@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Core" parent="AppTheme">
+        <item name="android:statusBarColor">@color/colorStatusBarBackground</item>
+        <item name="android:navigationBarColor">@color/colorStatusBarBackground</item>
+    </style>
+
+    <style name="AppTheme.BottomSheet" parent="BaseBottomSheetDialog">
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+    </style>
+
+</resources>

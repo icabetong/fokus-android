@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00c853</color>
+    <color name="colorPrimaryDark">#009624</color>
+    <color name="colorPrimaryLight">#5efc82</color>
+    <color name="colorOnPrimary">#000000</color>
+    <color name="colorSurface">#ffffff</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorError">#B00020</color>
+    <color name="colorOnError">#ffffff</color>
+
+    <color name="colorWindowBackground">#fcfcfc</color>
+    <color name="colorToolbarBackground">@color/colorWindowBackground</color>
+    <color name="colorStatusBarBackground">@color/colorWindowBackground</color>
+
+    <color name="colorPrimaryText">@color/colorOnSurface</color>
+    <color name="colorSecondaryText">#808080</color>
+
+    <color name="colorSwipeLeft">#ea4335</color>
+    <color name="colorSwipeRight">#34a853</color>
+</resources>

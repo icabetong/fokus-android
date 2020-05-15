@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="days_of_week_items">
+        <item>@string/days_of_week_item_sunday</item>
+        <item>@string/days_of_week_item_monday</item>
+        <item>@string/days_of_week_item_tuesday</item>
+        <item>@string/days_of_week_item_wednesday</item>
+        <item>@string/days_of_week_item_thursday</item>
+        <item>@string/days_of_week_item_friday</item>
+        <item>@string/days_of_week_item_saturday</item>
+    </string-array>
+
+    <integer-array name="days_of_week_values">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>8</item>
+        <item>16</item>
+        <item>32</item>
+        <item>64</item>
+    </integer-array>
+
+    <string-array name="settings_dark_theme_items">
+        <item>@string/settings_dark_theme_item_automatic</item>
+        <item>@string/settings_dark_theme_item_always</item>
+        <item>@string/settings_dark_theme_item_never</item>
+    </string-array>
+
+    <string-array name="settings_dark_theme_values">
+        <item>AUTOMATIC</item>
+        <item>ALWAYS</item>
+        <item>NEVER</item>
+    </string-array>
+
+    <string-array name="settings_reminder_frequency_items">
+        <item>@string/settings_reminder_frequency_item_everyday</item>
+        <item>@string/settings_reminder_frequency_item_weekends</item>
+    </string-array>
+
+    <string-array name="settings_reminder_frequency_values">
+        <item>EVERYDAY</item>
+        <item>WEEKENDS</item>
+    </string-array>
+
+    <string-array name="settings_reminder_due_interval_items">
+        <item>@string/settings_alert_me_when_due_is_in_item_the_hour</item>
+        <item>@string/settings_alert_me_when_due_is_in_item_three_hours</item>
+        <item>@string/settings_alert_me_when_due_is_in_item_the_day</item>
+    </string-array>
+
+    <string-array name="settings_reminder_due_interval_values">
+        <item>HOUR</item>
+        <item>THREE</item>
+        <item>DAY</item>
+    </string-array>
+
+</resources>

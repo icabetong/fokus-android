@@ -1,0 +1,58 @@
+package com.isaiahvonrundstedt.fokus.features.notifications
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import java.util.*
+
+class NotificationAdapter(private var swipeListener: SwipeListener)
+    : BaseAdapter<NotificationAdapter.ViewHolder>() {
+
+    private var itemList = ArrayList<Notification>()
+
+    fun setObservableItems(items: List<Notification>) {
+        itemList.clear()
+        itemList.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_notification,
+            parent, false)
+        return ViewHolder(rowView)
+    }
+
+    override fun getItemCount(): Int = itemList.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.onBind(itemList[position])
+    }
+
+    override fun onSwipe(position: Int, direction: Int) {
+        swipeListener.onSwipePerformed(position, itemList[position], direction)
+    }
+
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        private val rootView: View = itemView.findViewById(R.id.rootView)
+        private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
+        private val titleView: AppCompatTextView = itemView.findViewById(R.id.titleView)
+        private val summaryView: AppCompatTextView = itemView.findViewById(R.id.summaryView)
+
+        fun onBind(notification: Notification) {
+            val context = rootView.context
+            val iconRes = if (notification.type == Notification.typeReminder) R.drawable.ic_custom_brand
+                else R.drawable.ic_custom_alarm_clock
+
+            titleView.text = notification.title
+            summaryView.text = notification.content
+            iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+        }
+    }
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.isaiahvonrundstedt.fokus">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".CoreApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.Core">
+        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/xml_shortcuts"/>
+        </activity>
+        <activity android:name=".features.task.TaskActivity" />
+        <activity android:name=".features.subject.SubjectActivity" />
+        <activity android:name=".features.settings.SettingsActivity" />
+        <activity android:name=".features.task.TaskBottomSheet" />
+        <activity android:name=".features.notifications.NotificationActivity" />
+        <activity android:name=".features.archived.ArchivedActivity" />
+        <activity android:name=".features.support.WebViewActivity" />
+        <activity android:name=".features.search.SearchActivity" />
+        <activity android:name=".features.support.NoticesActivity" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="25">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_android_add"
+        android:shortcutId="shortcut_task"
+        android:shortcutShortLabel="@string/shortcut_new_task">
+        <intent
+            android:action="com.isaiahvonrundstedt.fokus.features.task.TaskActivity.new"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.task.TaskActivity"
+            android:targetPackage="com.isaiahvonrundstedt.fokus"/>
+    </shortcut>
+
+</shortcuts>

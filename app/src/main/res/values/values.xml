@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorOnSecondary">@color/colorOnPrimary</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <item name="android:windowBackground">@color/colorWindowBackground</item>
+        <item name="android:textColorPrimary">@color/colorOnSurface</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+
+        <item name="toolbarStyle">@style/AppTheme.Widget.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Widget.Toolbar.Navigation</item>
+        <item name="actionOverflowButtonStyle">@style/AppTheme.Widget.Toolbar.Overflow</item>
+
+        <item name="md_background_color">@color/colorSurface</item>
+        <item name="md_corner_radius">4dp</item>
+    </style>
+
+    <color name="ic_launcher_background">#00c853</color>
+</resources>

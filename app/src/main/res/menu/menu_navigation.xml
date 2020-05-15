@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_archived"
+        android:title="@string/menu_archived"
+        android:icon="@drawable/ic_custom_box"/>
+
+    <item
+        android:id="@+id/action_subjects"
+        android:title="@string/menu_subjects"
+        android:icon="@drawable/ic_custom_measure"/>
+
+    <item
+        android:id="@+id/action_notifications"
+        android:title="@string/menu_notifications"
+        android:icon="@drawable/ic_custom_bell"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/menu_settings"
+        android:icon="@drawable/ic_custom_settings"/>
+
+</menu>

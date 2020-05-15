@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorSurface">#121212</color>
+    <color name="colorOnSurface">#ffffff</color>
+
+    <color name="colorWindowBackground">#080808</color>
+    <color name="colorToolbarBackground">@color/colorWindowBackground</color>
+    <color name="colorStatusBarBackground">@color/colorWindowBackground</color>
+    <color name="colorPrimaryText">@color/colorOnSurface</color>
+
+</resources>

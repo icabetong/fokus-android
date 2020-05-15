@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <plurals name="files_attached">
+        <item quantity="one">@string/file_attached</item>
+        <item quantity="other">@string/files_attached</item>
+    </plurals>
+
+</resources>

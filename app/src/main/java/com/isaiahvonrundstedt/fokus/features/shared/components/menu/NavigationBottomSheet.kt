@@ -25,7 +25,7 @@ class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuTitleView.text = String.format(getString(R.string.menu_sheet_greetings),
+        menuTitleView.text = String.format(getString(R.string.hello),
             PreferenceManager(context).name)
 
         val adapter = MenuAdapter(activity, this)

@@ -10,8 +10,6 @@
     <string name="activity_notices">Open Source and Third Party</string>
     <string name="activity_privacy">Privacy Policy Statement</string>
 
-    <string name="menu_sheet_greetings">Hello, %1$s</string>
-
     <string name="menu_archived">Archived</string>
     <string name="menu_subjects">Subjects</string>
     <string name="menu_notifications">@string/activity_notifications</string>
@@ -147,6 +145,7 @@
     <string name="shortcut_new_task">New Task</string>
 
     <!-- used for concat and formatting -->
+    <string name="hello">Hello, %1$s</string>
     <string name="and">&#160;and&#160;</string>
     <string name="yesterday">Yesterday at %1$s</string>
     <string name="tomorrow">Tomorrow at %1$s</string>

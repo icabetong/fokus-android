@@ -11,7 +11,7 @@ Ever been assigned a task/assignment but completely forgot it and its details? I
 
 ## Versioning
 
-We use [SemVer](http://www.semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/isaiahcollins02/filebucket/tags)
+We use [SemVer](http://www.semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/isaiahcollins02/fokus/tags)
 
 ## Licenses
 

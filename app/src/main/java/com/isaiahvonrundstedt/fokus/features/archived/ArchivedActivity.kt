@@ -27,7 +27,7 @@ class ArchivedActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archived)
-        setupAppBar(toolbar, R.string.activity_archived)
+        setPersistentActionBar(toolbar, R.string.activity_archived)
 
         adapter = ArchivedAdapter(this, this)
         recyclerView.addItemDecoration(OffsetItemDecoration(this, R.dimen.item_padding))
@@ -43,7 +43,7 @@ class ArchivedActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.
         super.onStart()
 
         viewModel.fetch()?.observe(this, Observer { items ->
-            adapter?.setObservableItems(items)
+            adapter?.submitList(items)
             itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
     }
@@ -60,21 +60,21 @@ class ArchivedActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.
     override fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int) {
         if (t is Core) {
             if (swipeDirection == ItemTouchHelper.START) {
-                viewModel.remove(t)
+                viewModel.remove(t.task)
                 val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed,
                     Snackbar.LENGTH_SHORT)
                 snackbar.setAction(R.string.button_undo) {
-                    viewModel.insert(t)
+                    viewModel.insert(t.task, t.attachmentList)
                 }
                 snackbar.show()
             } else if (swipeDirection == ItemTouchHelper.END) {
                 t.task.isArchived = false
-                viewModel.update(t)
+                viewModel.update(t.task, t.attachmentList)
                 val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed_archived,
                     Snackbar.LENGTH_SHORT)
                 snackbar.setAction(R.string.button_undo) {
                     t.task.isArchived = false
-                    viewModel.insert(t)
+                    viewModel.insert(t.task, t.attachmentList)
                 }
                 snackbar.show()
             }

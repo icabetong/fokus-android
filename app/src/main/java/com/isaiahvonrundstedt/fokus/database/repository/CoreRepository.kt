@@ -1,12 +1,11 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.Core
+import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -25,20 +24,23 @@ class CoreRepository (app: Application) {
         onSearch(dataBundles?.search("%$query%") ?: emptyList())
     }
 
-    fun clearArchived() = GlobalScope.launch { tasks?.clearArchived() }
+    suspend fun clearArchived() { tasks?.clearArchived() }
 
-    fun insert(core: Core) = GlobalScope.launch {
-        tasks?.insert(core.task)
-        core.attachmentList.forEach { attachments?.insert(it) }
+    suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
+        tasks?.insert(task)
+        if (attachmentList.isNotEmpty())
+            attachmentList.forEach { attachments?.insert(it) }
     }
 
-    fun remove(core: Core) = GlobalScope.launch {
-        tasks?.remove(core.task)
+    suspend fun remove(task: Task) {
+        tasks?.remove(task)
     }
 
-    fun update(core: Core) = GlobalScope.launch {
-        tasks?.update(core.task)
-        attachments?.removeUsingTaskID(core.task.taskID)
-        core.attachmentList.forEach { attachments?.insert(it) }
+    suspend fun update(task: Task, attachmentList: List<Attachment> = emptyList()) {
+        tasks?.update(task)
+        if (attachmentList.isNotEmpty()) {
+            attachments?.removeUsingTaskID(task.taskID)
+            attachmentList.forEach { attachments?.insert(it) }
+        }
     }
 }

@@ -54,7 +54,4 @@ abstract class BaseBottomSheet: BottomSheetDialogFragment() {
         const val statusCommit = 1
     }
 
-    protected fun showFeedback(view: View, @StringRes id: Int) {
-        Snackbar.make(view, id, Snackbar.LENGTH_SHORT).show()
-    }
 }

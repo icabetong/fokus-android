@@ -13,15 +13,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.util.*
 
 class NotificationAdapter(private var swipeListener: SwipeListener)
-    : BaseAdapter<NotificationAdapter.ViewHolder>() {
+    : BaseAdapter<Notification, NotificationAdapter.ViewHolder>(callback) {
 
-    private var itemList = ArrayList<Notification>()
-
-    fun setObservableItems(items: List<Notification>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_notification,
@@ -29,14 +22,12 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
         return ViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(itemList[position])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, itemList[position], direction)
+        swipeListener.onSwipePerformed(position, getItem(position), direction)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -53,6 +44,18 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
             titleView.text = notification.title
             summaryView.text = notification.content
             iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Notification>() {
+            override fun areItemsTheSame(oldItem: Notification, newItem: Notification): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Notification, newItem: Notification): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 }

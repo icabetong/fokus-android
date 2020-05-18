@@ -1,9 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -14,7 +12,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.task.TaskBottomSheet
+import com.isaiahvonrundstedt.fokus.features.task.TaskEditorActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.layout_appbar_search.*
 
@@ -27,7 +25,7 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        setupAppBar(toolbar, null)
+        setPersistentActionBar(toolbar, null)
     }
 
     override fun onStart() {
@@ -38,7 +36,7 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
         recyclerView.adapter = adapter
 
         viewModel.items.observe(this, Observer { items ->
-            adapter.setObservableItems(items)
+            adapter.submitList(items)
             searchEmptyView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
         })
 
@@ -57,7 +55,7 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
         if (t is Core) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    TaskBottomSheet(t).invoke(supportFragmentManager)
+
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> { }
             }

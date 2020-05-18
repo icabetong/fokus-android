@@ -26,7 +26,7 @@ class NotificationActivity: BaseActivity(), BaseAdapter.SwipeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
-        setupAppBar(toolbar, R.string.activity_notifications)
+        setPersistentActionBar(toolbar, R.string.activity_notifications)
 
         adapter = NotificationAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -42,7 +42,7 @@ class NotificationActivity: BaseActivity(), BaseAdapter.SwipeListener {
         super.onStart()
 
         viewModel.fetch()?.observe(this, Observer { items ->
-            adapter?.setObservableItems(items)
+            adapter?.submitList(items)
             itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
     }

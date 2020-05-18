@@ -1,17 +1,17 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.Manifest
-import android.content.DialogInterface
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
@@ -22,37 +22,23 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.Core
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
-import kotlinx.android.synthetic.main.layout_sheet_task.*
+import kotlinx.android.synthetic.main.layout_appbar_editor.*
+import kotlinx.android.synthetic.main.layout_editor_task.*
 import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
+class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
 
-    constructor(core: Core): this() {
-        this.core = core
-    }
-
-    constructor(dismissListener: DismissListener): this() {
-        this.dismissListener = dismissListener
-    }
-
-    constructor(bundle: Core, dismissListener: DismissListener) : this(dismissListener) {
-        this.core = bundle
-        this.task = bundle.task
-        this.mode = modeUpdate
-    }
-
+    private var requestCode = 0
     private var core: Core? = null
     private var task = Task()
-    private var mode = modeInsert
-    private var dismissListener: DismissListener? = null
 
     private val attachmentRequestCode = 32
     private val attachmentList = ArrayList<Attachment>()
@@ -60,78 +46,91 @@ class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_task, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.layout_editor_task)
+        setPersistentActionBar(toolbar, null)
+
+        requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
+            && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode
+        if (requestCode == updateRequestCode) {
+            task = intent.getParcelableExtra(extraTask)!!
+            subject = intent.getParcelableExtra(extraSubject)!!
+            attachmentList.clear()
+            attachmentList.addAll(intent.getParcelableArrayListExtra(extraAttachments) ?: emptyList())
+        }
+
+        subjectViewModel.fetch()?.observe(this, Observer { items ->
+            adapter.setObservableItems(items)
+        })
+
+        if (requestCode == updateRequestCode) {
+            nameEditText.setText(task.name)
+            notesEditText.setText(task.notes)
+            subjectTextView.text = subject!!.code
+            dueDateTextView.text = Task.formatDueDate(this, task.dueDate!!)
+
+            attachmentList.forEach { attachment ->
+                attachmentChipGroup.addView(buildChip(attachment), 0)
+            }
+        }
     }
 
     private var adapter = SubjectListAdapter(this)
     private var subjectDialog: MaterialDialog? = null
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (core != null) {
-            nameEditText.setText(task.name)
-            notesEditText.setText(task.notes)
-            subjectTextView.text = core!!.subject.code
-            dueDateTextView.text = Task.formatDueDate(requireContext(), task.dueDate!!)
-
-            core!!.attachmentList.forEach { attachment ->
-                attachmentChipGroup.addView(buildChip(attachment), 0)
-            }
-            attachmentList.addAll(core!!.attachmentList)
-        }
-
+    override fun onStart() {
+        super.onStart()
 
         dueDateTextView.setOnClickListener { v ->
-            MaterialDialog(view.context).show {
-                lifecycleOwner(this@TaskBottomSheet)
+            MaterialDialog(this).show {
+                lifecycleOwner(this@TaskEditorActivity)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = task.dueDate?.toDateTime()?.toCalendar(Locale.getDefault())) { _, datetime ->
                     task.dueDate = LocalDateTime.fromCalendarFields(datetime)
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView)
-                        v.text = Task.formatDueDate(requireContext(), task.dueDate!!)
+                        v.text = Task.formatDueDate(this@TaskEditorActivity, task.dueDate!!)
                 }
             }
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(view.context).show {
-                lifecycleOwner(this@TaskBottomSheet)
+            subjectDialog = MaterialDialog(this).show {
+                lifecycleOwner(this@TaskEditorActivity)
                 title(R.string.dialog_select_subject_title)
                 message(R.string.dialog_select_subject_summary)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
-                    startActivity(Intent(requireContext(), SubjectActivity::class.java))
+                    startActivity(Intent(this@TaskEditorActivity, SubjectActivity::class.java))
                 }
             }
         }
 
         attachmentChip.setOnClickListener {
-            if (PermissionManager(requireContext()).readAccessGranted) {
+            if (PermissionManager(this).readAccessGranted) {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), attachmentRequestCode)
             } else
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PermissionManager.readStorageRequestCode)
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), attachmentRequestCode)
         }
 
         actionButton.setOnClickListener {
             if (nameEditText.text.isNullOrEmpty()) {
-                showFeedback(bottomSheetView, R.string.feedback_task_empty_name)
+                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_name)
                 nameEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (task.dueDate == null) {
-                showFeedback(bottomSheetView, R.string.feedback_task_empty_due_date)
+                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_due_date)
                 dueDateTextView.performClick()
                 return@setOnClickListener
             }
 
             if (task.subjectID == null) {
-                showFeedback(bottomSheetView, R.string.feedback_task_empty_subject)
+                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_subject)
                 subjectTextView.performClick()
                 return@setOnClickListener
             }
@@ -139,30 +138,15 @@ class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
             task.name = nameEditText.text.toString()
             task.notes = notesEditText.text.toString()
 
-            status = statusCommit
-            this.dismiss()
+            core = Core(task = this.task, subject = this.subject!!,
+                attachmentList = this.attachmentList)
+
+            val data = Intent()
+            data.putExtra(extraTask, core?.task)
+            data.putParcelableArrayListExtra(extraAttachments, ArrayList(core?.attachmentList!!))
+            setResult(Activity.RESULT_OK, data)
+            finish()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        subjectViewModel.fetch()?.observe(this, Observer { items ->
-            adapter.setObservableItems(items)
-        })
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-
-        if (mode == modeInsert) {
-            if (subject != null)
-                core = Core(task = this.task, subject = this.subject!!,
-                    attachmentList = this.attachmentList)
-        } else if (mode == modeUpdate) {
-            core!!.attachmentList = this.attachmentList
-        }
-        dismissListener?.onDismiss(status, mode, core)
     }
 
     private var subject: Subject? = null
@@ -197,7 +181,7 @@ class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
     }
 
     private fun buildChip(attachment: Attachment): Chip {
-        return Chip(context).apply {
+        return Chip(this).apply {
             text = getFileName(attachment.uri!!)
             tag = attachment.id
             isCloseIconVisible = true
@@ -227,7 +211,7 @@ class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
     private fun getFileName(uri: Uri): String {
         var result = ""
         if (uri.scheme == "content") {
-            val cursor: Cursor? = activity?.contentResolver?.query(uri, null, null, null, null)
+            val cursor: Cursor? = contentResolver?.query(uri, null, null, null, null)
             try {
                 if (cursor != null && cursor.moveToFirst())
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
@@ -244,11 +228,24 @@ class TaskBottomSheet(): BaseBottomSheet(), SubjectListAdapter.ItemSelected {
 
     private fun onParseIntent(uri: Uri?) {
         val intent = Intent(Intent.ACTION_VIEW)
-            .setDataAndType(uri, context?.contentResolver?.getType(uri!!))
+            .setDataAndType(uri, contentResolver?.getType(uri!!))
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        if (intent.resolveActivity(context?.packageManager!!) != null)
+        if (intent.resolveActivity(packageManager!!) != null)
             startActivity(intent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return true
+    }
+
+    companion object {
+        const val insertRequestCode = 32
+        const val updateRequestCode = 19
+
+        const val extraTask = "extraTask"
+        const val extraSubject = "extraSubject"
+        const val extraAttachments = "extraAttachments"
     }
 
 }

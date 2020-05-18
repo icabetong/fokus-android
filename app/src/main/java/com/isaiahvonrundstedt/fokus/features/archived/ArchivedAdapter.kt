@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
@@ -13,15 +14,7 @@ import java.util.*
 
 class ArchivedAdapter(private var actionListener: ActionListener,
                       private var swipeListener: SwipeListener)
-    : BaseAdapter<ArchivedAdapter.ArchivedViewHolder>() {
-
-    private var itemList = ArrayList<Core>()
-
-    fun setObservableItems(items: List<Core>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
+    : BaseAdapter<Core, ArchivedAdapter.ArchivedViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_archived,
@@ -29,14 +22,12 @@ class ArchivedAdapter(private var actionListener: ActionListener,
         return ArchivedViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: ArchivedViewHolder, position: Int) {
-        holder.onBind(itemList[position])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, itemList[position], direction)
+        swipeListener.onSwipePerformed(position, getItem(position), direction)
     }
 
     inner class ArchivedViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -55,6 +46,18 @@ class ArchivedAdapter(private var actionListener: ActionListener,
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
+            }
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Core>() {
+            override fun areItemsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem.task.taskID == newItem.task.taskID
+            }
+
+            override fun areContentsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem == newItem
             }
         }
     }

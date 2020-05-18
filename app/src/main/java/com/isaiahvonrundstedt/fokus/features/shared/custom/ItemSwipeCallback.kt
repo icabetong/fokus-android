@@ -18,7 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectAdapter
 import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 
-class ItemSwipeCallback<VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<VH>)
+class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
     private var iconEnd: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_custom_delete)!!

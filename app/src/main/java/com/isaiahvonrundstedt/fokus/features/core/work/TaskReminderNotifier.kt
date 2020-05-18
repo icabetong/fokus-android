@@ -86,9 +86,6 @@ class TaskReminderNotifier(private var context: Context, workerParameters: Worke
                     .plusHours(reminderTime?.hourOfDay ?: 8)
                     .plusMinutes(reminderTime?.minuteOfHour ?: 30))
 
-            Log.e("HOUR", executionTime.standardHours.toString())
-            Log.e("MINUTE", executionTime.standardMinutes.toString())
-
             if (removePrevious) workManager.cancelAllWorkByTag(TaskReminderNotifier::class.java.simpleName)
 
             val request = OneTimeWorkRequest.Builder(TaskReminderNotifier::class.java)

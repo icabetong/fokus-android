@@ -134,7 +134,7 @@
     <string name="tag_color_lemon">Lemon</string>
     <string name="tag_color_sea">Sea</string>
     <string name="tag_color_grape">Grape</string>
-    <string name="tag_color_leaf">Leaf</string>
+    <string name="tag_color_cherry">Cherry</string>
     <string name="tag_color_rose">Rose</string>
 
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>

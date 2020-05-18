@@ -1,5 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -16,8 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import kotlinx.android.synthetic.main.activity_subject.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class SubjectActivity: BaseActivity(), BaseBottomSheet.DismissListener,
-    BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
+class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
 
     companion object {
         const val action = "com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity.new"
@@ -30,18 +31,24 @@ class SubjectActivity: BaseActivity(), BaseBottomSheet.DismissListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject)
-        setupAppBar(toolbar, R.string.activity_subjects)
+        setPersistentActionBar(toolbar, R.string.activity_subjects)
 
         if (intent?.action == action)
-            SubjectBottomSheet(this).invoke(supportFragmentManager)
+            actionButton.performClick()
 
         adapter = SubjectAdapter(this, this)
         recyclerView.addItemDecoration(OffsetItemDecoration(this, R.dimen.item_padding))
+        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter!!))
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        viewModel.fetch()?.observe(this, Observer { items ->
+            adapter?.submitList(items)
+            itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        })
     }
 
     private var adapter: SubjectAdapter? = null
@@ -49,23 +56,33 @@ class SubjectActivity: BaseActivity(), BaseBottomSheet.DismissListener,
         super.onResume()
 
         actionButton.setOnClickListener {
-            val sheet = SubjectBottomSheet(this)
-            sheet.invoke(supportFragmentManager)
+            val editorIntent = Intent(this, SubjectEditorActivity::class.java)
+            startActivityForResult(editorIntent, SubjectEditorActivity.insertRequestCode)
         }
-
-        viewModel.fetch()?.observe(this, Observer { items ->
-            adapter?.setObservableItems(items)
-            itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
-        })
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Subject) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    SubjectBottomSheet(t, this).invoke(supportFragmentManager)
+                    val editorIntent = Intent(this, SubjectEditorActivity::class.java)
+                    editorIntent.putExtra(SubjectEditorActivity.extraSubject, t)
+                    startActivityForResult(editorIntent, SubjectEditorActivity.updateRequestCode)
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> {}
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            val subject: Subject = data?.getParcelableExtra(SubjectEditorActivity.extraSubject)!!
+
+            if (requestCode == SubjectEditorActivity.insertRequestCode) {
+                viewModel.insert(subject)
+            } else if (requestCode == SubjectEditorActivity.updateRequestCode) {
+                viewModel.update(subject)
             }
         }
     }
@@ -81,14 +98,6 @@ class SubjectActivity: BaseActivity(), BaseBottomSheet.DismissListener,
                 }
                 snackbar.show()
             }
-        }
-    }
-
-    override fun <E> onDismiss(status: Int, mode: Int, e: E) {
-        if (e is Subject && status == BaseBottomSheet.statusCommit) {
-            if (mode == BaseBottomSheet.modeInsert)
-                viewModel.insert(e)
-             else viewModel.update(e)
         }
     }
 

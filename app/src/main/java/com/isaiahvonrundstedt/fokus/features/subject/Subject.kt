@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Parcelable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.room.ColumnInfo
@@ -11,11 +12,13 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.ColorConverter
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import kotlinx.android.parcel.Parcelize
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Parcelize
 @Entity(tableName = "subjects")
 data class Subject @JvmOverloads constructor (
     @PrimaryKey
@@ -30,7 +33,7 @@ data class Subject @JvmOverloads constructor (
     var endTime: LocalTime? = null,
     @TypeConverters(ColorConverter::class)
     var tag: Tag = Tag.SKY
-) {
+): Parcelable {
 
     enum class Tag(val actualColor: Int) {
         SKY(Color.parseColor("#2196f3")),
@@ -39,7 +42,7 @@ data class Subject @JvmOverloads constructor (
         LEMON(Color.parseColor("#ffb600")),
         SEA(Color.parseColor("#01b1af")),
         GRAPE(Color.parseColor("#c14ce6")),
-        LEAF(Color.parseColor("#0f9d58")),
+        CHERRY(Color.parseColor("#f50057")),
         ROSE(Color.parseColor("#f15b8d"));
 
         companion object {
@@ -63,7 +66,7 @@ data class Subject @JvmOverloads constructor (
                     LEMON -> R.string.tag_color_lemon
                     SEA -> R.string.tag_color_sea
                     GRAPE -> R.string.tag_color_grape
-                    LEAF -> R.string.tag_color_leaf
+                    CHERRY -> R.string.tag_color_cherry
                     ROSE -> R.string.tag_color_rose
                 }
             }

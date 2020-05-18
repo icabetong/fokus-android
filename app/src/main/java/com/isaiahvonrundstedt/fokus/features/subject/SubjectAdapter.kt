@@ -1,24 +1,18 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class SubjectAdapter(private var actionListener: ActionListener,
                      private var swipeListener: SwipeListener)
-    : BaseAdapter<SubjectAdapter.SubjectViewHolder>() {
-
-    private var itemList = ArrayList<Subject>()
-
-    fun setObservableItems(items: List<Subject>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
+    : BaseAdapter<Subject, SubjectAdapter.SubjectViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_card,
@@ -26,14 +20,12 @@ class SubjectAdapter(private var actionListener: ActionListener,
         return SubjectViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.onBind(itemList[position])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, itemList[position], direction)
+        swipeListener.onSwipePerformed(position, getItem(position), direction)
     }
 
     inner class SubjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -69,6 +61,18 @@ class SubjectAdapter(private var actionListener: ActionListener,
                 .append(subject.formatEndTime())
             dateTimeView.text = builder.toString()
 
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Subject>() {
+            override fun areItemsTheSame(oldItem: Subject, newItem: Subject): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Subject, newItem: Subject): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 }

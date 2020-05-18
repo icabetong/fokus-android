@@ -13,13 +13,13 @@ import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
-import kotlinx.android.synthetic.main.layout_sheet_menu.*
+import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 
 class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_menu, container, false)
+        return inflater.inflate(R.layout.layout_sheet_navigation, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

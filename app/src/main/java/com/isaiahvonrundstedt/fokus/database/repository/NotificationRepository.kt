@@ -16,15 +16,15 @@ class NotificationRepository(app: Application) {
 
     fun clear() = GlobalScope.launch { notifications?.clear() }
 
-    fun insert(notification: Notification) = GlobalScope.launch {
+    suspend fun insert(notification: Notification) {
         notifications?.insert(notification)
     }
 
-    fun remove(notification: Notification) = GlobalScope.launch {
+    suspend fun remove(notification: Notification) {
         notifications?.remove(notification)
     }
 
-    fun update(notification: Notification) = GlobalScope.launch {
+    suspend fun update(notification: Notification) {
         notifications?.update(notification)
     }
 

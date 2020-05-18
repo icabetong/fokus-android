@@ -7,6 +7,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
@@ -15,15 +16,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<SearchAdapter.SearchViewHolder>() {
-
-    private var itemList = ArrayList<Core>()
-
-    fun setObservableItems(items: List<Core>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
+    : BaseAdapter<Core, SearchAdapter.SearchViewHolder>(callback) {
 
     override fun onSwipe(position: Int, direction: Int) {}
 
@@ -33,10 +26,8 @@ class SearchAdapter(private var actionListener: ActionListener)
         return SearchViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.onBind(itemList[position])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
     inner class SearchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -52,6 +43,18 @@ class SearchAdapter(private var actionListener: ActionListener)
             titleView.text = core.task.name
             summaryView.text  = core.subject.code
             tagView.setImageDrawable(core.subject.tintDrawable(tagView.drawable))
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Core>() {
+            override fun areItemsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem.task.taskID == newItem.task.taskID
+            }
+
+            override fun areContentsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 }

@@ -18,18 +18,10 @@ import java.util.*
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var swipeListener: SwipeListener)
-    : BaseAdapter<TaskAdapter.TaskViewHolder>() {
-
-    private var itemList = ArrayList<Core>()
-
-    fun setObservableItems(items: List<Core>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
+    : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, itemList[position], direction)
+        swipeListener.onSwipePerformed(position, getItem(position), direction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -38,10 +30,8 @@ class TaskAdapter(private var actionListener: ActionListener,
         return TaskViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.onBind(itemList[position])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
     inner class TaskViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -94,6 +84,18 @@ class TaskAdapter(private var actionListener: ActionListener,
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
+            }
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Core>() {
+            override fun areItemsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem.task.taskID == newItem.task.taskID
+            }
+
+            override fun areContentsTheSame(oldItem: Core, newItem: Core): Boolean {
+                return oldItem == newItem
             }
         }
     }

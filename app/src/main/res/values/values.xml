@@ -26,5 +26,5 @@
         <item name="md_corner_radius">4dp</item>
     </style>
 
-    <color name="ic_launcher_background">#ffd600</color>
+    <color name="ic_launcher_background">#0f9d58</color>
 </resources>

@@ -58,16 +58,10 @@ class TaskAdapter(private var actionListener: ActionListener,
         }
 
         fun onBind(core: Core) {
-            subjectNameView.text = core.subject.description ?: core.subject.code
-            tagView.setBackgroundColor(core.subject.tag.actualColor)
-
-            checkBox.isChecked = core.task.isFinished
-            taskNameView.text = core.task.name
-            formatDate(core)
-
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
-                core.task.isFinished = isChecked
-                if (isChecked) {
+            checkBox.setOnClickListener { view ->
+                view as MaterialCheckBox
+                core.task.isFinished = view.isChecked
+                if (view.isChecked) {
                     taskNameView.paintFlags = taskNameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     formatDate(core)
                 } else
@@ -85,6 +79,13 @@ class TaskAdapter(private var actionListener: ActionListener,
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
             }
+
+            subjectNameView.text = core.subject.description ?: core.subject.code
+            tagView.setBackgroundColor(core.subject.tag.actualColor)
+
+            checkBox.isChecked = core.task.isFinished
+            taskNameView.text = core.task.name
+            formatDate(core)
         }
     }
 

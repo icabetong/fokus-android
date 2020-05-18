@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +13,8 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
@@ -112,8 +115,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), attachmentRequestCode)
             } else
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), attachmentRequestCode)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PermissionManager.readStorageRequestCode)
         }
 
         actionButton.setOnClickListener {
@@ -153,7 +156,10 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
     override fun onItemSelected(subject: Subject) {
         task.subjectID = subject.id
         this.subject = subject
+
         subjectTextView.text = subject.code
+        tagHolderView.setImageDrawable(subject.tintDrawable(
+            ContextCompat.getDrawable(this, R.drawable.shape_color_holder)!!))
         subjectDialog?.dismiss()
     }
 

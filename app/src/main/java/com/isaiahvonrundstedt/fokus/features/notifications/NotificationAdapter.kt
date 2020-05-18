@@ -35,6 +35,7 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
         private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
         private val titleView: AppCompatTextView = itemView.findViewById(R.id.titleView)
         private val summaryView: AppCompatTextView = itemView.findViewById(R.id.summaryView)
+        private val dateTimeView: AppCompatTextView = itemView.findViewById(R.id.dateTimeView)
 
         fun onBind(notification: Notification) {
             val context = rootView.context
@@ -44,6 +45,7 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
             titleView.text = notification.title
             summaryView.text = notification.content
             iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+            dateTimeView.text = notification.formatDateTime()
         }
     }
 

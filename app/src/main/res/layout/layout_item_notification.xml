@@ -45,4 +45,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         tools:text="sample"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dateTimeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="h:mm"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

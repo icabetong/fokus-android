@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.core.work
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -42,6 +41,7 @@ class TaskReminderNotifier(private var context: Context, workerParameters: Worke
                     taskSize)
                 content = context.getString(R.string.notification_pending_tasks_summary)
                 type = Notification.typeReminder
+                dateTimeTriggered = LocalDateTime.now()
             }
         }
 

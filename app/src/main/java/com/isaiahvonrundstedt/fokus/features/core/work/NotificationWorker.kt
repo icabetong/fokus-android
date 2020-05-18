@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import org.joda.time.LocalDateTime
 
 class NotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
@@ -15,6 +16,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters)
 
     override suspend fun doWork(): Result  {
         val notification = convertDataToNotification(inputData)
+        notification.dateTimeTriggered = LocalDateTime.now()
 
         dataStore.insert(notification)
         sendNotification(createNotification(notification))

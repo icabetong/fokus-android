@@ -10,14 +10,17 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskActivity
+import org.joda.time.format.DateTimeFormat
 
 abstract class BaseWorker(private var context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {
@@ -92,10 +95,43 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         manager.notify(notificationID, notification)
     }
 
+    protected fun createActionableNotification(notification: Notification): android.app.Notification {
+        val targetActivity = Intent(context, TaskActivity::class.java)
+        val contentIntent = PendingIntent.getActivity(context, 0,
+            targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        val markAsFinishedService = Intent(context, NotificationActionService::class.java)
+        markAsFinishedService.action = NotificationActionService.actionFinished
+        markAsFinishedService.putExtra(NotificationActionService.extraTaskID, notification.data)
+        val markAsFinishedIntent = PendingIntent.getService(context, NotificationActionService.finishID,
+            markAsFinishedService, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val sendToArchiveService = Intent(context, NotificationActionService::class.java)
+        sendToArchiveService.action = NotificationActionService.actionArchive
+        sendToArchiveService.putExtra(NotificationActionService.extraTaskID, notification.data)
+        val sendToArchiveIntent = PendingIntent.getService(context, NotificationActionService.archiveID,
+            sendToArchiveService, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        return NotificationCompat.Builder(context, notificationChannelID).apply {
+            setSound(soundUri)
+            setSmallIcon(R.drawable.ic_custom_brand)
+            setContentIntent(contentIntent)
+            setContentTitle(notification.title)
+            setContentText(notification.content)
+            color = ContextCompat.getColor(context, R.color.colorPrimary)
+            addAction(R.drawable.ic_android_check, context.getString(R.string.button_mark_as_finished),
+                markAsFinishedIntent)
+            addAction(R.drawable.ic_android_archive, context.getString(R.string.button_archive),
+                sendToArchiveIntent)
+        }.build()
+    }
+
     protected fun createNotification(notification: Notification?): android.app.Notification {
         val targetActivity = Intent(context, TaskActivity::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0,
-            targetActivity, PendingIntent.FLAG_CANCEL_CURRENT)
+            targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
@@ -105,6 +141,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
             setContentText(notification?.content)
+            color = ContextCompat.getColor(context, R.color.colorPrimary)
         }.build()
     }
 

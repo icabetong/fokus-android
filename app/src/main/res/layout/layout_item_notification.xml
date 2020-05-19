@@ -16,8 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:iconTint="@color/colorOnSurface"
-        app:srcCompat="@drawable/ic_custom_brand"/>
+        app:tint="@color/colorOnSurface"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleView"

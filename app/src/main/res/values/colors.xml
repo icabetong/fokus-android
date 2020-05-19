@@ -18,4 +18,7 @@
 
     <color name="colorSwipeLeft">#ea4335</color>
     <color name="colorSwipeRight">#34a853</color>
+
+    <color name="colorIconReminder">#0091ea</color>
+    <color name="colorIconWarning">#ffab00</color>
 </resources>

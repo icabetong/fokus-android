@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import java.util.*
 
 class NotificationAdapter(private var swipeListener: SwipeListener)
     : BaseAdapter<Notification, NotificationAdapter.ViewHolder>(callback) {
@@ -38,13 +37,9 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
         private val dateTimeView: AppCompatTextView = itemView.findViewById(R.id.dateTimeView)
 
         fun onBind(notification: Notification) {
-            val context = rootView.context
-            val iconRes = if (notification.type == Notification.typeReminder) R.drawable.ic_custom_brand
-                else R.drawable.ic_custom_alarm_clock
-
             titleView.text = notification.title
             summaryView.text = notification.content
-            iconView.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+            iconView.setImageDrawable(notification.getIconDrawable(rootView.context))
             dateTimeView.text = notification.formatDateTime()
         }
     }

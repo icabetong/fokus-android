@@ -50,7 +50,7 @@ data class Task @JvmOverloads constructor (
                 String.format(context.getString(R.string.tomorrow),
                     DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time))
             else
-                DateTimeFormat.forPattern("EE - MMMM d, h:mm a").print(time)
+                DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(time)
         }
 
     }

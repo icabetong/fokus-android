@@ -19,6 +19,9 @@ interface SubjectDAO {
     @Query("SELECT * FROM subjects")
     fun fetch(): LiveData<List<Subject>>
 
+    @Query("SELECT * FROM subjects WHERE id = :id")
+    fun fetchItem(id: String): Subject
+
     @Query("SELECT * FROM subjects WHERE code LIKE :query OR description LIKE :query")
     fun search(query: String): LiveData<List<Subject>>
 

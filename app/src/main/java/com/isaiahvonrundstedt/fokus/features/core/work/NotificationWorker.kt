@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
+import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.LocalDateTime
 
@@ -19,7 +20,9 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters)
         notification.dateTimeTriggered = LocalDateTime.now()
 
         dataStore.insert(notification)
-        sendNotification(createNotification(notification))
+        if (notification.type == Notification.typeDueAlert)
+            sendNotification(createActionableNotification(notification))
+        else sendNotification(createNotification(notification))
 
         return Result.success()
     }

@@ -24,4 +24,10 @@ interface TaskDAO {
     @Query("DELETE FROM tasks WHERE isArchived = 1")
     suspend fun clearArchived()
 
+    @Query("UPDATE tasks SET isArchived = :status WHERE taskID = :taskID")
+    suspend fun setArchived(taskID: String, status: Int)
+
+    @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
+    suspend fun setFinished(taskID: String, status: Int)
+
 }

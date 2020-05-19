@@ -29,6 +29,8 @@
     <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_remove">Remove</string>
+    <string name="button_mark_as_finished">Mark as Finished</string>
+    <string name="button_archive">Archive</string>
 
     <string name="empty_view_no_search_results_title">Your query returned nothing</string>
     <string name="empty_view_no_search_results_summary">Try using less specific keywords or try checking if you have some mistakes</string>

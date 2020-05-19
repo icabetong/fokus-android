@@ -36,6 +36,8 @@
         <activity android:name=".features.task.TaskEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
 
+        <service android:name=".features.core.service.NotificationActionService"
+            android:exported="false"/>
     </application>
 
 </manifest>

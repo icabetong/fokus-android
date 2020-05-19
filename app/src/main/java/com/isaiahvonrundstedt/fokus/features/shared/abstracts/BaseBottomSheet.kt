@@ -41,17 +41,4 @@ abstract class BaseBottomSheet: BottomSheetDialogFragment() {
             show(fragmentManager, this::class.java.name)
     }
 
-    interface DismissListener {
-        fun <E> onDismiss(status: Int, mode: Int, e: E)
-    }
-
-    protected var status: Int = statusDiscard
-    companion object {
-        const val modeInsert = 1
-        const val modeUpdate = 2
-
-        const val statusDiscard = 0
-        const val statusCommit = 1
-    }
-
 }

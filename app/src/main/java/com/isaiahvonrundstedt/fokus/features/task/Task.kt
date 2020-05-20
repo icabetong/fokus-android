@@ -10,6 +10,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import kotlinx.android.parcel.Parcelize
+import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
@@ -26,15 +27,30 @@ data class Task @JvmOverloads constructor (
     var notes: String? = null,
     var subjectID: String? = null,
     @TypeConverters(DateTimeConverter::class)
-    var dateAdded: LocalDateTime? = LocalDateTime.now(),
+    var dateAdded: DateTime? = DateTime.now(),
     @TypeConverters(DateTimeConverter::class)
-    var dueDate: LocalDateTime? = null,
+    var dueDate: DateTime? = null,
     var isFinished: Boolean = false,
     var isArchived: Boolean = false
 ): Parcelable {
 
     fun isDueToday(): Boolean {
         return dueDate!!.toLocalDate().isEqual(LocalDate.now())
+    }
+
+    fun formatDueDate(context: Context): String {
+        val currentDateTime = LocalDate.now()
+
+        return if (dueDate!!.toLocalDate().isEqual(currentDateTime))
+            String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        else if (currentDateTime.minusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
+            String.format(context.getString(R.string.yesterday),
+                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        else if (currentDateTime.plusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
+            String.format(context.getString(R.string.tomorrow),
+                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        else
+            DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(dueDate)
     }
 
     companion object {

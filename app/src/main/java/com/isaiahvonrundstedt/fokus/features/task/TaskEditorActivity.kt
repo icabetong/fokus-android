@@ -31,6 +31,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
+import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -69,7 +70,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             nameEditText.setText(task.name)
             notesEditText.setText(task.notes)
             subjectTextView.text = subject!!.code
-            dueDateTextView.text = Task.formatDueDate(this, task.dueDate!!)
+            dueDateTextView.text = task.formatDueDate(this)
 
             attachmentList.forEach { attachment ->
                 attachmentChipGroup.addView(buildChip(attachment), 0)
@@ -87,11 +88,11 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
                 lifecycleOwner(this@TaskEditorActivity)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = task.dueDate?.toDateTime()?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    task.dueDate = LocalDateTime.fromCalendarFields(datetime)
+                    task.dueDate = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView)
-                        v.text = Task.formatDueDate(this@TaskEditorActivity, task.dueDate!!)
+                        v.text = task.formatDueDate(this@TaskEditorActivity)
                 }
             }
         }
@@ -175,7 +176,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             val attachment = Attachment().apply {
                 taskID = task.taskID
                 uri = data?.data
-                dateAttached = LocalDateTime.now()
+                dateAttached = DateTime.now()
             }
 
             attachmentList.add(attachment)

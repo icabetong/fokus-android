@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.shared.components.converter
 
 import androidx.room.TypeConverter
+import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -10,13 +11,13 @@ class DateTimeConverter {
     companion object {
         @JvmStatic
         @TypeConverter
-        fun toDateTime(time: String?): LocalDateTime? {
-            return LocalDateTime.parse(time)
+        fun toDateTime(time: String?): DateTime? {
+            return DateTime.parse(time)
         }
 
         @JvmStatic
         @TypeConverter
-        fun fromDateTime(dateTime: LocalDateTime?): String? {
+        fun fromDateTime(dateTime: DateTime?): String? {
             return dateTime.toString()
         }
 

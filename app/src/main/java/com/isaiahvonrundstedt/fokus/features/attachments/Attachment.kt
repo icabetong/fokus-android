@@ -10,6 +10,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTim
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.parcel.Parcelize
+import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -25,5 +26,5 @@ data class Attachment @JvmOverloads constructor (
     var uri: Uri? = null,
     var taskID: String = "",
     @TypeConverters(DateTimeConverter::class)
-    var dateAttached: LocalDateTime? = LocalDateTime.now()
+    var dateAttached: DateTime? = DateTime.now()
 ): Parcelable

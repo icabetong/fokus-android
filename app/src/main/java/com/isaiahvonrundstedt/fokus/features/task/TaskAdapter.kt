@@ -13,6 +13,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 
 class TaskAdapter(private var actionListener: ActionListener,
@@ -43,14 +44,14 @@ class TaskAdapter(private var actionListener: ActionListener,
         private val tagView: View = itemView.findViewById(R.id.tagView)
 
         private fun formatDate(core: Core) {
-            val currentTime = LocalDateTime.now()
-            if (core.task.dueDate?.isBefore(currentTime) == true && !core.task.isFinished) {
+            val currentTime = DateTime.now()
+            if (core.task.dueDate!!.isBefore(currentTime) && !core.task.isFinished) {
                 dueDateView.setTextColor(ContextCompat.getColor(rootView.context,
                     R.color.colorSwipeLeft))
                 dueDateView.text = String.format(rootView.context.getString(R.string.missed),
-                    Task.formatDueDate(itemView.context, core.task.dueDate!!))
+                    core.task.formatDueDate(rootView.context))
             } else {
-                dueDateView.text = Task.formatDueDate(itemView.context, core.task.dueDate!!)
+                dueDateView.text = core.task.formatDueDate(rootView.context)
                 dueDateView.setTextColor(ContextCompat.getColor(rootView.context,
                     R.color.colorOnSurface))
             }

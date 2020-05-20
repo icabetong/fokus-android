@@ -25,7 +25,7 @@ data class Event @JvmOverloads constructor(
     var notes: String? = null,
     var location: String? = null,
     @TypeConverters(DateTimeConverter::class)
-    var schedule: LocalDateTime? = null
+    var schedule: DateTime? = null
 ): Parcelable {
     
     fun formatSchedule(context: Context): String {

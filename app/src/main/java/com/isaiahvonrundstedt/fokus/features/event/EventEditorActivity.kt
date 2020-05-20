@@ -49,7 +49,7 @@ class EventEditorActivity: BaseActivity() {
                 lifecycleOwner(this@EventEditorActivity)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = event.schedule?.toDateTime()?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    event.schedule = LocalDateTime.fromCalendarFields(datetime)
+                    event.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView)

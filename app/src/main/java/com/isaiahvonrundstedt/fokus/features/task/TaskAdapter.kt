@@ -14,7 +14,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import org.joda.time.LocalDateTime
-import java.util.*
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var swipeListener: SwipeListener)

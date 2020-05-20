@@ -10,8 +10,8 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedActivity
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 

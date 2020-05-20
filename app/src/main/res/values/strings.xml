@@ -32,8 +32,12 @@
     <string name="button_mark_as_finished">Mark as Finished</string>
     <string name="button_archive">Archive</string>
 
+    <string name="status_task_archived">Archived</string>
+    <string name="status_task_finished">Finished</string>
+    <string name="status_task_pending">Pending</string>
+
     <string name="empty_view_no_search_results_title">Your query returned nothing</string>
-    <string name="empty_view_no_search_results_summary">Try using less specific keywords or try checking if you have some mistakes</string>
+    <string name="empty_view_no_search_results_summary">Try using less specific keywords or try checking if you have some spelling mistakes</string>
 
     <string name="empty_view_no_archived_title">Your archive is empty</string>
     <string name="empty_view_no_archived_summary">Your archive is a place where your finished tasks is stored. You can delete them permanently, or let them sit around.</string>

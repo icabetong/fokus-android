@@ -10,7 +10,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTim
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.parcel.Parcelize
-import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import java.util.*
 

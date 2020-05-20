@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.core.work
 
 import android.content.Context
-import android.util.Log
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService

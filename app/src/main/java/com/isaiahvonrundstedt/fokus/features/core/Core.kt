@@ -1,12 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.core
 
-import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import kotlinx.android.parcel.Parcelize
 
 data class Core @JvmOverloads constructor (
     @Embedded

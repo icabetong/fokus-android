@@ -12,16 +12,16 @@ import kotlinx.coroutines.launch
 class CoreRepository (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var dataBundles = database?.bundle()
+    private var cores = database?.bundle()
     private var tasks = database?.tasks()
     private var attachments = database?.attachment()
 
-    fun fetch(): LiveData<List<Core>>? = dataBundles?.fetch()
+    fun fetch(): LiveData<List<Core>>? = cores?.fetch()
 
-    fun fetchArchived(): LiveData<List<Core>>? = dataBundles?.fetchArchived()
+    fun fetchArchived(): LiveData<List<Core>>? = cores?.fetchArchived()
 
     fun search(query: String, onSearch:(List<Core>) -> Unit) = GlobalScope.launch {
-        onSearch(dataBundles?.search("%$query%") ?: emptyList())
+        onSearch(cores?.search("%$query%") ?: emptyList())
     }
 
     suspend fun clearArchived() { tasks?.clearArchived() }

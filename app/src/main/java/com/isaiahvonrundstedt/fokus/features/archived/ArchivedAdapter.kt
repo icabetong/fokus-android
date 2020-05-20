@@ -10,7 +10,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import java.util.*
 
 class ArchivedAdapter(private var actionListener: ActionListener,
                       private var swipeListener: SwipeListener)

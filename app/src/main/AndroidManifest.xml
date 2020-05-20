@@ -29,8 +29,9 @@
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
         <activity android:name=".features.archived.ArchivedActivity" />
-        <activity android:name=".features.search.SearchActivity" />
         <activity android:name=".features.support.NoticesActivity" />
+        <activity android:name=".features.search.SearchActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.subject.SubjectEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.task.TaskEditorActivity"

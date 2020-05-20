@@ -1,12 +1,13 @@
 package com.isaiahvonrundstedt.fokus.features.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
@@ -32,16 +33,19 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
         super.onStart()
 
         val adapter = SearchAdapter(this)
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         viewModel.items.observe(this, Observer { items ->
             adapter.submitList(items)
-            searchEmptyView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+            recyclerView.isVisible = items.isNotEmpty()
+            searchEmptyView.isVisible = items.isEmpty()
         })
 
         searchEditText.requestFocusFromTouch()
-        searchEditText.doOnTextChanged { text, _, _, _ ->
+        searchEditText.doAfterTextChanged { text ->
+            recyclerView.isVisible = text?.isNotBlank() == true
             searchEmptyView.isVisible = text.isNullOrBlank()
             viewModel.fetch(text.toString())
         }
@@ -55,7 +59,12 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
         if (t is Core) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-
+                    val editor = Intent(this, TaskEditorActivity::class.java)
+                    editor.putExtra(TaskEditorActivity.extraTask, t.task)
+                    editor.putExtra(TaskEditorActivity.extraSubject, t.subject)
+                    editor.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments,
+                        ArrayList(t.attachmentList))
+                    startActivityForResult(editor, TaskEditorActivity.updateRequestCode)
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> { }
             }

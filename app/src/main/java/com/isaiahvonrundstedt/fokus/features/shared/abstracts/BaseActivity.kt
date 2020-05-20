@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.view.Menu

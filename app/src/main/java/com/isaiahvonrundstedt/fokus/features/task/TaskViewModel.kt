@@ -9,9 +9,9 @@ import com.isaiahvonrundstedt.fokus.database.repository.CoreRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.core.work.DeadlineScheduler
+import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private var app: Application): BaseViewModel(app) {
@@ -51,5 +51,4 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
             workManager.enqueue(request)
         }
     }
-
 }

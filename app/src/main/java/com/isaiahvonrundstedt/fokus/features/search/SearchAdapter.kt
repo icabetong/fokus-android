@@ -3,8 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
@@ -12,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Core, SearchAdapter.SearchViewHolder>(callback) {
@@ -32,7 +28,8 @@ class SearchAdapter(private var actionListener: ActionListener)
 
     inner class SearchViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val rootView: View = itemView.findViewById(R.id.rootView)
-        private var tagView: AppCompatImageView = itemView.findViewById(R.id.tagView)
+        private val tagView: AppCompatImageView = itemView.findViewById(R.id.tagView)
+        private val overlineView: AppCompatTextView = itemView.findViewById(R.id.overlineView)
         private val titleView: AppCompatTextView = itemView.findViewById(R.id.titleView)
         private val summaryView: AppCompatTextView = itemView.findViewById(R.id.summaryView)
 
@@ -40,8 +37,14 @@ class SearchAdapter(private var actionListener: ActionListener)
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
             }
+
+            val resId = if (core.task.isArchived) R.string.status_task_archived
+                else if (core.task.isFinished) R.string.status_task_finished
+                else R.string.status_task_pending
+
+            overlineView.text = rootView.context.getString(resId)
             titleView.text = core.task.name
-            summaryView.text  = core.subject.code
+            summaryView.text  = core.subject.description ?: core.subject.code
             tagView.setImageDrawable(core.subject.tintDrawable(tagView.drawable))
         }
     }

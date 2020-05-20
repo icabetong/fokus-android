@@ -20,7 +20,6 @@ import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskActivity
-import org.joda.time.format.DateTimeFormat
 
 abstract class BaseWorker(private var context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {

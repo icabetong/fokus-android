@@ -23,7 +23,6 @@
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_new_task">New Task</string>
     <string name="button_new_subject">New Subject</string>
-    <string name="button_new_event">New Event</string>
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>
@@ -101,6 +100,7 @@
     <string name="feedback_task_archived">Task moved to archived</string>
     <string name="feedback_task_marked_as_finished">Task marked as finished</string>
     <string name="feedback_task_removed_archived">Task removed from archived</string>
+    <string name="feedback_event_removed">Event removed</string>
     <string name="feedback_subject_empty_name">You forgot to enter the subject code</string>
     <string name="feedback_subject_empty_description">You forgot to enter the description</string>
     <string name="feedback_subject_empty_start_time">You forgot to enter the start time</string>
@@ -108,6 +108,9 @@
     <string name="feedback_task_empty_name">You forgot to enter the task name</string>
     <string name="feedback_task_empty_subject">You forgot to specify which subject requires it</string>
     <string name="feedback_task_empty_due_date">You forgot to specify its due date</string>
+    <string name="feedback_event_empty_name">You forgot to enter the event name</string>
+    <string name="feedback_event_empty_location">You forgot to enter the location</string>
+    <string name="feedback_event_empty_schedule">You forgot to enter the schedule</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_behavior">Behavior</string>

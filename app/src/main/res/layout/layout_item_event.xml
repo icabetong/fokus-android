@@ -9,49 +9,36 @@
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:clipChildren="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:clipChildren="true">
 
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/locationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="8dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                tools:text="COMSCI 2101"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/locationView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    tools:text="COMSCI 2101"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/nameView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:textSize="18sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    tools:text="Feed the Cat"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/scheduleView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    tools:text="Some Description"/>
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/tagView"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/nameView"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorPrimary"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textSize="18sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                tools:text="Feed the Cat"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/scheduleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:text="Some Description"/>
 
         </LinearLayout>
 

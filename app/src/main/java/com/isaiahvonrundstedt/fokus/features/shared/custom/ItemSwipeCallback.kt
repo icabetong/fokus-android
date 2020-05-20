@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
+import com.isaiahvonrundstedt.fokus.features.event.EventAdapter
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectAdapter
@@ -38,7 +39,7 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
         val movementFlags =
             if (adapter is TaskAdapter || adapter is ArchivedAdapter)
                 ItemTouchHelper.START or ItemTouchHelper.END
-            else if (adapter is NotificationAdapter || adapter is SubjectAdapter)
+            else if (adapter is NotificationAdapter || adapter is SubjectAdapter || adapter is EventAdapter)
                 ItemTouchHelper.START
             else 0
 

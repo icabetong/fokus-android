@@ -12,4 +12,15 @@ class EventRepository (app: Application) {
 
     fun fetch(): LiveData<List<Event>>? = events?.fetch()
 
+    suspend fun insert(event: Event) {
+        events?.insert(event)
+    }
+
+    suspend fun remove(event: Event) {
+        events?.remove(event)
+    }
+
+    suspend fun update(event: Event) {
+        events?.update(event)
+    }
 }

@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class EventAdapter: BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
+class EventAdapter(private var actionListener: ActionListener,
+                   private var swipeListener: SwipeListener)
+    : BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
 
     override fun onSwipe(position: Int, direction: Int) {
-
+        swipeListener.onSwipePerformed(position, getItem(position), direction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -35,6 +37,7 @@ class EventAdapter: BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
             locationView.text = event.location
             nameView.text = event.name
             scheduleView.text = event.formatSchedule(rootView.context)
+            rootView.setOnClickListener { actionListener.onActionPerformed(event, ActionListener.Action.SELECT) }
         }
     }
 

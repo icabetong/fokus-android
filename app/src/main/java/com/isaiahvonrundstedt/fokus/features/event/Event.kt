@@ -17,17 +17,13 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
-@Entity(tableName = "events", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = arrayOf("id"), childColumns = arrayOf("subjectID"),
-        onDelete = ForeignKey.CASCADE)
-])
+@Entity(tableName = "events")
 data class Event @JvmOverloads constructor(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
     var name: String? = null,
     var notes: String? = null,
     var location: String? = null,
-    var subjectID: String? = null,
     @TypeConverters(DateTimeConverter::class)
     var schedule: LocalDateTime? = null
 ): Parcelable {

@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import kotlinx.android.parcel.Parcelize
+import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
@@ -25,7 +26,7 @@ data class Notification @JvmOverloads constructor (
     var content: String? = null,
     var data: String? = null,
     var type: Int = typeReminder,
-    var dateTimeTriggered: LocalDateTime? = null
+    var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
     private fun getIconRes(): Int {

@@ -10,6 +10,7 @@ import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.Duration
 import org.joda.time.LocalDateTime
@@ -20,7 +21,7 @@ class DeadlineScheduler(private var context: Context, workerParameters: WorkerPa
     : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        val currentTime = LocalDateTime.now()
+        val currentTime = DateTime.now()
 
         val task = convertDataToTask(inputData)
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at

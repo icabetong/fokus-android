@@ -41,7 +41,7 @@ class ArchivedAdapter(private var actionListener: ActionListener,
             tagView.setBackgroundColor(core.subject.tag.actualColor)
 
             taskNameView.text = core.task.name
-            dueDateView.text = Task.formatDueDate(itemView.context, core.task.dueDate!!)
+            dueDateView.text = core.task.formatDueDate(rootView.context)
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)

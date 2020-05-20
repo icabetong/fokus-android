@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedActivity
+import com.isaiahvonrundstedt.fokus.features.event.EventActivity
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
@@ -38,6 +39,7 @@ class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionLis
         when (id) {
             R.id.action_archived -> startActivity(Intent(context, ArchivedActivity::class.java))
             R.id.action_subjects -> startActivity(Intent(context, SubjectActivity::class.java))
+            R.id.action_events -> startActivity(Intent(context, EventActivity::class.java))
             R.id.action_notifications -> startActivity(Intent(context, NotificationActivity::class.java))
             R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
         }

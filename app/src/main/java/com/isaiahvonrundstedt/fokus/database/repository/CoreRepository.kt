@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 class CoreRepository (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var cores = database?.bundle()
+    private var cores = database?.cores()
     private var tasks = database?.tasks()
-    private var attachments = database?.attachment()
+    private var attachments = database?.attachments()
 
     fun fetch(): LiveData<List<Core>>? = cores?.fetch()
 

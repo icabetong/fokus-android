@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".features.task.TaskActivity" />
         <activity android:name=".features.subject.SubjectActivity" />
+        <activity android:name=".features.event.EventActivity" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
         <activity android:name=".features.archived.ArchivedActivity" />
@@ -35,6 +36,8 @@
         <activity android:name=".features.subject.SubjectEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.task.TaskEditorActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".features.event.EventEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
 
         <service android:name=".features.core.service.NotificationActionService"

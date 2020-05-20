@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class NotificationRepository(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var notifications = database?.notification()
+    private var notifications = database?.notifications()
 
     fun fetch(): LiveData<List<Notification>>? = notifications?.fetch()
 

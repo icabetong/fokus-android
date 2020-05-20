@@ -7,20 +7,22 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.*
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
-@Database(entities = [Subject::class, Task::class, Attachment::class, Notification::class], version = 1)
+@Database(entities = [Subject::class, Task::class, Attachment::class, Notification::class, Event::class], version = 1)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun tasks(): TaskDAO
-    abstract fun attachment(): AttachmentDAO
-    abstract fun bundle(): CoreDAO
-    abstract fun subject(): SubjectDAO
-    abstract fun notification(): NotificationDAO
+    abstract fun attachments(): AttachmentDAO
+    abstract fun cores(): CoreDAO
+    abstract fun subjects(): SubjectDAO
+    abstract fun notifications(): NotificationDAO
+    abstract fun events(): EventDAO
 
     companion object {
         private var instance: AppDatabase? = null

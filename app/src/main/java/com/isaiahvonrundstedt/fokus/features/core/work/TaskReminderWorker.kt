@@ -17,7 +17,7 @@ import org.joda.time.Duration
 import org.joda.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
-class TaskReminderNotifier(private var context: Context, workerParameters: WorkerParameters)
+class TaskReminderWorker(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var database = AppDatabase.getInstance(context)
@@ -89,11 +89,11 @@ class TaskReminderNotifier(private var context: Context, workerParameters: Worke
                     .plusHours(reminderTime?.hourOfDay ?: 8)
                     .plusMinutes(reminderTime?.minuteOfHour ?: 30))
 
-            if (removePrevious) workManager.cancelAllWorkByTag(TaskReminderNotifier::class.java.simpleName)
+            if (removePrevious) workManager.cancelAllWorkByTag(TaskReminderWorker::class.java.simpleName)
 
-            val request = OneTimeWorkRequest.Builder(TaskReminderNotifier::class.java)
+            val request = OneTimeWorkRequest.Builder(TaskReminderWorker::class.java)
                 .setInitialDelay(executionTime.standardMinutes, TimeUnit.MINUTES)
-                .addTag(TaskReminderNotifier::class.java.simpleName)
+                .addTag(TaskReminderWorker::class.java.simpleName)
                 .build()
             workManager.enqueue(request)
         }

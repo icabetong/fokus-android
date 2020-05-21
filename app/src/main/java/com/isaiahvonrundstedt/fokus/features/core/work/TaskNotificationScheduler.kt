@@ -8,7 +8,7 @@ import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
-class DeadlineIntervalScheduler(private var context: Context, workerParameters: WorkerParameters)
+class TaskNotificationScheduler(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var tasks = AppDatabase.getInstance(context)?.tasks()
@@ -16,7 +16,7 @@ class DeadlineIntervalScheduler(private var context: Context, workerParameters: 
     override suspend fun doWork(): Result {
         val taskList = tasks?.fetch()
         taskList?.forEach { task ->
-            val request = OneTimeWorkRequestBuilder<DeadlineScheduler>()
+            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
                 .setInputData(convertTaskToData(task))
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,

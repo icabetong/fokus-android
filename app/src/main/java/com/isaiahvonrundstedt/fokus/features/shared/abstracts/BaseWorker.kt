@@ -16,6 +16,7 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
+import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
@@ -40,6 +41,12 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         private const val extraTaskSubjectID = "subjectID"
         private const val extraTaskDue = "due"
 
+        private const val extraEventID = "eventID"
+        private const val extraEventName = "name"
+        private const val extraEventNotes = "notes"
+        private const val extraEventLocation = "location"
+        private const val extraEventSchedule = "schedule"
+
         fun convertNotificationToData(notification: Notification): Data {
             return Data.Builder().apply {
                 putString(extraNotificationID, notification.id)
@@ -60,6 +67,16 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
             }.build()
         }
 
+        fun convertEventToData(event: Event): Data {
+            return Data.Builder().apply {
+                putString(extraEventID, event.id)
+                putString(extraEventName, event.name)
+                putString(extraEventNotes, event.notes)
+                putString(extraEventLocation, event.location)
+                putString(extraEventSchedule, DateTimeConverter.fromDateTime(event.schedule!!))
+            }.build()
+        }
+
         fun convertDataToNotification(workerData: Data): Notification {
             return Notification().apply {
                 id = workerData.getString(extraNotificationID)!!
@@ -77,6 +94,16 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 notes = workerData.getString(extraTaskNotes)
                 subjectID = workerData.getString(extraTaskSubjectID)
                 dueDate = DateTimeConverter.toDateTime(workerData.getString(extraTaskDue)!!)
+            }
+        }
+
+        fun convertDataToEvent(workerData: Data): Event {
+            return Event().apply {
+                id = workerData.getString(extraEventID)!!
+                name = workerData.getString(extraEventName)
+                notes = workerData.getString(extraEventNotes)
+                location = workerData.getString(extraEventLocation)
+                schedule = DateTimeConverter.toDateTime(workerData.getString(extraEventSchedule))
             }
         }
     }

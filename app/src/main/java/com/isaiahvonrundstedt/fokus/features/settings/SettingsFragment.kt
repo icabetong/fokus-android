@@ -7,16 +7,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
-import com.google.android.gms.oss.licenses.OssLicensesActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.work.DeadlineIntervalScheduler
-import com.isaiahvonrundstedt.fokus.features.core.work.TaskReminderNotifier
+import com.isaiahvonrundstedt.fokus.features.core.work.EventNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.core.work.TaskNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.core.work.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import dev.doubledot.doki.ui.DokiActivity
@@ -80,10 +81,16 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 true
             }
             PreferenceManager.intervalKey -> {
-                val request = OneTimeWorkRequestBuilder<DeadlineIntervalScheduler>()
-                    .addTag(DeadlineIntervalScheduler::class.java.simpleName)
+                val taskRequest = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
+                    .addTag(TaskNotificationScheduler::class.java.simpleName)
                     .build()
-                WorkManager.getInstance(requireContext()).enqueue(request)
+                val eventRequest = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
+                    .addTag(EventNotificationScheduler::class.java.simpleName)
+                    .build()
+
+                val workManager = WorkManager.getInstance(requireContext())
+                workManager.enqueue(taskRequest)
+                workManager.enqueue(eventRequest)
                 true
             }
             else -> false
@@ -118,7 +125,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
     }
 
     private fun scheduleNextReminder() {
-        TaskReminderNotifier.Scheduler()
+        TaskReminderWorker.Scheduler()
             .setTargetTime(PreferenceManager(requireContext()).reminderTime?.toDateTimeToday())
             .removePrevious(true)
             .schedule(requireContext())

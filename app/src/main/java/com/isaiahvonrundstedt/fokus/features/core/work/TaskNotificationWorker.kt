@@ -13,11 +13,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTim
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.Duration
-import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.concurrent.TimeUnit
 
-class DeadlineScheduler(private var context: Context, workerParameters: WorkerParameters)
+class TaskNotificationWorker(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -39,7 +38,7 @@ class DeadlineScheduler(private var context: Context, workerParameters: WorkerPa
             PreferenceManager.dueDelayDay -> task.dueDate = task.dueDate!!.minusHours(24)
         }
 
-        val notificationRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+        val notificationRequest = OneTimeWorkRequestBuilder<CoreNotificationWorker>()
         if (currentTime.isBefore(task.dueDate!!)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 task.dueDate!!.toDateTime(DateTimeZone.UTC))

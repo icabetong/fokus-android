@@ -8,7 +8,7 @@ import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.database.repository.CoreRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.Core
-import com.isaiahvonrundstedt.fokus.features.core.work.DeadlineScheduler
+import com.isaiahvonrundstedt.fokus.features.core.work.TaskNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
@@ -27,7 +27,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
         if (PreferenceManager(app).remindWhenDue) {
             val data = BaseWorker.convertTaskToData(task)
-            val request = OneTimeWorkRequestBuilder<DeadlineScheduler>()
+            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
                 .setInputData(data)
                 .build()
             workManager.enqueue(request)
@@ -45,7 +45,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         if (PreferenceManager(app).remindWhenDue && !task.isArchived && !task.isFinished) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
-            val request = OneTimeWorkRequestBuilder<DeadlineScheduler>()
+            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
                 .setInputData(data)
                 .build()
             workManager.enqueue(request)

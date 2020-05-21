@@ -58,5 +58,6 @@ data class Notification @JvmOverloads constructor (
     companion object {
         const val typeReminder = 0
         const val typeDueAlert = 1
+        const val typeEventAlert = 2
     }
 }

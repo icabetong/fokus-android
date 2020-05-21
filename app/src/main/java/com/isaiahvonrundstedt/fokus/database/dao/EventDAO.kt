@@ -19,4 +19,7 @@ interface EventDAO {
     @Query("SELECT * FROM events")
     fun fetch(): LiveData<List<Event>>
 
+    @Query("SELECT * FROM events")
+    suspend fun fetchList(): List<Event>
+
 }

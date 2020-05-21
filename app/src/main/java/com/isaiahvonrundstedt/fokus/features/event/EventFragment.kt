@@ -68,7 +68,9 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Swi
         if (t is Event) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-
+                    val editor = Intent(context, EventEditorActivity::class.java)
+                    editor.putExtra(EventEditorActivity.extraEvent, t)
+                    startActivityForResult(editor, EventEditorActivity.updateRequestCode)
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> { }
             }

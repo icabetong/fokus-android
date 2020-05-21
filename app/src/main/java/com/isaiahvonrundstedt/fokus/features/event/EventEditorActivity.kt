@@ -39,6 +39,13 @@ class EventEditorActivity: BaseActivity() {
         if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
         }
+
+        if (requestCode == updateRequestCode) {
+            nameEditText.setText(event.name)
+            notesEditText.setText(event.notes)
+            locationEditText.setText(event.location)
+            scheduleTextView.text = event.formatSchedule(this)
+        }
     }
 
     override fun onStart() {

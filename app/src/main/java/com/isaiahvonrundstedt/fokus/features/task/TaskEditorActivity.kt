@@ -51,7 +51,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_task)
-        setPersistentActionBar(toolbar, null)
+        setPersistentActionBar(toolbar)
 
         requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
             && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode

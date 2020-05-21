@@ -34,16 +34,6 @@ abstract class BaseActivity: AppCompatActivity() {
 
     private var toolbar: MaterialToolbar? = null
 
-    @Deprecated("USE OTHER")
-    protected fun setPersistentActionBar(toolbar: MaterialToolbar?, @StringRes id: Int?) {
-        this.toolbar = toolbar
-
-        setSupportActionBar(toolbar)
-        this.toolbar?.setNavigationOnClickListener { onBackPressed() }
-        supportActionBar?.title = if (id != null) getString(id) else null
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     protected fun setPersistentActionBar(toolbar: MaterialToolbar?) {
         this.toolbar = toolbar
 

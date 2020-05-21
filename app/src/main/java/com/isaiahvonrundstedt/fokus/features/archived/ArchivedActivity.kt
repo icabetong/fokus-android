@@ -27,7 +27,8 @@ class ArchivedActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archived)
-        setPersistentActionBar(toolbar, R.string.activity_archived)
+        setPersistentActionBar(toolbar)
+        setToolbarTitle(R.string.activity_archived)
 
         adapter = ArchivedAdapter(this, this)
         recyclerView.addItemDecoration(OffsetItemDecoration(this, R.dimen.item_padding))

@@ -11,7 +11,8 @@ class SettingsActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        setPersistentActionBar(toolbar, R.string.activity_settings)
+        setPersistentActionBar(toolbar)
+        setToolbarTitle(R.string.activity_settings)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

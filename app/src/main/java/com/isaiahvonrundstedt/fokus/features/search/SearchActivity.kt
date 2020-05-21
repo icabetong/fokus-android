@@ -26,7 +26,7 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        setPersistentActionBar(toolbar, null)
+        setPersistentActionBar(toolbar)
     }
 
     override fun onStart() {

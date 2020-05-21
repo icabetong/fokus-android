@@ -22,8 +22,8 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
-    private var iconEnd: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_custom_delete)!!
-    private var iconStart: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_custom_box)!!
+    private var iconEnd: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_android_delete)!!
+    private var iconStart: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_android_archive)!!
 
     private var backgroundEnd = ColorDrawable(ContextCompat.getColor(context, R.color.colorSwipeLeft))
     private var backgroundStart = ColorDrawable(ContextCompat.getColor(context, R.color.colorSwipeRight))

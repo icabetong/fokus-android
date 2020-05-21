@@ -32,7 +32,7 @@ class EventEditorActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_event)
-        setPersistentActionBar(toolbar, null)
+        setPersistentActionBar(toolbar)
 
         requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
             else insertRequestCode

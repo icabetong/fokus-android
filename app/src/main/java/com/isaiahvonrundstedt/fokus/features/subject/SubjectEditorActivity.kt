@@ -30,7 +30,7 @@ class SubjectEditorActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
-        setPersistentActionBar(toolbar, null)
+        setPersistentActionBar(toolbar)
 
         requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
         if (requestCode == updateRequestCode)

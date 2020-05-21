@@ -26,7 +26,8 @@ class NotificationActivity: BaseActivity(), BaseAdapter.SwipeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
-        setPersistentActionBar(toolbar, R.string.activity_notifications)
+        setPersistentActionBar(toolbar)
+        setToolbarTitle(R.string.activity_notifications)
 
         adapter = NotificationAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))

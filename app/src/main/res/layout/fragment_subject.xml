@@ -5,14 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_appbar"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:clipChildren="false" />
 
     <LinearLayout
         android:id="@+id/itemEmptyView"
@@ -27,7 +24,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_measure"
+            app:srcCompat="@drawable/ic_custom_flasks"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView

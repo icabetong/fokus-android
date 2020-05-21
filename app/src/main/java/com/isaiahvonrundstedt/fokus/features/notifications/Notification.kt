@@ -31,6 +31,7 @@ data class Notification @JvmOverloads constructor (
 
     private fun getIconRes(): Int {
         return if (type == typeDueAlert) R.drawable.ic_custom_warning
+        else if (type == typeEventAlert) R.drawable.ic_custom_calendar
         else R.drawable.ic_custom_clipboards
     }
 

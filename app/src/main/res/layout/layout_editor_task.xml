@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_padding"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_measure"
+                app:srcCompat="@drawable/ic_custom_flasks"
                 app:tint="?attr/colorControlNormal"/>
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -21,7 +21,6 @@ import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskFragment
 
 abstract class BaseWorker(private var context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {
@@ -148,9 +147,9 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
             setContentTitle(notification.title)
             setContentText(notification.content)
             color = ContextCompat.getColor(context, R.color.colorPrimary)
-            addAction(R.drawable.ic_android_check, context.getString(R.string.button_mark_as_finished),
+            addAction(R.drawable.ic_android_check_white, context.getString(R.string.button_mark_as_finished),
                 markAsFinishedIntent)
-            addAction(R.drawable.ic_android_archive, context.getString(R.string.button_archive),
+            addAction(R.drawable.ic_android_archive_white, context.getString(R.string.button_archive),
                 sendToArchiveIntent)
         }.build()
     }

@@ -2,13 +2,9 @@ package com.isaiahvonrundstedt.fokus.features.shared.custom
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
@@ -22,18 +18,8 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
-    private var iconEnd: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_android_delete)!!
-    private var iconStart: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_android_archive)!!
-
-    private var backgroundEnd = ColorDrawable(ContextCompat.getColor(context, R.color.colorSwipeLeft))
-    private var backgroundStart = ColorDrawable(ContextCompat.getColor(context, R.color.colorSwipeRight))
-
-    init {
-        iconEnd.colorFilter = BlendModeColorFilterCompat
-            .createBlendModeColorFilterCompat(Color.WHITE, BlendModeCompat.SRC_ATOP)
-        iconStart.colorFilter = BlendModeColorFilterCompat
-            .createBlendModeColorFilterCompat(Color.WHITE, BlendModeCompat.SRC_ATOP)
-    }
+    private var iconEnd: Drawable = ContextCompat.getDrawable(context, R.drawable.shape_swipe_end)!!
+    private var iconStart: Drawable = ContextCompat.getDrawable(context, R.drawable.shape_swipe_start)!!
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         val movementFlags =
@@ -68,7 +54,6 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
         val itemView: View = viewHolder.itemView
-        val backgroundCornerOffset = 20
 
         if (dX > 0) {
             val iconMargin = (itemView.height - iconStart.intrinsicHeight) / 2
@@ -79,10 +64,6 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
             val iconRight = iconLeft + iconStart.intrinsicWidth
 
             iconStart.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-            backgroundStart.setBounds(itemView.left, itemView.top,
-                itemView.left + dX.toInt() + backgroundCornerOffset, itemView.bottom)
-
-            backgroundStart.draw(c)
             iconStart.draw(c)
         } else if (dX < 0) {
             val iconMargin = (itemView.height - iconEnd.intrinsicHeight) / 2
@@ -93,10 +74,7 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
             val iconRight: Int = itemView.right - iconMargin
 
             iconEnd.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-            backgroundEnd.setBounds(itemView.right + dX.toInt() - backgroundCornerOffset,
-                itemView.top, itemView.right, itemView.bottom)
 
-            backgroundEnd.draw(c)
             iconEnd.draw(c)
         }
     }

@@ -103,7 +103,7 @@ class SubjectEditorActivity: BaseActivity() {
 
                     subject.startTime = startTime
                     if (subject.endTime == null) subject.endTime = startTime
-                    if (startTime.isBefore(subject.endTime)) {
+                    if (startTime.isAfter(subject.endTime) || startTime.isEqual(subject.endTime)) {
                         subject.endTime = subject.startTime?.plusHours(1)?.plusMinutes(30)
                         this@SubjectEditorActivity.endTimeTextView.text = formatTime(subject.endTime!!)
                     }
@@ -124,7 +124,7 @@ class SubjectEditorActivity: BaseActivity() {
 
                     subject.endTime = endTime
                     if (subject.startTime == null) subject.startTime = endTime
-                    if (endTime.isBefore(subject.startTime)) {
+                    if (endTime.isBefore(subject.startTime) || endTime.isEqual(subject.startTime)) {
                         subject.startTime = subject.endTime?.minusHours(1)?.minusMinutes(30)
                         this@SubjectEditorActivity.startTimeTextView.text = formatTime(subject.startTime!!)
                     }

@@ -15,6 +15,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.MainActivity
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
@@ -122,7 +123,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     }
 
     protected fun createActionableNotification(notification: Notification): android.app.Notification {
-        val targetActivity = Intent(context, TaskFragment::class.java)
+        val targetActivity = Intent(context, MainActivity::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0,
             targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -155,7 +156,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     }
 
     protected fun createNotification(notification: Notification?): android.app.Notification {
-        val targetActivity = Intent(context, TaskFragment::class.java)
+        val targetActivity = Intent(context, MainActivity::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0,
             targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 

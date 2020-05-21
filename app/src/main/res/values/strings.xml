@@ -12,17 +12,20 @@
     <string name="activity_privacy">Privacy Policy Statement</string>
 
     <string name="menu_archived">Archived</string>
-    <string name="menu_subjects">Subjects</string>
-    <string name="menu_events">Events</string>
     <string name="menu_notifications">@string/activity_notifications</string>
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_help_and_feedback">@string/activity_help_and_feedback</string>
     <string name="menu_search">Search</string>
     <string name="menu_clear_items">Clear Items</string>
 
+    <string name="navigation_tasks">Tasks</string>
+    <string name="navigation_events">Events</string>
+    <string name="navigation_subjects">Subjects</string>
+
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_new_task">New Task</string>
     <string name="button_new_subject">New Subject</string>
+    <string name="button_new_event">New Event</string>
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>

@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Core">
-        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.MainActivity">
+        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +24,12 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/xml_shortcuts"/>
         </activity>
-        <activity android:name=".features.task.TaskActivity" />
-        <activity android:name=".features.subject.SubjectActivity" />
-        <activity android:name=".features.event.EventActivity" />
+
+        <activity android:name=".features.core.MainActivity"
+            android:theme="@style/AppTheme.Core.Navigation" />
+        <activity android:name=".features.task.TaskFragment" />
+        <activity android:name=".features.subject.SubjectFragment" />
+        <activity android:name=".features.event.EventFragment" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
         <activity android:name=".features.archived.ArchivedActivity" />
@@ -39,6 +42,11 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.event.EventEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
+
+        <!-- OSSLicenses -->
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/AppTheme.Bridge"/>
 
         <service android:name=".features.core.service.NotificationActionService"
             android:exported="false"/>

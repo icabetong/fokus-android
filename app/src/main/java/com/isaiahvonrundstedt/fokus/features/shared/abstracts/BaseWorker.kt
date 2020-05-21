@@ -19,7 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionServ
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskActivity
+import com.isaiahvonrundstedt.fokus.features.task.TaskFragment
 
 abstract class BaseWorker(private var context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {
@@ -95,7 +95,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     }
 
     protected fun createActionableNotification(notification: Notification): android.app.Notification {
-        val targetActivity = Intent(context, TaskActivity::class.java)
+        val targetActivity = Intent(context, TaskFragment::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0,
             targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -128,7 +128,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     }
 
     protected fun createNotification(notification: Notification?): android.app.Notification {
-        val targetActivity = Intent(context, TaskActivity::class.java)
+        val targetActivity = Intent(context, TaskFragment::class.java)
         val contentIntent = PendingIntent.getActivity(context, 0,
             targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
 

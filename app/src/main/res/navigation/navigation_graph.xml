@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/navigation_tasks">
+
+    <fragment
+        android:id="@+id/navigation_tasks"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
+        android:label="@string/navigation_tasks"
+        tools:layout="@layout/fragment_task">
+        <action
+            android:id="@+id/action_navigation_tasks_to_navigation_events"
+            app:destination="@id/navigation_events"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
+        android:label="@string/navigation_events"
+        tools:layout="@layout/fragment_event">
+        <action
+            android:id="@+id/action_navigation_events_to_navigation_subjects"
+            app:destination="@id/navigation_subjects"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_subjects"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment"
+        android:label="@string/navigation_subjects"
+        tools:layout="@layout/fragment_subject"/>
+
+</navigation>

@@ -5,8 +5,9 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,47 +17,40 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.components.menu.NavigationBottomSheet
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
-import kotlinx.android.synthetic.main.activity_task.*
-import kotlinx.android.synthetic.main.layout_appbar.*
+import kotlinx.android.synthetic.main.fragment_task.*
 
-class TaskActivity: BaseActivity(), BaseAdapter.ActionListener,
+class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
     BaseAdapter.SwipeListener {
 
     companion object {
-        private const val action = "com.isaiahvonrundstedt.fokus.features.task.TaskActivity.new"
+        const val action = "com.isaiahvonrundstedt.fokus.features.task.TaskActivity.new"
     }
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task)
-        setPersistentActionBar(toolbar, R.string.activity_main)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_task, container, false)
+    }
 
-        if (intent?.action == action)
-            actionButton.performClick()
-
-        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_android_menu)
-        toolbar?.setNavigationOnClickListener {
-            NavigationBottomSheet().invoke(supportFragmentManager)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         adapter = TaskAdapter(this, this)
-        recyclerView.addItemDecoration(OffsetItemDecoration(this, R.dimen.item_padding))
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(this, Observer { items ->
+        viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
             adapter?.submitList(items)
             itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
@@ -67,7 +61,7 @@ class TaskActivity: BaseActivity(), BaseAdapter.ActionListener,
         super.onResume()
 
         actionButton.setOnClickListener {
-            val editorIntent = Intent(this, TaskEditorActivity::class.java)
+            val editorIntent = Intent(context, TaskEditorActivity::class.java)
             startActivityForResult(editorIntent, TaskEditorActivity.insertRequestCode)
         }
     }
@@ -78,20 +72,20 @@ class TaskActivity: BaseActivity(), BaseAdapter.ActionListener,
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
-                        if (PreferenceManager(this).completedSounds) {
+                        if (PreferenceManager(context).completedSounds) {
                             Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
                                 Snackbar.LENGTH_SHORT).show()
                             val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                            RingtoneManager.getRingtone(this.applicationContext, soundUri).play()
+                            RingtoneManager.getRingtone(requireContext().applicationContext, soundUri).play()
                         }
-                        if (PreferenceManager(this).autoArchive) {
+                        if (PreferenceManager(context).autoArchive) {
                             t.task.isArchived = true
                             viewModel.update(t.task)
                         }
                     }
                 }
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val editorIntent = Intent(this, TaskEditorActivity::class.java)
+                    val editorIntent = Intent(context, TaskEditorActivity::class.java)
                     editorIntent.putExtra(TaskEditorActivity.extraSubject, t.subject)
                     editorIntent.putExtra(TaskEditorActivity.extraTask, t.task)
                     editorIntent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))

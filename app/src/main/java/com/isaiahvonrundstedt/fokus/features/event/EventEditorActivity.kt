@@ -17,7 +17,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectL
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import kotlinx.android.synthetic.main.activity_event.*
+import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import kotlinx.android.synthetic.main.layout_editor_event.actionButton

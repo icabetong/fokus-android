@@ -8,6 +8,10 @@
         <item name="android:navigationBarColor">@color/colorStatusBarBackground</item>
     </style>
 
+    <style name="AppTheme.Core.Navigation" parent="AppTheme.Core">
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+    </style>
+
     <style name="AppTheme.BottomSheet" parent="BaseBottomSheetDialog">
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

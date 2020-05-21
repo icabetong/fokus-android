@@ -5,6 +5,14 @@
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
+    <style name="AppTheme.Core.Navigation" parent="AppTheme.Core">
+        <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+
+    <style name="AppTheme.Bridge" parent="AppTheme.Base">
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
     <style name="AppTheme.BottomSheet" parent="BaseBottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
@@ -41,6 +49,10 @@
         <item name="android:tint">@color/colorOnSurface</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="AppTheme.Widget.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemBackground">@color/colorSurface</item>
     </style>
 
 </resources>

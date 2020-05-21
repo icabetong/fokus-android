@@ -6,14 +6,11 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <include layout="@layout/layout_appbar"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:clipChildren="false"/>
 
     <LinearLayout
         android:id="@+id/itemEmptyView"
@@ -28,7 +25,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_clipboards_check"
+            app:srcCompat="@drawable/ic_custom_calendar"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -36,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_tasks_title"
+            android:text="@string/empty_view_no_events_title"
             android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
@@ -44,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_tasks_summary"/>
+            android:text="@string/empty_view_no_events_summary"/>
 
     </LinearLayout>
 
@@ -54,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:text="@string/button_new_task"
+        android:text="@string/button_new_event"
         app:icon="@drawable/ic_android_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

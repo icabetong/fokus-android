@@ -27,7 +27,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -104,7 +104,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
                 message(R.string.dialog_select_subject_summary)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
-                    startActivity(Intent(this@TaskEditorActivity, SubjectActivity::class.java))
+                    startActivity(Intent(this@TaskEditorActivity, SubjectFragment::class.java))
                 }
             }
         }

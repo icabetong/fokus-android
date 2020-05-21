@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.settings
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
@@ -10,14 +11,14 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
+import com.google.android.gms.oss.licenses.OssLicensesActivity
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.work.DeadlineIntervalScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.TaskReminderNotifier
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
 import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -109,12 +110,8 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 DokiActivity.start(requireContext())
             }
             PreferenceManager.noticesKey -> {
-                LibsBuilder()
-                    .withActivityTitle(getString(R.string.settings_third_party_notices))
-                    .withAboutIconShown(false)
-                    .withLicenseDialog(true)
-                    .withActivityStyle(Libs.ActivityStyle.LIGHT)
-                    .start(requireContext())
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_notices))
+                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             }
         }
         return@OnPreferenceClickListener true

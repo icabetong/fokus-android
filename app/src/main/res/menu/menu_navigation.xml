@@ -8,16 +8,6 @@
         android:icon="@drawable/ic_custom_box"/>
 
     <item
-        android:id="@+id/action_subjects"
-        android:title="@string/menu_subjects"
-        android:icon="@drawable/ic_custom_measure"/>
-
-    <item
-        android:id="@+id/action_events"
-        android:title="@string/menu_events"
-        android:icon="@drawable/ic_custom_calendar"/>
-
-    <item
         android:id="@+id/action_notifications"
         android:title="@string/menu_notifications"
         android:icon="@drawable/ic_custom_bell"/>

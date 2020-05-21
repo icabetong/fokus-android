@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include layout="@layout/layout_appbar"/>
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:clipChildren="false"/>
 
     <LinearLayout
         android:id="@+id/itemEmptyView"
@@ -27,7 +25,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_measure"
+            app:srcCompat="@drawable/ic_custom_clipboards_check"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -35,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_title"
+            android:text="@string/empty_view_no_tasks_title"
             android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
@@ -43,16 +41,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_summary" />
+            android:text="@string/empty_view_no_tasks_summary"/>
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_android_add"/>
+        android:text="@string/button_new_task"
+        app:icon="@drawable/ic_android_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

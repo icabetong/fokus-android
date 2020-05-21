@@ -3,6 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,31 +15,36 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
-import kotlinx.android.synthetic.main.activity_event.*
+import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class EventActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
+class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
 
     private val viewModel: EventViewModel? by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_event)
-        setPersistentActionBar(toolbar, R.string.activity_events)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_event, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         adapter = EventAdapter(this, this)
-        recyclerView.addItemDecoration(OffsetItemDecoration(this, R.dimen.item_padding))
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel?.fetch()?.observe(this, Observer { items ->
+        viewModel?.fetch()?.observe(viewLifecycleOwner, Observer { items ->
             adapter?.submitList(items)
             itemEmptyView.isVisible = items.isEmpty()
         })
@@ -47,7 +55,7 @@ class EventActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.Swi
         super.onResume()
 
         actionButton.setOnClickListener {
-            val editorIntent = Intent(this, EventEditorActivity::class.java)
+            val editorIntent = Intent(context, EventEditorActivity::class.java)
             startActivityForResult(editorIntent, EventEditorActivity.insertRequestCode)
         }
     }

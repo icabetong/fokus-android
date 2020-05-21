@@ -9,8 +9,8 @@
         android:shortcutId="shortcut_task"
         android:shortcutShortLabel="@string/shortcut_new_task">
         <intent
-            android:action="com.isaiahvonrundstedt.fokus.features.task.TaskActivity.new"
-            android:targetClass="com.isaiahvonrundstedt.fokus.features.task.TaskActivity"
+            android:action="com.isaiahvonrundstedt.fokus.features.task.TaskFragment.new"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
             android:targetPackage="com.isaiahvonrundstedt.fokus"/>
     </shortcut>
 

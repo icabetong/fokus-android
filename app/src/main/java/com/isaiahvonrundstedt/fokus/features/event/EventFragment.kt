@@ -23,6 +23,10 @@ import kotlinx.android.synthetic.main.layout_appbar.*
 
 class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
 
+    companion object {
+
+    }
+
     private val viewModel: EventViewModel? by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }

@@ -26,10 +26,6 @@ import kotlinx.android.synthetic.main.fragment_task.*
 class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
     BaseAdapter.SwipeListener {
 
-    companion object {
-        const val action = "com.isaiahvonrundstedt.fokus.features.task.TaskActivity.new"
-    }
-
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
     }

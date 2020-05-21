@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.event.EventEditorActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.menu.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskEditorActivity
@@ -24,9 +25,12 @@ class MainActivity: BaseActivity() {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_main)
 
-        if (intent?.action == TaskFragment.action)
+        if (intent?.action == actionNewTask)
             startActivityForResult(Intent(this, TaskEditorActivity::class.java),
                 TaskEditorActivity.insertRequestCode)
+        else if (intent?.action == actionNewEvent)
+            startActivityForResult(Intent(this, EventEditorActivity::class.java),
+                EventEditorActivity.insertRequestCode)
 
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_android_menu)
         toolbar?.setNavigationOnClickListener {
@@ -57,4 +61,9 @@ class MainActivity: BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean = true
+
+    companion object {
+        const val actionNewTask = "com.isaiahvonrundstedt.fokus.features.core.MainActivity.newTask"
+        const val actionNewEvent = "com.isaiahvonrundstedt.fokus.features.core.MainActivity.newEvent"
+    }
 }

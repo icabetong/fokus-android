@@ -163,7 +163,8 @@
 
     <string name="notification_channel_reminders">Reminders</string>
 
-    <string name="shortcut_new_task">New Task</string>
+    <string name="shortcut_new_task">@string/button_new_task</string>
+    <string name="shortcut_new_event">@string/button_new_event</string>
 
     <!-- used for concat and formatting -->
     <string name="hello">Hello, %1$s</string>

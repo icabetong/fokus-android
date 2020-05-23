@@ -2,7 +2,6 @@
     <string name="app_name">Fokus</string>
 
     <string name="activity_main">Your Tasks</string>
-    <string name="activity_archived">Archived Tasks</string>
     <string name="activity_subjects">Your Subjects</string>
     <string name="activity_events">Your Events</string>
     <string name="activity_notifications">Notifications</string>
@@ -11,7 +10,6 @@
     <string name="activity_notices">Open Source and Third Party</string>
     <string name="activity_privacy">Privacy Policy Statement</string>
 
-    <string name="menu_archived">Archived</string>
     <string name="menu_notifications">@string/activity_notifications</string>
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_help_and_feedback">@string/activity_help_and_feedback</string>
@@ -21,6 +19,9 @@
     <string name="navigation_tasks">Tasks</string>
     <string name="navigation_events">Events</string>
     <string name="navigation_subjects">Subjects</string>
+
+    <string name="first_run_add_first_subject_title">Add a subject first</string>
+    <string name="first_run_add_first_subject_message">To add a task, you\'ll need to associate it with a subject to organize them efficiently</string>
 
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_new_task">New Task</string>
@@ -35,17 +36,12 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_remove">Remove</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
-    <string name="button_archive">Archive</string>
 
-    <string name="status_task_archived">Archived</string>
     <string name="status_task_finished">Finished</string>
     <string name="status_task_pending">Pending</string>
 
     <string name="empty_view_no_search_results_title">Your query returned nothing</string>
     <string name="empty_view_no_search_results_summary">Try using less specific keywords or try checking if you have some spelling mistakes</string>
-
-    <string name="empty_view_no_archived_title">Your archive is empty</string>
-    <string name="empty_view_no_archived_summary">Your archive is a place where your finished tasks is stored. You can delete them permanently, or let them sit around.</string>
 
     <string name="empty_view_no_subjects_title">You have no subjects added</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -73,12 +69,12 @@
     <string name="dialog_select_color_tag">Select color tag</string>
     <string name="dialog_select_subject_title">Select subject</string>
     <string name="dialog_select_subject_summary">Specify which subject requires this task to be done</string>
+    <string name="dialog_select_notification_interval">Select notification interval</string>
+    <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_delete_task_title">Delete task?</string>
     <string name="dialog_delete_task_summary">Are you sure you want to delete this task? This action cannot be undone.</string>
     <string name="dialog_delete_subject_title">Delete subject?</string>
     <string name="dialog_delete_subject_summary">Are you sure you want to delete this subject? This action cannot be undone.</string>
-    <string name="dialog_delete_archived_task_title">Delete archived task?</string>
-    <string name="dialog_delete_archived_task_summary">Are you sure you want to delete this archived task? This action cannot be undone.</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
 
@@ -100,9 +96,7 @@
     <string name="feedback_subject_removed">Subject removed</string>
     <string name="feedback_notification_removed">Notification removed</string>
     <string name="feedback_task_removed">Task removed</string>
-    <string name="feedback_task_archived">Task moved to archived</string>
     <string name="feedback_task_marked_as_finished">Task marked as finished</string>
-    <string name="feedback_task_removed_archived">Task removed from archived</string>
     <string name="feedback_event_removed">Event removed</string>
     <string name="feedback_subject_empty_name">You forgot to enter the subject code</string>
     <string name="feedback_subject_empty_description">You forgot to enter the description</string>
@@ -122,27 +116,30 @@
 
     <string name="settings_name">Your Name</string>
 
-    <string name="settings_dark_theme">Use Dark Theme</string>
-    <string name="settings_dark_theme_dialog_title">Dark Theme</string>
-    <string name="settings_dark_theme_item_automatic">Automatic</string>
-    <string name="settings_dark_theme_item_always">Always</string>
-    <string name="settings_dark_theme_item_never">Never</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_item_system">System default</string>
+    <string name="settings_theme_item_dark">Dark</string>
+    <string name="settings_theme_item_light">Light</string>
 
     <string name="settings_completion_sounds_title">Completion Sounds</string>
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
-    <string name="settings_move_finished_tasks_to_archive_title">Move finished tasks to archive</string>
-    <string name="settings_move_finished_tasks_to_archive_summary">When a task have been marked as finished, automatically move it to the archive</string>
 
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
     <string name="settings_reminder_frequency_item_weekends">Weekends</string>
     <string name="settings_remind_me_in_time_of_day">Remind me at this time</string>
-    <string name="settings_alert_me_when_nearing_due_title">Alert me when a task is nearing due</string>
-    <string name="settings_alert_me_when_nearing_due_summary">Show notifications for tasks that are nearing its deadline</string>
-    <string name="settings_alert_me_when_due_is_in_title">Alert me when the due is</string>
-    <string name="settings_alert_me_when_due_is_in_item_the_hour">The hour before</string>
-    <string name="settings_alert_me_when_due_is_in_item_three_hours">Three hours before</string>
-    <string name="settings_alert_me_when_due_is_in_item_the_day">The day before</string>
+    <string name="settings_notify_me_when_nearing_due_title">Notify me when a task is nearing due</string>
+    <string name="settings_notify_me_when_nearing_due_summary">Show notifications for tasks that are nearing its deadline</string>
+    <string name="settings_show_a_notification_when_the_due_is_title">Show a notification when the due is</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_hour">The hour before</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_three_hours">Three hours before</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_day">The day before</string>
+    <string name="settings_notify_me_about_my_incoming_events_title">Notify me about my incoming events</string>
+    <string name="settings_notify_me_about_my_incoming_events_summary">Show notifications about incoming events this day</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at">Show a notification when an event starts at</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_quarter_hour">15 minutes</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_half_hour">30 minutes</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_full_hour">1 hour</string>
     <string name="settings_not_working_notifications_title">Notifications not working?</string>
     <string name="settings_not_working_notifications_summary">Tap here to fix</string>
 
@@ -161,7 +158,9 @@
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>
 
-    <string name="notification_channel_reminders">Reminders</string>
+    <string name="notification_channel_generic">Generic</string>
+    <string name="notification_channel_task_reminders">Task Reminders</string>
+    <string name="notification_channel_event_reminders">Event Reminders</string>
 
     <string name="shortcut_new_task">@string/button_new_task</string>
     <string name="shortcut_new_event">@string/button_new_event</string>

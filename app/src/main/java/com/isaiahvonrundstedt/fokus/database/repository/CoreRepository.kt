@@ -18,13 +18,9 @@ class CoreRepository (app: Application) {
 
     fun fetch(): LiveData<List<Core>>? = cores?.fetch()
 
-    fun fetchArchived(): LiveData<List<Core>>? = cores?.fetchArchived()
-
     fun search(query: String, onSearch:(List<Core>) -> Unit) = GlobalScope.launch {
         onSearch(cores?.search("%$query%") ?: emptyList())
     }
-
-    suspend fun clearArchived() { tasks?.clearArchived() }
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks?.insert(task)

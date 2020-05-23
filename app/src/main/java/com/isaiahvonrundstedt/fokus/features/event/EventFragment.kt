@@ -13,18 +13,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.layout_appbar.*
 
 class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
 
     companion object {
-
+        const val action = "com.isaiahvonrundstedt.fokus.features.event.new"
     }
 
     private val viewModel: EventViewModel? by lazy {
@@ -38,7 +36,6 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Swi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         adapter = EventAdapter(this, this)
         recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))

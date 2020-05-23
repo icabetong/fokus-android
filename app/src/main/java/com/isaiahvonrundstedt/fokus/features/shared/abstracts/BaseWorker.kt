@@ -26,8 +26,12 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     : CoroutineWorker(context, workerParameters) {
 
     companion object {
-        const val notificationID = 27
-        const val notificationChannelID = "taskChannelID"
+        const val eventNotificationID = 14
+        const val eventNotificationChannelID = "eventChannelID"
+        const val taskNotificationID = 27
+        const val taskNotificationChannelID = "taskChannelID"
+        const val genericNotificationID = 38
+        const val genericNotificationChannelID = "genericChannelID"
 
         private const val extraNotificationID = "id"
         private const val extraNotificationTitle = "title"
@@ -83,7 +87,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 title = workerData.getString(extraNotificationTitle)
                 content = workerData.getString(extraNotificationContent)
                 data = workerData.getString(extraNotificationData)
-                type = workerData.getInt(extraNotificationType, Notification.typeReminder)
+                type = workerData.getInt(extraNotificationType, Notification.typeGeneric)
             }
         }
 
@@ -108,61 +112,53 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         }
     }
 
-    protected fun sendNotification(notification: android.app.Notification?) {
-        with(NotificationManagerCompat.from(context)) {
-            if (getNotificationChannel(notificationChannelID) == null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    manager.createNotificationChannel(NotificationChannel(notificationChannelID,
-                        context.getString(R.string.notification_channel_reminders),
-                        NotificationManager.IMPORTANCE_HIGH))
-                }
-            }
-        }
-        manager.notify(notificationID, notification)
+    protected fun sendNotification(notification: Notification) {
+        createNotificationChannel(notification.type)
+        if (notification.type == Notification.typeTaskReminder)
+            manager.notify(taskNotificationID, createTaskNotification(notification))
+        else if (notification.type == Notification.typeEventReminder)
+            manager.notify(eventNotificationID, createNotification(notification))
+        else manager.notify(genericNotificationID, createNotification(notification))
     }
 
-    protected fun createActionableNotification(notification: Notification): android.app.Notification {
-        val targetActivity = Intent(context, MainActivity::class.java)
-        val contentIntent = PendingIntent.getActivity(context, 0,
-            targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
+    private fun createNotificationChannel(type: Int) {
+        with(NotificationManagerCompat.from(context)) {
+            val id = when (type) {
+                Notification.typeTaskReminder -> taskNotificationChannelID
+                Notification.typeEventReminder -> eventNotificationChannelID
+                else -> genericNotificationChannelID
+            }
+            val resID = when (type) {
+                Notification.typeTaskReminder -> R.string.notification_channel_task_reminders
+                Notification.typeEventReminder -> R.string.notification_channel_event_reminders
+                else -> R.string.notification_channel_generic
+            }
 
-        val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            if (getNotificationChannel(id) == null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    manager.createNotificationChannel(NotificationChannel(id, context.getString(resID),
+                        NotificationManager.IMPORTANCE_HIGH))
+            }
+        }
+    }
 
-        val markAsFinishedService = Intent(context, NotificationActionService::class.java)
-        markAsFinishedService.action = NotificationActionService.actionFinished
-        markAsFinishedService.putExtra(NotificationActionService.extraTaskID, notification.data)
-        val markAsFinishedIntent = PendingIntent.getService(context, NotificationActionService.finishID,
-            markAsFinishedService, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val sendToArchiveService = Intent(context, NotificationActionService::class.java)
-        sendToArchiveService.action = NotificationActionService.actionArchive
-        sendToArchiveService.putExtra(NotificationActionService.extraTaskID, notification.data)
-        val sendToArchiveIntent = PendingIntent.getService(context, NotificationActionService.archiveID,
-            sendToArchiveService, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        return NotificationCompat.Builder(context, notificationChannelID).apply {
-            setSound(soundUri)
+    private fun createTaskNotification(notification: Notification): android.app.Notification {
+        return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
+            setSound(notificationSoundUri)
             setSmallIcon(R.drawable.ic_custom_brand)
             setContentIntent(contentIntent)
             setContentTitle(notification.title)
             setContentText(notification.content)
             color = ContextCompat.getColor(context, R.color.colorPrimary)
             addAction(R.drawable.ic_android_check_white, context.getString(R.string.button_mark_as_finished),
-                markAsFinishedIntent)
-            addAction(R.drawable.ic_android_archive_white, context.getString(R.string.button_archive),
-                sendToArchiveIntent)
+                createPendingIntent(NotificationActionService.finishID, NotificationActionService.actionFinished,
+                    NotificationActionService.extraTaskID, notification.data!!))
         }.build()
     }
 
-    protected fun createNotification(notification: Notification?): android.app.Notification {
-        val targetActivity = Intent(context, MainActivity::class.java)
-        val contentIntent = PendingIntent.getActivity(context, 0,
-            targetActivity, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-        return NotificationCompat.Builder(context, notificationChannelID).apply {
-            setSound(soundUri)
+    private fun createNotification(notification: Notification?): android.app.Notification {
+        return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
+            setSound(notificationSoundUri)
             setSmallIcon(R.drawable.ic_custom_brand)
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
@@ -171,7 +167,24 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         }.build()
     }
 
+    private fun createPendingIntent(id: Int, action: String, extra: String, data: String): PendingIntent {
+        return PendingIntent.getService(context, id,
+            Intent(context, NotificationActionService::class.java).apply {
+                setAction(action)
+                putExtra(extra, data)
+            }, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
     private val manager by lazy {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
+
+    private val contentIntent: PendingIntent
+        get() {
+            return PendingIntent.getActivity(context, 0,
+                Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+    private val notificationSoundUri: Uri
+        get() = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 }

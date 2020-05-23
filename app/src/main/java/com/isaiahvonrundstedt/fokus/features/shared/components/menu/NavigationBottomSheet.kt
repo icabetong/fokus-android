@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.archived.ArchivedActivity
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 
 class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionListener {
@@ -36,7 +35,7 @@ class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionLis
 
     override fun onItemSelected(id: Int) {
         when (id) {
-            R.id.action_archived -> startActivity(Intent(context, ArchivedActivity::class.java))
+            R.id.action_subjects -> startActivity(Intent(context, SubjectActivity::class.java))
             R.id.action_notifications -> startActivity(Intent(context, NotificationActivity::class.java))
             R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
         }

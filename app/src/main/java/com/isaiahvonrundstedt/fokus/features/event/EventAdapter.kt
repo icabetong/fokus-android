@@ -37,7 +37,9 @@ class EventAdapter(private var actionListener: ActionListener,
             locationView.text = event.location
             nameView.text = event.name
             scheduleView.text = event.formatSchedule(rootView.context)
-            rootView.setOnClickListener { actionListener.onActionPerformed(event, ActionListener.Action.SELECT) }
+            rootView.setOnClickListener {
+                actionListener.onActionPerformed(event, ActionListener.Action.SELECT)
+            }
         }
     }
 

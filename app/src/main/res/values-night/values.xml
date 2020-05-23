@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Fokus.Widget.NavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <!-- disable elevation in night mode -->
+        <!-- https://github.com/material-components/material-components-android/issues/1148 -->
+        <item name="elevation">0dp</item>
+    </style>
+
+</resources>

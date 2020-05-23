@@ -12,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -21,6 +24,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditorActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 
 class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
@@ -38,6 +43,18 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (PreferenceManager(context).isFirstRun) {
+            MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+                title(R.string.first_run_add_first_subject_title)
+                message(R.string.first_run_add_first_subject_message)
+                positiveButton(R.string.button_continue) {
+                    startActivity(Intent(context, SubjectActivity::class.java).apply {
+                        action = SubjectActivity.action
+                    })
+                }
+            }
+        }
+
         adapter = TaskAdapter(this, this)
         recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -50,6 +67,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
             adapter?.submitList(items)
             itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
+
     }
 
     private var adapter: TaskAdapter? = null
@@ -57,8 +75,8 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
         super.onResume()
 
         actionButton.setOnClickListener {
-            val editorIntent = Intent(context, TaskEditorActivity::class.java)
-            startActivityForResult(editorIntent, TaskEditorActivity.insertRequestCode)
+            startActivityForResult(Intent(context, TaskEditorActivity::class.java),
+                TaskEditorActivity.insertRequestCode)
         }
     }
 
@@ -73,10 +91,6 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
                                 Snackbar.LENGTH_SHORT).show()
                             val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
                             RingtoneManager.getRingtone(requireContext().applicationContext, soundUri).play()
-                        }
-                        if (PreferenceManager(context).autoArchive) {
-                            t.task.isArchived = true
-                            viewModel.update(t.task)
                         }
                     }
                 }
@@ -98,16 +112,6 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
                 val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed,
                     Snackbar.LENGTH_SHORT)
                 snackbar.setAction(R.string.button_undo) {
-                    viewModel.insert(t.task, t.attachmentList)
-                }
-                snackbar.show()
-            } else if (swipeDirection == ItemTouchHelper.END) {
-                t.task.isArchived = true
-                viewModel.update(t.task, t.attachmentList)
-                val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_archived,
-                    Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.button_undo) {
-                    t.task.isArchived = false
                     viewModel.insert(t.task, t.attachmentList)
                 }
                 snackbar.show()

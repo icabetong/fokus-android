@@ -22,37 +22,49 @@
     </integer-array>
 
     <string-array name="settings_dark_theme_items">
-        <item>@string/settings_dark_theme_item_automatic</item>
-        <item>@string/settings_dark_theme_item_always</item>
-        <item>@string/settings_dark_theme_item_never</item>
+        <item>@string/settings_theme_item_system</item>
+        <item>@string/settings_theme_item_dark</item>
+        <item>@string/settings_theme_item_light</item>
     </string-array>
 
     <string-array name="settings_dark_theme_values">
-        <item>AUTOMATIC</item>
-        <item>ALWAYS</item>
-        <item>NEVER</item>
+        <item>SYSTEM</item>
+        <item>DARK</item>
+        <item>LIGHT</item>
     </string-array>
 
-    <string-array name="settings_reminder_frequency_items">
+    <string-array name="settings_task_reminder_frequency_items">
         <item>@string/settings_reminder_frequency_item_everyday</item>
         <item>@string/settings_reminder_frequency_item_weekends</item>
     </string-array>
 
-    <string-array name="settings_reminder_frequency_values">
+    <string-array name="settings_task_reminder_frequency_values">
         <item>EVERYDAY</item>
         <item>WEEKENDS</item>
     </string-array>
 
-    <string-array name="settings_reminder_due_interval_items">
-        <item>@string/settings_alert_me_when_due_is_in_item_the_hour</item>
-        <item>@string/settings_alert_me_when_due_is_in_item_three_hours</item>
-        <item>@string/settings_alert_me_when_due_is_in_item_the_day</item>
+    <string-array name="settings_task_reminder_interval_items">
+        <item>@string/settings_show_a_notification_when_the_due_is_item_hour</item>
+        <item>@string/settings_show_a_notification_when_the_due_is_item_three_hours</item>
+        <item>@string/settings_show_a_notification_when_the_due_is_item_day</item>
     </string-array>
 
-    <string-array name="settings_reminder_due_interval_values">
-        <item>HOUR</item>
-        <item>THREE</item>
-        <item>DAY</item>
+    <string-array name="settings_task_reminder_interval_values">
+        <item>1</item>
+        <item>3</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="settings_event_reminder_interval_items">
+        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_quarter_hour</item>
+        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_half_hour</item>
+        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_full_hour</item>
+    </string-array>
+
+    <string-array name="settings_event_reminder_interval_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
     </string-array>
 
 </resources>

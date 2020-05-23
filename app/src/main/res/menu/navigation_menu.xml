@@ -11,9 +11,4 @@
         android:title="@string/navigation_events"
         android:icon="@drawable/ic_custom_calendar"/>
 
-    <item
-        android:id="@+id/navigation_subjects"
-        android:title="@string/navigation_subjects"
-        android:icon="@drawable/ic_custom_flasks"/>
-
 </menu>

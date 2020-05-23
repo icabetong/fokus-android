@@ -30,8 +30,7 @@ data class Task @JvmOverloads constructor (
     var dateAdded: DateTime? = DateTime.now(),
     @TypeConverters(DateTimeConverter::class)
     var dueDate: DateTime? = null,
-    var isFinished: Boolean = false,
-    var isArchived: Boolean = false
+    var isFinished: Boolean = false
 ): Parcelable {
 
     fun isDueToday(): Boolean {
@@ -50,24 +49,6 @@ data class Task @JvmOverloads constructor (
             String.format(context.getString(R.string.tomorrow),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
         else
-            DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(dueDate)
-    }
-
-    companion object {
-        fun formatDueDate(context: Context, time: LocalDateTime): String {
-            val currentDateTime = LocalDate.now()
-
-            return if (time.toLocalDate().isEqual(currentDateTime))
-                String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time))
-            else if (currentDateTime.minusDays(1).compareTo(time.toLocalDate()) == 0)
-                String.format(context.getString(R.string.yesterday),
-                    DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time))
-            else if (currentDateTime.plusDays(1).compareTo(time.toLocalDate()) == 0)
-                String.format(context.getString(R.string.tomorrow),
-                    DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time))
-            else
-                DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(time)
-        }
-
+            DateTimeFormat.forPattern("MMMM d, h:mm a").print(dueDate)
     }
 }

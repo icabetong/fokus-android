@@ -23,14 +23,14 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
         val notification = Notification().apply {
             title = event.name
             content = event.formatSchedule(context)
-            type = Notification.typeEventAlert
+            type = Notification.typeEventReminder
             data = event.id
         }
 
-        when (PreferenceManager(context).dueInterval) {
-            PreferenceManager.dueDelayHour -> event.schedule = event.schedule!!.minusHours(1)
-            PreferenceManager.dueDelayThreeHours -> event.schedule = event.schedule!!.minusHours(3)
-            PreferenceManager.dueDelayDay -> event.schedule = event.schedule!!.minusHours(24)
+        when (PreferenceManager(context).eventReminderInterval) {
+            PreferenceManager.eventReminderIntervalQuarter -> event.schedule = event.schedule!!.minusMinutes(15)
+            PreferenceManager.eventReminderIntervalHalf -> event.schedule = event.schedule!!.minusMinutes(30)
+            PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
         }
         val notificationRequest = OneTimeWorkRequestBuilder<CoreNotificationWorker>()
         if (currentTime.isBefore(event.schedule)) {

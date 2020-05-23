@@ -56,7 +56,6 @@ class MainActivity: BaseActivity() {
         when (destination.id) {
             R.id.navigation_tasks -> { setToolbarTitle(R.string.activity_main) }
             R.id.navigation_events -> { setToolbarTitle(R.string.activity_events) }
-            R.id.navigation_subjects -> { setToolbarTitle(R.string.activity_subjects) }
         }
     }
 

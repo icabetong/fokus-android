@@ -19,8 +19,6 @@ class NotificationActionWorker(context: Context, workerParameters: WorkerParamet
 
         if (action == NotificationActionService.actionFinished)
             tasks?.setFinished(taskID, 1)
-        else if (action == NotificationActionService.actionArchive)
-            tasks?.setArchived(taskID, 1)
 
         return Result.success()
     }

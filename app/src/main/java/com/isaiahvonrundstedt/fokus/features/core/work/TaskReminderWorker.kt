@@ -43,7 +43,7 @@ class TaskReminderWorker(private var context: Context, workerParameters: WorkerP
                 title = String.format(context.getString(R.string.notification_pending_tasks_title),
                     taskSize)
                 content = context.getString(R.string.notification_pending_tasks_summary)
-                type = Notification.typeReminder
+                type = Notification.typeGeneric
                 dateTimeTriggered = DateTime.now()
             }
         }
@@ -55,7 +55,7 @@ class TaskReminderWorker(private var context: Context, workerParameters: WorkerP
 
         if (notification != null) {
             dataStore.insert(notification)
-            sendNotification(createNotification(notification))
+            sendNotification(notification)
         }
 
         return Result.success()

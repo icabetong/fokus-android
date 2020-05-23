@@ -38,8 +38,7 @@ class SearchAdapter(private var actionListener: ActionListener)
                 actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
             }
 
-            val resId = if (core.task.isArchived) R.string.status_task_archived
-                else if (core.task.isFinished) R.string.status_task_finished
+            val resId = if (core.task.isFinished) R.string.status_task_finished
                 else R.string.status_task_pending
 
             overlineView.text = rootView.context.getString(resId)

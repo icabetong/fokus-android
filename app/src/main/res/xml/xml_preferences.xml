@@ -15,12 +15,12 @@
 
         <ListPreference
             android:key="themePreference"
-            android:title="@string/settings_dark_theme"
+            android:title="@string/settings_theme"
             android:summary="%s"
-            android:dialogTitle="@string/settings_dark_theme_dialog_title"
+            android:dialogTitle="@string/dialog_choose_theme"
             android:entries="@array/settings_dark_theme_items"
             android:entryValues="@array/settings_dark_theme_values"
-            android:defaultValue="AUTOMATIC"
+            android:defaultValue="SYSTEM"
             app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
@@ -34,12 +34,6 @@
             android:summary="@string/settings_completion_sounds_summary"
             android:defaultValue="true"/>
 
-        <SwitchPreference
-            android:key="archivePreference"
-            android:title="@string/settings_move_finished_tasks_to_archive_title"
-            android:summary="@string/settings_move_finished_tasks_to_archive_summary"
-            android:defaultValue="false"/>
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -48,8 +42,8 @@
         <ListPreference
             android:key="frequencyPreference"
             android:title="@string/settings_reminder_frequency_title"
-            android:entries="@array/settings_reminder_frequency_items"
-            android:entryValues="@array/settings_reminder_frequency_values"
+            android:entries="@array/settings_task_reminder_frequency_items"
+            android:entryValues="@array/settings_task_reminder_frequency_values"
             android:defaultValue="EVERYDAY"
             app:useSimpleSummaryProvider="true"/>
 
@@ -58,18 +52,34 @@
             android:title="@string/settings_remind_me_in_time_of_day"/>
 
         <SwitchPreference
-            android:key="dueAlertPreference"
-            android:title="@string/settings_alert_me_when_nearing_due_title"
-            android:summary="@string/settings_alert_me_when_nearing_due_summary"
+            android:key="taskReminderPreference"
+            android:title="@string/settings_notify_me_when_nearing_due_title"
+            android:summary="@string/settings_notify_me_when_nearing_due_summary"
             android:defaultValue="true"/>
 
         <ListPreference
-            android:key="intervalPreference"
-            android:title="@string/settings_alert_me_when_due_is_in_title"
+            android:key="taskIntervalPreference"
+            android:title="@string/settings_show_a_notification_when_the_due_is_title"
             android:summary="%s"
-            android:entries="@array/settings_reminder_due_interval_items"
-            android:entryValues="@array/settings_reminder_due_interval_values"
-            android:defaultValue="THREE"/>
+            android:entries="@array/settings_task_reminder_interval_items"
+            android:entryValues="@array/settings_task_reminder_interval_values"
+            android:defaultValue="3"
+            android:dialogTitle="@string/dialog_select_notification_interval"/>
+
+        <SwitchPreference
+            android:key="eventReminderPreference"
+            android:title="@string/settings_notify_me_about_my_incoming_events_title"
+            android:summary="@string/settings_notify_me_about_my_incoming_events_summary"
+            android:defaultValue="true"/>
+
+        <ListPreference
+            android:key="eventIntervalPreference"
+            android:title="@string/settings_show_a_notification_when_an_event_starts_at"
+            android:summary="%s"
+            android:entries="@array/settings_event_reminder_interval_items"
+            android:entryValues="@array/settings_event_reminder_interval_values"
+            android:defaultValue="30"
+            android:dialogTitle="@string/dialog_select_notification_interval"/>
 
         <Preference
             android:key="notificationPreference"

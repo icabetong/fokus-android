@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Core" parent="AppTheme">
+    <style name="Fokus.Theme.Core" parent="Fokus.Theme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/colorStatusBarBackground</item>
     </style>
 
-    <style name="AppTheme.Core.Navigation" parent="AppTheme.Core">
+    <style name="Fokus.Theme.Core.Navigation" parent="Fokus.Theme.Core">
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
-    <style name="AppTheme.Bridge" parent="AppTheme.Base">
+    <style name="Fokus.Theme.Bridge" parent="Fokus.Theme.Base">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/colorStatusBarBackground</item>
     </style>

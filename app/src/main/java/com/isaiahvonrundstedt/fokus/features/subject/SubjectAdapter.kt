@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -29,17 +30,17 @@ class SubjectAdapter(private var actionListener: ActionListener,
 
     inner class SubjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val rootView: View = itemView.findViewById(R.id.rootView)
+        private val tagView: AppCompatImageView = itemView.findViewById(R.id.tagView)
         private val nameView: AppCompatTextView = itemView.findViewById(R.id.nameView)
         private val descriptionView: AppCompatTextView = itemView.findViewById(R.id.descriptionView)
         private val dateTimeView: AppCompatTextView = itemView.findViewById(R.id.dateTimeView)
-        private val tagView: View = itemView.findViewById(R.id.tagView)
 
         fun onBind(subject: Subject) {
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(subject, ActionListener.Action.SELECT)
             }
 
-            tagView.setBackgroundColor(subject.tag.actualColor)
+            tagView.setImageDrawable(subject.tintDrawable(tagView.drawable))
 
             nameView.text = subject.code
             descriptionView.text = subject.description

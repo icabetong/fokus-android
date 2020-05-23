@@ -20,11 +20,11 @@ abstract class BaseActivity: AppCompatActivity() {
         super.onResume()
 
         when (PreferenceManager(this).theme){
-            PreferenceManager.Theme.NEVER ->
+            PreferenceManager.Theme.LIGHT ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            PreferenceManager.Theme.ALWAYS ->
+            PreferenceManager.Theme.DARK ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            PreferenceManager.Theme.AUTOMATIC -> {
+            PreferenceManager.Theme.SYSTEM -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)

@@ -8,7 +8,6 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
@@ -30,16 +29,23 @@ class SettingsFragment: PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.xml_preferences, rootKey)
     }
 
+    private val manager by lazy {
+        WorkManager.getInstance(requireContext())
+    }
+
     override fun onStart() {
         super.onStart()
 
         findPreference<ListPreference>(PreferenceManager.themeKey)
             ?.onPreferenceChangeListener = changeListener
 
-        findPreference<Preference>(PreferenceManager.intervalKey)
+        findPreference<Preference>(PreferenceManager.taskIntervalKey)
             ?.onPreferenceChangeListener = changeListener
 
-        val remindTimePreference = findPreference<Preference>(PreferenceManager.timeKey)
+        findPreference<Preference>(PreferenceManager.eventIntervalKey)
+            ?.onPreferenceChangeListener = changeListener
+
+        val remindTimePreference = findPreference<Preference>(PreferenceManager.reminderTimeKey)
         remindTimePreference?.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)
             .print(PreferenceManager(context).reminderTime)
         remindTimePreference?.onPreferenceClickListener = clickListener
@@ -59,11 +65,11 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     private fun notifyAppCompatDelegate(newTheme: String) {
         when (PreferenceManager.Theme.parse(newTheme)) {
-            PreferenceManager.Theme.ALWAYS ->
+            PreferenceManager.Theme.DARK ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            PreferenceManager.Theme.NEVER ->
+            PreferenceManager.Theme.LIGHT ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            PreferenceManager.Theme.AUTOMATIC -> {
+            PreferenceManager.Theme.SYSTEM -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
@@ -80,17 +86,20 @@ class SettingsFragment: PreferenceFragmentCompat() {
                 }
                 true
             }
-            PreferenceManager.intervalKey -> {
-                val taskRequest = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
+            PreferenceManager.taskIntervalKey -> {
+                val request = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
                     .addTag(TaskNotificationScheduler::class.java.simpleName)
                     .build()
-                val eventRequest = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
+
+                manager.enqueue(request)
+                true
+            }
+            PreferenceManager.eventIntervalKey -> {
+                val request = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
                     .addTag(EventNotificationScheduler::class.java.simpleName)
                     .build()
 
-                val workManager = WorkManager.getInstance(requireContext())
-                workManager.enqueue(taskRequest)
-                workManager.enqueue(eventRequest)
+                manager.enqueue(request)
                 true
             }
             else -> false
@@ -99,7 +108,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     private var clickListener = Preference.OnPreferenceClickListener {
         when (it.key) {
-            PreferenceManager.timeKey -> {
+            PreferenceManager.reminderTimeKey -> {
                 MaterialDialog(requireContext()).show {
                     timePicker(show24HoursView = false) { _, datetime ->
                         val selectedTime = LocalTime.fromCalendarFields(datetime)

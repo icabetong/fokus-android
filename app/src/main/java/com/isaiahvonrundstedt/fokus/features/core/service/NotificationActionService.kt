@@ -16,10 +16,8 @@ class NotificationActionService: IntentService(name) {
         const val name = "notificationActionService"
         const val extraTaskID = "taskID"
         const val extraAction = "action"
-        const val actionArchive = "archive"
         const val actionFinished = "finished"
 
-        const val archiveID = 19
         const val finishID = 28
     }
 
@@ -28,15 +26,13 @@ class NotificationActionService: IntentService(name) {
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        manager?.cancel(BaseWorker.notificationID)
+        manager?.cancel(BaseWorker.taskNotificationID)
 
         val taskID = intent?.getStringExtra(extraTaskID)
 
         val data = Data.Builder()
         data.putString(extraTaskID, taskID)
-        if (intent?.action == actionArchive)
-            data.putString(extraAction, actionArchive)
-        else if (intent?.action == actionFinished)
+        if (intent?.action == actionFinished)
             data.putString(extraAction, actionFinished)
 
         val workRequest = OneTimeWorkRequest.Builder(NotificationActionWorker::class.java)

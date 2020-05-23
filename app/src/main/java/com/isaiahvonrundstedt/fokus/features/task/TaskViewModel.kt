@@ -25,7 +25,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         dataStore.insert(task, attachmentList)
 
-        if (PreferenceManager(app).remindWhenDue) {
+        if (PreferenceManager(app).taskReminder) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
                 .setInputData(data)
@@ -42,7 +42,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         dataStore.update(task, attachmentList)
 
-        if (PreferenceManager(app).remindWhenDue && !task.isArchived && !task.isFinished) {
+        if (PreferenceManager(app).taskReminder && !task.isFinished) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()

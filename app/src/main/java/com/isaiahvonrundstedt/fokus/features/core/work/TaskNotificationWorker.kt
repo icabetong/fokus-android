@@ -28,14 +28,14 @@ class TaskNotificationWorker(private var context: Context, workerParameters: Wor
             title = task.name
             content = String.format(context.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
-            type = Notification.typeDueAlert
+            type = Notification.typeTaskReminder
             data = task.taskID
         }
 
-        when (PreferenceManager(context).dueInterval) {
-            PreferenceManager.dueDelayHour -> task.dueDate = task.dueDate!!.minusHours(1)
-            PreferenceManager.dueDelayThreeHours -> task.dueDate = task.dueDate!!.minusHours(3)
-            PreferenceManager.dueDelayDay -> task.dueDate = task.dueDate!!.minusHours(24)
+        when (PreferenceManager(context).taskReminderInterval) {
+            PreferenceManager.taskReminderIntervalHour -> task.dueDate = task.dueDate!!.minusHours(1)
+            PreferenceManager.taskReminderIntervalThreeHours -> task.dueDate = task.dueDate!!.minusHours(3)
+            PreferenceManager.taskReminderIntervalDay -> task.dueDate = task.dueDate!!.minusHours(24)
         }
 
         val notificationRequest = OneTimeWorkRequestBuilder<CoreNotificationWorker>()

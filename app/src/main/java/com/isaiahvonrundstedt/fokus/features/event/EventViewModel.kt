@@ -24,7 +24,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun insert(event: Event) = viewModelScope.launch {
         dataStore.insert(event)
 
-        if (PreferenceManager(app).remindWhenDue) {
+        if (PreferenceManager(app).taskReminder) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
@@ -42,7 +42,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
         dataStore.update(event)
 
         val currentTime = DateTime.now()
-        if (PreferenceManager(app).remindWhenDue && event.schedule!!.isAfter(currentTime)) {
+        if (PreferenceManager(app).taskReminder && event.schedule!!.isAfter(currentTime)) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)

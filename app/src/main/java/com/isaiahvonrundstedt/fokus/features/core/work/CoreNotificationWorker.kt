@@ -7,7 +7,6 @@ import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
 
 class CoreNotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
@@ -21,9 +20,9 @@ class CoreNotificationWorker(context: Context, workerParameters: WorkerParameter
         notification.dateTimeTriggered = DateTime.now()
 
         dataStore.insert(notification)
-        if (notification.type == Notification.typeDueAlert)
-            sendNotification(createActionableNotification(notification))
-        else sendNotification(createNotification(notification))
+        if (notification.type == Notification.typeTaskReminder)
+            sendNotification(notification)
+        else sendNotification(notification)
 
         return Result.success()
     }

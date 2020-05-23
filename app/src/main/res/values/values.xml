@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme.Base" parent="Theme.MaterialComponents.DayNight">
+    <!-- Base application theme -->
+    <style name="Fokus.Theme.Base" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -18,18 +18,75 @@
         <item name="android:textColorPrimary">@color/colorOnSurface</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
 
-        <item name="toolbarStyle">@style/AppTheme.Widget.Toolbar</item>
-        <item name="toolbarNavigationButtonStyle">@style/AppTheme.Widget.Toolbar.Navigation</item>
-        <item name="actionOverflowButtonStyle">@style/AppTheme.Widget.Toolbar.Overflow</item>
+        <item name="bottomSheetDialogTheme">@style/Fokus.Component.BottomSheet</item>
+        <item name="alertDialogTheme">@style/Fokus.Component.Dialog</item>
+        <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
+        <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
 
         <item name="md_background_color">@color/colorSurface</item>
         <item name="md_corner_radius">4dp</item>
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Base">
+    <!-- Theme without actionBar, used mainly in Activities -->
+    <style name="Fokus.Theme" parent="Fokus.Theme.Base">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text</item>
+    </style>
+
+    <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Fokus.Component.BottomSheet.Bridge" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
+        <item name="bottomSheetStyle">@style/Fokus.Component.BottomSheet.Base</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="Fokus.Component.BottomSheet.Base" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/shape_bottom_sheet</item>
+        <item name="android:layout_marginStart">@dimen/bottom_sheet_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/bottom_sheet_margin_horizontal</item>
+    </style>
+
+    <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
+        <item name="contentInsetStart">@dimen/toolbar_keyline</item>
+        <item name="maxButtonHeight">48dp</item>
+    </style>
+
+    <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:tint">@color/colorOnSurface</item>
+        <item name="android:minWidth">48dp</item>
+    </style>
+
+    <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/colorOnSurface</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+    </style>
+
+    <style name="Fokus.Widget.NavigationView" parent="Widget.MaterialComponents.BottomNavigationView"/>
+
+    <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
+    </style>
+
+    <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#0f9d58</color>
 </resources>

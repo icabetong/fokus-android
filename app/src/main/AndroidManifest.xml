@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Core">
+        android:theme="@style/Fokus.Theme.Core">
         <activity android:name="com.isaiahvonrundstedt.fokus.features.core.StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +26,9 @@
         </activity>
 
         <activity android:name=".features.core.MainActivity"
-            android:theme="@style/AppTheme.Core.Navigation" />
+            android:theme="@style/Fokus.Theme.Core.Navigation" />
         <activity android:name=".features.task.TaskFragment" />
-        <activity android:name=".features.subject.SubjectFragment" />
+        <activity android:name=".features.subject.SubjectActivity" />
         <activity android:name=".features.event.EventFragment" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
@@ -46,7 +46,7 @@
         <!-- OSSLicenses -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/AppTheme.Bridge"/>
+            android:theme="@style/Fokus.Theme.Bridge"/>
 
         <service android:name=".features.core.service.NotificationActionService"
             android:exported="false"/>

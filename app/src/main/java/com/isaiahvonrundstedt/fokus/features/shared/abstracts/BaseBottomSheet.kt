@@ -15,8 +15,6 @@ import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseBottomSheet: BottomSheetDialogFragment() {
 
-    override fun getTheme(): Int = R.style.AppTheme_BottomSheet
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         return super.onCreateView(inflater, container, savedInstanceState)

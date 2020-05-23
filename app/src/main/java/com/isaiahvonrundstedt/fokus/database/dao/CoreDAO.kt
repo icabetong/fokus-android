@@ -12,12 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.core.Core
 interface CoreDAO {
 
     @Transaction
-    @Query("SELECT * FROM tasks INNER JOIN subjects ON tasks.subjectID == subjects.id WHERE isArchived = 0 ORDER BY dateAdded")
+    @Query("SELECT * FROM tasks INNER JOIN subjects ON tasks.subjectID == subjects.id ORDER BY dateAdded")
     fun fetch(): LiveData<List<Core>>
-
-    @Transaction
-    @Query("SELECT * FROM tasks INNER JOIN subjects ON tasks.subjectID == subjects.id WHERE isArchived = 1 ORDER BY dateAdded")
-    fun fetchArchived(): LiveData<List<Core>>
 
     @Transaction
     @Query("SELECT * FROM tasks INNER JOIN subjects ON tasks.subjectID == subjects.id WHERE tasks.name LIKE :query OR tasks.notes LIKE :query OR subjects.code LIKE :query OR subjects.description LIKE :query ORDER BY dateAdded")

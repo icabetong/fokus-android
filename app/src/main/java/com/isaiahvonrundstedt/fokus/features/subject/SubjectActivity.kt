@@ -3,24 +3,23 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
-import kotlinx.android.synthetic.main.fragment_subject.*
+import kotlinx.android.synthetic.main.activity_subject.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
+class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
 
     companion object {
         const val action = "com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity.new"
@@ -30,24 +29,26 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.S
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_subject, container, false)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_subject)
+        setPersistentActionBar(toolbar)
+        setToolbarTitle(R.string.activity_subjects)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        if (intent?.action == action)
+            startActivityForResult(Intent(this, SubjectEditorActivity::class.java),
+                SubjectEditorActivity.insertRequestCode)
 
         adapter = SubjectAdapter(this, this)
-        recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter!!))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
+        viewModel.fetch()?.observe(this, Observer { items ->
             adapter?.submitList(items)
             itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
@@ -58,8 +59,8 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.S
         super.onResume()
 
         actionButton.setOnClickListener {
-            val editorIntent = Intent(context, SubjectEditorActivity::class.java)
-            startActivityForResult(editorIntent, SubjectEditorActivity.insertRequestCode)
+            startActivityForResult(Intent(this, SubjectEditorActivity::class.java),
+                SubjectEditorActivity.insertRequestCode)
         }
     }
 
@@ -67,7 +68,7 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.S
         if (t is Subject) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val editorIntent = Intent(context, SubjectEditorActivity::class.java)
+                    val editorIntent = Intent(this, SubjectEditorActivity::class.java)
                     editorIntent.putExtra(SubjectEditorActivity.extraSubject, t)
                     startActivityForResult(editorIntent, SubjectEditorActivity.updateRequestCode)
                 }
@@ -83,6 +84,9 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.S
 
             if (requestCode == SubjectEditorActivity.insertRequestCode) {
                 viewModel.insert(subject)
+
+                if (PreferenceManager(this).isFirstRun)
+                    PreferenceManager(this).isFirstRun = false
             } else if (requestCode == SubjectEditorActivity.updateRequestCode) {
                 viewModel.update(subject)
             }

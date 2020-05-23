@@ -14,7 +14,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTim
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
@@ -26,19 +25,19 @@ data class Notification @JvmOverloads constructor (
     var title: String? = null,
     var content: String? = null,
     var data: String? = null,
-    var type: Int = typeReminder,
+    var type: Int = typeGeneric,
     @TypeConverters(DateTimeConverter::class)
     var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
     private fun getIconRes(): Int {
-        return if (type == typeDueAlert) R.drawable.ic_custom_warning
-        else if (type == typeEventAlert) R.drawable.ic_custom_calendar
+        return if (type == typeTaskReminder) R.drawable.ic_custom_warning
+        else if (type == typeEventReminder) R.drawable.ic_custom_calendar
         else R.drawable.ic_custom_clipboards
     }
 
     fun getIconDrawable(context: Context): Drawable? {
-        val colorRes = if (type == typeReminder) R.color.colorIconReminder else R.color.colorIconWarning
+        val colorRes = if (type == typeGeneric) R.color.colorIconReminder else R.color.colorIconWarning
         val drawable = ContextCompat.getDrawable(context, getIconRes())
 
         drawable?.mutate()
@@ -59,8 +58,8 @@ data class Notification @JvmOverloads constructor (
     }
 
     companion object {
-        const val typeReminder = 0
-        const val typeDueAlert = 1
-        const val typeEventAlert = 2
+        const val typeGeneric = 0
+        const val typeTaskReminder = 1
+        const val typeEventReminder = 2
     }
 }

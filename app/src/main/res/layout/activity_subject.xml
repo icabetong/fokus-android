@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/layout_appbar"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false" />
+        android:clipChildren="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <LinearLayout
         android:id="@+id/itemEmptyView"
@@ -24,7 +27,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_flasks"
+            app:srcCompat="@drawable/ic_custom_atom"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -44,13 +47,12 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:text="@string/button_new_subject"
-        app:icon="@drawable/ic_android_add"/>
+        app:srcCompat="@drawable/ic_android_add"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

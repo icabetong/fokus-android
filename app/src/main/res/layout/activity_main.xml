@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/navigation_menu"
-            style="@style/AppTheme.Widget.BottomNavigationView"/>
+            style="@style/Fokus.Widget.NavigationView"/>
 
     </LinearLayout>
 

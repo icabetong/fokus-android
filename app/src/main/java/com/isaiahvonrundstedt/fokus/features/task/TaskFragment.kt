@@ -28,8 +28,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditorActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 
-class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
-    BaseAdapter.SwipeListener {
+class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
@@ -55,7 +54,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
             }
         }
 
-        adapter = TaskAdapter(this, this)
+        adapter = TaskAdapter(this)
         recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -101,20 +100,14 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener,
                     editorIntent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))
                     startActivityForResult(editorIntent, TaskEditorActivity.updateRequestCode)
                 }
-            }
-        }
-    }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    viewModel.remove(t.task)
 
-    override fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int) {
-        if (t is Core) {
-            if (swipeDirection == ItemTouchHelper.START) {
-                viewModel.remove(t.task)
-                val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed,
-                    Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.button_undo) {
-                    viewModel.insert(t.task, t.attachmentList)
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed,
+                        Snackbar.LENGTH_SHORT)
+                    snackbar.setAction(R.string.button_undo) { viewModel.insert(t.task, t.attachmentList) }
+                    snackbar.show()
                 }
-                snackbar.show()
             }
         }
     }

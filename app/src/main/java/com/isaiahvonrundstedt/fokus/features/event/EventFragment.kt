@@ -19,7 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import kotlinx.android.synthetic.main.fragment_event.*
 
-class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
+class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     companion object {
         const val action = "com.isaiahvonrundstedt.fokus.features.event.new"
@@ -37,7 +37,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Swi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EventAdapter(this, this)
+        adapter = EventAdapter(this)
         recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -69,21 +69,16 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Swi
                     editor.putExtra(EventEditorActivity.extraEvent, t)
                     startActivityForResult(editor, EventEditorActivity.updateRequestCode)
                 }
-                BaseAdapter.ActionListener.Action.MODIFY -> { }
-            }
-        }
-    }
-
-    override fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int) {
-        if (t is Event) {
-            if (swipeDirection == ItemTouchHelper.START) {
-                viewModel?.remove(t)
-                val snackbar = Snackbar.make(recyclerView, R.string.feedback_event_removed,
-                    Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.button_undo) {
-                    viewModel?.insert(t)
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    viewModel?.remove(t)
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_event_removed,
+                        Snackbar.LENGTH_SHORT)
+                    snackbar.setAction(R.string.button_undo) {
+                        viewModel?.insert(t)
+                    }
+                    snackbar.show()
                 }
-                snackbar.show()
+                BaseAdapter.ActionListener.Action.MODIFY -> { }
             }
         }
     }

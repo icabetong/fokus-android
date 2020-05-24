@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
@@ -15,12 +16,12 @@ import com.isaiahvonrundstedt.fokus.features.core.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import org.joda.time.DateTime
 
-class TaskAdapter(private var actionListener: ActionListener,
-                  private var swipeListener: SwipeListener)
+class TaskAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, getItem(position), direction)
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {

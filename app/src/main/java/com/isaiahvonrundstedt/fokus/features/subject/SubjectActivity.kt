@@ -19,7 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import kotlinx.android.synthetic.main.activity_subject.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.SwipeListener {
+class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
 
     companion object {
         const val action = "com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity.new"
@@ -39,7 +39,7 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.S
             startActivityForResult(Intent(this, SubjectEditorActivity::class.java),
                 SubjectEditorActivity.insertRequestCode)
 
-        adapter = SubjectAdapter(this, this)
+        adapter = SubjectAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -72,6 +72,15 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.S
                     editorIntent.putExtra(SubjectEditorActivity.extraSubject, t)
                     startActivityForResult(editorIntent, SubjectEditorActivity.updateRequestCode)
                 }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    viewModel.remove(t)
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_subject_removed,
+                        Snackbar.LENGTH_SHORT)
+                    snackbar.setAction(R.string.button_undo) {
+                        viewModel.insert(t)
+                    }
+                    snackbar.show()
+                }
                 BaseAdapter.ActionListener.Action.MODIFY -> {}
             }
         }
@@ -89,20 +98,6 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener, BaseAdapter.S
                     PreferenceManager(this).isFirstRun = false
             } else if (requestCode == SubjectEditorActivity.updateRequestCode) {
                 viewModel.update(subject)
-            }
-        }
-    }
-
-    override fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int) {
-        if (t is Subject) {
-            if (swipeDirection == ItemTouchHelper.START) {
-                viewModel.remove(t)
-                val snackbar = Snackbar.make(recyclerView, R.string.feedback_subject_removed,
-                    Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.button_undo) {
-                    viewModel.insert(t)
-                }
-                snackbar.show()
             }
         }
     }

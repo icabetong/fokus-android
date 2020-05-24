@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class EventAdapter(private var actionListener: ActionListener,
-                   private var swipeListener: SwipeListener)
+class EventAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, getItem(position), direction)
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {

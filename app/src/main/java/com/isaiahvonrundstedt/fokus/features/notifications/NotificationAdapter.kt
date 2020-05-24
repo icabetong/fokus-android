@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class NotificationAdapter(private var swipeListener: SwipeListener)
+class NotificationAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Notification, NotificationAdapter.ViewHolder>(callback) {
 
 
@@ -25,7 +26,8 @@ class NotificationAdapter(private var swipeListener: SwipeListener)
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, getItem(position), direction)
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

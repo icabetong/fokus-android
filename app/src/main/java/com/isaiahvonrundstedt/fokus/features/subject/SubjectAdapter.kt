@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class SubjectAdapter(private var actionListener: ActionListener,
-                     private var swipeListener: SwipeListener)
+class SubjectAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Subject, SubjectAdapter.SubjectViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
@@ -25,7 +25,8 @@ class SubjectAdapter(private var actionListener: ActionListener,
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        swipeListener.onSwipePerformed(position, getItem(position), direction)
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
     }
 
     inner class SubjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

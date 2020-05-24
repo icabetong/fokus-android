@@ -12,10 +12,6 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.
     interface ActionListener {
         fun <T> onActionPerformed(t: T, action: Action)
 
-        enum class Action { SELECT, MODIFY }
-    }
-
-    interface SwipeListener {
-        fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int)
+        enum class Action { SELECT, MODIFY, DELETE }
     }
 }

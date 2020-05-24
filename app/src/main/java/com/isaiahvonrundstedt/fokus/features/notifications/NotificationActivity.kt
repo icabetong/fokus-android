@@ -17,7 +17,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class NotificationActivity: BaseActivity(), BaseAdapter.SwipeListener {
+class NotificationActivity: BaseActivity(), BaseAdapter.ActionListener {
 
     private val viewModel: NotificationViewModel by lazy {
         ViewModelProvider(this).get(NotificationViewModel::class.java)
@@ -48,16 +48,20 @@ class NotificationActivity: BaseActivity(), BaseAdapter.SwipeListener {
         })
     }
 
-    override fun <T> onSwipePerformed(position: Int, t: T, swipeDirection: Int) {
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Notification) {
-            if (swipeDirection == ItemTouchHelper.START) {
-                viewModel.remove(t)
-                val snackbar = Snackbar.make(recyclerView, R.string.feedback_notification_removed,
-                    Snackbar.LENGTH_SHORT)
-                snackbar.setAction(R.string.button_undo) {
-                    viewModel.insert(t)
+            when (action) {
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    viewModel.remove(t)
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_notification_removed,
+                        Snackbar.LENGTH_SHORT)
+                    snackbar.setAction(R.string.button_undo) {
+                        viewModel.insert(t)
+                    }
+                    snackbar.show()
                 }
-                snackbar.show()
+                BaseAdapter.ActionListener.Action.SELECT -> { }
+                BaseAdapter.ActionListener.Action.MODIFY -> { }
             }
         }
     }

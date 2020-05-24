@@ -8,7 +8,7 @@ import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 
-class CoreNotificationWorker(context: Context, workerParameters: WorkerParameters)
+class NotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private val dataStore by lazy {

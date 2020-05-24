@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.Core
+import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import org.joda.time.DateTime
 

@@ -3,12 +3,12 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.database.repository.CoreRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.Core
-import com.isaiahvonrundstedt.fokus.features.core.work.TaskNotificationWorker
+import com.isaiahvonrundstedt.fokus.features.core.data.Core
+import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
@@ -27,7 +27,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
         if (PreferenceManager(app).taskReminder && !task.isFinished) {
             val data = BaseWorker.convertTaskToData(task)
-            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
+            val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
             workManager.enqueue(request)
@@ -45,7 +45,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         if (PreferenceManager(app).taskReminder && !task.isFinished) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
-            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
+            val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
             workManager.enqueue(request)

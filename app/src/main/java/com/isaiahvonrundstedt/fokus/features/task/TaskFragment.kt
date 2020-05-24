@@ -18,14 +18,13 @@ import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.Core
+import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditorActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 
 class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {

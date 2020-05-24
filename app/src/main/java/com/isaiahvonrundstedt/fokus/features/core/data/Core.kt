@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core
+package com.isaiahvonrundstedt.fokus.features.core.data
 
 import androidx.room.Embedded
 import androidx.room.Relation

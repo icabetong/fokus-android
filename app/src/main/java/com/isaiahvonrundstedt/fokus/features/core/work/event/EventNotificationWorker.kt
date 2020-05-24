@@ -1,10 +1,8 @@
-package com.isaiahvonrundstedt.fokus.features.core.work
+package com.isaiahvonrundstedt.fokus.features.core.work.event
 
 import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkerParameters
+import androidx.work.*
+import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
@@ -32,7 +30,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
             PreferenceManager.eventReminderIntervalHalf -> event.schedule = event.schedule!!.minusMinutes(30)
             PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
         }
-        val notificationRequest = OneTimeWorkRequestBuilder<CoreNotificationWorker>()
+        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         if (currentTime.isBefore(event.schedule)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 event.schedule!!.toDateTime(DateTimeZone.UTC))

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.isaiahvonrundstedt.fokus.features.core.work.EventNotificationWorker
+import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker

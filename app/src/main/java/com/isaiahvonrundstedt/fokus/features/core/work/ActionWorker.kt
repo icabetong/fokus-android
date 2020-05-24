@@ -6,7 +6,7 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
-class NotificationActionWorker(context: Context, workerParameters: WorkerParameters)
+class ActionWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var tasks = AppDatabase.getInstance(context)?.tasks()

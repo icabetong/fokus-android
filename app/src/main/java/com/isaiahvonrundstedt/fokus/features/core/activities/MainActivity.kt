@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core
+package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,6 @@ import com.isaiahvonrundstedt.fokus.features.event.EventEditorActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.menu.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskEditorActivity
-import com.isaiahvonrundstedt.fokus.features.task.TaskFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
@@ -62,7 +61,7 @@ class MainActivity: BaseActivity() {
     override fun onSupportNavigateUp(): Boolean = true
 
     companion object {
-        const val actionNewTask = "com.isaiahvonrundstedt.fokus.features.core.MainActivity.newTask"
-        const val actionNewEvent = "com.isaiahvonrundstedt.fokus.features.core.MainActivity.newEvent"
+        const val actionNewTask = "com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity.newTask"
+        const val actionNewEvent = "com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity.newEvent"
     }
 }

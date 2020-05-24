@@ -7,7 +7,7 @@ import android.content.Intent
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import com.isaiahvonrundstedt.fokus.features.core.work.NotificationActionWorker
+import com.isaiahvonrundstedt.fokus.features.core.work.ActionWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
 class NotificationActionService: IntentService(name) {
@@ -35,9 +35,9 @@ class NotificationActionService: IntentService(name) {
         if (intent?.action == actionFinished)
             data.putString(extraAction, actionFinished)
 
-        val workRequest = OneTimeWorkRequest.Builder(NotificationActionWorker::class.java)
+        val workRequest = OneTimeWorkRequest.Builder(ActionWorker::class.java)
             .setInputData(data.build())
-            .addTag(NotificationActionWorker::class.java.simpleName)
+            .addTag(ActionWorker::class.java.simpleName)
             .build()
         WorkManager.getInstance(this).enqueue(workRequest)
     }

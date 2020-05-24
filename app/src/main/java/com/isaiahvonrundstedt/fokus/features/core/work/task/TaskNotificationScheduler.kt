@@ -1,10 +1,7 @@
-package com.isaiahvonrundstedt.fokus.features.core.work
+package com.isaiahvonrundstedt.fokus.features.core.work.task
 
 import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkerParameters
+import androidx.work.*
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
@@ -16,7 +13,7 @@ class TaskNotificationScheduler(private var context: Context, workerParameters: 
     override suspend fun doWork(): Result {
         val taskList = tasks?.fetch()
         taskList?.forEach { task ->
-            val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
+            val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(convertTaskToData(task))
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,

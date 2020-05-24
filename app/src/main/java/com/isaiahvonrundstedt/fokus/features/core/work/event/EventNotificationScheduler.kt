@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.work
+package com.isaiahvonrundstedt.fokus.features.core.work.event
 
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
@@ -6,7 +6,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 

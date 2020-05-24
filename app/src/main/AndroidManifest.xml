@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Fokus.Theme.Core">
-        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.StartupActivity">
+        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
                 android:resource="@xml/xml_shortcuts"/>
         </activity>
 
-        <activity android:name=".features.core.MainActivity"
+        <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" />
         <activity android:name=".features.task.TaskFragment" />
         <activity android:name=".features.subject.SubjectActivity" />

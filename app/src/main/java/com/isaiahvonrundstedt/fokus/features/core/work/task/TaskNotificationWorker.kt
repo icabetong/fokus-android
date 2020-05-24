@@ -1,11 +1,9 @@
-package com.isaiahvonrundstedt.fokus.features.core.work
+package com.isaiahvonrundstedt.fokus.features.core.work.task
 
 import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkerParameters
+import androidx.work.*
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
@@ -38,7 +36,7 @@ class TaskNotificationWorker(private var context: Context, workerParameters: Wor
             PreferenceManager.taskReminderIntervalDay -> task.dueDate = task.dueDate!!.minusHours(24)
         }
 
-        val notificationRequest = OneTimeWorkRequestBuilder<CoreNotificationWorker>()
+        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         if (currentTime.isBefore(task.dueDate!!)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 task.dueDate!!.toDateTime(DateTimeZone.UTC))

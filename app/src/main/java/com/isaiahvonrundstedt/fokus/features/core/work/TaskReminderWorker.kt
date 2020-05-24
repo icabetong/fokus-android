@@ -22,7 +22,7 @@ class TaskReminderWorker(private var context: Context, workerParameters: WorkerP
 
     private var database = AppDatabase.getInstance(context)
     private val dataStore by lazy {
-        NotificationRepository(context.applicationContext as Application)
+        NotificationRepository.getInstance(context.applicationContext as Application)
     }
 
     private fun scheduleNextReminder() {

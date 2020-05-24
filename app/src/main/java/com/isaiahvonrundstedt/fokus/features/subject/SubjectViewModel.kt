@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class SubjectViewModel(app: Application): BaseViewModel(app) {
 
-    private var repository = SubjectRepository(app)
+    private var repository = SubjectRepository.getInstance(app)
     private var items: LiveData<List<Subject>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Subject>>? = items

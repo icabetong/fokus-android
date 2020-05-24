@@ -6,9 +6,21 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import kotlinx.coroutines.Job
 
-class SubjectRepository(app: Application) {
+class SubjectRepository private constructor (app: Application) {
 
-    private var job = Job()
+    companion object {
+        private var instance: SubjectRepository? = null
+
+        fun getInstance(app: Application): SubjectRepository {
+            if (instance == null) {
+                synchronized(SubjectRepository::class) {
+                    instance = SubjectRepository(app)
+                }
+            }
+            return instance!!
+        }
+    }
+
     private var database = AppDatabase.getInstance(app)
     private var subjects = database?.subjects()
 

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
-    private var repository = CoreRepository(app)
+    private var repository = CoreRepository.getInstance(app)
     private var workManager = WorkManager.getInstance(app)
     private var items: LiveData<List<Core>>? = repository.fetch()
 

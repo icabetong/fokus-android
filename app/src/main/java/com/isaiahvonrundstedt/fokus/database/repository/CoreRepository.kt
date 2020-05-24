@@ -9,12 +9,25 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CoreRepository (app: Application) {
+class CoreRepository private constructor (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var cores = database?.cores()
     private var tasks = database?.tasks()
     private var attachments = database?.attachments()
+
+    companion object {
+        private var instance: CoreRepository? = null
+
+        fun getInstance(app: Application): CoreRepository {
+            if (instance == null) {
+                synchronized(CoreRepository::class) {
+                    instance = CoreRepository(app)
+                }
+            }
+            return instance!!
+        }
+    }
 
     fun fetch(): LiveData<List<Core>>? = cores?.fetch()
 

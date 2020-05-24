@@ -15,7 +15,7 @@ import org.joda.time.DateTime
 
 class EventViewModel(private var app: Application): BaseViewModel(app) {
 
-    private var repository = EventRepository(app)
+    private var repository = EventRepository.getInstance(app)
     private var workManager = WorkManager.getInstance(app)
     private var items: LiveData<List<Event>>? = repository.fetch()
 

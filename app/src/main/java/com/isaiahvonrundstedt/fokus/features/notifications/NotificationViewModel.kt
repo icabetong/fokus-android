@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class NotificationViewModel(app: Application): BaseViewModel(app) {
 
-    private var repository = NotificationRepository(app)
+    private var repository = NotificationRepository.getInstance(app)
     private var items: LiveData<List<Notification>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Notification>>? = items

@@ -5,10 +5,23 @@ import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.event.Event
 
-class EventRepository (app: Application) {
+class EventRepository private constructor (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var events = database?.events()
+
+    companion object {
+        private var instance: EventRepository? = null
+
+        fun getInstance(app: Application): EventRepository {
+            if (instance == null) {
+                synchronized(EventRepository::class) {
+                    instance = EventRepository(app)
+                }
+            }
+            return instance!!
+        }
+    }
 
     fun fetch(): LiveData<List<Event>>? = events?.fetch()
 

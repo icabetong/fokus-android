@@ -7,10 +7,23 @@ import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class NotificationRepository(app: Application) {
+class NotificationRepository private constructor (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var notifications = database?.notifications()
+
+    companion object {
+        private var instance: NotificationRepository? = null
+
+        fun getInstance(app: Application): NotificationRepository {
+            if (instance == null) {
+                synchronized(NotificationRepository::class) {
+                    instance = NotificationRepository(app)
+                }
+            }
+            return instance!!
+        }
+    }
 
     fun fetch(): LiveData<List<Notification>>? = notifications?.fetch()
 

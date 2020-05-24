@@ -9,7 +9,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 
 class SearchViewModel(app: Application): BaseViewModel(app) {
 
-    private var repository = CoreRepository(app)
+    private var repository = CoreRepository.getInstance(app)
     private var initialList = ArrayList<Core>()
     private var _items: MutableLiveData<List<Core>> = MutableLiveData()
     internal var items: LiveData<List<Core>> = _items

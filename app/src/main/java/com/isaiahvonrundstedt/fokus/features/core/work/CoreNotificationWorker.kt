@@ -12,7 +12,7 @@ class CoreNotificationWorker(context: Context, workerParameters: WorkerParameter
     : BaseWorker(context, workerParameters) {
 
     private val dataStore by lazy {
-        NotificationRepository(context.applicationContext as Application)
+        NotificationRepository.getInstance(context.applicationContext as Application)
     }
 
     override suspend fun doWork(): Result  {

@@ -9,21 +9,21 @@ import kotlinx.coroutines.launch
 
 class NotificationViewModel(app: Application): BaseViewModel(app) {
 
-    private var dataStore = NotificationRepository(app)
-    private var items: LiveData<List<Notification>>? = dataStore.fetch()
+    private var repository = NotificationRepository(app)
+    private var items: LiveData<List<Notification>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Notification>>? = items
 
     fun insert(notification: Notification) = viewModelScope.launch {
-        dataStore.insert(notification)
+        repository.insert(notification)
     }
 
     fun remove(notification: Notification) = viewModelScope.launch {
-        dataStore.remove(notification)
+        repository.remove(notification)
     }
 
     fun clear() {
-        dataStore.clear()
+        repository.clear()
     }
 
 }

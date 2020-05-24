@@ -15,14 +15,14 @@ import org.joda.time.DateTime
 
 class EventViewModel(private var app: Application): BaseViewModel(app) {
 
-    private var dataStore = EventRepository(app)
+    private var repository = EventRepository(app)
     private var workManager = WorkManager.getInstance(app)
-    private var items: LiveData<List<Event>>? = dataStore.fetch()
+    private var items: LiveData<List<Event>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Event>>? = items
 
     fun insert(event: Event) = viewModelScope.launch {
-        dataStore.insert(event)
+        repository.insert(event)
 
         if (PreferenceManager(app).taskReminder) {
             val data = BaseWorker.convertEventToData(event)
@@ -34,12 +34,12 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     }
 
     fun remove(event: Event) = viewModelScope.launch {
-        dataStore.remove(event)
+        repository.remove(event)
         workManager.cancelUniqueWork(event.id)
     }
 
     fun update(event: Event) = viewModelScope.launch {
-        dataStore.update(event)
+        repository.update(event)
 
         val currentTime = DateTime.now()
         if (PreferenceManager(app).taskReminder && event.schedule!!.isAfter(currentTime)) {

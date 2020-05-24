@@ -9,21 +9,21 @@ import kotlinx.coroutines.launch
 
 class SubjectViewModel(app: Application): BaseViewModel(app) {
 
-    private var dataStore = SubjectRepository(app)
-    private var items: LiveData<List<Subject>>? = dataStore.fetch()
+    private var repository = SubjectRepository(app)
+    private var items: LiveData<List<Subject>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Subject>>? = items
 
     fun insert(subject: Subject) = viewModelScope.launch {
-        dataStore.insert(subject)
+        repository.insert(subject)
     }
 
     fun remove(subject: Subject) = viewModelScope.launch {
-        dataStore.remove(subject)
+        repository.remove(subject)
     }
 
     fun update(subject: Subject) = viewModelScope.launch {
-        dataStore.update(subject)
+        repository.update(subject)
     }
 
 }

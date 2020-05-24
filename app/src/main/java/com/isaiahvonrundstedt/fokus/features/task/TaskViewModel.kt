@@ -16,14 +16,14 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
-    private var dataStore = CoreRepository(app)
+    private var repository = CoreRepository(app)
     private var workManager = WorkManager.getInstance(app)
-    private var items: LiveData<List<Core>>? = dataStore.fetch()
+    private var items: LiveData<List<Core>>? = repository.fetch()
 
     fun fetch(): LiveData<List<Core>>? = items
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
-        dataStore.insert(task, attachmentList)
+        repository.insert(task, attachmentList)
 
         if (PreferenceManager(app).taskReminder) {
             val data = BaseWorker.convertTaskToData(task)
@@ -35,12 +35,12 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     }
 
     fun remove(task: Task) = viewModelScope.launch {
-        dataStore.remove(task)
+        repository.remove(task)
         workManager.cancelUniqueWork(task.taskID)
     }
 
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
-        dataStore.update(task, attachmentList)
+        repository.update(task, attachmentList)
 
         if (PreferenceManager(app).taskReminder && !task.isFinished) {
             workManager.cancelUniqueWork(task.taskID)

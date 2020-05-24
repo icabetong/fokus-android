@@ -9,13 +9,13 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 
 class SearchViewModel(app: Application): BaseViewModel(app) {
 
-    private var dataStore = CoreRepository(app)
+    private var repository = CoreRepository(app)
     private var initialList = ArrayList<Core>()
     private var _items: MutableLiveData<List<Core>> = MutableLiveData()
     internal var items: LiveData<List<Core>> = _items
 
     fun fetch(query: String) {
-        dataStore.search(query) { items ->
+        repository.search(query) { items ->
             initialList.clear()
             initialList.addAll(items)
             initialList.distinctBy { it.task.taskID }.toMutableList()

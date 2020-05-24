@@ -34,9 +34,8 @@ class CoreRepository (app: Application) {
 
     suspend fun update(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks?.update(task)
-        if (attachmentList.isNotEmpty()) {
-            attachments?.removeUsingTaskID(task.taskID)
+        attachments?.removeUsingTaskID(task.taskID)
+        if (attachmentList.isNotEmpty())
             attachmentList.forEach { attachments?.insert(it) }
-        }
     }
 }

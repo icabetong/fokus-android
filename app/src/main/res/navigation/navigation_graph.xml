@@ -13,11 +13,7 @@
         tools:layout="@layout/fragment_task">
         <action
             android:id="@+id/action_navigation_tasks_to_navigation_events"
-            app:destination="@id/navigation_events"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:destination="@id/navigation_events"/>
     </fragment>
 
     <fragment

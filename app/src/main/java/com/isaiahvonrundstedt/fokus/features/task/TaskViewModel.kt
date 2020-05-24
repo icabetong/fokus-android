@@ -25,7 +25,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)
 
-        if (PreferenceManager(app).taskReminder) {
+        if (PreferenceManager(app).taskReminder && !task.isFinished) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequestBuilder<TaskNotificationWorker>()
                 .setInputData(data)

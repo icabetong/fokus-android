@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/titleView"
         app:layout_constraintStart_toEndOf="@id/tagView"
@@ -37,8 +37,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
-        android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Title"
         app:layout_constraintTop_toBottomOf="@id/overlineView"
         app:layout_constraintBottom_toTopOf="@id/summaryView"
         app:layout_constraintStart_toEndOf="@id/tagView"
@@ -51,11 +50,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Body"
         app:layout_constraintTop_toBottomOf="@id/titleView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tagView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        tools:text="sample"/>
+        tools:text="Introduction to Web Design"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

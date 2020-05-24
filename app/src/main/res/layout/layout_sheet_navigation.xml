@@ -11,9 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding"
         android:text="@string/app_name"
-        android:textSize="22sp"
-        android:textColor="@color/colorPrimaryText"
-        android:textStyle="bold" />
+        android:textAppearance="@style/Fokus.TextAppearance.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

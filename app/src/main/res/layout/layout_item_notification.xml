@@ -23,8 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/summaryView"
         app:layout_constraintStart_toEndOf="@id/iconView"
@@ -37,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Body"
         app:layout_constraintTop_toBottomOf="@id/titleView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iconView"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Metadata"
         tools:text="h:mm"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

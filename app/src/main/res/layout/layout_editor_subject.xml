@@ -21,8 +21,7 @@
             android:paddingBottom="8dp"
             android:inputType="textCapWords"
             android:hint="@string/field_subject_code"
-            android:textSize="26sp"
-            android:textStyle="bold"
+            android:textAppearance="@style/Fokus.TextAppearance.Title"
             android:autofillHints="subject_name"
             android:background="@android:color/transparent">
 
@@ -32,7 +31,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -46,7 +45,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -58,7 +57,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -72,7 +71,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/daysOfWeekTextView"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
@@ -99,12 +98,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/startTimeTextView"
                     android:layout_width="0dp"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="8dp"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
@@ -122,7 +121,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/endTimeTextView"
                     android:layout_width="0dp"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
                     android:layout_marginStart="8dp"
@@ -144,7 +143,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -158,7 +157,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tagView"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"

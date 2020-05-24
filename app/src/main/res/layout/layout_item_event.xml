@@ -20,17 +20,16 @@
                 android:id="@+id/locationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_marginBottom="4dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
                 tools:text="COMSCI 2101"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nameView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:textSize="18sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
                 tools:text="Feed the Cat"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -38,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
                 tools:text="Some Description"/>
 
         </LinearLayout>

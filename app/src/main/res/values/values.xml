@@ -87,6 +87,20 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
 
+    <style name="Fokus.TextAppearance.Title" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Fokus.TextAppearance.Body" parent="TextAppearance.AppCompat.Body1"/>
+    <style name="Fokus.TextAppearance.Body.Medium" parent="TextAppearance.AppCompat.Body2"/>
+    <style name="Fokus.TextAppearance.List.Overline" parent="TextAppearance.MaterialComponents.Overline"/>
+    <style name="Fokus.TextAppearance.List.Title" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Fokus.TextAppearance.List.Body" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+    <style name="Fokus.TextAppearance.List.Metadata" parent="TextAppearance.AppCompat.Caption"/>
+
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#0f9d58</color>
 </resources>

@@ -13,7 +13,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
-    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.shape_item_swipe_delete)
+    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.shape_item_delete_icon)
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         return makeMovementFlags(0, ItemTouchHelper.START)

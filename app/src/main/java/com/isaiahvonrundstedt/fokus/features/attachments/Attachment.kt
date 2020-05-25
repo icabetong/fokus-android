@@ -11,7 +11,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConv
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
 import java.util.*
 
 @Parcelize

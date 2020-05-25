@@ -9,7 +9,9 @@ import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.*
+import com.isaiahvonrundstedt.fokus.features.shared.components.converter.ColorConverter
+import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 

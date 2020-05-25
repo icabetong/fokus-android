@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.shared.components.converter
 
 import androidx.room.TypeConverter
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 

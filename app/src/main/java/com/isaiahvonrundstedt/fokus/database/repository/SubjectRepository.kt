@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import kotlinx.coroutines.Job
 
 class SubjectRepository private constructor (app: Application) {
 

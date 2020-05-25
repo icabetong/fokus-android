@@ -20,9 +20,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters)
         notification.dateTimeTriggered = DateTime.now()
 
         dataStore.insert(notification)
-        if (notification.type == Notification.typeTaskReminder)
-            sendNotification(notification)
-        else sendNotification(notification)
+        sendNotification(notification)
 
         return Result.success()
     }

@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
@@ -24,7 +25,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
 
-        if (PreferenceManager(app).taskReminder) {
+        if (PreferenceManager(app).eventReminder) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
@@ -41,8 +42,9 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
 
-        val currentTime = DateTime.now()
-        if (PreferenceManager(app).taskReminder && event.schedule!!.isAfter(currentTime)) {
+        Log.e("DEBUG", "VIEWMODEL")
+        if (PreferenceManager(app).eventReminder && event.schedule!!.isBeforeNow) {
+            Log.e("DEBUG", "CONDITION")
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)

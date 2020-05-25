@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.work.event
 
 import android.content.Context
+import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -19,6 +20,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
 
     override suspend fun doWork(): Result {
         val currentTime = DateTime.now()
+        Log.e("DEBUG", "WORKER")
 
         val event = convertDataToEvent(inputData)
         val notification = Notification().apply {
@@ -34,7 +36,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
             PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
         }
         val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        if (currentTime.isBefore(event.schedule)) {
+        if (currentTime.isBefore(event.schedule!!)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 event.schedule!!.toDateTime(DateTimeZone.UTC))
             notificationRequest.setInitialDelay(delay.standardMinutes, TimeUnit.MINUTES)

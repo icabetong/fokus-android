@@ -16,10 +16,10 @@ interface EventDAO {
     @Update
     suspend fun update(event: Event)
 
-    @Query("SELECT * FROM events")
+    @Query("SELECT * FROM events ORDER BY schedule ASC")
     fun fetch(): LiveData<List<Event>>
 
-    @Query("SELECT * FROM events")
+    @Query("SELECT * FROM events ORDER BY schedule ASC")
     suspend fun fetchList(): List<Event>
 
 }

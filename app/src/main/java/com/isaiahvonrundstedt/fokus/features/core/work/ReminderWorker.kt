@@ -85,7 +85,8 @@ class ReminderWorker(private var context: Context, workerParameters: WorkerParam
             val executionTime = if (DateTime.now().isBefore(reminderTime?.toDateTimeToday()))
                 Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay()
                     .plusHours(reminderTime?.hourOfDay ?: 8)
-                    .plusMinutes(reminderTime?.minuteOfHour ?: 30))
+                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
+                    .plusMinutes(1))
             else
                 Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay()
                     .plusDays(1)

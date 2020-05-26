@@ -8,6 +8,8 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
@@ -63,6 +65,10 @@ abstract class BaseActivity: AppCompatActivity() {
 
     protected fun showFeedback(view: View, @StringRes id: Int) {
         Snackbar.make(view, id, Snackbar.LENGTH_SHORT).show()
+    }
+
+    fun AppCompatTextView.editorValueChanged() {
+        this.setTextColor(ContextCompat.getColor(this@BaseActivity, R.color.colorPrimaryText))
     }
 
 }

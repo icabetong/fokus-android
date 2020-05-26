@@ -87,11 +87,14 @@
     <string name="field_notes">Notes</string>
     <string name="field_subject">Subject</string>
     <string name="field_due_date">Due Date</string>
-    <string name="field_due_date_is_next_meeting">Deadline is the next meeting</string>
     <string name="field_search">Search</string>
     <string name="field_event_name">Event Name</string>
     <string name="field_schedule">Schedule</string>
     <string name="field_location">Location</string>
+    <string name="field_attachments">Attachments</string>
+    <string name="field_class_time">Class Time</string>
+    <string name="field_color_tag">Color Tag</string>
+    <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
     <string name="feedback_notification_removed">Notification removed</string>

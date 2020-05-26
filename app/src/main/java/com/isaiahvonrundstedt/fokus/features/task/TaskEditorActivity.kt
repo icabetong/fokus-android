@@ -72,6 +72,9 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             subjectTextView.text = subject!!.code
             dueDateTextView.text = task.formatDueDate(this)
 
+            subjectTextView.editorValueChanged()
+            dueDateTextView.editorValueChanged()
+
             attachmentList.forEach { attachment ->
                 attachmentChipGroup.addView(buildChip(attachment), 0)
             }
@@ -91,8 +94,10 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
                     task.dueDate = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView)
+                    if (v is AppCompatTextView) {
                         v.text = task.formatDueDate(this@TaskEditorActivity)
+                        v.editorValueChanged()
+                    }
                 }
             }
         }
@@ -157,8 +162,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         this.subject = subject
 
         subjectTextView.text = subject.code
-        tagHolderView.setImageDrawable(subject.tintDrawable(
-            ContextCompat.getDrawable(this, R.drawable.shape_color_holder)!!))
+        subjectTextView.editorValueChanged()
         subjectDialog?.dismiss()
     }
 

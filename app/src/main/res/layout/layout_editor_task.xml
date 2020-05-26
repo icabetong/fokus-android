@@ -6,151 +6,160 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_appbar_editor"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:inputType="textCapWords"
-            android:hint="@string/field_task_name"
-            android:textAppearance="@style/Fokus.TextAppearance.Title"
-            android:autofillHints="subject"
-            android:background="@android:color/transparent">
-
-            <requestFocus/>
-
-        </androidx.appcompat.widget.AppCompatEditText>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_pencil"
-                app:tint="?attr/colorControlNormal"/>
+            <include layout="@layout/layout_appbar_editor" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/notesEditText"
+                android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:hint="@string/field_notes"
-                android:inputType="textMultiLine"
-                android:lines="4"
-                android:minLines="2"
-                android:maxLines="6"
-                android:scrollbars="vertical"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal"
-            android:animateLayoutChanges="true">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/tagHolderView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_atom"
-                app:tint="?attr/colorControlNormal"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/subjectTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/field_subject"
-                android:textSize="18sp"
-                android:clickable="true"
-                android:focusable="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:srcCompat="@drawable/ic_custom_calendar"
-                app:tint="?attr/colorControlNormal"/>
+                android:autofillHints="subject"
+                android:background="@android:color/transparent"
+                android:hint="@string/field_task_name"
+                android:inputType="textCapWords"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textAppearance="@style/Fokus.TextAppearance.Title">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/dueDateTextView"
+                <requestFocus />
+
+            </androidx.appcompat.widget.AppCompatEditText>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/field_due_date"
-                android:textSize="18sp"
-                android:clickable="true"
-                android:focusable="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_clip"
-                app:tint="?attr/colorControlNormal"/>
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/shape_surface_background"
+                android:orientation="vertical"
+                android:paddingVertical="16dp">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/attachmentChipGroup"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_notes"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/notesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/listPreferredItemHeightSmall"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/field_not_set"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="6"
+                    android:minLines="2"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:scrollbars="vertical"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="?attr/listPreferredItemHeightSmall"
-                android:layout_gravity="center"
-                android:paddingHorizontal="@dimen/activity_padding"
-                android:animateLayoutChanges="true">
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/attachmentChip"
-                    android:layout_width="wrap_content"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_add_attachment"
-                    app:closeIconEnabled="false" />
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-            </com.google.android.material.chip.ChipGroup>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/subjectTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_due_date"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dueDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_attachments"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/attachmentChipGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:animateLayoutChanges="true"
+                    android:minHeight="?attr/listPreferredItemHeightSmall"
+                    android:paddingHorizontal="@dimen/activity_padding">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/attachmentChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_add_attachment"
+                        app:closeIconEnabled="false" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/actionButton"

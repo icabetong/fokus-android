@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#006d2d</color>
     <color name="colorPrimaryLight">#55cf86</color>
     <color name="colorOnPrimary">#000000</color>
-    <color name="colorSurface">#ffffff</color>
+    <color name="colorSurface">#eeeeee</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorError">#B00020</color>
     <color name="colorOnError">#ffffff</color>

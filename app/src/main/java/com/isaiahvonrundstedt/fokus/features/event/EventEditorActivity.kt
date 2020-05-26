@@ -39,6 +39,7 @@ class EventEditorActivity: BaseActivity() {
             notesEditText.setText(event.notes)
             locationEditText.setText(event.location)
             scheduleTextView.text = event.formatSchedule(this)
+            scheduleTextView.editorValueChanged()
         }
     }
 
@@ -53,8 +54,10 @@ class EventEditorActivity: BaseActivity() {
                     event.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView)
+                    if (v is AppCompatTextView) {
                         v.text = event.formatSchedule(this@EventEditorActivity)
+                        v.editorValueChanged()
+                    }
                 }
             }
         }

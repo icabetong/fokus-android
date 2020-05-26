@@ -49,6 +49,8 @@ class SubjectEditorActivity: BaseActivity() {
             startTimeTextView.text = formatTime(subject.startTime!!)
             endTimeTextView.text = formatTime(subject.endTime!!)
 
+            startTimeTextView.editorValueChanged()
+            endTimeTextView.editorValueChanged()
             val builder = StringBuilder()
             val selectedDays = Subject.getDays(subject.daysOfWeek)
 
@@ -67,8 +69,8 @@ class SubjectEditorActivity: BaseActivity() {
             tagView.text = getString(Subject.Tag.getName(subject.tag))
         }
 
-        daysOfWeekTextView.setOnClickListener {
-            MaterialDialog(it.context).show {
+        daysOfWeekTextView.setOnClickListener { v ->
+            MaterialDialog(v.context).show {
                 lifecycleOwner(this@SubjectEditorActivity)
                 title(R.string.days_of_week_dialog_title)
                 listItemsMultiChoice(R.array.days_of_week_items, initialSelection = selectedIndices)
@@ -87,9 +89,9 @@ class SubjectEditorActivity: BaseActivity() {
                         else if (index < items.size - 2)
                             builder.append(", ")
                     }
-                    (it as AppCompatTextView).text = builder
+                    (v as AppCompatTextView).text = builder
                 }
-                positiveButton(R.string.button_done)
+                positiveButton(R.string.button_done) { (v as AppCompatTextView).editorValueChanged() }
             }
         }
 
@@ -130,7 +132,10 @@ class SubjectEditorActivity: BaseActivity() {
                     }
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView) v.text = formatTime(subject.endTime!!)
+                    if (v is AppCompatTextView) {
+                        v.text = formatTime(subject.endTime!!)
+                        v.editorValueChanged()
+                    }
                 }
             }
         }
@@ -144,8 +149,10 @@ class SubjectEditorActivity: BaseActivity() {
 
                     this@SubjectEditorActivity.tagHolderView
                         .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
-                    if (v is AppCompatTextView)
+                    if (v is AppCompatTextView) {
                         v.text = getString(Subject.Tag.getName(subject.tag))
+                        v.editorValueChanged()
+                    }
                 }
             }
         }

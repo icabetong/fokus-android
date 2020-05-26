@@ -92,6 +92,14 @@
     </style>
     <style name="Fokus.TextAppearance.Body" parent="TextAppearance.AppCompat.Body1"/>
     <style name="Fokus.TextAppearance.Body.Medium" parent="TextAppearance.AppCompat.Body2"/>
+    <style name="Fokus.TextAppearance.Editor.Hint" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
+        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="Fokus.TextAppearance.List.Overline" parent="TextAppearance.MaterialComponents.Overline"/>
     <style name="Fokus.TextAppearance.List.Title" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textSize">18sp</item>

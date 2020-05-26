@@ -5,171 +5,196 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/layout_appbar_editor"/>
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/codeEditText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:inputType="textCapWords"
-            android:hint="@string/field_subject_code"
-            android:textAppearance="@style/Fokus.TextAppearance.Title"
-            android:autofillHints="subject_name"
-            android:background="@android:color/transparent">
+            android:orientation="vertical">
 
-            <requestFocus/>
-
-        </androidx.appcompat.widget.AppCompatEditText>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_pencil"
-                app:tint="?attr/colorControlNormal"/>
+            <include layout="@layout/layout_appbar_editor"/>
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/descriptionEditText"
+                android:id="@+id/codeEditText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:inputType="textCapWords"
-                android:hint="@string/field_description"
-                android:background="@android:color/transparent"/>
+                android:hint="@string/field_subject_code"
+                android:textAppearance="@style/Fokus.TextAppearance.Title"
+                android:autofillHints="subject_name"
+                android:background="@android:color/transparent">
 
-        </LinearLayout>
+                <requestFocus/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
+            </androidx.appcompat.widget.AppCompatEditText>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_calendar"
-                app:tint="?attr/colorControlNormal"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/daysOfWeekTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/field_days_of_week"
-                android:textSize="18sp"
-                android:clickable="true"
-                android:focusable="true"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_custom_clock"
-                app:tint="?attr/colorControlNormal"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/startTimeTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/field_start_time"
-                    android:textSize="18sp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/endTimeTextView"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_description"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/endTimeTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/descriptionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/listPreferredItemHeightSmall"
                     android:layout_gravity="center"
-                    android:gravity="center_vertical"
-                    android:layout_marginStart="8dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@string/field_end_time"
-                    android:textSize="18sp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:inputType="textCapWords"
+                    android:hint="@string/field_not_set"
                     android:background="@android:color/transparent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/startTimeTextView"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/tagHolderView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/shape_color_holder"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tagView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/tag_color_sky"
-                android:textSize="18sp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_days_of_week"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/daysOfWeekTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_class_time"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/startTimeTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_start_time"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/endTimeTextView"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/endTimeTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_end_time"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="@android:color/transparent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/startTimeTextView"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_color_tag"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/tagHolderView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/activity_padding"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/shape_color_holder"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tagView"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/listPreferredItemHeightSmall"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/tag_color_sky"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/actionButton"

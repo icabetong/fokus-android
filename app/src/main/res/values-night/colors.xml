@@ -7,5 +7,6 @@
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>
     <color name="colorStatusBarBackground">@color/colorWindowBackground</color>
     <color name="colorPrimaryText">@color/colorOnSurface</color>
+    <color name="colorSecondaryText">#808080</color>
 
 </resources>

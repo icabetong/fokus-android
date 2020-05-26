@@ -11,18 +11,20 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iconView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/shape_color_holder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/colorOnSurface"/>
+        app:tint="@color/colorPrimary"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:textAppearance="@style/Fokus.TextAppearance.List.Title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/summaryView"
@@ -35,7 +37,7 @@
         android:id="@+id/summaryView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:textAppearance="@style/Fokus.TextAppearance.List.Body"
         app:layout_constraintTop_toBottomOf="@id/titleView"
         app:layout_constraintBottom_toBottomOf="parent"

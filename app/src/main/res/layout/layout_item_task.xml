@@ -14,25 +14,16 @@
         android:layout_height="wrap_content"
         android:clipChildren="true">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:button="@drawable/ic_toggle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/subjectNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/taskNameView"
-            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="COMSCI 2101"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -41,10 +32,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title"
             app:layout_constraintTop_toBottomOf="@id/subjectNameView"
             app:layout_constraintBottom_toTopOf="@id/attachmentsView"
-            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Feed the Cat"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -52,10 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Body"
             app:layout_constraintTop_toBottomOf="@id/taskNameView"
             app:layout_constraintBottom_toTopOf="@id/dueDateView"
-            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="8 files attached"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -63,11 +56,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Body"
             app:layout_constraintTop_toBottomOf="@id/attachmentsView"
             app:layout_constraintBottom_toTopOf="@id/tagView"
-            app:layout_constraintStart_toEndOf="@id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Sunday at 1:00PM"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_toggle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <View
             android:id="@+id/tagView"

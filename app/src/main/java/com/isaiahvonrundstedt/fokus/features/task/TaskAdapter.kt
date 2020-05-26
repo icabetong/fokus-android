@@ -43,27 +43,12 @@ class TaskAdapter(private var actionListener: ActionListener)
         private val attachmentView: AppCompatTextView = itemView.findViewById(R.id.attachmentsView)
         private val tagView: View = itemView.findViewById(R.id.tagView)
 
-        private fun formatDate(core: Core) {
-            val currentTime = DateTime.now()
-            if (core.task.dueDate!!.isBefore(currentTime) && !core.task.isFinished) {
-                dueDateView.setTextColor(ContextCompat.getColor(rootView.context,
-                    R.color.colorSwipeLeft))
-                dueDateView.text = String.format(rootView.context.getString(R.string.missed),
-                    core.task.formatDueDate(rootView.context))
-            } else {
-                dueDateView.text = core.task.formatDueDate(rootView.context)
-                dueDateView.setTextColor(ContextCompat.getColor(rootView.context,
-                    R.color.colorOnSurface))
-            }
-        }
-
         fun onBind(core: Core) {
             checkBox.setOnClickListener { view ->
                 view as MaterialCheckBox
                 core.task.isFinished = view.isChecked
                 if (view.isChecked) {
                     taskNameView.paintFlags = taskNameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    formatDate(core)
                 } else
                     taskNameView.paintFlags = taskNameView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 actionListener.onActionPerformed(core, ActionListener.Action.MODIFY)
@@ -81,11 +66,11 @@ class TaskAdapter(private var actionListener: ActionListener)
             }
 
             subjectNameView.text = core.subject.description ?: core.subject.code
+            dueDateView.text = core.task.formatDueDate(rootView.context)
             tagView.setBackgroundColor(core.subject.tag.actualColor)
 
             checkBox.isChecked = core.task.isFinished
             taskNameView.text = core.task.name
-            formatDate(core)
         }
     }
 

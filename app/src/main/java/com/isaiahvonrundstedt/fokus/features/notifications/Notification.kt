@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.notifications
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -30,21 +31,13 @@ data class Notification @JvmOverloads constructor (
     var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
-    private fun getIconRes(): Int {
-        return if (type == typeTaskReminder) R.drawable.ic_custom_warning
-        else if (type == typeEventReminder) R.drawable.ic_custom_calendar
-        else R.drawable.ic_custom_clipboards
-    }
-
-    fun getIconDrawable(context: Context): Drawable? {
-        val colorRes = if (type == typeGeneric) R.color.colorIconReminder else R.color.colorIconWarning
-        val drawable = ContextCompat.getDrawable(context, getIconRes())
-
-        drawable?.mutate()
-        drawable?.colorFilter = BlendModeColorFilterCompat
-            .createBlendModeColorFilterCompat(ContextCompat.getColor(context, colorRes),
-            BlendModeCompat.SRC_ATOP)
-        return drawable
+    fun tintDrawable(sourceView: AppCompatImageView) {
+        val colorID = if (type == typeGeneric) R.color.colorIconReminder else R.color.colorIconWarning
+        sourceView.setImageDrawable(sourceView.drawable.mutate().apply {
+            colorFilter = BlendModeColorFilterCompat
+                .createBlendModeColorFilterCompat(ContextCompat.getColor(sourceView.context, colorID),
+                    BlendModeCompat.SRC_ATOP)
+        })
     }
 
     fun formatDateTime(): String {

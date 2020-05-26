@@ -40,7 +40,7 @@ class NotificationAdapter(private var actionListener: ActionListener)
         fun onBind(notification: Notification) {
             titleView.text = notification.title
             summaryView.text = notification.content
-            iconView.setImageDrawable(notification.getIconDrawable(rootView.context))
+            notification.tintDrawable(iconView)
             dateTimeView.text = notification.formatDateTime()
         }
     }

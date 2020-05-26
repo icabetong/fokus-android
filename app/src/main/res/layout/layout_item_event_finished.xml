@@ -20,7 +20,6 @@
                 android:id="@+id/nameView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Title"
                 tools:text="Feed the Cat"/>
 

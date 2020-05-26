@@ -173,7 +173,6 @@
     <string name="and">&#160;and&#160;</string>
     <string name="yesterday">Yesterday at %1$s</string>
     <string name="tomorrow">Tomorrow at %1$s</string>
-    <string name="missed">Missed! - %1$s</string>
     <string name="today_at">Today at %1$s</string>
     <string name="due_today_at">Due today at %1$s</string>
     <string name="due_tomorrow_at">Due tomorrow at %1$s</string>

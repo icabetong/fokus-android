@@ -183,7 +183,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         subjectDialog?.dismiss()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+                                            grantResults: IntArray) {
         if (requestCode == PermissionManager.readStorageRequestCode
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -197,6 +198,9 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         // then create an Attachment object and a corresponding ChipView
         // attachments have to be inserted temporarily on the ArrayList
         if (requestCode == attachmentRequestCode && resultCode == Activity.RESULT_OK) {
+            contentResolver?.takePersistableUriPermission(data?.data!!,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
             val attachment = Attachment().apply {
                 taskID = task.taskID
                 uri = data?.data

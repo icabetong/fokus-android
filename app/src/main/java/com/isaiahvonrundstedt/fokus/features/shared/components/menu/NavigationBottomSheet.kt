@@ -28,7 +28,7 @@ class NavigationBottomSheet: BaseBottomSheet(), MenuAdapter.MenuItemSelectionLis
             PreferenceManager(context).name)
 
         val adapter = MenuAdapter(activity, this)
-        adapter.setItems(R.menu.menu_navigation)
+        adapter.setItems(R.menu.menu_main)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
     }

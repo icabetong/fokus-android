@@ -1,9 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
-import android.content.Intent
 import android.os.Build
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +10,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.search.SearchActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 
 abstract class BaseActivity: AppCompatActivity() {
@@ -47,15 +43,6 @@ abstract class BaseActivity: AppCompatActivity() {
 
     protected fun setToolbarTitle(@StringRes id: Int) {
         this.toolbar?.title = getString(id)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                startActivity(Intent(this, SearchActivity::class.java))
-                true
-            } else -> false
-        }
     }
 
     protected fun createSnackbar(view: View, @StringRes id: Int) {

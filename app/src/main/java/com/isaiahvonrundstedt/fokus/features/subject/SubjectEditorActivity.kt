@@ -53,6 +53,7 @@ class SubjectEditorActivity: BaseActivity() {
             startTimeTextView.text = formatTime(subject.startTime!!)
             endTimeTextView.text = formatTime(subject.endTime!!)
 
+
             startTimeTextView.editorValueChanged()
             endTimeTextView.editorValueChanged()
             val builder = StringBuilder()
@@ -67,10 +68,12 @@ class SubjectEditorActivity: BaseActivity() {
                     builder.append(", ")
             }
             daysOfWeekTextView.text = builder.toString()
+            daysOfWeekTextView.editorValueChanged()
 
             this@SubjectEditorActivity.tagHolderView
                 .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
             tagView.text = getString(Subject.Tag.getName(subject.tag))
+            tagView.editorValueChanged()
         }
 
         daysOfWeekTextView.setOnClickListener { v ->
@@ -169,26 +172,25 @@ class SubjectEditorActivity: BaseActivity() {
             // the corresponding field then return to stop
             // the execution of the code
             if (codeEditText.text.isNullOrEmpty()) {
-                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_name)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_name)
                 codeEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (descriptionEditText.text.isNullOrEmpty()) {
-                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_description)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_description)
                 descriptionEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (subject.startTime == null) {
-                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_start_time)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_start_time)
                 startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             if (subject.endTime == null) {
-                createSnackbar(window.decorView.rootView,
-                    R.string.feedback_subject_empty_end_time)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_end_time)
                 endTimeTextView.performClick()
                 return@setOnClickListener
             }

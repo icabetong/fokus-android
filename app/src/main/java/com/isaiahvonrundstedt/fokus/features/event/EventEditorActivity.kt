@@ -72,22 +72,19 @@ class EventEditorActivity: BaseActivity() {
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.
             if (nameEditText.text.isNullOrBlank()) {
-                Snackbar.make(recyclerView, R.string.feedback_event_empty_name,
-                    Snackbar.LENGTH_SHORT).show()
+                createSnackbar(rootLayout, R.string.feedback_event_empty_name)
                 nameEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (locationEditText.text.isNullOrBlank()) {
-                Snackbar.make(recyclerView, R.string.feedback_event_empty_location,
-                    Snackbar.LENGTH_SHORT).show()
+                createSnackbar(rootLayout, R.string.feedback_event_empty_location)
                 locationEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (event.schedule == null) {
-                Snackbar.make(recyclerView, R.string.feedback_event_empty_schedule,
-                    Snackbar.LENGTH_SHORT).show()
+                createSnackbar(rootLayout, R.string.feedback_event_empty_schedule)
                 scheduleTextView.performClick()
                 return@setOnClickListener
             }

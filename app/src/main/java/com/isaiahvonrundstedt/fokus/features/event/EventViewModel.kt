@@ -25,7 +25,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
 
-        if (PreferenceManager(app).eventReminder) {
+        if (PreferenceManager(app).eventReminder && event.schedule!!.isBeforeNow) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
@@ -42,9 +42,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
 
-        Log.e("DEBUG", "VIEWMODEL")
         if (PreferenceManager(app).eventReminder && event.schedule!!.isBeforeNow) {
-            Log.e("DEBUG", "CONDITION")
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)

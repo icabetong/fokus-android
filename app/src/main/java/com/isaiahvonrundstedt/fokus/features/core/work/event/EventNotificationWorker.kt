@@ -22,7 +22,6 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
 
     override suspend fun doWork(): Result {
         val currentTime = DateTime.now()
-        Log.e("DEBUG", "WORKER")
 
         val event = convertDataToEvent(inputData)
         val notification = Notification().apply {

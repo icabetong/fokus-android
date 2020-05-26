@@ -15,6 +15,8 @@ import org.joda.time.DateTimeZone
 import org.joda.time.Duration
 import java.util.concurrent.TimeUnit
 
+// This worker's function is to schedule the notification worker
+// for the event schedule minus the interval.
 class EventNotificationWorker(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 

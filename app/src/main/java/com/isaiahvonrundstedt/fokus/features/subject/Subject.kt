@@ -35,6 +35,7 @@ data class Subject @JvmOverloads constructor (
     var tag: Tag = Tag.SKY
 ): Parcelable {
 
+    // Used for the color tag of the subject
     enum class Tag(val actualColor: Int) {
         SKY(Color.parseColor("#2196f3")),
         GRASS(Color.parseColor("#71a234")),

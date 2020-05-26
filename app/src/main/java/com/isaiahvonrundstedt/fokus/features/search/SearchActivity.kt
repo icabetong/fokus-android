@@ -67,6 +67,7 @@ class SearchActivity: BaseActivity(), BaseAdapter.ActionListener {
                     startActivityForResult(editor, TaskEditorActivity.updateRequestCode)
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> { }
+                BaseAdapter.ActionListener.Action.DELETE -> { }
             }
         }
     }

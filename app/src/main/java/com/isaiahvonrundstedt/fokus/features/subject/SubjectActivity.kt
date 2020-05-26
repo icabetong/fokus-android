@@ -34,6 +34,8 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_subjects)
 
+        // Check the intent action if we have been launched
+        // from a launcher shortcut
         if (intent?.action == action)
             startActivityForResult(Intent(this, SubjectEditorActivity::class.java),
                 SubjectEditorActivity.insertRequestCode)
@@ -66,11 +68,16 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Subject) {
             when (action) {
+                // Create the intent for the editorUI and pass the extras
+                // and wait for the result
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editorIntent = Intent(this, SubjectEditorActivity::class.java)
                     editorIntent.putExtra(SubjectEditorActivity.extraSubject, t)
                     startActivityForResult(editorIntent, SubjectEditorActivity.updateRequestCode)
                 }
+                // Item has been swiped from the RecyclerView, notify user action
+                // in the ViewModel to delete it from the database
+                // then show a SnackBar feedback
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
                     val snackbar = Snackbar.make(recyclerView, R.string.feedback_subject_removed,
@@ -93,6 +100,8 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
             if (requestCode == SubjectEditorActivity.insertRequestCode) {
                 viewModel.insert(subject)
 
+                // The user has added a subject, now disable the
+                // dialog for first run
                 if (PreferenceManager(this).isFirstRun)
                     PreferenceManager(this).isFirstRun = false
             } else if (requestCode == SubjectEditorActivity.updateRequestCode) {

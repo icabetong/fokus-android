@@ -78,9 +78,15 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
+    // Callback from the RecyclerView Adapter
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Core) {
             when (action) {
+                // Update the task in the database then show
+                // snackbar feedback and also if the sounds if turned on
+                // play a notification sound. Primarily, MODIFY is used when
+                // the checkbox is checked, indicating that the
+                // task has been marked as finished.
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
@@ -92,6 +98,8 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                         }
                     }
                 }
+                // Create the intent to the editorUI and pass the extras
+                // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editorIntent = Intent(context, TaskEditorActivity::class.java)
                     editorIntent.putExtra(TaskEditorActivity.extraSubject, t.subject)
@@ -99,6 +107,9 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                     editorIntent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))
                     startActivityForResult(editorIntent, TaskEditorActivity.updateRequestCode)
                 }
+                // The item has been swiped down from the recyclerView
+                // remove the item from the database and show a snackbar
+                // feedback
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
@@ -113,10 +124,13 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK) {
             val task: Task = data?.getParcelableExtra(TaskEditorActivity.extraTask)!!
             val attachments: List<Attachment> = data.getParcelableArrayListExtra(TaskEditorActivity.extraAttachments)!!
 
+            // Perform an action on the database based on the
+            // requestCode
             if (requestCode == TaskEditorActivity.insertRequestCode) {
                 viewModel.insert(task, attachments)
             } else if (requestCode == TaskEditorActivity.updateRequestCode) {

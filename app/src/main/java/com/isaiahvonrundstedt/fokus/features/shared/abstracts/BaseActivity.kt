@@ -63,7 +63,7 @@ abstract class BaseActivity: AppCompatActivity() {
         }
     }
 
-    protected fun showFeedback(view: View, @StringRes id: Int) {
+    protected fun createSnackbar(view: View, @StringRes id: Int) {
         Snackbar.make(view, id, Snackbar.LENGTH_SHORT).show()
     }
 

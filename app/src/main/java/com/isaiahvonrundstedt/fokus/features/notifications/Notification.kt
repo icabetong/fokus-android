@@ -43,6 +43,7 @@ data class Notification @JvmOverloads constructor (
     fun formatDateTime(): String {
         val currentDateTime = LocalDate.now()
 
+        // Formats the dateTime object for human reading
         return if (dateTimeTriggered!!.toLocalDate().isEqual(currentDateTime))
             DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dateTimeTriggered)
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)

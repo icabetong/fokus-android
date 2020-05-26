@@ -6,6 +6,9 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
+// This entity is used to show both the
+// task, subject and the attachments of the task
+// in a single entity
 data class Core @JvmOverloads constructor (
     @Embedded
     var task: Task,

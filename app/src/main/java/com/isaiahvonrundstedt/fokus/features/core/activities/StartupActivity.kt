@@ -11,6 +11,8 @@ class StartupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Schedule a reminder based on the reminder frequency
+        // preference.
         ReminderWorker.Scheduler()
             .setTargetTime(PreferenceManager(this).reminderTime?.toDateTimeToday())
             .removePrevious(true)

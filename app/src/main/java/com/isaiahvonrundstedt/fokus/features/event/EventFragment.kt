@@ -64,11 +64,13 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Event) {
             when (action) {
+                // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editor = Intent(context, EventEditorActivity::class.java)
                     editor.putExtra(EventEditorActivity.extraEvent, t)
                     startActivityForResult(editor, EventEditorActivity.updateRequestCode)
                 }
+                // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel?.remove(t)
                     val snackbar = Snackbar.make(recyclerView, R.string.feedback_event_removed,

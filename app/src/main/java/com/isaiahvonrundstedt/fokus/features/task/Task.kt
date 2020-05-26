@@ -39,14 +39,18 @@ data class Task @JvmOverloads constructor (
     fun formatDueDate(context: Context): String {
         val currentDateTime = LocalDate.now()
 
+        // Check if the day on the task's due is today
         return if (dueDate!!.toLocalDate().isEqual(currentDateTime))
             String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        // Now check if the day is yesterday
         else if (currentDateTime.minusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
             String.format(context.getString(R.string.yesterday),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        // Now check if its tomorrow
         else if (currentDateTime.plusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
             String.format(context.getString(R.string.tomorrow),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+        // Just print the date what could go wrong?
         else
             DateTimeFormat.forPattern("MMMM d, h:mm a").print(dueDate)
     }

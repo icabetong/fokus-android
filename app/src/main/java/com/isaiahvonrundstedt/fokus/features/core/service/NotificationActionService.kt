@@ -10,6 +10,11 @@ import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.features.core.work.ActionWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
+// This service function is to trigger the worker
+// that will perform the appropriate action
+// based on what the user tapped on the notification
+// Since PendingIntents can trigger Workers, this service
+// acts like a middle man
 class NotificationActionService: IntentService(name) {
 
     companion object {

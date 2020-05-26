@@ -7,6 +7,7 @@ import com.isaiahvonrundstedt.fokus.database.repository.CoreRepository
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 
+// Needs rework on the logic side
 class SearchViewModel(app: Application): BaseViewModel(app) {
 
     private var repository = CoreRepository.getInstance(app)

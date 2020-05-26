@@ -32,10 +32,12 @@ class SubjectEditorActivity: BaseActivity() {
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
 
+        // Check if the parent activity have passed some extras
         requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
         if (requestCode == updateRequestCode)
             subject = intent.getParcelableExtra(extraSubject)!!
 
+        // Get actual values for the items
         values = resources.getIntArray(R.array.days_of_week_values)
         colors = Subject.Tag.getColors()
     }
@@ -43,6 +45,8 @@ class SubjectEditorActivity: BaseActivity() {
     override fun onStart() {
         super.onStart()
 
+        // The extras passed by the parent activity will
+        // be shown to the fields.
         if (requestCode == updateRequestCode) {
             codeEditText.setText(subject.code)
             descriptionEditText.setText(subject.description)
@@ -158,26 +162,32 @@ class SubjectEditorActivity: BaseActivity() {
         }
 
         actionButton.setOnClickListener {
+
+            // This ifs is used to check if some fields are
+            // blank or null, if these returned true,
+            // we'll show a Snackbar then direct the focus to
+            // the corresponding field then return to stop
+            // the execution of the code
             if (codeEditText.text.isNullOrEmpty()) {
-                showFeedback(window.decorView.rootView, R.string.feedback_subject_empty_name)
+                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_name)
                 codeEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (descriptionEditText.text.isNullOrEmpty()) {
-                showFeedback(window.decorView.rootView, R.string.feedback_subject_empty_description)
+                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_description)
                 descriptionEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (subject.startTime == null) {
-                showFeedback(window.decorView.rootView, R.string.feedback_subject_empty_start_time)
+                createSnackbar(window.decorView.rootView, R.string.feedback_subject_empty_start_time)
                 startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             if (subject.endTime == null) {
-                showFeedback(window.decorView.rootView,
+                createSnackbar(window.decorView.rootView,
                     R.string.feedback_subject_empty_end_time)
                 endTimeTextView.performClick()
                 return@setOnClickListener
@@ -186,6 +196,7 @@ class SubjectEditorActivity: BaseActivity() {
             subject.code = codeEditText.text.toString()
             subject.description = descriptionEditText.text.toString()
 
+            // Pass the intent to the parent activity
             val data = Intent()
             data.putExtra(extraSubject, subject)
             setResult(Activity.RESULT_OK, data)
@@ -197,6 +208,7 @@ class SubjectEditorActivity: BaseActivity() {
         return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)
     }
 
+    // Override the menu to remove the default search menu item
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return true
     }

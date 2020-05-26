@@ -9,6 +9,10 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 
+// This worker's function is to reschedule all pending workers
+// that is supposed to trigger at its due minus the interval
+// This only triggers when the user has changed the notification interval
+// for tasks in the Settings
 class EventNotificationScheduler(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 

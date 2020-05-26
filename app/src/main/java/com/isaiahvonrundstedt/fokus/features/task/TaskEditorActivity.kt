@@ -12,7 +12,6 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
@@ -53,6 +52,9 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
 
+        // Check if the parent activity has extras sent then
+        // determine if the editorUI will be in insert or
+        // update mode
         requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
             && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode
         if (requestCode == updateRequestCode) {
@@ -66,6 +68,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             adapter.setObservableItems(items)
         })
 
+        // the passed extras from the parent activity
+        // will be shown in their respective fields.
         if (requestCode == updateRequestCode) {
             nameEditText.setText(task.name)
             notesEditText.setText(task.notes)
@@ -115,6 +119,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
 
         attachmentChip.setOnClickListener {
+            // Check if we have read storage permissions then request the permission
+            // if we have the permission, open up file picker
             if (PermissionManager(this).readAccessGranted) {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), attachmentRequestCode)
@@ -124,20 +130,26 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
 
         actionButton.setOnClickListener {
+
+            // This three ifs checks if the user have entered the
+            // values on the fields, if we don't have the value required,
+            // show a snackbar feedback then direct the user's
+            // attention to the field. Then return to stop the execution
+            // of the code.
             if (nameEditText.text.isNullOrEmpty()) {
-                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_name)
+                createSnackbar(window.decorView.rootView, R.string.feedback_task_empty_name)
                 nameEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (task.dueDate == null) {
-                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_due_date)
+                createSnackbar(window.decorView.rootView, R.string.feedback_task_empty_due_date)
                 dueDateTextView.performClick()
                 return@setOnClickListener
             }
 
             if (task.subjectID == null) {
-                showFeedback(window.decorView.rootView, R.string.feedback_task_empty_subject)
+                createSnackbar(window.decorView.rootView, R.string.feedback_task_empty_subject)
                 subjectTextView.performClick()
                 return@setOnClickListener
             }
@@ -145,9 +157,11 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             task.name = nameEditText.text.toString()
             task.notes = notesEditText.text.toString()
 
+            // Prepare the send the data back to the parent activity
             core = Core(task = this.task, subject = this.subject!!,
                 attachmentList = this.attachmentList)
 
+            // Send the data back to the parent activity
             val data = Intent()
             data.putExtra(extraTask, core?.task)
             data.putParcelableArrayListExtra(extraAttachments, ArrayList(core?.attachmentList!!))
@@ -156,6 +170,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
     }
 
+    // Item selection callback for the subject dialog
     private var subject: Subject? = null
     override fun onItemSelected(subject: Subject) {
         task.subjectID = subject.id
@@ -176,7 +191,10 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == attachmentRequestCode && resultCode == -1) {
+        // Check if the request codes are the same and the result code is successful
+        // then create an Attachment object and a corresponding ChipView
+        // attachments have to be inserted temporarily on the ArrayList
+        if (requestCode == attachmentRequestCode && resultCode == Activity.RESULT_OK) {
             val attachment = Attachment().apply {
                 taskID = task.taskID
                 uri = data?.data
@@ -199,6 +217,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
     }
 
+    // An extension function for the attachment list that will get the item
+    // using the items id from the list
     private fun ArrayList<Attachment>.getUsingID(id: String): Attachment? {
         this.forEach { if (it.id == id) return it }
         return null
@@ -217,6 +237,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         if (attachment != null) attachmentList.remove(attachment)
     }
 
+    // This function determines the file name for the uri returned by the SAF file
+    // picker that will be used exclusively for the ChipView
     private fun getFileName(uri: Uri): String {
         var result = ""
         if (uri.scheme == "content") {
@@ -235,6 +257,9 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         return result
     }
 
+    // This function invokes the corresponding application that
+    // will open the uri of the attachment if the user clicks
+    // on the ChipView
     private fun onParseIntent(uri: Uri?) {
         val intent = Intent(Intent.ACTION_VIEW)
             .setDataAndType(uri, contentResolver?.getType(uri!!))
@@ -244,6 +269,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             startActivity(intent)
     }
 
+    // Override this function to remove the default menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return true
     }

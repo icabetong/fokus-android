@@ -28,12 +28,16 @@ class EventEditorActivity: BaseActivity() {
         setContentView(R.layout.layout_editor_event)
         setPersistentActionBar(toolbar)
 
+        // Check if the parent activity has passed some
+        // extras so that we'll show it to the user
         requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
             else insertRequestCode
         if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
         }
 
+        // The passed extras will be shown in their
+        // corresponding fields
         if (requestCode == updateRequestCode) {
             nameEditText.setText(event.name)
             notesEditText.setText(event.notes)
@@ -63,6 +67,10 @@ class EventEditorActivity: BaseActivity() {
         }
 
         actionButton.setOnClickListener {
+
+            // Conditions to check if the fields are null or blank
+            // then if resulted true, show a feedback then direct
+            // user focus to the field and stop code execution.
             if (nameEditText.text.isNullOrBlank()) {
                 Snackbar.make(recyclerView, R.string.feedback_event_empty_name,
                     Snackbar.LENGTH_SHORT).show()
@@ -88,6 +96,7 @@ class EventEditorActivity: BaseActivity() {
             event.notes = notesEditText.text.toString()
             event.location = locationEditText.text.toString()
 
+            // Send the data back to the parent activity
             val data = Intent()
             data.putExtra(extraEvent, event)
             setResult(Activity.RESULT_OK, data)

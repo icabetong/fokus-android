@@ -6,6 +6,8 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
+// This worker's primary function perform the action
+// at is triggered in the notification such as 'Mark as Finished'
 class ActionWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 

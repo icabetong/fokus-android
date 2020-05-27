@@ -49,6 +49,9 @@ class EventAdapter(private var actionListener: ActionListener)
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(event, ActionListener.Action.SELECT)
             }
+
+            if (event.schedule!!.isBeforeNow)
+                nameView.paintFlags = nameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
 

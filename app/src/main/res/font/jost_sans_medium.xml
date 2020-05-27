@@ -4,18 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <font
-        android:font="@font/file_google_sans_medium"
+        android:font="@font/file_medium"
         android:fontStyle="normal"
         android:fontWeight="500"
-        app:font="@font/file_google_sans_medium"
+        app:font="@font/file_medium"
         app:fontStyle="normal"
         app:fontWeight="500"/>
 
     <font
-        android:font="@font/file_google_sans_medium_italic"
+        android:font="@font/file_medium_italic"
         android:fontStyle="italic"
         android:fontWeight="500"
-        app:font="@font/file_google_sans_medium_italic"
+        app:font="@font/file_medium_italic"
         app:fontStyle="italic"
         app:fontWeight="500"/>
 

@@ -145,12 +145,12 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     private fun createTaskNotification(notification: Notification): android.app.Notification {
         return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_custom_brand)
+            setSmallIcon(R.drawable.ic_brand_black)
             setContentIntent(contentIntent)
             setContentTitle(notification.title)
             setContentText(notification.content)
             color = ContextCompat.getColor(context, R.color.colorPrimary)
-            addAction(R.drawable.ic_android_check_white, context.getString(R.string.button_mark_as_finished),
+            addAction(R.drawable.ic_check_white, context.getString(R.string.button_mark_as_finished),
                 createPendingIntent(NotificationActionService.finishID, NotificationActionService.actionFinished,
                     NotificationActionService.extraTaskID, notification.data!!))
         }.build()
@@ -159,7 +159,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     private fun createNotification(notification: Notification?): android.app.Notification {
         return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_custom_brand)
+            setSmallIcon(R.drawable.ic_brand_black)
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
             setContentText(notification?.content)

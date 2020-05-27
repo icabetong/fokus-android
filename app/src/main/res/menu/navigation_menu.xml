@@ -4,11 +4,11 @@
     <item
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
-        android:icon="@drawable/ic_custom_check"/>
+        android:icon="@drawable/ic_check_black"/>
 
     <item
         android:id="@+id/navigation_events"
         android:title="@string/navigation_events"
-        android:icon="@drawable/ic_custom_calendar"/>
+        android:icon="@drawable/ic_event_black"/>
 
 </menu>

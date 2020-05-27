@@ -25,7 +25,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_check"
+            app:srcCompat="@drawable/ic_check_black"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -52,6 +52,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
         android:text="@string/button_new_task"
-        app:icon="@drawable/ic_android_add" />
+        app:icon="@drawable/ic_add_black" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

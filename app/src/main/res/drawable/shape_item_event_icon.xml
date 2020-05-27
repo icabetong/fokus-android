@@ -10,7 +10,7 @@
     </item>
 
     <item
-        android:drawable="@drawable/ic_android_event_white"
+        android:drawable="@drawable/ic_event_white"
         android:top="8dp" android:bottom="8dp"
         android:left="8dp" android:right="8dp"/>
 

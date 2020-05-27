@@ -21,5 +21,5 @@ This project is licensed under the AGPL-3.0 - see the license file for more deta
 
 * [Material Dialogs](https://github.com/afollestad/material-dialogs) - Aidan Follestad
 * [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
-* [Application and UI Icons](https://flaticon.com/authors/freepik) - Freepik via Flaticon
+* [Launcher Icon](https://flaticon.com/authors/freepik) - Freepik via Flaticon
 

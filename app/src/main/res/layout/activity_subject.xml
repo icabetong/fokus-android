@@ -27,7 +27,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_custom_atom"
+            app:srcCompat="@drawable/ic_palette_black"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -53,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_android_add"/>
+        app:srcCompat="@drawable/ic_add_black"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

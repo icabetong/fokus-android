@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,68 +7,76 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeightLarge"
-    android:background="@color/colorSurface">
+    android:background="@color/colorSurface"
+    android:foreground="?attr/selectableItemBackground">
 
-    <LinearLayout
-        android:id="@+id/scheduleLayout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintWidth_percent="0.25"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dayView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:minLines="1"
-            android:textAppearance="@style/Fokus.TextAppearance.Body"
-            tools:text="2/23/2010"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/timeView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:minLines="1"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            tools:text="10:00AM"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/detailsLayout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintWidth_percent="0.75"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/scheduleLayout">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/nameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+        <LinearLayout
+            android:id="@+id/scheduleLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintWidth_percent="0.25"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/locationView"
-            tools:text="Feed the Cat"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/locationView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            app:layout_constraintTop_toBottomOf="@id/nameView"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="COMSCI 2101"/>
+            app:layout_constraintStart_toStartOf="parent">
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dayView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:minLines="1"
+                android:textAppearance="@style/Fokus.TextAppearance.Body"
+                tools:text="2/23/2010"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/timeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:minLines="1"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                tools:text="10:00AM"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detailsLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintWidth_percent="0.75"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/scheduleLayout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/nameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/locationView"
+                tools:text="Feed the Cat"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/locationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                app:layout_constraintTop_toBottomOf="@id/nameView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="COMSCI 2101"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

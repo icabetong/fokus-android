@@ -24,7 +24,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
-import com.isaiahvonrundstedt.fokus.features.shared.custom.OffsetItemDecoration
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 

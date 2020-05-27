@@ -1,7 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.notifications
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat

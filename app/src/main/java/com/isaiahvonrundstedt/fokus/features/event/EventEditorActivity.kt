@@ -3,18 +3,15 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.widget.AppCompatTextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
-import kotlinx.android.synthetic.main.layout_editor_event.actionButton
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -43,7 +40,7 @@ class EventEditorActivity: BaseActivity() {
             notesEditText.setText(event.notes)
             locationEditText.setText(event.location)
             scheduleTextView.text = event.formatSchedule(this)
-            scheduleTextView.editorValueChanged()
+            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
         }
     }
 
@@ -60,7 +57,7 @@ class EventEditorActivity: BaseActivity() {
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
                         v.text = event.formatSchedule(this@EventEditorActivity)
-                        v.editorValueChanged()
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }

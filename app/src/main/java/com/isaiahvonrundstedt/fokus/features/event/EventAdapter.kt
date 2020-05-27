@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.extensions.addStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
@@ -51,7 +52,7 @@ class EventAdapter(private var actionListener: ActionListener)
             }
 
             if (event.schedule!!.isBeforeNow)
-                nameView.paintFlags = nameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                nameView.addStrikeThroughEffect()
         }
     }
 

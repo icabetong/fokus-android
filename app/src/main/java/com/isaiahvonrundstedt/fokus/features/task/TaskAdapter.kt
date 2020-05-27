@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
+import com.isaiahvonrundstedt.fokus.features.core.extensions.addStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.features.core.extensions.removeStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import org.joda.time.DateTime
 
 class TaskAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
@@ -48,15 +48,14 @@ class TaskAdapter(private var actionListener: ActionListener)
             checkBox.setOnClickListener { view ->
                 view as MaterialCheckBox
                 core.task.isFinished = view.isChecked
-                if (view.isChecked) {
-                    taskNameView.paintFlags = taskNameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                } else
-                    taskNameView.paintFlags = taskNameView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                if (view.isChecked)
+                    taskNameView.addStrikeThroughEffect()
+                else taskNameView.removeStrikeThroughEffect()
                 actionListener.onActionPerformed(core, ActionListener.Action.MODIFY)
             }
 
             if (core.task.isFinished)
-                taskNameView.paintFlags = taskNameView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                taskNameView.addStrikeThroughEffect()
 
             attachmentView.isVisible = core.attachmentList.isNotEmpty()
             attachmentView.text = itemView.context.resources.getQuantityString(R.plurals.files_attached,

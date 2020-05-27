@@ -8,7 +8,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
@@ -24,6 +23,7 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
@@ -78,8 +78,8 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             subjectTextView.text = subject!!.code
             dueDateTextView.text = task.formatDueDate(this)
 
-            subjectTextView.editorValueChanged()
-            dueDateTextView.editorValueChanged()
+            subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
 
             attachmentList.forEach { attachment ->
                 attachmentChipGroup.addView(buildChip(attachment), 0)
@@ -102,7 +102,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
                         v.text = task.formatDueDate(this@TaskEditorActivity)
-                        v.editorValueChanged()
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }
@@ -179,7 +179,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         this.subject = subject
 
         subjectTextView.text = subject.code
-        subjectTextView.editorValueChanged()
+        subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectDialog?.dismiss()
     }
 

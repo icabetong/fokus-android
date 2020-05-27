@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.widget.AppCompatTextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
@@ -11,6 +10,7 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
@@ -54,8 +54,8 @@ class SubjectEditorActivity: BaseActivity() {
             endTimeTextView.text = formatTime(subject.endTime!!)
 
 
-            startTimeTextView.editorValueChanged()
-            endTimeTextView.editorValueChanged()
+            startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
             val builder = StringBuilder()
             val selectedDays = Subject.getDays(subject.daysOfWeek)
 
@@ -68,12 +68,12 @@ class SubjectEditorActivity: BaseActivity() {
                     builder.append(", ")
             }
             daysOfWeekTextView.text = builder.toString()
-            daysOfWeekTextView.editorValueChanged()
+            daysOfWeekTextView.setTextColorFromResource(R.color.colorPrimaryText)
 
             this@SubjectEditorActivity.tagHolderView
                 .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
             tagView.text = getString(Subject.Tag.getName(subject.tag))
-            tagView.editorValueChanged()
+            tagView.setTextColorFromResource(R.color.colorPrimaryText)
         }
 
         daysOfWeekTextView.setOnClickListener { v ->
@@ -98,7 +98,11 @@ class SubjectEditorActivity: BaseActivity() {
                     }
                     (v as AppCompatTextView).text = builder
                 }
-                positiveButton(R.string.button_done) { (v as AppCompatTextView).editorValueChanged() }
+                positiveButton(R.string.button_done) {
+                    if (v is AppCompatTextView) {
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
+                    }
+                }
             }
         }
 
@@ -118,7 +122,10 @@ class SubjectEditorActivity: BaseActivity() {
                     }
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView) v.text = formatTime(subject.startTime!!)
+                    if (v is AppCompatTextView) {
+                        v.text = formatTime(subject.startTime!!)
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
+                    }
                 }
             }
         }
@@ -141,7 +148,7 @@ class SubjectEditorActivity: BaseActivity() {
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
                         v.text = formatTime(subject.endTime!!)
-                        v.editorValueChanged()
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }
@@ -158,7 +165,7 @@ class SubjectEditorActivity: BaseActivity() {
                         .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
                     if (v is AppCompatTextView) {
                         v.text = getString(Subject.Tag.getName(subject.tag))
-                        v.editorValueChanged()
+                        v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }

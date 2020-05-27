@@ -90,6 +90,8 @@
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
+        <item name="fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">24sp</item>
     </style>
@@ -98,12 +100,15 @@
         <item name="android:textSize">14sp</item>
     </style>
     <style name="Fokus.TextAppearance.Body.Medium" parent="Fokus.TextAppearance.Body">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium0</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
+        <item name="fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
         <item name="android:textColor">?android:textColorHint</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
@@ -115,6 +120,8 @@
         <item name="android:letterSpacing">0.123</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
+        <item name="fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">

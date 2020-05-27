@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
@@ -12,7 +11,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
-import org.joda.time.DateTime
 
 class EventViewModel(private var app: Application): BaseViewModel(app) {
 

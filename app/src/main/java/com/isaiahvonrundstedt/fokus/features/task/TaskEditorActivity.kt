@@ -275,11 +275,6 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             startActivity(intent)
     }
 
-    // Override this function to remove the default menu
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
-    }
-
     companion object {
         const val insertRequestCode = 32
         const val updateRequestCode = 19

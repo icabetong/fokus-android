@@ -101,10 +101,6 @@ class EventEditorActivity: BaseActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
-    }
-
     companion object {
         const val insertRequestCode = 24
         const val updateRequestCode = 56

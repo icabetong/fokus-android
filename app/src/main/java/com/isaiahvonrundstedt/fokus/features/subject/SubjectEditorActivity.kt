@@ -210,11 +210,6 @@ class SubjectEditorActivity: BaseActivity() {
         return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)
     }
 
-    // Override the menu to remove the default search menu item
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
-    }
-
     companion object {
         const val insertRequestCode = 27
         const val updateRequestCode = 13

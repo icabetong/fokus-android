@@ -1,45 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:minHeight="?attr/listPreferredItemHeightLarge"
+    android:background="@color/colorSurface">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/scheduleLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        android:clipChildren="true">
+        app:layout_constraintWidth_percent="0.25"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/locationView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
-                tools:text="COMSCI 2101"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dayView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:minLines="1"
+            android:textAppearance="@style/Fokus.TextAppearance.Body"
+            tools:text="2/23/2010"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/nameView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
-                tools:text="Feed the Cat"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/timeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:minLines="1"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            tools:text="10:00AM"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/scheduleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-                tools:text="Some Description"/>
+    </LinearLayout>
 
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/detailsLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/scheduleLayout">
 
-</com.google.android.material.card.MaterialCardView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/nameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/locationView"
+            tools:text="Feed the Cat"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/locationView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            app:layout_constraintTop_toBottomOf="@id/nameView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="COMSCI 2101"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -38,7 +39,8 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = EventAdapter(this)
-        recyclerView.addItemDecoration(OffsetItemDecoration(requireContext(), R.dimen.item_padding))
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
+            DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

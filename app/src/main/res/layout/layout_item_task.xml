@@ -1,86 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:background="@color/colorSurface">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/subjectNameView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipChildren="true">
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/taskNameView"
+        app:layout_constraintStart_toEndOf="@id/tagView"
+        tools:text="COMSCI 2101"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/subjectNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/taskNameView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="COMSCI 2101"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/taskNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+        app:layout_constraintTop_toBottomOf="@id/subjectNameView"
+        app:layout_constraintBottom_toTopOf="@id/attachmentsView"
+        app:layout_constraintStart_toEndOf="@id/tagView"
+        tools:text="Feed the Cat"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/taskNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title"
-            app:layout_constraintTop_toBottomOf="@id/subjectNameView"
-            app:layout_constraintBottom_toTopOf="@id/attachmentsView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Feed the Cat"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/attachmentsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+        app:layout_constraintTop_toBottomOf="@id/taskNameView"
+        app:layout_constraintBottom_toTopOf="@id/dueDateView"
+        app:layout_constraintStart_toEndOf="@id/tagView"
+        tools:text="8 files attached"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/attachmentsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            app:layout_constraintTop_toBottomOf="@id/taskNameView"
-            app:layout_constraintBottom_toTopOf="@id/dueDateView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="8 files attached"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dueDateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+        app:layout_constraintTop_toBottomOf="@id/attachmentsView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tagView"
+        tools:text="Sunday at 1:00PM"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/dueDateView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            app:layout_constraintTop_toBottomOf="@id/attachmentsView"
-            app:layout_constraintBottom_toTopOf="@id/tagView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Sunday at 1:00PM"/>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/ic_toggle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_toggle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/tagView"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/shape_color_holder_rect"/>
 
-        <View
-            android:id="@+id/tagView"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@id/dueDateView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:background="@color/colorPrimary"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

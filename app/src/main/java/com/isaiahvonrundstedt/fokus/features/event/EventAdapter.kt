@@ -56,12 +56,14 @@ class EventAdapter(private var actionListener: ActionListener)
         private val rootView: View = itemView.findViewById(R.id.rootView)
         private val locationView: AppCompatTextView = itemView.findViewById(R.id.locationView)
         private val nameView: AppCompatTextView = itemView.findViewById(R.id.nameView)
-        private val scheduleView: AppCompatTextView = itemView.findViewById(R.id.scheduleView)
+        private val dayView: AppCompatTextView = itemView.findViewById(R.id.dayView)
+        private val timeView: AppCompatTextView = itemView.findViewById(R.id.timeView)
 
         fun onBind(event: Event) {
             locationView.text = event.location
             nameView.text = event.name
-            scheduleView.text = event.formatSchedule(rootView.context)
+            dayView.text = event.formatScheduleDate(rootView.context)
+            timeView.text = event.formatScheduleTime()
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(event, ActionListener.Action.SELECT)
             }

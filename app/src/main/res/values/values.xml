@@ -24,6 +24,9 @@
         <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
 
+        <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
+        <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
+
         <item name="md_background_color">@color/colorSurface</item>
         <item name="md_corner_radius">4dp</item>
     </style>
@@ -87,28 +90,34 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
 
-
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
-        <item name="fontFamily">@font/jost_sans_bold</item>
-        <item name="android:fontFamily">@font/jost_sans_bold</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/font_manrope_medium</item>
+        <item name="android:fontFamily">@font/font_manrope_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorOnSurface</item>
     </style>
     <style name="Fokus.TextAppearance.Body" parent="Fokus.TextAppearance">
         <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="Fokus.TextAppearance.Body.Medium" parent="Fokus.TextAppearance.Body">
-        <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:fontFamily">sans-serif-medium0</item>
+        <item name="fontFamily">@font/font_manrope_bold</item>
+        <item name="android:fontFamily">@font/font_manrope_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Fokus.TextAppearance.Editor.Title" parent="Fokus.TextAppearance">
+        <item name="fontFamily">@font/font_manrope_bold</item>
+        <item name="android:fontFamily">@font/font_manrope_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
-        <item name="fontFamily">@font/jost_sans_bold</item>
-        <item name="android:fontFamily">@font/jost_sans_bold</item>
+        <item name="fontFamily">@font/font_manrope_bold</item>
+        <item name="android:fontFamily">@font/font_manrope_bold</item>
         <item name="android:textColor">?android:textColorHint</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
@@ -120,9 +129,9 @@
         <item name="android:letterSpacing">0.123</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
-        <item name="fontFamily">@font/jost_sans_bold</item>
-        <item name="android:fontFamily">@font/jost_sans_bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/font_manrope_bold</item>
+        <item name="android:fontFamily">@font/font_manrope_bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">
         <item name="android:textSize">14sp</item>

@@ -27,7 +27,7 @@
                 android:paddingBottom="8dp"
                 android:inputType="textCapWords"
                 android:hint="@string/field_event_name"
-                android:textAppearance="@style/Fokus.TextAppearance.Title"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"
                 android:autofillHints="subject"
                 android:background="@android:color/transparent">
 

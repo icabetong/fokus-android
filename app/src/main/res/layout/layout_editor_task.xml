@@ -29,7 +29,7 @@
                 android:inputType="textCapWords"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:textAppearance="@style/Fokus.TextAppearance.Title">
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
 
                 <requestFocus />
 

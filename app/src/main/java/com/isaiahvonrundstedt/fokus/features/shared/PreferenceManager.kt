@@ -1,7 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.shared
 
+import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import androidx.preference.PreferenceManager
+import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import org.joda.time.LocalTime
@@ -23,6 +26,8 @@ class PreferenceManager(private val context: Context?) {
     }
 
     companion object {
+        const val defaultSound = "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
+
         const val durationEveryday = "EVERYDAY"
         const val durationWeekends = "WEEKENDS"
 
@@ -38,6 +43,8 @@ class PreferenceManager(private val context: Context?) {
         const val nameKey = "usernamePreference"
         const val themeKey = "themePreference"
         const val soundKey = "soundPreference"
+        const val customSoundKey = "customSoundPreference"
+        const val customSoundFileKey = "selectSoundPreference"
         const val frequencyKey = "frequencyPreference"
         const val reminderTimeKey = "timePreference"
         const val taskReminderKey = "taskReminderPreference"
@@ -83,6 +90,23 @@ class PreferenceManager(private val context: Context?) {
         get() {
             val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
             return shared?.getBoolean(soundKey, true) ?: true
+        }
+
+    val customSound: Boolean
+        get() {
+            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+            return shared?.getBoolean(customSoundKey, false) ?: false
+        }
+
+    var soundFileUri: Uri
+        get() {
+            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
+            return Uri.parse(shared.getString(customSoundFileKey, defaultSound))
+        }
+        set(value) {
+            val editor = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext).edit()
+            editor.putString(customSoundFileKey, value.toString())
+            editor.apply()
         }
 
     val reminderFrequency: String

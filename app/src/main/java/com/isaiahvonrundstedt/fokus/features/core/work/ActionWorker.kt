@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionServ
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
 // This worker's primary function perform the action
-// at is triggered in the notification such as 'Mark as Finished'
+// at is triggered in the fokus such as 'Mark as Finished'
 class ActionWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 

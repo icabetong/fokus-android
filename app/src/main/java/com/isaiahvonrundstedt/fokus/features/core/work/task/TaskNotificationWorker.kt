@@ -17,7 +17,7 @@ import org.joda.time.Duration
 import org.joda.time.format.DateTimeFormat
 import java.util.concurrent.TimeUnit
 
-// This worker's function is to schedule the notification worker
+// This worker's function is to schedule the fokus worker
 // for the task minus the interval.
 class TaskNotificationWorker(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {

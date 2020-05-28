@@ -19,6 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -186,5 +187,11 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         }
 
     private val notificationSoundUri: Uri
-        get() = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        get() {
+            return PreferenceManager(applicationContext).let {
+                if (it.customSound)
+                    it.soundFileUri
+                else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            }
+        }
 }

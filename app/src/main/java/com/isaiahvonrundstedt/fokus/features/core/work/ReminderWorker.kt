@@ -17,9 +17,9 @@ import org.joda.time.Duration
 import org.joda.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
-// This worker's function is to only show notification
+// This worker's function is to only show fokus
 // based on the frequency the user has selected; daily or every weekends
-// This will show a notification for pending tasks.
+// This will show a fokus for pending tasks.
 class ReminderWorker(private var context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 

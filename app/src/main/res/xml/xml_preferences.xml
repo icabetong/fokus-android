@@ -34,6 +34,17 @@
             android:summary="@string/settings_completion_sounds_summary"
             android:defaultValue="true"/>
 
+        <SwitchPreference
+            android:key="customSoundPreference"
+            android:title="@string/settings_custom_notification_sound_title"
+            android:summary="@string/settings_custom_notification_sound_summary"
+            android:defaultValue="false"/>
+
+        <Preference
+            android:key="selectSoundPreference"
+            android:title="@string/settings_select_sound"
+            android:dependency="customSoundPreference"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

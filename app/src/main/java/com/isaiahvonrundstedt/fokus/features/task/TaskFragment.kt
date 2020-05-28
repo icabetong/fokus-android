@@ -85,7 +85,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
             when (action) {
                 // Update the task in the database then show
                 // snackbar feedback and also if the sounds if turned on
-                // play a notification sound. Primarily, MODIFY is used when
+                // play a fokus sound. Primarily, MODIFY is used when
                 // the checkbox is checked, indicating that the
                 // task has been marked as finished.
                 BaseAdapter.ActionListener.Action.MODIFY -> {
@@ -94,8 +94,12 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                         if (PreferenceManager(context).completedSounds) {
                             Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
                                 Snackbar.LENGTH_SHORT).show()
-                            val soundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                            RingtoneManager.getRingtone(requireContext().applicationContext, soundUri).play()
+                            val uri: Uri = PreferenceManager(requireContext()).let {
+                                if (it.customSound)
+                                    it.soundFileUri
+                                else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                            }
+                            RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
                         }
                     }
                 }

@@ -23,6 +23,7 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
+import com.isaiahvonrundstedt.fokus.features.core.extensions.getFileName
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
@@ -215,7 +216,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
 
     private fun buildChip(attachment: Attachment): Chip {
         return Chip(this).apply {
-            text = getFileName(attachment.uri!!)
+            text = attachment.uri!!.getFileName(this@TaskEditorActivity)
             tag = attachment.id
             isCloseIconVisible = true
             setOnClickListener(chipClickListener)

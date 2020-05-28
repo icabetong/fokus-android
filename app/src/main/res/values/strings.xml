@@ -120,6 +120,9 @@
 
     <string name="settings_completion_sounds_title">Completion Sounds</string>
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
+    <string name="settings_custom_notification_sound_title">Use custom sound</string>
+    <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
+    <string name="settings_select_sound">Select sound</string>
 
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>

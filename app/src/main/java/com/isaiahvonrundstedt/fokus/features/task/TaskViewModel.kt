@@ -26,7 +26,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         repository.insert(task, attachmentList)
 
         // Check if notifications for tasks are turned on and check if
-        // the task is not finished, then schedule a notification
+        // the task is not finished, then schedule a fokus
         if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isBeforeNow) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -39,7 +39,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun remove(task: Task) = viewModelScope.launch {
         repository.remove(task)
 
-        // Cancel the notification task from WorkManager
+        // Cancel the fokus task from WorkManager
         workManager.cancelUniqueWork(task.taskID)
     }
 
@@ -47,7 +47,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         repository.update(task, attachmentList)
 
         // Check if notifications for tasks is turned on and if the task
-        // is not finished then reschedule the notification from
+        // is not finished then reschedule the fokus from
         // WorkManager
         if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isBeforeNow) {
             workManager.cancelUniqueWork(task.taskID)

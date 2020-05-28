@@ -7,9 +7,9 @@ import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 
-// This worker fetches the notification passed by various
+// This worker fetches the fokus passed by various
 // worker classes. It's primary purpose is to only trigger
-// and to show the notification. Also to insert the notification
+// and to show the fokus. Also to insert the fokus
 // object to the database.
 class NotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {

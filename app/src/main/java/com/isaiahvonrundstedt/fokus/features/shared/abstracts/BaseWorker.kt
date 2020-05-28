@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -135,10 +136,17 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 else -> R.string.notification_channel_generic
             }
 
+            val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+
             if (getNotificationChannel(id) == null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    manager.createNotificationChannel(NotificationChannel(id, context.getString(resID),
-                        NotificationManager.IMPORTANCE_HIGH))
+                    manager.createNotificationChannel(
+                        NotificationChannel(id, context.getString(resID),
+                            NotificationManager.IMPORTANCE_HIGH).apply {
+                                setSound(notificationSoundUri, attributes)
+                            })
             }
         }
     }
@@ -189,8 +197,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
     private val notificationSoundUri: Uri
         get() {
             return PreferenceManager(applicationContext).let {
-                if (it.customSound)
-                    it.soundFileUri
+                if (it.customSoundEnabled) it.customSoundUri
                 else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             }
         }

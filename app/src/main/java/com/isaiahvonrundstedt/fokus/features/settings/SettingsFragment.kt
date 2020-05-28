@@ -18,7 +18,6 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.getFileName
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
@@ -161,8 +160,12 @@ class SettingsFragment: PreferenceFragmentCompat() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == soundRequestCode && resultCode == Activity.RESULT_OK)
-            preferences.soundFileUri = data?.data ?: Uri.parse(PreferenceManager.defaultSound)
+        if (requestCode == soundRequestCode && resultCode == Activity.RESULT_OK) {
+            context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
+        }
     }
 
     private fun scheduleNextReminder() {

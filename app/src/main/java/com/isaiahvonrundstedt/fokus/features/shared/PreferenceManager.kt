@@ -25,6 +25,69 @@ class PreferenceManager(private val context: Context?) {
         }
     }
 
+    private val sharedPreference by lazy {
+        PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
+    var isFirstRun: Boolean
+        get() = sharedPreference?.getBoolean(isFirstRunKey, true) ?: true
+        set(value) {
+            val editor = sharedPreference.edit()
+            editor.putBoolean(isFirstRunKey, value)
+            editor.apply()
+        }
+
+    val name: String?
+        get() = sharedPreference.getString(nameKey, context?.getString(R.string.app_name))
+
+    var theme: Theme
+        get() = Theme.parse(sharedPreference.getString(themeKey, Theme.SYSTEM.toString()))
+        set(value) {
+            val editor = sharedPreference.edit()
+            editor?.putString(themeKey, value.toString())
+            editor?.apply()
+        }
+
+    val completedSounds: Boolean
+        get() = sharedPreference.getBoolean(soundKey, true)
+
+    val customSoundEnabled: Boolean
+        get() = sharedPreference.getBoolean(customSoundKey, false)
+
+    var customSoundUri: Uri
+        get() = Uri.parse(sharedPreference.getString(customSoundFileKey, defaultSound))
+        set(value) {
+            val editor = sharedPreference.edit()
+            editor.putString(customSoundFileKey, value.toString())
+            editor.apply()
+        }
+
+    val reminderFrequency: String
+        get() = sharedPreference.getString(frequencyKey, durationEveryday) ?: durationEveryday
+
+    var reminderTime: LocalTime?
+        get() = DateTimeConverter.toTime(
+            sharedPreference.getString(reminderTimeKey, "08:30") ?: "08:30")
+        set(value) {
+            val editor = sharedPreference.edit()
+            editor?.putString(reminderTimeKey, DateTimeConverter.fromTime(value))
+            editor?.apply()
+        }
+
+    val taskReminder: Boolean
+        get() = sharedPreference.getBoolean(taskReminderKey, true)
+
+    val taskReminderInterval: String
+        get() = sharedPreference.getString(taskIntervalKey, taskReminderIntervalThreeHours)
+            ?: taskReminderIntervalThreeHours
+
+    val eventReminder: Boolean
+        get() = sharedPreference.getBoolean(eventReminderKey, true)
+
+    val eventReminderInterval: String
+        get() = sharedPreference.getString(eventIntervalKey, eventReminderIntervalHalf)
+            ?: eventReminderIntervalHalf
+
     companion object {
         const val defaultSound = "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
 
@@ -56,99 +119,4 @@ class PreferenceManager(private val context: Context?) {
         const val noticesKey = "noticesPreference"
         const val versionKey = "versionPreference"
     }
-
-    var isFirstRun: Boolean
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getBoolean(isFirstRunKey, true) ?: true
-        }
-        set(value) {
-            val editor = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext).edit()
-            editor.putBoolean(isFirstRunKey, value)
-            editor.apply()
-        }
-
-    val name: String?
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getString(nameKey, context?.getString(R.string.app_name))
-        }
-
-    var theme: Theme
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return Theme.parse(shared?.getString(themeKey, Theme.SYSTEM.toString()))
-        }
-        set(value) {
-            val editor = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext).edit()
-
-            editor?.putString(themeKey, value.toString())
-            editor?.apply()
-        }
-
-    val completedSounds: Boolean
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getBoolean(soundKey, true) ?: true
-        }
-
-    val customSound: Boolean
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getBoolean(customSoundKey, false) ?: false
-        }
-
-    var soundFileUri: Uri
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return Uri.parse(shared.getString(customSoundFileKey, defaultSound))
-        }
-        set(value) {
-            val editor = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext).edit()
-            editor.putString(customSoundFileKey, value.toString())
-            editor.apply()
-        }
-
-    val reminderFrequency: String
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getString(frequencyKey, durationEveryday)!!
-        }
-
-    var reminderTime: LocalTime?
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return DateTimeConverter.toTime(
-                shared.getString(reminderTimeKey, "08:30") ?: "08:30")
-        }
-        set(value) {
-            val editor = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext).edit()
-
-            editor?.putString(reminderTimeKey, DateTimeConverter.fromTime(value))
-            editor?.apply()
-        }
-
-    val taskReminder: Boolean
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getBoolean(taskReminderKey, true) ?: true
-        }
-
-    val taskReminderInterval: String
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getString(taskIntervalKey, taskReminderIntervalThreeHours) ?: taskReminderIntervalThreeHours
-        }
-
-    val eventReminder: Boolean
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getBoolean(eventReminderKey, true) ?: true
-        }
-
-    val eventReminderInterval: String
-        get() {
-            val shared = PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
-            return shared?.getString(eventIntervalKey, eventReminderIntervalHalf) ?: eventReminderIntervalHalf
-        }
 }

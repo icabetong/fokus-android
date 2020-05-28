@@ -24,6 +24,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.core.extensions.getFileName
+import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
@@ -224,13 +225,6 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
     }
 
-    // An extension function for the attachment list that will get the item
-    // using the items id from the list
-    private fun ArrayList<Attachment>.getUsingID(id: String): Attachment? {
-        this.forEach { if (it.id == id) return it }
-        return null
-    }
-
     private val chipClickListener = View.OnClickListener {
         val attachment = attachmentList.getUsingID(it.tag.toString())
         if (attachment != null) onParseIntent(attachment.uri)
@@ -242,26 +236,6 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
 
         val attachment = attachmentList.getUsingID(it.tag.toString())
         if (attachment != null) attachmentList.remove(attachment)
-    }
-
-    // This function determines the file name for the uri returned by the SAF file
-    // picker that will be used exclusively for the ChipView
-    private fun getFileName(uri: Uri): String {
-        var result = ""
-        if (uri.scheme == "content") {
-            val cursor: Cursor? = contentResolver?.query(uri, null, null, null, null)
-            try {
-                if (cursor != null && cursor.moveToFirst())
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-            } catch (ex: Exception) {}
-            finally { cursor?.close() }
-        } else {
-            result = uri.path.toString()
-            val index = result.lastIndexOf('/')
-            if (index != 1)
-                result = result.substring(index + 1)
-        }
-        return result
     }
 
     // This function invokes the corresponding application that

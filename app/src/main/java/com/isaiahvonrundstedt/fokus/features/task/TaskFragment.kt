@@ -95,8 +95,8 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                             Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
                                 Snackbar.LENGTH_SHORT).show()
                             val uri: Uri = PreferenceManager(requireContext()).let {
-                                if (it.customSound)
-                                    it.soundFileUri
+                                if (it.customSoundEnabled)
+                                    it.customSoundUri
                                 else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
                             }
                             RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()

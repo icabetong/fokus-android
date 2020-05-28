@@ -5,6 +5,11 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.OpenableColumns
 
+/**
+ *  Extension function used to get the file name
+ *  of an uri object
+ *  @param context used to get access for a contentResolver object
+ */
 fun Uri.getFileName(context: Context): String {
     var result = ""
     if (this.scheme == "content") {

@@ -32,10 +32,6 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
         return defaultValue * 10
     }
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-        return 0.5f
-    }
-
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                              dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)

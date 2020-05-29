@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/tagView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/shape_color_holder"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/nameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="INTECH 2100"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/descriptionView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="Introduction to Web Design"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/dateTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

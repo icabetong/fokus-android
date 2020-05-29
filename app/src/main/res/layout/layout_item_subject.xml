@@ -15,7 +15,7 @@
         android:paddingVertical="16dp"
         android:paddingHorizontal="32dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/tagView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/shape_color_holder"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="COMSCI 2101"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/summaryView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

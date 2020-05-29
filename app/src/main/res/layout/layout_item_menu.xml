@@ -10,7 +10,7 @@
     android:padding="@dimen/activity_padding"
     android:background="?attr/selectableItemBackground">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/titleView"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

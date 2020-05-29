@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_padding">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
         tools:text="text"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@android:id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

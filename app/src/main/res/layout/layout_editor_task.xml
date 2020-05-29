@@ -18,7 +18,7 @@
 
             <include layout="@layout/layout_appbar_editor" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
                 <requestFocus />
 
-            </androidx.appcompat.widget.AppCompatEditText>
+            </EditText>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,14 +44,14 @@
                 android:orientation="vertical"
                 android:paddingVertical="16dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_notes"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/notesEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,14 +78,14 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape_surface_background">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_subject"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/subjectTextView"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
@@ -97,7 +97,7 @@
                     android:text="@string/field_not_set"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -105,7 +105,7 @@
                     android:text="@string/field_due_date"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/dueDateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
@@ -128,7 +128,7 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape_surface_background">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"

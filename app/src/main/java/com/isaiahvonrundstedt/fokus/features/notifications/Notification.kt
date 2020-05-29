@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.notifications
 
 import android.os.Parcelable
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -29,7 +30,7 @@ data class Notification @JvmOverloads constructor (
     var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
-    fun tintDrawable(sourceView: AppCompatImageView) {
+    fun tintDrawable(sourceView: ImageView) {
         val colorID = if (type == typeGeneric) R.color.colorIconReminder else R.color.colorIconWarning
         sourceView.setImageDrawable(sourceView.drawable.mutate().apply {
             colorFilter = BlendModeColorFilterCompat

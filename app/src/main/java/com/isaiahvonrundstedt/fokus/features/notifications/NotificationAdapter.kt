@@ -3,8 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.notifications
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +15,9 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class NotificationAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Notification, NotificationAdapter.ViewHolder>(callback) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_notification,
-            parent, false)
+                                                                        parent, false)
         return ViewHolder(rowView)
     }
 
@@ -31,11 +31,11 @@ class NotificationAdapter(private var actionListener: ActionListener)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val rootView: View = itemView.findViewById(R.id.rootView)
-        private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
-        private val titleView: AppCompatTextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: AppCompatTextView = itemView.findViewById(R.id.summaryView)
-        private val dateTimeView: AppCompatTextView = itemView.findViewById(R.id.dateTimeView)
+        private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
+        private val iconView: ImageView = itemView.findViewById(R.id.iconView)
+        private val titleView: TextView = itemView.findViewById(R.id.titleView)
+        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
+        private val dateTimeView: TextView = itemView.findViewById(R.id.dateTimeView)
 
         fun onBind(notification: Notification) {
             titleView.text = notification.title

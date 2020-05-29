@@ -17,7 +17,7 @@
 
             <include layout="@layout/layout_appbar_editor"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/codeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
                 <requestFocus/>
 
-            </androidx.appcompat.widget.AppCompatEditText>
+            </EditText>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,14 +43,14 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape_surface_background">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_description"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/descriptionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,14 +73,14 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape_surface_background">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_days_of_week"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/daysOfWeekTextView"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
@@ -92,7 +92,7 @@
                     android:clickable="true"
                     android:focusable="true" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/startTimeTextView"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -121,7 +121,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/endTimeTextView"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/endTimeTextView"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -152,7 +152,7 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape_surface_background">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <ImageView
                         android:id="@+id/tagHolderView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/shape_color_holder"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/tagView"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/listPreferredItemHeightSmall"

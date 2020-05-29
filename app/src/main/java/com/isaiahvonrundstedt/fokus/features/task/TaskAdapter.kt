@@ -4,6 +4,8 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
@@ -38,11 +40,11 @@ class TaskAdapter(private var actionListener: ActionListener)
     inner class TaskViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val rootView: View = itemView.findViewById(R.id.rootView)
         private val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkBox)
-        private val subjectNameView: AppCompatTextView = itemView.findViewById(R.id.subjectNameView)
-        private val taskNameView: AppCompatTextView = itemView.findViewById(R.id.taskNameView)
-        private val dueDateView: AppCompatTextView = itemView.findViewById(R.id.dueDateView)
-        private val attachmentView: AppCompatTextView = itemView.findViewById(R.id.attachmentsView)
-        private val tagView: AppCompatImageView = itemView.findViewById(R.id.tagView)
+        private val subjectNameView: TextView = itemView.findViewById(R.id.subjectNameView)
+        private val taskNameView: TextView = itemView.findViewById(R.id.taskNameView)
+        private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)
+        private val attachmentView: TextView = itemView.findViewById(R.id.attachmentsView)
+        private val tagView: ImageView = itemView.findViewById(R.id.tagView)
 
         fun onBind(core: Core) {
             checkBox.setOnClickListener { view ->

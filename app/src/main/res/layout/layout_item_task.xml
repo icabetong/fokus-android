@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/subjectNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="COMSCI 2101"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/taskNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="Feed the Cat"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/attachmentsView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="8 files attached"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/dueDateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/tagView"
             android:layout_width="4dp"
             android:layout_height="0dp"

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/iconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:tint="@color/colorPrimary"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="COMSCI 2101"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/summaryView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="sample"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/dateTimeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

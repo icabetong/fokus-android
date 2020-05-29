@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.extensions
 
 import android.graphics.Paint
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -10,7 +11,7 @@ import androidx.core.content.ContextCompat
  *   of a AppCompatTextView
  *   @param id a color id from the Android resource
  */
-fun AppCompatTextView.setTextColorFromResource(@ColorRes id: Int) {
+fun TextView.setTextColorFromResource(@ColorRes id: Int) {
     this.setTextColor(ContextCompat.getColor(this.context, id))
 }
 
@@ -18,7 +19,7 @@ fun AppCompatTextView.setTextColorFromResource(@ColorRes id: Int) {
  *   Extension function used to add a strike through effect on
  *   the AppCompatTextView
  */
-fun AppCompatTextView.addStrikeThroughEffect() {
+fun TextView.addStrikeThroughEffect() {
     this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 }
 
@@ -26,6 +27,6 @@ fun AppCompatTextView.addStrikeThroughEffect() {
  *   Extension function used to remove a strike through effect on
  *   the AppCompatTextView
  */
-fun AppCompatTextView.removeStrikeThroughEffect() {
+fun TextView.removeStrikeThroughEffect() {
     this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG.inv()
 }

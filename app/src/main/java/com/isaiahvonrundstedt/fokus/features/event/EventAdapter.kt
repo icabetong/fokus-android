@@ -4,6 +4,8 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -36,11 +38,11 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     inner class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val rootView: View = itemView.findViewById(R.id.rootView)
-        private val locationView: AppCompatTextView = itemView.findViewById(R.id.locationView)
-        private val nameView: AppCompatTextView = itemView.findViewById(R.id.nameView)
-        private val dayView: AppCompatTextView = itemView.findViewById(R.id.dayView)
-        private val timeView: AppCompatTextView = itemView.findViewById(R.id.timeView)
+        private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
+        private val locationView: TextView = itemView.findViewById(R.id.locationView)
+        private val nameView: TextView = itemView.findViewById(R.id.nameView)
+        private val dayView: TextView = itemView.findViewById(R.id.dayView)
+        private val timeView: TextView = itemView.findViewById(R.id.timeView)
 
         fun onBind(event: Event) {
             locationView.text = event.location

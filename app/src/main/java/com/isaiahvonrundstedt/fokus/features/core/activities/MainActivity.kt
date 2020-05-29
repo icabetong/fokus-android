@@ -9,7 +9,7 @@ import androidx.navigation.ui.NavigationUI
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.event.EventEditorActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.components.menu.NavigationBottomSheet
+import com.isaiahvonrundstedt.fokus.features.shared.components.sheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskEditorActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_appbar.*
@@ -33,7 +33,8 @@ class MainActivity: BaseActivity() {
 
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_android_menu)
         toolbar?.setNavigationOnClickListener {
-            NavigationBottomSheet().invoke(supportFragmentManager)
+            NavigationBottomSheet()
+                .invoke(supportFragmentManager)
         }
 
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)

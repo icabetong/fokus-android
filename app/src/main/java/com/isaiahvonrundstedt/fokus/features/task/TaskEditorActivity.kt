@@ -13,9 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -111,7 +109,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            subjectDialog = MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditorActivity)
                 title(R.string.dialog_select_subject_title)
                 message(R.string.dialog_select_subject_summary)

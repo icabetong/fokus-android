@@ -23,5 +23,4 @@ This project is licensed under the AGPL-3.0 - see the license file for more deta
 ### Other materials used
 * [Launcher Icon](https://flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat
-* [Manrope Font](https://manropefont.com/) - Mikhail Sharanda
 

@@ -18,8 +18,8 @@
     <string name="navigation_events">Events</string>
     <string name="navigation_subjects">Subjects</string>
 
-    <string name="first_run_add_first_subject_title">Add a subject first</string>
-    <string name="first_run_add_first_subject_message">To add a task, you\'ll need to associate it with a subject to organize them efficiently</string>
+    <string name="first_run_add_first_subject_title">First things first</string>
+    <string name="first_run_add_first_subject_message">You may need to add a subject first to add a task.</string>
 
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_new_task">New Task</string>

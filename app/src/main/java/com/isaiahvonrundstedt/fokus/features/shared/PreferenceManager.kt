@@ -116,6 +116,7 @@ class PreferenceManager(private val context: Context?) {
         const val eventIntervalKey = "eventIntervalPreference"
         const val notificationKey = "notificationPreference"
         const val locationKey = "locationPreference"
+        const val issueKey = "issuePreference"
         const val noticesKey = "noticesPreference"
         const val versionKey = "versionPreference"
     }

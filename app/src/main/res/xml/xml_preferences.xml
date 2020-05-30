@@ -104,6 +104,10 @@
         android:title="@string/settings_group_about">
 
         <Preference
+            android:key="issuePreference"
+            android:title="@string/settings_report_an_issue"/>
+
+        <Preference
             android:key="noticesPreference"
             android:title="@string/settings_third_party_notices"/>
 

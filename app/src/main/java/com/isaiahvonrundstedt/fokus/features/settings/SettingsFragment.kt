@@ -32,6 +32,7 @@ class SettingsFragment: PreferenceFragmentCompat() {
 
     companion object {
         const val soundRequestCode = 32
+        const val url = "https://github.com/reichsadmiral/fokus/issues/new"
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -65,6 +66,9 @@ class SettingsFragment: PreferenceFragmentCompat() {
             ?.onPreferenceClickListener = clickListener
 
         findPreference<Preference>(PreferenceManager.locationKey)
+            ?.onPreferenceClickListener = clickListener
+
+        findPreference<Preference>(PreferenceManager.issueKey)
             ?.onPreferenceClickListener = clickListener
 
         findPreference<Preference>(PreferenceManager.noticesKey)
@@ -141,6 +145,9 @@ class SettingsFragment: PreferenceFragmentCompat() {
             }
             PreferenceManager.notificationKey -> {
                 DokiActivity.start(requireContext())
+            }
+            PreferenceManager.issueKey -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             }
             PreferenceManager.noticesKey -> {
                 OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_notices))

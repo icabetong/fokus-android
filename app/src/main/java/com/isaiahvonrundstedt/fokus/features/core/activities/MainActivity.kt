@@ -31,7 +31,7 @@ class MainActivity: BaseActivity() {
             startActivityForResult(Intent(this, EventEditorActivity::class.java),
                 EventEditorActivity.insertRequestCode)
 
-        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_android_menu)
+        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_menu_black)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet()
                 .invoke(supportFragmentManager)

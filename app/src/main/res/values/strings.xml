@@ -143,6 +143,7 @@
     <string name="settings_not_working_notifications_title">Notifications not working?</string>
     <string name="settings_not_working_notifications_summary">Tap here to fix</string>
 
+    <string name="settings_report_an_issue">Report an issue</string>
     <string name="settings_third_party_notices">Third Party Notices</string>
     <string name="settings_build_version">Build Version</string>
 

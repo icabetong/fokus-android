@@ -1,14 +1,12 @@
 <resources>
-    <string name="app_name">Fokus</string>
+    <string translatable="false" name="app_name">Fokus</string>
 
     <string name="activity_tasks">Your Tasks</string>
     <string name="activity_events">Your Events</string>
     <string name="activity_subjects">Your Subjects</string>
     <string name="activity_notifications">Your Notifications</string>
     <string name="activity_settings">Settings</string>
-    <string name="activity_help_and_feedback">Help and Feedback</string>
     <string name="activity_notices">Open Source and Third Party</string>
-    <string name="activity_privacy">Privacy Policy Statement</string>
 
     <string name="menu_notifications">Notifications</string>
     <string name="menu_settings">@string/activity_settings</string>
@@ -25,18 +23,11 @@
     <string name="button_new_task">New Task</string>
     <string name="button_new_event">New Event</string>
     <string name="button_new_subject">New Subject</string>
-    <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>
     <string name="button_undo">Undo</string>
-    <string name="button_move">Move</string>
     <string name="button_continue">Continue</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="button_remove">Remove</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
-
-    <string name="status_task_finished">Finished</string>
-    <string name="status_task_pending">Pending</string>
 
     <string name="empty_view_no_subjects_title">You have no subjects added</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -66,10 +57,6 @@
     <string name="dialog_select_subject_summary">Specify which subject requires this task to be done</string>
     <string name="dialog_select_notification_interval">Select notification interval</string>
     <string name="dialog_choose_theme">Choose theme</string>
-    <string name="dialog_delete_task_title">Delete task?</string>
-    <string name="dialog_delete_task_summary">Are you sure you want to delete this task? This action cannot be undone.</string>
-    <string name="dialog_delete_subject_title">Delete subject?</string>
-    <string name="dialog_delete_subject_summary">Are you sure you want to delete this subject? This action cannot be undone.</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
 
@@ -122,7 +109,7 @@
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
     <string name="settings_custom_notification_sound_title">Use custom sound</string>
     <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
-    <string name="settings_select_sound">Select sound</string>
+    <string name="settings_select_sound">Select sound file</string>
 
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
@@ -131,9 +118,9 @@
     <string name="settings_notify_me_when_nearing_due_title">Notify me when a task is nearing due</string>
     <string name="settings_notify_me_when_nearing_due_summary">Show notifications for tasks that are nearing its deadline</string>
     <string name="settings_show_a_notification_when_the_due_is_title">Show a notification when the due is</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_hour">The hour before</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_three_hours">Three hours before</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_day">The day before</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_hour">1 hour before</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_three_hours">3 hours before</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_day">1 day before</string>
     <string name="settings_notify_me_about_my_incoming_events_title">Notify me about my incoming events</string>
     <string name="settings_notify_me_about_my_incoming_events_summary">Show notifications about incoming events this day</string>
     <string name="settings_show_a_notification_when_an_event_starts_at">Show a notification when an event starts at</string>
@@ -180,28 +167,22 @@
     <string name="file_attached">%1$d file attached</string>
     <string name="files_attached">%1$d files attached</string>
 
-    <string name="credit_open_source_libraries">Open Source Libraries</string>
-    <string name="credit_other_resources">Other resources</string>
-    <string name="credit_notification_sound_title">Notification Sound</string>
-    <string name="credit_notification_sound_summary">Zapsplat</string>
-    <string name="credit_launcher_icon_title">Launcher Icon</string>
-    <string name="credit_launcher_icon_summary">Freepik</string>
-
     <!-- Preference Keys -->
-    <string name="key_is_first_run">isFirstRunKey</string>
-    <string name="key_username">usernameKey</string>
-    <string name="key_theme">themeKey</string>
-    <string name="key_sound">soundKey</string>
-    <string name="key_custom_sound">customSoundKey</string>
-    <string name="key_sound_uri">soundUriKey</string>
-    <string name="key_reminder_frequency">reminderFrequencyKey</string>
-    <string name="key_reminder_time">reminderTimeKey</string>
-    <string name="key_task_reminder">taskReminderKey</string>
-    <string name="key_task_reminder_interval">taskReminderIntervalKey</string>
-    <string name="key_event_reminder">eventReminderKey</string>
-    <string name="key_event_reminder_interval">eventReminderIntervalKey</string>
-    <string name="key_not_working_notifications">notWorkingNotificationKey</string>
-    <string name="key_report_issue">issueKey</string>
-    <string name="key_notices">noticesKey</string>
-    <string name="key_version">versionKey</string>
+    <string translatable="false" name="key_is_first_run">isFirstRunKey</string>
+    <string translatable="false" name="key_username">usernameKey</string>
+    <string translatable="false" name="key_theme">themeKey</string>
+    <string translatable="false" name="key_sound">soundKey</string>
+    <string translatable="false" name="key_custom_sound">customSoundKey</string>
+    <string translatable="false" name="key_sound_uri">soundUriKey</string>
+    <string translatable="false" name="key_reminder_frequency">reminderFrequencyKey</string>
+    <string translatable="false" name="key_reminder_time">reminderTimeKey</string>
+    <string translatable="false" name="key_task_reminder">taskReminderKey</string>
+    <string translatable="false" name="key_task_reminder_interval">taskReminderIntervalKey</string>
+    <string translatable="false" name="key_event_reminder">eventReminderKey</string>
+    <string translatable="false" name="key_event_reminder_interval">eventReminderIntervalKey</string>
+    <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
+    <string translatable="false" name="key_report_issue">issueKey</string>
+    <string translatable="false" name="key_notices">noticesKey</string>
+    <string translatable="false" name="key_version">versionKey</string>
+
 </resources>

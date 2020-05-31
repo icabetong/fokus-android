@@ -121,6 +121,7 @@
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">

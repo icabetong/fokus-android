@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fokus</string>
+    <string name="activity_tasks">Ihre Aufgaben</string>
+    <string name="activity_events">Ihre Veranstaltungen</string>
+    <string name="activity_subjects">Ihre Themen</string>
+    <string name="activity_notifications">Ihre Benachrichtigungen</string>
+    <string name="activity_settings">Einstellungen</string>
+    <string name="activity_notices">Open Source und Dritte</string>
+
+    <string name="menu_notifications">Benachrichtigungen</string>
+    <string name="menu_settings">@string/activity_settings</string>
+    <string name="menu_clear_items">Artikel löschen</string>
+    <string name="navigation_tasks">Aufgaben</string>
+    <string name="navigation_events">Veranstaltungen</string>
+    <string name="navigation_subjects">Themen</string>
+
+    <string name="first_run_bottom_sheet_title">Eins nach dem anderen</string>
+    <string name="first_run_bottom_sheet_message">Möglicherweise müssen Sie zuerst einen Betreff hinzufügen, um eine Aufgabe hinzufügen zu können</string>
+
+    <string name="button_add_attachment">Anhang hinzufügen</string>
+    <string name="button_new_task">Neue Aufgabe</string>
+    <string name="button_new_event">Neue Veranstaltung</string>
+    <string name="button_new_subject">Neues Thema</string>
+    <string name="button_save">Speichern</string>
+    <string name="button_done">Erledigt</string>
+    <string name="button_undo">Rückgängig machen</string>
+    <string name="button_continue">Fortfahren</string>
+    <string name="button_mark_as_finished">Als beendet markieren</string>
+
+    <string name="empty_view_no_subjects_title">Sie haben keine Themen hinzugefügt</string>
+    <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
+    <string name="empty_view_no_tasks_title">Keine anhängigen Aufgaben</string>
+    <string name="empty_view_no_tasks_summary">Sie haben derzeit keine offenen Aufgaben. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
+    <string name="empty_view_no_notifications_title">Benachrichtigungen</string>
+    <string name="empty_view_no_notifications_summary">Benachrichtigungen werden hier aufgelistet, sobald sie auf Ihrem Benachrichtigungsschirm erscheinen.</string>
+    <string name="empty_view_no_events_title">Keine geplanten Ereignisse</string>
+    <string name="empty_view_no_events_summary">Sie haben derzeit keine geplanten Veranstaltungen. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
+
+    <string name="days_of_week_dialog_title">Tage auswählen</string>
+    <string name="days_of_week_item_sunday">Sonntag</string>
+    <string name="days_of_week_item_monday">Montag</string>
+    <string name="days_of_week_item_tuesday">Dienstag</string>
+    <string name="days_of_week_item_wednesday">Mittwoch</string>
+    <string name="days_of_week_item_thursday">Donnerstag</string>
+    <string name="days_of_week_item_friday">Freitag</string>
+    <string name="days_of_week_item_saturday">Samstag</string>
+
+    <string name="dialog_select_start_time">Startzeit auswählen</string>
+    <string name="dialog_select_end_time">Endzeit auswählen</string>
+    <string name="dialog_select_color_tag">Farb-Tag auswählen</string>
+    <string name="dialog_select_subject_title">Thema auswählen</string>
+    <string name="dialog_select_subject_summary">Geben Sie an, zu welchem Thema diese Aufgabe durchgeführt werden muss</string>
+    <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
+    <string name="dialog_choose_theme">Thema wählen</string>
+    <string name="dialog_your_name_title">Wie sollen wir Sie nennen?</string>
+    <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
+
+    <string name="field_subject_code">Betreff Code</string>
+    <string name="field_description">Beschreibung</string>
+    <string name="field_days_of_week">Wochentage</string>
+    <string name="field_start_time">Startzeit</string>
+    <string name="field_end_time">Endzeit</string>
+    <string name="field_task_name">Name der Aufgabe</string>
+    <string name="field_notes">Anmerkungen</string>
+    <string name="field_subject">Themen</string>
+    <string name="field_due_date">Fälligkeitsdatum</string>
+    <string name="field_event_name">Name der Veranstaltung</string>
+    <string name="field_schedule">Zeitplan</string>
+    <string name="field_location">Standort</string>
+    <string name="field_attachments">Anhänge</string>
+    <string name="field_class_time">Unterrichtszeit</string>
+    <string name="field_color_tag">Farb-Tag</string>
+    <string name="field_not_set">Nicht gesetzt</string>
+
+    <string name="feedback_subject_removed">Betreff entfernt</string>
+    <string name="feedback_notification_removed">Benachrichtigung entfernt</string>
+    <string name="feedback_task_removed">Aufgabe entfernt</string>
+    <string name="feedback_task_marked_as_finished">Als abgeschlossen markierte Aufgabe</string>
+    <string name="feedback_event_removed">Ereignis entfernt</string>
+    <string name="feedback_subject_empty_name">Sie haben vergessen, den Betreff-Code einzugeben</string>
+    <string name="feedback_subject_empty_description">Sie haben vergessen, die Beschreibung einzugeben</string>
+    <string name="feedback_subject_empty_start_time">Sie haben vergessen, die Startzeit einzugeben.</string>
+    <string name="feedback_subject_empty_end_time">Sie haben vergessen, die Endzeit einzugeben.</string>
+    <string name="feedback_task_empty_name">Sie haben vergessen, den Aufgabennamen einzugeben</string>
+    <string name="feedback_task_empty_subject">Sie haben vergessen anzugeben, welches Thema dies erfordert.</string>
+    <string name="feedback_task_empty_due_date">Sie haben vergessen, das Fälligkeitsdatum anzugeben.</string>
+    <string name="feedback_event_empty_name">Sie haben vergessen, den Namen der Veranstaltung einzugeben</string>
+    <string name="feedback_event_empty_location">Sie haben vergessen, den Standort einzugeben</string>
+    <string name="feedback_event_empty_schedule">Sie haben vergessen, den Zeitplan einzugeben</string>
+
+    <string name="settings_group_interface">Schnittstelle</string>
+    <string name="settings_group_behavior">Verhalten</string>
+    <string name="settings_group_notification">Benachrichtigungen</string>
+    <string name="settings_group_about">Über</string>
+
+    <string name="settings_name">Ihr Name</string>
+    <string name="settings_theme">Thema</string>
+    <string name="settings_theme_item_system">Systemvorgabe</string>
+    <string name="settings_theme_item_dark">Dunkel</string>
+    <string name="settings_theme_item_light">Licht</string>
+
+    <string name="settings_completion_sounds_title">Vervollständigung klingt</string>
+    <string name="settings_completion_sounds_summary">"Spielen Sie einen Ton ab, wenn Sie eine Aufgabe als erledigt markieren "</string>
+    <string name="settings_custom_notification_sound_summary">Systembenachrichtigungston überschreiben; wählen Sie unten einen aus, um Ihren eigenen zu verwenden</string>
+    <string name="settings_custom_notification_sound_title">Benutzerdefinierten Ton verwenden</string>
+    <string name="settings_select_sound">Sounddatei auswählen</string>
+
+    <string name="settings_reminder_frequency_title">Häufigkeit von Erinnerungen</string>
+    <string name="settings_reminder_frequency_item_everyday">Täglich</string>
+    <string name="settings_reminder_frequency_item_weekends">Wochenenden</string>
+    <string name="settings_remind_me_in_time_of_day">Erinnern Sie mich an dieser Stelle</string>
+    <string name="settings_notify_me_when_nearing_due_title">Benachrichtigen Sie mich, wenn die Aufgabe fällig wird</string>
+    <string name="settings_notify_me_when_nearing_due_summary">Benachrichtigungen für Aufgaben anzeigen, die sich dem Ende der Frist nähern</string>
+    <string name="settings_show_a_notification_when_the_due_is_title">Eine Benachrichtigung anzeigen, wenn die Fälligkeit</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_hour">1 Stunde vorher</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_three_hours">3 Stunden vorher</string>
+    <string name="settings_show_a_notification_when_the_due_is_item_day">1 Tag vorher</string>
+    <string name="settings_notify_me_about_my_incoming_events_title">Benachrichtigen Sie mich über meine eingehenden Ereignisse</string>
+    <string name="settings_notify_me_about_my_incoming_events_summary">Benachrichtigungen über eingehende Ereignisse an diesem Tag anzeigen</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at">Eine Benachrichtigung anzeigen, wenn ein Ereignis beginnt bei</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_quarter_hour">15 Minuten</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_half_hour">30 Minuten</string>
+    <string name="settings_show_a_notification_when_an_event_starts_at_item_full_hour">1 Stunde</string>
+    <string name="settings_not_working_notifications_title">Funktionieren die Benachrichtigungen jetzt?</string>
+    <string name="settings_not_working_notifications_summary">Tippen Sie hier zum Beheben</string>
+
+    <string name="settings_report_an_issue">Ein Problem melden</string>
+    <string name="settings_third_party_notices">Mitteilungen Dritter</string>
+    <string name="settings_build_version">Build-Version</string>
+
+    <string name="tag_color_sky">Himmel</string>
+    <string name="tag_color_grass">Gras</string>
+    <string name="tag_color_sunset">Sonnenuntergang</string>
+    <string name="tag_color_lemon">Zitrone</string>
+    <string name="tag_color_sea">Meer</string>
+    <string name="tag_color_grape">Traube</string>
+    <string name="tag_color_cherry">Kirsche</string>
+    <string name="tag_color_rose">Rose</string>
+
+    <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
+    <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>
+    <string name="notification_channel_generic">Generisch</string>
+    <string name="notification_channel_task_reminders">Aufgaben-Erinnerungen</string>
+    <string name="notification_channel_event_reminders">Ereignis-Erinnerungen</string>
+
+    <string name="shortcut_new_task">@string/button_new_task</string>
+    <string name="shortcut_new_event">@string/button_new_event</string>
+    <string name="hello">Hallo, %1$s</string>
+    <string name="and">&#160;und&#160;</string>
+    <string name="yesterday_at">Gestern um %1$s</string>
+    <string name="yesterday">Gestern</string>
+    <string name="tomorrow_at">Morgen um %1$s</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="today_at">Heute um %1$s</string>
+    <string name="today">Heute</string>
+    <string name="due_today_at">Fällig heute um %1$s</string>
+    <string name="due_tomorrow_at">Fällig morgen um %1$s</string>
+    <string name="file_attached">%1$d  Datei angehängt</string>
+    <string name="files_attached">%1$d Dateien angehängt</string>
+
+
+</resources>

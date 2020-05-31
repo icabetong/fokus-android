@@ -23,8 +23,8 @@
 
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_new_task">New Task</string>
-    <string name="button_new_subject">New Subject</string>
     <string name="button_new_event">New Event</string>
+    <string name="button_new_subject">New Subject</string>
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>

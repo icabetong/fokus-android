@@ -29,9 +29,8 @@ class EventEditorActivity: BaseActivity() {
         // extras so that we'll show it to the user
         requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
             else insertRequestCode
-        if (requestCode == updateRequestCode) {
+        if (requestCode == updateRequestCode)
             event = intent.getParcelableExtra(extraEvent)!!
-        }
 
         // The passed extras will be shown in their
         // corresponding fields

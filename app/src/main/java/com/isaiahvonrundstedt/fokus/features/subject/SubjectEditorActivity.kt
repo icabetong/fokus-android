@@ -48,31 +48,21 @@ class SubjectEditorActivity: BaseActivity() {
         // The extras passed by the parent activity will
         // be shown to the fields.
         if (requestCode == updateRequestCode) {
-            codeEditText.setText(subject.code)
-            descriptionEditText.setText(subject.description)
-            startTimeTextView.text = formatTime(subject.startTime!!)
-            endTimeTextView.text = formatTime(subject.endTime!!)
-
-
-            startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            val builder = StringBuilder()
-            val selectedDays = Subject.getDays(subject.daysOfWeek)
-
-            selectedDays.forEachIndexed { index, dayOfWeek ->
-                builder.append(getString(Subject.getDayNameResource(dayOfWeek)))
-
-                if (index == selectedDays.size - 2)
-                    builder.append(getString(R.string.and))
-                else if (index < selectedDays.size - 2)
-                    builder.append(", ")
+            with(subject) {
+                codeEditText.setText(code)
+                descriptionEditText.setText(description)
+                startTimeTextView.text = formatStartTime()
+                endTimeTextView.text = formatEndTime()
+                daysOfWeekTextView.text = formatDaysOfWeek(this@SubjectEditorActivity)
             }
-            daysOfWeekTextView.text = builder.toString()
-            daysOfWeekTextView.setTextColorFromResource(R.color.colorPrimaryText)
 
             this@SubjectEditorActivity.tagHolderView
                 .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
             tagView.text = getString(Subject.Tag.getName(subject.tag))
+
+            startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            daysOfWeekTextView.setTextColorFromResource(R.color.colorPrimaryText)
             tagView.setTextColorFromResource(R.color.colorPrimaryText)
         }
 
@@ -88,15 +78,7 @@ class SubjectEditorActivity: BaseActivity() {
                         sum += values!![index]
                     }
                     subject.daysOfWeek = sum
-                    val builder = StringBuilder("")
-                    items.forEachIndexed { index, charSequence ->
-                        builder.append(charSequence)
-                        if (index == items.size - 2)
-                            builder.append(getString(R.string.and))
-                        else if (index < items.size - 2)
-                            builder.append(", ")
-                    }
-                    (v as AppCompatTextView).text = builder
+                    (v as AppCompatTextView).text = subject.formatDaysOfWeek(this@SubjectEditorActivity)
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
@@ -118,12 +100,12 @@ class SubjectEditorActivity: BaseActivity() {
                     if (subject.endTime == null) subject.endTime = startTime
                     if (startTime.isAfter(subject.endTime) || startTime.isEqual(subject.endTime)) {
                         subject.endTime = subject.startTime?.plusHours(1)?.plusMinutes(30)
-                        this@SubjectEditorActivity.endTimeTextView.text = formatTime(subject.endTime!!)
+                        this@SubjectEditorActivity.endTimeTextView.text = subject.formatEndTime()
                     }
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
-                        v.text = formatTime(subject.startTime!!)
+                        v.text = subject.formatStartTime()
                         v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
@@ -142,12 +124,12 @@ class SubjectEditorActivity: BaseActivity() {
                     if (subject.startTime == null) subject.startTime = endTime
                     if (endTime.isBefore(subject.startTime) || endTime.isEqual(subject.startTime)) {
                         subject.startTime = subject.endTime?.minusHours(1)?.minusMinutes(30)
-                        this@SubjectEditorActivity.startTimeTextView.text = formatTime(subject.startTime!!)
+                        this@SubjectEditorActivity.startTimeTextView.text = subject.formatStartTime()
                     }
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
-                        v.text = formatTime(subject.endTime!!)
+                        v.text = subject.formatEndTime()
                         v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
@@ -211,10 +193,6 @@ class SubjectEditorActivity: BaseActivity() {
             setResult(Activity.RESULT_OK, data)
             finish()
         }
-    }
-
-    private fun formatTime(time: LocalTime): String {
-        return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)
     }
 
     companion object {

@@ -31,10 +31,6 @@ class CoreRepository private constructor (app: Application) {
 
     fun fetch(): LiveData<List<Core>>? = cores?.fetch()
 
-    fun search(query: String, onSearch:(List<Core>) -> Unit) = GlobalScope.launch {
-        onSearch(cores?.search("%$query%") ?: emptyList())
-    }
-
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks?.insert(task)
         if (attachmentList.isNotEmpty())

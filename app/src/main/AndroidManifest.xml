@@ -27,15 +27,9 @@
 
         <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" />
-        <activity android:name=".features.task.TaskFragment" />
         <activity android:name=".features.subject.SubjectActivity" />
-        <activity android:name=".features.event.EventFragment" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
-        <activity android:name=".features.archived.ArchivedActivity" />
-        <activity android:name=".features.support.NoticesActivity" />
-        <activity android:name=".features.search.SearchActivity"
-            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.subject.SubjectEditorActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.task.TaskEditorActivity"

@@ -7,10 +7,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -23,12 +23,13 @@ import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationSc
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 
-class SettingsFragment: PreferenceFragmentCompat() {
+class SettingsFragment: BasePreference() {
 
     companion object {
         const val soundRequestCode = 32
@@ -45,37 +46,95 @@ class SettingsFragment: PreferenceFragmentCompat() {
     override fun onStart() {
         super.onStart()
 
-        findPreference<ListPreference>(PreferenceManager.themeKey)
-            ?.onPreferenceChangeListener = changeListener
+        findPreference<ListPreference>(getKey(R.string.key_theme))?.apply {
+            setOnPreferenceChangeListener { _, value ->
+                if (value is String) {
+                    val theme = value.toString()
+                    notifyAppCompatDelegate(theme)
+                }
+                true
+            }
+        }
 
-        findPreference<Preference>(PreferenceManager.taskIntervalKey)
-            ?.onPreferenceChangeListener = changeListener
+        findPreference<Preference>(getKey(R.string.key_task_reminder_interval))?.apply {
+            setOnPreferenceChangeListener { _, _ ->
+                val request = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
+                    .addTag(TaskNotificationScheduler::class.java.simpleName)
+                    .build()
 
-        findPreference<Preference>(PreferenceManager.eventIntervalKey)
-            ?.onPreferenceChangeListener = changeListener
+                manager.enqueue(request)
+                true
+            }
+        }
 
-        val remindTimePreference = findPreference<Preference>(PreferenceManager.reminderTimeKey)
-        remindTimePreference?.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)
-            .print(preferences.reminderTime)
-        remindTimePreference?.onPreferenceClickListener = clickListener
+        findPreference<Preference>(getKey(R.string.key_event_reminder_interval))?.apply {
+            setOnPreferenceChangeListener { _, _ ->
+                val request = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
+                    .addTag(EventNotificationScheduler::class.java.simpleName)
+                    .build()
 
-        findPreference<Preference>(PreferenceManager.customSoundFileKey)
-            ?.onPreferenceClickListener = clickListener
+                manager.enqueue(request)
+                true
+            }
+        }
 
-        findPreference<Preference>(PreferenceManager.notificationKey)
-            ?.onPreferenceClickListener = clickListener
+        findPreference<Preference>(getKey(R.string.key_reminder_time))?.apply {
+            summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(preferences.reminderTime)
+            setOnPreferenceClickListener {
+                MaterialDialog(requireContext()).show {
+                    timePicker(show24HoursView = false) { _, datetime ->
+                        preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
 
-        findPreference<Preference>(PreferenceManager.locationKey)
-            ?.onPreferenceClickListener = clickListener
+                        ReminderWorker.Scheduler()
+                            .setTargetTime(preferences.reminderTime?.toDateTimeToday())
+                            .removePrevious(true)
+                            .schedule(requireContext())
+                    }
+                    positiveButton(R.string.button_done) { _ ->
+                        it.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)
+                            .print(preferences.reminderTime)
+                    }
+                }
+                true
+            }
+        }
 
-        findPreference<Preference>(PreferenceManager.issueKey)
-            ?.onPreferenceClickListener = clickListener
+        findPreference<Preference>(getKey(R.string.key_custom_sound))?.apply {
+            setOnPreferenceClickListener {
+                if (!PermissionManager(requireContext()).readAccessGranted)
+                    requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                                       PermissionManager.readStorageRequestCode)
+                else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                                .setType("audio/*"), soundRequestCode)
+                true
+            }
+        }
 
-        findPreference<Preference>(PreferenceManager.noticesKey)
-            ?.onPreferenceClickListener = clickListener
+        findPreference<Preference>(getKey(R.string.key_not_working_notifications))?.apply {
+            setOnPreferenceClickListener {
+                DokiActivity.start(requireContext())
+                true
+            }
+        }
 
-        findPreference<Preference>(PreferenceManager.versionKey)
-            ?.summary = BuildConfig.VERSION_NAME
+        findPreference<Preference>(getKey(R.string.key_report_issue))?.apply {
+            setOnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                true
+            }
+        }
+
+        findPreference<Preference>(getKey(R.string.key_notices))?.apply {
+            setOnPreferenceClickListener {
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_notices))
+                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                true
+            }
+        }
+
+        findPreference<Preference>(getKey(R.string.key_version))?.apply {
+            summary = BuildConfig.VERSION_NAME
+        }
     }
 
     private fun notifyAppCompatDelegate(newTheme: String) {
@@ -92,71 +151,6 @@ class SettingsFragment: PreferenceFragmentCompat() {
         }
     }
 
-    private var changeListener = Preference.OnPreferenceChangeListener { preference, value ->
-        return@OnPreferenceChangeListener when (preference.key) {
-            PreferenceManager.themeKey -> {
-                if (value is String) {
-                    val theme = value.toString()
-                    notifyAppCompatDelegate(theme)
-                }
-                true
-            }
-            PreferenceManager.taskIntervalKey -> {
-                val request = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
-                    .addTag(TaskNotificationScheduler::class.java.simpleName)
-                    .build()
-
-                manager.enqueue(request)
-                true
-            }
-            PreferenceManager.eventIntervalKey -> {
-                val request = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
-                    .addTag(EventNotificationScheduler::class.java.simpleName)
-                    .build()
-
-                manager.enqueue(request)
-                true
-            }
-            else -> false
-        }
-    }
-
-    private var clickListener = Preference.OnPreferenceClickListener {
-        when (it.key) {
-            PreferenceManager.customSoundFileKey -> {
-                if (!PermissionManager(requireContext()).readAccessGranted)
-                    requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        PermissionManager.readStorageRequestCode)
-                else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .setType("audio/*"), soundRequestCode)
-            }
-            PreferenceManager.reminderTimeKey -> {
-                MaterialDialog(requireContext()).show {
-                    timePicker(show24HoursView = false) { _, datetime ->
-                        preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
-
-                        scheduleNextReminder()
-                    }
-                    positiveButton(R.string.button_done) { _ ->
-                        it.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)
-                            .print(preferences.reminderTime)
-                    }
-                }
-            }
-            PreferenceManager.notificationKey -> {
-                DokiActivity.start(requireContext())
-            }
-            PreferenceManager.issueKey -> {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-            }
-            PreferenceManager.noticesKey -> {
-                OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_notices))
-                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-            }
-        }
-        return@OnPreferenceClickListener true
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -171,14 +165,16 @@ class SettingsFragment: PreferenceFragmentCompat() {
             context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
+            preferences.soundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
         }
     }
 
-    private fun scheduleNextReminder() {
-        ReminderWorker.Scheduler()
-            .setTargetTime(preferences.reminderTime?.toDateTimeToday())
-            .removePrevious(true)
-            .schedule(requireContext())
-    }
+    /**
+     *   Function to retrieve the Preference Key
+     *   in the string resource
+     *   @param id - Resource ID of the String resource
+     *   @return the Preference Key in String format
+     */
+    private fun getKey(@StringRes id: Int): String = context?.getString(id)!!
+
 }

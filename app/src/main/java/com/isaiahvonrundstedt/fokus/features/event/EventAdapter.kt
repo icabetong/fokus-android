@@ -25,7 +25,7 @@ class EventAdapter(private var actionListener: ActionListener)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,
             parent, false)
-        return EventViewHolder(rowView)
+        return EventViewHolder(rowView, actionListener)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -37,7 +37,9 @@ class EventAdapter(private var actionListener: ActionListener)
         holder.onBind(getItem(position))
     }
 
-    inner class EventViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class EventViewHolder(itemView: View, private val actionListener: ActionListener)
+        : RecyclerView.ViewHolder(itemView) {
+
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val locationView: TextView = itemView.findViewById(R.id.locationView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
@@ -45,16 +47,19 @@ class EventAdapter(private var actionListener: ActionListener)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
 
         fun onBind(event: Event) {
-            locationView.text = event.location
-            nameView.text = event.name
-            dayView.text = event.formatScheduleDate(rootView.context)
-            timeView.text = event.formatScheduleTime()
+            with(event) {
+                locationView.text = location
+                nameView.text = name
+                dayView.text = event.formatScheduleDate(rootView.context)
+                timeView.text = event.formatScheduleTime()
+
+                if (event.schedule!!.isBeforeNow)
+                    nameView.addStrikeThroughEffect()
+            }
+
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(event, ActionListener.Action.SELECT)
             }
-
-            if (event.schedule!!.isBeforeNow)
-                nameView.addStrikeThroughEffect()
         }
     }
 

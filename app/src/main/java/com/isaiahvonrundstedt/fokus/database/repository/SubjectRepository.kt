@@ -25,8 +25,6 @@ class SubjectRepository private constructor (app: Application) {
 
     fun fetch(): LiveData<List<Subject>>? = subjects?.fetch()
 
-    fun search(query: String): LiveData<List<Subject>>? = subjects?.search(query)
-
     suspend fun insert(subject: Subject) {
         subjects?.insert(subject)
     }

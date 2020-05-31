@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
-        android:key="usernamePreference"
+        android:key="@string/key_username"
         android:title="@string/settings_name"
         android:dialogTitle="@string/dialog_your_name_title"
         android:dialogMessage="@string/dialog_your_name_summary"
@@ -14,7 +14,7 @@
         android:title="@string/settings_group_interface">
 
         <ListPreference
-            android:key="themePreference"
+            android:key="@string/key_theme"
             android:title="@string/settings_theme"
             android:summary="%s"
             android:dialogTitle="@string/dialog_choose_theme"
@@ -26,24 +26,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/settings_group_behavior">
+        android:title="@string/settings_group_behavior"
+        app:initialExpandedChildrenCount="1">
 
         <SwitchPreference
-            android:key="soundPreference"
+            android:key="@string/key_sound"
             android:title="@string/settings_completion_sounds_title"
             android:summary="@string/settings_completion_sounds_summary"
             android:defaultValue="true"/>
 
         <SwitchPreference
-            android:key="customSoundPreference"
+            android:key="@string/key_custom_sound"
             android:title="@string/settings_custom_notification_sound_title"
             android:summary="@string/settings_custom_notification_sound_summary"
             android:defaultValue="false"/>
 
         <Preference
-            android:key="selectSoundPreference"
+            android:key="@string/key_sound_uri"
             android:title="@string/settings_select_sound"
-            android:dependency="customSoundPreference"/>
+            android:dependency="@string/key_custom_sound"/>
 
     </PreferenceCategory>
 
@@ -51,7 +52,7 @@
         android:title="@string/settings_group_notification">
 
         <ListPreference
-            android:key="frequencyPreference"
+            android:key="@string/key_reminder_frequency"
             android:title="@string/settings_reminder_frequency_title"
             android:entries="@array/settings_task_reminder_frequency_items"
             android:entryValues="@array/settings_task_reminder_frequency_values"
@@ -59,17 +60,17 @@
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
-            android:key="timePreference"
+            android:key="@string/key_reminder_time"
             android:title="@string/settings_remind_me_in_time_of_day"/>
 
         <SwitchPreference
-            android:key="taskReminderPreference"
+            android:key="@string/key_task_reminder"
             android:title="@string/settings_notify_me_when_nearing_due_title"
             android:summary="@string/settings_notify_me_when_nearing_due_summary"
             android:defaultValue="true"/>
 
         <ListPreference
-            android:key="taskIntervalPreference"
+            android:key="@string/key_task_reminder_interval"
             android:title="@string/settings_show_a_notification_when_the_due_is_title"
             android:summary="%s"
             android:entries="@array/settings_task_reminder_interval_items"
@@ -78,13 +79,13 @@
             android:dialogTitle="@string/dialog_select_notification_interval"/>
 
         <SwitchPreference
-            android:key="eventReminderPreference"
+            android:key="@string/key_event_reminder"
             android:title="@string/settings_notify_me_about_my_incoming_events_title"
             android:summary="@string/settings_notify_me_about_my_incoming_events_summary"
             android:defaultValue="true"/>
 
         <ListPreference
-            android:key="eventIntervalPreference"
+            android:key="@string/key_event_reminder_interval"
             android:title="@string/settings_show_a_notification_when_an_event_starts_at"
             android:summary="%s"
             android:entries="@array/settings_event_reminder_interval_items"
@@ -93,7 +94,7 @@
             android:dialogTitle="@string/dialog_select_notification_interval"/>
 
         <Preference
-            android:key="notificationPreference"
+            android:key="@string/key_not_working_notifications"
             android:title="@string/settings_not_working_notifications_title"
             android:summary="@string/settings_not_working_notifications_summary"
             android:layout="@layout/layout_preference_centered"/>
@@ -104,15 +105,15 @@
         android:title="@string/settings_group_about">
 
         <Preference
-            android:key="issuePreference"
+            android:key="@string/key_report_issue"
             android:title="@string/settings_report_an_issue"/>
 
-        <Preference
-            android:key="noticesPreference"
-            android:title="@string/settings_third_party_notices"/>
+        <PreferenceScreen
+            android:key="@string/key_notices"
+            android:title="@string/settings_third_party_notices" />
 
         <Preference
-            android:key="versionPreference"
+            android:key="@string/key_version"
             android:title="@string/settings_build_version" />
 
     </PreferenceCategory>

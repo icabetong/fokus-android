@@ -180,4 +180,28 @@
     <string name="file_attached">%1$d file attached</string>
     <string name="files_attached">%1$d files attached</string>
 
+    <string name="credit_open_source_libraries">Open Source Libraries</string>
+    <string name="credit_other_resources">Other resources</string>
+    <string name="credit_notification_sound_title">Notification Sound</string>
+    <string name="credit_notification_sound_summary">Zapsplat</string>
+    <string name="credit_launcher_icon_title">Launcher Icon</string>
+    <string name="credit_launcher_icon_summary">Freepik</string>
+
+    <!-- Preference Keys -->
+    <string name="key_is_first_run">isFirstRunKey</string>
+    <string name="key_username">usernameKey</string>
+    <string name="key_theme">themeKey</string>
+    <string name="key_sound">soundKey</string>
+    <string name="key_custom_sound">customSoundKey</string>
+    <string name="key_sound_uri">soundUriKey</string>
+    <string name="key_reminder_frequency">reminderFrequencyKey</string>
+    <string name="key_reminder_time">reminderTimeKey</string>
+    <string name="key_task_reminder">taskReminderKey</string>
+    <string name="key_task_reminder_interval">taskReminderIntervalKey</string>
+    <string name="key_event_reminder">eventReminderKey</string>
+    <string name="key_event_reminder_interval">eventReminderIntervalKey</string>
+    <string name="key_not_working_notifications">notWorkingNotificationKey</string>
+    <string name="key_report_issue">issueKey</string>
+    <string name="key_notices">noticesKey</string>
+    <string name="key_version">versionKey</string>
 </resources>

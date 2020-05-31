@@ -37,9 +37,11 @@ class MainActivity: BaseActivity() {
                 .invoke(supportFragmentManager)
         }
 
-        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
-        controller = navigationHost?.findNavController()
-        NavigationUI.setupWithNavController(navigationView, controller!!)
+        controller?.let {
+            val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
+            controller = navigationHost?.findNavController()
+            NavigationUI.setupWithNavController(navigationView, it)
+        }
     }
 
     override fun onResume() {

@@ -15,7 +15,4 @@ class SettingsActivity: BaseActivity() {
         setToolbarTitle(R.string.activity_settings)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return true
-    }
 }

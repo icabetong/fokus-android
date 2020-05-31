@@ -16,8 +16,8 @@ class NotificationAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Notification, NotificationAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_notification,
-                                                                        parent, false)
+        val rowView: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_item_notification, parent, false)
         return ViewHolder(rowView)
     }
 
@@ -30,7 +30,7 @@ class NotificationAdapter(private var actionListener: ActionListener)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val iconView: ImageView = itemView.findViewById(R.id.iconView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
@@ -38,10 +38,12 @@ class NotificationAdapter(private var actionListener: ActionListener)
         private val dateTimeView: TextView = itemView.findViewById(R.id.dateTimeView)
 
         fun onBind(notification: Notification) {
-            titleView.text = notification.title
-            summaryView.text = notification.content
-            notification.tintDrawable(iconView)
-            dateTimeView.text = notification.formatDateTime()
+            with(notification) {
+                titleView.text = title
+                summaryView.text = content
+                dateTimeView.text = formatDateTime()
+                tintDrawable(iconView)
+            }
         }
     }
 

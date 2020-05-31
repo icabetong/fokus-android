@@ -79,12 +79,12 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
-                        if (PreferenceManager(context).completedSounds) {
+                        if (PreferenceManager(context).soundEnabled) {
                             Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
                                 Snackbar.LENGTH_SHORT).show()
                             val uri: Uri = PreferenceManager(requireContext()).let {
                                 if (it.customSoundEnabled)
-                                    it.customSoundUri
+                                    it.soundUri
                                 else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
                             }
                             RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()

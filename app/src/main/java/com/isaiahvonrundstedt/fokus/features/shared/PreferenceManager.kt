@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.shared
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
@@ -30,63 +31,77 @@ class PreferenceManager(private val context: Context?) {
     }
 
     var isFirstRun: Boolean
-        get() = sharedPreference?.getBoolean(isFirstRunKey, true) ?: true
+        get() = sharedPreference?.getBoolean(getKey(R.string.key_is_first_run), true) ?: true
         set(value) {
-            val editor = sharedPreference.edit()
-            editor.putBoolean(isFirstRunKey, value)
-            editor.apply()
+            sharedPreference.edit().run {
+                putBoolean(getKey(R.string.key_is_first_run), value)
+                apply()
+            }
         }
 
     val name: String?
-        get() = sharedPreference.getString(nameKey, context?.getString(R.string.app_name))
+        get() = sharedPreference.getString(getKey(R.string.key_username), context?.getString(R.string.app_name))
 
     var theme: Theme
-        get() = Theme.parse(sharedPreference.getString(themeKey, Theme.SYSTEM.toString()))
+        get() = Theme.parse(sharedPreference.getString(getKey(R.string.key_theme), Theme.SYSTEM.toString()))
         set(value) {
-            val editor = sharedPreference.edit()
-            editor?.putString(themeKey, value.toString())
-            editor?.apply()
+            sharedPreference.edit().run {
+                putString(getKey(R.string.key_theme), value.toString())
+                apply()
+            }
         }
 
-    val completedSounds: Boolean
-        get() = sharedPreference.getBoolean(soundKey, true)
+    val soundEnabled: Boolean
+        get() = sharedPreference.getBoolean(getKey(R.string.key_sound), true)
 
     val customSoundEnabled: Boolean
-        get() = sharedPreference.getBoolean(customSoundKey, false)
+        get() = sharedPreference.getBoolean(getKey(R.string.key_custom_sound), false)
 
-    var customSoundUri: Uri
-        get() = Uri.parse(sharedPreference.getString(customSoundFileKey, defaultSound))
+    var soundUri: Uri
+        get() = Uri.parse(sharedPreference.getString(getKey(R.string.key_sound_uri), defaultSound))
         set(value) {
-            val editor = sharedPreference.edit()
-            editor.putString(customSoundFileKey, value.toString())
-            editor.apply()
+            sharedPreference.edit().run {
+                putString(getKey(R.string.key_sound_uri), value.toString())
+                apply()
+            }
         }
 
     val reminderFrequency: String
-        get() = sharedPreference.getString(frequencyKey, durationEveryday) ?: durationEveryday
+        get() = sharedPreference.getString(getKey(R.string.key_reminder_frequency), durationEveryday)
+            ?: durationEveryday
 
     var reminderTime: LocalTime?
         get() = DateTimeConverter.toTime(
-            sharedPreference.getString(reminderTimeKey, "08:30") ?: "08:30")
+            sharedPreference.getString(getKey(R.string.key_reminder_time), "08:30") ?: "08:30")
         set(value) {
-            val editor = sharedPreference.edit()
-            editor?.putString(reminderTimeKey, DateTimeConverter.fromTime(value))
-            editor?.apply()
+            sharedPreference.edit().run {
+                putString(getKey(R.string.key_reminder_time), DateTimeConverter.fromTime(value))
+                apply()
+            }
         }
 
     val taskReminder: Boolean
-        get() = sharedPreference.getBoolean(taskReminderKey, true)
+        get() = sharedPreference.getBoolean(getKey(R.string.key_task_reminder), true)
 
     val taskReminderInterval: String
-        get() = sharedPreference.getString(taskIntervalKey, taskReminderIntervalThreeHours)
-            ?: taskReminderIntervalThreeHours
+        get() = sharedPreference.getString(getKey(R.string.key_task_reminder_interval),
+                                           taskReminderIntervalThreeHours) ?: taskReminderIntervalThreeHours
 
     val eventReminder: Boolean
-        get() = sharedPreference.getBoolean(eventReminderKey, true)
+        get() = sharedPreference.getBoolean(getKey(R.string.key_event_reminder), true)
 
     val eventReminderInterval: String
-        get() = sharedPreference.getString(eventIntervalKey, eventReminderIntervalHalf)
-            ?: eventReminderIntervalHalf
+        get() = sharedPreference.getString(getKey(R.string.key_event_reminder_interval),
+                                           eventReminderIntervalHalf) ?: eventReminderIntervalHalf
+
+
+    /**
+     *   Function to retrieve the Preference Key
+     *   in the string resource
+     *   @param id - Resource ID of the String resource
+     *   @return the Preference Key in String format
+     */
+    private fun getKey(@StringRes id: Int): String? = context?.getString(id)
 
     companion object {
         const val defaultSound = "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
@@ -101,23 +116,5 @@ class PreferenceManager(private val context: Context?) {
         const val eventReminderIntervalQuarter = "15"
         const val eventReminderIntervalHalf = "30"
         const val eventReminderIntervalFull = "60"
-
-        const val isFirstRunKey = "isFirstRunKey"
-        const val nameKey = "usernamePreference"
-        const val themeKey = "themePreference"
-        const val soundKey = "soundPreference"
-        const val customSoundKey = "customSoundPreference"
-        const val customSoundFileKey = "selectSoundPreference"
-        const val frequencyKey = "frequencyPreference"
-        const val reminderTimeKey = "timePreference"
-        const val taskReminderKey = "taskReminderPreference"
-        const val taskIntervalKey = "taskIntervalPreference"
-        const val eventReminderKey = "eventReminderPreference"
-        const val eventIntervalKey = "eventIntervalPreference"
-        const val notificationKey = "notificationPreference"
-        const val locationKey = "locationPreference"
-        const val issueKey = "issuePreference"
-        const val noticesKey = "noticesPreference"
-        const val versionKey = "versionPreference"
     }
 }

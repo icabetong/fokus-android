@@ -10,6 +10,8 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.extensions.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
@@ -56,8 +58,7 @@ class SubjectEditorActivity: BaseActivity() {
                 daysOfWeekTextView.text = formatDaysOfWeek(this@SubjectEditorActivity)
             }
 
-            this@SubjectEditorActivity.tagHolderView
-                .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
+            tagView.setCompoundDrawableStart(tagView.getCompoundDrawableAtStart())
             tagView.text = getString(Subject.Tag.getName(subject.tag))
 
             startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
@@ -143,8 +144,8 @@ class SubjectEditorActivity: BaseActivity() {
                 colorChooser(colors!!) { _, color ->
                     subject.tag = Subject.Tag.convertColorToTag(color)!!
 
-                    this@SubjectEditorActivity.tagHolderView
-                        .setImageDrawable(subject.tintDrawable(this@SubjectEditorActivity.tagHolderView.drawable))
+                    this@SubjectEditorActivity.tagView
+                        .setCompoundDrawableStart(this@SubjectEditorActivity.tagView.getCompoundDrawableAtStart())
                     if (v is AppCompatTextView) {
                         v.text = getString(Subject.Tag.getName(subject.tag))
                         v.setTextColorFromResource(R.color.colorPrimaryText)

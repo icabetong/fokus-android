@@ -2,10 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.task
 
 import android.content.Context
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -21,6 +18,7 @@ import java.util.*
         onDelete = ForeignKey.CASCADE)])
 data class Task @JvmOverloads constructor (
     @PrimaryKey
+    @ColumnInfo(index = true)
     var taskID: String = UUID.randomUUID().toString(),
     var name: String? = null,
     var notes: String? = null,

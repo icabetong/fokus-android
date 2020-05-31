@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.extensions
 
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatTextView
@@ -29,4 +30,21 @@ fun TextView.addStrikeThroughEffect() {
  */
 fun TextView.removeStrikeThroughEffect() {
     this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG.inv()
+}
+
+/**
+ *  Extension function used to add a compound drawable in the
+ *  TextView at a specific position
+ */
+fun TextView.setCompoundDrawableStart(drawable: Drawable?) {
+    this.setCompoundDrawablesRelative(drawable, null, null, null)
+}
+
+/**
+ *  Extension function used to get the compound drawable in the
+ *  TextView at the specific position
+ */
+fun TextView.getCompoundDrawableAtStart(): Drawable? {
+    // Start, Top, End, Bottom
+    return this.compoundDrawables[0]
 }

@@ -15,7 +15,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConv
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
-@Database(entities = [Subject::class, Task::class, Attachment::class, Notification::class, Event::class], version = 1)
+@Database(entities = [Subject::class, Task::class, Attachment::class,
+    Notification::class, Event::class], version = 1, exportSchema = false)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

@@ -27,7 +27,7 @@
                 android:inputType="textCapWords"
                 android:hint="@string/field_subject_code"
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"
-                android:autofillHints="subject_name"
+                android:importantForAutofill="no"
                 android:background="@android:color/transparent">
 
                 <requestFocus/>
@@ -58,6 +58,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:inputType="textCapWords"
+                    android:importantForAutofill="no"
                     android:hint="@string/field_not_set"
                     android:background="@android:color/transparent"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
@@ -159,32 +160,19 @@
                     android:text="@string/field_color_tag"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tagView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/tagHolderView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/activity_padding"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/shape_color_holder"/>
-
-                    <TextView
-                        android:id="@+id/tagView"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/listPreferredItemHeightSmall"
-                        android:gravity="center_vertical"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="@string/tag_color_sky"
-                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                        android:clickable="true"
-                        android:focusable="true"/>
-
-                </LinearLayout>
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/tag_color_sky"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:drawableStart="@drawable/shape_color_holder"
+                    android:drawablePadding="16dp"/>
 
             </LinearLayout>
 

@@ -44,9 +44,9 @@
     </string-array>
 
     <string-array name="settings_task_reminder_interval_items">
-        <item>@string/settings_show_a_notification_when_the_due_is_item_hour</item>
-        <item>@string/settings_show_a_notification_when_the_due_is_item_three_hours</item>
-        <item>@string/settings_show_a_notification_when_the_due_is_item_day</item>
+        <item>@string/settings_task_reminders_item_hour</item>
+        <item>@string/settings_task_reminders_item_three_hours</item>
+        <item>@string/settings_task_reminders_item_day</item>
     </string-array>
 
     <string-array name="settings_task_reminder_interval_values">
@@ -56,9 +56,9 @@
     </string-array>
 
     <string-array name="settings_event_reminder_interval_items">
-        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_quarter_hour</item>
-        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_half_hour</item>
-        <item>@string/settings_show_a_notification_when_an_event_starts_at_item_full_hour</item>
+        <item>@string/settings_event_reminders_item_quarter_hour</item>
+        <item>@string/settings_event_reminders_item_half_hour</item>
+        <item>@string/settings_event_reminders_item_hour</item>
     </string-array>
 
     <string-array name="settings_event_reminder_interval_values">

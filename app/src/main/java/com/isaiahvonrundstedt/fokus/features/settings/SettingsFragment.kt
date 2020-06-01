@@ -110,24 +110,9 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_not_working_notifications))?.apply {
-            setOnPreferenceClickListener {
-                DokiActivity.start(requireContext())
-                true
-            }
-        }
-
         findPreference<Preference>(getKey(R.string.key_report_issue))?.apply {
             setOnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                true
-            }
-        }
-
-        findPreference<Preference>(getKey(R.string.key_notices))?.apply {
-            setOnPreferenceClickListener {
-                OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_notices))
-                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
                 true
             }
         }
@@ -168,13 +153,5 @@ class SettingsFragment: BasePreference() {
             preferences.soundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
         }
     }
-
-    /**
-     *   Function to retrieve the Preference Key
-     *   in the string resource
-     *   @param id - Resource ID of the String resource
-     *   @return the Preference Key in String format
-     */
-    private fun getKey(@StringRes id: Int): String = context?.getString(id)!!
 
 }

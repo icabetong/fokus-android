@@ -14,7 +14,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/navigationHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"

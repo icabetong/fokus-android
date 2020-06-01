@@ -6,7 +6,8 @@
     <string name="activity_subjects">Ihre Themen</string>
     <string name="activity_notifications">Ihre Benachrichtigungen</string>
     <string name="activity_settings">Einstellungen</string>
-    <string name="activity_notices">Open Source und Dritte</string>
+    <string name="activity_notices">Mitteilungen Dritter</string>
+    <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
 
     <string name="menu_notifications">Benachrichtigungen</string>
     <string name="menu_settings">@string/activity_settings</string>
@@ -110,23 +111,23 @@
     <string name="settings_reminder_frequency_item_everyday">Täglich</string>
     <string name="settings_reminder_frequency_item_weekends">Wochenenden</string>
     <string name="settings_remind_me_in_time_of_day">Erinnern Sie mich an dieser Stelle</string>
-    <string name="settings_notify_me_when_nearing_due_title">Benachrichtigen Sie mich, wenn die Aufgabe fällig wird</string>
-    <string name="settings_notify_me_when_nearing_due_summary">Benachrichtigungen für Aufgaben anzeigen, die sich dem Ende der Frist nähern</string>
-    <string name="settings_show_a_notification_when_the_due_is_title">Eine Benachrichtigung anzeigen, wenn die Fälligkeit</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_hour">1 Stunde vorher</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_three_hours">3 Stunden vorher</string>
-    <string name="settings_show_a_notification_when_the_due_is_item_day">1 Tag vorher</string>
-    <string name="settings_notify_me_about_my_incoming_events_title">Benachrichtigen Sie mich über meine eingehenden Ereignisse</string>
-    <string name="settings_notify_me_about_my_incoming_events_summary">Benachrichtigungen über eingehende Ereignisse an diesem Tag anzeigen</string>
-    <string name="settings_show_a_notification_when_an_event_starts_at">Eine Benachrichtigung anzeigen, wenn ein Ereignis beginnt bei</string>
-    <string name="settings_show_a_notification_when_an_event_starts_at_item_quarter_hour">15 Minuten</string>
-    <string name="settings_show_a_notification_when_an_event_starts_at_item_half_hour">30 Minuten</string>
-    <string name="settings_show_a_notification_when_an_event_starts_at_item_full_hour">1 Stunde</string>
+    <string name="settings_when_nearing_due_title">Wenn sich eine Aufgabe nähert</string>
+    <string name="settings_when_nearing_due_summary">Benachrichtigungen für Aufgaben anzeigen, die sich dem Ende der Frist nähern</string>
+    <string name="settings_task_reminders">Aufgaben-Erinnerungen</string>
+    <string name="settings_task_reminders_item_hour">1 Stunde vorher</string>
+    <string name="settings_task_reminders_item_three_hours">3 Stunden vorher</string>
+    <string name="settings_task_reminders_item_day">1 Tag vorher</string>
+    <string name="settings_incoming_events_title">Eingehende Ereignisse</string>
+    <string name="settings_incoming_events_summary">Benachrichtigungen über eingehende Ereignisse an diesem Tag anzeigen</string>
+    <string name="settings_event_reminders">Erinnerungen an Ereignisse</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 Minuten vorher</string>
+    <string name="settings_event_reminders_item_half_hour">30 Minuten vorher</string>
+    <string name="settings_event_reminders_item_hour">1 Stunde vorher</string>
     <string name="settings_not_working_notifications_title">Funktionieren die Benachrichtigungen jetzt?</string>
     <string name="settings_not_working_notifications_summary">Tippen Sie hier zum Beheben</string>
 
     <string name="settings_report_an_issue">Ein Problem melden</string>
-    <string name="settings_third_party_notices">Mitteilungen Dritter</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build-Version</string>
 
     <string name="tag_color_sky">Himmel</string>
@@ -158,6 +159,11 @@
     <string name="due_tomorrow_at">Fällig morgen um %1$s</string>
     <string name="file_attached">%1$d  Datei angehängt</string>
     <string name="files_attached">%1$d Dateien angehängt</string>
+
+    <string name="open_source_libraries">Open-Source-Bibliotheken</string>
+    <string name="credit_launcher_icon_summary">Startsymbol</string>
+    <string name="credit_notification_sound_summary">Benachrichtigungs-Ton</string>
+    <string name="credit_other_resources">Andere Ressourcen</string>
 
 
 </resources>

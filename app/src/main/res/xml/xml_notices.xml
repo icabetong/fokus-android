@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/key_credit_libraries"
+        android:title="@string/open_source_libraries"/>
+
+    <PreferenceCategory
+        android:title="@string/credit_other_resources">
+
+        <Preference
+            android:key="@string/key_credit_notification_sound"
+            android:title="@string/credit_notification_sound_title"
+            android:summary="@string/credit_notification_sound_summary"/>
+
+        <Preference
+            android:key="@string/key_credit_launcher_icon"
+            android:title="@string/credit_launcher_icon_title"
+            android:summary="@string/credit_launcher_icon_summary"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -65,33 +65,35 @@
 
         <SwitchPreference
             android:key="@string/key_task_reminder"
-            android:title="@string/settings_notify_me_when_nearing_due_title"
-            android:summary="@string/settings_notify_me_when_nearing_due_summary"
+            android:title="@string/settings_when_nearing_due_title"
+            android:summary="@string/settings_when_nearing_due_summary"
             android:defaultValue="true"/>
 
         <ListPreference
             android:key="@string/key_task_reminder_interval"
-            android:title="@string/settings_show_a_notification_when_the_due_is_title"
+            android:title="@string/settings_task_reminders"
             android:summary="%s"
             android:entries="@array/settings_task_reminder_interval_items"
             android:entryValues="@array/settings_task_reminder_interval_values"
             android:defaultValue="3"
-            android:dialogTitle="@string/dialog_select_notification_interval"/>
+            android:dialogTitle="@string/dialog_select_notification_interval"
+            android:dependency="@string/key_task_reminder"/>
 
         <SwitchPreference
             android:key="@string/key_event_reminder"
-            android:title="@string/settings_notify_me_about_my_incoming_events_title"
-            android:summary="@string/settings_notify_me_about_my_incoming_events_summary"
+            android:title="@string/settings_incoming_events_title"
+            android:summary="@string/settings_incoming_events_summary"
             android:defaultValue="true"/>
 
         <ListPreference
             android:key="@string/key_event_reminder_interval"
-            android:title="@string/settings_show_a_notification_when_an_event_starts_at"
+            android:title="@string/settings_event_reminders"
             android:summary="%s"
             android:entries="@array/settings_event_reminder_interval_items"
             android:entryValues="@array/settings_event_reminder_interval_values"
             android:defaultValue="30"
-            android:dialogTitle="@string/dialog_select_notification_interval"/>
+            android:dialogTitle="@string/dialog_select_notification_interval"
+            android:dependency="@string/key_event_reminder"/>
 
         <Preference
             android:key="@string/key_not_working_notifications"
@@ -108,9 +110,10 @@
             android:key="@string/key_report_issue"
             android:title="@string/settings_report_an_issue"/>
 
-        <PreferenceScreen
+        <Preference
             android:key="@string/key_notices"
-            android:title="@string/settings_third_party_notices" />
+            android:title="@string/settings_third_party_notices"
+            android:fragment="com.isaiahvonrundstedt.fokus.features.settings.children.NoticesFragment"/>
 
         <Preference
             android:key="@string/key_version"

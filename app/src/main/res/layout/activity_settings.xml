@@ -8,10 +8,12 @@
     <include layout="@layout/layout_appbar"/>
 
     <fragment
-        android:id="@+id/settingsFragment"
+        android:id="@+id/navigationHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:navGraph="@navigation/settings_graph"
+        app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_graph"
+    app:startDestination="@id/mainPreferenceKey">
+
+    <fragment
+        android:id="@+id/mainPreferenceKey"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsFragment"
+        android:label="@string/activity_settings">
+
+        <action
+            android:id="@+id/mainToNoticesFragment"
+            app:destination="@id/noticesKey"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/noticesKey"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.children.NoticesFragment"
+        android:label="@string/activity_notices"/>
+
+</navigation>

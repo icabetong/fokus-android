@@ -28,7 +28,7 @@ class SettingsActivity: BaseActivity(), PreferenceFragmentCompat.OnPreferenceSta
         controller = Navigation.findNavController(this, R.id.navigationHostFragment)
 
         val configuration = AppBarConfiguration.Builder()
-            .setFallbackOnNavigateUpListener { onNavigateUp() }
+            .setFallbackOnNavigateUpListener { onNavigateUpOrFinish() }
             .build()
 
         toolbar.setupWithNavController(controller!!, configuration)
@@ -44,5 +44,12 @@ class SettingsActivity: BaseActivity(), PreferenceFragmentCompat.OnPreferenceSta
     override fun onSupportNavigateUp(): Boolean
         = Navigation.findNavController(this, R.id.navigationHostFragment).navigateUp()
             || super.onSupportNavigateUp()
+
+    private fun onNavigateUpOrFinish(): Boolean {
+        if (!onNavigateUp())
+            finish()
+        else onNavigateUp()
+        return true
+    }
 
 }

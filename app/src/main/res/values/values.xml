@@ -119,6 +119,7 @@
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">
+        <item name="android:letterSpacing">0.12</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>

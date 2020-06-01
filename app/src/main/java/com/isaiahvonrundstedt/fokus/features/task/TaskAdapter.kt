@@ -53,7 +53,7 @@ class TaskAdapter(private var actionListener: ActionListener)
                     itemView.context.resources.getQuantityString(R.plurals.files_attached,
                         core.attachmentList.size, core.attachmentList.size)
 
-                subjectNameView.text = subject.description ?: subject.code
+                subjectNameView.text = subject.code
                 taskNameView.text = task.name
                 dueDateView.text = task.formatDueDate(rootView.context)
                 tagView.setImageDrawable(subject.tintDrawable(tagView.drawable))

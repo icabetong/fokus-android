@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
@@ -46,12 +47,14 @@ abstract class BaseActivity: AppCompatActivity() {
         this.toolbar?.title = getString(id)
     }
 
-    protected fun createSnackbar(view: View, @StringRes id: Int) {
-        Snackbar.make(view, id, Snackbar.LENGTH_SHORT).show()
+    protected fun startEditorActivity(view: View, intent: Intent, requestCode: Int) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+            view, BaseEditor.transitionName)
+        startActivityForResult(intent, requestCode, options.toBundle())
     }
 
-    fun AppCompatTextView.editorValueChanged() {
-        this.setTextColor(ContextCompat.getColor(this@BaseActivity, R.color.colorPrimaryText))
+    protected fun createSnackbar(view: View, @StringRes id: Int) {
+        Snackbar.make(view, id, Snackbar.LENGTH_SHORT).show()
     }
 
 }

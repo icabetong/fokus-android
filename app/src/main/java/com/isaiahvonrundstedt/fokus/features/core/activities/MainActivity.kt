@@ -21,7 +21,6 @@ class MainActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPersistentActionBar(toolbar)

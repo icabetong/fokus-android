@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
@@ -9,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,7 +19,6 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.components.sheet.FirstRunBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
@@ -64,23 +61,14 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
     override fun onResume() {
         super.onResume()
 
-        if (launchNextActivity) {
-            actionButton.performClick()
-            launchNextActivity = false
-        }
-
         actionButton.setOnClickListener {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
-                it, BaseEditor.transitionName)
-
-            startActivityForResult(Intent(context, TaskEditorActivity::class.java),
-                TaskEditorActivity.insertRequestCode, options.toBundle())
+            startEditorWithTransition(it, Intent(context, TaskEditorActivity::class.java),
+                TaskEditorActivity.insertRequestCode)
         }
     }
 
     // Callback from the RecyclerView Adapter
-    override fun <T> onActionPerformed(t: T,
-                                       action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        itemView: View) {
         if (t is Core) {
             when (action) {
@@ -107,16 +95,12 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(),
-                        itemView, BaseEditor.transitionName)
-
-                    val editorIntent = Intent(context, TaskEditorActivity::class.java)
-                    editorIntent.putExtra(TaskEditorActivity.extraSubject, t.subject)
-                    editorIntent.putExtra(TaskEditorActivity.extraTask, t.task)
-                    editorIntent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))
-                    startActivityForResult(editorIntent, TaskEditorActivity.updateRequestCode,
-                        options.toBundle())
-
+                    val intent = Intent(context, TaskEditorActivity::class.java)
+                    intent.putExtra(TaskEditorActivity.extraSubject, t.subject)
+                    intent.putExtra(TaskEditorActivity.extraTask, t.task)
+                    intent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))
+                    startEditorWithTransition(itemView, intent,
+                        TaskEditorActivity.updateRequestCode)
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
@@ -133,12 +117,10 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    private var launchNextActivity: Boolean = false
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            this.launchNextActivity = true
             val task: Task = data?.getParcelableExtra(TaskEditorActivity.extraTask)!!
             val attachments: List<Attachment> = data.getParcelableArrayListExtra(TaskEditorActivity.extraAttachments)!!
 

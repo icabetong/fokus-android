@@ -30,11 +30,11 @@
         <activity android:name=".features.subject.SubjectActivity" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
-        <activity android:name=".features.subject.SubjectEditorActivity"
+        <activity android:name=".features.subject.SubjectEditor"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.task.TaskEditorActivity"
+        <activity android:name=".features.task.TaskEditor"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.event.EventEditorActivity"
+        <activity android:name=".features.event.EventEditor"
             android:windowSoftInputMode="adjustResize"/>
 
         <!-- OSSLicenses -->

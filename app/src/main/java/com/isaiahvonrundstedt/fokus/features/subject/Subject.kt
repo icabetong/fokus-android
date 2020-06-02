@@ -14,7 +14,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.ColorConverter
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import kotlinx.android.parcel.Parcelize
-import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -49,6 +48,19 @@ data class Subject @JvmOverloads constructor (
         CHERRY(Color.parseColor("#f50057")),
         ROSE(Color.parseColor("#f15b8d"));
 
+        fun getNameResource(): Int {
+            return when (this) {
+                SKY -> R.string.tag_color_sky
+                GRASS -> R.string.tag_color_grass
+                SUNSET -> R.string.tag_color_sunset
+                LEMON -> R.string.tag_color_lemon
+                SEA -> R.string.tag_color_sea
+                GRAPE -> R.string.tag_color_grape
+                CHERRY -> R.string.tag_color_cherry
+                ROSE -> R.string.tag_color_rose
+            }
+        }
+
         companion object {
             private val colors: MutableMap<Int, Tag> = HashMap()
             init {
@@ -60,19 +72,6 @@ data class Subject @JvmOverloads constructor (
 
             fun getColors(): IntArray {
                 return colors.keys.toIntArray()
-            }
-
-            fun getName(tag: Tag): Int {
-                return when (tag) {
-                    SKY -> R.string.tag_color_sky
-                    GRASS -> R.string.tag_color_grass
-                    SUNSET -> R.string.tag_color_sunset
-                    LEMON -> R.string.tag_color_lemon
-                    SEA -> R.string.tag_color_sea
-                    GRAPE -> R.string.tag_color_grape
-                    CHERRY -> R.string.tag_color_cherry
-                    ROSE -> R.string.tag_color_rose
-                }
             }
         }
     }

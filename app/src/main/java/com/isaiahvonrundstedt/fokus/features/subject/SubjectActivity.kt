@@ -39,8 +39,8 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
         // Check the intent action if we have been launched
         // from a launcher shortcut
         if (intent?.action == action)
-            startActivityForResult(Intent(this, SubjectEditorActivity::class.java),
-                SubjectEditorActivity.insertRequestCode)
+            startActivityForResult(Intent(this, SubjectEditor::class.java),
+                SubjectEditor.insertRequestCode)
 
         adapter = SubjectAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -62,8 +62,8 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
         super.onResume()
 
         actionButton.setOnClickListener {
-            startEditorActivity(it, Intent(this, SubjectEditorActivity::class.java),
-                SubjectEditorActivity.insertRequestCode)
+            startEditorActivity(it, Intent(this, SubjectEditor::class.java),
+                SubjectEditor.insertRequestCode)
         }
     }
 
@@ -74,9 +74,10 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(this, SubjectEditorActivity::class.java)
-                    intent.putExtra(SubjectEditorActivity.extraSubject, t)
-                    startEditorActivity(itemView, intent, SubjectEditorActivity.updateRequestCode)
+                    val intent = Intent(this, SubjectEditor::class.java).apply {
+                        putExtra(SubjectEditor.extraSubject, t)
+                    }
+                    startEditorActivity(itemView, intent, SubjectEditor.updateRequestCode)
                 }
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database
@@ -98,16 +99,16 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            val subject: Subject = data?.getParcelableExtra(SubjectEditorActivity.extraSubject)!!
+            val subject: Subject = data?.getParcelableExtra(SubjectEditor.extraSubject)!!
 
-            if (requestCode == SubjectEditorActivity.insertRequestCode) {
+            if (requestCode == SubjectEditor.insertRequestCode) {
                 viewModel.insert(subject)
 
                 // The user has added a subject, now disable the
                 // dialog for first run
                 if (PreferenceManager(this).isFirstRun)
                     PreferenceManager(this).isFirstRun = false
-            } else if (requestCode == SubjectEditorActivity.updateRequestCode) {
+            } else if (requestCode == SubjectEditor.updateRequestCode) {
                 viewModel.update(subject)
             }
         }

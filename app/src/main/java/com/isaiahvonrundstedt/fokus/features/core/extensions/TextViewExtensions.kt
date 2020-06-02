@@ -46,5 +46,5 @@ fun TextView.setCompoundDrawableStart(drawable: Drawable?) {
  */
 fun TextView.getCompoundDrawableAtStart(): Drawable? {
     // Start, Top, End, Bottom
-    return this.compoundDrawables[0]
+    return this.compoundDrawablesRelative[0]
 }

@@ -57,8 +57,8 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
         super.onResume()
 
         actionButton.setOnClickListener {
-            startEditorWithTransition(it, Intent(context, EventEditorActivity::class.java),
-                EventEditorActivity.insertRequestCode)
+            startEditorWithTransition(it, Intent(context, EventEditor::class.java),
+                EventEditor.insertRequestCode)
         }
     }
 
@@ -68,10 +68,11 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
             when (action) {
                 // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(context, EventEditorActivity::class.java)
-                    intent.putExtra(EventEditorActivity.extraEvent, t)
+                    val intent = Intent(context, EventEditor::class.java).apply {
+                        putExtra(EventEditor.extraEvent, t)
+                    }
                     startEditorWithTransition(itemView, intent,
-                        EventEditorActivity.updateRequestCode)
+                        EventEditor.updateRequestCode)
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
@@ -91,11 +92,11 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            val event: Event = data?.getParcelableExtra(EventEditorActivity.extraEvent)!!
+            val event: Event = data?.getParcelableExtra(EventEditor.extraEvent)!!
 
-            if (requestCode == EventEditorActivity.insertRequestCode) {
+            if (requestCode == EventEditor.insertRequestCode) {
                 viewModel?.insert(event)
-            } else if (requestCode == EventEditorActivity.updateRequestCode) {
+            } else if (requestCode == EventEditor.updateRequestCode) {
                 viewModel?.update(event)
             }
         }

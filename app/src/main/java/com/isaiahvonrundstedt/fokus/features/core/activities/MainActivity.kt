@@ -8,10 +8,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.event.EventEditorActivity
+import com.isaiahvonrundstedt.fokus.features.event.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.components.sheet.NavigationBottomSheet
-import com.isaiahvonrundstedt.fokus.features.task.TaskEditorActivity
+import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
@@ -27,11 +27,11 @@ class MainActivity: BaseActivity() {
         setToolbarTitle(R.string.activity_tasks)
 
         if (intent?.action == actionNewTask)
-            startActivityForResult(Intent(this, TaskEditorActivity::class.java),
-                TaskEditorActivity.insertRequestCode)
+            startActivityForResult(Intent(this, TaskEditor::class.java),
+                TaskEditor.insertRequestCode)
         else if (intent?.action == actionNewEvent)
-            startActivityForResult(Intent(this, EventEditorActivity::class.java),
-                EventEditorActivity.insertRequestCode)
+            startActivityForResult(Intent(this, EventEditor::class.java),
+                EventEditor.insertRequestCode)
 
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_menu_black)
         toolbar?.setNavigationOnClickListener {

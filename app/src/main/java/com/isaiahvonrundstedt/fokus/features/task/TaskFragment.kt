@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
+import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
@@ -62,8 +63,8 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         super.onResume()
 
         actionButton.setOnClickListener {
-            startEditorWithTransition(it, Intent(context, TaskEditorActivity::class.java),
-                TaskEditorActivity.insertRequestCode)
+            startEditorWithTransition(it, Intent(context, TaskEditor::class.java),
+                TaskEditor.insertRequestCode)
         }
     }
 
@@ -95,12 +96,13 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(context, TaskEditorActivity::class.java)
-                    intent.putExtra(TaskEditorActivity.extraSubject, t.subject)
-                    intent.putExtra(TaskEditorActivity.extraTask, t.task)
-                    intent.putParcelableArrayListExtra(TaskEditorActivity.extraAttachments, ArrayList(t.attachmentList))
+                    val intent = Intent(context, TaskEditor::class.java).apply {
+                        putExtra(TaskEditor.extraTask, t.task)
+                        putExtra(TaskEditor.extraSubject, t.subject)
+                        putExtra(TaskEditor.extraAttachments, t.attachmentList.toArrayList())
+                    }
                     startEditorWithTransition(itemView, intent,
-                        TaskEditorActivity.updateRequestCode)
+                        TaskEditor.updateRequestCode)
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
@@ -121,14 +123,14 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            val task: Task = data?.getParcelableExtra(TaskEditorActivity.extraTask)!!
-            val attachments: List<Attachment> = data.getParcelableArrayListExtra(TaskEditorActivity.extraAttachments)!!
+            val task: Task = data?.getParcelableExtra(TaskEditor.extraTask)!!
+            val attachments: List<Attachment> = data.getParcelableArrayListExtra(TaskEditor.extraAttachments)!!
 
             // Perform an action on the database based on the
             // requestCode
-            if (requestCode == TaskEditorActivity.insertRequestCode) {
+            if (requestCode == TaskEditor.insertRequestCode) {
                 viewModel.insert(task, attachments)
-            } else if (requestCode == TaskEditorActivity.updateRequestCode) {
+            } else if (requestCode == TaskEditor.updateRequestCode) {
                 viewModel.update(task, attachments)
             }
         }

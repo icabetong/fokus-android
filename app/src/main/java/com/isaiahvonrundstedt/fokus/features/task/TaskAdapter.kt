@@ -20,9 +20,11 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class TaskAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
 
-    override fun onSwipe(position: Int, direction: Int) {
+    override fun onSwipe(position: Int, direction: Int,
+                         itemView: View) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -68,11 +70,11 @@ class TaskAdapter(private var actionListener: ActionListener)
                 if (view.isChecked)
                     taskNameView.addStrikeThroughEffect()
                 else taskNameView.removeStrikeThroughEffect()
-                actionListener.onActionPerformed(core, ActionListener.Action.MODIFY)
+                actionListener.onActionPerformed(core, ActionListener.Action.MODIFY, rootView)
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(core, ActionListener.Action.SELECT)
+                actionListener.onActionPerformed(core, ActionListener.Action.SELECT, rootView)
             }
         }
     }

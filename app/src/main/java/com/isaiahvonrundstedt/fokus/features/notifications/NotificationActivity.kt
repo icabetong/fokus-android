@@ -48,7 +48,9 @@ class NotificationActivity: BaseActivity(), BaseAdapter.ActionListener {
         })
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
+    override fun <T> onActionPerformed(t: T,
+                                       action: BaseAdapter.ActionListener.Action,
+                                       itemView: View) {
         if (t is Notification) {
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {

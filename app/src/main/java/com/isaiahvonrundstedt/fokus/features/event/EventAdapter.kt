@@ -1,12 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +15,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class EventAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
 
-    override fun onSwipe(position: Int, direction: Int) {
+    override fun onSwipe(position: Int, direction: Int,
+                         itemView: View) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE, itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -58,7 +57,7 @@ class EventAdapter(private var actionListener: ActionListener)
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(event, ActionListener.Action.SELECT)
+                actionListener.onActionPerformed(event, ActionListener.Action.SELECT, rootView)
             }
         }
     }

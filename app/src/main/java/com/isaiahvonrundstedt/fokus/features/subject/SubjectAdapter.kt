@@ -25,9 +25,11 @@ class SubjectAdapter(private var actionListener: ActionListener)
         holder.onBind(getItem(holder.adapterPosition))
     }
 
-    override fun onSwipe(position: Int, direction: Int) {
+    override fun onSwipe(position: Int, direction: Int,
+                         itemView: View) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                itemView)
     }
 
     class SubjectViewHolder(itemView: View, private val actionListener: ActionListener)
@@ -48,7 +50,8 @@ class SubjectAdapter(private var actionListener: ActionListener)
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(subject, ActionListener.Action.SELECT)
+                actionListener.onActionPerformed(subject, ActionListener.Action.SELECT,
+                    rootView)
             }
         }
     }

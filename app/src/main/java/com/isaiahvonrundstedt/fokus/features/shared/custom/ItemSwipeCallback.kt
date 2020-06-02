@@ -25,7 +25,7 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.onSwipe(viewHolder.adapterPosition, direction)
+        adapter.onSwipe(viewHolder.adapterPosition, direction, viewHolder.itemView)
     }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {

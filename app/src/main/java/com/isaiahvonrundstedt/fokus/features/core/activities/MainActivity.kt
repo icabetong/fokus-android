@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,8 @@ class MainActivity: BaseActivity() {
     private var controller: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPersistentActionBar(toolbar)

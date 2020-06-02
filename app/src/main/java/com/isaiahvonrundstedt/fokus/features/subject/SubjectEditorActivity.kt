@@ -14,6 +14,7 @@ import com.isaiahvonrundstedt.fokus.features.core.extensions.getCompoundDrawable
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
@@ -21,7 +22,7 @@ import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
-class SubjectEditorActivity: BaseActivity() {
+class SubjectEditorActivity: BaseEditor() {
 
     private var requestCode = 0
     private var subject = Subject()
@@ -72,7 +73,7 @@ class SubjectEditorActivity: BaseActivity() {
                 lifecycleOwner(this@SubjectEditorActivity)
                 title(R.string.days_of_week_dialog_title)
                 listItemsMultiChoice(R.array.days_of_week_items, initialSelection = selectedIndices)
-                        { _, indices, items ->
+                        { _, indices, _ ->
                     selectedIndices = indices
                     var sum = 0
                     indices.forEach { index ->
@@ -192,7 +193,7 @@ class SubjectEditorActivity: BaseActivity() {
             val data = Intent()
             data.putExtra(extraSubject, subject)
             setResult(Activity.RESULT_OK, data)
-            finish()
+            supportFinishAfterTransition()
         }
     }
 

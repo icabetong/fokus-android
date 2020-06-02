@@ -10,12 +10,13 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
-class EventEditorActivity: BaseActivity() {
+class EventEditorActivity: BaseEditor() {
 
     private var requestCode = 0
     private var event = Event()
@@ -93,7 +94,7 @@ class EventEditorActivity: BaseActivity() {
             val data = Intent()
             data.putExtra(extraEvent, event)
             setResult(Activity.RESULT_OK, data)
-            finish()
+            supportFinishAfterTransition()
         }
     }
 

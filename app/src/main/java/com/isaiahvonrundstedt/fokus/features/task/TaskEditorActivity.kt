@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -26,6 +28,7 @@ import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
@@ -37,7 +40,7 @@ import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
+class TaskEditorActivity: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     private var requestCode = 0
     private var core: Core? = null
@@ -168,7 +171,7 @@ class TaskEditorActivity: BaseActivity(), SubjectListAdapter.ItemSelected {
             data.putExtra(extraTask, core?.task)
             data.putParcelableArrayListExtra(extraAttachments, ArrayList(core?.attachmentList!!))
             setResult(Activity.RESULT_OK, data)
-            finish()
+            supportFinishAfterTransition()
         }
     }
 

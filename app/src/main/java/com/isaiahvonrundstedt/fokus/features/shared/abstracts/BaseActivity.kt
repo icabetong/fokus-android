@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
+import android.content.Intent
 import android.os.Build
 import android.view.View
 import androidx.annotation.StringRes

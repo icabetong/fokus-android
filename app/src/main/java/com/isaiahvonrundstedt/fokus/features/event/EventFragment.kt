@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_event.*
@@ -62,14 +64,20 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
+    override fun <T> onActionPerformed(t: T,
+                                       action: BaseAdapter.ActionListener.Action,
+                                       itemView: View) {
         if (t is Event) {
             when (action) {
                 // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
+                        itemView, BaseEditor.transitionName)
+
                     val editor = Intent(context, EventEditorActivity::class.java)
                     editor.putExtra(EventEditorActivity.extraEvent, t)
-                    startActivityForResult(editor, EventEditorActivity.updateRequestCode)
+                    startActivityForResult(editor, EventEditorActivity.updateRequestCode,
+                        options.toBundle())
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {

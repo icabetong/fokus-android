@@ -17,7 +17,7 @@ class NoticesFragment: BasePreference() {
     override fun onStart() {
         super.onStart()
 
-        findPreference<Preference>(getKey(R.string.key_credit_libraries))?.apply {
+        findPreference<Preference>(R.string.key_credit_libraries)?.apply {
             setOnPreferenceClickListener {
                 OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_open_source_licenses))
                 startActivity(Intent(context, OssLicensesMenuActivity::class.java))
@@ -25,14 +25,14 @@ class NoticesFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_credit_notification_sound))?.apply {
+        findPreference<Preference>(R.string.key_credit_notification_sound)?.apply {
             setOnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(soundLink)))
                 true
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_credit_launcher_icon))?.apply {
+        findPreference<Preference>(R.string.key_credit_launcher_icon)?.apply {
             setOnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(launcherIconLink)))
                 true

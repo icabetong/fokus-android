@@ -46,7 +46,7 @@ class SettingsFragment: BasePreference() {
     override fun onStart() {
         super.onStart()
 
-        findPreference<ListPreference>(getKey(R.string.key_theme))?.apply {
+        findPreference<ListPreference>(R.string.key_theme)?.apply {
             setOnPreferenceChangeListener { _, value ->
                 if (value is String) {
                     val theme = value.toString()
@@ -56,7 +56,7 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_task_reminder_interval))?.apply {
+        findPreference<Preference>(R.string.key_task_reminder_interval)?.apply {
             setOnPreferenceChangeListener { _, _ ->
                 val request = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
                     .addTag(TaskNotificationScheduler::class.java.simpleName)
@@ -67,7 +67,7 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_event_reminder_interval))?.apply {
+        findPreference<Preference>(R.string.key_event_reminder_interval)?.apply {
             setOnPreferenceChangeListener { _, _ ->
                 val request = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
                     .addTag(EventNotificationScheduler::class.java.simpleName)
@@ -78,7 +78,7 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_reminder_time))?.apply {
+        findPreference<Preference>(R.string.key_reminder_time)?.apply {
             summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(preferences.reminderTime)
             setOnPreferenceClickListener {
                 MaterialDialog(requireContext()).show {
@@ -99,7 +99,7 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_custom_sound))?.apply {
+        findPreference<Preference>(R.string.key_custom_sound)?.apply {
             setOnPreferenceClickListener {
                 if (!PermissionManager(requireContext()).readAccessGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -110,14 +110,14 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_report_issue))?.apply {
+        findPreference<Preference>(R.string.key_report_issue)?.apply {
             setOnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 true
             }
         }
 
-        findPreference<Preference>(getKey(R.string.key_version))?.apply {
+        findPreference<Preference>(R.string.key_version)?.apply {
             summary = BuildConfig.VERSION_NAME
         }
     }

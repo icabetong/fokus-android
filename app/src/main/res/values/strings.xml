@@ -175,27 +175,4 @@
     <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
     <string name="credit_launcher_icon_summary">Launcher Icon</string>
 
-    <!-- Preference Keys -->
-    <string translatable="false" name="key_root">rootKey</string>
-    <string translatable="false" name="key_is_first_run">isFirstRunKey</string>
-    <string translatable="false" name="key_username">usernameKey</string>
-    <string translatable="false" name="key_theme">themeKey</string>
-    <string translatable="false" name="key_sound">soundKey</string>
-    <string translatable="false" name="key_custom_sound">customSoundKey</string>
-    <string translatable="false" name="key_sound_uri">soundUriKey</string>
-    <string translatable="false" name="key_reminder_frequency">reminderFrequencyKey</string>
-    <string translatable="false" name="key_reminder_time">reminderTimeKey</string>
-    <string translatable="false" name="key_task_reminder">taskReminderKey</string>
-    <string translatable="false" name="key_task_reminder_interval">taskReminderIntervalKey</string>
-    <string translatable="false" name="key_event_reminder">eventReminderKey</string>
-    <string translatable="false" name="key_event_reminder_interval">eventReminderIntervalKey</string>
-    <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
-    <string translatable="false" name="key_report_issue">issueKey</string>
-    <string translatable="false" name="key_notices">noticesKey</string>
-    <string translatable="false" name="key_version">versionKey</string>
-
-    <string translatable="false" name="key_credit_libraries">librariesKey</string>
-    <string translatable="false" name="key_credit_notification_sound">notificationSoundKey</string>
-    <string translatable="false" name="key_credit_launcher_icon">launcherIconKey</string>
-
 </resources>

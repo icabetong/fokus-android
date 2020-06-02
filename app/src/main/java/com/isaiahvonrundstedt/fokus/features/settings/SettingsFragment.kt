@@ -99,7 +99,7 @@ class SettingsFragment: BasePreference() {
             }
         }
 
-        findPreference<Preference>(R.string.key_custom_sound)?.apply {
+        findPreference<Preference>(R.string.key_sound_uri)?.apply {
             setOnPreferenceClickListener {
                 if (!PermissionManager(requireContext()).readAccessGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),

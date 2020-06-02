@@ -110,6 +110,13 @@ class SettingsFragment: BasePreference() {
             }
         }
 
+        findPreference<Preference>(R.string.key_not_working_notifications)?.apply {
+            setOnPreferenceClickListener {
+                DokiActivity.start(requireContext())
+                true
+            }
+        }
+
         findPreference<Preference>(R.string.key_report_issue)?.apply {
             setOnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

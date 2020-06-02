@@ -29,7 +29,7 @@ fun TextView.addStrikeThroughEffect() {
  *   the AppCompatTextView
  */
 fun TextView.removeStrikeThroughEffect() {
-    this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG.inv()
+    this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
 }
 
 /**

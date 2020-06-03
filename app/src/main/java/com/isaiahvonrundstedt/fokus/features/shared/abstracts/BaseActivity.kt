@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
@@ -47,9 +48,12 @@ abstract class BaseActivity: AppCompatActivity() {
         this.toolbar?.title = getString(id)
     }
 
-    protected fun startEditorActivity(view: View, intent: Intent, requestCode: Int) {
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-            view, BaseEditor.transitionName)
+    protected fun startEditorActivity(views: Map<String, View>, intent: Intent, requestCode: Int) {
+        val list = views.mapNotNull {
+            Pair.create(it.value, it.key)
+        }.toTypedArray()
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *list)
         startActivityForResult(intent, requestCode, options.toBundle())
     }
 

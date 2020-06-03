@@ -2,7 +2,6 @@
 <resources>
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="activity_padding_medium">32dp</dimen>
-
     <dimen name="item_padding">16dp</dimen>
 
     <dimen name="toolbar_height">128dp</dimen>
@@ -10,4 +9,7 @@
     <dimen name="toolbar_keyline">16dp</dimen>
 
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
+
+    <dimen name="tag_corner_radius">12dp</dimen>
+    <dimen name="surface_corner_radius">16dp</dimen>
 </resources>

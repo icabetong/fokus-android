@@ -4,7 +4,7 @@
 
     <solid android:color="@color/colorPrimary"/>
 
-    <corners android:topRightRadius="12dp"
-        android:bottomRightRadius="12dp"/>
+    <corners android:topRightRadius="@dimen/tag_corner_radius"
+        android:bottomRightRadius="@dimen/tag_corner_radius"/>
 
 </shape>

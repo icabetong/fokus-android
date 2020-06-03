@@ -25,10 +25,10 @@ class NotificationAdapter(private var actionListener: ActionListener)
         holder.onBind(getItem(holder.adapterPosition))
     }
 
-    override fun onSwipe(position: Int, direction: Int,
-                         itemView: View) {
+    override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE, itemView)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                emptyMap())
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

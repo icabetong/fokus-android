@@ -5,6 +5,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="@string/transition_item_to_detail"
     android:animateLayoutChanges="true">
 
     <ScrollView

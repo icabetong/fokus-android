@@ -45,13 +45,12 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:text="@string/button_new_task"
-        app:icon="@drawable/ic_add_black" />
+        android:src="@drawable/ic_add_black" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

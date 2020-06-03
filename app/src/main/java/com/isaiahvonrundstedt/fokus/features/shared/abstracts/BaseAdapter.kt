@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.ItemCallback<T>)
     : ListAdapter<T, VH>(callback) {
 
-    abstract fun onSwipe(position: Int, direction: Int, itemView: View)
+    abstract fun onSwipe(position: Int, direction: Int)
 
     interface ActionListener {
-        fun <T> onActionPerformed(t: T, action: Action, itemView: View)
+        fun <T> onActionPerformed(t: T, action: Action, views: Map<String, View>)
 
         enum class Action { SELECT, MODIFY, DELETE }
     }

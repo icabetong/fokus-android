@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +16,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.activity_subject.*
 import kotlinx.android.synthetic.main.layout_appbar.*
@@ -30,7 +32,6 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject)
         setPersistentActionBar(toolbar)
@@ -62,13 +63,13 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
         super.onResume()
 
         actionButton.setOnClickListener {
-            startEditorActivity(it, Intent(this, SubjectEditor::class.java),
+            startActivityForResult(Intent(this, SubjectEditor::class.java),
                 SubjectEditor.insertRequestCode)
         }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       itemView: View) {
+                                       views: Map<String, View>) {
         if (t is Subject) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
@@ -77,7 +78,7 @@ class SubjectActivity: BaseActivity(), BaseAdapter.ActionListener {
                     val intent = Intent(this, SubjectEditor::class.java).apply {
                         putExtra(SubjectEditor.extraSubject, t)
                     }
-                    startEditorActivity(itemView, intent, SubjectEditor.updateRequestCode)
+                    startEditorActivity(views, intent, SubjectEditor.updateRequestCode)
                 }
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database

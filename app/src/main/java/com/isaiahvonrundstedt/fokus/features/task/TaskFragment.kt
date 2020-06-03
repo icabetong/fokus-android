@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,6 +21,7 @@ import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.components.sheet.FirstRunBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
@@ -63,14 +65,14 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         super.onResume()
 
         actionButton.setOnClickListener {
-            startEditorWithTransition(it, Intent(context, TaskEditor::class.java),
+            startActivityForResult(Intent(context, TaskEditor::class.java),
                 TaskEditor.insertRequestCode)
         }
     }
 
     // Callback from the RecyclerView Adapter
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       itemView: View) {
+                                       views: Map<String, View>) {
         if (t is Core) {
             when (action) {
                 // Update the task in the database then show
@@ -101,8 +103,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                         putExtra(TaskEditor.extraSubject, t.subject)
                         putExtra(TaskEditor.extraAttachments, t.attachmentList.toArrayList())
                     }
-                    startEditorWithTransition(itemView, intent,
-                        TaskEditor.updateRequestCode)
+                    startEditorWithTransition(views, intent, TaskEditor.updateRequestCode)
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar

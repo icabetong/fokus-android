@@ -3,7 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.ViewCompat.setTransitionName
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.datetime.timePicker
@@ -28,14 +30,22 @@ class SubjectEditor: BaseEditor() {
     private var colors: IntArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Check if the parent activity have passed some extras
+        requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
+
+        if (requestCode == insertRequestCode)
+            findViewById<View>(android.R.id.content).transitionName = transition
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
 
-        // Check if the parent activity have passed some extras
-        requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
-        if (requestCode == updateRequestCode)
+        if (requestCode == updateRequestCode) {
             subject = intent.getParcelableExtra(extraSubject)!!
+
+            setTransitionName(codeEditText, SubjectAdapter.transitionCodeID + subject.id)
+            setTransitionName(descriptionEditText, SubjectAdapter.transitionDescriptionID + subject.id)
+        }
 
         // Get actual values for the items
         values = resources.getIntArray(R.array.days_of_week_values)

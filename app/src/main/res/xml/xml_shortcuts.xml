@@ -5,7 +5,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/shape_item_task_icon"
+        android:icon="@drawable/shape_shortcut_task_icon"
         android:shortcutId="shortcut_task"
         android:shortcutShortLabel="@string/shortcut_new_task">
         <intent
@@ -16,7 +16,7 @@
 
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/shape_item_event_icon"
+        android:icon="@drawable/shape_shortcut_event_icon"
         android:shortcutId="shortcut_event"
         android:shortcutShortLabel="@string/shortcut_new_event">
         <intent

@@ -29,7 +29,7 @@
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
 
         <item name="md_background_color">@color/colorSurface</item>
-        <item name="md_corner_radius">4dp</item>
+        <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
 
     <!-- Theme without actionBar, used mainly in Activities -->

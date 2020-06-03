@@ -3,7 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.ViewCompat.setTransitionName
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -21,16 +23,24 @@ class EventEditor: BaseEditor() {
     private var event = Event()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Check if the parent activity has passed some
+        // extras so that we'll show it to the user
+        requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
+        else insertRequestCode
+
+        if (requestCode == insertRequestCode)
+            findViewById<View>(android.R.id.content).transitionName = transition
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_event)
         setPersistentActionBar(toolbar)
 
-        // Check if the parent activity has passed some
-        // extras so that we'll show it to the user
-        requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
-            else insertRequestCode
-        if (requestCode == updateRequestCode)
+        if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
+
+            setTransitionName(nameEditText, EventAdapter.transitionEventName + event.id)
+            setTransitionName(locationEditText, EventAdapter.transitionLocation + event.id)
+        }
 
         // The passed extras will be shown in their
         // corresponding fields

@@ -7,8 +7,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.ViewCompat.setTransitionName
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
@@ -24,6 +27,8 @@ import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -49,20 +54,29 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Check if the parent activity has extras sent then
+        // determine if the editor will be in insert or
+        // update mode
+        requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
+                && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode
+
+        if (requestCode == insertRequestCode)
+            findViewById<View>(android.R.id.content).transitionName = transition
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
 
-        // Check if the parent activity has extras sent then
-        // determine if the editorUI will be in insert or
-        // update mode
-        requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
-            && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode
         if (requestCode == updateRequestCode) {
             task = intent.getParcelableExtra(extraTask)!!
             subject = intent.getParcelableExtra(extraSubject)!!
             attachmentList.clear()
             attachmentList.addAll(intent.getParcelableArrayListExtra(extraAttachments) ?: emptyList())
+
+            val id = task.taskID
+            setTransitionName(nameEditText, TaskAdapter.transitionNameID + id)
+            setTransitionName(dueDateTextView, TaskAdapter.transitionDateID + id)
+            setTransitionName(subjectTextView, TaskAdapter.transitionSubjectID + id)
         }
 
         subjectViewModel.fetch()?.observe(this, Observer { items ->

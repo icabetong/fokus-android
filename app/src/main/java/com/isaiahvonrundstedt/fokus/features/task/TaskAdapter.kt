@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,16 +17,11 @@ import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.core.extensions.addStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.core.extensions.removeStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class TaskAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
 
-    override fun onSwipe(position: Int, direction: Int,
-                         itemView: View) {
-        if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                itemView)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
@@ -35,6 +31,12 @@ class TaskAdapter(private var actionListener: ActionListener)
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind(getItem(holder.adapterPosition))
+    }
+
+    override fun onSwipe(position: Int, direction: Int) {
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                emptyMap())
     }
 
     class TaskViewHolder(itemView: View, private val actionListener: ActionListener)
@@ -49,6 +51,11 @@ class TaskAdapter(private var actionListener: ActionListener)
         private val tagView: ImageView = itemView.findViewById(R.id.tagView)
 
         fun onBind(core: Core) {
+            val id = core.task.taskID
+            taskNameView.transitionName = transitionNameID + id
+            dueDateView.transitionName = transitionDateID + id
+            subjectNameView.transitionName = transitionSubjectID + id
+
             with(core) {
                 attachmentView.isVisible = attachmentList.isNotEmpty()
                 attachmentView.text =
@@ -70,16 +77,23 @@ class TaskAdapter(private var actionListener: ActionListener)
                 if (view.isChecked)
                     taskNameView.addStrikeThroughEffect()
                 else taskNameView.removeStrikeThroughEffect()
-                actionListener.onActionPerformed(core, ActionListener.Action.MODIFY, rootView)
+                actionListener.onActionPerformed(core, ActionListener.Action.MODIFY,
+                    emptyMap())
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(core, ActionListener.Action.SELECT, rootView)
+                actionListener.onActionPerformed(core, ActionListener.Action.SELECT,
+                    mapOf(transitionNameID + id to taskNameView, transitionDateID + id to dueDateView,
+                        transitionSubjectID + id to subjectNameView))
             }
         }
     }
 
     companion object {
+        const val transitionNameID = "transition:name:"
+        const val transitionDateID = "transition:date:"
+        const val transitionSubjectID = "transition:schedule:"
+
         val callback = object : DiffUtil.ItemCallback<Core>() {
             override fun areItemsTheSame(oldItem: Core, newItem: Core): Boolean {
                 return oldItem.task.taskID == newItem.task.taskID

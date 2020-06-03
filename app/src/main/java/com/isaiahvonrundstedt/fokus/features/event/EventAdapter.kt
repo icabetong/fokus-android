@@ -15,25 +15,20 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class EventAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
 
-    override fun onSwipe(position: Int, direction: Int,
-                         itemView: View) {
-        if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE, itemView)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,
             parent, false)
         return EventViewHolder(rowView, actionListener)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).schedule!!.isBeforeNow) viewTypeFinished
-            else viewTypePending
-    }
-
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         holder.onBind(getItem(position))
+    }
+
+    override fun onSwipe(position: Int, direction: Int) {
+        if (direction == ItemTouchHelper.START)
+            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                emptyMap())
     }
 
     class EventViewHolder(itemView: View, private val actionListener: ActionListener)
@@ -46,6 +41,10 @@ class EventAdapter(private var actionListener: ActionListener)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
 
         fun onBind(event: Event) {
+            val id = event.id
+            nameView.transitionName = transitionEventName + id
+            locationView.transitionName = transitionLocation + id
+
             with(event) {
                 locationView.text = location
                 nameView.text = name
@@ -57,14 +56,15 @@ class EventAdapter(private var actionListener: ActionListener)
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(event, ActionListener.Action.SELECT, rootView)
+                actionListener.onActionPerformed(event, ActionListener.Action.SELECT,
+                    mapOf(transitionEventName + id to nameView, transitionLocation + id to locationView))
             }
         }
     }
 
     companion object {
-        const val viewTypePending: Int = 0
-        const val viewTypeFinished: Int = 1
+        const val transitionEventName = "transition:name:"
+        const val transitionLocation = "transition:location:"
 
         val callback = object: DiffUtil.ItemCallback<Event>() {
             override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {

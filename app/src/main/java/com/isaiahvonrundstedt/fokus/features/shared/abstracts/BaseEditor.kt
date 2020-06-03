@@ -2,23 +2,27 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.app.Activity
 import android.os.Bundle
+import android.transition.*
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.Window
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseEditor: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
 
-        // Setup shared element transition
-        findViewById<ViewGroup>(android.R.id.content).transitionName = transitionName
+        window.sharedElementEnterTransition =
+            TransitionInflater.from(this).inflateTransition(R.transition.transition_enter)
+        window.sharedElementReturnTransition =
+            TransitionInflater.from(this).inflateTransition(R.transition.transition_return)
 
         super.onCreate(savedInstanceState)
     }
 
     override fun supportFinishAfterTransition() {
+        findViewById<ExtendedFloatingActionButton>(R.id.actionButton).isVisible = false
         currentFocus?.let {
             val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(it.windowToken, 0)
@@ -37,6 +41,6 @@ abstract class BaseEditor: BaseActivity() {
     }
 
     companion object {
-        const val transitionName = "shared_element_end_root"
+        const val transition = "shared_element_end_root"
     }
 }

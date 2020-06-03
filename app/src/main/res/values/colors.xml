@@ -11,15 +11,12 @@
 
     <color name="colorEditorSurface">#eeeeee</color>
 
-    <color name="colorWindowBackground">#fcfcfc</color>
+    <color name="colorWindowBackground">#ffffff</color>
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>
     <color name="colorStatusBarBackground">@color/colorWindowBackground</color>
 
     <color name="colorPrimaryText">@color/colorOnSurface</color>
     <color name="colorSecondaryText">#808080</color>
-
-    <color name="colorSwipeLeft">#ea4335</color>
-    <color name="colorSwipeRight">#34a853</color>
 
     <color name="colorIconReminder">#0091ea</color>
     <color name="colorIconWarning">#ffab00</color>

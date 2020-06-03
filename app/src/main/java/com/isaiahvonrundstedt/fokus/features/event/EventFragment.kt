@@ -60,7 +60,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
             startActivityForResult(Intent(context, EventEditor::class.java),
-                EventEditor.updateRequestCode)
+                EventEditor.insertRequestCode)
         }
     }
 

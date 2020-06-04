@@ -37,7 +37,7 @@ fun TextView.removeStrikeThroughEffect() {
  *  TextView at a specific position
  */
 fun TextView.setCompoundDrawableStart(drawable: Drawable?) {
-    this.setCompoundDrawablesRelative(drawable, null, null, null)
+    this.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
 }
 
 /**

@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.lifecycle.Observer
@@ -22,10 +24,7 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.data.Core
-import com.isaiahvonrundstedt.fokus.features.core.extensions.getFileName
-import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
-import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.features.core.extensions.*
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -193,6 +192,9 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         task.subjectID = subject.id
         this.subject = subject
 
+        ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
+            subjectTextView.setCompoundDrawableStart(subject.tintDrawable(it))
+        }
         subjectTextView.text = subject.code
         subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectDialog?.dismiss()

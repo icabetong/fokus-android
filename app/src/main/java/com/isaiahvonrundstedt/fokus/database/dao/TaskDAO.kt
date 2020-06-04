@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 @Dao
@@ -23,5 +25,9 @@ interface TaskDAO {
 
     @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
     suspend fun setFinished(taskID: String, status: Int)
+
+    @Transaction
+    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subjectID == subjects.id ORDER BY dateAdded")
+    fun fetchLiveData(): LiveData<List<TaskResource>>
 
 }

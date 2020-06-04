@@ -16,9 +16,9 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
     private var workManager = WorkManager.getInstance(app)
-    private var items: LiveData<List<Event>>? = repository.fetch()
+    private var items: LiveData<List<EventResource>>? = repository.fetch()
 
-    fun fetch(): LiveData<List<Event>>? = items
+    fun fetch(): LiveData<List<EventResource>>? = items
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
@@ -34,7 +34,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
 
     fun remove(event: Event) = viewModelScope.launch {
         repository.remove(event)
-        workManager.cancelUniqueWork(event.id)
+        workManager.cancelUniqueWork(event.eventID)
     }
 
     fun update(event: Event) = viewModelScope.launch {

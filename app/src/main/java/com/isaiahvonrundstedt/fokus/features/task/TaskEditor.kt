@@ -6,13 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,11 +20,8 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.core.extensions.*
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -43,7 +37,6 @@ import kotlin.collections.ArrayList
 class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     private var requestCode = 0
-    private var core: Core? = null
     private var task = Task()
 
     private val attachmentRequestCode = 32
@@ -126,7 +119,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             subjectDialog = MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 title(R.string.dialog_select_subject_title)
-                message(R.string.dialog_select_subject_summary)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
                     startActivity(Intent(this@TaskEditor, SubjectActivity::class.java))
@@ -173,14 +165,10 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             task.name = nameEditText.text.toString()
             task.notes = notesEditText.text.toString()
 
-            // Prepare the send the data back to the parent activity
-            core = Core(task = this.task, subject = this.subject!!,
-                attachmentList = this.attachmentList)
-
             // Send the data back to the parent activity
             val data = Intent()
-            data.putExtra(extraTask, core?.task)
-            data.putParcelableArrayListExtra(extraAttachments, core?.attachmentList!!.toArrayList())
+            data.putExtra(extraTask, task)
+            data.putParcelableArrayListExtra(extraAttachments, attachmentList.toArrayList())
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
         }

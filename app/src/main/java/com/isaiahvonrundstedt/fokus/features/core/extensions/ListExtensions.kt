@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.core.extensions
 
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -18,7 +17,7 @@ fun <T> List<T>.getUsingID(id: String): T? {
             if (it.taskID == id) return it
 
         if (it is Event)
-            if (it.id == id) return it
+            if (it.eventID == id) return it
 
         if (it is Subject)
             if (it.id == id) return it

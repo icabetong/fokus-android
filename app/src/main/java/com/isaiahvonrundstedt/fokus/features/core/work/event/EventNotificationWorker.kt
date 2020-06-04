@@ -27,7 +27,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
             title = event.name
             content = event.formatSchedule(context)
             type = Notification.typeEventReminder
-            data = event.id
+            data = event.eventID
         }
 
         when (PreferenceManager(context).eventReminderInterval) {
@@ -43,7 +43,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
         }
         notificationRequest.setInputData(convertNotificationToData(notification))
 
-        WorkManager.getInstance(context).enqueueUniqueWork(event.id, ExistingWorkPolicy.REPLACE,
+        WorkManager.getInstance(context).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
             notificationRequest.build())
 
         return Result.success()

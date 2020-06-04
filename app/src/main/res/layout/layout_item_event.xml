@@ -14,6 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/tagView"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/shape_color_holder_rect"/>
+
         <LinearLayout
             android:id="@+id/scheduleLayout"
             android:layout_width="0dp"
@@ -23,7 +33,7 @@
             app:layout_constraintWidth_percent="0.25"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toEndOf="@id/tagView">
 
             <TextView
                 android:id="@+id/dayView"

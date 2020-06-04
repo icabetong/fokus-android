@@ -64,6 +64,7 @@
                     android:minLines="2"
                     android:maxLines="6"
                     android:scrollbars="vertical"
+                    android:importantForAutofill="no"
                     android:background="@android:color/transparent"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
@@ -94,6 +95,7 @@
                     android:hint="@string/field_not_set"
                     android:inputType="textCapWords"
                     android:background="@android:color/transparent"
+                    android:autofillHints="location"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
                 <TextView
@@ -115,6 +117,27 @@
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:clickable="true"
                     android:focusable="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <TextView
+                    android:id="@+id/subjectTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:drawablePadding="16dp"/>
 
             </LinearLayout>
 

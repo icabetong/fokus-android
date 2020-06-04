@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,22 +67,23 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is Event) {
+        if (t is EventResource) {
             when (action) {
                 // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, EventEditor::class.java).apply {
-                        putExtra(EventEditor.extraEvent, t)
+                        putExtra(EventEditor.extraEvent, t.event)
+                        putExtra(EventEditor.extraSubject, t.subject)
                     }
                     startEditorWithTransition(views, intent, EventEditor.updateRequestCode)
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
-                    viewModel?.remove(t)
+                    viewModel?.remove(t.event)
                     val snackbar = Snackbar.make(recyclerView, R.string.feedback_event_removed,
                         Snackbar.LENGTH_SHORT)
                     snackbar.setAction(R.string.button_undo) {
-                        viewModel?.insert(t)
+                        viewModel?.insert(t.event)
                     }
                     snackbar.show()
                 }

@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.data.Core
 import com.isaiahvonrundstedt.fokus.features.core.extensions.addStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.core.extensions.removeStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class TaskAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Core, TaskAdapter.TaskViewHolder>(callback) {
+    : BaseAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -50,17 +47,17 @@ class TaskAdapter(private var actionListener: ActionListener)
         private val attachmentView: TextView = itemView.findViewById(R.id.attachmentsView)
         private val tagView: ImageView = itemView.findViewById(R.id.tagView)
 
-        fun onBind(core: Core) {
-            val id = core.task.taskID
+        fun onBind(resource: TaskResource) {
+            val id = resource.task.taskID
             taskNameView.transitionName = transitionNameID + id
             dueDateView.transitionName = transitionDateID + id
             subjectNameView.transitionName = transitionSubjectID + id
 
-            with(core) {
+            with(resource) {
                 attachmentView.isVisible = attachmentList.isNotEmpty()
                 attachmentView.text =
                     itemView.context.resources.getQuantityString(R.plurals.files_attached,
-                        core.attachmentList.size, core.attachmentList.size)
+                        resource.attachmentList.size, resource.attachmentList.size)
 
                 subjectNameView.text = subject.code
                 taskNameView.text = task.name
@@ -73,16 +70,16 @@ class TaskAdapter(private var actionListener: ActionListener)
 
             checkBox.setOnClickListener { view ->
                 view as MaterialCheckBox
-                core.task.isFinished = view.isChecked
+                resource.task.isFinished = view.isChecked
                 if (view.isChecked)
                     taskNameView.addStrikeThroughEffect()
                 else taskNameView.removeStrikeThroughEffect()
-                actionListener.onActionPerformed(core, ActionListener.Action.MODIFY,
+                actionListener.onActionPerformed(resource, ActionListener.Action.MODIFY,
                     emptyMap())
             }
 
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(core, ActionListener.Action.SELECT,
+                actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
                     mapOf(transitionNameID + id to taskNameView, transitionDateID + id to dueDateView,
                         transitionSubjectID + id to subjectNameView))
             }
@@ -94,12 +91,12 @@ class TaskAdapter(private var actionListener: ActionListener)
         const val transitionDateID = "transition:date:"
         const val transitionSubjectID = "transition:schedule:"
 
-        val callback = object : DiffUtil.ItemCallback<Core>() {
-            override fun areItemsTheSame(oldItem: Core, newItem: Core): Boolean {
+        val callback = object : DiffUtil.ItemCallback<TaskResource>() {
+            override fun areItemsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {
                 return oldItem.task.taskID == newItem.task.taskID
             }
 
-            override fun areContentsTheSame(oldItem: Core, newItem: Core): Boolean {
+            override fun areContentsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {
                 return oldItem == newItem
             }
         }

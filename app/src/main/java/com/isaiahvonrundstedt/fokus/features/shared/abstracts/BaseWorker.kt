@@ -75,7 +75,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
 
         fun convertEventToData(event: Event): Data {
             return Data.Builder().apply {
-                putString(extraEventID, event.id)
+                putString(extraEventID, event.eventID)
                 putString(extraEventName, event.name)
                 putString(extraEventNotes, event.notes)
                 putString(extraEventLocation, event.location)
@@ -105,7 +105,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
 
         fun convertDataToEvent(workerData: Data): Event {
             return Event().apply {
-                id = workerData.getString(extraEventID)!!
+                eventID = workerData.getString(extraEventID)!!
                 name = workerData.getString(extraEventName)
                 notes = workerData.getString(extraEventNotes)
                 location = workerData.getString(extraEventLocation)

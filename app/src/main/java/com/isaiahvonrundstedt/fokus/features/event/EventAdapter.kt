@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.features.core.extensions.addStrikeThroughEff
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Event, EventAdapter.EventViewHolder>(callback) {
+    : BaseAdapter<EventResource, EventAdapter.EventViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,
@@ -35,28 +36,32 @@ class EventAdapter(private var actionListener: ActionListener)
         : RecyclerView.ViewHolder(itemView) {
 
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
+        private val tagView: ImageView = itemView.findViewById(R.id.tagView)
         private val locationView: TextView = itemView.findViewById(R.id.locationView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
         private val dayView: TextView = itemView.findViewById(R.id.dayView)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
 
-        fun onBind(event: Event) {
-            val id = event.id
+        fun onBind(resource: EventResource) {
+            val id = resource.event.eventID
             nameView.transitionName = transitionEventName + id
             locationView.transitionName = transitionLocation + id
 
-            with(event) {
+            with(resource.event) {
                 locationView.text = location
                 nameView.text = name
-                dayView.text = event.formatScheduleDate(rootView.context)
-                timeView.text = event.formatScheduleTime()
+                dayView.text = formatScheduleDate(rootView.context)
+                timeView.text = formatScheduleTime()
 
-                if (event.schedule!!.isBeforeNow)
+                if (schedule!!.isBeforeNow)
                     nameView.addStrikeThroughEffect()
             }
 
+            resource.subject?.let {
+                tagView.setImageDrawable(it.tintDrawable(tagView.drawable))
+            }
             rootView.setOnClickListener {
-                actionListener.onActionPerformed(event, ActionListener.Action.SELECT,
+                actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
                     mapOf(transitionEventName + id to nameView, transitionLocation + id to locationView))
             }
         }
@@ -66,12 +71,12 @@ class EventAdapter(private var actionListener: ActionListener)
         const val transitionEventName = "transition:name:"
         const val transitionLocation = "transition:location:"
 
-        val callback = object: DiffUtil.ItemCallback<Event>() {
-            override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-                return oldItem.id == newItem.id
+        val callback = object: DiffUtil.ItemCallback<EventResource>() {
+            override fun areItemsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {
+                return oldItem.event.eventID == newItem.event.eventID
             }
 
-            override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+            override fun areContentsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {
                 return oldItem == newItem
             }
         }

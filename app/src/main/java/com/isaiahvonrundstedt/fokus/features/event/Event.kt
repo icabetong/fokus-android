@@ -3,10 +3,12 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.content.Context
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -14,15 +16,21 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
-@Entity(tableName = "events")
+@Entity(tableName = "events", foreignKeys = [
+    ForeignKey(entity = Subject::class, parentColumns = arrayOf("id"),
+        childColumns = arrayOf("subjectID"), onDelete = ForeignKey.CASCADE)
+])
 data class Event @JvmOverloads constructor(
     @PrimaryKey
-    var id: String = UUID.randomUUID().toString(),
+    var eventID: String = UUID.randomUUID().toString(),
     var name: String? = null,
     var notes: String? = null,
     var location: String? = null,
+    var subjectID: String? = null,
     @TypeConverters(DateTimeConverter::class)
-    var schedule: DateTime? = null
+    var schedule: DateTime? = null,
+    @TypeConverters(DateTimeConverter::class)
+    var dateAdded: DateTime = DateTime.now()
 ): Parcelable {
 
     fun formatScheduleDate(context: Context): String {

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.event.Event
+import com.isaiahvonrundstedt.fokus.features.event.EventResource
 
 class EventRepository private constructor (app: Application) {
 
@@ -23,7 +24,7 @@ class EventRepository private constructor (app: Application) {
         }
     }
 
-    fun fetch(): LiveData<List<Event>>? = events?.fetch()
+    fun fetch(): LiveData<List<EventResource>>? = events?.fetchLiveData()
 
     suspend fun insert(event: Event) {
         events?.insert(event)

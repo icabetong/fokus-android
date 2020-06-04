@@ -5,22 +5,34 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
-class EventEditor: BaseEditor() {
+class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     private var requestCode = 0
     private var event = Event()
+    private val subjectViewModel: SubjectViewModel by lazy {
+        ViewModelProvider(this).get(SubjectViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Check if the parent activity has passed some
@@ -37,9 +49,10 @@ class EventEditor: BaseEditor() {
 
         if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
+            subject = intent.getParcelableExtra(extraSubject)!!
 
-            setTransitionName(nameEditText, EventAdapter.transitionEventName + event.id)
-            setTransitionName(locationEditText, EventAdapter.transitionLocation + event.id)
+            setTransitionName(nameEditText, EventAdapter.transitionEventName + event.eventID)
+            setTransitionName(locationEditText, EventAdapter.transitionLocation + event.eventID)
         }
 
         // The passed extras will be shown in their
@@ -49,12 +62,21 @@ class EventEditor: BaseEditor() {
             notesEditText.setText(event.notes)
             locationEditText.setText(event.location)
             scheduleTextView.text = event.formatSchedule(this)
+            subjectTextView.text = subject!!.code
+
             scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
 
             window.decorView.rootView.clearFocus()
         }
+
+        subjectViewModel.fetch()?.observe(this, Observer { items ->
+            adapter.setObservableItems(items)
+        })
     }
 
+    private val adapter = SubjectListAdapter(this)
+    private var subjectDialog: MaterialDialog? = null
     override fun onStart() {
         super.onStart()
 
@@ -62,7 +84,8 @@ class EventEditor: BaseEditor() {
             MaterialDialog(this).show {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = event.schedule?.toDateTime()?.toCalendar(Locale.getDefault())) { _, datetime ->
+                    currentDateTime = event.schedule?.toDateTime()?.toCalendar(
+                        Locale.getDefault())) { _, datetime ->
                     event.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
@@ -70,6 +93,17 @@ class EventEditor: BaseEditor() {
                         v.text = event.formatSchedule(this@EventEditor)
                         v.setTextColorFromResource(R.color.colorPrimaryText)
                     }
+                }
+            }
+        }
+
+        subjectTextView.setOnClickListener {
+            subjectDialog = MaterialDialog(it.context).show {
+                lifecycleOwner(this@EventEditor)
+                title(R.string.dialog_select_subject_title)
+                customListAdapter(adapter)
+                positiveButton(R.string.button_new_subject) {
+                    startActivity(Intent(this@EventEditor, SubjectEditor::class.java))
                 }
             }
         }
@@ -109,9 +143,23 @@ class EventEditor: BaseEditor() {
         }
     }
 
+    private var subject: Subject? = null
+    override fun onItemSelected(subject: Subject) {
+        event.subjectID = subject.id
+        this.subject = subject
+
+        ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
+            subjectTextView.setCompoundDrawableStart(it)
+        }
+        subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
+        subjectTextView.text = subject.code
+        subjectDialog?.dismiss()
+    }
+
     companion object {
         const val insertRequestCode = 24
         const val updateRequestCode = 56
         const val extraEvent = "extraEvent"
+        const val extraSubject = "extraSubject"
     }
 }

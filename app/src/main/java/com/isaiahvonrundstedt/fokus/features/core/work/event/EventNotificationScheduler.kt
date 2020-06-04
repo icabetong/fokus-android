@@ -27,7 +27,7 @@ class EventNotificationScheduler(private var context: Context, workerParameters:
                 val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                     .setInputData(convertEventToData(event))
                     .build()
-                WorkManager.getInstance(context).enqueueUniqueWork(event.id, ExistingWorkPolicy.REPLACE,
+                WorkManager.getInstance(context).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
                     request)
             }
         }

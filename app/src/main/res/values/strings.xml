@@ -142,7 +142,11 @@
     <string name="tag_color_sea">Sea</string>
     <string name="tag_color_grape">Grape</string>
     <string name="tag_color_cherry">Cherry</string>
-    <string name="tag_color_rose">Rose</string>
+    <string name="tag_color_coral">Coral</string>
+    <string name="tag_color_midnight">Midnight</string>
+    <string name="tag_color_mint">Mint</string>
+    <string name="tag_color_lavender">Lavender</string>
+    <string name="tag_color_graphite">Graphite</string>
 
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>

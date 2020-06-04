@@ -44,9 +44,13 @@ data class Subject @JvmOverloads constructor (
         SUNSET(Color.parseColor("#ff7e0f")),
         LEMON(Color.parseColor("#ffb600")),
         SEA(Color.parseColor("#01b1af")),
-        GRAPE(Color.parseColor("#c14ce6")),
+        GRAPE(Color.parseColor("#9c27b0")),
         CHERRY(Color.parseColor("#f50057")),
-        ROSE(Color.parseColor("#f15b8d"));
+        CORAL(Color.parseColor("#f15b8d")),
+        MIDNIGHT(Color.parseColor("#1a237e")),
+        LAVENDER(Color.parseColor("#b39ddb")),
+        MINT(Color.parseColor("#009c56")),
+        GRAPHITE(Color.parseColor("#757575"));
 
         fun getNameResource(): Int {
             return when (this) {
@@ -57,7 +61,11 @@ data class Subject @JvmOverloads constructor (
                 SEA -> R.string.tag_color_sea
                 GRAPE -> R.string.tag_color_grape
                 CHERRY -> R.string.tag_color_cherry
-                ROSE -> R.string.tag_color_rose
+                CORAL -> R.string.tag_color_coral
+                MIDNIGHT -> R.string.tag_color_midnight
+                MINT -> R.string.tag_color_mint
+                LAVENDER -> R.string.tag_color_lavender
+                GRAPHITE -> R.string.tag_color_graphite
             }
         }
 

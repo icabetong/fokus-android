@@ -137,7 +137,11 @@
     <string name="tag_color_sea">Meer</string>
     <string name="tag_color_grape">Traube</string>
     <string name="tag_color_cherry">Kirsche</string>
-    <string name="tag_color_rose">Rose</string>
+    <string name="tag_color_coral">Koralle</string>
+    <string name="tag_color_midnight">Mitternacht</string>
+    <string name="tag_color_mint">Münzprägeanstalt</string>
+    <string name="tag_color_lavender">Lavendel</string>
+    <string name="tag_color_graphite">Graphit</string>
 
     <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
     <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>

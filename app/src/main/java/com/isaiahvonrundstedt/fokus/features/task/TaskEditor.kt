@@ -61,14 +61,13 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
         if (requestCode == updateRequestCode) {
             task = intent.getParcelableExtra(extraTask)!!
-            subject = intent.getParcelableExtra(extraSubject)!!
+            subject = intent.getParcelableExtra(extraSubject)
             attachmentList.clear()
             attachmentList.addAll(intent.getParcelableArrayListExtra(extraAttachments) ?: emptyList())
 
             val id = task.taskID
             setTransitionName(nameEditText, TaskAdapter.transitionNameID + id)
             setTransitionName(dueDateTextView, TaskAdapter.transitionDateID + id)
-            setTransitionName(subjectTextView, TaskAdapter.transitionSubjectID + id)
         }
 
         subjectViewModel.fetch()?.observe(this, Observer { items ->
@@ -80,11 +79,13 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         if (requestCode == updateRequestCode) {
             nameEditText.setText(task.name)
             notesEditText.setText(task.notes)
-            subjectTextView.text = subject!!.code
             dueDateTextView.text = task.formatDueDate(this)
-
-            subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
             dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
+
+            subject?.let {
+                subjectTextView.text = it.code
+                subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            }
 
             attachmentList.forEach { attachment ->
                 attachmentChipGroup.addView(buildChip(attachment), 0)
@@ -153,12 +154,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             if (task.dueDate == null) {
                 createSnackbar(rootLayout, R.string.feedback_task_empty_due_date)
                 dueDateTextView.performClick()
-                return@setOnClickListener
-            }
-
-            if (task.subjectID == null) {
-                createSnackbar(rootLayout, R.string.feedback_task_empty_subject)
-                subjectTextView.performClick()
                 return@setOnClickListener
             }
 

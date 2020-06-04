@@ -13,54 +13,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/subjectNameView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/detailsLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/taskNameView"
-            app:layout_constraintStart_toEndOf="@id/tagView"
-            tools:text="COMSCI 2101"/>
-
-        <TextView
-            android:id="@+id/taskNameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title"
-            app:layout_constraintTop_toBottomOf="@id/subjectNameView"
-            app:layout_constraintBottom_toTopOf="@id/attachmentsView"
-            app:layout_constraintStart_toEndOf="@id/tagView"
-            tools:text="Feed the Cat"/>
-
-        <TextView
-            android:id="@+id/attachmentsView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            app:layout_constraintTop_toBottomOf="@id/taskNameView"
-            app:layout_constraintBottom_toTopOf="@id/dueDateView"
-            app:layout_constraintStart_toEndOf="@id/tagView"
-            tools:text="8 files attached"/>
-
-        <TextView
-            android:id="@+id/dueDateView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-            app:layout_constraintTop_toBottomOf="@id/attachmentsView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tagView"
-            tools:text="Sunday at 1:00PM"/>
+            app:layout_constraintEnd_toStartOf="@id/checkBox">
+
+            <TextView
+                android:id="@+id/subjectNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+                tools:text="COMSCI 2101"/>
+
+            <TextView
+                android:id="@+id/taskNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+                tools:text="Feed the Cat"/>
+
+            <TextView
+                android:id="@+id/attachmentsView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                tools:text="8 files attached"/>
+
+            <TextView
+                android:id="@+id/dueDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                tools:text="Sunday at 1:00PM"/>
+
+        </LinearLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox"
@@ -69,6 +68,7 @@
             android:button="@drawable/selector_toggle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/detailsLayout"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
@@ -79,6 +79,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/detailsLayout"
             app:srcCompat="@drawable/shape_color_holder_rect"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

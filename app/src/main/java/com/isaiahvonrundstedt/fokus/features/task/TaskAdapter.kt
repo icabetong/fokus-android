@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -59,11 +60,15 @@ class TaskAdapter(private var actionListener: ActionListener)
                     itemView.context.resources.getQuantityString(R.plurals.files_attached,
                         resource.attachmentList.size, resource.attachmentList.size)
 
-                subjectNameView.text = subject.code
+                checkBox.isChecked = task.isFinished
                 taskNameView.text = task.name
                 dueDateView.text = task.formatDueDate(rootView.context)
-                tagView.setImageDrawable(subject.tintDrawable(tagView.drawable))
-                checkBox.isChecked = task.isFinished
+
+                if (subject != null) {
+                    subjectNameView.text = subject?.code
+                    tagView.setImageDrawable(subject?.tintDrawable(tagView.drawable))
+                } else
+                    subjectNameView.isVisible = false
 
                 if (task.isFinished) taskNameView.addStrikeThroughEffect()
             }
@@ -80,8 +85,7 @@ class TaskAdapter(private var actionListener: ActionListener)
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
-                    mapOf(transitionNameID + id to taskNameView, transitionDateID + id to dueDateView,
-                        transitionSubjectID + id to subjectNameView))
+                    mapOf(transitionNameID + id to taskNameView, transitionDateID + id to dueDateView))
             }
         }
     }

@@ -132,12 +132,12 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         attachmentChip.setOnClickListener {
             // Check if we have read storage permissions then request the permission
             // if we have the permission, open up file picker
-            if (PermissionManager(this).readAccessGranted) {
+            if (PermissionManager(this).storageReadGranted) {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), attachmentRequestCode)
             } else
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PermissionManager.readStorageRequestCode)
+                    PermissionManager.storageRequestCode)
         }
 
         actionButton.setOnClickListener {
@@ -186,7 +186,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
-        if (requestCode == PermissionManager.readStorageRequestCode
+        if (requestCode == PermissionManager.storageRequestCode
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("*/*"), attachmentRequestCode)

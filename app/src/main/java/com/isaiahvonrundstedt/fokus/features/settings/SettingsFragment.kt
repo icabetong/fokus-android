@@ -99,9 +99,9 @@ class SettingsFragment: BasePreference() {
 
         findPreference<Preference>(R.string.key_sound_uri)?.apply {
             setOnPreferenceClickListener {
-                if (!PermissionManager(requireContext()).readAccessGranted)
+                if (!PermissionManager(requireContext()).storageReadGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                                       PermissionManager.readStorageRequestCode)
+                                       PermissionManager.storageRequestCode)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                                                 .setType("audio/*"), soundRequestCode)
                 true
@@ -144,7 +144,7 @@ class SettingsFragment: BasePreference() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PermissionManager.readStorageRequestCode
+        if (requestCode == PermissionManager.storageRequestCode
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("audio/*"), soundRequestCode)

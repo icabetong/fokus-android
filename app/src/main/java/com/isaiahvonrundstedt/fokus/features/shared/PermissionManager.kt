@@ -9,22 +9,13 @@ import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTim
 class PermissionManager(var context: Context) {
 
     companion object {
-        const val readStorageRequestCode = 3
-        const val writeStorageRequestCode = 2
+        const val storageRequestCode = 3
     }
 
-    val readAccessGranted: Boolean
+    val storageReadGranted: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-            else
-                true
-        }
-
-    val writeAccessGranted: Boolean
-        get() {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             else true
         }
 }

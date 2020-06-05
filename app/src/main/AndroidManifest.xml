@@ -27,7 +27,6 @@
 
         <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" />
-        <activity android:name=".features.subject.SubjectActivity" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
         <activity android:name=".features.subject.SubjectEditor"
@@ -40,7 +39,7 @@
         <!-- OSSLicenses -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Fokus.Theme.Bridge"/>
+            android:theme="@style/Fokus.Theme.Base"/>
 
         <service android:name=".features.core.service.NotificationActionService"
             android:exported="false"/>

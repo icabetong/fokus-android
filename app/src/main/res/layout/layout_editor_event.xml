@@ -118,10 +118,20 @@
                     android:clickable="true"
                     android:focusable="true"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_subject"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />

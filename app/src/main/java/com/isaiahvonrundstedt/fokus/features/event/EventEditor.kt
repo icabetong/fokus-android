@@ -30,6 +30,10 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     private var requestCode = 0
     private var event = Event()
+    private var subject: Subject? = null
+    private var subjectDialog: MaterialDialog? = null
+
+    private val adapter = SubjectListAdapter(this)
     private val subjectViewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
@@ -71,12 +75,10 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectViewModel.fetch()?.observe(this, Observer { items ->
-            adapter.setObservableItems(items)
+            adapter.submitList(items)
         })
     }
 
-    private val adapter = SubjectListAdapter(this)
-    private var subjectDialog: MaterialDialog? = null
     override fun onStart() {
         super.onStart()
 
@@ -143,13 +145,12 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
     }
 
-    private var subject: Subject? = null
     override fun onItemSelected(subject: Subject) {
         event.subjectID = subject.id
         this.subject = subject
 
         ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-            subjectTextView.setCompoundDrawableStart(it)
+            subjectTextView.setCompoundDrawableStart(subject.tintDrawable(it))
         }
         subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectTextView.text = subject.code

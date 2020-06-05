@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment: Fragment() {
 
-    protected fun startEditorWithTransition(views: Map<String, View>, intent: Intent, requestCode: Int) {
+    protected fun startActivityWithTransition(views: Map<String, View>, intent: Intent, requestCode: Int) {
         val list = views.mapNotNull {
             Pair.create(it.value, it.key)
         }.toTypedArray()

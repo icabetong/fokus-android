@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 
 /**

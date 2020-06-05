@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class SubjectAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Subject, SubjectAdapter.SubjectViewHolder>(callback) {

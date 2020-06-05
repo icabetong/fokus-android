@@ -4,11 +4,12 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.task.Task
 
-// This entity is used to show both the
-// task, subject and the attachments of the task
-// in a single entity
+/**
+ *  Data class used for data representation
+ *  of tasks, subjects and its attachments
+ *  in the UI
+ */
 data class TaskResource @JvmOverloads constructor (
     @Embedded
     var task: Task,

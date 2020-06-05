@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="Fokus.Theme.Base" parent="Theme.MaterialComponents.DayNight">
+    <style name="Fokus.Theme" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -32,12 +32,6 @@
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
 
-    <!-- Theme without actionBar, used mainly in Activities -->
-    <style name="Fokus.Theme" parent="Fokus.Theme.Base">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorPrimary</item>
@@ -56,6 +50,8 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="bottomSheetStyle">@style/Fokus.Component.BottomSheet.Base</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>

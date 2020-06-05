@@ -39,7 +39,7 @@
             android:key="@string/key_custom_sound"
             android:title="@string/settings_custom_notification_sound_title"
             android:summary="@string/settings_custom_notification_sound_summary"
-            android:defaultValue="false"/>
+            android:defaultValue="false" />
 
         <Preference
             android:key="@string/key_sound_uri"

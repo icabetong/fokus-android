@@ -20,6 +20,18 @@
         android:id="@+id/navigation_events"
         android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
         android:label="@string/navigation_events"
-        tools:layout="@layout/fragment_event"/>
+        tools:layout="@layout/fragment_event">
+
+        <action
+            android:id="@+id/action_navigation_events_to_navigation_subjects"
+            app:destination="@id/navigation_subjects"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_subjects"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment"
+        android:label="@string/activity_subjects"
+        tools:layout="@layout/fragment_subject"/>
 
 </navigation>

@@ -2,17 +2,15 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 
 abstract class BaseActivity: AppCompatActivity() {
@@ -48,7 +46,7 @@ abstract class BaseActivity: AppCompatActivity() {
         this.toolbar?.title = getString(id)
     }
 
-    protected fun startEditorActivity(views: Map<String, View>, intent: Intent, requestCode: Int) {
+    protected fun startActivityWithTransition(views: Map<String, View>, intent: Intent, requestCode: Int) {
         val list = views.mapNotNull {
             Pair.create(it.value, it.key)
         }.toTypedArray()

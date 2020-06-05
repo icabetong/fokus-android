@@ -11,4 +11,9 @@
         android:title="@string/navigation_events"
         android:icon="@drawable/ic_event_black"/>
 
+    <item
+        android:id="@+id/navigation_subjects"
+        android:title="@string/navigation_subjects"
+        android:icon="@drawable/ic_palette_black"/>
+
 </menu>

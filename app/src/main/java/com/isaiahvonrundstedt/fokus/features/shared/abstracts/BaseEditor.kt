@@ -2,7 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.app.Activity
 import android.os.Bundle
-import android.transition.*
+import android.transition.TransitionInflater
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible

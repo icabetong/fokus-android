@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.notifications
 
 import android.os.Parcelable
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat

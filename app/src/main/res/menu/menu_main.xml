@@ -3,11 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_subjects"
-        android:title="@string/navigation_subjects"
-        android:icon="@drawable/ic_palette_black"/>
-
-    <item
         android:id="@+id/action_notifications"
         android:title="@string/menu_notifications"
         android:icon="@drawable/ic_notifications_black"/>

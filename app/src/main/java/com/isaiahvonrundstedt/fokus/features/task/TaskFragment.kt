@@ -20,7 +20,6 @@ import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.shared.components.sheet.FirstRunBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_task.*
 
@@ -37,9 +36,6 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (PreferenceManager(context).isFirstRun)
-            FirstRunBottomSheet().invoke(childFragmentManager)
 
         adapter = TaskAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
@@ -80,9 +76,9 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
+                        Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
+                            Snackbar.LENGTH_SHORT).show()
                         if (PreferenceManager(context).soundEnabled) {
-                            Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
-                                Snackbar.LENGTH_SHORT).show()
                             val uri: Uri = PreferenceManager(requireContext()).let {
                                 if (it.customSoundEnabled)
                                     it.soundUri
@@ -100,7 +96,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                         putExtra(TaskEditor.extraSubject, t.subject)
                         putExtra(TaskEditor.extraAttachments, t.attachmentList.toArrayList())
                     }
-                    startEditorWithTransition(views, intent, TaskEditor.updateRequestCode)
+                    startActivityWithTransition(views, intent, TaskEditor.updateRequestCode)
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
@@ -120,16 +116,20 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
-            val task: Task = data?.getParcelableExtra(TaskEditor.extraTask)!!
-            val attachments: List<Attachment> = data.getParcelableArrayListExtra(TaskEditor.extraAttachments)!!
+        // Check the request code first if the data was from TaskEditor
+        // so that it doesn't crash when casting the Parcelable object
+        if (requestCode == TaskEditor.insertRequestCode
+                || requestCode == TaskEditor.updateRequestCode) {
 
-            // Perform an action on the database based on the
-            // requestCode
-            if (requestCode == TaskEditor.insertRequestCode) {
-                viewModel.insert(task, attachments)
-            } else if (requestCode == TaskEditor.updateRequestCode) {
-                viewModel.update(task, attachments)
+            if (resultCode == Activity.RESULT_OK) {
+                val task: Task? = data?.getParcelableExtra(TaskEditor.extraTask)
+                val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.extraAttachments)
+
+                task?.let {
+                    if (requestCode == TaskEditor.insertRequestCode)
+                        viewModel.insert(it, attachments ?: emptyList())
+                    else viewModel.update(it, attachments ?: emptyList())
+                }
             }
         }
     }

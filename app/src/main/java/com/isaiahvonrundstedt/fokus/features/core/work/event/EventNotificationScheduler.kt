@@ -19,7 +19,7 @@ class EventNotificationScheduler(private var context: Context, workerParameters:
     private var events = AppDatabase.getInstance(context)?.events()
 
     override suspend fun doWork(): Result {
-        val items = events?.fetchList()
+        val items = events?.fetch()
         val currentDateTime = DateTime.now()
 
         items?.forEach { event ->

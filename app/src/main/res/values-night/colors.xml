@@ -7,7 +7,7 @@
 
     <color name="colorWindowBackground">#080808</color>
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>
-    <color name="colorStatusBarBackground">@color/colorWindowBackground</color>
+    <color name="colorSystemBarBackground">@color/colorWindowBackground</color>
     <color name="colorPrimaryText">@color/colorOnSurface</color>
     <color name="colorSecondaryText">#808080</color>
 

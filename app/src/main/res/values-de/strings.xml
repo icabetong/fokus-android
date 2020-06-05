@@ -16,9 +16,6 @@
     <string name="navigation_events">Veranstaltungen</string>
     <string name="navigation_subjects">Themen</string>
 
-    <string name="first_run_bottom_sheet_title">Eins nach dem anderen</string>
-    <string name="first_run_bottom_sheet_message">Möglicherweise müssen Sie zuerst einen Betreff hinzufügen, um eine Aufgabe hinzufügen zu können</string>
-
     <string name="button_add_attachment">Anhang hinzufügen</string>
     <string name="button_new_task">Neue Aufgabe</string>
     <string name="button_new_event">Neue Veranstaltung</string>

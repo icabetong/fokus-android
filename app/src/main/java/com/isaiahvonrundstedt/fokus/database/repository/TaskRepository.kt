@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 
 class TaskRepository private constructor (app: Application) {
 

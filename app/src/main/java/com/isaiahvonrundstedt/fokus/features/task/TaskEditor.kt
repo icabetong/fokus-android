@@ -25,7 +25,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -39,8 +39,12 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     private var requestCode = 0
     private var task = Task()
 
+    private var subject: Subject? = null
+    private var subjectDialog: MaterialDialog? = null
+
     private val attachmentRequestCode = 32
     private val attachmentList = ArrayList<Attachment>()
+    private val adapter = SubjectListAdapter(this)
     private val subjectViewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
@@ -71,7 +75,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectViewModel.fetch()?.observe(this, Observer { items ->
-            adapter.setObservableItems(items)
+            adapter.submitList(items)
         })
 
         // the passed extras from the parent activity
@@ -95,8 +99,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
     }
 
-    private var adapter = SubjectListAdapter(this)
-    private var subjectDialog: MaterialDialog? = null
     override fun onStart() {
         super.onStart()
 
@@ -122,7 +124,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 title(R.string.dialog_select_subject_title)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
-                    startActivity(Intent(this@TaskEditor, SubjectActivity::class.java))
+                    startActivity(Intent(this@TaskEditor, SubjectFragment::class.java))
                 }
             }
         }
@@ -170,7 +172,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     }
 
     // Item selection callback for the subject dialog
-    private var subject: Subject? = null
     override fun onItemSelected(subject: Subject) {
         task.subjectID = subject.id
         this.subject = subject

@@ -11,12 +11,10 @@ import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.shared.components.menu.MenuAdapter
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectActivity
+import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.NavigationAdapter
 import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 
-class NavigationBottomSheet: BaseBottomSheet(),
-    MenuAdapter.MenuItemSelectionListener {
+class NavigationBottomSheet: BaseBottomSheet(), NavigationAdapter.NavigationListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,21 +27,17 @@ class NavigationBottomSheet: BaseBottomSheet(),
         menuTitleView.text = String.format(getString(R.string.hello),
             PreferenceManager(context).name)
 
-        val adapter =
-            MenuAdapter(
-                activity, this)
+        val adapter = NavigationAdapter(activity, this)
         adapter.setItems(R.menu.menu_main)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
     }
 
-    override fun onItemSelected(id: Int) {
+    override fun onNavigate(id: Int) {
         when (id) {
-            R.id.action_subjects -> startActivity(Intent(context, SubjectActivity::class.java))
             R.id.action_notifications -> startActivity(Intent(context, NotificationActivity::class.java))
             R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
         }
         this.dismiss()
     }
-
 }

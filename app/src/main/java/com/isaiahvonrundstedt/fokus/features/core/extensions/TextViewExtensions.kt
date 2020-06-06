@@ -35,7 +35,7 @@ fun TextView.removeStrikeThroughEffect() {
  *  Extension function used to add a compound drawable in the
  *  TextView at a specific position
  */
-fun TextView.setCompoundDrawableStart(drawable: Drawable?) {
+fun TextView.setCompoundDrawableAtStart(drawable: Drawable?) {
     this.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
 }
 
@@ -46,4 +46,12 @@ fun TextView.setCompoundDrawableStart(drawable: Drawable?) {
 fun TextView.getCompoundDrawableAtStart(): Drawable? {
     // Start, Top, End, Bottom
     return this.compoundDrawablesRelative[0]
+}
+
+/**
+ *  Extension function to remove the compound drawable
+ *  in the TextView at the specific position
+ */
+fun TextView.removeCompoundDrawableAtStart() {
+    this.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
 }

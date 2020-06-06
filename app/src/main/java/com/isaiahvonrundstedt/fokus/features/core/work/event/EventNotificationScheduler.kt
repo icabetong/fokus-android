@@ -13,10 +13,10 @@ import org.joda.time.DateTime
 // that is supposed to trigger at its due minus the interval
 // This only triggers when the user has changed the fokus interval
 // for tasks in the Settings
-class EventNotificationScheduler(private var context: Context, workerParameters: WorkerParameters)
+class EventNotificationScheduler(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var events = AppDatabase.getInstance(context)?.events()
+    private var events = AppDatabase.getInstance(applicationContext)?.events()
 
     override suspend fun doWork(): Result {
         val items = events?.fetch()
@@ -27,7 +27,7 @@ class EventNotificationScheduler(private var context: Context, workerParameters:
                 val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                     .setInputData(convertEventToData(event))
                     .build()
-                WorkManager.getInstance(context).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
+                WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
                     request)
             }
         }

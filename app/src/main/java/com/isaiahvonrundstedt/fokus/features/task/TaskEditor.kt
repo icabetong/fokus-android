@@ -11,9 +11,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -25,10 +27,17 @@ import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
+import kotlinx.android.synthetic.main.layout_editor_event.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
+import kotlinx.android.synthetic.main.layout_editor_task.actionButton
+import kotlinx.android.synthetic.main.layout_editor_task.clearButton
+import kotlinx.android.synthetic.main.layout_editor_task.nameEditText
+import kotlinx.android.synthetic.main.layout_editor_task.notesEditText
+import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
+import kotlinx.android.synthetic.main.layout_editor_task.subjectTextView
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
@@ -45,7 +54,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     private val attachmentRequestCode = 32
     private val attachmentList = ArrayList<Attachment>()
     private val adapter = SubjectListAdapter(this)
-    private val subjectViewModel: SubjectViewModel by lazy {
+    private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
 
@@ -74,7 +83,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             setTransitionName(dueDateTextView, TaskAdapter.transitionDateID + id)
         }
 
-        subjectViewModel.fetch()?.observe(this, Observer { items ->
+        viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
 
@@ -119,12 +128,13 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(this).show {
+            subjectDialog = MaterialDialog(this, BottomSheet()).show {
                 lifecycleOwner(this@TaskEditor)
                 title(R.string.dialog_select_subject_title)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
-                    startActivity(Intent(this@TaskEditor, SubjectFragment::class.java))
+                    startActivityForResult(Intent(this@TaskEditor,
+                        SubjectEditor::class.java), SubjectEditor.insertRequestCode)
                 }
             }
         }
@@ -140,6 +150,16 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                     PermissionManager.storageRequestCode)
         }
 
+        clearButton.setOnClickListener {
+            it.isVisible = false
+            this.task.subjectID = null
+            with(subjectTextView) {
+                removeCompoundDrawableAtStart()
+                setText(R.string.field_not_set)
+                setTextColorFromResource(R.color.colorSecondaryText)
+            }
+        }
+
         actionButton.setOnClickListener {
 
             // This three ifs checks if the user have entered the
@@ -148,13 +168,13 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             // attention to the field. Then return to stop the execution
             // of the code.
             if (nameEditText.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_task_empty_name)
+                createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
                 nameEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (task.dueDate == null) {
-                createSnackbar(rootLayout, R.string.feedback_task_empty_due_date)
+                createSnackbar(rootLayout, R.string.feedback_task_empty_due_date).show()
                 dueDateTextView.performClick()
                 return@setOnClickListener
             }
@@ -173,11 +193,12 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     // Item selection callback for the subject dialog
     override fun onItemSelected(subject: Subject) {
+        clearButton.isVisible = true
         task.subjectID = subject.id
         this.subject = subject
 
         ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-            subjectTextView.setCompoundDrawableStart(subject.tintDrawable(it))
+            subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
         }
         subjectTextView.text = subject.code
         subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
@@ -210,6 +231,12 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
             attachmentList.add(attachment)
             attachmentChipGroup.addView(buildChip(attachment), 0)
+        } else if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
+            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
+
+            subject?.let {
+                viewModel.insert(it)
+            }
         } else
             super.onActivityResult(requestCode, resultCode, data)
     }

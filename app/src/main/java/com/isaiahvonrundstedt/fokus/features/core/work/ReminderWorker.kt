@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit
 // This worker's function is to only show fokus
 // based on the frequency the user has selected; daily or every weekends
 // This will show a fokus for pending tasks.
-class ReminderWorker(private var context: Context, workerParameters: WorkerParameters)
+class ReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var database = AppDatabase.getInstance(context)
+    private var database = AppDatabase.getInstance(applicationContext)
     private val dataStore by lazy {
         NotificationRepository.getInstance(context.applicationContext as Application)
     }
@@ -31,8 +31,8 @@ class ReminderWorker(private var context: Context, workerParameters: WorkerParam
     private fun scheduleNextReminder() {
         Scheduler()
             .removePrevious(true)
-            .setTargetTime(PreferenceManager(context).reminderTime?.toDateTimeToday())
-            .schedule(context)
+            .setTargetTime(PreferenceManager(applicationContext).reminderTime?.toDateTimeToday())
+            .schedule(applicationContext)
     }
 
     override suspend fun doWork(): Result {
@@ -43,15 +43,15 @@ class ReminderWorker(private var context: Context, workerParameters: WorkerParam
         var notification: Notification? = null
         if (taskSize > 0) {
             notification = Notification().apply {
-                title = String.format(context.getString(R.string.notification_pending_tasks_title),
+                title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
                     taskSize)
-                content = context.getString(R.string.notification_pending_tasks_summary)
+                content = applicationContext.getString(R.string.notification_pending_tasks_summary)
                 type = Notification.typeGeneric
                 dateTimeTriggered = DateTime.now()
             }
         }
 
-        if (PreferenceManager(context).reminderFrequency == PreferenceManager.durationWeekends
+        if (PreferenceManager(applicationContext).reminderFrequency == PreferenceManager.durationWeekends
             && !(currentTime.dayOfWeek == DateTimeConstants.SATURDAY
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()

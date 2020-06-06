@@ -136,18 +136,41 @@
                     android:text="@string/field_subject"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <TextView
-                    android:id="@+id/subjectTextView"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:drawablePadding="16dp"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/subjectTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:drawablePadding="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageButton
+                        android:id="@+id/clearButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/shape_clear_button_holder"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/subjectTextView"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

@@ -10,6 +10,7 @@
     <color name="colorOnError">#ffffff</color>
 
     <color name="colorEditorSurface">#eeeeee</color>
+    <color name="colorEditorRemoveButton">#bcbcbc</color>
 
     <color name="colorWindowBackground">#ffffff</color>
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>

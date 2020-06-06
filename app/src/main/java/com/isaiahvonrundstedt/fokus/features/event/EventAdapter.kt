@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +39,7 @@ class EventAdapter(private var actionListener: ActionListener)
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val tagView: ImageView = itemView.findViewById(R.id.tagView)
         private val locationView: TextView = itemView.findViewById(R.id.locationView)
+        private val subjectView: TextView = itemView.findViewById(R.id.subjectNameView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
         private val dayView: TextView = itemView.findViewById(R.id.dayView)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
@@ -57,7 +59,9 @@ class EventAdapter(private var actionListener: ActionListener)
                     nameView.addStrikeThroughEffect()
             }
 
+            subjectView.isVisible = resource.subject != null
             resource.subject?.let {
+                subjectView.text = it.code
                 tagView.setImageDrawable(it.tintDrawable(tagView.drawable))
             }
             rootView.setOnClickListener {

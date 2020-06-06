@@ -77,12 +77,11 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.event)
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_event_removed,
-                        Snackbar.LENGTH_SHORT)
-                    snackbar.setAction(R.string.button_undo) {
-                        viewModel.insert(t.event)
+
+                    createSnackbar(recyclerView, R.string.feedback_event_removed).run {
+                        setAction(R.string.button_undo) { viewModel.insert(t.event) }
+                        show()
                     }
-                    snackbar.show()
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> { }
             }

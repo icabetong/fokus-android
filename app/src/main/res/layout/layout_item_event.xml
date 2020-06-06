@@ -67,6 +67,14 @@
             app:layout_constraintStart_toEndOf="@id/scheduleLayout">
 
             <TextView
+                android:id="@+id/subjectNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+                tools:text="Intech 1100"/>
+
+            <TextView
                 android:id="@+id/nameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

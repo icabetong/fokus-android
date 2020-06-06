@@ -5,6 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
 // for the event schedule minus the interval.
-class EventNotificationWorker(private var context: Context, workerParameters: WorkerParameters)
+class EventNotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -25,12 +26,12 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
         val event = convertDataToEvent(inputData)
         val notification = Notification().apply {
             title = event.name
-            content = event.formatSchedule(context)
+            content = event.formatSchedule(applicationContext)
             type = Notification.typeEventReminder
             data = event.eventID
         }
 
-        when (PreferenceManager(context).eventReminderInterval) {
+        when (PreferenceManager(applicationContext).eventReminderInterval) {
             PreferenceManager.eventReminderIntervalQuarter -> event.schedule = event.schedule!!.minusMinutes(15)
             PreferenceManager.eventReminderIntervalHalf -> event.schedule = event.schedule!!.minusMinutes(30)
             PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
@@ -43,7 +44,7 @@ class EventNotificationWorker(private var context: Context, workerParameters: Wo
         }
         notificationRequest.setInputData(convertNotificationToData(notification))
 
-        WorkManager.getInstance(context).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
+        WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
             notificationRequest.build())
 
         return Result.success()

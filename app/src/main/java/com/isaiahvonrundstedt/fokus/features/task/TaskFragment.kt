@@ -76,8 +76,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
-                        Snackbar.make(recyclerView, R.string.feedback_task_marked_as_finished,
-                            Snackbar.LENGTH_SHORT).show()
+                        createSnackbar(recyclerView, R.string.feedback_task_marked_as_finished).show()
                         if (PreferenceManager(context).soundEnabled) {
                             val uri: Uri = PreferenceManager(requireContext()).let {
                                 if (it.customSoundEnabled)
@@ -104,10 +103,10 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_task_removed,
-                        Snackbar.LENGTH_SHORT)
-                    snackbar.setAction(R.string.button_undo) { viewModel.insert(t.task, t.attachmentList) }
-                    snackbar.show()
+                     createSnackbar(recyclerView, R.string.feedback_task_removed).run {
+                        setAction(R.string.button_undo) { viewModel.insert(t.task, t.attachmentList) }
+                        show()
+                    }
                 }
             }
         }

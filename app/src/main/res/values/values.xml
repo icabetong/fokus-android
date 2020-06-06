@@ -112,7 +112,7 @@
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">

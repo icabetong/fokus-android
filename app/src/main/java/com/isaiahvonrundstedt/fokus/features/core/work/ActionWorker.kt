@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 class ActionWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var tasks = AppDatabase.getInstance(context)?.tasks()
+    private var tasks = AppDatabase.getInstance(applicationContext)?.tasks()
 
     override suspend fun doWork(): Result {
         val action = inputData.getString(NotificationActionService.extraAction)

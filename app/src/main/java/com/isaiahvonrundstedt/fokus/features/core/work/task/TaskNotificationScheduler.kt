@@ -12,10 +12,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 // that is supposed to trigger at its due minus the interval
 // This only triggers when the user has changed the fokus interval
 // for tasks in the Settings
-class TaskNotificationScheduler(private var context: Context, workerParameters: WorkerParameters)
+class TaskNotificationScheduler(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var tasks = AppDatabase.getInstance(context)?.tasks()
+    private var tasks = AppDatabase.getInstance(applicationContext)?.tasks()
 
     override suspend fun doWork(): Result {
         val taskList = tasks?.fetch()
@@ -23,7 +23,7 @@ class TaskNotificationScheduler(private var context: Context, workerParameters: 
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(convertTaskToData(task))
                 .build()
-            WorkManager.getInstance(context).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
+            WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request)
         }
 

@@ -7,13 +7,14 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.extensions.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
@@ -67,7 +68,7 @@ class SubjectEditor: BaseEditor() {
             }
 
             val drawable = tagView.getCompoundDrawableAtStart()?.let { subject.tintDrawable(it) }
-            tagView.setCompoundDrawableStart(drawable)
+            tagView.setCompoundDrawableAtStart(drawable)
             tagView.text = getString(subject.tag.getNameResource())
 
             startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
@@ -79,7 +80,7 @@ class SubjectEditor: BaseEditor() {
         }
 
         daysOfWeekTextView.setOnClickListener { it ->
-            MaterialDialog(it.context).show {
+            MaterialDialog(it.context, BottomSheet()).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.days_of_week_dialog_title)
                 listItemsMultiChoice(R.array.days_of_week_items, initialSelection = selectedIndices)
@@ -149,7 +150,7 @@ class SubjectEditor: BaseEditor() {
         }
 
         tagView.setOnClickListener {
-            MaterialDialog(it.context).show {
+            MaterialDialog(it.context, BottomSheet()).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_select_color_tag)
                 colorChooser(colors!!) { _, color ->
@@ -159,7 +160,7 @@ class SubjectEditor: BaseEditor() {
                         .getCompoundDrawableAtStart()?.let { drawable ->
                             subject.tintDrawable(drawable)
                         }
-                    this@SubjectEditor.tagView.setCompoundDrawableStart(tagDrawable)
+                    this@SubjectEditor.tagView.setCompoundDrawableAtStart(tagDrawable)
                     if (it is AppCompatTextView) {
                         it.text = getString(subject.tag.getNameResource())
                         it.setTextColorFromResource(R.color.colorPrimaryText)
@@ -176,25 +177,25 @@ class SubjectEditor: BaseEditor() {
             // the corresponding field then return to stop
             // the execution of the code
             if (codeEditText.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_name)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
                 codeEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (descriptionEditText.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_description)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_description).show()
                 descriptionEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (subject.startTime == null) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_start_time)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_start_time).show()
                 startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             if (subject.endTime == null) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_end_time)
+                createSnackbar(rootLayout, R.string.feedback_subject_empty_end_time).show()
                 endTimeTextView.performClick()
                 return@setOnClickListener
             }

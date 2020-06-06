@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
 // for the task minus the interval.
-class TaskNotificationWorker(private var context: Context, workerParameters: WorkerParameters)
+class TaskNotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -29,13 +29,13 @@ class TaskNotificationWorker(private var context: Context, workerParameters: Wor
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at
         val notification = Notification().apply {
             title = task.name
-            content = String.format(context.getString(resID),
+            content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
             type = Notification.typeTaskReminder
             data = task.taskID
         }
 
-        when (PreferenceManager(context).taskReminderInterval) {
+        when (PreferenceManager(applicationContext).taskReminderInterval) {
             PreferenceManager.taskReminderIntervalHour -> task.dueDate = task.dueDate!!.minusHours(1)
             PreferenceManager.taskReminderIntervalThreeHours -> task.dueDate = task.dueDate!!.minusHours(3)
             PreferenceManager.taskReminderIntervalDay -> task.dueDate = task.dueDate!!.minusHours(24)
@@ -49,7 +49,7 @@ class TaskNotificationWorker(private var context: Context, workerParameters: Wor
         }
         notificationRequest.setInputData(convertNotificationToData(notification))
 
-        WorkManager.getInstance(context).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
+        WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
             notificationRequest.build())
 
         return Result.success()

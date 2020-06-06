@@ -71,12 +71,11 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // then show a SnackBar feedback
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_subject_removed,
-                        Snackbar.LENGTH_SHORT)
-                    snackbar.setAction(R.string.button_undo) {
-                        viewModel.insert(t)
+
+                    createSnackbar(recyclerView, R.string.feedback_subject_removed).run {
+                        setAction(R.string.button_undo) { viewModel.insert(t) }
+                        show()
                     }
-                    snackbar.show()
                 }
                 BaseAdapter.ActionListener.Action.MODIFY -> {}
             }

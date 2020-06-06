@@ -7,14 +7,17 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.removeCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
@@ -34,7 +37,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     private var subjectDialog: MaterialDialog? = null
 
     private val adapter = SubjectListAdapter(this)
-    private val subjectViewModel: SubjectViewModel by lazy {
+    private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
 
@@ -74,7 +77,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             window.decorView.rootView.clearFocus()
         }
 
-        subjectViewModel.fetch()?.observe(this, Observer { items ->
+        viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
     }
@@ -100,13 +103,24 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(it.context).show {
+            subjectDialog = MaterialDialog(this, BottomSheet()).show {
                 lifecycleOwner(this@EventEditor)
                 title(R.string.dialog_select_subject_title)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
-                    startActivity(Intent(this@EventEditor, SubjectEditor::class.java))
+                    startActivityForResult(Intent(this@EventEditor,
+                        SubjectEditor::class.java), SubjectEditor.insertRequestCode)
                 }
+            }
+        }
+
+        clearButton.setOnClickListener {
+            it.isVisible = false
+            event.subjectID = null
+            with(subjectTextView) {
+                removeCompoundDrawableAtStart()
+                setText(R.string.field_not_set)
+                setTextColorFromResource(R.color.colorSecondaryText)
             }
         }
 
@@ -116,19 +130,19 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.
             if (nameEditText.text.isNullOrBlank()) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_name)
+                createSnackbar(rootLayout, R.string.feedback_event_empty_name).show()
                 nameEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (locationEditText.text.isNullOrBlank()) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_location)
+                createSnackbar(rootLayout, R.string.feedback_event_empty_location).show()
                 locationEditText.requestFocus()
                 return@setOnClickListener
             }
 
             if (event.schedule == null) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_schedule)
+                createSnackbar(rootLayout, R.string.feedback_event_empty_schedule).show()
                 scheduleTextView.performClick()
                 return@setOnClickListener
             }
@@ -146,15 +160,27 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     }
 
     override fun onItemSelected(subject: Subject) {
+        clearButton.isVisible = true
         event.subjectID = subject.id
         this.subject = subject
 
         ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-            subjectTextView.setCompoundDrawableStart(subject.tintDrawable(it))
+            subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
         }
         subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectTextView.text = subject.code
         subjectDialog?.dismiss()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
+            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
+
+            subject?.let {
+                viewModel.insert(it)
+            }
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

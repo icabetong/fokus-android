@@ -115,13 +115,13 @@
     <string name="settings_remind_me_in_time_of_day">Remind me at this time</string>
     <string name="settings_when_nearing_due_title">When a task is nearing due</string>
     <string name="settings_when_nearing_due_summary">Show notifications for tasks that are nearing its deadline</string>
-    <string name="settings_task_reminders">Task reminders</string>
+    <string name="settings_task_reminders">Task reminder interval</string>
     <string name="settings_task_reminders_item_hour">1 hour before</string>
     <string name="settings_task_reminders_item_three_hours">3 hours before</string>
     <string name="settings_task_reminders_item_day">1 day before</string>
     <string name="settings_incoming_events_title">Incoming events</string>
     <string name="settings_incoming_events_summary">Show notifications about incoming events this day</string>
-    <string name="settings_event_reminders">Event reminders</string>
+    <string name="settings_event_reminders">Event reminder interval</string>
     <string name="settings_event_reminders_item_quarter_hour">15 minutes before</string>
     <string name="settings_event_reminders_item_half_hour">30 minutes before</string>
     <string name="settings_event_reminders_item_hour">1 hour before</string>
@@ -145,12 +145,13 @@
     <string name="tag_color_lavender">Lavender</string>
     <string name="tag_color_graphite">Graphite</string>
 
-    <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
-    <string name="notification_pending_tasks_summary">It might be worth to take a look</string>
-
+    <!-- Notifications -->
     <string name="notification_channel_generic">Generic</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
+
+    <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
+    <string name="notification_pending_tasks_summary">It might be worth to take a look</string>
 
     <string name="shortcut_new_task">@string/button_new_task</string>
     <string name="shortcut_new_event">@string/button_new_event</string>

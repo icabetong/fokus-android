@@ -44,8 +44,8 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
         }
         notificationRequest.setInputData(convertNotificationToData(notification))
 
-        WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-            notificationRequest.build())
+        WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID,
+            ExistingWorkPolicy.REPLACE, notificationRequest.build())
 
         return Result.success()
     }

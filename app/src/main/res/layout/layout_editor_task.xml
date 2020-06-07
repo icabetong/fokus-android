@@ -83,44 +83,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
-                    android:text="@string/field_subject"
+                    android:text="@string/field_priority"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <Switch
+                    android:id="@+id/prioritySwitch"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_mark_as_important"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
-                    <TextView
-                        android:id="@+id/subjectTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="48dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:text="@string/field_not_set"
-                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                        android:drawablePadding="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <ImageButton
-                        android:id="@+id/clearButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@null"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/shape_clear_button_holder"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/subjectTextView"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/helper_this_is_important"
+                    android:textColor="@color/colorSecondaryText"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -177,6 +159,60 @@
                         app:closeIconEnabled="false" />
 
                 </com.google.android.material.chip.ChipGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/subjectTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:drawablePadding="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageButton
+                        android:id="@+id/clearButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/shape_clear_button_holder"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/subjectTextView"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

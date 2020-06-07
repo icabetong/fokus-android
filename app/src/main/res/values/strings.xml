@@ -51,9 +51,9 @@
     <string name="dialog_select_start_time">Select Start Time</string>
     <string name="dialog_select_end_time">Select End Time</string>
     <string name="dialog_select_color_tag">Select color tag</string>
-    <string name="dialog_select_subject_title">Select subject</string>
-    <string name="dialog_select_subject_summary">Specify which subject requires this task to be done</string>
+    <string name="dialog_select_subject">Select subject</string>
     <string name="dialog_select_notification_interval">Select notification interval</string>
+    <string name="dialog_select_priority">Select priority</string>
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
@@ -73,6 +73,8 @@
     <string name="field_attachments">Attachments</string>
     <string name="field_class_time">Class Time</string>
     <string name="field_color_tag">Color Tag</string>
+    <string name="field_priority">Priority</string>
+    <string name="field_mark_as_important">Mark as Important</string>
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
@@ -109,6 +111,8 @@
     <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
     <string name="settings_select_sound">Select sound file</string>
 
+    <string name="settings_persistent_notification_icon_title">Persistent Notification Icon</string>
+    <string name="settings_persistent_notification_icon_summary">Enable persistent notification icon in high priority tasks</string>
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
     <string name="settings_reminder_frequency_item_weekends">Weekends</string>
@@ -144,6 +148,9 @@
     <string name="tag_color_mint">Mint</string>
     <string name="tag_color_lavender">Lavender</string>
     <string name="tag_color_graphite">Graphite</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Marking this as important means that it will show a persistent notification at your notification shade.</string>
 
     <!-- Notifications -->
     <string name="notification_channel_generic">Generic</string>

@@ -20,8 +20,10 @@ class NotificationActionService: IntentService(name) {
     companion object {
         const val name = "notificationActionService"
         const val extraTaskID = "taskID"
+        const val extraIsPersistent = "isPersistent"
         const val extraAction = "action"
-        const val actionFinished = "finished"
+
+        const val action = "finished"
 
         const val finishID = 28
     }
@@ -31,14 +33,17 @@ class NotificationActionService: IntentService(name) {
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        manager?.cancel(BaseWorker.taskNotificationID)
-
         val taskID = intent?.getStringExtra(extraTaskID)
+        val isPersistent = intent?.getBooleanExtra(extraIsPersistent, false) ?: false
+
+        if (isPersistent)
+            manager?.cancel(taskID, BaseWorker.taskNotificationID)
+        else manager?.cancel(BaseWorker.taskNotificationTag, BaseWorker.taskNotificationID)
 
         val data = Data.Builder()
         data.putString(extraTaskID, taskID)
-        if (intent?.action == actionFinished)
-            data.putString(extraAction, actionFinished)
+        if (intent?.action == action)
+            data.putString(extraAction, action)
 
         val workRequest = OneTimeWorkRequest.Builder(ActionWorker::class.java)
             .setInputData(data.build())

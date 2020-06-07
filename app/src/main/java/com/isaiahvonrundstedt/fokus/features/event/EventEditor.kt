@@ -62,21 +62,6 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             setTransitionName(locationEditText, EventAdapter.transitionLocation + event.eventID)
         }
 
-        // The passed extras will be shown in their
-        // corresponding fields
-        if (requestCode == updateRequestCode) {
-            nameEditText.setText(event.name)
-            notesEditText.setText(event.notes)
-            locationEditText.setText(event.location)
-            scheduleTextView.text = event.formatSchedule(this)
-            subjectTextView.text = subject!!.code
-
-            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
-
-            window.decorView.rootView.clearFocus()
-        }
-
         viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
@@ -105,7 +90,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         subjectTextView.setOnClickListener {
             subjectDialog = MaterialDialog(this, BottomSheet()).show {
                 lifecycleOwner(this@EventEditor)
-                title(R.string.dialog_select_subject_title)
+                title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
                     startActivityForResult(Intent(this@EventEditor,
@@ -156,6 +141,34 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             data.putExtra(extraEvent, event)
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // The passed extras will be shown in their
+        // corresponding fields
+        if (requestCode == updateRequestCode) {
+            with(event) {
+                nameEditText.setText(name)
+                notesEditText.setText(notes)
+                locationEditText.setText(location)
+                scheduleTextView.text = formatSchedule(this@EventEditor)
+            }
+
+            subject?.let {
+                with(subjectTextView) {
+                    text = it.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
+                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
+                }
+            }
+
+            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
+
+            window.decorView.rootView.clearFocus()
         }
     }
 

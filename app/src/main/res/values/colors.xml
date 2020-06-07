@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0f9d58</color>
-    <color name="colorPrimaryDark">#006d2d</color>
-    <color name="colorPrimaryLight">#55cf86</color>
-    <color name="colorOnPrimary">#000000</color>
+    <color name="colorPrimary">#0277bd</color>
+    <color name="colorPrimaryDark">#004c8c</color>
+    <color name="colorPrimaryLight">#58a5f0</color>
+    <color name="colorOnPrimary">#ffffff</color>
     <color name="colorSurface">#ffffff</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorError">#B00020</color>

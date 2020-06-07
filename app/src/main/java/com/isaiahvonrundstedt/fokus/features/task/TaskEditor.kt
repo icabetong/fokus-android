@@ -30,7 +30,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
-import kotlinx.android.synthetic.main.layout_editor_event.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_editor_task.actionButton
 import kotlinx.android.synthetic.main.layout_editor_task.clearButton
@@ -86,30 +85,12 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
-
-        // the passed extras from the parent activity
-        // will be shown in their respective fields.
-        if (requestCode == updateRequestCode) {
-            nameEditText.setText(task.name)
-            notesEditText.setText(task.notes)
-            dueDateTextView.text = task.formatDueDate(this)
-            dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
-
-            subject?.let {
-                subjectTextView.text = it.code
-                subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            }
-
-            attachmentList.forEach { attachment ->
-                attachmentChipGroup.addView(buildChip(attachment), 0)
-            }
-
-            window.decorView.rootView.clearFocus()
-        }
     }
 
     override fun onStart() {
         super.onStart()
+
+        prioritySwitch.changeTextColorWhenChecked()
 
         dueDateTextView.setOnClickListener { v ->
             MaterialDialog(this).show {
@@ -130,7 +111,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         subjectTextView.setOnClickListener {
             subjectDialog = MaterialDialog(this, BottomSheet()).show {
                 lifecycleOwner(this@TaskEditor)
-                title(R.string.dialog_select_subject_title)
+                title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
                 positiveButton(R.string.button_new_subject) {
                     startActivityForResult(Intent(this@TaskEditor,
@@ -181,6 +162,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
             task.name = nameEditText.text.toString()
             task.notes = notesEditText.text.toString()
+            task.isImportant = prioritySwitch.isChecked
 
             // Send the data back to the parent activity
             val data = Intent()
@@ -188,6 +170,37 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             data.putParcelableArrayListExtra(extraAttachments, attachmentList.toArrayList())
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // the passed extras from the parent activity
+        // will be shown in their respective fields.
+        if (requestCode == updateRequestCode) {
+            with(task) {
+                nameEditText.setText(name)
+                notesEditText.setText(notes)
+                dueDateTextView.text = formatDueDate(this@TaskEditor)
+                dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                prioritySwitch.isChecked = isImportant
+            }
+
+            subject?.let {
+                with(subjectTextView) {
+                    text = it.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
+                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
+                }
+            }
+
+            attachmentList.forEach { attachment ->
+                attachmentChipGroup.addView(buildChip(attachment), 0)
+            }
+
+            window.decorView.rootView.clearFocus()
         }
     }
 

@@ -1,6 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Application
+import android.app.NotificationManager
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
@@ -26,7 +29,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
-        if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isBeforeNow) {
+        if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isAfterNow) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
@@ -45,10 +48,16 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.update(task, attachmentList)
 
+        // If we have a persistent notification,
+        // we should dismiss it when the user updates
+        // the task to finish
+        if (task.isFinished && task.isImportant)
+            manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
+
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isBeforeNow) {
+        if (PreferenceManager(app).taskReminder && !task.isFinished && task.dueDate!!.isAfterNow) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -56,5 +65,9 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+    }
+
+    private val manager by lazy {
+        app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
     }
 }

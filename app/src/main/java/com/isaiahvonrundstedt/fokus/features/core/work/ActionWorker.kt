@@ -19,7 +19,7 @@ class ActionWorker(context: Context, workerParameters: WorkerParameters)
         if (action.isNullOrBlank() || taskID.isNullOrBlank())
             return Result.success()
 
-        if (action == NotificationActionService.actionFinished)
+        if (action == NotificationActionService.action)
             tasks?.setFinished(taskID, 1)
 
         return Result.success()

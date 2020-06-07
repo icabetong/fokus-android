@@ -11,11 +11,11 @@ import com.google.android.material.snackbar.Snackbar
 abstract class BaseFragment: Fragment() {
 
     protected fun startActivityWithTransition(views: Map<String, View>, intent: Intent, requestCode: Int) {
-        val list = views.mapNotNull {
+        val sharedElements = views.mapNotNull {
             Pair.create(it.value, it.key)
         }.toTypedArray()
 
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), *list)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), *sharedElements)
         startActivityForResult(intent, requestCode, options.toBundle())
     }
 
@@ -23,7 +23,4 @@ abstract class BaseFragment: Fragment() {
         return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
     }
 
-    companion object {
-        const val transition = "shared_element_end_root"
-    }
 }

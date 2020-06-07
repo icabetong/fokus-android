@@ -23,7 +23,9 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters)
         notification.dateTimeTriggered = DateTime.now()
 
         dataStore.insert(notification)
-        sendNotification(notification)
+        if (notification.isPersistent)
+            sendNotification(notification, notification.data)
+        else sendNotification(notification)
 
         return Result.success()
     }

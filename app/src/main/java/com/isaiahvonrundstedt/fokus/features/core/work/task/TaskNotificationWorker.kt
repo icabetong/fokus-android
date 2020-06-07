@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.work.task
 
 import android.content.Context
+import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -23,6 +24,7 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
     : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
+
         val currentTime = DateTime.now()
 
         val task = convertDataToTask(inputData)
@@ -32,7 +34,17 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
             content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
             type = Notification.typeTaskReminder
+            isPersistent = task.isImportant
             data = task.taskID
+        }
+
+        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+        notificationRequest.setInputData(convertNotificationToData(notification))
+
+        if (notification.isPersistent) {
+            WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID,
+                ExistingWorkPolicy.REPLACE, notificationRequest.build())
+            return Result.success()
         }
 
         when (PreferenceManager(applicationContext).taskReminderInterval) {
@@ -41,16 +53,14 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
             PreferenceManager.taskReminderIntervalDay -> task.dueDate = task.dueDate!!.minusHours(24)
         }
 
-        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         if (currentTime.isBefore(task.dueDate!!)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 task.dueDate!!.toDateTime(DateTimeZone.UTC))
             notificationRequest.setInitialDelay(delay.standardMinutes, TimeUnit.MINUTES)
         }
-        notificationRequest.setInputData(convertNotificationToData(notification))
 
-        WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
-            notificationRequest.build())
+        WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID,
+            ExistingWorkPolicy.REPLACE, notificationRequest.build())
 
         return Result.success()
     }

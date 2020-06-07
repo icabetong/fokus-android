@@ -9,6 +9,7 @@ import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -24,15 +25,18 @@ import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
-abstract class BaseWorker(private var context: Context, workerParameters: WorkerParameters)
+abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {
 
     companion object {
         const val eventNotificationID = 14
+        const val eventNotificationTag = "com:isaiahvonrundstedt:fokus:event"
         const val eventNotificationChannelID = "eventChannelID"
         const val taskNotificationID = 27
+        const val taskNotificationTag = "com:isaiahvonrundstedt:fokus:task"
         const val taskNotificationChannelID = "taskChannelID"
         const val genericNotificationID = 38
+        const val genericNotificationTag = "com:isaiahvonrundstedt:fokus:generic"
         const val genericNotificationChannelID = "genericChannelID"
 
         private const val extraNotificationID = "id"
@@ -40,12 +44,14 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         private const val extraNotificationContent = "content"
         private const val extraNotificationType = "type"
         private const val extraNotificationData = "data"
+        private const val extraNotificationIsPersistent = "isPersistent"
 
         private const val extraTaskID = "taskID"
         private const val extraTaskName = "name"
         private const val extraTaskNotes = "notes"
         private const val extraTaskSubjectID = "subjectID"
         private const val extraTaskDue = "due"
+        private const val extraTaskIsImportant = "isImportant"
 
         private const val extraEventID = "eventID"
         private const val extraEventName = "name"
@@ -60,6 +66,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 putString(extraNotificationContent, notification.content)
                 putString(extraNotificationData, notification.data)
                 putInt(extraNotificationType, notification.type)
+                putBoolean(extraNotificationIsPersistent, notification.isPersistent)
             }.build()
         }
 
@@ -70,6 +77,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 putString(extraTaskNotes, task.notes)
                 putString(extraTaskSubjectID, task.subjectID)
                 putString(extraTaskDue, DateTimeConverter.fromDateTime(task.dueDate!!))
+                putBoolean(extraTaskIsImportant, task.isImportant)
             }.build()
         }
 
@@ -90,6 +98,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 content = workerData.getString(extraNotificationContent)
                 data = workerData.getString(extraNotificationData)
                 type = workerData.getInt(extraNotificationType, Notification.typeGeneric)
+                isPersistent = workerData.getBoolean(extraNotificationIsPersistent, false)
             }
         }
 
@@ -99,13 +108,14 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 name = workerData.getString(extraTaskName)
                 notes = workerData.getString(extraTaskNotes)
                 subjectID = workerData.getString(extraTaskSubjectID)
+                isImportant = workerData.getBoolean(extraTaskIsImportant, false)
                 dueDate = DateTimeConverter.toDateTime(workerData.getString(extraTaskDue)!!)
             }
         }
 
         fun convertDataToEvent(workerData: Data): Event {
             return Event().apply {
-                eventID = workerData.getString(extraEventID)!!
+                eventID = workerData.getString(extraTaskID)!!
                 name = workerData.getString(extraEventName)
                 notes = workerData.getString(extraEventNotes)
                 location = workerData.getString(extraEventLocation)
@@ -114,17 +124,29 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         }
     }
 
-    protected fun sendNotification(notification: Notification) {
+    protected fun sendNotification(notification: Notification, @Nullable tag: String? = null) {
         createNotificationChannel(notification.type)
-        if (notification.type == Notification.typeTaskReminder)
-            manager.notify(taskNotificationID, createTaskNotification(notification))
-        else if (notification.type == Notification.typeEventReminder)
-            manager.notify(eventNotificationID, createNotification(notification))
-        else manager.notify(genericNotificationID, createNotification(notification))
+        if (notification.type == Notification.typeTaskReminder) {
+            val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
+                Intent(applicationContext, NotificationActionService::class.java).apply {
+                    putExtra(NotificationActionService.extraTaskID, notification.data)
+                    putExtra(NotificationActionService.extraIsPersistent, notification.isPersistent)
+                    action = NotificationActionService.action
+                }, PendingIntent.FLAG_UPDATE_CURRENT)
+
+           manager.notify(tag ?: taskNotificationTag, taskNotificationID,
+                createNotification(notification, taskNotificationChannelID,
+                    NotificationCompat.Action(R.drawable.ic_check_black,
+                        applicationContext.getString(R.string.button_mark_as_finished), intent)))
+        } else if (notification.type == Notification.typeEventReminder)
+            manager.notify(tag ?: eventNotificationTag, eventNotificationID,
+                createNotification(notification, eventNotificationChannelID))
+        else manager.notify(tag ?: genericNotificationTag, genericNotificationID,
+            createNotification(notification, genericNotificationChannelID))
     }
 
     private fun createNotificationChannel(type: Int) {
-        with(NotificationManagerCompat.from(context)) {
+        with(NotificationManagerCompat.from(applicationContext)) {
             val id = when (type) {
                 Notification.typeTaskReminder -> taskNotificationChannelID
                 Notification.typeEventReminder -> eventNotificationChannelID
@@ -143,7 +165,7 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
             if (getNotificationChannel(id) == null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                     manager.createNotificationChannel(
-                        NotificationChannel(id, context.getString(resID),
+                        NotificationChannel(id, applicationContext.getString(resID),
                             NotificationManager.IMPORTANCE_HIGH).apply {
                                 setSound(notificationSoundUri, attributes)
                             })
@@ -151,37 +173,18 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
         }
     }
 
-    private fun createTaskNotification(notification: Notification): android.app.Notification {
-        return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
-            setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_brand_black)
-            setContentIntent(contentIntent)
-            setContentTitle(notification.title)
-            setContentText(notification.content)
-            color = ContextCompat.getColor(context, R.color.colorPrimary)
-            addAction(R.drawable.ic_check_white, context.getString(R.string.button_mark_as_finished),
-                createPendingIntent(NotificationActionService.finishID, NotificationActionService.actionFinished,
-                    NotificationActionService.extraTaskID, notification.data!!))
-        }.build()
-    }
-
-    private fun createNotification(notification: Notification?): android.app.Notification {
-        return NotificationCompat.Builder(context, taskNotificationChannelID).apply {
+    private fun createNotification(notification: Notification?, id: String,
+                                   @Nullable action: NotificationCompat.Action? = null): android.app.Notification {
+        return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
             setSmallIcon(R.drawable.ic_brand_black)
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
             setContentText(notification?.content)
-            color = ContextCompat.getColor(context, R.color.colorPrimary)
+            setOngoing(notification?.isPersistent == true)
+            addAction(action)
+            color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
         }.build()
-    }
-
-    private fun createPendingIntent(id: Int, action: String, extra: String, data: String): PendingIntent {
-        return PendingIntent.getService(context, id,
-            Intent(context, NotificationActionService::class.java).apply {
-                setAction(action)
-                putExtra(extra, data)
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private val manager by lazy {
@@ -190,8 +193,8 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
 
     private val contentIntent: PendingIntent
         get() {
-            return PendingIntent.getActivity(context, 0,
-                Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+            return PendingIntent.getActivity(applicationContext, 0,
+                Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
     private val notificationSoundUri: Uri
@@ -201,4 +204,5 @@ abstract class BaseWorker(private var context: Context, workerParameters: Worker
                 else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             }
         }
+
 }

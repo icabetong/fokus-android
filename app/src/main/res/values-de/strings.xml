@@ -47,9 +47,9 @@
     <string name="dialog_select_start_time">Startzeit auswählen</string>
     <string name="dialog_select_end_time">Endzeit auswählen</string>
     <string name="dialog_select_color_tag">Farb-Tag auswählen</string>
-    <string name="dialog_select_subject_title">Thema auswählen</string>
-    <string name="dialog_select_subject_summary">Geben Sie an, zu welchem Thema diese Aufgabe durchgeführt werden muss</string>
+    <string name="dialog_select_subject">Thema auswählen</string>
     <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
+    <string name="dialog_select_priority">Priorität auswählen</string>
     <string name="dialog_choose_theme">Thema wählen</string>
     <string name="dialog_your_name_title">Wie sollen wir Sie nennen?</string>
     <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
@@ -69,6 +69,8 @@
     <string name="field_attachments">Anhänge</string>
     <string name="field_class_time">Unterrichtszeit</string>
     <string name="field_color_tag">Farb-Tag</string>
+    <string name="field_priority">Priorität</string>
+    <string name="field_mark_as_important">Als wichtig markieren</string>
     <string name="field_not_set">Nicht gesetzt</string>
 
     <string name="feedback_subject_removed">Betreff entfernt</string>
@@ -104,6 +106,8 @@
     <string name="settings_custom_notification_sound_title">Benutzerdefinierten Ton verwenden</string>
     <string name="settings_select_sound">Sounddatei auswählen</string>
 
+    <string name="settings_persistent_notification_icon_title">Symbol für anhaltende Benachrichtigung</string>
+    <string name="settings_persistent_notification_icon_summary">Aktivieren des Symbols für anhaltende Benachrichtigung bei Aufgaben mit hoher Priorität</string>
     <string name="settings_reminder_frequency_title">Häufigkeit von Erinnerungen</string>
     <string name="settings_reminder_frequency_item_everyday">Täglich</string>
     <string name="settings_reminder_frequency_item_weekends">Wochenenden</string>
@@ -140,6 +144,8 @@
     <string name="tag_color_lavender">Lavendel</string>
     <string name="tag_color_graphite">Graphit</string>
 
+    <string name="helper_this_is_important">Wenn Sie dies als wichtig kennzeichnen, bedeutet dies, dass es eine anhaltende Benachrichtigung im Schatten Ihrer Benachrichtigung anzeigt.</string>
+    
     <string name="notification_channel_generic">Generisch</string>
     <string name="notification_channel_task_reminders">Aufgaben-Erinnerungen</string>
     <string name="notification_channel_event_reminders">Ereignis-Erinnerungen</string>

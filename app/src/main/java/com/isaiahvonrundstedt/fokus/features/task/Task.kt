@@ -23,6 +23,7 @@ data class Task @JvmOverloads constructor (
     var name: String? = null,
     var notes: String? = null,
     var subjectID: String? = null,
+    var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateAdded: DateTime? = DateTime.now(),
     @TypeConverters(DateTimeConverter::class)

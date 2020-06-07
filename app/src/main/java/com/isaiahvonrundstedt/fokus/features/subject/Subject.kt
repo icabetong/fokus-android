@@ -10,6 +10,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.ColorConverter
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter

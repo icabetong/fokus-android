@@ -67,6 +67,7 @@
         <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
+        <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
         <item name="maxButtonHeight">48dp</item>
     </style>
 
@@ -132,5 +133,5 @@
     <style name="Fokus.TextAppearance.List.Metadata" parent="Fokus.TextAppearance"/>
 
     <!-- Used for Adaptive Launcher Icon Background -->
-    <color name="ic_launcher_background">#0f9d58</color>
+    <color name="ic_launcher_background">#0277bd</color>
 </resources>

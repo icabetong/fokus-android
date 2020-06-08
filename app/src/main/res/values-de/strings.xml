@@ -8,10 +8,13 @@
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
+    <string name="activity_about">Über</string>
 
     <string name="menu_notifications">Benachrichtigungen</string>
     <string name="menu_settings">@string/activity_settings</string>
+    <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Artikel löschen</string>
+
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
     <string name="navigation_subjects">Themen</string>
@@ -92,7 +95,6 @@
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_behavior">Verhalten</string>
     <string name="settings_group_notification">Benachrichtigungen</string>
-    <string name="settings_group_about">Über</string>
 
     <string name="settings_name">Ihr Name</string>
     <string name="settings_theme">Thema</string>

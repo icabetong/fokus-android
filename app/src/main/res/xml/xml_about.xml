@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/key_report_issue"
+        android:title="@string/settings_report_an_issue"/>
+
+    <Preference
+        android:key="@string/key_notices"
+        android:title="@string/settings_third_party_notices"
+        android:fragment="com.isaiahvonrundstedt.fokus.features.about.children.NoticesFragment"/>
+
+    <Preference
+        android:key="@string/key_version"
+        android:title="@string/settings_build_version" />
+
+</PreferenceScreen>

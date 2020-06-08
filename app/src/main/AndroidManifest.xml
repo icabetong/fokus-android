@@ -24,6 +24,7 @@
         <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" />
         <activity android:name=".features.settings.SettingsActivity" />
+        <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.notifications.NotificationActivity" />
         <activity android:name=".features.subject.SubjectEditor"
             android:windowSoftInputMode="adjustResize"/>
@@ -35,6 +36,9 @@
         <!-- OSSLicenses -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/Fokus.Theme.Base"/>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Fokus.Theme.Base"/>
 
         <service android:name=".features.core.service.NotificationActionService"

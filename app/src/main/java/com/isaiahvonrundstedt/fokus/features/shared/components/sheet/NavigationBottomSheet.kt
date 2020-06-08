@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
@@ -37,6 +38,7 @@ class NavigationBottomSheet: BaseBottomSheet(), NavigationAdapter.NavigationList
         when (id) {
             R.id.action_notifications -> startActivity(Intent(context, NotificationActivity::class.java))
             R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
+            R.id.action_about -> startActivity(Intent(context, AboutActivity::class.java))
         }
         this.dismiss()
     }

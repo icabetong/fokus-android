@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.settings.children
+package com.isaiahvonrundstedt.fokus.features.about.children
 
 import android.content.Intent
 import android.net.Uri
@@ -27,14 +27,16 @@ class NoticesFragment: BasePreference() {
 
         findPreference<Preference>(R.string.key_credit_notification_sound)?.apply {
             setOnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(soundLink)))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    soundLink)))
                 true
             }
         }
 
         findPreference<Preference>(R.string.key_credit_launcher_icon)?.apply {
             setOnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(launcherIconLink)))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    launcherIconLink)))
                 true
             }
         }

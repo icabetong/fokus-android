@@ -95,7 +95,7 @@ class SettingsPreference: BasePreference() {
             }
         }
 
-        findPreference<Preference>(R.string.key_sound_uri)?.apply {
+        findPreference<Preference>(R.string.key_custom_sound_uri)?.apply {
             setOnPreferenceClickListener {
                 if (!PermissionManager(requireContext()).storageReadGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -143,7 +143,7 @@ class SettingsPreference: BasePreference() {
             context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            preferences.soundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
+            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
         }
     }
 

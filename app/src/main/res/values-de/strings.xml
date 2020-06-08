@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fokus</string>
+
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Themen</string>
@@ -20,9 +20,7 @@
     <string name="navigation_subjects">Themen</string>
 
     <string name="button_add_attachment">Anhang hinzufügen</string>
-    <string name="button_new_task">Neue Aufgabe</string>
-    <string name="button_new_event">Neue Veranstaltung</string>
-    <string name="button_new_subject">Neues Thema</string>
+    <string name="button_new">Neue</string>
     <string name="button_save">Speichern</string>
     <string name="button_done">Erledigt</string>
     <string name="button_undo">Rückgängig machen</string>
@@ -93,7 +91,7 @@
     <string name="feedback_event_empty_schedule">Sie haben vergessen, den Zeitplan einzugeben</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
-    <string name="settings_group_behavior">Verhalten</string>
+    <string name="settings_group_sound">Tone</string>
     <string name="settings_group_notification">Benachrichtigungen</string>
 
     <string name="settings_name">Ihr Name</string>
@@ -155,8 +153,6 @@
     <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
     <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>
 
-    <string name="shortcut_new_task">@string/button_new_task</string>
-    <string name="shortcut_new_event">@string/button_new_event</string>
     <string name="hello">Hallo, %1$s</string>
     <string name="and">&#160;und&#160;</string>
     <string name="yesterday_at">Gestern um %1$s</string>

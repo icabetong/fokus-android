@@ -20,9 +20,7 @@
     <string name="navigation_subjects">Subjects</string>
 
     <string name="button_add_attachment">Add Attachment</string>
-    <string name="button_new_task">New Task</string>
-    <string name="button_new_event">New Event</string>
-    <string name="button_new_subject">New Subject</string>
+    <string name="button_new">New</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>
     <string name="button_undo">Undo</string>
@@ -96,7 +94,7 @@
     <string name="feedback_event_empty_schedule">You forgot to enter the schedule</string>
 
     <string name="settings_group_interface">Interface</string>
-    <string name="settings_group_behavior">Behavior</string>
+    <string name="settings_group_sound">Sound</string>
     <string name="settings_group_notification">Notifications</string>
 
     <string name="settings_name">Your Name</string>
@@ -160,9 +158,6 @@
 
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>
-
-    <string name="shortcut_new_task">@string/button_new_task</string>
-    <string name="shortcut_new_event">@string/button_new_event</string>
 
     <!-- used for concat and formatting -->
     <string name="hello">Hello, %1$s</string>

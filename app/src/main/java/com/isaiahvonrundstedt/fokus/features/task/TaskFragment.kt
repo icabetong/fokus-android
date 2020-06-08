@@ -79,8 +79,8 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                         if (PreferenceManager(context).soundEnabled) {
                             val uri: Uri = PreferenceManager(requireContext()).let {
                                 if (it.customSoundEnabled)
-                                    it.soundUri
-                                else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                                    it.customSoundUri
+                                else PreferenceManager.defaultSoundUri
                             }
                             RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
                         }

@@ -48,6 +48,31 @@ class SubjectEditor: BaseEditor() {
         // Get actual values for the items
         values = resources.getIntArray(R.array.days_of_week_values)
         colors = Subject.Tag.getColors()
+
+        // The extras passed by the parent activity will
+        // be shown to the fields.
+        if (requestCode == updateRequestCode) {
+
+            with(subject) {
+                codeEditText.setText(code)
+                descriptionEditText.setText(description)
+                startTimeTextView.text = formatStartTime()
+                endTimeTextView.text = formatEndTime()
+                daysOfWeekTextView.text = formatDaysOfWeek(this@SubjectEditor)
+                tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
+                    ?.let {
+                            drawable -> tintDrawable(drawable)
+                    })
+                tagView.setText(tag.getNameResource())
+            }
+
+            startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            daysOfWeekTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            tagView.setTextColorFromResource(R.color.colorPrimaryText)
+
+            window.decorView.rootView.clearFocus()
+        }
     }
 
     override fun onStart() {
@@ -182,36 +207,6 @@ class SubjectEditor: BaseEditor() {
             data.putExtra(extraSubject, subject)
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
-        // The extras passed by the parent activity will
-        // be shown to the fields.
-        if (requestCode == updateRequestCode) {
-
-            with(subject) {
-                codeEditText.setText(code)
-                descriptionEditText.setText(description)
-                startTimeTextView.text = formatStartTime()
-                endTimeTextView.text = formatEndTime()
-                daysOfWeekTextView.text = formatDaysOfWeek(this@SubjectEditor)
-                tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
-                    ?.let {
-                        drawable -> tintDrawable(drawable)
-                    })
-                tagView.setText(tag.getNameResource())
-            }
-
-            startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            daysOfWeekTextView.setTextColorFromResource(R.color.colorPrimaryText)
-            tagView.setTextColorFromResource(R.color.colorPrimaryText)
-
-            window.decorView.rootView.clearFocus()
         }
     }
 

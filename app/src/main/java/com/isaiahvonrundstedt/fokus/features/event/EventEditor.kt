@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
@@ -62,6 +61,30 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
+
+        // The passed extras will be shown in their
+        // corresponding fields
+        if (requestCode == updateRequestCode) {
+            with(event) {
+                nameEditText.setText(name)
+                notesEditText.setText(notes)
+                locationEditText.setText(location)
+                scheduleTextView.text = formatSchedule(this@EventEditor)
+            }
+
+            subject?.let {
+                with(subjectTextView) {
+                    text = it.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
+                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
+                }
+            }
+
+            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
+
+            window.decorView.rootView.clearFocus()
+        }
     }
 
     override fun onStart() {
@@ -89,7 +112,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 lifecycleOwner(this@EventEditor)
                 title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
-                positiveButton(R.string.button_new_subject) {
+                positiveButton(R.string.button_new) {
                     startActivityForResult(Intent(this@EventEditor,
                         SubjectEditor::class.java), SubjectEditor.insertRequestCode)
                 }
@@ -139,34 +162,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-
-        // The passed extras will be shown in their
-        // corresponding fields
-        if (requestCode == updateRequestCode) {
-            with(event) {
-                nameEditText.setText(name)
-                notesEditText.setText(notes)
-                locationEditText.setText(location)
-                scheduleTextView.text = formatSchedule(this@EventEditor)
-            }
-
-            subject?.let {
-                with(subjectTextView) {
-                    text = it.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
-                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
-                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
-                }
-            }
-
-            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
-
-            window.decorView.rootView.clearFocus()
-        }
     }
 
     override fun onItemSelected(subject: Subject) {

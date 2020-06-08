@@ -26,7 +26,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/settings_group_behavior"
+        android:title="@string/settings_group_sound"
         app:initialExpandedChildrenCount="1">
 
         <SwitchPreference
@@ -42,7 +42,7 @@
             android:defaultValue="false" />
 
         <Preference
-            android:key="@string/key_sound_uri"
+            android:key="@string/key_custom_sound_uri"
             android:title="@string/settings_select_sound"
             android:dependency="@string/key_custom_sound"/>
 

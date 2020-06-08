@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.Nullable
@@ -200,8 +199,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     private val notificationSoundUri: Uri
         get() {
             return PreferenceManager(applicationContext).let {
-                if (it.customSoundEnabled) it.soundUri
-                else RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                if (it.customSoundEnabled) it.customSoundUri
+                else PreferenceManager.defaultSoundUri
             }
         }
 

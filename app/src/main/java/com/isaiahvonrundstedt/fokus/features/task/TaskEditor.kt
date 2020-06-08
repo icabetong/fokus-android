@@ -77,12 +77,39 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         viewModel.fetch()?.observe(this, Observer { items ->
             adapter.submitList(items)
         })
+
+        prioritySwitch.changeTextColorWhenChecked()
+
+        // The passed extras from the parent activity
+        // will be shown in their respective fields.
+        if (requestCode == updateRequestCode) {
+            with(task) {
+                nameEditText.setText(name)
+                notesEditText.setText(notes)
+                dueDateTextView.text = formatDueDate(this@TaskEditor)
+                dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                prioritySwitch.isChecked = isImportant
+            }
+
+            subject?.let {
+                with(subjectTextView) {
+                    text = it.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
+                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
+                }
+            }
+
+            attachmentList.forEach { attachment ->
+                attachmentChipGroup.addView(createChip(attachment), 0)
+            }
+
+            window.decorView.rootView.clearFocus()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-
-        prioritySwitch.changeTextColorWhenChecked()
 
         dueDateTextView.setOnClickListener { v ->
             MaterialDialog(this).show {
@@ -105,7 +132,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 lifecycleOwner(this@TaskEditor)
                 title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
-                positiveButton(R.string.button_new_subject) {
+                positiveButton(R.string.button_new) {
                     startActivityForResult(Intent(this@TaskEditor,
                         SubjectEditor::class.java), SubjectEditor.insertRequestCode)
                 }
@@ -162,37 +189,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             data.putParcelableArrayListExtra(extraAttachments, attachmentList.toArrayList())
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // the passed extras from the parent activity
-        // will be shown in their respective fields.
-        if (requestCode == updateRequestCode) {
-            with(task) {
-                nameEditText.setText(name)
-                notesEditText.setText(notes)
-                dueDateTextView.text = formatDueDate(this@TaskEditor)
-                dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
-                prioritySwitch.isChecked = isImportant
-            }
-
-            subject?.let {
-                with(subjectTextView) {
-                    text = it.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
-                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
-                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
-                }
-            }
-
-            attachmentList.forEach { attachment ->
-                attachmentChipGroup.addView(createChip(attachment), 0)
-            }
-
-            window.decorView.rootView.clearFocus()
         }
     }
 

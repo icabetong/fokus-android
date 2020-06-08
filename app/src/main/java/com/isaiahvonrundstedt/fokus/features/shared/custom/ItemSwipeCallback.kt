@@ -2,6 +2,8 @@ package com.isaiahvonrundstedt.fokus.features.shared.custom
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -13,7 +15,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
-    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.shape_item_delete_icon)
+    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_delete)
+    private var background: ColorDrawable = ColorDrawable(Color.parseColor("#ea4335"))
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         return makeMovementFlags(0, ItemTouchHelper.START)
@@ -35,19 +38,26 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                              dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        if (icon != null && dX < 0) {
-            val itemView: View = viewHolder.itemView
 
-            val iconMargin = (itemView.height - icon!!.intrinsicHeight) / 2
-            val iconTop = itemView.top + (itemView.height - icon!!.intrinsicHeight) / 2
-            val iconBottom = iconTop + icon!!.intrinsicHeight
+        val itemView: View = viewHolder.itemView
+        val backgroundCornerOffset = 20
 
-            val iconLeft: Int = itemView.right - iconMargin - icon!!.intrinsicWidth
+        background.setBounds(itemView.right + dX.toInt() - backgroundCornerOffset,
+            itemView.top, itemView.right, itemView.bottom)
+        background.draw(c)
+
+        icon?.let {
+            it.setTint(Color.WHITE)
+
+            val iconMargin: Int = (itemView.height - it.intrinsicHeight) / 2
+
+            val iconTop: Int = itemView.top + (itemView.height - it.intrinsicHeight) / 2
+            val iconBottom: Int = iconTop + it.intrinsicHeight
+            val iconLeft: Int = itemView.right - iconMargin - it.intrinsicWidth
             val iconRight: Int = itemView.right - iconMargin
 
-            icon!!.setBounds(iconLeft, iconTop, iconRight, iconBottom)
-
-            icon!!.draw(c)
+            it.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+            it.draw(c)
         }
     }
 }

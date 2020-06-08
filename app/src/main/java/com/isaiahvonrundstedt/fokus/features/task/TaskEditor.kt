@@ -23,6 +23,7 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.extensions.*
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
@@ -31,12 +32,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
-import kotlinx.android.synthetic.main.layout_editor_task.actionButton
-import kotlinx.android.synthetic.main.layout_editor_task.clearButton
-import kotlinx.android.synthetic.main.layout_editor_task.nameEditText
-import kotlinx.android.synthetic.main.layout_editor_task.notesEditText
-import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
-import kotlinx.android.synthetic.main.layout_editor_task.subjectTextView
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
@@ -58,18 +53,15 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.layout_editor_task)
+        setPersistentActionBar(toolbar)
+
         // Check if the parent activity has extras sent then
         // determine if the editor will be in insert or
         // update mode
         requestCode = if (intent.hasExtra(extraTask) && intent.hasExtra(extraSubject)
                 && intent.hasExtra(extraAttachments)) updateRequestCode else insertRequestCode
-
-        if (requestCode == insertRequestCode)
-            findViewById<View>(android.R.id.content).transitionName = transition
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_editor_task)
-        setPersistentActionBar(toolbar)
 
         if (requestCode == updateRequestCode) {
             task = intent.getParcelableExtra(extraTask)!!
@@ -197,7 +189,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             }
 
             attachmentList.forEach { attachment ->
-                attachmentChipGroup.addView(buildChip(attachment), 0)
+                attachmentChipGroup.addView(createChip(attachment), 0)
             }
 
             window.decorView.rootView.clearFocus()
@@ -210,11 +202,16 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         task.subjectID = subject.id
         this.subject = subject
 
+        with(subjectTextView) {
+            text = subject.code
+            setTextColorFromResource(R.color.colorPrimaryText)
+            ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                this.setCompoundDrawableAtStart(it)
+            }
+        }
         ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
             subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
         }
-        subjectTextView.text = subject.code
-        subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectDialog?.dismiss()
     }
 
@@ -243,7 +240,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             }
 
             attachmentList.add(attachment)
-            attachmentChipGroup.addView(buildChip(attachment), 0)
+            attachmentChipGroup.addView(createChip(attachment), 0)
         } else if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
             val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
 
@@ -254,7 +251,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun buildChip(attachment: Attachment): Chip {
+    private fun createChip(attachment: Attachment): Chip {
         return Chip(this).apply {
             text = attachment.uri!!.getFileName(this@TaskEditor)
             tag = attachment.id

@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
@@ -51,7 +50,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         // If we have a persistent notification,
         // we should dismiss it when the user updates
         // the task to finish
-        if (task.isFinished && task.isImportant)
+        if (task.isFinished)
             manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
 
         // Check if notifications for tasks is turned on and if the task

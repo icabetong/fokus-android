@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.extensions
+package com.isaiahvonrundstedt.fokus.features.core.extensions.android
 
 import android.widget.Switch
 import androidx.annotation.ColorRes

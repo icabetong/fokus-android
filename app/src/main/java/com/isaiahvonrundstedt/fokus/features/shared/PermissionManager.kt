@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 
 class PermissionManager(var context: Context) {
 

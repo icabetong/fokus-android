@@ -4,9 +4,12 @@ import android.app.Activity
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseEditor: BaseActivity() {
@@ -40,7 +43,4 @@ abstract class BaseEditor: BaseActivity() {
         }
     }
 
-    companion object {
-        const val transition = "shared_element_end_root"
-    }
 }

@@ -136,7 +136,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
            manager.notify(tag ?: taskNotificationTag, taskNotificationID,
                 createNotification(notification, taskNotificationChannelID,
-                    NotificationCompat.Action(R.drawable.ic_check_black,
+                    NotificationCompat.Action(R.drawable.ic_check,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
         } else if (notification.type == Notification.typeEventReminder)
             manager.notify(tag ?: eventNotificationTag, eventNotificationID,
@@ -177,7 +177,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                                    @Nullable action: NotificationCompat.Action? = null): android.app.Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_brand_black)
+            setSmallIcon(R.drawable.ic_fokus)
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
             setContentText(notification?.content)

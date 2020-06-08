@@ -3,7 +3,6 @@
 
     <!-- Preference Keys -->
     <string translatable="false" name="key_root">rootKey</string>
-    <string translatable="false" name="key_is_first_run">isFirstRunKey</string>
     <string translatable="false" name="key_username">usernameKey</string>
     <string translatable="false" name="key_theme">themeKey</string>
     <string translatable="false" name="key_sound">soundKey</string>
@@ -13,7 +12,6 @@
     <string translatable="false" name="key_reminder_time">reminderTimeKey</string>
     <string translatable="false" name="key_task_reminder">taskReminderKey</string>
     <string translatable="false" name="key_task_reminder_interval">taskReminderIntervalKey</string>
-    <string translatable="false" name="key_task_persistent_icon">taskPersistentIconKey</string>
     <string translatable="false" name="key_event_reminder">eventReminderKey</string>
     <string translatable="false" name="key_event_reminder_interval">eventReminderIntervalKey</string>
     <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>

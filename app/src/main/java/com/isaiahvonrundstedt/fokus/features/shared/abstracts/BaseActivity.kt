@@ -1,14 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
-import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager

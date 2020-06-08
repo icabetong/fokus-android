@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.extensions
+package com.isaiahvonrundstedt.fokus.features.core.extensions.android
 
 import android.content.Context
 import android.database.Cursor

@@ -102,7 +102,9 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
-                    android:textColor="@color/colorSecondaryText"/>
+                    android:textColor="@color/colorSecondaryText"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawablePadding="16dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -227,6 +229,6 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_check_black"/>
+        app:icon="@drawable/ic_check"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,9 +13,9 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsMultiChoice
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
@@ -31,15 +31,12 @@ class SubjectEditor: BaseEditor() {
     private var colors: IntArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Check if the parent activity have passed some extras
-        requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
-
-        if (requestCode == insertRequestCode)
-            findViewById<View>(android.R.id.content).transitionName = transition
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
+
+        // Check if the parent activity have passed some extras
+        requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
 
         if (requestCode == updateRequestCode) {
             subject = intent.getParcelableExtra(extraSubject)!!

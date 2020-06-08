@@ -8,6 +8,6 @@
         </shape>
     </item>
 
-    <item android:drawable="@drawable/ic_clear_black"/>
+    <item android:drawable="@drawable/ic_clear"/>
 
 </layer-list>

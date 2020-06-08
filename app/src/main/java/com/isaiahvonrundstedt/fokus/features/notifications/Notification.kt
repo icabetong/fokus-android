@@ -8,7 +8,6 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
 import kotlinx.android.parcel.Parcelize

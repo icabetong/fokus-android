@@ -30,15 +30,6 @@ class PreferenceManager(private val context: Context?) {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    var isFirstRun: Boolean
-        get() = sharedPreference?.getBoolean(getKey(R.string.key_is_first_run), true) ?: true
-        set(value) {
-            sharedPreference.edit().run {
-                putBoolean(getKey(R.string.key_is_first_run), value)
-                apply()
-            }
-        }
-
     val name: String?
         get() = sharedPreference.getString(getKey(R.string.key_username), context?.getString(R.string.app_name))
 

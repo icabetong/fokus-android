@@ -16,9 +16,9 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.removeCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.removeCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -42,17 +42,14 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.layout_editor_event)
+        setPersistentActionBar(toolbar)
+
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
         requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
         else insertRequestCode
-
-        if (requestCode == insertRequestCode)
-            findViewById<View>(android.R.id.content).transitionName = transition
-
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_editor_event)
-        setPersistentActionBar(toolbar)
 
         if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
@@ -177,6 +174,13 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         event.subjectID = subject.id
         this.subject = subject
 
+        with(subjectTextView) {
+            text = subject.code
+            setTextColorFromResource(R.color.colorPrimaryText)
+            ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                setCompoundDrawableAtStart(subject.tintDrawable(it))
+            }
+        }
         ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
             subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
         }

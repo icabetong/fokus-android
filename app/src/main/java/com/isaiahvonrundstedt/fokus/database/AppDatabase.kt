@@ -38,10 +38,6 @@ abstract class AppDatabase: RoomDatabase() {
             }
             return instance
         }
-
-        fun close() {
-            instance = null
-        }
     }
 
 }

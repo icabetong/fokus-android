@@ -1,0 +1,22 @@
+<resources>
+
+    <style name="Fokus.Theme.Base" parent="Fokus.Theme">
+        <item name="android:statusBarColor">@color/colorSystemBarBackground</item>
+        <item name="android:navigationBarColor">@color/colorSystemBarBackground</item>
+    </style>
+
+    <style name="Fokus.Theme.Core" parent="Fokus.Theme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Fokus.Theme.Core.Navigation" parent="Fokus.Theme.Core">
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+    </style>
+
+    <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+    </style>
+
+</resources>

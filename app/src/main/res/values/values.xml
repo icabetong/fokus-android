@@ -19,6 +19,7 @@
         <item name="android:textColorPrimary">@color/colorOnSurface</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
 
+        <item name="preferenceTheme">@style/Fokus.Component.Preference</item>
         <item name="bottomSheetDialogTheme">@style/Fokus.Component.BottomSheet</item>
         <item name="alertDialogTheme">@style/Fokus.Component.Dialog</item>
         <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
@@ -31,6 +32,8 @@
         <item name="md_background_color">@color/colorSurface</item>
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
+
+    <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material"/>
 
     <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>

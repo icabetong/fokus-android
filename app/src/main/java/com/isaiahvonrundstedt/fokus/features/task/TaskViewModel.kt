@@ -50,7 +50,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         // If we have a persistent notification,
         // we should dismiss it when the user updates
         // the task to finish
-        if (task.isFinished)
+        if (task.isFinished || !task.isImportant)
             manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
 
         // Check if notifications for tasks is turned on and if the task

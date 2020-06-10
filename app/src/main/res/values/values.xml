@@ -98,7 +98,9 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
 
-    <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Filter"/>
+    <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="checkedIconTint">@color/colorOnSurface</item>
+    </style>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">

@@ -102,9 +102,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
-                    android:textColor="@color/colorSecondaryText"
-                    android:drawableStart="@drawable/ic_info"
-                    android:drawablePadding="16dp"/>
+                    android:textColor="@color/colorSecondaryText"/>
 
                 <TextView
                     android:layout_width="match_parent"

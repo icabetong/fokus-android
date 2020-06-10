@@ -43,4 +43,8 @@ abstract class BaseEditor: BaseActivity() {
         }
     }
 
+    protected fun createSnackbar(view: View, @StringRes id: Int): Snackbar {
+        return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
+    }
+
 }

@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
 import com.afollestad.materialdialogs.MaterialDialog
@@ -60,9 +59,7 @@ class SubjectEditor: BaseEditor() {
                 endTimeTextView.text = formatEndTime()
                 daysOfWeekTextView.text = formatDaysOfWeek(this@SubjectEditor)
                 tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
-                    ?.let {
-                            drawable -> tintDrawable(drawable)
-                    })
+                    ?.let { drawable -> tintDrawable(drawable) })
                 tagView.setText(tag.getNameResource())
             }
 
@@ -78,7 +75,7 @@ class SubjectEditor: BaseEditor() {
     override fun onStart() {
         super.onStart()
 
-        daysOfWeekTextView.setOnClickListener { it ->
+        daysOfWeekTextView.setOnClickListener {
             MaterialDialog(it.context, BottomSheet()).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.days_of_week_dialog_title)
@@ -119,6 +116,7 @@ class SubjectEditor: BaseEditor() {
                     if (it is AppCompatTextView) {
                         it.text = subject.formatStartTime()
                         it.setTextColorFromResource(R.color.colorPrimaryText)
+                        this@SubjectEditor.endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }
@@ -143,6 +141,7 @@ class SubjectEditor: BaseEditor() {
                     if (it is AppCompatTextView) {
                         it.text = subject.formatEndTime()
                         it.setTextColorFromResource(R.color.colorPrimaryText)
+                        this@SubjectEditor.startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
                     }
                 }
             }

@@ -19,7 +19,4 @@ interface SubjectDAO {
     @Query("SELECT * FROM subjects")
     fun fetch(): LiveData<List<Subject>>
 
-    @Query("SELECT * FROM subjects WHERE id = :id")
-    fun fetchItem(id: String): Subject
-
 }

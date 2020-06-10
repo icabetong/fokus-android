@@ -22,6 +22,7 @@
         <item name="preferenceTheme">@style/Fokus.Component.Preference</item>
         <item name="bottomSheetDialogTheme">@style/Fokus.Component.BottomSheet</item>
         <item name="alertDialogTheme">@style/Fokus.Component.Dialog</item>
+        <item name="appBarLayoutStyle">@style/Fokus.Widget.AppBar</item>
         <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
         <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
@@ -64,6 +65,10 @@
         <item name="android:background">@drawable/shape_bottom_sheet</item>
         <item name="android:layout_marginStart">@dimen/bottom_sheet_margin_horizontal</item>
         <item name="android:layout_marginEnd">@dimen/bottom_sheet_margin_horizontal</item>
+    </style>
+
+    <style name="Fokus.Widget.AppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">@color/colorToolbarBackground</item>
     </style>
 
     <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">

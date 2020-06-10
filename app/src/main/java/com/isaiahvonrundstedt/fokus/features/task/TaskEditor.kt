@@ -22,8 +22,9 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.extensions.*
 import com.isaiahvonrundstedt.fokus.features.core.extensions.android.*
+import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
+import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
@@ -98,6 +99,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
                 }
+                clearButton.isVisible = true
             }
 
             attachmentList.forEach { attachment ->

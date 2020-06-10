@@ -15,7 +15,7 @@ import java.util.*
 @Parcelize
 @Entity(tableName = "tasks", foreignKeys = [
     ForeignKey(entity = Subject::class, parentColumns = arrayOf("id"),
-        childColumns = arrayOf("subjectID"), onDelete = ForeignKey.CASCADE)])
+        childColumns = arrayOf("subjectID"), onDelete = ForeignKey.SET_NULL)])
 data class Task @JvmOverloads constructor (
     @PrimaryKey
     @ColumnInfo(index = true)

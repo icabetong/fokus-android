@@ -36,7 +36,4 @@ class SubjectRepository private constructor (app: Application) {
     suspend fun update(subject: Subject) {
         subjects?.update(subject)
     }
-
-
-
 }

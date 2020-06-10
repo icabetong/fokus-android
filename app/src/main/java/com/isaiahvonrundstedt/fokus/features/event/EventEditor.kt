@@ -79,6 +79,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
                 }
+                clearButton.isVisible = true
             }
 
             scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)

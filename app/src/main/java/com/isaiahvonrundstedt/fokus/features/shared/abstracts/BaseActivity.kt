@@ -1,12 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.os.Build
-import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 
 abstract class BaseActivity: AppCompatActivity() {
@@ -40,10 +38,6 @@ abstract class BaseActivity: AppCompatActivity() {
 
     protected fun setToolbarTitle(@StringRes id: Int) {
         this.toolbar?.title = getString(id)
-    }
-
-    protected fun createSnackbar(view: View, @StringRes id: Int): Snackbar {
-        return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
     }
 
 }

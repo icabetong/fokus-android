@@ -169,6 +169,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="@string/tag_color_sky"
+                    android:textColor="@color/colorPrimaryText"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:clickable="true"
                     android:focusable="true"

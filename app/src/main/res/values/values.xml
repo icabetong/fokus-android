@@ -22,6 +22,7 @@
         <item name="preferenceTheme">@style/Fokus.Component.Preference</item>
         <item name="bottomSheetDialogTheme">@style/Fokus.Component.BottomSheet</item>
         <item name="alertDialogTheme">@style/Fokus.Component.Dialog</item>
+
         <item name="appBarLayoutStyle">@style/Fokus.Widget.AppBar</item>
         <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
         <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
@@ -96,6 +97,8 @@
     <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
+
+    <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Filter"/>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">

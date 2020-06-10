@@ -82,17 +82,70 @@
                     android:text="@string/field_days_of_week"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <TextView
-                    android:id="@+id/daysOfWeekTextView"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/daysOfWeekGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/activity_padding"
+                        app:singleLine="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/sundayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_sunday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/mondayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_monday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/tuesdayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_tuesday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/wednesdayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_wednesday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/thursdayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_thursday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/fridayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_friday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/saturdayChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/days_of_week_item_saturday"
+                            style="@style/Fokus.Widget.Chip"/>
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </HorizontalScrollView>
 
                 <TextView
                     android:layout_width="match_parent"

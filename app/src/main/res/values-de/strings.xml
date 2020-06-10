@@ -81,6 +81,7 @@
     <string name="feedback_event_removed">Ereignis entfernt</string>
     <string name="feedback_subject_empty_name">Sie haben vergessen, den Betreff-Code einzugeben</string>
     <string name="feedback_subject_empty_description">Sie haben vergessen, die Beschreibung einzugeben</string>
+    <string name="feedback_subject_empty_days">Sie haben vergessen, die Tage anzugeben</string>
     <string name="feedback_subject_empty_start_time">Sie haben vergessen, die Startzeit einzugeben.</string>
     <string name="feedback_subject_empty_end_time">Sie haben vergessen, die Endzeit einzugeben.</string>
     <string name="feedback_task_empty_name">Sie haben vergessen, den Aufgabennamen einzugeben</string>

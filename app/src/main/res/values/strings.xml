@@ -84,6 +84,7 @@
     <string name="feedback_event_removed">Event removed</string>
     <string name="feedback_subject_empty_name">You forgot to enter the subject code</string>
     <string name="feedback_subject_empty_description">You forgot to enter the description</string>
+    <string name="feedback_subject_empty_days">You forgot to specify the days</string>
     <string name="feedback_subject_empty_start_time">You forgot to enter the start time</string>
     <string name="feedback_subject_empty_end_time">You forgot to enter the end time</string>
     <string name="feedback_task_empty_name">You forgot to enter the task name</string>

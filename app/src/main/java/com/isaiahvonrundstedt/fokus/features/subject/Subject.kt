@@ -104,7 +104,7 @@ data class Subject @JvmOverloads constructor (
      *   @return the formatted days of week
      *           (e.g. "Sunday, Monday and Thursday")
      */
-    fun formatDaysOfWeek(context: Context): String {
+    private fun formatDaysOfWeek(context: Context): String {
         val builder = StringBuilder()
         val list = getDaysList()
         list.forEachIndexed { index, i ->
@@ -164,7 +164,7 @@ data class Subject @JvmOverloads constructor (
      *   @return a list which contains the days inherited
      *           from the DateTimeConstants class
      */
-    private fun getDaysList(): List<Int> {
+    fun getDaysList(): List<Int> {
         val days = ArrayList<Int>()
 
         if (daysOfWeek and 1 == 1) days.add(DateTimeConstants.SUNDAY)
@@ -179,6 +179,14 @@ data class Subject @JvmOverloads constructor (
     }
 
     companion object {
+
+        const val BIT_VALUE_SUNDAY = 1
+        const val BIT_VALUE_MONDAY = 2
+        const val BIT_VALUE_TUESDAY = 4
+        const val BIT_VALUE_WEDNESDAY = 8
+        const val BIT_VALUE_THURSDAY = 16
+        const val BIT_VALUE_FRIDAY = 32
+        const val BIT_VALUE_SATURDAY = 64
 
         fun tintDrawable(drawable: Drawable, tag: Tag): Drawable {
             drawable.mutate()

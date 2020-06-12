@@ -36,6 +36,10 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
 
     fun remove(event: Event) = viewModelScope.launch {
         repository.remove(event)
+
+        if (event.isImportant)
+            manager?.cancel(event.eventID, BaseWorker.eventNotificationID)
+
         workManager.cancelUniqueWork(event.eventID)
     }
 

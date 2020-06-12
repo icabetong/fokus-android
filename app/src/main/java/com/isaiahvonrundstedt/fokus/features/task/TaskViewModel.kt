@@ -40,7 +40,9 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
     fun remove(task: Task) = viewModelScope.launch {
         repository.remove(task)
 
-        // Cancel the fokus task from WorkManager
+        if (task.isImportant)
+            manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
+
         workManager.cancelUniqueWork(task.taskID)
     }
 
@@ -50,7 +52,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         // If we have a persistent notification,
         // we should dismiss it when the user updates
         // the task to finish
-        if (task.isFinished || !task.isImportant)
+        if (task.isFinished || !task.isImportant || task.dueDate!!.isBeforeNow)
             manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
 
         // Check if notifications for tasks is turned on and if the task

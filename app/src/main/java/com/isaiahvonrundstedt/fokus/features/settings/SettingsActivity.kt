@@ -1,6 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.settings
 
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import kotlinx.android.synthetic.main.layout_appbar.*

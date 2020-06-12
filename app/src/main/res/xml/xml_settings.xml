@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <EditTextPreference
         app:key="@string/key_username"
@@ -94,11 +95,18 @@
             app:dialogTitle="@string/dialog_select_notification_interval"
             app:dependency="@string/key_event_reminder"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings_group_debugging">
+
+        <com.isaiahvonrundstedt.fokus.features.shared.components.preference.InfoPreference
+            app:summary="@string/settings_not_working_notifications_info"
+            tools:layout="@layout/layout_preference_info"/>
+
         <Preference
             app:key="@string/key_not_working_notifications"
-            app:title="@string/settings_not_working_notifications_title"
-            app:summary="@string/settings_not_working_notifications_summary"
-            app:layout="@layout/layout_preference_centered"/>
+            app:title="@string/settings_not_working_notifications_link"/>
 
     </PreferenceCategory>
 

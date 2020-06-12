@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.isaiahvonrundstedt.fokus">
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -40,6 +41,12 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Fokus.Theme.Base"/>
+        <activity
+            android:name="dev.doubledot.doki.ui.DokiActivity"
+            android:theme="@style/Fokus.Bridge"
+            android:label="@string/settings_group_debugging"
+            android:parentActivityName=".features.settings.SettingsActivity"
+            tools:replace="android:theme"/>
 
         <service android:name=".features.core.service.NotificationActionService"
             android:exported="false"/>

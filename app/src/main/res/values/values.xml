@@ -35,16 +35,6 @@
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
 
-    <style name="Fokus.Bridge" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
-        <item name="colorOnSecondary">@color/colorOnPrimary</item>
-    </style>
-
     <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material"/>
 
     <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">

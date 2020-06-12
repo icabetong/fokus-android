@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="vertical">
 
             <include layout="@layout/layout_appbar_editor" />
@@ -22,7 +23,8 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:autofillHints="subject"
                 android:background="@android:color/transparent"
                 android:hint="@string/field_task_name"
@@ -168,7 +170,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@null"
                         android:background="@android:color/transparent"
-                        android:src="@drawable/shape_clear_button_holder"
+                        android:src="@drawable/shape_remove_button"
                         android:visibility="gone"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"

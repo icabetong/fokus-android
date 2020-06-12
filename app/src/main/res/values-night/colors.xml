@@ -4,7 +4,7 @@
     <color name="colorOnSurface">#ffffff</color>
 
     <color name="colorEditorSurface">@color/colorSurface</color>
-    <color name="colorEditorRemoveButton">#212121</color>
+    <color name="colorEditorButton">#212121</color>
 
     <color name="colorWindowBackground">#080808</color>
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>

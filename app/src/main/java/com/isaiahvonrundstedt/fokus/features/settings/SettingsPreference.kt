@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -102,6 +103,25 @@ class SettingsPreference: BasePreference() {
                                        PermissionManager.storageRequestCode)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                                                 .setType("audio/*"), soundRequestCode)
+                true
+            }
+        }
+
+        findPreference<Preference>(R.string.key_more_notification_settings)?.apply {
+            setOnPreferenceClickListener {
+                val intent = Intent()
+                with(intent) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                        putExtra(Settings.EXTRA_APP_PACKAGE, context?.packageName)
+                    } else {
+                        action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                        putExtra("app_package", context?.packageName)
+                        putExtra("app_uid", context?.applicationInfo?.uid)
+                    }
+                    startActivity(this)
+                }
+
                 true
             }
         }

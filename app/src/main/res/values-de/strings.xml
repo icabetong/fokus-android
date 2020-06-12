@@ -126,6 +126,7 @@
     <string name="settings_event_reminders_item_quarter_hour">15 Minuten vorher</string>
     <string name="settings_event_reminders_item_half_hour">30 Minuten vorher</string>
     <string name="settings_event_reminders_item_hour">1 Stunde vorher</string>
+    <string name="settings_more_notification_settings">Weitere Einstellungen</string>
     <string name="settings_not_working_notifications_link">Weitere Informationen</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>
 

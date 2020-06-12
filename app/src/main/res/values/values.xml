@@ -35,7 +35,9 @@
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
 
-    <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material"/>
+    <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceCategoryTitleTextAppearance">@style/Fokus.TextAppearance.Preference.Group</item>
+    </style>
 
     <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -132,7 +134,7 @@
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">
-        <item name="android:letterSpacing">0.12</item>
+        <item name="android:letterSpacing">0.1</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
@@ -147,6 +149,7 @@
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
     <style name="Fokus.TextAppearance.List.Meta" parent="Fokus.TextAppearance"/>
+    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#0277bd</color>

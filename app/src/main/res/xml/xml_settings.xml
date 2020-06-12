@@ -95,6 +95,10 @@
             app:dialogTitle="@string/dialog_select_notification_interval"
             app:dependency="@string/key_event_reminder"/>
 
+        <Preference
+            app:key="@string/key_more_notification_settings"
+            app:title="@string/settings_more_notification_settings"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import org.joda.time.LocalTime
 
 class PreferenceManager(private val context: Context?) {

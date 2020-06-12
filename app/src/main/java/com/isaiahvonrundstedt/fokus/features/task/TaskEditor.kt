@@ -22,12 +22,12 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.*
-import com.isaiahvonrundstedt.fokus.features.core.extensions.getUsingID
-import com.isaiahvonrundstedt.fokus.features.core.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.extensions.android.*
+import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
+import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel

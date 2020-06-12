@@ -10,7 +10,7 @@ import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.Duration

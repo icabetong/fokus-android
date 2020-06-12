@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.extensions
+package com.isaiahvonrundstedt.fokus.components.extensions
 
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event

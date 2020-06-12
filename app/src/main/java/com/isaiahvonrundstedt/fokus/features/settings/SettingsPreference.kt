@@ -21,7 +21,7 @@ import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationSche
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat

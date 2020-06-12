@@ -15,11 +15,11 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.removeCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.components.adapters.SubjectListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel

@@ -21,7 +21,7 @@ import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionServ
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)

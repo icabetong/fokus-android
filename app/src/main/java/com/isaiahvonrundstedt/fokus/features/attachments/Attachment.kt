@@ -6,8 +6,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.features.shared.components.converter.UriConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime

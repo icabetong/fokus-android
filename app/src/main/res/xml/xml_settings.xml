@@ -100,7 +100,7 @@
     <PreferenceCategory
         app:title="@string/settings_group_debugging">
 
-        <com.isaiahvonrundstedt.fokus.features.shared.components.preference.InfoPreference
+        <com.isaiahvonrundstedt.fokus.components.preference.InformationHolder
             app:summary="@string/settings_not_working_notifications_info"
             tools:layout="@layout/layout_preference_info"/>
 

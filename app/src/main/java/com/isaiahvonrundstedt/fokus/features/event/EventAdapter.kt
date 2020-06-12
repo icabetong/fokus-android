@@ -4,16 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.addStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.addStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class EventAdapter(private var actionListener: ActionListener)

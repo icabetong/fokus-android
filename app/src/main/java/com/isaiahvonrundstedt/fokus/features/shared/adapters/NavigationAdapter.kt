@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.shared.components.adapters
+package com.isaiahvonrundstedt.fokus.features.shared.adapters
 
 import android.app.Activity
 import android.graphics.drawable.Drawable

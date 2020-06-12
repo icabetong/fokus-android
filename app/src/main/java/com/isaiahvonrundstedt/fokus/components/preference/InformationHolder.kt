@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.shared.components.preference
+package com.isaiahvonrundstedt.fokus.components.preference
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,7 @@ import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 
 @SuppressLint("RestrictedApi")
-class InfoPreference(context: Context, attr: AttributeSet?, defStyleAttr: Int, defStyleRes: Int)
+class InformationHolder(context: Context, attr: AttributeSet?, defStyleAttr: Int, defStyleRes: Int)
     : Preference(context, attr, defStyleAttr, defStyleRes) {
 
     constructor(context: Context, attr: AttributeSet?, defStyleAttr: Int)

@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.addStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.removeStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.addStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.removeStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class TaskAdapter(private var actionListener: ActionListener)

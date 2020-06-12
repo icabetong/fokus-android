@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.extensions.android
+package com.isaiahvonrundstedt.fokus.components.extensions.android
 
 import android.graphics.Paint
 import android.graphics.drawable.Drawable

@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
@@ -15,9 +14,9 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*

@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.content.Context
+import android.graphics.BlendMode
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
@@ -92,7 +93,7 @@ data class Subject @JvmOverloads constructor (
         return formatTime(endTime)
     }
 
-    fun tintDrawable(drawable: Drawable): Drawable {
+    fun tintDrawable(drawable: Drawable?): Drawable? {
         return Companion.tintDrawable(drawable, tag)
     }
 
@@ -188,10 +189,12 @@ data class Subject @JvmOverloads constructor (
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
 
-        fun tintDrawable(drawable: Drawable, tag: Tag): Drawable {
-            drawable.mutate()
-            drawable.colorFilter = BlendModeColorFilterCompat
-                .createBlendModeColorFilterCompat(tag.actualColor, BlendModeCompat.SRC_ATOP)
+        fun tintDrawable(drawable: Drawable?, tag: Tag): Drawable? {
+            drawable?.let {
+                it.mutate()
+                it.colorFilter = BlendModeColorFilterCompat
+                    .createBlendModeColorFilterCompat(tag.actualColor, BlendModeCompat.SRC_ATOP)
+            }
             return drawable
         }
 

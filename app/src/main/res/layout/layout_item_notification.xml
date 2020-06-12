@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Metadata"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Meta"
             tools:text="h:mm"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

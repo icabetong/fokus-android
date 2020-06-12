@@ -6,23 +6,12 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?attr/listPreferredItemHeightLarge"
     android:background="@color/colorSurface"
     android:foreground="?attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/tagView"
-            android:layout_width="4dp"
-            android:layout_height="0dp"
-            android:contentDescription="@null"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_color_holder_rect"/>
 
         <LinearLayout
             android:id="@+id/scheduleLayout"
@@ -33,7 +22,7 @@
             app:layout_constraintWidth_percent="0.25"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagView">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/dayView"
@@ -67,14 +56,6 @@
             app:layout_constraintStart_toEndOf="@id/scheduleLayout">
 
             <TextView
-                android:id="@+id/subjectNameView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
-                tools:text="Intech 1100"/>
-
-            <TextView
                 android:id="@+id/nameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,11 +68,20 @@
                 android:id="@+id/locationView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="16dp"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Body"
                 app:layout_constraintTop_toBottomOf="@id/nameView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="COMSCI 2101"/>
+                tools:text="San Jose City"/>
+
+            <TextView
+                android:id="@+id/subjectNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+                android:drawableStart="@drawable/shape_color_holder_chip"
+                android:drawablePadding="16dp"
+                tools:text="Intech 1100"/>
 
         </LinearLayout>
 

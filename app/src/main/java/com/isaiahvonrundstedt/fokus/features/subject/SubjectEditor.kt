@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.forEach
@@ -142,14 +143,10 @@ class SubjectEditor: BaseEditor() {
                 colorChooser(colors!!) { _, color ->
                     subject.tag = Subject.Tag.convertColorToTag(color)!!
 
-                    val tagDrawable = this@SubjectEditor.tagView
-                        .getCompoundDrawableAtStart()?.let { drawable ->
-                            subject.tintDrawable(drawable)
-                        }
-                    this@SubjectEditor.tagView.setCompoundDrawableAtStart(tagDrawable)
-                    if (it is AppCompatTextView) {
-                        it.text = getString(subject.tag.getNameResource())
-                        it.setTextColorFromResource(R.color.colorPrimaryText)
+                    with(it as TextView) {
+                        text = getString(subject.tag.getNameResource())
+                        setTextColorFromResource(R.color.colorPrimaryText)
+                        setCompoundDrawableAtStart(subject.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 }
             }
@@ -157,11 +154,6 @@ class SubjectEditor: BaseEditor() {
 
         actionButton.setOnClickListener {
 
-            // This ifs is used to check if some fields are
-            // blank or null, if these returned true,
-            // we'll show a Snackbar then direct the focus to
-            // the corresponding field then return to stop
-            // the execution of the code
             subject.daysOfWeek = 0
             daysOfWeekGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
@@ -176,9 +168,13 @@ class SubjectEditor: BaseEditor() {
                         else -> 0
                     }
                 }
-                Log.e("DEBUG", subject.daysOfWeek.toString())
             }
 
+            // This ifs is used to check if some fields are
+            // blank or null, if these returned true,
+            // we'll show a Snackbar then direct the focus to
+            // the corresponding field then return to stop
+            // the execution of the code
             if (subject.daysOfWeek == 0) {
                 createSnackbar(rootLayout, R.string.feedback_subject_empty_days).show()
                 return@setOnClickListener

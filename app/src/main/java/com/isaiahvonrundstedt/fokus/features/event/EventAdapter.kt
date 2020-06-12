@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.extensions.android.addStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
@@ -37,7 +39,6 @@ class EventAdapter(private var actionListener: ActionListener)
         : RecyclerView.ViewHolder(itemView) {
 
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
-        private val tagView: ImageView = itemView.findViewById(R.id.tagView)
         private val locationView: TextView = itemView.findViewById(R.id.locationView)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectNameView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
@@ -61,9 +62,12 @@ class EventAdapter(private var actionListener: ActionListener)
 
             subjectView.isVisible = resource.subject != null
             resource.subject?.let {
-                subjectView.text = it.code
-                tagView.setImageDrawable(it.tintDrawable(tagView.drawable))
+                with(subjectView) {
+                    text = it.code
+                    setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
+                }
             }
+
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
                     mapOf(transitionEventName + id to nameView, transitionLocation + id to locationView))

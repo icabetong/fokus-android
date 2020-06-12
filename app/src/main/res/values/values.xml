@@ -138,14 +138,15 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
-    <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
+    <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
-    <style name="Fokus.TextAppearance.List.Metadata" parent="Fokus.TextAppearance"/>
+    <style name="Fokus.TextAppearance.List.Meta" parent="Fokus.TextAppearance"/>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#0277bd</color>

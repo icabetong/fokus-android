@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.extensions.android.addStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.core.extensions.android.removeStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.features.core.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class TaskAdapter(private var actionListener: ActionListener)
@@ -41,36 +42,31 @@ class TaskAdapter(private var actionListener: ActionListener)
 
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkBox)
-        private val subjectNameView: TextView = itemView.findViewById(R.id.subjectNameView)
+        private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
         private val taskNameView: TextView = itemView.findViewById(R.id.taskNameView)
         private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)
-        private val attachmentView: TextView = itemView.findViewById(R.id.attachmentsView)
-        private val tagView: ImageView = itemView.findViewById(R.id.tagView)
 
         fun onBind(resource: TaskResource) {
             val id = resource.task.taskID
             taskNameView.transitionName = transitionNameID + id
             dueDateView.transitionName = transitionDateID + id
-            subjectNameView.transitionName = transitionSubjectID + id
 
             with(resource) {
-                attachmentView.isVisible = attachmentList.isNotEmpty()
-                attachmentView.text =
-                    itemView.context.resources.getQuantityString(R.plurals.files_attached,
-                        resource.attachmentList.size, resource.attachmentList.size)
-
                 checkBox.isChecked = task.isFinished
                 taskNameView.text = task.name
                 dueDateView.text = task.formatDueDate(rootView.context)
 
-                if (subject != null) {
-                    subjectNameView.text = subject?.code
-                    tagView.setImageDrawable(subject?.tintDrawable(tagView.drawable))
-                } else
-                    subjectNameView.isVisible = false
+                subject?.let {
+                    with(subjectView) {
+                        text = it.code
+                        setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
+                    }
+                }
 
+                subjectView.isVisible = subject != null
                 if (task.isFinished) taskNameView.addStrikeThroughEffect()
             }
+
 
             checkBox.setOnClickListener { view ->
                 view as MaterialCheckBox

@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.work.event
 
 import android.content.Context
+import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -28,6 +29,16 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
             content = event.formatSchedule(applicationContext)
             type = Notification.typeEventReminder
             data = event.eventID
+            isPersistent = event.isImportant
+        }
+
+        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+        notificationRequest.setInputData(convertNotificationToData(notification))
+
+        if (notification.isPersistent) {
+            WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID,
+                ExistingWorkPolicy.REPLACE, notificationRequest.build())
+            return Result.success()
         }
 
         when (PreferenceManager(applicationContext).eventReminderInterval) {
@@ -35,13 +46,12 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
             PreferenceManager.eventReminderIntervalHalf -> event.schedule = event.schedule!!.minusMinutes(30)
             PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
         }
-        val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+
         if (currentTime.isBefore(event.schedule!!)) {
             val delay = Duration(currentTime.toDateTime(DateTimeZone.UTC),
                 event.schedule!!.toDateTime(DateTimeZone.UTC))
             notificationRequest.setInitialDelay(delay.standardMinutes, TimeUnit.MINUTES)
         }
-        notificationRequest.setInputData(convertNotificationToData(notification))
 
         WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID,
             ExistingWorkPolicy.REPLACE, notificationRequest.build())

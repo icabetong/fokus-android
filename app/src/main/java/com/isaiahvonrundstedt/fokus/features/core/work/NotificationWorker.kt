@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.core.work
 import android.app.Application
 import android.content.Context
 import androidx.work.WorkerParameters
+import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -14,15 +15,13 @@ import org.joda.time.DateTime
 class NotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private val dataStore by lazy {
-        NotificationRepository.getInstance(applicationContext as Application)
-    }
+    private var notifications = AppDatabase.getInstance(applicationContext)?.notifications()
 
     override suspend fun doWork(): Result  {
         val notification = convertDataToNotification(inputData)
         notification.dateTimeTriggered = DateTime.now()
 
-        dataStore.insert(notification)
+        notifications?.insert(notification)
         if (notification.isPersistent)
             sendNotification(notification, notification.data)
         else sendNotification(notification)

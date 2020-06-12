@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColorWhenChecked
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
@@ -52,7 +53,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
         if (requestCode == updateRequestCode) {
             event = intent.getParcelableExtra(extraEvent)!!
-            subject = intent.getParcelableExtra(extraSubject)!!
+            subject = intent.getParcelableExtra(extraSubject)
 
             setTransitionName(nameEditText, EventAdapter.transitionEventName + event.eventID)
             setTransitionName(locationEditText, EventAdapter.transitionLocation + event.eventID)
@@ -62,6 +63,8 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             adapter.submitList(items)
         })
 
+        prioritySwitch.changeTextColorWhenChecked()
+
         // The passed extras will be shown in their
         // corresponding fields
         if (requestCode == updateRequestCode) {
@@ -70,6 +73,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 notesEditText.setText(notes)
                 locationEditText.setText(location)
                 scheduleTextView.text = formatSchedule(this@EventEditor)
+                prioritySwitch.isChecked = isImportant
             }
 
             subject?.let {
@@ -156,6 +160,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             event.name = nameEditText.text.toString()
             event.notes = notesEditText.text.toString()
             event.location = locationEditText.text.toString()
+            event.isImportant = prioritySwitch.isChecked
 
             // Send the data back to the parent activity
             val data = Intent()

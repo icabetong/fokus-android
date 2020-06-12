@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import android.app.Application
+import android.app.NotificationManager
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
@@ -40,6 +42,9 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
 
+        if (event.schedule?.isBeforeNow == true || !event.isImportant)
+            manager?.cancel(event.eventID, BaseWorker.eventNotificationID)
+
         if (PreferenceManager(app).eventReminder && event.schedule!!.isAfterNow) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
@@ -47,5 +52,9 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+    }
+
+    private val manager by lazy {
+        app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
     }
 }

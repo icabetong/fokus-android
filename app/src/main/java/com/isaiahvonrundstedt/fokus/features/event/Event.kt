@@ -27,6 +27,7 @@ data class Event @JvmOverloads constructor(
     var notes: String? = null,
     var location: String? = null,
     var subjectID: String? = null,
+    var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var schedule: DateTime? = null,
     @TypeConverters(DateTimeConverter::class)

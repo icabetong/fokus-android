@@ -57,6 +57,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         private const val extraEventNotes = "notes"
         private const val extraEventLocation = "location"
         private const val extraEventSchedule = "schedule"
+        private const val extraEventIsImportant = "isImportant"
 
         fun convertNotificationToData(notification: Notification): Data {
             return Data.Builder().apply {
@@ -87,6 +88,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(extraEventNotes, event.notes)
                 putString(extraEventLocation, event.location)
                 putString(extraEventSchedule, DateTimeConverter.fromDateTime(event.schedule!!))
+                putBoolean(extraEventIsImportant, event.isImportant)
             }.build()
         }
 
@@ -114,11 +116,12 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertDataToEvent(workerData: Data): Event {
             return Event().apply {
-                eventID = workerData.getString(extraTaskID)!!
+                eventID = workerData.getString(extraEventID)!!
                 name = workerData.getString(extraEventName)
                 notes = workerData.getString(extraEventNotes)
                 location = workerData.getString(extraEventLocation)
                 schedule = DateTimeConverter.toDateTime(workerData.getString(extraEventSchedule))
+                isImportant = workerData.getBoolean(extraEventIsImportant, false)
             }
         }
     }
@@ -181,7 +184,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             setContentTitle(notification?.title)
             setContentText(notification?.content)
             setOngoing(notification?.isPersistent == true)
-            addAction(action)
+            if (action != null) addAction(action)
             color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
         }.build()
     }

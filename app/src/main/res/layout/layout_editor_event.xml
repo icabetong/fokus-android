@@ -84,6 +84,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
+                    android:text="@string/field_priority"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <Switch
+                    android:id="@+id/prioritySwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_mark_as_important"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/helper_this_is_important"
+                    android:textColor="@color/colorSecondaryText"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
                     android:text="@string/field_location"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 

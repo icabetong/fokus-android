@@ -179,7 +179,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                                    @Nullable action: NotificationCompat.Action? = null): android.app.Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_fokus)
+            setSmallIcon(R.drawable.ic_done_all)
             setContentIntent(contentIntent)
             setContentTitle(notification?.title)
             setContentText(notification?.content)

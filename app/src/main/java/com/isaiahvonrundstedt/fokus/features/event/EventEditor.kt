@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -24,9 +23,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
-import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
@@ -120,10 +117,6 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 lifecycleOwner(this@EventEditor)
                 title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
-                positiveButton(R.string.button_new) {
-                    startActivityForResult(Intent(this@EventEditor,
-                        SubjectEditor::class.java), SubjectEditor.insertRequestCode)
-                }
             }
         }
 
@@ -192,17 +185,6 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
         subjectTextView.text = subject.code
         subjectDialog?.dismiss()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
-            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
-
-            subject?.let {
-                viewModel.insert(it)
-            }
-        } else
-            super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

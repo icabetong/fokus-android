@@ -16,9 +16,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
-import kotlinx.android.synthetic.main.fragment_event.actionButton
-import kotlinx.android.synthetic.main.fragment_event.itemEmptyView
-import kotlinx.android.synthetic.main.fragment_event.recyclerView
+import kotlinx.android.synthetic.main.fragment_event.*
 
 class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 

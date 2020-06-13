@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,10 +16,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_subject.*
-import kotlinx.android.synthetic.main.fragment_subject.actionButton
-import kotlinx.android.synthetic.main.fragment_subject.itemEmptyView
-import kotlinx.android.synthetic.main.fragment_subject.recyclerView
-import kotlinx.android.synthetic.main.fragment_task.*
 
 class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 

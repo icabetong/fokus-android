@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.core.work.event
 
 import android.content.Context
-import android.util.Log
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager

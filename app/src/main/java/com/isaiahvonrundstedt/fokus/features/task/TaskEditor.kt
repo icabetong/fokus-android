@@ -23,15 +23,14 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -136,10 +135,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
                 lifecycleOwner(this@TaskEditor)
                 title(R.string.dialog_select_subject)
                 customListAdapter(adapter)
-                positiveButton(R.string.button_new) {
-                    startActivityForResult(Intent(this@TaskEditor,
-                        SubjectEditor::class.java), SubjectEditor.insertRequestCode)
-                }
             }
         }
 
@@ -241,14 +236,7 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
             attachmentList.add(attachment)
             attachmentChipGroup.addView(createChip(attachment), 0)
-        } else if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
-            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
-
-            subject?.let {
-                viewModel.insert(it)
-            }
-        } else
-            super.onActivityResult(requestCode, resultCode, data)
+        } else super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun createChip(attachment: Attachment): Chip {

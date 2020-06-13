@@ -5,13 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.notifications.Notification
-import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
-import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 

@@ -1,10 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.core.work
 
-import android.app.Application
 import android.content.Context
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 

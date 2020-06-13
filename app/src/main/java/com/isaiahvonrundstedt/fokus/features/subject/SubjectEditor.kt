@@ -20,7 +20,6 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import org.joda.time.DateTimeConstants

@@ -3,6 +3,8 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
@@ -18,6 +20,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import org.joda.time.DateTimeConstants
@@ -212,6 +215,33 @@ class SubjectEditor: BaseEditor() {
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return if (requestCode == updateRequestCode)
+            super.onCreateOptionsMenu(menu)
+        else false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete -> {
+                MaterialDialog(this).show {
+                    title(R.string.dialog_confirm_deletion_title)
+                    message(R.string.dialog_confirm_deletion_summary)
+                    positiveButton(R.string.button_delete) {
+                        // Pass the intent to the parent activity
+                        val data = Intent()
+                        data.putExtra(extraSubject, subject)
+                        setResult(RESULT_DELETE, data)
+                        supportFinishAfterTransition()
+                    }
+                    negativeButton(R.string.button_cancel)
+                }
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     companion object {

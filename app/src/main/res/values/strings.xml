@@ -14,6 +14,7 @@
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Clear Items</string>
+    <string name="menu_delete">@string/button_delete</string>
 
     <string name="navigation_tasks">Tasks</string>
     <string name="navigation_events">Events</string>
@@ -26,6 +27,8 @@
     <string name="button_undo">Undo</string>
     <string name="button_continue">Continue</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_cancel">Cancel</string>
 
     <string name="empty_view_no_subjects_title">You have no subjects added</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -57,6 +60,8 @@
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
+    <string name="dialog_confirm_deletion_title">Confirm Deletion?</string>
+    <string name="dialog_confirm_deletion_summary">This action cannot be undone.</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>

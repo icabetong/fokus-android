@@ -13,9 +13,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_subject.*
+import kotlinx.android.synthetic.main.fragment_subject.actionButton
+import kotlinx.android.synthetic.main.fragment_subject.itemEmptyView
+import kotlinx.android.synthetic.main.fragment_subject.recyclerView
+import kotlinx.android.synthetic.main.fragment_task.*
 
 class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
@@ -91,13 +96,21 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
         if (requestCode == SubjectEditor.insertRequestCode
                 || requestCode == SubjectEditor.updateRequestCode) {
 
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
 
                 subject?.let {
-                    if (requestCode == SubjectEditor.insertRequestCode)
-                        viewModel.insert(it)
-                    else viewModel.update(it)
+                    if (resultCode == BaseEditor.RESULT_OK) {
+                        if (requestCode == SubjectEditor.insertRequestCode)
+                            viewModel.insert(it)
+                        else viewModel.update(it)
+                    } else {
+                        viewModel.remove(it)
+                        createSnackbar(recyclerView, R.string.feedback_subject_removed).apply {
+                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                            show()
+                        }
+                    }
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +13,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
-import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_event.actionButton
+import kotlinx.android.synthetic.main.fragment_event.itemEmptyView
+import kotlinx.android.synthetic.main.fragment_event.recyclerView
 
 class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
@@ -91,13 +93,22 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
         if (requestCode == EventEditor.insertRequestCode ||
                 requestCode == EventEditor.updateRequestCode) {
 
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val event: Event? = data?.getParcelableExtra(EventEditor.extraEvent)
 
                 event?.let {
-                    if (requestCode == EventEditor.insertRequestCode)
-                        viewModel.insert(it)
-                    else viewModel.update(it)
+                    if (resultCode == BaseEditor.RESULT_OK) {
+                        if (requestCode == EventEditor.insertRequestCode)
+                            viewModel.insert(it)
+                        else viewModel.update(it)
+                    } else {
+                        viewModel.remove(it)
+
+                        createSnackbar(recyclerView, R.string.feedback_event_removed).apply {
+                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                            show()
+                        }
+                    }
                 }
             }
         }

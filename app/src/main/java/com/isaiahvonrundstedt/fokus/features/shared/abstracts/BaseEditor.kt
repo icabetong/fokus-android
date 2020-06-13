@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 import android.app.Activity
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -33,6 +34,11 @@ abstract class BaseEditor: BaseActivity() {
         super.supportFinishAfterTransition()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_editor, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -45,6 +51,11 @@ abstract class BaseEditor: BaseActivity() {
 
     protected fun createSnackbar(view: View, @StringRes id: Int): Snackbar {
         return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
+    }
+
+    companion object {
+        const val RESULT_OK = Activity.RESULT_OK
+        const val RESULT_DELETE = 2
     }
 
 }

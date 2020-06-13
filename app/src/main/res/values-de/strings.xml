@@ -14,6 +14,7 @@
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Artikel löschen</string>
+    <string name="menu_delete">@string/button_delete</string>
 
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
@@ -26,6 +27,8 @@
     <string name="button_undo">Rückgängig machen</string>
     <string name="button_continue">Fortfahren</string>
     <string name="button_mark_as_finished">Als beendet markieren</string>
+    <string name="button_delete">Löschen</string>
+    <string name="button_cancel">Abbrechen</string>
 
     <string name="empty_view_no_subjects_title">Sie haben keine Themen hinzugefügt</string>
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
@@ -54,6 +57,8 @@
     <string name="dialog_choose_theme">Thema wählen</string>
     <string name="dialog_your_name_title">Wie sollen wir Sie nennen?</string>
     <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
+    <string name="dialog_confirm_deletion_title">Löschung bestätigen?</string>
+    <string name="dialog_confirm_deletion_summary">Diese Aktion kann nicht rückgängig gemacht werden.</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>

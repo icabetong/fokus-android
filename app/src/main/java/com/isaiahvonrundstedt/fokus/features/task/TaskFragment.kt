@@ -18,6 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_task.*
@@ -119,14 +120,22 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         if (requestCode == TaskEditor.insertRequestCode
                 || requestCode == TaskEditor.updateRequestCode) {
 
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val task: Task? = data?.getParcelableExtra(TaskEditor.extraTask)
                 val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.extraAttachments)
 
                 task?.let {
-                    if (requestCode == TaskEditor.insertRequestCode)
-                        viewModel.insert(it, attachments ?: emptyList())
-                    else viewModel.update(it, attachments ?: emptyList())
+                    if (resultCode == BaseEditor.RESULT_OK) {
+                        if (requestCode == TaskEditor.insertRequestCode)
+                            viewModel.insert(it, attachments ?: emptyList())
+                        else viewModel.update(it, attachments ?: emptyList())
+                    } else {
+                        viewModel.remove(it)
+                        createSnackbar(recyclerView, R.string.feedback_task_removed).apply {
+                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                            show()
+                        }
+                    }
                 }
             }
         }

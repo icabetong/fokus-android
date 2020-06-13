@@ -38,7 +38,6 @@
     <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material">
         <item name="preferenceCategoryTitleTextAppearance">@style/Fokus.TextAppearance.Preference.Group</item>
     </style>
-
     <style name="Fokus.Component.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorSecondary">@color/colorPrimary</item>
@@ -47,11 +46,9 @@
         <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text</item>
         <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text</item>
     </style>
-
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-
     <style name="Fokus.Component.BottomSheet.Bridge" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
@@ -63,7 +60,6 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
-
     <style name="Fokus.Component.BottomSheet.Base" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/shape_bottom_sheet</item>
         <item name="android:layout_marginStart">@dimen/bottom_sheet_margin_horizontal</item>
@@ -73,7 +69,6 @@
     <style name="Fokus.Widget.AppBar" parent="Widget.MaterialComponents.AppBarLayout.Surface">
         <item name="android:background">@color/colorToolbarBackground</item>
     </style>
-
     <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="android:background">@color/colorToolbarBackground</item>
         <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
@@ -82,24 +77,19 @@
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
         <item name="maxButtonHeight">48dp</item>
     </style>
-
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:tint">@color/colorOnSurface</item>
         <item name="android:minWidth">48dp</item>
     </style>
-
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:tint">@color/colorOnSurface</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
-
     <style name="Fokus.Widget.NavigationView" parent="Widget.MaterialComponents.BottomNavigationView"/>
-
     <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
-
     <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="checkedIconTint">@color/colorOnSurface</item>
     </style>
@@ -124,20 +114,19 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">24sp</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body.Medium">
-        <item name="android:textSize">14sp</item>
+    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
+        <item name="android:letterSpacing">0.1</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">
-        <item name="android:letterSpacing">0.1</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Editor.Hint">
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body">

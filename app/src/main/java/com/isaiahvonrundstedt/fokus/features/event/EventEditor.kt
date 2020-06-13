@@ -3,6 +3,8 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
@@ -24,6 +26,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
+import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
@@ -165,7 +168,7 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             // Send the data back to the parent activity
             val data = Intent()
             data.putExtra(extraEvent, event)
-            setResult(Activity.RESULT_OK, data)
+            setResult(RESULT_OK, data)
             supportFinishAfterTransition()
         }
 
@@ -200,6 +203,33 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             }
         } else
             super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return if (requestCode == updateRequestCode)
+            super.onCreateOptionsMenu(menu)
+        else false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete -> {
+                MaterialDialog(this).show {
+                    title(R.string.dialog_confirm_deletion_title)
+                    message(R.string.dialog_confirm_deletion_summary)
+                    positiveButton(R.string.button_delete) {
+                        // Send the data back to the parent activity
+                        val data = Intent()
+                        data.putExtra(extraEvent, event)
+                        setResult(RESULT_DELETE, data)
+                        supportFinishAfterTransition()
+                    }
+                    negativeButton(R.string.button_cancel)
+                }
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     companion object {

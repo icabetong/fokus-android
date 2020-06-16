@@ -10,7 +10,7 @@
         <item name="android:navigationBarColor">@color/colorSystemBarBackground</item>
     </style>
 
-    <style name="Fokus.Theme.Core.Navigation" parent="Fokus.Theme.Core">
+    <style name="Fokus.Theme.Core.Navigation">
         <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:navigationBarColor">@color/colorSurface</item>

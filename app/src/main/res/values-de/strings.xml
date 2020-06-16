@@ -15,6 +15,7 @@
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Artikel löschen</string>
     <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_new">@string/button_new</string>
 
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>

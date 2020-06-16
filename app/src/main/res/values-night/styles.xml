@@ -10,7 +10,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Fokus.Theme.Core.Navigation" parent="Fokus.Theme.Core">
+    <style name="Fokus.Theme.Core.Navigation">
         <item name="android:navigationBarColor">@color/colorSurface</item>
     </style>
 

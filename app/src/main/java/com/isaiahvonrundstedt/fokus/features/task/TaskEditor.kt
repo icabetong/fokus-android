@@ -14,13 +14,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
@@ -29,9 +25,8 @@ import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
+import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import org.joda.time.DateTime
@@ -39,20 +34,14 @@ import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
+class TaskEditor: BaseEditor() {
 
     private var requestCode = 0
     private var task = Task()
-
     private var subject: Subject? = null
-    private var subjectDialog: MaterialDialog? = null
 
     private val attachmentRequestCode = 32
     private val attachmentList = ArrayList<Attachment>()
-    private val adapter = SubjectListAdapter(this)
-    private val viewModel: SubjectViewModel by lazy {
-        ViewModelProvider(this).get(SubjectViewModel::class.java)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +64,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             setTransitionName(nameEditText, TaskAdapter.transitionNameID + id)
             setTransitionName(dueDateTextView, TaskAdapter.transitionDateID + id)
         }
-
-        viewModel.fetch()?.observe(this, Observer { items ->
-            adapter.submitList(items)
-        })
 
         prioritySwitch.changeTextColorWhenChecked()
 
@@ -131,11 +116,9 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(this, BottomSheet()).show {
-                lifecycleOwner(this@TaskEditor)
-                title(R.string.dialog_select_subject)
-                customListAdapter(adapter)
-            }
+            startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
+                SubjectSelectorActivity.requestCode)
+            overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
         }
 
         attachmentChip.setOnClickListener {
@@ -191,25 +174,6 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
     }
 
-    // Item selection callback for the subject dialog
-    override fun onItemSelected(subject: Subject) {
-        clearButton.isVisible = true
-        task.subjectID = subject.id
-        this.subject = subject
-
-        with(subjectTextView) {
-            text = subject.code
-            setTextColorFromResource(R.color.colorPrimaryText)
-            ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
-                this.setCompoundDrawableAtStart(it)
-            }
-        }
-        ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-            subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
-        }
-        subjectDialog?.dismiss()
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         if (requestCode == PermissionManager.storageRequestCode
@@ -236,6 +200,25 @@ class TaskEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
             attachmentList.add(attachment)
             attachmentChipGroup.addView(createChip(attachment), 0)
+        } else if (requestCode == SubjectSelectorActivity.requestCode
+                && resultCode == Activity.RESULT_OK) {
+
+            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.extraSubject)?.let { subject ->
+                clearButton.isVisible = true
+                task.subjectID = subject.id
+                this.subject = subject
+
+                with(subjectTextView) {
+                    text = subject.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                        this.setCompoundDrawableAtStart(it)
+                    }
+                }
+                ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
+                    subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
+                }
+            }
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 

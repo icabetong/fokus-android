@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -8,38 +9,27 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.afollestad.materialdialogs.list.customListAdapter
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColorWhenChecked
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.adapters.SubjectListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
+import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
-class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
+class EventEditor: BaseEditor() {
 
     private var requestCode = 0
     private var event = Event()
     private var subject: Subject? = null
-    private var subjectDialog: MaterialDialog? = null
-
-    private val adapter = SubjectListAdapter(this)
-    private val viewModel: SubjectViewModel by lazy {
-        ViewModelProvider(this).get(SubjectViewModel::class.java)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +48,6 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
             setTransitionName(nameEditText, EventAdapter.transitionEventName + event.eventID)
             setTransitionName(locationEditText, EventAdapter.transitionLocation + event.eventID)
         }
-
-        viewModel.fetch()?.observe(this, Observer { items ->
-            adapter.submitList(items)
-        })
 
         prioritySwitch.changeTextColorWhenChecked()
 
@@ -113,11 +99,9 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
         }
 
         subjectTextView.setOnClickListener {
-            subjectDialog = MaterialDialog(this, BottomSheet()).show {
-                lifecycleOwner(this@EventEditor)
-                title(R.string.dialog_select_subject)
-                customListAdapter(adapter)
-            }
+            startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
+                SubjectSelectorActivity.requestCode)
+            overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
         }
 
         clearButton.setOnClickListener {
@@ -167,24 +151,27 @@ class EventEditor: BaseEditor(), SubjectListAdapter.ItemSelected {
 
     }
 
-    override fun onItemSelected(subject: Subject) {
-        clearButton.isVisible = true
-        event.subjectID = subject.id
-        this.subject = subject
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == SubjectSelectorActivity.requestCode && resultCode == Activity.RESULT_OK) {
+            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.extraSubject)?.let { subject ->
+                clearButton.isVisible = true
+                event.subjectID = subject.id
+                this.subject = subject
 
-        with(subjectTextView) {
-            text = subject.code
-            setTextColorFromResource(R.color.colorPrimaryText)
-            ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
-                setCompoundDrawableAtStart(subject.tintDrawable(it))
+                with(subjectTextView) {
+                    text = subject.code
+                    setTextColorFromResource(R.color.colorPrimaryText)
+                    ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                        setCompoundDrawableAtStart(subject.tintDrawable(it))
+                    }
+                }
+                ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
+                    subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
+                }
+                subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                subjectTextView.text = subject.code
             }
-        }
-        ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-            subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
-        }
-        subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
-        subjectTextView.text = subject.code
-        subjectDialog?.dismiss()
+        } else super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

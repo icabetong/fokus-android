@@ -16,7 +16,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Subject, SubjectAdapter.SubjectViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_card,
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,
             parent, false)
         return SubjectViewHolder(rowView, actionListener)
     }

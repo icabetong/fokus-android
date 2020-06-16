@@ -34,6 +34,8 @@
         <activity android:name=".features.event.EventEditor"
             android:windowSoftInputMode="adjustResize"/>
 
+        <activity android:name=".features.subject.selector.SubjectSelectorActivity"/>
+
         <!-- OSSLicenses -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"

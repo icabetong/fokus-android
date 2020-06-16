@@ -87,7 +87,7 @@
                     android:text="@string/field_priority"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/prioritySwitch"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/listPreferredItemHeightSmall"

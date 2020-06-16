@@ -29,13 +29,13 @@
         app:title="@string/settings_group_sound"
         app:initialExpandedChildrenCount="1">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="@string/key_sound"
             app:title="@string/settings_completion_sounds_title"
             app:summary="@string/settings_completion_sounds_summary"
             app:defaultValue="true"/>
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="@string/key_custom_sound"
             app:title="@string/settings_custom_notification_sound_title"
             app:summary="@string/settings_custom_notification_sound_summary"
@@ -63,7 +63,7 @@
             app:key="@string/key_reminder_time"
             app:title="@string/settings_remind_me_in_time_of_day"/>
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="@string/key_task_reminder"
             app:title="@string/settings_when_nearing_due_title"
             app:summary="@string/settings_when_nearing_due_summary"
@@ -79,7 +79,7 @@
             app:dialogTitle="@string/dialog_select_notification_interval"
             app:dependency="@string/key_task_reminder"/>
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="@string/key_event_reminder"
             app:title="@string/settings_incoming_events_title"
             app:summary="@string/settings_incoming_events_summary"

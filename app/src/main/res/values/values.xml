@@ -27,6 +27,7 @@
         <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
         <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
+        <item name="switchStyle">@style/Fokus.Widget.Switch</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -93,6 +94,10 @@
     <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="checkedIconTint">@color/colorOnSurface</item>
     </style>
+    <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/selector_switch_thumb</item>
+        <item name="android:track">@drawable/selector_switch_track</item>
+    </style>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
@@ -115,7 +120,7 @@
         <item name="android:textSize">24sp</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.08</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>

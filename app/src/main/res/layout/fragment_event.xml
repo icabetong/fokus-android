@@ -28,7 +28,7 @@
             app:srcCompat="@drawable/ic_event"
             app:tint="@color/colorOnSurface"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -37,7 +37,7 @@
             android:textSize="18sp"
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

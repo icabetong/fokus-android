@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
@@ -22,6 +23,14 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
+import kotlinx.android.synthetic.main.layout_editor_event.actionButton
+import kotlinx.android.synthetic.main.layout_editor_event.clearButton
+import kotlinx.android.synthetic.main.layout_editor_event.nameEditText
+import kotlinx.android.synthetic.main.layout_editor_event.notesEditText
+import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
+import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
+import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
+import kotlinx.android.synthetic.main.layout_editor_task.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -105,6 +114,9 @@ class EventEditor: BaseEditor() {
         }
 
         clearButton.setOnClickListener {
+            it.startAnimation(animation)
+            subjectTextView.startAnimation(animation)
+
             it.isVisible = false
             event.subjectID = null
             with(subjectTextView) {

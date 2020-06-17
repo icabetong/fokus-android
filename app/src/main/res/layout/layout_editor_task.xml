@@ -64,7 +64,9 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
-                    android:textColor="@color/colorSecondaryText"/>
+                    android:textColor="@color/colorSecondaryText"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawablePadding="16dp"/>
 
             </LinearLayout>
 
@@ -76,6 +78,26 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_due_date"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <TextView
+                    android:id="@+id/dueDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_subject"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
@@ -116,30 +138,17 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_due_date"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+            </LinearLayout>
 
-                <TextView
-                    android:id="@+id/dueDateTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Fokus.LinearLayout.Editor">
+
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_attachments"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />

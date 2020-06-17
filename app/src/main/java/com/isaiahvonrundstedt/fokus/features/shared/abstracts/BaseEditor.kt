@@ -6,6 +6,8 @@ import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -52,6 +54,9 @@ abstract class BaseEditor: BaseActivity() {
     protected fun createSnackbar(view: View, @StringRes id: Int): Snackbar {
         return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
     }
+
+    protected val animation: Animation
+        get() { return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in) }
 
     companion object {
         const val RESULT_OK = Activity.RESULT_OK

@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.Manifest
+import android.animation.LayoutTransition
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,11 +10,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
+import androidx.transition.TransitionManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -134,6 +138,9 @@ class TaskEditor: BaseEditor() {
         }
 
         clearButton.setOnClickListener {
+            it.startAnimation(animation)
+            subjectTextView.startAnimation(animation)
+
             it.isVisible = false
             this.task.subjectID = null
             with(subjectTextView) {
@@ -145,7 +152,7 @@ class TaskEditor: BaseEditor() {
 
         actionButton.setOnClickListener {
 
-            // This three ifs checks if the user have entered the
+            // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,
             // show a snackbar feedback then direct the user's
             // attention to the field. Then return to stop the execution

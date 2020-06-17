@@ -14,7 +14,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:orientation="vertical">
 
             <include layout="@layout/layout_appbar_editor"/>
@@ -39,46 +38,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:paddingVertical="16dp"
-                android:orientation="vertical"
-                android:background="@drawable/shape_surface_background">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_notes"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <EditText
-                    android:id="@+id/notesEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:hint="@string/field_not_set"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:minLines="2"
-                    android:maxLines="6"
-                    android:scrollbars="vertical"
-                    android:importantForAutofill="no"
-                    android:background="@android:color/transparent"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:paddingVertical="16dp"
-                android:orientation="vertical"
-                android:background="@drawable/shape_surface_background">
+                style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -105,56 +65,12 @@
                     android:text="@string/helper_this_is_important"
                     android:textColor="@color/colorSecondaryText"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_location"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <EditText
-                    android:id="@+id/locationEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:hint="@string/field_not_set"
-                    android:inputType="textCapWords"
-                    android:background="@android:color/transparent"
-                    android:autofillHints="location"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_schedule"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <TextView
-                    android:id="@+id/scheduleTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:clickable="true"
-                    android:focusable="true"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:paddingVertical="16dp"
-                android:orientation="vertical"
-                android:background="@drawable/shape_surface_background">
+                style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -198,6 +114,77 @@
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_schedule"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <TextView
+                    android:id="@+id/scheduleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/field_not_set"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_location"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <EditText
+                    android:id="@+id/locationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:hint="@string/field_not_set"
+                    android:inputType="textCapWords"
+                    android:background="@android:color/transparent"
+                    android:autofillHints="location"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Fokus.LinearLayout.Editor">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_notes"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <EditText
+                    android:id="@+id/notesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?attr/listPreferredItemHeightSmall"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:hint="@string/field_not_set"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:minLines="2"
+                    android:maxLines="6"
+                    android:scrollbars="vertical"
+                    android:importantForAutofill="no"
+                    android:background="@android:color/transparent"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
             </LinearLayout>
 

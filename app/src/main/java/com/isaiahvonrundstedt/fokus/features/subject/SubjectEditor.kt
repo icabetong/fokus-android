@@ -233,7 +233,7 @@ class SubjectEditor: BaseEditor() {
                         val data = Intent()
                         data.putExtra(extraSubject, subject)
                         setResult(RESULT_DELETE, data)
-                        supportFinishAfterTransition()
+                        finish()
                     }
                     negativeButton(R.string.button_cancel)
                 }

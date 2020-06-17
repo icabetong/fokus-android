@@ -28,8 +28,8 @@
                 android:id="@+id/taskNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:layout_marginStart="16dp"
+                android:textSize="18sp"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Title"
                 tools:text="Feed the Cat"/>
 

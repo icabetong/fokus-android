@@ -4,13 +4,13 @@
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Themen</string>
-    <string name="activity_notifications">Ihre Benachrichtigungen</string>
+    <string name="activity_notifications">Ihre Benachrichtigungsgeschichte</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_notifications">Benachrichtigungen</string>
+    <string name="menu_notifications">Geschichte der Benachrichtigung</string>
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Artikel löschen</string>

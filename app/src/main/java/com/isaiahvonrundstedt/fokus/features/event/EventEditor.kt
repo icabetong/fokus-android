@@ -191,7 +191,7 @@ class EventEditor: BaseEditor() {
                         val data = Intent()
                         data.putExtra(extraEvent, event)
                         setResult(RESULT_DELETE, data)
-                        supportFinishAfterTransition()
+                        finish()
                     }
                     negativeButton(R.string.button_cancel)
                 }

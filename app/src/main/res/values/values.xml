@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Fokus"/>
     <!-- Base application theme -->
     <style name="Fokus.Theme" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -31,6 +32,8 @@
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
+        <item name="android:textAppearanceListItem">@style/Fokus.TextAppearance.List.Title</item>
+        <item name="android:textAppearanceListItemSecondary">@style/Fokus.TextAppearance.List.Body</item>
 
         <item name="md_background_color">@color/colorSurface</item>
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
@@ -95,9 +98,10 @@
         <item name="checkedIconTint">@color/colorOnSurface</item>
     </style>
     <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="track">@drawable/selector_switch_track</item>
         <item name="android:thumb">@drawable/selector_switch_thumb</item>
-        <item name="android:track">@drawable/selector_switch_track</item>
     </style>
+
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
@@ -135,8 +139,9 @@
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">
         <item name="android:textSize">14sp</item>
@@ -144,6 +149,20 @@
     </style>
     <style name="Fokus.TextAppearance.List.Meta" parent="Fokus.TextAppearance"/>
     <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>
+
+    <!-- Layout Styles -->
+    <style name="Fokus.LinearLayout">
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="Fokus.LinearLayout.Editor">
+        <item name="android:background">@drawable/shape_surface_background</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:layout_marginStart">@dimen/activity_padding</item>
+        <item name="android:layout_marginEnd">@dimen/activity_padding</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#0277bd</color>

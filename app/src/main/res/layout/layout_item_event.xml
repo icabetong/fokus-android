@@ -59,6 +59,7 @@
                 android:id="@+id/nameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/locationView"

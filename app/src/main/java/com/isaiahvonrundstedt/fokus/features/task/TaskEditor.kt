@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
@@ -275,7 +276,7 @@ class TaskEditor: BaseEditor() {
                         data.putExtra(extraTask, task)
                         data.putParcelableArrayListExtra(extraAttachments, attachmentList.toArrayList())
                         setResult(RESULT_DELETE, data)
-                        supportFinishAfterTransition()
+                        finish()
                     }
                     negativeButton(R.string.button_cancel)
                 }

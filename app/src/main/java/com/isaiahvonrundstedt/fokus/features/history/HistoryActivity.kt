@@ -54,7 +54,7 @@ class HistoryActivity: BaseActivity(), BaseAdapter.ActionListener {
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_notification_removed,
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_history_removed,
                         Snackbar.LENGTH_SHORT)
                     snackbar.setAction(R.string.button_undo) {
                         viewModel.insert(t)

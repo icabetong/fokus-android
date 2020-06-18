@@ -81,7 +81,7 @@
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
-    <string name="feedback_notification_removed">Notification removed</string>
+    <string name="feedback_history_removed">History removed</string>
     <string name="feedback_task_removed">Task removed</string>
     <string name="feedback_task_marked_as_finished">Task marked as finished</string>
     <string name="feedback_event_removed">Event removed</string>

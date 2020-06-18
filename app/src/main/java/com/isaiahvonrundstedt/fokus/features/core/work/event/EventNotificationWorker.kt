@@ -6,7 +6,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -23,16 +23,16 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
         val currentTime = DateTime.now()
 
         val event = convertDataToEvent(inputData)
-        val notification = Notification().apply {
+        val notification = History().apply {
             title = event.name
             content = event.formatSchedule(applicationContext)
-            type = Notification.typeEventReminder
+            type = History.typeEventReminder
             data = event.eventID
             isPersistent = event.isImportant
         }
 
         val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        notificationRequest.setInputData(convertNotificationToData(notification))
+        notificationRequest.setInputData(convertHistoryToData(notification))
 
         if (notification.isPersistent) {
             WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID,

@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -20,7 +21,7 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -59,14 +60,14 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         private const val extraEventSchedule = "schedule"
         private const val extraEventIsImportant = "isImportant"
 
-        fun convertNotificationToData(notification: Notification): Data {
+        fun convertHistoryToData(history: History): Data {
             return Data.Builder().apply {
-                putString(extraNotificationID, notification.id)
-                putString(extraNotificationTitle, notification.title)
-                putString(extraNotificationContent, notification.content)
-                putString(extraNotificationData, notification.data)
-                putInt(extraNotificationType, notification.type)
-                putBoolean(extraNotificationIsPersistent, notification.isPersistent)
+                putString(extraNotificationID, history.id)
+                putString(extraNotificationTitle, history.title)
+                putString(extraNotificationContent, history.content)
+                putString(extraNotificationData, history.data)
+                putInt(extraNotificationType, history.type)
+                putBoolean(extraNotificationIsPersistent, history.isPersistent)
             }.build()
         }
 
@@ -92,13 +93,13 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             }.build()
         }
 
-        fun convertDataToNotification(workerData: Data): Notification {
-            return Notification().apply {
+        fun convertDataToHistory(workerData: Data): History {
+            return History().apply {
                 id = workerData.getString(extraNotificationID)!!
                 title = workerData.getString(extraNotificationTitle)
                 content = workerData.getString(extraNotificationContent)
                 data = workerData.getString(extraNotificationData)
-                type = workerData.getInt(extraNotificationType, Notification.typeGeneric)
+                type = workerData.getInt(extraNotificationType, History.typeGeneric)
                 isPersistent = workerData.getBoolean(extraNotificationIsPersistent, false)
             }
         }
@@ -126,37 +127,37 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         }
     }
 
-    protected fun sendNotification(notification: Notification, @Nullable tag: String? = null) {
-        createNotificationChannel(notification.type)
-        if (notification.type == Notification.typeTaskReminder) {
+    protected fun sendNotification(history: History, @Nullable tag: String? = null) {
+        createNotificationChannel(history.type)
+        if (history.type == History.typeTaskReminder) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
-                    putExtra(NotificationActionService.extraTaskID, notification.data)
-                    putExtra(NotificationActionService.extraIsPersistent, notification.isPersistent)
+                    putExtra(NotificationActionService.extraTaskID, history.data)
+                    putExtra(NotificationActionService.extraIsPersistent, history.isPersistent)
                     action = NotificationActionService.action
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
            manager.notify(tag ?: taskNotificationTag, taskNotificationID,
-                createNotification(notification, taskNotificationChannelID,
+                createNotification(history, taskNotificationChannelID,
                     NotificationCompat.Action(R.drawable.ic_check,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
-        } else if (notification.type == Notification.typeEventReminder)
+        } else if (history.type == History.typeEventReminder)
             manager.notify(tag ?: eventNotificationTag, eventNotificationID,
-                createNotification(notification, eventNotificationChannelID))
+                createNotification(history, eventNotificationChannelID))
         else manager.notify(tag ?: genericNotificationTag, genericNotificationID,
-            createNotification(notification, genericNotificationChannelID))
+            createNotification(history, genericNotificationChannelID))
     }
 
     private fun createNotificationChannel(type: Int) {
         with(NotificationManagerCompat.from(applicationContext)) {
             val id = when (type) {
-                Notification.typeTaskReminder -> taskNotificationChannelID
-                Notification.typeEventReminder -> eventNotificationChannelID
+                History.typeTaskReminder -> taskNotificationChannelID
+                History.typeEventReminder -> eventNotificationChannelID
                 else -> genericNotificationChannelID
             }
             val resID = when (type) {
-                Notification.typeTaskReminder -> R.string.notification_channel_task_reminders
-                Notification.typeEventReminder -> R.string.notification_channel_event_reminders
+                History.typeTaskReminder -> R.string.notification_channel_task_reminders
+                History.typeEventReminder -> R.string.notification_channel_event_reminders
                 else -> R.string.notification_channel_generic
             }
 
@@ -175,15 +176,15 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         }
     }
 
-    private fun createNotification(notification: Notification?, id: String,
-                                   @Nullable action: NotificationCompat.Action? = null): android.app.Notification {
+    private fun createNotification(history: History?, id: String,
+                                   @Nullable action: NotificationCompat.Action? = null): Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
             setSmallIcon(R.drawable.ic_done_all)
             setContentIntent(contentIntent)
-            setContentTitle(notification?.title)
-            setContentText(notification?.content)
-            setOngoing(notification?.isPersistent == true)
+            setContentTitle(history?.title)
+            setContentText(history?.content)
+            setOngoing(history?.isPersistent == true)
             if (action != null) addAction(action)
             color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
         }.build()

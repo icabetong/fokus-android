@@ -11,19 +11,19 @@ import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 @Database(entities = [Subject::class, Task::class, Attachment::class,
-    Notification::class, Event::class], version = 1, exportSchema = false)
+    History::class, Event::class], version = 1, exportSchema = false)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun tasks(): TaskDAO
     abstract fun attachments(): AttachmentDAO
     abstract fun subjects(): SubjectDAO
-    abstract fun notifications(): NotificationDAO
+    abstract fun notifications(): HistoryDAO
     abstract fun events(): EventDAO
 
     companion object {

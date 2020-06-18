@@ -7,8 +7,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.database.repository.NotificationRepository
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.database.repository.HistoryRepository
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -25,7 +25,7 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
 
     private var database = AppDatabase.getInstance(applicationContext)
     private val dataStore by lazy {
-        NotificationRepository.getInstance(context.applicationContext as Application)
+        HistoryRepository.getInstance(context.applicationContext as Application)
     }
 
     private fun scheduleNextReminder() {
@@ -40,13 +40,13 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
         scheduleNextReminder()
 
         val taskSize: Int = database!!.tasks().fetchCount()
-        var notification: Notification? = null
+        var history: History? = null
         if (taskSize > 0) {
-            notification = Notification().apply {
+            history = History().apply {
                 title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
                     taskSize)
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
-                type = Notification.typeGeneric
+                type = History.typeGeneric
                 dateTimeTriggered = DateTime.now()
             }
         }
@@ -56,9 +56,9 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()
 
-        if (notification != null) {
-            dataStore.insert(notification)
-            sendNotification(notification)
+        if (history != null) {
+            dataStore.insert(history)
+            sendNotification(history)
         }
 
         return Result.success()

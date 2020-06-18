@@ -26,7 +26,7 @@
             android:theme="@style/Fokus.Theme.Core.Navigation" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.about.AboutActivity" />
-        <activity android:name=".features.notifications.NotificationActivity" />
+        <activity android:name=".features.history.HistoryActivity" />
         <activity android:name=".features.subject.SubjectEditor"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.task.TaskEditor"

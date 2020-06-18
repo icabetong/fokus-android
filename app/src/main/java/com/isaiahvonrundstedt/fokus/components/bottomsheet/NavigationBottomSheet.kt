@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
-import com.isaiahvonrundstedt.fokus.features.notifications.NotificationActivity
+import com.isaiahvonrundstedt.fokus.features.history.HistoryActivity
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
@@ -35,7 +35,7 @@ class NavigationBottomSheet: BaseBottomSheet(), NavigationAdapter.NavigationList
 
     override fun onNavigate(id: Int) {
         when (id) {
-            R.id.action_notifications -> startActivity(Intent(context, NotificationActivity::class.java))
+            R.id.action_history -> startActivity(Intent(context, HistoryActivity::class.java))
             R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
             R.id.action_about -> startActivity(Intent(context, AboutActivity::class.java))
         }

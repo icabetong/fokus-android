@@ -2,7 +2,7 @@ package com.isaiahvonrundstedt.fokus.components.extensions
 
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -25,7 +25,7 @@ fun <T> List<T>.getUsingID(id: String): T? {
         if (it is Attachment)
             if (it.id == id) return it
 
-        if (it is Notification)
+        if (it is History)
             if (it.id == id) return it
     }
     return null

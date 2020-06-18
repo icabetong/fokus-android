@@ -8,7 +8,7 @@ import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
-import com.isaiahvonrundstedt.fokus.features.notifications.Notification
+import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -28,17 +28,17 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
 
         val task = convertDataToTask(inputData)
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at
-        val notification = Notification().apply {
+        val notification = History().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
-            type = Notification.typeTaskReminder
+            type = History.typeTaskReminder
             isPersistent = task.isImportant
             data = task.taskID
         }
 
         val notificationRequest = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        notificationRequest.setInputData(convertNotificationToData(notification))
+        notificationRequest.setInputData(convertHistoryToData(notification))
 
         if (notification.isPersistent) {
             WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID,

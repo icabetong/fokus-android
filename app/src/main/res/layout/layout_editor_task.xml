@@ -45,40 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
-                    android:text="@string/field_priority"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/prioritySwitch"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/field_mark_as_important"
-                    android:textColor="@color/colorSecondaryText"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/helper_this_is_important"
-                    android:textColor="@color/colorSecondaryText"
-                    android:drawableStart="@drawable/ic_info"
-                    android:drawablePadding="16dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Fokus.LinearLayout.Editor">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
                     android:text="@string/field_due_date"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
@@ -94,10 +60,16 @@
                     android:text="@string/field_not_set"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Fokus.LinearLayout.Editor">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:paddingHorizontal="16dp"
                     android:text="@string/field_subject"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
@@ -137,6 +109,34 @@
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_priority"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/prioritySwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/field_mark_as_important"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/helper_this_is_important"
+                    android:textColor="@color/colorSecondaryText"
+                    android:drawableStart="@drawable/ic_info"
+                    android:drawablePadding="16dp"/>
 
             </LinearLayout>
 

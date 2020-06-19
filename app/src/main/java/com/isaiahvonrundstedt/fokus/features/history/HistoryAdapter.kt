@@ -17,7 +17,7 @@ class HistoryAdapter(private var actionListener: ActionListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_item_notification, parent, false)
+            .inflate(R.layout.layout_item_history, parent, false)
         return ViewHolder(rowView)
     }
 

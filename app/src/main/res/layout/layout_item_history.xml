@@ -14,26 +14,26 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/tagView"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@null"
+            android:layout_marginStart="8dp"
+            app:srcCompat="@drawable/shape_color_holder"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/shape_color_holder"/>
+            app:tint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="24dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/summaryView"
-            app:layout_constraintStart_toEndOf="@id/tagView"
+            app:layout_constraintStart_toEndOf="@id/iconView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             tools:text="COMSCI 2101"/>
@@ -42,15 +42,24 @@
             android:id="@+id/summaryView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="24dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Body"
             app:layout_constraintTop_toBottomOf="@id/titleView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagView"
+            app:layout_constraintStart_toEndOf="@id/iconView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            tools:text="Web Design and Development"/>
+            tools:text="sample"/>
+
+        <TextView
+            android:id="@+id/dateTimeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Meta"
+            tools:text="h:mm"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

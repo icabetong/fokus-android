@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class HistoryRepository private constructor (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var notifications = database?.notifications()
+    private var histories = database?.histories()
 
     companion object {
         private var instance: HistoryRepository? = null
@@ -25,20 +25,20 @@ class HistoryRepository private constructor (app: Application) {
         }
     }
 
-    fun fetch(): LiveData<List<History>>? = notifications?.fetch()
+    fun fetch(): LiveData<List<History>>? = histories?.fetch()
 
-    fun clear() = GlobalScope.launch { notifications?.clear() }
+    fun clear() = GlobalScope.launch { histories?.clear() }
 
     suspend fun insert(history: History) {
-        notifications?.insert(history)
+        histories?.insert(history)
     }
 
     suspend fun remove(history: History) {
-        notifications?.remove(history)
+        histories?.remove(history)
     }
 
     suspend fun update(history: History) {
-        notifications?.update(history)
+        histories?.update(history)
     }
 
 }

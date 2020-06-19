@@ -16,10 +16,10 @@ interface HistoryDAO {
     @Update
     suspend fun update(history: History)
 
-    @Query("SELECT * FROM notifications")
+    @Query("SELECT * FROM histories")
     fun fetch(): LiveData<List<History>>
 
-    @Query("DELETE FROM notifications")
+    @Query("DELETE FROM histories")
     suspend fun clear()
 
 }

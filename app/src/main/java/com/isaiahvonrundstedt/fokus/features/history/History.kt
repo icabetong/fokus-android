@@ -17,7 +17,7 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
-@Entity(tableName = "notifications")
+@Entity(tableName = "histories")
 data class History @JvmOverloads constructor (
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),

@@ -23,7 +23,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun tasks(): TaskDAO
     abstract fun attachments(): AttachmentDAO
     abstract fun subjects(): SubjectDAO
-    abstract fun notifications(): HistoryDAO
+    abstract fun histories(): HistoryDAO
     abstract fun events(): EventDAO
 
     companion object {

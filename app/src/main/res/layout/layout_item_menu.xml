@@ -29,7 +29,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="@dimen/activity_padding"
         android:textColor="@color/colorOnSurface"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iconView"

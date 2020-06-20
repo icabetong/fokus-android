@@ -114,7 +114,6 @@ class EventEditor: BaseEditor() {
         }
 
         clearButton.setOnClickListener {
-            it.startAnimation(animation)
             subjectTextView.startAnimation(animation)
 
             it.isVisible = false

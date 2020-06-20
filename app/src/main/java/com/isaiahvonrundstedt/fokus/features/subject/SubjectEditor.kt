@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.forEach
+import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.color.colorChooser
@@ -138,7 +139,7 @@ class SubjectEditor: BaseEditor() {
         }
 
         tagView.setOnClickListener {
-            MaterialDialog(it.context, BottomSheet()).show {
+            MaterialDialog(it.context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_select_color_tag)
                 colorChooser(colors!!) { _, color ->

@@ -65,9 +65,7 @@ class TaskEditor: BaseEditor() {
             attachmentList.clear()
             attachmentList.addAll(intent.getParcelableArrayListExtra(extraAttachments) ?: emptyList())
 
-            val id = task.taskID
-            setTransitionName(nameEditText, TaskAdapter.transitionNameID + id)
-            setTransitionName(dueDateTextView, TaskAdapter.transitionDateID + id)
+            setTransitionName(nameEditText, TaskAdapter.transitionNameID + task.taskID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()

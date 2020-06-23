@@ -38,7 +38,7 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
 
         viewModel.fetch()?.observe(this, Observer {
             adapter.submitList(it)
-            itemEmptyView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            emptyView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         })
     }
 

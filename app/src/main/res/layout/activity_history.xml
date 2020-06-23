@@ -15,13 +15,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <LinearLayout
-        android:id="@+id/itemEmptyView"
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="@dimen/activity_padding_medium"
-        android:visibility="gone">
+        android:padding="@dimen/activity_padding_medium">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="64dp"

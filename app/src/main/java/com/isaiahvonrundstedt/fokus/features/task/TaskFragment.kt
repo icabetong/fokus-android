@@ -47,7 +47,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
             adapter?.submitList(items)
-            itemEmptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+            emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         })
 
     }

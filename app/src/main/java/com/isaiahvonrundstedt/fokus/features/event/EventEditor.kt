@@ -55,7 +55,6 @@ class EventEditor: BaseEditor() {
             subject = intent.getParcelableExtra(extraSubject)
 
             setTransitionName(nameEditText, EventAdapter.transitionEventName + event.eventID)
-            setTransitionName(locationEditText, EventAdapter.transitionLocation + event.eventID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()

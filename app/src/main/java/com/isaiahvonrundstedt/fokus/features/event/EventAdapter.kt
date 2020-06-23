@@ -47,7 +47,6 @@ class EventAdapter(private var actionListener: ActionListener)
         fun onBind(resource: EventResource) {
             val id = resource.event.eventID
             nameView.transitionName = transitionEventName + id
-            locationView.transitionName = transitionLocation + id
 
             with(resource.event) {
                 locationView.text = location
@@ -69,7 +68,7 @@ class EventAdapter(private var actionListener: ActionListener)
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
-                    mapOf(transitionEventName + id to nameView, transitionLocation + id to locationView))
+                    mapOf(transitionEventName + id to nameView))
             }
         }
     }

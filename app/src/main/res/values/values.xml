@@ -82,11 +82,11 @@
         <item name="maxButtonHeight">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="android:tint">@color/colorOnSurface</item>
+        <item name="tint">@color/colorOnSurface</item>
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/colorOnSurface</item>
+        <item name="tint">@color/colorOnSurface</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
@@ -138,15 +138,12 @@
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Editor.Hint">
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
-    <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body">
-        <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+    <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textSize">16sp</item>
     </style>
-    <style name="Fokus.TextAppearance.List.Title.Strong" parent="Fokus.TextAppearance">
+    <style name="Fokus.TextAppearance.List.Title.Strong" parent="Fokus.TextAppearance.Body">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">
         <item name="android:textSize">14sp</item>

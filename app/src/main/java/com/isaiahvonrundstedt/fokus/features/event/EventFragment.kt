@@ -43,7 +43,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
             adapter?.submitList(items)
-            itemEmptyView.isVisible = items.isEmpty()
+            emptyView.isVisible = items.isEmpty()
         })
     }
 

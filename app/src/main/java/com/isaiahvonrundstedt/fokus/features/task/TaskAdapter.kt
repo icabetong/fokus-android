@@ -49,7 +49,6 @@ class TaskAdapter(private var actionListener: ActionListener)
         fun onBind(resource: TaskResource) {
             val id = resource.task.taskID
             taskNameView.transitionName = transitionNameID + id
-            dueDateView.transitionName = transitionDateID + id
 
             with(resource) {
                 checkBox.isChecked = task.isFinished
@@ -80,7 +79,7 @@ class TaskAdapter(private var actionListener: ActionListener)
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
-                    mapOf(transitionNameID + id to taskNameView, transitionDateID + id to dueDateView))
+                    mapOf(transitionNameID + id to taskNameView))
             }
         }
     }

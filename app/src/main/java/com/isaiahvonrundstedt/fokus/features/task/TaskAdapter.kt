@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -41,7 +42,7 @@ class TaskAdapter(private var actionListener: ActionListener)
         : RecyclerView.ViewHolder(itemView) {
 
         private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
-        private val checkBox: MaterialCheckBox = itemView.findViewById(R.id.checkBox)
+        private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
         private val taskNameView: TextView = itemView.findViewById(R.id.taskNameView)
         private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)

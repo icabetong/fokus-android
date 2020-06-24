@@ -106,7 +106,7 @@
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
         <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans_serif_medium</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>

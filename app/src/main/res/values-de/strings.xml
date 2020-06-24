@@ -108,6 +108,8 @@
     <string name="settings_theme_item_dark">Dunkel</string>
     <string name="settings_theme_item_light">Licht</string>
 
+    <string name="settings_confetti_title">Konfetti</string>
+    <string name="settings_confetti_summary">Konfetti anzeigen, wenn Aufgaben als erledigt markiert sind</string>
     <string name="settings_completion_sounds_title">Vervollständigung klingt</string>
     <string name="settings_completion_sounds_summary">"Spielen Sie einen Ton ab, wenn Sie eine Aufgabe als erledigt markieren "</string>
     <string name="settings_custom_notification_sound_summary">Systembenachrichtigungston überschreiben; wählen Sie unten einen aus, um Ihren eigenen zu verwenden</string>

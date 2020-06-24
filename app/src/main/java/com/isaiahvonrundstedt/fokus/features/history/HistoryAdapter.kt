@@ -31,19 +31,20 @@ class HistoryAdapter(private var actionListener: ActionListener)
                 emptyMap())
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
+    class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
         private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
         private val dateTimeView: TextView = itemView.findViewById(R.id.dateTimeView)
 
-        fun onBind(history: History) {
-            with(history) {
-                titleView.text = title
-                summaryView.text = content
-                dateTimeView.text = formatDateTime()
-                tintDrawable(iconView)
+        override fun <T> onBind(t: T) {
+            with(t) {
+                if (this is History) {
+                    titleView.text = title
+                    summaryView.text = content
+                    dateTimeView.text = formatDateTime()
+                    tintDrawable(iconView)
+                }
             }
         }
     }

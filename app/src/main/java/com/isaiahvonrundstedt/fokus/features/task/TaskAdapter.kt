@@ -4,23 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.addStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.components.extensions.android.removeStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class TaskAdapter(private var actionListener: ActionListener)
     : BaseAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
@@ -39,56 +32,53 @@ class TaskAdapter(private var actionListener: ActionListener)
     }
 
     class TaskViewHolder(itemView: View, private val actionListener: ActionListener)
-        : RecyclerView.ViewHolder(itemView) {
+        : BaseViewHolder(itemView) {
 
-        private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
         private val taskNameView: TextView = itemView.findViewById(R.id.taskNameView)
         private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)
 
-        fun onBind(resource: TaskResource) {
-            val id = resource.task.taskID
-            taskNameView.transitionName = transitionNameID + id
+        override fun <T> onBind(t: T) {
+            with(t) {
+                if (this is TaskResource) {
+                    taskNameView.transitionName = transitionNameID + task.taskID
 
-            with(resource) {
-                checkBox.isChecked = task.isFinished
-                taskNameView.text = task.name
-                dueDateView.text = task.formatDueDate(rootView.context)
+                    with(task) {
+                        checkBox.isChecked = isFinished
+                        taskNameView.text = name
+                        dueDateView.text = formatDueDate(rootView.context)
 
-                subject?.let {
-                    with(subjectView) {
-                        text = it.code
-                        setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
+                        taskNameView.setStrikeThroughEffect(task.isFinished)
+                    }
+
+                    subjectView.isVisible = subject != null
+                    subject?.let {
+                        with(subjectView) {
+                            text = it.code
+                            setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
+                        }
+                    }
+
+                    checkBox.setOnClickListener { view ->
+                        view as CheckBox
+                        task.isFinished = view.isChecked
+                        taskNameView.setStrikeThroughEffect(view.isChecked)
+                        actionListener.onActionPerformed(this, ActionListener.Action.MODIFY,
+                            emptyMap())
+                    }
+
+                    rootView.setOnClickListener {
+                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                            mapOf(transitionNameID + task.taskID to taskNameView))
                     }
                 }
-
-                subjectView.isVisible = subject != null
-                if (task.isFinished) taskNameView.addStrikeThroughEffect()
-            }
-
-
-            checkBox.setOnClickListener { view ->
-                view as MaterialCheckBox
-                resource.task.isFinished = view.isChecked
-                if (view.isChecked)
-                    taskNameView.addStrikeThroughEffect()
-                else taskNameView.removeStrikeThroughEffect()
-                actionListener.onActionPerformed(resource, ActionListener.Action.MODIFY,
-                    emptyMap())
-            }
-
-            rootView.setOnClickListener {
-                actionListener.onActionPerformed(resource, ActionListener.Action.SELECT,
-                    mapOf(transitionNameID + id to taskNameView))
             }
         }
     }
 
     companion object {
         const val transitionNameID = "transition:name:"
-        const val transitionDateID = "transition:date:"
-        const val transitionSubjectID = "transition:schedule:"
 
         val callback = object : DiffUtil.ItemCallback<TaskResource>() {
             override fun areItemsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {

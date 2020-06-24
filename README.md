@@ -20,6 +20,7 @@ This project is licensed under the AGPL-3.0 - see the license file for more deta
 * [Material Dialogs](https://github.com/afollestad/material-dialogs) - Aidan Follestad
 * [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
 * [Doki](https://github.com/doubledotlabs/doki) - Double Dot Labs
+* [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
 
 ### Other materials used
 * [Launcher Icon](https://flaticon.com/authors/freepik) - Freepik via Flaticon

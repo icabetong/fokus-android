@@ -27,7 +27,13 @@
 
     <PreferenceCategory
         app:title="@string/settings_group_sound"
-        app:initialExpandedChildrenCount="1">
+        app:initialExpandedChildrenCount="2">
+
+        <SwitchPreferenceCompat
+            app:key="@string/key_confetti"
+            app:title="@string/settings_confetti_title"
+            app:summary="@string/settings_confetti_summary"
+            app:defaultValue="true"/>
 
         <SwitchPreferenceCompat
             app:key="@string/key_sound"

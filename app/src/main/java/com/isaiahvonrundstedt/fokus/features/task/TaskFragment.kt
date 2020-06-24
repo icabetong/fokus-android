@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +22,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_task.*
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
@@ -76,13 +79,29 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
                         createSnackbar(recyclerView, R.string.feedback_task_marked_as_finished).show()
-                        if (PreferenceManager(context).soundEnabled) {
-                            val uri: Uri = PreferenceManager(requireContext()).let {
-                                if (it.customSoundEnabled)
-                                    it.customSoundUri
-                                else PreferenceManager.defaultSoundUri
+                        with(PreferenceManager(context)) {
+                            if (soundEnabled) {
+                                val uri: Uri = this.let {
+                                    if (it.customSoundEnabled)
+                                        it.customSoundUri
+                                    else PreferenceManager.defaultSoundUri
+                                }
+                                RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
                             }
-                            RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
+
+                            if (confettiEnabled) {
+                                confettiView.build()
+                                    .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
+                                    .setDirection(0.0, 359.0)
+                                    .setSpeed(1f, 5f)
+                                    .setFadeOutEnabled(true)
+                                    .setTimeToLive(1000L)
+                                    .addShapes(Shape.Square, Shape.Circle)
+                                    .addSizes(Size(12, 5f))
+                                    .setPosition(confettiView.x + confettiView.width / 2,
+                                        confettiView.y + confettiView.height / 3)
+                                    .burst(100)
+                            }
                         }
                     }
                 }

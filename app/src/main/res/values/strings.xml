@@ -109,6 +109,8 @@
     <string name="settings_theme_item_dark">Dark</string>
     <string name="settings_theme_item_light">Light</string>
 
+    <string name="settings_confetti_title">Confetti</string>
+    <string name="settings_confetti_summary">Show confetti when tasks are marked as finished</string>
     <string name="settings_completion_sounds_title">Completion Sounds</string>
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
     <string name="settings_custom_notification_sound_title">Use custom sound</string>

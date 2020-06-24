@@ -43,6 +43,9 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
+    val confettiEnabled: Boolean
+        get() = sharedPreference.getBoolean(R.string.key_confetti, true)
+
     val soundEnabled: Boolean
         get() = sharedPreference.getBoolean(R.string.key_sound, true)
 

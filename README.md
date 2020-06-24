@@ -2,6 +2,10 @@
 
 Ever been assigned a task/assignment but completely forgot it and its details? If you're lazy as me, that didn't take notes every single class, you can put your assignments/tasks here and be notified based on your preferences. You can also attach some files to help you finish your tasks and tag it with a course subject.
 
+## Translations
+* English
+* German (Beta)
+
 ## Built with
 * Kotlin
 * Room
@@ -13,6 +17,9 @@ We use [SemVer](http://www.semver.org) for versioning. For the versions availabl
 
 ## Licenses
 This project is licensed under the AGPL-3.0 - see the license file for more details
+
+## Contributing
+This is an open-source personal project and I am very happy to accept community contributions. Open a PR to get started.
 
 ## Acknowledgements
 

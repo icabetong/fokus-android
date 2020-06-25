@@ -5,7 +5,7 @@
     <item>
         <shape android:shape="oval">
             <size android:width="4dp" android:height="4dp"/>
-            <solid android:color="@color/colorEditorButton"/>
+            <solid android:color="@color/colorWidgetTint"/>
         </shape>
     </item>
 

@@ -29,6 +29,8 @@
         <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
         <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
         <item name="switchStyle">@style/Fokus.Widget.Switch</item>
+        <item name="floatingActionButtonStyle">@style/Fokus.Widget.FAB</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -101,7 +103,15 @@
         <item name="track">@drawable/selector_switch_track</item>
         <item name="android:thumb">@drawable/selector_switch_thumb</item>
     </style>
-
+    <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorWidgetTint</item>
+        <item name="tint">@color/colorPrimary</item>
+    </style>
+    <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/colorWidgetTint</item>
+        <item name="iconTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
@@ -167,5 +177,5 @@
     </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
-    <color name="ic_launcher_background">#0277bd</color>
+    <color name="ic_launcher_background">@color/colorPrimary</color>
 </resources>

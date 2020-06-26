@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView

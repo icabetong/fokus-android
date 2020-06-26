@@ -149,14 +149,15 @@
                     android:textColor="@color/colorSecondaryText"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
                     android:textColor="@color/colorSecondaryText"
                     android:drawableStart="@drawable/ic_fluent_info_24_regular"
-                    android:drawablePadding="16dp"/>
+                    android:drawablePadding="16dp"
+                    app:drawableTint="?attr/colorControlNormal"/>
 
             </LinearLayout>
 

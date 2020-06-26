@@ -115,9 +115,8 @@
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
-        <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:fontFamily">sans_serif_medium</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
     <style name="Fokus.TextAppearance.Body" parent="Fokus.TextAppearance">
@@ -141,8 +140,8 @@
         <item name="android:textAllCaps">true</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Editor.Hint">
@@ -152,8 +151,8 @@
         <item name="android:textSize">16sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title.Strong" parent="Fokus.TextAppearance.Body">
-        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Body" parent="Fokus.TextAppearance">
         <item name="android:textSize">14sp</item>

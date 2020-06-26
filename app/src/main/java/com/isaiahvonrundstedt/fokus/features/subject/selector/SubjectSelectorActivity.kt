@@ -16,8 +16,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
+import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_appbar_selector.*
-import kotlinx.android.synthetic.main.layout_selector_subject.*
 
 class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
 

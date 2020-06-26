@@ -5,16 +5,16 @@
     <item
         android:id="@+id/action_history"
         android:title="@string/menu_history"
-        android:icon="@drawable/ic_history"/>
+        android:icon="@drawable/ic_fluent_history_24_regular"/>
 
     <item
         android:id="@+id/action_settings"
         android:title="@string/menu_settings"
-        android:icon="@drawable/ic_settings"/>
+        android:icon="@drawable/ic_fluent_settings_24_regular"/>
 
     <item
         android:id="@+id/action_about"
         android:title="@string/menu_about"
-        android:icon="@drawable/ic_info"/>
+        android:icon="@drawable/ic_fluent_info_24_regular"/>
 
 </menu>

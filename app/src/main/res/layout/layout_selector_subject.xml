@@ -27,7 +27,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_palette"
+            app:srcCompat="@drawable/ic_fluent_beaker_24_regular"
             app:tint="@color/colorOnSurface"/>
 
         <androidx.appcompat.widget.AppCompatTextView

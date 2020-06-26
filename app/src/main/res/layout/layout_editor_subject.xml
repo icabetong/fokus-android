@@ -231,6 +231,6 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_save"/>
+        app:icon="@drawable/ic_fluent_save_20_regular"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

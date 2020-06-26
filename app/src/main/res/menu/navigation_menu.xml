@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
-        android:icon="@drawable/ic_check"/>
+        android:icon="@drawable/ic_fluent_checkmark_24_selector"/>
 
     <item
         android:id="@+id/navigation_events"
         android:title="@string/navigation_events"
-        android:icon="@drawable/ic_event"/>
+        android:icon="@drawable/ic_fluent_calendar_24_selector"/>
 
     <item
         android:id="@+id/navigation_subjects"
         android:title="@string/navigation_subjects"
-        android:icon="@drawable/ic_palette"/>
+        android:icon="@drawable/ic_fluent_beaker_24_selector"/>
 
 </menu>

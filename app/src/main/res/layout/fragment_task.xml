@@ -29,7 +29,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/ic_check"
+            app:srcCompat="@drawable/ic_fluent_checkmark_24_regular"
             app:tint="@color/colorOnSurface"/>
 
         <TextView
@@ -56,6 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_fluent_add_24_regular"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,11 +5,11 @@
     <item>
         <shape android:shape="oval">
             <size android:width="4dp" android:height="4dp"/>
-            <solid android:color="@color/colorWidgetTint"/>
+            <solid android:color="@color/colorEditorButton"/>
         </shape>
     </item>
 
-    <item android:drawable="@drawable/ic_clear"
+    <item android:drawable="@drawable/ic_fluent_dismiss_12_regular"
         android:top="2dp"
         android:bottom="2dp"
         android:left="2dp"

@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/transparent"
-        app:navigationIcon="@drawable/ic_close"/>
+        app:navigationIcon="@drawable/ic_fluent_dismiss_24_regular"/>
 
 </com.google.android.material.appbar.AppBarLayout>

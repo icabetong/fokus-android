@@ -3,7 +3,7 @@
 Ever been assigned a task/assignment but completely forgot it and its details? If you're lazy as me, that didn't take notes every single class, you can put your assignments/tasks here and be notified based on your preferences. You can also attach some files to help you finish your tasks and tag it with a course subject.
 
 ## Screenshots
-<img src="art/1-Tasks.png" width="250"><img src="art/2-Events.png" width="250"><img src="art/3-tags.png" width="250"><img src="art/4-notifications.png" width="250">
+<img src="art/1-tasks.png" width="250"><img src="art/2-events.png" width="250"><img src="art/3-tags.png" width="250"><img src="art/4-notifications.png" width="250">
 
 ## Translations
 * English

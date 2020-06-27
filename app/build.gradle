@@ -6,14 +6,14 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.isaiahvonrundstedt.fokus"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0.0-rc01"
+        versionName "1.0.0-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -43,7 +43,7 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_new, menu)
+        menuInflater.inflate(R.menu.menu_selector, menu)
         return true
     }
 

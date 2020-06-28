@@ -176,5 +176,5 @@
     </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
-    <color name="ic_launcher_background">@color/colorPrimary</color>
+    <color name="ic_launcher_background">#0288d1</color>
 </resources>

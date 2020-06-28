@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0091ea</color>
-    <color name="colorPrimaryDark">#0064b7</color>
-    <color name="colorPrimaryLight">#64c1ff</color>
+    <color name="colorPrimary">#0288d1</color>
+    <color name="colorPrimaryDark">#005b9f</color>
+    <color name="colorPrimaryLight">#5eb8ff</color>
     <color name="colorOnPrimary">#000000</color>
     <color name="colorWidgetTint">#c1e4f8</color>
-    <color name="colorSurface">#ffffff</color>
+    <color name="colorSurface">#fcfcfc</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorError">#B00020</color>
     <color name="colorOnError">#ffffff</color>
@@ -13,7 +13,7 @@
     <color name="colorEditorSurface">#eeeeee</color>
     <color name="colorEditorButton">#bcbcbc</color>
 
-    <color name="colorWindowBackground">#fcfcfc</color>
+    <color name="colorWindowBackground">#ffffff</color>
     <color name="colorToolbarBackground">@color/colorWindowBackground</color>
     <color name="colorSystemBarBackground">@color/colorWindowBackground</color>
 

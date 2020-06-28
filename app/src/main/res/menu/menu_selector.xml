@@ -5,6 +5,7 @@
     <item
         android:id="@+id/action_new"
         android:title="@string/button_new"
-        app:showAsAction="withText|always"/>
+        android:icon="@drawable/ic_fluent_add_24_filled"
+        app:showAsAction="ifRoom"/>
 
 </menu>

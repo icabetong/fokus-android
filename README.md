@@ -8,6 +8,7 @@ Ever been assigned a task/assignment but completely forgot it and its details? I
 ## Translations
 * English
 * German (Beta)
+* French (Beta)
 
 ## Built with
 * Kotlin

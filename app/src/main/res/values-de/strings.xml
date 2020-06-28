@@ -91,7 +91,6 @@
     <string name="feedback_subject_empty_start_time">Sie haben vergessen, die Startzeit einzugeben.</string>
     <string name="feedback_subject_empty_end_time">Sie haben vergessen, die Endzeit einzugeben.</string>
     <string name="feedback_task_empty_name">Sie haben vergessen, den Aufgabennamen einzugeben</string>
-    <string name="feedback_task_empty_subject">Sie haben vergessen anzugeben, welches Thema dies erfordert.</string>
     <string name="feedback_task_empty_due_date">Sie haben vergessen, das Fälligkeitsdatum anzugeben.</string>
     <string name="feedback_event_empty_name">Sie haben vergessen, den Namen der Veranstaltung einzugeben</string>
     <string name="feedback_event_empty_location">Sie haben vergessen, den Standort einzugeben</string>
@@ -116,8 +115,6 @@
     <string name="settings_custom_notification_sound_title">Benutzerdefinierten Ton verwenden</string>
     <string name="settings_select_sound">Sounddatei auswählen</string>
 
-    <string name="settings_persistent_notification_icon_title">Symbol für anhaltende Benachrichtigung</string>
-    <string name="settings_persistent_notification_icon_summary">Aktivieren des Symbols für anhaltende Benachrichtigung bei Aufgaben mit hoher Priorität</string>
     <string name="settings_reminder_frequency_title">Häufigkeit von Erinnerungen</string>
     <string name="settings_reminder_frequency_item_everyday">Täglich</string>
     <string name="settings_reminder_frequency_item_weekends">Wochenenden</string>
@@ -141,9 +138,6 @@
     <string name="settings_report_an_issue">Ein Problem melden</string>
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build-Version</string>
-
-    <string name="settings_summary_on">An</string>
-    <string name="settings_summary_off">Aus</string>
 
     <string name="tag_color_sky">Himmel</string>
     <string name="tag_color_grass">Gras</string>
@@ -177,8 +171,6 @@
     <string name="today">Heute</string>
     <string name="due_today_at">Fällig heute um %1$s</string>
     <string name="due_tomorrow_at">Fällig morgen um %1$s</string>
-    <string name="file_attached">%1$d  Datei angehängt</string>
-    <string name="files_attached">%1$d Dateien angehängt</string>
 
     <string name="open_source_libraries">Open-Source-Bibliotheken</string>
     <string name="credit_launcher_icon_summary">Startsymbol</string>

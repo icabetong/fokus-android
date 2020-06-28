@@ -1,0 +1,184 @@
+<resources>
+
+    <string name="activity_tasks">Vos tâches</string>
+    <string name="activity_events">Vos événements</string>
+    <string name="activity_subjects">Vos sujets</string>
+    <string name="activity_history">Votre histoire</string>
+    <string name="activity_settings">Paramètres</string>
+    <string name="activity_notices">Avis aux tiers</string>
+    <string name="activity_open_source_licenses">Licences Open Source</string>
+    <string name="activity_about">À propos de</string>
+
+    <string name="menu_history">Histoire</string>
+    <string name="menu_settings">@string/activity_settings</string>
+    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_clear_items">Points clairs</string>
+    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_new">@string/button_new</string>
+
+    <string name="navigation_tasks">Tâches</string>
+    <string name="navigation_events">Événements</string>
+    <string name="navigation_subjects">Sujets</string>
+
+    <string name="button_add_attachment">Ajouter une pièce jointe</string>
+    <string name="button_new">Nouveau</string>
+    <string name="button_save">Sauvegarder</string>
+    <string name="button_done">Fait</string>
+    <string name="button_undo">Annuler</string>
+    <string name="button_continue">Continuer</string>
+    <string name="button_mark_as_finished">Marquer comme terminé</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_cancel">Annuler</string>
+
+    <string name="empty_view_no_subjects_title">Vous n\'avez pas ajouté de sujets</string>
+    <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
+    <string name="empty_view_no_tasks_title">Pas de tâches en suspens</string>
+    <string name="empty_view_no_tasks_summary">Vous n\'avez actuellement aucune tâche en cours. Si vous en avez une, ajoutez-la en utilisant le bouton ci-dessous.</string>
+    <string name="empty_view_no_history_title">Pas d\'historique enregistré</string>
+    <string name="empty_view_no_history_summary">Une fois qu\'une tâche, un événement ou un rappel quelconque apparaîtra à l\'ombre de votre notification, il apparaîtra également ici.</string>
+    <string name="empty_view_no_events_title">Aucun événement prévu</string>
+    <string name="empty_view_no_events_summary">Vous n\'avez actuellement aucun événement prévu. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>
+
+    <string name="days_of_week_item_sunday">Dimanche</string>
+    <string name="days_of_week_item_monday">Lundi</string>
+    <string name="days_of_week_item_tuesday">Mardi</string>
+    <string name="days_of_week_item_wednesday">Mercredi</string>
+    <string name="days_of_week_item_thursday">Jeudi</string>
+    <string name="days_of_week_item_friday">Vendredi</string>
+    <string name="days_of_week_item_saturday">Samedi</string>
+
+    <string name="dialog_select_start_time">Sélectionnez l\'heure de début</string>
+    <string name="dialog_select_end_time">Sélectionnez l\'heure de fin</string>
+    <string name="dialog_select_color_tag">Sélectionner un tag de couleur</string>
+    <string name="dialog_select_subject">Sélectionnez un sujet</string>
+    <string name="dialog_select_notification_interval">Sélectionnez l\'intervalle de notification</string>
+    <string name="dialog_select_priority">Sélectionnez une priorité</string>
+    <string name="dialog_choose_theme">Choisissez un thème</string>
+    <string name="dialog_your_name_title">Comment devrions-nous vous appeler?</string>
+    <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
+    <string name="dialog_confirm_deletion_title">Confirmer la suppression?</string>
+    <string name="dialog_confirm_deletion_summary">Cette action ne peut être annulée.</string>
+
+    <string name="field_subject_code">Code matière</string>
+    <string name="field_description">Description</string>
+    <string name="field_days_of_week">Jours de la semaine</string>
+    <string name="field_start_time">Heure de début</string>
+    <string name="field_end_time">Heure de fin</string>
+    <string name="field_task_name">Nom de la tâche</string>
+    <string name="field_notes">Notes</string>
+    <string name="field_subject">Sujet</string>
+    <string name="field_due_date">Date d\'échéance</string>
+    <string name="field_event_name">Nom de l\'événement</string>
+    <string name="field_schedule">Programme</string>
+    <string name="field_location">Lieu</string>
+    <string name="field_attachments">Pièces jointes</string>
+    <string name="field_class_time">Heure de cours</string>
+    <string name="field_color_tag">Étiquette de couleur</string>
+    <string name="field_priority">Priorité</string>
+    <string name="field_mark_as_important">Marquer comme important</string>
+    <string name="field_not_set">Non fixé</string>
+
+    <string name="feedback_subject_removed">Sujet supprimé</string>
+    <string name="feedback_history_removed">Historique supprimé</string>
+    <string name="feedback_task_removed">Tâche supprimée</string>
+    <string name="feedback_event_removed">Événement supprimé</string>
+    <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
+    <string name="feedback_subject_empty_name">Vous avez oublié de saisir le code de l\'objet</string>
+    <string name="feedback_subject_empty_description">Vous avez oublié de saisir la description</string>
+    <string name="feedback_subject_empty_days">Vous avez oublié de préciser les jours</string>
+    <string name="feedback_subject_empty_start_time">Vous avez oublié d\'entrer l\'heure de départ</string>
+    <string name="feedback_subject_empty_end_time">Vous avez oublié d\'entrer l\'heure de fin</string>
+    <string name="feedback_task_empty_name">Vous avez oublié de saisir le nom de la tâche</string>
+    <string name="feedback_task_empty_due_date">Vous avez oublié de préciser sa date d\'échéance</string>
+    <string name="feedback_event_empty_name">Vous avez oublié de saisir le nom de l\'événement</string>
+    <string name="feedback_event_empty_location">Vous avez oublié de saisir le lieu</string>
+    <string name="feedback_event_empty_schedule">Vous avez oublié d\'entrer l\'horaire</string>
+
+    <string name="settings_group_interface">Interface</string>
+    <string name="settings_group_sound">Son</string>
+    <string name="settings_group_notification">Notifications</string>
+    <string name="settings_group_debugging">Débogage</string>
+
+    <string name="settings_name">Votre nom</string>
+
+    <string name="settings_theme">Thème</string>
+    <string name="settings_theme_item_system">Défaut du système</string>
+    <string name="settings_theme_item_dark">Foncé</string>
+    <string name="settings_theme_item_light">Lumière</string>
+
+    <string name="settings_confetti_title">Confetti</string>
+    <string name="settings_confetti_summary">Afficher les confettis lorsque les tâches sont marquées comme étant terminées</string>
+    <string name="settings_completion_sounds_title">Sons d\'achèvement</string>
+    <string name="settings_completion_sounds_summary">Jouez un son lorsque vous marquez une tâche comme étant terminée</string>
+    <string name="settings_custom_notification_sound_title">Use custom sound</string>
+    <string name="settings_custom_notification_sound_summary">Annulez le son de notification du système ; sélectionnez-en un ci-dessous pour utiliser votre propre</string>
+    <string name="settings_select_sound">Sélectionner un fichier son</string>
+
+    <string name="settings_reminder_frequency_title">Fréquence des rappels</string>
+    <string name="settings_reminder_frequency_item_everyday">Tous les jours</string>
+    <string name="settings_reminder_frequency_item_weekends">Week-ends</string>
+    <string name="settings_remind_me_in_time_of_day">Rappelez-moi à ce moment</string>
+    <string name="settings_when_nearing_due_title">Lorsqu\'une tâche est sur le point d\'être accomplie</string>
+    <string name="settings_when_nearing_due_summary">Afficher les notifications pour les tâches qui approchent de leur échéance</string>
+    <string name="settings_task_reminders">Intervalle de notification des tâches</string>
+    <string name="settings_task_reminders_item_hour">1 heure avant</string>
+    <string name="settings_task_reminders_item_three_hours">3 heures avant</string>
+    <string name="settings_task_reminders_item_day">1 jour avant</string>
+    <string name="settings_incoming_events_title">Événements à venir</string>
+    <string name="settings_incoming_events_summary">Afficher les notifications concernant les événements à venir ce jour</string>
+    <string name="settings_event_reminders">Intervalle de rappel des événements</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 minutes avant</string>
+    <string name="settings_event_reminders_item_half_hour">30 minutes avant</string>
+    <string name="settings_event_reminders_item_hour">1 heure avant</string>
+    <string name="settings_more_notification_settings">Plus de paramètres</string>
+    <string name="settings_not_working_notifications_link">En savoir plus</string>
+    <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>
+
+    <string name="settings_report_an_issue">Signaler un problème</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Construire une version</string>
+
+    <string name="tag_color_sky">Sky</string>
+    <string name="tag_color_grass">Grass</string>
+    <string name="tag_color_sunset">Coucher de soleil</string>
+    <string name="tag_color_lemon">Lemon</string>
+    <string name="tag_color_sea">Mer</string>
+    <string name="tag_color_grape">Raisin</string>
+    <string name="tag_color_cherry">Cherry</string>
+    <string name="tag_color_coral">Corail</string>
+    <string name="tag_color_midnight">Minuit</string>
+    <string name="tag_color_mint">Monnaie</string>
+    <string name="tag_color_lavender">Lavande</string>
+    <string name="tag_color_graphite">Graphite</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Le fait de le marquer comme important signifie qu\'il affichera une notification persistante à votre nuance de notification.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_generic">Générique</string>
+    <string name="notification_channel_task_reminders">Rappels de tâches</string>
+    <string name="notification_channel_event_reminders">Rappels d\'événements</string>
+
+    <string name="notification_pending_tasks_title">Vous avez %1$d tâches en suspens</string>
+    <string name="notification_pending_tasks_summary">Il pourrait être utile de jeter un coup d'œil</string>
+
+    <!-- used for concat and formatting -->
+    <string name="hello">Bonjour, %1$s</string>
+    <string name="and">&#160;et&#160;</string>
+    <string name="yesterday_at">Hier à %1$s</string>
+    <string name="yesterday">Hier</string>
+    <string name="tomorrow_at">Demain à %1$s</string>
+    <string name="tomorrow">Demain</string>
+    <string name="today_at">Aujourd\'hui à %1$s</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="due_today_at">Dû aujourd\'hui à %1$s</string>
+    <string name="due_tomorrow_at">Dû demain à %1$s</string>
+
+    <string name="open_source_libraries">Bibliothèques à code source ouvert</string>
+    <string name="credit_other_resources">Autres ressources</string>
+    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Notification sonore</string>
+    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
+    <string name="credit_launcher_icon_summary">Icône de lancement</string>
+
+</resources>

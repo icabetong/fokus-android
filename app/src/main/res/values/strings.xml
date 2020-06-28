@@ -40,7 +40,6 @@
     <string name="empty_view_no_events_title">No Scheduled Events</string>
     <string name="empty_view_no_events_summary">You currently have no scheduled events. If you have one, add it using the button below.</string>
 
-    <string name="days_of_week_dialog_title">Select Days</string>
     <string name="days_of_week_item_sunday">Sunday</string>
     <string name="days_of_week_item_monday">Monday</string>
     <string name="days_of_week_item_tuesday">Tuesday</string>
@@ -91,7 +90,6 @@
     <string name="feedback_subject_empty_start_time">You forgot to enter the start time</string>
     <string name="feedback_subject_empty_end_time">You forgot to enter the end time</string>
     <string name="feedback_task_empty_name">You forgot to enter the task name</string>
-    <string name="feedback_task_empty_subject">You forgot to specify which subject requires it</string>
     <string name="feedback_task_empty_due_date">You forgot to specify its due date</string>
     <string name="feedback_event_empty_name">You forgot to enter the event name</string>
     <string name="feedback_event_empty_location">You forgot to enter the location</string>
@@ -117,8 +115,6 @@
     <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
     <string name="settings_select_sound">Select sound file</string>
 
-    <string name="settings_persistent_notification_icon_title">Persistent Notification Icon</string>
-    <string name="settings_persistent_notification_icon_summary">Enable persistent notification icon in high priority tasks</string>
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
     <string name="settings_reminder_frequency_item_weekends">Weekends</string>
@@ -142,9 +138,6 @@
     <string name="settings_report_an_issue">Report an issue</string>
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build Version</string>
-
-    <string name="settings_summary_on">On</string>
-    <string name="settings_summary_off">Off</string>
 
     <string name="tag_color_sky">Sky</string>
     <string name="tag_color_grass">Grass</string>
@@ -181,8 +174,6 @@
     <string name="today">Today</string>
     <string name="due_today_at">Due today at %1$s</string>
     <string name="due_tomorrow_at">Due tomorrow at %1$s</string>
-    <string name="file_attached">%1$d file attached</string>
-    <string name="files_attached">%1$d files attached</string>
 
     <string name="open_source_libraries">Open Source Libraries</string>
     <string name="credit_other_resources">Other Resources</string>

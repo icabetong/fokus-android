@@ -1,6 +1,14 @@
 # Fokus - To Do app tailored specifically for students
+Fokus is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It's fast and beautiful yet simple design that can help you focus on what matters most.
 
-Ever been assigned a task/assignment but completely forgot it and its details? If you're lazy as me, that didn't take notes every single class, you can put your assignments/tasks here and be notified based on your preferences. You can also attach some files to help you finish your tasks and tag it with a course subject.
+## Features
+* Get reminded when a task is nearing its due
+* Get reminded about incoming events
+* Add attachments to your tasks
+* Persistent notifications for important tasks or events
+* No ads or any tracking
+* Open Source Code
+* On-Device Database
 
 ## Screenshots
 <img src="art/1-tasks.png" width="250"><img src="art/2-events.png" width="250"><img src="art/3-tags.png" width="250">

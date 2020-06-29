@@ -12,6 +12,7 @@ class AboutPreference: BasePreference() {
 
     companion object {
         const val url = "https://github.com/reichsadmiral/fokus/issues/new"
+        const val email = "isaiahcollins_02@live.com"
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -20,6 +21,16 @@ class AboutPreference: BasePreference() {
 
     override fun onStart() {
         super.onStart()
+
+        findPreference<Preference>(R.string.key_translate)?.apply {
+            setOnPreferenceClickListener {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("mailto:$email")
+                }
+                startActivity(intent)
+                true
+            }
+        }
 
         findPreference<Preference>(R.string.key_report_issue)?.apply {
             setOnPreferenceClickListener {

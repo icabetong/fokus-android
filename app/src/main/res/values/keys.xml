@@ -17,6 +17,7 @@
     <string translatable="false" name="key_more_notification_settings">moreNotificationKey</string>
     <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
     <string translatable="false" name="key_report_issue">issueKey</string>
+    <string translatable="false" name="key_translate">translateKey</string>
     <string translatable="false" name="key_notices">noticesKey</string>
     <string translatable="false" name="key_version">versionKey</string>
 

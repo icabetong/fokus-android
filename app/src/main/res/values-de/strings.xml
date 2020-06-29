@@ -100,6 +100,7 @@
     <string name="settings_group_sound">Tone</string>
     <string name="settings_group_notification">Benachrichtigungen</string>
     <string name="settings_group_debugging">Fehlerbehebung</string>
+    <string name="settings_group_contribute">Beitragen</string>
 
     <string name="settings_name">Ihr Name</string>
     <string name="settings_theme">Thema</string>
@@ -135,6 +136,7 @@
     <string name="settings_not_working_notifications_link">Weitere Informationen</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>
 
+    <string name="settings_translate">Übersetzen</string>
     <string name="settings_report_an_issue">Ein Problem melden</string>
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build-Version</string>

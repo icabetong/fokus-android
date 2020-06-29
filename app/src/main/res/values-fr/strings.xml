@@ -99,6 +99,7 @@
     <string name="settings_group_sound">Son</string>
     <string name="settings_group_notification">Notifications</string>
     <string name="settings_group_debugging">Débogage</string>
+    <string name="settings_group_contribute">Contribuer</string>
 
     <string name="settings_name">Votre nom</string>
 
@@ -135,6 +136,7 @@
     <string name="settings_not_working_notifications_link">En savoir plus</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>
 
+    <string name="settings_translate">Traduire</string>
     <string name="settings_report_an_issue">Signaler un problème</string>
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Construire une version</string>

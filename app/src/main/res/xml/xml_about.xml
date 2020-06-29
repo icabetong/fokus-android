@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="@string/key_report_issue"
-        app:title="@string/settings_report_an_issue"/>
-
-    <Preference
         app:key="@string/key_notices"
         app:title="@string/settings_third_party_notices"
         app:fragment="com.isaiahvonrundstedt.fokus.features.about.children.NoticesFragment"/>
@@ -14,5 +10,18 @@
     <Preference
         app:key="@string/key_version"
         app:title="@string/settings_build_version" />
+
+    <PreferenceCategory
+        app:title="@string/settings_group_contribute">
+
+        <Preference
+            app:key="@string/key_translate"
+            app:title="@string/settings_translate"/>
+
+        <Preference
+            app:key="@string/key_report_issue"
+            app:title="@string/settings_report_an_issue"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

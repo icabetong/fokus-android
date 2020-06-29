@@ -28,6 +28,7 @@
     <string name="button_undo">Rückgängig machen</string>
     <string name="button_continue">Fortfahren</string>
     <string name="button_mark_as_finished">Als beendet markieren</string>
+    <string name="button_mark_as_important">Als wichtig markieren</string>
     <string name="button_delete">Löschen</string>
     <string name="button_cancel">Abbrechen</string>
 
@@ -40,7 +41,6 @@
     <string name="empty_view_no_events_title">Keine geplanten Ereignisse</string>
     <string name="empty_view_no_events_summary">Sie haben derzeit keine geplanten Veranstaltungen. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
 
-    <string name="days_of_week_dialog_title">Tage auswählen</string>
     <string name="days_of_week_item_sunday">Sonntag</string>
     <string name="days_of_week_item_monday">Montag</string>
     <string name="days_of_week_item_tuesday">Dienstag</string>
@@ -77,7 +77,7 @@
     <string name="field_class_time">Unterrichtszeit</string>
     <string name="field_color_tag">Farb-Tag</string>
     <string name="field_priority">Priorität</string>
-    <string name="field_mark_as_important">Als wichtig markieren</string>
+    <string name="field_status">Stand</string>
     <string name="field_not_set">Nicht gesetzt</string>
 
     <string name="feedback_subject_removed">Betreff entfernt</string>

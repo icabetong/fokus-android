@@ -46,6 +46,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
+                    android:text="@string/field_status"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/statusSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/listPreferredItemHeightSmall"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/button_mark_as_finished"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
                     android:text="@string/field_due_date"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
@@ -126,7 +145,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@string/field_mark_as_important"
+                    android:text="@string/button_mark_as_important"
                     android:textColor="@color/colorSecondaryText"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
 

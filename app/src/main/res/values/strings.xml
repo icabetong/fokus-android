@@ -28,6 +28,7 @@
     <string name="button_undo">Undo</string>
     <string name="button_continue">Continue</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
+    <string name="button_mark_as_important">Mark as Important</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
 
@@ -76,7 +77,7 @@
     <string name="field_class_time">Class Time</string>
     <string name="field_color_tag">Color Tag</string>
     <string name="field_priority">Priority</string>
-    <string name="field_mark_as_important">Mark as Important</string>
+    <string name="field_status">Status</string>
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>

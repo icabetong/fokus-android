@@ -63,6 +63,7 @@ class TaskEditor: BaseEditor() {
             setTransitionName(nameEditText, TaskAdapter.transitionNameID + task.taskID)
         }
 
+        statusSwitch.changeTextColorWhenChecked()
         prioritySwitch.changeTextColorWhenChecked()
 
         // The passed extras from the parent activity
@@ -74,6 +75,7 @@ class TaskEditor: BaseEditor() {
                 dueDateTextView.text = formatDueDate(this@TaskEditor)
                 dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
                 prioritySwitch.isChecked = isImportant
+                statusSwitch.isChecked = isFinished
             }
 
             subject?.let {
@@ -164,6 +166,7 @@ class TaskEditor: BaseEditor() {
             task.name = nameEditText.text.toString()
             task.notes = notesEditText.text.toString()
             task.isImportant = prioritySwitch.isChecked
+            task.isFinished = statusSwitch.isChecked
 
             // Send the data back to the parent activity
             val data = Intent()

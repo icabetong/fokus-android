@@ -5,7 +5,7 @@
     <color name="colorPrimaryLight">#5eb8ff</color>
     <color name="colorOnPrimary">#000000</color>
     <color name="colorWidgetTint">#c1e4f8</color>
-    <color name="colorSurface">#fcfcfc</color>
+    <color name="colorSurface">#ffffff</color>
     <color name="colorOnSurface">#000000</color>
     <color name="colorError">#B00020</color>
     <color name="colorOnError">#ffffff</color>

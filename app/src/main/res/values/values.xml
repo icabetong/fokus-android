@@ -102,6 +102,7 @@
     <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="thumbTint">@color/selector_switch_thumb</item>
         <item name="trackTint">@color/selector_switch_track</item>
+        <item name="switchPadding">0dp</item>
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
         <item name="backgroundTint">@color/colorWidgetTint</item>
@@ -115,8 +116,9 @@
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorOnSurface</item>
     </style>
     <style name="Fokus.TextAppearance.Body" parent="Fokus.TextAppearance">

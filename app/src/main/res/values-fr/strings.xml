@@ -27,6 +27,7 @@
     <string name="button_undo">Annuler</string>
     <string name="button_continue">Continuer</string>
     <string name="button_mark_as_finished">Marquer comme terminé</string>
+    <string name="button_mark_as_important">Marquer comme important</string>
     <string name="button_delete">Supprimer</string>
     <string name="button_cancel">Annuler</string>
 
@@ -75,7 +76,7 @@
     <string name="field_class_time">Heure de cours</string>
     <string name="field_color_tag">Étiquette de couleur</string>
     <string name="field_priority">Priorité</string>
-    <string name="field_mark_as_important">Marquer comme important</string>
+    <string name="field_status">Statut</string>
     <string name="field_not_set">Non fixé</string>
 
     <string name="feedback_subject_removed">Sujet supprimé</string>

@@ -155,7 +155,7 @@
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
                     android:textColor="@color/colorSecondaryText"
-                    android:drawableStart="@drawable/ic_fluent_info_24_regular"
+                    android:drawableStart="@drawable/ic_outline_info_24"
                     android:drawablePadding="16dp"
                     app:drawableTint="?attr/colorControlNormal"/>
 
@@ -235,6 +235,6 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_fluent_save_24_regular"/>
+        app:icon="@drawable/ic_outline_save_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

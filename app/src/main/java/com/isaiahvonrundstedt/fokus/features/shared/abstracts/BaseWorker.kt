@@ -139,7 +139,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
            manager.notify(tag ?: taskNotificationTag, taskNotificationID,
                 createNotification(history, taskNotificationChannelID,
-                    NotificationCompat.Action(R.drawable.ic_fluent_checkmark_24_regular,
+                    NotificationCompat.Action(R.drawable.ic_outline_done_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
         } else if (history.type == History.typeEventReminder)
             manager.notify(tag ?: eventNotificationTag, eventNotificationID,
@@ -180,7 +180,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                                    @Nullable action: NotificationCompat.Action? = null): Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_fluent_lightbulb_24_regular)
+            setSmallIcon(R.drawable.ic_outline_done_all_24)
             setContentIntent(contentIntent)
             setContentTitle(history?.title)
             setContentText(history?.content)

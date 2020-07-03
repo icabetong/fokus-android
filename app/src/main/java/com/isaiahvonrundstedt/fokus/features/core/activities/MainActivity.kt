@@ -21,7 +21,7 @@ class MainActivity: BaseActivity() {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_tasks)
 
-        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_fluent_navigation_24_filled)
+        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_outline_menu_24)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet().invoke(supportFragmentManager)
     }

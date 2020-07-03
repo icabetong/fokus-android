@@ -10,7 +10,7 @@
     android:text="@string/button_add"
     android:textColor="@color/colorOnSurface"
     android:textAppearance="@style/Fokus.TextAppearance.List.Title"
-    app:icon="@drawable/ic_fluent_add_24_regular"
+    app:icon="@drawable/ic_outline_add_24"
     app:iconTint="@color/colorOnSurface"
     app:iconPadding="16dp"
     app:iconGravity="textStart"

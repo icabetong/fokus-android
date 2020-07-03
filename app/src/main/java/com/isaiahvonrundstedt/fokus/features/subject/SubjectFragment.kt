@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
             startActivityForResult(Intent(context, SubjectEditor::class.java),
-                SubjectEditor.insertRequestCode)
+                SubjectEditor.REQUEST_CODE_INSERT)
         }
     }
 
@@ -67,10 +66,10 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // and wait for the result
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
-                        putExtra(SubjectEditor.extraSubject, t.subject)
-                        putParcelableArrayListExtra(SubjectEditor.extraSchedules, t.scheduleList.toArrayList())
+                        putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
+                        putParcelableArrayListExtra(SubjectEditor.EXTRA_SCHEDULE, t.scheduleList.toArrayList())
                     }
-                    startActivityWithTransition(views, intent, SubjectEditor.updateRequestCode)
+                    startActivityWithTransition(views, intent, SubjectEditor.REQUEST_CODE_UPDATE)
                 }
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database
@@ -93,19 +92,19 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == SubjectEditor.insertRequestCode
-                || requestCode == SubjectEditor.updateRequestCode) {
+        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT
+                || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
-                val scheduleList: List<Schedule>? = data?.getListExtra(SubjectEditor.extraSchedules)
+                val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+                val scheduleList: List<Schedule>? = data?.getListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
                 subject?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
                         when (requestCode) {
-                            SubjectEditor.insertRequestCode ->
+                            SubjectEditor.REQUEST_CODE_INSERT ->
                                 viewModel.insert(it, scheduleList ?: emptyList())
-                            SubjectEditor.updateRequestCode ->
+                            SubjectEditor.REQUEST_CODE_UPDATE ->
                                 viewModel.update(it, scheduleList ?: emptyList())
                         }
                     } else if (resultCode == BaseEditor.RESULT_DELETE) {

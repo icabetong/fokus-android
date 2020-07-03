@@ -23,141 +23,147 @@ import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionServ
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     : CoroutineWorker(context, workerParameters) {
 
     companion object {
-        const val eventNotificationID = 14
-        const val eventNotificationTag = "com:isaiahvonrundstedt:fokus:event"
-        const val eventNotificationChannelID = "eventChannelID"
-        const val taskNotificationID = 27
-        const val taskNotificationTag = "com:isaiahvonrundstedt:fokus:task"
-        const val taskNotificationChannelID = "taskChannelID"
-        const val genericNotificationID = 38
-        const val genericNotificationTag = "com:isaiahvonrundstedt:fokus:generic"
-        const val genericNotificationChannelID = "genericChannelID"
+        const val NOTIFICATION_ID_EVENT = 14
+        const val NOTIFICATION_TAG_EVENT = "com:isaiahvonrundstedt:fokus:event"
+        const val NOTIFICATION_CHANNEL_ID_EVENT = "channel:event"
+        const val NOTIFICATION_ID_TASK = 27
+        const val NOTIFICATION_TAG_TASK = "com:isaiahvonrundstedt:fokus:task"
+        const val NOTIFICATION_CHANNEL_ID_TASK = "channel:task"
+        const val NOTIFICATION_ID_GENERIC = 38
+        const val NOTIFICATION_TAG_GENERIC = "com:isaiahvonrundstedt:fokus:generic"
+        const val NOTIFICATION_CHANNEL_ID_GENERIC = "channel:generic"
 
-        private const val extraNotificationID = "id"
-        private const val extraNotificationTitle = "title"
-        private const val extraNotificationContent = "content"
-        private const val extraNotificationType = "type"
-        private const val extraNotificationData = "data"
-        private const val extraNotificationIsPersistent = "isPersistent"
+        private const val EXTRA_HISTORY_ID = "extra:history:id"
+        private const val EXTRA_HISTORY_TITLE = "extra:history:title"
+        private const val EXTRA_HISTORY_CONTENT = "extra:history:content"
+        private const val EXTRA_HISTORY_TYPE = "extra:history:type"
+        private const val EXTRA_HISTORY_DATA = "extra:history:data"
+        private const val EXTRA_HISTORY_PERSISTENCE = "extra:history:isPersistent"
 
-        private const val extraTaskID = "taskID"
-        private const val extraTaskName = "name"
-        private const val extraTaskNotes = "notes"
-        private const val extraTaskSubjectID = "subjectID"
-        private const val extraTaskDue = "due"
-        private const val extraTaskIsImportant = "isImportant"
+        private const val EXTRA_TASK_ID = "extra:task:id"
+        private const val EXTRA_TASK_NAME = "extra:task:name"
+        private const val EXTRA_TASK_NOTES = "extra:task:notes"
+        private const val EXTRA_TASK_SUBJECT = "extra:task:subject"
+        private const val EXTRA_TASK_DUE = "extra:task:due"
+        private const val EXTRA_TASK_IMPORTANCE = "extra:task:isImportant"
 
-        private const val extraEventID = "eventID"
-        private const val extraEventName = "name"
-        private const val extraEventNotes = "notes"
-        private const val extraEventLocation = "location"
-        private const val extraEventSchedule = "schedule"
-        private const val extraEventIsImportant = "isImportant"
+        private const val EXTRA_EVENT_ID = "extra:event:id"
+        private const val EXTRA_EVENT_NAME = "extra:event:name"
+        private const val EXTRA_EVENT_NOTES = "extra:event:notes"
+        private const val EXTRA_EVENT_LOCATION = "extra:event:location"
+        private const val EXTRA_EVENT_SCHEDULE = "extra:event:schedule"
+        private const val EVENT_EVENT_IMPORTANCE = "extra:event:isImportant"
+
+        private const val EXTRA_SUBJECT_ID = "extra:subject:id"
+        private const val EXTRA_SUBJECT_CODE = "extra:subject:code"
+        private const val EXTRA_SUBJECT_DESCRIPTION = "extra:subject:description"
+        private const val EXTRA_SUBJECT_SCHEDULE = "extra:subject:schedule"
 
         fun convertHistoryToData(history: History): Data {
             return Data.Builder().apply {
-                putString(extraNotificationID, history.historyID)
-                putString(extraNotificationTitle, history.title)
-                putString(extraNotificationContent, history.content)
-                putString(extraNotificationData, history.data)
-                putInt(extraNotificationType, history.type)
-                putBoolean(extraNotificationIsPersistent, history.isPersistent)
+                putString(EXTRA_HISTORY_ID, history.historyID)
+                putString(EXTRA_HISTORY_TITLE, history.title)
+                putString(EXTRA_HISTORY_CONTENT, history.content)
+                putString(EXTRA_HISTORY_DATA, history.data)
+                putInt(EXTRA_HISTORY_TYPE, history.type)
+                putBoolean(EXTRA_HISTORY_PERSISTENCE, history.isPersistent)
             }.build()
         }
 
         fun convertTaskToData(task: Task): Data {
             return Data.Builder().apply {
-                putString(extraTaskID, task.taskID)
-                putString(extraTaskName, task.name)
-                putString(extraTaskNotes, task.notes)
-                putString(extraTaskSubjectID, task.subject)
-                putString(extraTaskDue, DateTimeConverter.fromDateTime(task.dueDate!!))
-                putBoolean(extraTaskIsImportant, task.isImportant)
+                putString(EXTRA_TASK_ID, task.taskID)
+                putString(EXTRA_TASK_NAME, task.name)
+                putString(EXTRA_TASK_NOTES, task.notes)
+                putString(EXTRA_TASK_SUBJECT, task.subject)
+                putString(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate!!))
+                putBoolean(EXTRA_TASK_IMPORTANCE, task.isImportant)
             }.build()
         }
 
         fun convertEventToData(event: Event): Data {
             return Data.Builder().apply {
-                putString(extraEventID, event.eventID)
-                putString(extraEventName, event.name)
-                putString(extraEventNotes, event.notes)
-                putString(extraEventLocation, event.location)
-                putString(extraEventSchedule, DateTimeConverter.fromDateTime(event.schedule!!))
-                putBoolean(extraEventIsImportant, event.isImportant)
+                putString(EXTRA_EVENT_ID, event.eventID)
+                putString(EXTRA_EVENT_NAME, event.name)
+                putString(EXTRA_EVENT_NOTES, event.notes)
+                putString(EXTRA_EVENT_LOCATION, event.location)
+                putString(EXTRA_EVENT_SCHEDULE, DateTimeConverter.fromDateTime(event.schedule!!))
+                putBoolean(EVENT_EVENT_IMPORTANCE, event.isImportant)
             }.build()
         }
 
         fun convertDataToHistory(workerData: Data): History {
             return History().apply {
-                historyID = workerData.getString(extraNotificationID)!!
-                title = workerData.getString(extraNotificationTitle)
-                content = workerData.getString(extraNotificationContent)
-                data = workerData.getString(extraNotificationData)
-                type = workerData.getInt(extraNotificationType, History.typeGeneric)
-                isPersistent = workerData.getBoolean(extraNotificationIsPersistent, false)
+                historyID = workerData.getString(EXTRA_HISTORY_ID)!!
+                title = workerData.getString(EXTRA_HISTORY_TITLE)
+                content = workerData.getString(EXTRA_HISTORY_CONTENT)
+                data = workerData.getString(EXTRA_HISTORY_DATA)
+                type = workerData.getInt(EXTRA_HISTORY_TYPE, History.TYPE_GENERIC)
+                isPersistent = workerData.getBoolean(EXTRA_HISTORY_PERSISTENCE, false)
             }
         }
 
         fun convertDataToTask(workerData: Data): Task {
             return Task().apply {
-                taskID = workerData.getString(extraTaskID)!!
-                name = workerData.getString(extraTaskName)
-                notes = workerData.getString(extraTaskNotes)
-                subject = workerData.getString(extraTaskSubjectID)
-                isImportant = workerData.getBoolean(extraTaskIsImportant, false)
-                dueDate = DateTimeConverter.toDateTime(workerData.getString(extraTaskDue)!!)
+                taskID = workerData.getString(EXTRA_TASK_ID)!!
+                name = workerData.getString(EXTRA_TASK_NAME)
+                notes = workerData.getString(EXTRA_TASK_NOTES)
+                subject = workerData.getString(EXTRA_TASK_SUBJECT)
+                isImportant = workerData.getBoolean(EXTRA_TASK_IMPORTANCE, false)
+                dueDate = DateTimeConverter.toDateTime(workerData.getString(EXTRA_TASK_DUE)!!)
             }
         }
 
         fun convertDataToEvent(workerData: Data): Event {
             return Event().apply {
-                eventID = workerData.getString(extraEventID)!!
-                name = workerData.getString(extraEventName)
-                notes = workerData.getString(extraEventNotes)
-                location = workerData.getString(extraEventLocation)
-                schedule = DateTimeConverter.toDateTime(workerData.getString(extraEventSchedule))
-                isImportant = workerData.getBoolean(extraEventIsImportant, false)
+                eventID = workerData.getString(EXTRA_EVENT_ID)!!
+                name = workerData.getString(EXTRA_EVENT_NAME)
+                notes = workerData.getString(EXTRA_EVENT_NOTES)
+                location = workerData.getString(EXTRA_EVENT_LOCATION)
+                schedule = DateTimeConverter.toDateTime(workerData.getString(EXTRA_EVENT_SCHEDULE))
+                isImportant = workerData.getBoolean(EVENT_EVENT_IMPORTANCE, false)
             }
         }
     }
 
     protected fun sendNotification(history: History, @Nullable tag: String? = null) {
         createNotificationChannel(history.type)
-        if (history.type == History.typeTaskReminder) {
+        if (history.type == History.TYPE_TASK) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
-                    putExtra(NotificationActionService.extraTaskID, history.data)
-                    putExtra(NotificationActionService.extraIsPersistent, history.isPersistent)
-                    action = NotificationActionService.action
+                    putExtra(NotificationActionService.EXTRA_TASK_ID, history.data)
+                    putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, history.isPersistent)
+                    action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
-           manager.notify(tag ?: taskNotificationTag, taskNotificationID,
-                createNotification(history, taskNotificationChannelID,
+           manager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
+                createNotification(history, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(R.drawable.ic_outline_done_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
-        } else if (history.type == History.typeEventReminder)
-            manager.notify(tag ?: eventNotificationTag, eventNotificationID,
-                createNotification(history, eventNotificationChannelID))
-        else manager.notify(tag ?: genericNotificationTag, genericNotificationID,
-            createNotification(history, genericNotificationChannelID))
+        } else if (history.type == History.TYPE_EVENT)
+            manager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
+                createNotification(history, NOTIFICATION_CHANNEL_ID_EVENT))
+        else manager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
+            createNotification(history, NOTIFICATION_CHANNEL_ID_GENERIC))
     }
 
     private fun createNotificationChannel(type: Int) {
         with(NotificationManagerCompat.from(applicationContext)) {
             val id = when (type) {
-                History.typeTaskReminder -> taskNotificationChannelID
-                History.typeEventReminder -> eventNotificationChannelID
-                else -> genericNotificationChannelID
+                History.TYPE_TASK -> NOTIFICATION_CHANNEL_ID_TASK
+                History.TYPE_EVENT -> NOTIFICATION_CHANNEL_ID_EVENT
+                else -> NOTIFICATION_CHANNEL_ID_GENERIC
             }
             val resID = when (type) {
-                History.typeTaskReminder -> R.string.notification_channel_task_reminders
-                History.typeEventReminder -> R.string.notification_channel_event_reminders
+                History.TYPE_TASK -> R.string.notification_channel_task_reminders
+                History.TYPE_EVENT -> R.string.notification_channel_event_reminders
                 else -> R.string.notification_channel_generic
             }
 
@@ -204,7 +210,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         get() {
             return PreferenceManager(applicationContext).let {
                 if (it.customSoundEnabled) it.customSoundUri
-                else PreferenceManager.defaultSoundUri
+                else PreferenceManager.DEFAULT_SOUND_URI
             }
         }
 

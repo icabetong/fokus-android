@@ -80,6 +80,7 @@
     <string name="field_color_tag">Color Tag</string>
     <string name="field_priority">Priority</string>
     <string name="field_status">Status</string>
+    <string name="field_class_schedule">Class Schedule</string>
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
@@ -136,6 +137,12 @@
     <string name="settings_event_reminders_item_quarter_hour">15 minutes before</string>
     <string name="settings_event_reminders_item_half_hour">30 minutes before</string>
     <string name="settings_event_reminders_item_hour">1 hour before</string>
+    <string name="settings_subject_schedules_title">Subject schedules</string>
+    <string name="settings_subject_schedules_summary">Show notifications about classes for my subjects this day</string>
+    <string name="settings_subject_reminders">Subject reminders</string>
+    <string name="settings_subject_reminders_item_5_minutes">5 minutes before</string>
+    <string name="settings_subject_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_subject_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
     <string name="settings_not_working_notifications_link">Learn more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>

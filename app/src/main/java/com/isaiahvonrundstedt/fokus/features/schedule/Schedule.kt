@@ -94,25 +94,25 @@ data class Schedule @JvmOverloads constructor (
     fun getDaysAsList(): List<Int> {
         val days = mutableListOf<Int>()
 
-        if (daysOfWeek and 1 == bitSunday) days.add(DateTimeConstants.SUNDAY)
-        if (daysOfWeek and 2 == bitMonday) days.add(DateTimeConstants.MONDAY)
-        if (daysOfWeek and 4 == bitTuesday) days.add(DateTimeConstants.TUESDAY)
-        if (daysOfWeek and 8 == bitWednesday) days.add(DateTimeConstants.WEDNESDAY)
-        if (daysOfWeek and 16 == bitThursday) days.add(DateTimeConstants.THURSDAY)
-        if (daysOfWeek and 32 == bitFriday) days.add(DateTimeConstants.FRIDAY)
-        if (daysOfWeek and 64 == bitSaturday) days.add(DateTimeConstants.SATURDAY)
+        if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DateTimeConstants.SUNDAY)
+        if (daysOfWeek and 2 == BIT_VALUE_MONDAY) days.add(DateTimeConstants.MONDAY)
+        if (daysOfWeek and 4 == BIT_VALUE_TUESDAY) days.add(DateTimeConstants.TUESDAY)
+        if (daysOfWeek and 8 == BIT_VALUE_WEDNESDAY) days.add(DateTimeConstants.WEDNESDAY)
+        if (daysOfWeek and 16 == BIT_VALUE_THURSDAY) days.add(DateTimeConstants.THURSDAY)
+        if (daysOfWeek and 32 == BIT_VALUE_FRIDAY) days.add(DateTimeConstants.FRIDAY)
+        if (daysOfWeek and 64 == BIT_VALUE_SATURDAY) days.add(DateTimeConstants.SATURDAY)
 
         return days
     }
 
     companion object {
-        const val bitSunday = 1
-        const val bitMonday = 2
-        const val bitTuesday = 4
-        const val bitWednesday = 8
-        const val bitThursday = 16
-        const val bitFriday = 32
-        const val bitSaturday = 64
+        const val BIT_VALUE_SUNDAY = 1
+        const val BIT_VALUE_MONDAY = 2
+        const val BIT_VALUE_TUESDAY = 4
+        const val BIT_VALUE_WEDNESDAY = 8
+        const val BIT_VALUE_THURSDAY = 16
+        const val BIT_VALUE_FRIDAY = 32
+        const val BIT_VALUE_SATURDAY = 64
 
         fun formatTime(time: LocalTime?): String {
             return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)

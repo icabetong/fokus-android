@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 class TaskViewModel(private var app: Application): BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
-    private var workManager = WorkManager.getInstance(app)
     private var items: LiveData<List<TaskResource>>? = repository.fetch()
 
     fun fetch(): LiveData<List<TaskResource>>? = items
@@ -41,7 +40,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         repository.remove(task)
 
         if (task.isImportant)
-            manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
+            notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         workManager.cancelUniqueWork(task.taskID)
     }
@@ -53,7 +52,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         // we should dismiss it when the user updates
         // the task to finish
         if (task.isFinished || !task.isImportant || task.dueDate!!.isBeforeNow)
-            manager?.cancel(task.taskID, BaseWorker.taskNotificationID)
+            notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
@@ -68,7 +67,4 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         }
     }
 
-    private val manager by lazy {
-        app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-    }
 }

@@ -26,7 +26,7 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
         val notification = History().apply {
             title = event.name
             content = event.formatSchedule(applicationContext)
-            type = History.typeEventReminder
+            type = History.TYPE_EVENT
             data = event.eventID
             isPersistent = event.isImportant
         }
@@ -41,9 +41,9 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
         }
 
         when (PreferenceManager(applicationContext).eventReminderInterval) {
-            PreferenceManager.eventReminderIntervalQuarter -> event.schedule = event.schedule!!.minusMinutes(15)
-            PreferenceManager.eventReminderIntervalHalf -> event.schedule = event.schedule!!.minusMinutes(30)
-            PreferenceManager.eventReminderIntervalFull -> event.schedule = event.schedule!!.minusMinutes(60)
+            PreferenceManager.EVENT_REMINDER_INTERVAL_15_MINUTES -> event.schedule = event.schedule!!.minusMinutes(15)
+            PreferenceManager.EVENT_REMINDER_INTERVAL_30_MINUTES -> event.schedule = event.schedule!!.minusMinutes(30)
+            PreferenceManager.EVENT_REMINDER_INTERVAL_60_MINUTES -> event.schedule = event.schedule!!.minusMinutes(60)
         }
 
         if (currentTime.isBefore(event.schedule!!)) {

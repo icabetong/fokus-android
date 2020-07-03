@@ -8,7 +8,7 @@ import android.os.Build
 class PermissionManager(var context: Context) {
 
     companion object {
-        const val storageRequestCode = 3
+        const val REQUEST_CODE_STORAGE = 3
     }
 
     val storageReadGranted: Boolean

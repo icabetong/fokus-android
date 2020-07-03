@@ -11,8 +11,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 class AboutPreference: BasePreference() {
 
     companion object {
-        const val url = "https://github.com/reichsadmiral/fokus/issues/new"
-        const val email = "isaiahcollins_02@live.com"
+        const val ABOUT_REPOSITORY_URL = "https://github.com/reichsadmiral/fokus/issues/new"
+        const val ABOUT_DEVELOPER_EMAIL = "isaiahcollins_02@live.com"
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -25,7 +25,7 @@ class AboutPreference: BasePreference() {
         findPreference<Preference>(R.string.key_translate)?.apply {
             setOnPreferenceClickListener {
                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse("mailto:$email")
+                    data = Uri.parse("mailto:$ABOUT_DEVELOPER_EMAIL")
                 }
                 startActivity(intent)
                 true
@@ -34,7 +34,7 @@ class AboutPreference: BasePreference() {
 
         findPreference<Preference>(R.string.key_report_issue)?.apply {
             setOnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ABOUT_REPOSITORY_URL)))
                 true
             }
         }

@@ -61,7 +61,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
             startActivityForResult(Intent(context, TaskEditor::class.java),
-                TaskEditor.insertRequestCode)
+                TaskEditor.REQUEST_CODE_INSERT)
         }
     }
 
@@ -84,7 +84,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                                 val uri: Uri = this.let {
                                     if (it.customSoundEnabled)
                                         it.customSoundUri
-                                    else PreferenceManager.defaultSoundUri
+                                    else PreferenceManager.DEFAULT_SOUND_URI
                                 }
                                 RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
                             }
@@ -109,11 +109,11 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, TaskEditor::class.java).apply {
-                        putExtra(TaskEditor.extraTask, t.task)
-                        putExtra(TaskEditor.extraSubject, t.subject)
-                        putExtra(TaskEditor.extraAttachments, t.attachmentList.toArrayList())
+                        putExtra(TaskEditor.EXTRA_TASK, t.task)
+                        putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
+                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, t.attachmentList.toArrayList())
                     }
-                    startActivityWithTransition(views, intent, TaskEditor.updateRequestCode)
+                    startActivityWithTransition(views, intent, TaskEditor.REQUEST_CODE_UPDATE)
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
@@ -135,16 +135,16 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == TaskEditor.insertRequestCode
-                || requestCode == TaskEditor.updateRequestCode) {
+        if (requestCode == TaskEditor.REQUEST_CODE_INSERT
+                || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val task: Task? = data?.getParcelableExtra(TaskEditor.extraTask)
-                val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.extraAttachments)
+                val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
+                val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
                 task?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
-                        if (requestCode == TaskEditor.insertRequestCode)
+                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
                             viewModel.insert(it, attachments ?: emptyList())
                         else viewModel.update(it, attachments ?: emptyList())
                     } else {

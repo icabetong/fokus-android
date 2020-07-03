@@ -53,7 +53,7 @@ class PreferenceManager(private val context: Context?) {
         get() = sharedPreference.getBoolean(R.string.key_custom_sound, false)
 
     var customSoundUri: Uri
-        get() = Uri.parse(sharedPreference.getString(R.string.key_custom_sound_uri, defaultSound))
+        get() = Uri.parse(sharedPreference.getString(R.string.key_custom_sound_uri, DEFAULT_SOUND))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_custom_sound_uri, value.toString())
@@ -62,8 +62,8 @@ class PreferenceManager(private val context: Context?) {
         }
 
     val reminderFrequency: String
-        get() = sharedPreference.getString(R.string.key_reminder_frequency, durationEveryday)
-            ?: durationEveryday
+        get() = sharedPreference.getString(R.string.key_reminder_frequency, DURATION_EVERYDAY)
+            ?: DURATION_EVERYDAY
 
     var reminderTime: LocalTime?
         get() = DateTimeConverter.toTime(
@@ -80,14 +80,21 @@ class PreferenceManager(private val context: Context?) {
 
     val taskReminderInterval: String
         get() = sharedPreference.getString(R.string.key_task_reminder_interval,
-                                           taskReminderIntervalThreeHours) ?: taskReminderIntervalThreeHours
+                                           TASK_REMINDER_INTERVAL_3_HOURS) ?: TASK_REMINDER_INTERVAL_3_HOURS
 
     val eventReminder: Boolean
         get() = sharedPreference.getBoolean(R.string.key_event_reminder, true)
 
     val eventReminderInterval: String
         get() = sharedPreference.getString(R.string.key_event_reminder_interval,
-                                           eventReminderIntervalHalf) ?: eventReminderIntervalHalf
+                                           EVENT_REMINDER_INTERVAL_30_MINUTES) ?: EVENT_REMINDER_INTERVAL_30_MINUTES
+
+    val subjectReminder: Boolean
+        get() = sharedPreference.getBoolean(R.string.key_subject_reminder, true)
+
+    val subjectReminderInterval: String
+        get() = sharedPreference.getString(R.string.key_subject_reminder_interval, SUBJECT_REMINDER_INTERVAL_30_MINUTES)
+            ?: SUBJECT_REMINDER_INTERVAL_5_MINUTES
 
     /**
      *  Extension functions for SharedPreference object
@@ -106,20 +113,24 @@ class PreferenceManager(private val context: Context?) {
     }
 
     companion object {
-        const val defaultSound = "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
+        const val DEFAULT_SOUND = "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
+        val DEFAULT_SOUND_URI: Uri
+            get() = Uri.parse(DEFAULT_SOUND)
 
-        const val durationEveryday = "EVERYDAY"
-        const val durationWeekends = "WEEKENDS"
+        const val DURATION_EVERYDAY = "EVERYDAY"
+        const val DURATION_WEEKENDS = "WEEKENDS"
 
-        const val taskReminderIntervalHour = "1"
-        const val taskReminderIntervalThreeHours = "3"
-        const val taskReminderIntervalDay = "24"
+        const val TASK_REMINDER_INTERVAL_1_HOUR = "1"
+        const val TASK_REMINDER_INTERVAL_3_HOURS = "3"
+        const val TASK_REMINDER_INTERVAL_24_HOURS = "24"
 
-        const val eventReminderIntervalQuarter = "15"
-        const val eventReminderIntervalHalf = "30"
-        const val eventReminderIntervalFull = "60"
+        const val EVENT_REMINDER_INTERVAL_15_MINUTES = "15"
+        const val EVENT_REMINDER_INTERVAL_30_MINUTES = "30"
+        const val EVENT_REMINDER_INTERVAL_60_MINUTES = "60"
 
-        val defaultSoundUri: Uri
-            get() = Uri.parse(defaultSound)
+        const val SUBJECT_REMINDER_INTERVAL_5_MINUTES = "5"
+        const val SUBJECT_REMINDER_INTERVAL_15_MINUTES = "15"
+        const val SUBJECT_REMINDER_INTERVAL_30_MINUTES = "30"
+
     }
 }

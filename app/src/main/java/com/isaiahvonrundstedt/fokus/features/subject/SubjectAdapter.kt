@@ -43,8 +43,8 @@ class SubjectAdapter(private var actionListener: ActionListener)
             with(t) {
                 if (this is SubjectResource) {
                     with(this.subject) {
-                        nameView.transitionName = transitionCodeID + subjectID
-                        descriptionView.transitionName = transitionDescriptionID + subjectID
+                        nameView.transitionName = TRANSITION_CODE_ID + subjectID
+                        descriptionView.transitionName = TRANSITION_DESCRIPTION_ID + subjectID
 
                         tagView.setImageDrawable(tintDrawable(tagView.drawable))
                         nameView.text = code
@@ -62,8 +62,8 @@ class SubjectAdapter(private var actionListener: ActionListener)
 
                     rootView.setOnClickListener {
                         actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(transitionCodeID + subject.subjectID to nameView,
-                                transitionDescriptionID + subject.subjectID to descriptionView))
+                            mapOf(TRANSITION_CODE_ID + subject.subjectID to nameView,
+                                TRANSITION_DESCRIPTION_ID + subject.subjectID to descriptionView))
                     }
                 }
             }
@@ -71,8 +71,8 @@ class SubjectAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        const val transitionCodeID = "transition:code:"
-        const val transitionDescriptionID = "transition:description:"
+        const val TRANSITION_CODE_ID = "transition:code:"
+        const val TRANSITION_DESCRIPTION_ID = "transition:description:"
 
         val callback = object: DiffUtil.ItemCallback<SubjectResource>() {
             override fun areItemsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {

@@ -27,29 +27,29 @@ class LocalizationReceiver: BroadcastReceiver() {
 
                     val notificationSoundUri: Uri = PreferenceManager(it).run {
                         if (customSoundEnabled) customSoundUri
-                        else PreferenceManager.defaultSoundUri
+                        else PreferenceManager.DEFAULT_SOUND_URI
                     }
 
                     with(NotificationManagerCompat.from(it)) {
-                        if (getNotificationChannel(BaseWorker.taskNotificationChannelID) != null) {
+                        if (getNotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_TASK) != null) {
                             manager.createNotificationChannel(
-                                NotificationChannel(BaseWorker.taskNotificationChannelID,
+                                NotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_TASK,
                                     it.getString(R.string.notification_channel_task_reminders),
                                     NotificationManager.IMPORTANCE_HIGH).apply { setSound(notificationSoundUri, attributes) }
                             )
                         }
 
-                        if (getNotificationChannel(BaseWorker.eventNotificationChannelID) != null) {
+                        if (getNotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_EVENT) != null) {
                             manager.createNotificationChannel(
-                                NotificationChannel(BaseWorker.eventNotificationChannelID,
+                                NotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_EVENT,
                                     it.getString(R.string.notification_channel_event_reminders),
                                     NotificationManager.IMPORTANCE_HIGH).apply { setSound(notificationSoundUri, attributes) }
                             )
                         }
 
-                        if (getNotificationChannel(BaseWorker.genericNotificationChannelID) != null) {
+                        if (getNotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_GENERIC) != null) {
                             manager.createNotificationChannel(
-                                NotificationChannel(BaseWorker.genericNotificationChannelID,
+                                NotificationChannel(BaseWorker.NOTIFICATION_CHANNEL_ID_GENERIC,
                                     it.getString(R.string.notification_channel_generic),
                                     NotificationManager.IMPORTANCE_HIGH).apply { setSound(notificationSoundUri, attributes) }
                             )

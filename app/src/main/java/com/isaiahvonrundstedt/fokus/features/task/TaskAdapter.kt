@@ -44,7 +44,7 @@ class TaskAdapter(private var actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             with(t) {
                 if (this is TaskResource) {
-                    taskNameView.transitionName = transitionNameID + task.taskID
+                    taskNameView.transitionName = TRANSITION_NAME_ID + task.taskID
 
                     with(task) {
                         checkBox.isChecked = isFinished
@@ -72,7 +72,7 @@ class TaskAdapter(private var actionListener: ActionListener)
 
                     rootView.setOnClickListener {
                         actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(transitionNameID + task.taskID to taskNameView))
+                            mapOf(TRANSITION_NAME_ID + task.taskID to taskNameView))
                     }
                 }
             }
@@ -80,7 +80,7 @@ class TaskAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        const val transitionNameID = "transition:name:"
+        const val TRANSITION_NAME_ID = "transition:name:"
 
         val callback = object : DiffUtil.ItemCallback<TaskResource>() {
             override fun areItemsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {

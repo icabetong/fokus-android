@@ -24,14 +24,14 @@ data class History @JvmOverloads constructor (
     var title: String? = null,
     var content: String? = null,
     var data: String? = null,
-    var type: Int = typeGeneric,
+    var type: Int = TYPE_GENERIC,
     var isPersistent: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
     fun tintDrawable(sourceView: ImageView) {
-        val colorID = if (type == typeGeneric) R.color.colorIconReminder else R.color.colorIconWarning
+        val colorID = if (type == TYPE_GENERIC) R.color.colorIconReminder else R.color.colorIconWarning
         sourceView.setImageDrawable(sourceView.drawable.mutate().apply {
             colorFilter = BlendModeColorFilterCompat
                 .createBlendModeColorFilterCompat(ContextCompat.getColor(sourceView.context, colorID),
@@ -51,8 +51,8 @@ data class History @JvmOverloads constructor (
     }
 
     companion object {
-        const val typeGeneric = 0
-        const val typeTaskReminder = 1
-        const val typeEventReminder = 2
+        const val TYPE_GENERIC = 0
+        const val TYPE_TASK = 1
+        const val TYPE_EVENT = 2
     }
 }

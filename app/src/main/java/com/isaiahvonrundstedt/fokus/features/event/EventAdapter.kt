@@ -44,7 +44,7 @@ class EventAdapter(private var actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             with(t) {
                 if (this is EventResource) {
-                    nameView.transitionName = transitionEventName + event.eventID
+                    nameView.transitionName = TRANSITION_EVENT_NAME + event.eventID
 
                     with(event) {
                         locationView.text = location
@@ -65,7 +65,7 @@ class EventAdapter(private var actionListener: ActionListener)
 
                     rootView.setOnClickListener {
                         actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(transitionEventName + event.eventID to nameView)
+                            mapOf(TRANSITION_EVENT_NAME + event.eventID to nameView)
                         )
                     }
                 }
@@ -74,7 +74,7 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        const val transitionEventName = "transition:name:"
+        const val TRANSITION_EVENT_NAME = "transition:name:"
 
         val callback = object: DiffUtil.ItemCallback<EventResource>() {
             override fun areItemsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {

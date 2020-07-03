@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 class EventViewModel(private var app: Application): BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
-    private var workManager = WorkManager.getInstance(app)
     private var items: LiveData<List<EventResource>>? = repository.fetch()
 
     fun fetch(): LiveData<List<EventResource>>? = items
@@ -38,7 +37,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
         repository.remove(event)
 
         if (event.isImportant)
-            manager?.cancel(event.eventID, BaseWorker.eventNotificationID)
+            notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
         workManager.cancelUniqueWork(event.eventID)
     }
@@ -47,7 +46,7 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
         repository.update(event)
 
         if (event.schedule?.isBeforeNow == true || !event.isImportant)
-            manager?.cancel(event.eventID, BaseWorker.eventNotificationID)
+            notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
         if (PreferenceManager(app).eventReminder && event.schedule!!.isAfterNow) {
             val data = BaseWorker.convertEventToData(event)
@@ -56,9 +55,5 @@ class EventViewModel(private var app: Application): BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
-    }
-
-    private val manager by lazy {
-        app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
     }
 }

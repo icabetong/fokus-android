@@ -32,7 +32,7 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
             title = task.name
             content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
-            type = History.typeTaskReminder
+            type = History.TYPE_TASK
             isPersistent = task.isImportant
             data = task.taskID
         }
@@ -47,9 +47,9 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
         }
 
         when (PreferenceManager(applicationContext).taskReminderInterval) {
-            PreferenceManager.taskReminderIntervalHour -> task.dueDate = task.dueDate!!.minusHours(1)
-            PreferenceManager.taskReminderIntervalThreeHours -> task.dueDate = task.dueDate!!.minusHours(3)
-            PreferenceManager.taskReminderIntervalDay -> task.dueDate = task.dueDate!!.minusHours(24)
+            PreferenceManager.TASK_REMINDER_INTERVAL_1_HOUR -> task.dueDate = task.dueDate!!.minusHours(1)
+            PreferenceManager.TASK_REMINDER_INTERVAL_3_HOURS -> task.dueDate = task.dueDate!!.minusHours(3)
+            PreferenceManager.TASK_REMINDER_INTERVAL_24_HOURS -> task.dueDate = task.dueDate!!.minusHours(24)
         }
 
         if (currentTime.isBefore(task.dueDate!!)) {

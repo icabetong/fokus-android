@@ -15,15 +15,15 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 // based on what the user tapped on the fokus
 // Since PendingIntents can trigger Workers, this service
 // acts like a middle man
-class NotificationActionService: IntentService(name) {
+class NotificationActionService: IntentService(SERVICE_NAME) {
 
     companion object {
-        const val name = "notificationActionService"
-        const val extraTaskID = "taskID"
-        const val extraIsPersistent = "isPersistent"
-        const val extraAction = "action"
+        const val SERVICE_NAME = "notificationActionService"
+        const val EXTRA_TASK_ID = "extra:taskID"
+        const val EXTRA_IS_PERSISTENT = "extra:isPersistent"
+        const val EXTRA_ACTION = "extra:action"
 
-        const val action = "finished"
+        const val ACTION_FINISHED = "action:finished"
 
         const val finishID = 28
     }
@@ -33,17 +33,17 @@ class NotificationActionService: IntentService(name) {
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        val taskID = intent?.getStringExtra(extraTaskID)
-        val isPersistent = intent?.getBooleanExtra(extraIsPersistent, false) ?: false
+        val taskID = intent?.getStringExtra(EXTRA_TASK_ID)
+        val isPersistent = intent?.getBooleanExtra(EXTRA_IS_PERSISTENT, false) ?: false
 
         if (isPersistent)
-            manager?.cancel(taskID, BaseWorker.taskNotificationID)
-        else manager?.cancel(BaseWorker.taskNotificationTag, BaseWorker.taskNotificationID)
+            manager?.cancel(taskID, BaseWorker.NOTIFICATION_ID_TASK)
+        else manager?.cancel(BaseWorker.NOTIFICATION_TAG_TASK, BaseWorker.NOTIFICATION_ID_TASK)
 
         val data = Data.Builder()
-        data.putString(extraTaskID, taskID)
-        if (intent?.action == action)
-            data.putString(extraAction, action)
+        data.putString(EXTRA_TASK_ID, taskID)
+        if (intent?.action == ACTION_FINISHED)
+            data.putString(EXTRA_ACTION, ACTION_FINISHED)
 
         val workRequest = OneTimeWorkRequest.Builder(ActionWorker::class.java)
             .setInputData(data.build())

@@ -14,6 +14,8 @@
     <string translatable="false" name="key_task_reminder_interval">taskReminderIntervalKey</string>
     <string translatable="false" name="key_event_reminder">eventReminderKey</string>
     <string translatable="false" name="key_event_reminder_interval">eventReminderIntervalKey</string>
+    <string translatable="false" name="key_subject_reminder">subjectReminderKey</string>
+    <string translatable="false" name="key_subject_reminder_interval">subjectReminderIntervalKey</string>
     <string translatable="false" name="key_more_notification_settings">moreNotificationKey</string>
     <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
     <string translatable="false" name="key_report_issue">issueKey</string>

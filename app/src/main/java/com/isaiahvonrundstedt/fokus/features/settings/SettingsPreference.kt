@@ -30,7 +30,7 @@ import org.joda.time.format.DateTimeFormat
 class SettingsPreference: BasePreference() {
 
     companion object {
-        const val soundRequestCode = 32
+        const val REQUEST_CODE_SOUND = 32
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -100,9 +100,9 @@ class SettingsPreference: BasePreference() {
             setOnPreferenceClickListener {
                 if (!PermissionManager(requireContext()).storageReadGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                                       PermissionManager.storageRequestCode)
+                                       PermissionManager.REQUEST_CODE_STORAGE)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                                                .setType("audio/*"), soundRequestCode)
+                                                .setType("audio/*"), REQUEST_CODE_SOUND)
                 true
             }
         }
@@ -152,18 +152,18 @@ class SettingsPreference: BasePreference() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PermissionManager.storageRequestCode
+        if (requestCode == PermissionManager.REQUEST_CODE_STORAGE
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                .setType("audio/*"), soundRequestCode)
+                .setType("audio/*"), REQUEST_CODE_SOUND)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == soundRequestCode && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SOUND && resultCode == Activity.RESULT_OK) {
             context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.defaultSound)
+            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.DEFAULT_SOUND)
         }
     }
 

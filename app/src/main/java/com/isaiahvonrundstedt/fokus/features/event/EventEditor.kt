@@ -38,21 +38,21 @@ class EventEditor: BaseEditor() {
 
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
-        requestCode = if (intent.hasExtra(extraEvent)) updateRequestCode
-        else insertRequestCode
+        requestCode = if (intent.hasExtra(EXTRA_EVENT)) REQUEST_CODE_UPDATE
+        else REQUEST_CODE_INSERT
 
-        if (requestCode == updateRequestCode) {
-            event = intent.getParcelableExtra(extraEvent)!!
-            subject = intent.getParcelableExtra(extraSubject)
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            event = intent.getParcelableExtra(EXTRA_EVENT)!!
+            subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-            setTransitionName(nameEditText, EventAdapter.transitionEventName + event.eventID)
+            setTransitionName(nameEditText, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()
 
         // The passed extras will be shown in their
         // corresponding fields
-        if (requestCode == updateRequestCode) {
+        if (requestCode == REQUEST_CODE_UPDATE) {
             with(event) {
                 nameEditText.setText(name)
                 notesEditText.setText(notes)
@@ -99,7 +99,7 @@ class EventEditor: BaseEditor() {
 
         subjectTextView.setOnClickListener {
             startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
-                SubjectSelectorActivity.requestCode)
+                SubjectSelectorActivity.REQUEST_CODE)
             overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
         }
 
@@ -145,7 +145,7 @@ class EventEditor: BaseEditor() {
 
             // Send the data back to the parent activity
             val data = Intent()
-            data.putExtra(extraEvent, event)
+            data.putExtra(EXTRA_EVENT, event)
             setResult(RESULT_OK, data)
             supportFinishAfterTransition()
         }
@@ -153,8 +153,8 @@ class EventEditor: BaseEditor() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SubjectSelectorActivity.requestCode && resultCode == Activity.RESULT_OK) {
-            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.extraSubject)?.let { subject ->
+        if (requestCode == SubjectSelectorActivity.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.EXTRA_SUBJECT)?.let { subject ->
                 clearButton.isVisible = true
                 event.subject = subject.subjectID
                 this.subject = subject
@@ -176,7 +176,7 @@ class EventEditor: BaseEditor() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == updateRequestCode)
+        return if (requestCode == REQUEST_CODE_UPDATE)
             super.onCreateOptionsMenu(menu)
         else false
     }
@@ -190,7 +190,7 @@ class EventEditor: BaseEditor() {
                     positiveButton(R.string.button_delete) {
                         // Send the data back to the parent activity
                         val data = Intent()
-                        data.putExtra(extraEvent, event)
+                        data.putExtra(EXTRA_EVENT, event)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }
@@ -203,9 +203,9 @@ class EventEditor: BaseEditor() {
     }
 
     companion object {
-        const val insertRequestCode = 24
-        const val updateRequestCode = 56
-        const val extraEvent = "extraEvent"
-        const val extraSubject = "extraSubject"
+        const val REQUEST_CODE_INSERT = 24
+        const val REQUEST_CODE_UPDATE = 56
+        const val EXTRA_EVENT = "extra:event"
+        const val EXTRA_SUBJECT = "extra:subject"
     }
 }

@@ -14,12 +14,12 @@ class ActionWorker(context: Context, workerParameters: WorkerParameters)
     private var tasks = AppDatabase.getInstance(applicationContext)?.tasks()
 
     override suspend fun doWork(): Result {
-        val action = inputData.getString(NotificationActionService.extraAction)
-        val taskID = inputData.getString(NotificationActionService.extraTaskID)
+        val action = inputData.getString(NotificationActionService.EXTRA_ACTION)
+        val taskID = inputData.getString(NotificationActionService.EXTRA_TASK_ID)
         if (action.isNullOrBlank() || taskID.isNullOrBlank())
             return Result.success()
 
-        if (action == NotificationActionService.action)
+        if (action == NotificationActionService.ACTION_FINISHED)
             tasks?.setFinished(taskID, 1)
 
         return Result.success()

@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -45,14 +44,14 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
         recyclerView.adapter = adapter
 
         // Check if the parent activity have passed some extras
-        requestCode = if (intent.hasExtra(extraSubject)) updateRequestCode else insertRequestCode
+        requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
 
-        if (requestCode == updateRequestCode) {
-            subject = intent.getParcelableExtra(extraSubject)!!
-            adapter.setItems(intent.getListExtra(extraSchedules)!!)
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
+            adapter.setItems(intent.getListExtra(EXTRA_SCHEDULE)!!)
 
-            setTransitionName(codeEditText, SubjectAdapter.transitionCodeID + subject.subjectID)
-            setTransitionName(descriptionEditText, SubjectAdapter.transitionDescriptionID + subject.subjectID)
+            setTransitionName(codeEditText, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
+            setTransitionName(descriptionEditText, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
         }
 
         // Get actual values for the items
@@ -60,7 +59,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         // The extras passed by the parent activity will
         // be shown to the fields.
-        if (requestCode == updateRequestCode) {
+        if (requestCode == REQUEST_CODE_UPDATE) {
             with(subject) {
                 codeEditText.setText(code)
                 descriptionEditText.setText(description)
@@ -79,8 +78,8 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
     override fun <T> onDismiss(t: T, requestCode: Int) {
         if (t is Schedule){
             when (requestCode) {
-                ScheduleEditor.insertRequestCode -> adapter.insert(t)
-                ScheduleEditor.updateRequestCode -> adapter.update(t)
+                ScheduleEditor.REQUEST_CODE_INSERT -> adapter.insert(t)
+                ScheduleEditor.REQUEST_CODE_UPDATE -> adapter.update(t)
             }
         }
     }
@@ -95,8 +94,8 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editor = ScheduleEditor(this)
                     editor.arguments = bundleOf(
-                        Pair(extraSubject, subject.subjectID),
-                        Pair(extraSchedules, t)
+                        Pair(EXTRA_SUBJECT, subject.subjectID),
+                        Pair(EXTRA_SCHEDULE, t)
                     )
                     editor.invoke(supportFragmentManager)
                 }
@@ -110,7 +109,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         addItemButton.setOnClickListener {
             val editor = ScheduleEditor(this)
-            editor.arguments = bundleOf(Pair(extraSubject, subject.subjectID))
+            editor.arguments = bundleOf(Pair(EXTRA_SUBJECT, subject.subjectID))
             editor.invoke(supportFragmentManager)
         }
 
@@ -154,15 +153,15 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
             // Pass the intent to the parent activity
             val data = Intent()
-            data.putExtra(extraSubject, subject)
-            data.putExtra(extraSchedules, adapter.itemList)
+            data.putExtra(EXTRA_SUBJECT, subject)
+            data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
             setResult(Activity.RESULT_OK, data)
             supportFinishAfterTransition()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == updateRequestCode)
+        return if (requestCode == REQUEST_CODE_UPDATE)
             super.onCreateOptionsMenu(menu)
         else false
     }
@@ -176,7 +175,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
                     positiveButton(R.string.button_delete) {
                         // Pass the intent to the parent activity
                         val data = Intent()
-                        data.putExtra(extraSubject, subject)
+                        data.putExtra(EXTRA_SUBJECT, subject)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }
@@ -189,9 +188,9 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
     }
 
     companion object {
-        const val insertRequestCode = 27
-        const val updateRequestCode = 13
-        const val extraSubject = "extra:subject"
-        const val extraSchedules = "extra:schedule"
+        const val REQUEST_CODE_INSERT = 27
+        const val REQUEST_CODE_UPDATE = 13
+        const val EXTRA_SUBJECT = "extra:subject"
+        const val EXTRA_SCHEDULE = "extra:schedule"
     }
 }

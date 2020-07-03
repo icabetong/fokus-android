@@ -53,7 +53,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
             startActivityForResult(Intent(context, EventEditor::class.java),
-                EventEditor.insertRequestCode)
+                EventEditor.REQUEST_CODE_INSERT)
         }
     }
 
@@ -64,10 +64,10 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, EventEditor::class.java).apply {
-                        putExtra(EventEditor.extraEvent, t.event)
-                        putExtra(EventEditor.extraSubject, t.subject)
+                        putExtra(EventEditor.EXTRA_EVENT, t.event)
+                        putExtra(EventEditor.EXTRA_SUBJECT, t.subject)
                     }
-                    startActivityWithTransition(views, intent, EventEditor.updateRequestCode)
+                    startActivityWithTransition(views, intent, EventEditor.REQUEST_CODE_UPDATE)
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
@@ -88,15 +88,15 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
 
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == EventEditor.insertRequestCode ||
-                requestCode == EventEditor.updateRequestCode) {
+        if (requestCode == EventEditor.REQUEST_CODE_INSERT ||
+                requestCode == EventEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val event: Event? = data?.getParcelableExtra(EventEditor.extraEvent)
+                val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
 
                 event?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
-                        if (requestCode == EventEditor.insertRequestCode)
+                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
                             viewModel.insert(it)
                         else viewModel.update(it)
                     } else {

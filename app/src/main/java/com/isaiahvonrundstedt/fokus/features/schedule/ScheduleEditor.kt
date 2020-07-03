@@ -22,7 +22,7 @@ import java.util.*
 class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSheet() {
 
     private var schedule: Schedule = Schedule()
-    private var requestCode: Int = insertRequestCode
+    private var requestCode: Int = REQUEST_CODE_INSERT
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,7 +37,7 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
 
             it.getParcelable<Schedule>(extraSchedule)?.also { schedule ->
                 this.schedule = schedule
-                requestCode = updateRequestCode
+                requestCode = REQUEST_CODE_UPDATE
 
                 startTimeTextView.text = schedule.formatStartTime()
                 endTimeTextView.text = schedule.formatEndTime()
@@ -116,13 +116,13 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
             daysOfWeekGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
                     schedule.daysOfWeek += when (it.id) {
-                        R.id.sundayChip -> Schedule.bitSunday
-                        R.id.mondayChip -> Schedule.bitMonday
-                        R.id.tuesdayChip -> Schedule.bitTuesday
-                        R.id.wednesdayChip -> Schedule.bitWednesday
-                        R.id.thursdayChip -> Schedule.bitThursday
-                        R.id.fridayChip -> Schedule.bitFriday
-                        R.id.saturdayChip -> Schedule.bitSaturday
+                        R.id.sundayChip -> Schedule.BIT_VALUE_SUNDAY
+                        R.id.mondayChip -> Schedule.BIT_VALUE_MONDAY
+                        R.id.tuesdayChip -> Schedule.BIT_VALUE_TUESDAY
+                        R.id.wednesdayChip -> Schedule.BIT_VALUE_WEDNESDAY
+                        R.id.thursdayChip -> Schedule.BIT_VALUE_THURSDAY
+                        R.id.fridayChip -> Schedule.BIT_VALUE_FRIDAY
+                        R.id.saturdayChip -> Schedule.BIT_VALUE_SATURDAY
                         else -> 0
                     }
                 }
@@ -160,9 +160,9 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
     }
 
     companion object {
-        const val insertRequestCode = 0
-        const val updateRequestCode = 1
+        const val REQUEST_CODE_INSERT = 43
+        const val REQUEST_CODE_UPDATE = 89
         const val extraSchedule = "extra:schedule"
-        const val extraSubjectID = "extra:id"
+        const val extraSubjectID = "extra:subjectID"
     }
 }

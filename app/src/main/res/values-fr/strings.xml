@@ -79,6 +79,7 @@
     <string name="field_color_tag">Étiquette de couleur</string>
     <string name="field_priority">Priorité</string>
     <string name="field_status">Statut</string>
+    <string name="field_class_schedule">Calendrier des cours</string>
     <string name="field_not_set">Non fixé</string>
 
     <string name="feedback_subject_removed">Sujet supprimé</string>
@@ -135,6 +136,12 @@
     <string name="settings_event_reminders_item_quarter_hour">15 minutes avant</string>
     <string name="settings_event_reminders_item_half_hour">30 minutes avant</string>
     <string name="settings_event_reminders_item_hour">1 heure avant</string>
+    <string name="settings_subject_schedules_title">Horaires des sujets</string>
+    <string name="settings_subject_schedules_summary">Afficher les notifications de cours pour mes matières ce jour-là</string>
+    <string name="settings_subject_reminders">Rappels sur le sujet</string>
+    <string name="settings_subject_reminders_item_5_minutes">5 minutes avant</string>
+    <string name="settings_subject_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_subject_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Plus de paramètres</string>
     <string name="settings_not_working_notifications_link">En savoir plus</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>

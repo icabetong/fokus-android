@@ -52,7 +52,7 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
         return when (item.itemId) {
             R.id.action_new -> {
                 startActivityForResult(Intent(this, SubjectEditor::class.java),
-                    SubjectEditor.insertRequestCode)
+                    SubjectEditor.REQUEST_CODE_INSERT)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -62,9 +62,9 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
-            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
-            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(SubjectEditor.extraSchedules)
+        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT && resultCode == Activity.RESULT_OK) {
+            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
             subject?.let {
                 viewModel.insert(it, scheduleList ?: emptyList())
@@ -78,7 +78,7 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val result = Intent()
-                    result.putExtra(extraSubject, t)
+                    result.putExtra(EXTRA_SUBJECT, t)
                     setResult(Activity.RESULT_OK, result)
                     finish()
                 }
@@ -94,7 +94,7 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
     }
 
     companion object {
-        const val requestCode = 43
-        const val extraSubject = "extra:subject"
+        const val REQUEST_CODE = 43
+        const val EXTRA_SUBJECT = "extra:subject"
     }
 }

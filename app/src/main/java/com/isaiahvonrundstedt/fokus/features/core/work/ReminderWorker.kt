@@ -46,12 +46,12 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
                 title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
                     taskSize)
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
-                type = History.typeGeneric
+                type = History.TYPE_GENERIC
                 dateTimeTriggered = DateTime.now()
             }
         }
 
-        if (PreferenceManager(applicationContext).reminderFrequency == PreferenceManager.durationWeekends
+        if (PreferenceManager(applicationContext).reminderFrequency == PreferenceManager.DURATION_WEEKENDS
             && !(currentTime.dayOfWeek == DateTimeConstants.SATURDAY
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()

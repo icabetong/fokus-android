@@ -22,6 +22,7 @@
     <string name="navigation_subjects">Themen</string>
 
     <string name="button_add_attachment">Anhang hinzufügen</string>
+    <string name="button_add">Hinzufügen</string>
     <string name="button_new">Neue</string>
     <string name="button_save">Speichern</string>
     <string name="button_done">Erledigt</string>
@@ -60,6 +61,7 @@
     <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
     <string name="dialog_confirm_deletion_title">Löschung bestätigen?</string>
     <string name="dialog_confirm_deletion_summary">Diese Aktion kann nicht rückgängig gemacht werden.</string>
+    <string name="dialog_add_schedule">Zeitplan hinzufügen</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -87,9 +89,10 @@
     <string name="feedback_event_removed">Ereignis entfernt</string>
     <string name="feedback_subject_empty_name">Sie haben vergessen, den Betreff-Code einzugeben</string>
     <string name="feedback_subject_empty_description">Sie haben vergessen, die Beschreibung einzugeben</string>
-    <string name="feedback_subject_empty_days">Sie haben vergessen, die Tage anzugeben</string>
-    <string name="feedback_subject_empty_start_time">Sie haben vergessen, die Startzeit einzugeben.</string>
-    <string name="feedback_subject_empty_end_time">Sie haben vergessen, die Endzeit einzugeben.</string>
+    <string name="feedback_subject_no_schedule">Sie haben vergessen, einen Zeitplan hinzuzufügen</string>
+    <string name="feedback_schedule_empty_days">Sie haben vergessen, die Tage anzugeben</string>
+    <string name="feedback_schedule_empty_start_time">Sie haben vergessen, die Startzeit einzugeben.</string>
+    <string name="feedback_schedule_empty_end_time">Sie haben vergessen, die Endzeit einzugeben.</string>
     <string name="feedback_task_empty_name">Sie haben vergessen, den Aufgabennamen einzugeben</string>
     <string name="feedback_task_empty_due_date">Sie haben vergessen, das Fälligkeitsdatum anzugeben.</string>
     <string name="feedback_event_empty_name">Sie haben vergessen, den Namen der Veranstaltung einzugeben</string>

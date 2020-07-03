@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.history.History
 @Dao
 interface HistoryDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(history: History)
 
     @Delete

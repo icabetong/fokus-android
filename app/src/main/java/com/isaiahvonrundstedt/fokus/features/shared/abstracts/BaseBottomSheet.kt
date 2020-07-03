@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,6 +16,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseBottomSheet: BottomSheetDialogFragment() {
+
+    interface DismissListener {
+        fun <T> onDismiss(t: T, requestCode: Int)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -35,6 +41,10 @@ abstract class BaseBottomSheet: BottomSheetDialogFragment() {
     fun invoke(fragmentManager: FragmentManager) {
         if (!this.isAdded)
             show(fragmentManager, this::class.java.name)
+    }
+
+    protected fun showFeedback(@StringRes id: Int): Toast {
+        return Toast.makeText(requireContext(), getString(id), Toast.LENGTH_SHORT)
     }
 
 }

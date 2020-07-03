@@ -22,6 +22,7 @@
     <string name="navigation_subjects">Subjects</string>
 
     <string name="button_add_attachment">Add Attachment</string>
+    <string name="button_add">Add</string>
     <string name="button_new">New</string>
     <string name="button_save">Save</string>
     <string name="button_done">Done</string>
@@ -60,6 +61,7 @@
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
     <string name="dialog_confirm_deletion_title">Confirm Deletion?</string>
     <string name="dialog_confirm_deletion_summary">This action cannot be undone.</string>
+    <string name="dialog_add_schedule">Add Schedule</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -87,9 +89,10 @@
     <string name="feedback_event_removed">Event removed</string>
     <string name="feedback_subject_empty_name">You forgot to enter the subject code</string>
     <string name="feedback_subject_empty_description">You forgot to enter the description</string>
-    <string name="feedback_subject_empty_days">You forgot to specify the days</string>
-    <string name="feedback_subject_empty_start_time">You forgot to enter the start time</string>
-    <string name="feedback_subject_empty_end_time">You forgot to enter the end time</string>
+    <string name="feedback_subject_no_schedule">You forgot to add a schedule</string>
+    <string name="feedback_schedule_empty_days">You forgot to specify the days</string>
+    <string name="feedback_schedule_empty_start_time">You forgot to enter the start time</string>
+    <string name="feedback_schedule_empty_end_time">You forgot to enter the end time</string>
     <string name="feedback_task_empty_name">You forgot to enter the task name</string>
     <string name="feedback_task_empty_due_date">You forgot to specify its due date</string>
     <string name="feedback_event_empty_name">You forgot to enter the event name</string>

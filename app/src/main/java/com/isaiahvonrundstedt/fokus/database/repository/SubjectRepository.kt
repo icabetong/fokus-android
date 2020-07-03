@@ -3,7 +3,9 @@ package com.isaiahvonrundstedt.fokus.database.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
 class SubjectRepository private constructor (app: Application) {
 
@@ -22,18 +24,24 @@ class SubjectRepository private constructor (app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var subjects = database?.subjects()
+    private var schedules = database?.schedules()
 
-    fun fetch(): LiveData<List<Subject>>? = subjects?.fetch()
+    fun fetch(): LiveData<List<SubjectResource>>? = subjects?.fetchLiveData()
 
-    suspend fun insert(subject: Subject) {
+    suspend fun insert(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
         subjects?.insert(subject)
+        if (scheduleList.isNotEmpty())
+            scheduleList.forEach { schedules?.insert(it) }
     }
 
     suspend fun remove(subject: Subject) {
         subjects?.remove(subject)
     }
 
-    suspend fun update(subject: Subject) {
+    suspend fun update(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
         subjects?.update(subject)
+        schedules?.removeUsingSubjectID(subject.subjectID)
+        if (scheduleList.isNotEmpty())
+            scheduleList.forEach { schedules?.insert(it) }
     }
 }

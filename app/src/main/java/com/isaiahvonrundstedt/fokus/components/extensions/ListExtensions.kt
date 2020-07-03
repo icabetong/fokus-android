@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.components.extensions
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -20,15 +21,41 @@ fun <T> List<T>.getUsingID(id: String): T? {
             if (it.eventID == id) return it
 
         if (it is Subject)
-            if (it.id == id) return it
+            if (it.subjectID == id) return it
 
         if (it is Attachment)
-            if (it.id == id) return it
+            if (it.attachmentID == id) return it
 
         if (it is History)
-            if (it.id == id) return it
+            if (it.historyID == id) return it
+
+        if (it is Schedule)
+            if (it.scheduleID == id) return it
     }
     return null
+}
+
+fun <T> List<T>.getIndexByID(id: String): Int {
+    this.forEachIndexed { index, it ->
+        if (it is Task)
+            if (it.taskID == id) return index
+
+        if (it is Event)
+            if (it.eventID == id) return index
+
+        if (it is Subject)
+            if (it.subjectID == id) return index
+
+        if (it is Attachment)
+            if (it.attachmentID == id) return index
+
+        if (it is History)
+            if (it.historyID == id) return index
+
+        if (it is Schedule)
+            if (it.scheduleID == id) return index
+    }
+    return -1
 }
 
 /**

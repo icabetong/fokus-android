@@ -50,7 +50,7 @@ class HistoryAdapter(private var actionListener: ActionListener)
     companion object {
         val callback = object: DiffUtil.ItemCallback<History>() {
             override fun areItemsTheSame(oldItem: History, newItem: History): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.historyID == newItem.historyID
             }
 
             override fun areContentsTheSame(oldItem: History, newItem: History): Boolean {

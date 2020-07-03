@@ -58,7 +58,7 @@ class TaskEditor: BaseEditor() {
             task = intent.getParcelableExtra(extraTask)!!
             subject = intent.getParcelableExtra(extraSubject)
             attachmentList.clear()
-            attachmentList.addAll(intent.getParcelableArrayListExtra(extraAttachments) ?: emptyList())
+            attachmentList.addAll(intent.getListExtra(extraAttachments) ?: emptyList())
 
             setTransitionName(nameEditText, TaskAdapter.transitionNameID + task.taskID)
         }
@@ -136,7 +136,7 @@ class TaskEditor: BaseEditor() {
             subjectTextView.startAnimation(animation)
 
             it.isVisible = false
-            this.task.subjectID = null
+            this.task.subject = null
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()
                 setText(R.string.field_not_set)
@@ -196,7 +196,7 @@ class TaskEditor: BaseEditor() {
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
             val attachment = Attachment().apply {
-                taskID = task.taskID
+                task = this@TaskEditor.task.taskID
                 uri = data?.data
                 dateAttached = DateTime.now()
             }
@@ -208,7 +208,7 @@ class TaskEditor: BaseEditor() {
 
             data?.getParcelableExtra<Subject>(SubjectSelectorActivity.extraSubject)?.let { subject ->
                 clearButton.isVisible = true
-                task.subjectID = subject.id
+                task.subject = subject.subjectID
                 this.subject = subject
 
                 with(subjectTextView) {
@@ -228,7 +228,7 @@ class TaskEditor: BaseEditor() {
     private fun createChip(attachment: Attachment): Chip {
         return Chip(this).apply {
             text = attachment.uri!!.getFileName(this@TaskEditor)
-            tag = attachment.id
+            tag = attachment.attachmentID
             isCloseIconVisible = true
             setOnClickListener(chipClickListener)
             setOnCloseIconClickListener(chipRemoveListener)
@@ -276,7 +276,7 @@ class TaskEditor: BaseEditor() {
                         // Send the data back to the parent activity
                         val data = Intent()
                         data.putExtra(extraTask, task)
-                        data.putParcelableArrayListExtra(extraAttachments, attachmentList.toArrayList())
+                        data.putExtra(extraAttachments, attachmentList)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }

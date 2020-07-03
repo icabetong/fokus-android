@@ -15,6 +15,6 @@ data class TaskResource @JvmOverloads constructor (
     var task: Task,
     @Embedded
     var subject: Subject? = null,
-    @Relation(entity = Attachment::class, parentColumn = "taskID", entityColumn = "taskID")
+    @Relation(entity = Attachment::class, parentColumn = "taskID", entityColumn = "task")
     var attachmentList: List<Attachment> = emptyList()
 )

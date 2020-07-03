@@ -107,7 +107,7 @@ class EventEditor: BaseEditor() {
             subjectTextView.startAnimation(animation)
 
             it.isVisible = false
-            event.subjectID = null
+            event.subject = null
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()
                 setText(R.string.field_not_set)
@@ -156,7 +156,7 @@ class EventEditor: BaseEditor() {
         if (requestCode == SubjectSelectorActivity.requestCode && resultCode == Activity.RESULT_OK) {
             data?.getParcelableExtra<Subject>(SubjectSelectorActivity.extraSubject)?.let { subject ->
                 clearButton.isVisible = true
-                event.subjectID = subject.id
+                event.subject = subject.subjectID
                 this.subject = subject
 
                 with(subjectTextView) {

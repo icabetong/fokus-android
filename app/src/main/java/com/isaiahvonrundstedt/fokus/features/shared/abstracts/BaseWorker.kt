@@ -62,7 +62,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertHistoryToData(history: History): Data {
             return Data.Builder().apply {
-                putString(extraNotificationID, history.id)
+                putString(extraNotificationID, history.historyID)
                 putString(extraNotificationTitle, history.title)
                 putString(extraNotificationContent, history.content)
                 putString(extraNotificationData, history.data)
@@ -76,7 +76,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(extraTaskID, task.taskID)
                 putString(extraTaskName, task.name)
                 putString(extraTaskNotes, task.notes)
-                putString(extraTaskSubjectID, task.subjectID)
+                putString(extraTaskSubjectID, task.subject)
                 putString(extraTaskDue, DateTimeConverter.fromDateTime(task.dueDate!!))
                 putBoolean(extraTaskIsImportant, task.isImportant)
             }.build()
@@ -95,7 +95,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertDataToHistory(workerData: Data): History {
             return History().apply {
-                id = workerData.getString(extraNotificationID)!!
+                historyID = workerData.getString(extraNotificationID)!!
                 title = workerData.getString(extraNotificationTitle)
                 content = workerData.getString(extraNotificationContent)
                 data = workerData.getString(extraNotificationData)
@@ -109,7 +109,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 taskID = workerData.getString(extraTaskID)!!
                 name = workerData.getString(extraTaskName)
                 notes = workerData.getString(extraTaskNotes)
-                subjectID = workerData.getString(extraTaskSubjectID)
+                subject = workerData.getString(extraTaskSubjectID)
                 isImportant = workerData.getBoolean(extraTaskIsImportant, false)
                 dueDate = DateTimeConverter.toDateTime(workerData.getString(extraTaskDue)!!)
             }

@@ -27,7 +27,7 @@ interface TaskDAO {
     suspend fun setFinished(taskID: String, status: Int)
 
     @Transaction
-    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subjectID == subjects.id ORDER BY dateAdded")
+    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID ORDER BY dateAdded")
     fun fetchLiveData(): LiveData<List<TaskResource>>
 
 }

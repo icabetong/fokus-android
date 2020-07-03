@@ -20,7 +20,7 @@ import java.util.*
 @Entity(tableName = "histories")
 data class History @JvmOverloads constructor (
     @PrimaryKey
-    var id: String = UUID.randomUUID().toString(),
+    var historyID: String = UUID.randomUUID().toString(),
     var title: String? = null,
     var content: String? = null,
     var data: String? = null,

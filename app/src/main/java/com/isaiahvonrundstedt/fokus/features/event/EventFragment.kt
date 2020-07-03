@@ -94,7 +94,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val event: Event? = data?.getParcelableExtra(EventEditor.extraEvent)
 
-                event?.let {
+                event?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
                         if (requestCode == EventEditor.insertRequestCode)
                             viewModel.insert(it)

@@ -14,15 +14,15 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "tasks", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = arrayOf("id"),
-        childColumns = arrayOf("subjectID"), onDelete = ForeignKey.SET_NULL)])
+    ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
+        childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)])
 data class Task @JvmOverloads constructor (
     @PrimaryKey
     @ColumnInfo(index = true)
     var taskID: String = UUID.randomUUID().toString(),
     var name: String? = null,
     var notes: String? = null,
-    var subjectID: String? = null,
+    var subject: String? = null,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateAdded: DateTime? = DateTime.now(),

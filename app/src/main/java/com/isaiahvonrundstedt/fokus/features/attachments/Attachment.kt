@@ -15,15 +15,15 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "attachments", foreignKeys = [ForeignKey(entity = Task::class,
-    parentColumns = arrayOf("taskID"), childColumns = arrayOf("taskID"),
+    parentColumns = arrayOf("taskID"), childColumns = arrayOf("task"),
     onDelete = ForeignKey.CASCADE)
 ])
 data class Attachment @JvmOverloads constructor (
     @PrimaryKey
-    var id: String = UUID.randomUUID().toString(),
+    var attachmentID: String = UUID.randomUUID().toString(),
     @TypeConverters(UriConverter::class)
     var uri: Uri? = null,
-    var taskID: String = "",
+    var task: String = "",
     @TypeConverters(DateTimeConverter::class)
     var dateAttached: DateTime? = DateTime.now()
 ): Parcelable

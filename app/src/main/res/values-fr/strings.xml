@@ -21,6 +21,7 @@
     <string name="navigation_subjects">Sujets</string>
 
     <string name="button_add_attachment">Ajouter une pièce jointe</string>
+    <string name="button_add">Ajouter</string>
     <string name="button_new">Nouveau</string>
     <string name="button_save">Sauvegarder</string>
     <string name="button_done">Fait</string>
@@ -59,6 +60,7 @@
     <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
     <string name="dialog_confirm_deletion_title">Confirmer la suppression?</string>
     <string name="dialog_confirm_deletion_summary">Cette action ne peut être annulée.</string>
+    <string name="dialog_add_schedule">Ajouter un calendrier</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>
@@ -86,9 +88,10 @@
     <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
     <string name="feedback_subject_empty_name">Vous avez oublié de saisir le code de l\'objet</string>
     <string name="feedback_subject_empty_description">Vous avez oublié de saisir la description</string>
-    <string name="feedback_subject_empty_days">Vous avez oublié de préciser les jours</string>
-    <string name="feedback_subject_empty_start_time">Vous avez oublié d\'entrer l\'heure de départ</string>
-    <string name="feedback_subject_empty_end_time">Vous avez oublié d\'entrer l\'heure de fin</string>
+    <string name="feedback_subject_no_schedule">Vous avez oublié d\'ajouter un horaire</string>
+    <string name="feedback_schedule_empty_days">Vous avez oublié de préciser les jours</string>
+    <string name="feedback_schedule_empty_start_time">Vous avez oublié d\'entrer l\'heure de départ</string>
+    <string name="feedback_schedule_empty_end_time">Vous avez oublié d\'entrer l\'heure de fin</string>
     <string name="feedback_task_empty_name">Vous avez oublié de saisir le nom de la tâche</string>
     <string name="feedback_task_empty_due_date">Vous avez oublié de préciser sa date d\'échéance</string>
     <string name="feedback_event_empty_name">Vous avez oublié de saisir le nom de l\'événement</string>

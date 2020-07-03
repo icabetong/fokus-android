@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -51,8 +52,8 @@ abstract class BaseEditor: BaseActivity() {
         }
     }
 
-    protected fun createSnackbar(view: View, @StringRes id: Int): Snackbar {
-        return Snackbar.make(view, id, Snackbar.LENGTH_SHORT)
+    protected fun createSnackbar(@Nullable view: View?, @StringRes id: Int): Snackbar {
+        return Snackbar.make(view ?: window.decorView.rootView, id, Snackbar.LENGTH_SHORT)
     }
 
     protected val animation: Animation

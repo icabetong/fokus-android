@@ -31,6 +31,7 @@
         <item name="switchStyle">@style/Fokus.Widget.Switch</item>
         <item name="floatingActionButtonStyle">@style/Fokus.Widget.FAB</item>
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
+        <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -111,6 +112,10 @@
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
         <item name="backgroundTint">@color/colorWidgetTint</item>
         <item name="iconTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorWidgetTint</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 

@@ -142,7 +142,7 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 val task: Task? = data?.getParcelableExtra(TaskEditor.extraTask)
                 val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.extraAttachments)
 
-                task?.let {
+                task?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
                         if (requestCode == TaskEditor.insertRequestCode)
                             viewModel.insert(it, attachments ?: emptyList())

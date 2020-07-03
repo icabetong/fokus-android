@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
 class SubjectSelectorAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Subject, SubjectSelectorAdapter.ViewHolder>(callback) {
+    : BaseAdapter<SubjectResource, SubjectSelectorAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_selector,
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,
             parent, false)
         return ViewHolder(rowView, actionListener)
     }
@@ -28,32 +29,33 @@ class SubjectSelectorAdapter(private val actionListener: ActionListener)
     override fun onSwipe(position: Int, direction: Int) {}
 
     class ViewHolder(itemView: View, private val actionListener: ActionListener)
-        : RecyclerView.ViewHolder(itemView) {
+        : BaseViewHolder(itemView) {
 
-        private val rootView: FrameLayout = itemView.findViewById(R.id.rootView)
         private val tagView: ImageView = itemView.findViewById(R.id.tagView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
 
-        fun onBind(subject: Subject) {
-            with(subject) {
-                tagView.setImageDrawable(tintDrawable(tagView.drawable))
-                titleView.text = code
-                summaryView.text = description
-            }
-            rootView.setOnClickListener {
-                actionListener.onActionPerformed(subject, ActionListener.Action.SELECT, emptyMap())
+        override fun <T> onBind(t: T) {
+            if (t is SubjectResource) {
+                with(t.subject) {
+                    tagView.setImageDrawable(tintDrawable(tagView.drawable))
+                    titleView.text = code
+                    summaryView.text = description
+                }
+                rootView.setOnClickListener {
+                    actionListener.onActionPerformed(t.subject, ActionListener.Action.SELECT, emptyMap())
+                }
             }
         }
     }
 
     companion object {
-        val callback = object: DiffUtil.ItemCallback<Subject>() {
-            override fun areItemsTheSame(oldItem: Subject, newItem: Subject): Boolean {
-                return oldItem.id == newItem.id
+        val callback = object: DiffUtil.ItemCallback<SubjectResource>() {
+            override fun areItemsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
+                return oldItem.subject.subjectID == newItem.subject.subjectID
             }
 
-            override fun areContentsTheSame(oldItem: Subject, newItem: Subject): Boolean {
+            override fun areContentsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
                 return oldItem == newItem
             }
         }

@@ -43,20 +43,19 @@
             android:layout_marginStart="24dp"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
             app:layout_constraintTop_toBottomOf="@id/nameView"
-            app:layout_constraintBottom_toTopOf="@id/dateTimeView"
+            app:layout_constraintBottom_toTopOf="@id/scheduleView"
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="Introduction to Web Design"/>
 
-        <TextView
-            android:id="@+id/dateTimeView"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/scheduleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/descriptionView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagView"
-            tools:text="Mondays at 7:00AM"/>
+            app:layout_constraintStart_toEndOf="@id/tagView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

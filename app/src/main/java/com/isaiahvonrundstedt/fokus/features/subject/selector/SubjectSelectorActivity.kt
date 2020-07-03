@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -63,8 +64,10 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
 
         if (requestCode == SubjectEditor.insertRequestCode && resultCode == Activity.RESULT_OK) {
             val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
+            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(SubjectEditor.extraSchedules)
+
             subject?.let {
-                viewModel.insert(it)
+                viewModel.insert(it, scheduleList ?: emptyList())
             }
         }
     }

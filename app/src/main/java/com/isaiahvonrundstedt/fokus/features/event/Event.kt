@@ -17,8 +17,8 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "events", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = arrayOf("id"),
-        childColumns = arrayOf("subjectID"), onDelete = ForeignKey.SET_NULL)
+    ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
+        childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)
 ])
 data class Event @JvmOverloads constructor(
     @PrimaryKey
@@ -26,7 +26,7 @@ data class Event @JvmOverloads constructor(
     var name: String? = null,
     var notes: String? = null,
     var location: String? = null,
-    var subjectID: String? = null,
+    var subject: String? = null,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var schedule: DateTime? = null,

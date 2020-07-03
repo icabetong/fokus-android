@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getListExtra
+import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
@@ -57,13 +61,14 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is Subject) {
+        if (t is SubjectResource) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
-                        putExtra(SubjectEditor.extraSubject, t)
+                        putExtra(SubjectEditor.extraSubject, t.subject)
+                        putParcelableArrayListExtra(SubjectEditor.extraSchedules, t.scheduleList.toArrayList())
                     }
                     startActivityWithTransition(views, intent, SubjectEditor.updateRequestCode)
                 }
@@ -71,10 +76,10 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // in the ViewModel to delete it from the database
                 // then show a SnackBar feedback
                 BaseAdapter.ActionListener.Action.DELETE -> {
-                    viewModel.remove(t)
+                    viewModel.remove(t.subject)
 
                     createSnackbar(recyclerView, R.string.feedback_subject_removed).run {
-                        setAction(R.string.button_undo) { viewModel.insert(t) }
+                        setAction(R.string.button_undo) { viewModel.insert(t.subject, t.scheduleList) }
                         show()
                     }
                 }
@@ -93,16 +98,20 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val subject: Subject? = data?.getParcelableExtra(SubjectEditor.extraSubject)
+                val scheduleList: List<Schedule>? = data?.getListExtra(SubjectEditor.extraSchedules)
 
-                subject?.let {
+                subject?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {
-                        if (requestCode == SubjectEditor.insertRequestCode)
-                            viewModel.insert(it)
-                        else viewModel.update(it)
-                    } else {
+                        when (requestCode) {
+                            SubjectEditor.insertRequestCode ->
+                                viewModel.insert(it, scheduleList ?: emptyList())
+                            SubjectEditor.updateRequestCode ->
+                                viewModel.update(it, scheduleList ?: emptyList())
+                        }
+                    } else if (resultCode == BaseEditor.RESULT_DELETE) {
                         viewModel.remove(it)
                         createSnackbar(recyclerView, R.string.feedback_subject_removed).apply {
-                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                            setAction(R.string.button_undo) { _ -> viewModel.insert(it, scheduleList ?: emptyList()) }
                             show()
                         }
                     }

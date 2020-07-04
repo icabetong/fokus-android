@@ -13,11 +13,7 @@ class StartupActivity : AppCompatActivity() {
 
         // Schedule a reminder based on the reminder frequency
         // preference.
-        ReminderWorker.Scheduler()
-            .setTargetTime(
-                PreferenceManager(this).reminderTime?.toDateTimeToday())
-            .removePrevious(true)
-            .schedule(this)
+        ReminderWorker.reschedule(this.applicationContext)
 
         startActivity(Intent(this, MainActivity::class.java))
         finish()

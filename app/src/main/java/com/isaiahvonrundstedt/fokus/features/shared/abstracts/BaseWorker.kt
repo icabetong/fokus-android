@@ -9,8 +9,10 @@ import android.net.Uri
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.Preference
 import androidx.work.CoroutineWorker
 import androidx.work.Data
+import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -20,6 +22,7 @@ import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.history.History
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
@@ -57,10 +60,10 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         private const val EXTRA_EVENT_SCHEDULE = "extra:event:schedule"
         private const val EVENT_EVENT_IMPORTANCE = "extra:event:isImportant"
 
-        private const val EXTRA_SUBJECT_ID = "extra:subject:id"
-        private const val EXTRA_SUBJECT_CODE = "extra:subject:code"
-        private const val EXTRA_SUBJECT_DESCRIPTION = "extra:subject:description"
-        private const val EXTRA_SUBJECT_SCHEDULE = "extra:subject:schedule"
+        private const val EXTRA_SCHEDULE_ID = "extra:schedule:id"
+        private const val EXTRA_SCHEDULE_DAY_OF_WEEK = "extra:schedule:day"
+        private const val EXTRA_SCHEDULE_TIME = "extra:time"
+        private const val EXTRA_SCHEDULE_SUBJECT = "extra:subject"
 
         fun convertHistoryToData(history: History): Data {
             return Data.Builder().apply {
@@ -92,6 +95,15 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(EXTRA_EVENT_LOCATION, event.location)
                 putString(EXTRA_EVENT_SCHEDULE, DateTimeConverter.fromDateTime(event.schedule!!))
                 putBoolean(EVENT_EVENT_IMPORTANCE, event.isImportant)
+            }.build()
+        }
+
+        fun convertScheduleToData(schedule: Schedule): Data {
+            return Data.Builder().apply {
+                putString(EXTRA_SCHEDULE_ID, schedule.scheduleID)
+                putString(EXTRA_SCHEDULE_SUBJECT, schedule.subject)
+                putString(EXTRA_SCHEDULE_TIME, DateTimeConverter.fromTime(schedule.startTime))
+                putInt(EXTRA_SCHEDULE_DAY_OF_WEEK, schedule.daysOfWeek)
             }.build()
         }
 
@@ -127,6 +139,16 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 isImportant = workerData.getBoolean(EVENT_EVENT_IMPORTANCE, false)
             }
         }
+
+        fun convertDataToSchedule(workerData: Data): Schedule {
+            return Schedule().apply {
+                workerData.getString(EXTRA_SCHEDULE_ID)?.let { scheduleID = it }
+                subject = workerData.getString(EXTRA_SCHEDULE_SUBJECT)
+                startTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_TIME))
+                daysOfWeek = workerData.getInt(EXTRA_SCHEDULE_DAY_OF_WEEK, 0)
+            }
+        }
+
     }
 
     protected fun sendNotification(history: History, @Nullable tag: String? = null) {
@@ -139,14 +161,14 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                     action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
-           manager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
+           notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
                 createNotification(history, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(R.drawable.ic_outline_done_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
         } else if (history.type == History.TYPE_EVENT)
-            manager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
+            notificationManager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
                 createNotification(history, NOTIFICATION_CHANNEL_ID_EVENT))
-        else manager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
+        else notificationManager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
             createNotification(history, NOTIFICATION_CHANNEL_ID_GENERIC))
     }
 
@@ -173,8 +195,16 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         }.build()
     }
 
-    private val manager by lazy {
-        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    protected val notificationManager by lazy {
+        applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+    protected val preferenceManager by lazy {
+        PreferenceManager(applicationContext)
+    }
+
+    protected val workManager by lazy {
+        WorkManager.getInstance(applicationContext)
     }
 
     private val contentIntent: PendingIntent

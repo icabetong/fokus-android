@@ -101,6 +101,22 @@
             app:dialogTitle="@string/dialog_select_notification_interval"
             app:dependency="@string/key_event_reminder"/>
 
+        <SwitchPreferenceCompat
+            app:key="@string/key_subject_reminder"
+            app:title="@string/settings_classes_for_this_day_title"
+            app:summary="@string/settings_classes_for_this_day_summary"
+            app:defaultValue="true"/>
+
+        <ListPreference
+            app:key="@string/key_subject_reminder_interval"
+            app:title="@string/settings_class_reminders"
+            app:summary="%s"
+            app:entries="@array/settings_subject_reminder_interval_items"
+            app:entryValues="@array/settings_subject_reminder_interval_values"
+            app:defaultValue="5"
+            app:dialogTitle="@string/dialog_select_notification_interval"
+            app:dependency="@string/key_subject_reminder"/>
+
         <Preference
             app:key="@string/key_more_notification_settings"
             app:title="@string/settings_more_notification_settings"/>

@@ -54,5 +54,6 @@ data class History @JvmOverloads constructor (
         const val TYPE_GENERIC = 0
         const val TYPE_TASK = 1
         const val TYPE_EVENT = 2
+        const val TYPE_CLASS = 3
     }
 }

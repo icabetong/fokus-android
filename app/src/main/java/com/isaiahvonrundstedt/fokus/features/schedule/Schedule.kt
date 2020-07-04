@@ -11,6 +11,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import kotlinx.android.parcel.Parcelize
+import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -113,6 +114,13 @@ data class Schedule @JvmOverloads constructor (
         const val BIT_VALUE_THURSDAY = 16
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
+
+        fun getNextWeekDay(day: Int): DateTime {
+            var currentDate = DateTime.now()
+            if (currentDate.dayOfWeek >= day)
+                currentDate = currentDate.plusWeeks(1)
+            return currentDate.withDayOfWeek(day)
+        }
 
         fun formatTime(time: LocalTime?): String {
             return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)

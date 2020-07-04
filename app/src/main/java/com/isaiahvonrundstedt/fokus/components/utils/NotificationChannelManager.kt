@@ -32,6 +32,7 @@ class NotificationChannelManager (private var context: Context?) {
         return when(id) {
             CHANNEL_ID_TASK -> R.string.notification_channel_task_reminders
             CHANNEL_ID_EVENT -> R.string.notification_channel_event_reminders
+            CHANNEL_ID_CLASS -> R.string.notification_channel_class_reminders
             CHANNEL_ID_GENERIC -> R.string.notification_channel_generic
             else -> 0
         }
@@ -53,6 +54,7 @@ class NotificationChannelManager (private var context: Context?) {
     companion object {
         const val CHANNEL_ID_TASK = "channel:task"
         const val CHANNEL_ID_EVENT = "channel:event"
+        const val CHANNEL_ID_CLASS = "channel:class"
         const val CHANNEL_ID_GENERIC = "channel:generic"
     }
 }

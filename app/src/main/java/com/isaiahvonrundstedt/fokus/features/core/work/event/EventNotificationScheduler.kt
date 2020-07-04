@@ -20,10 +20,9 @@ class EventNotificationScheduler(context: Context, workerParameters: WorkerParam
 
     override suspend fun doWork(): Result {
         val items = events?.fetch()
-        val currentDateTime = DateTime.now()
 
         items?.forEach { event ->
-            if (event.schedule!!.isAfter(currentDateTime)) {
+            if (event.schedule!!.isAfterNow) {
                 val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                     .setInputData(convertEventToData(event))
                     .build()

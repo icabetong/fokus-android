@@ -24,25 +24,14 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var database = AppDatabase.getInstance(applicationContext)
-    private val dataStore by lazy {
-        HistoryRepository.getInstance(context.applicationContext as Application)
-    }
-
-    private fun scheduleNextReminder() {
-        Scheduler()
-            .removePrevious(true)
-            .setTargetTime(
-                PreferenceManager(
-                    applicationContext
-                ).reminderTime?.toDateTimeToday())
-            .schedule(applicationContext)
-    }
+    private var tasks = database?.tasks()
+    private var histories = database?.histories()
 
     override suspend fun doWork(): Result {
         val currentTime = LocalDateTime.now()
-        scheduleNextReminder()
+        reschedule(applicationContext)
 
-        val taskSize: Int = database!!.tasks().fetchCount()
+        val taskSize: Int = tasks?.fetchCount() ?: 0
         var history: History? = null
         if (taskSize > 0) {
             history = History().apply {
@@ -54,59 +43,41 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
             }
         }
 
-        if (PreferenceManager(
-                applicationContext
-            ).reminderFrequency == PreferenceManager.DURATION_WEEKENDS
+        if (preferenceManager.reminderFrequency == PreferenceManager.DURATION_WEEKENDS
             && !(currentTime.dayOfWeek == DateTimeConstants.SATURDAY
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()
 
         if (history != null) {
-            dataStore.insert(history)
+            histories?.insert(history)
             sendNotification(history)
         }
 
         return Result.success()
     }
 
-    class Scheduler {
-        private var removePrevious: Boolean = true
-        private var targetTime: DateTime = DateTime.now()
+    companion object {
 
-        fun removePrevious(removePrevious: Boolean): Scheduler {
-            this.removePrevious = removePrevious
-            return this
-        }
+        fun reschedule(context: Context) {
+            val manager = WorkManager.getInstance(context)
+            val preferences = PreferenceManager(context)
 
-        fun setTargetTime(targetTime: DateTime?): Scheduler {
-            this.targetTime = targetTime ?: DateTime.now().withHourOfDay(8).withMinuteOfHour(30)
-            return this
-        }
+            manager.cancelAllWorkByTag(this::class.java.simpleName)
 
-        fun schedule(context: Context) {
-            val workManager = WorkManager.getInstance(context)
+            val reminderTime = preferences.reminderTime?.toDateTimeToday()
+            val executionTime = DateTime.now().withTimeAtStartOfDay()
+            if (reminderTime?.isAfterNow == true)
+                executionTime.plusDays(1)
 
-            val reminderTime = PreferenceManager(
-                context
-            ).reminderTime
-            val executionTime = if (DateTime.now().isBefore(reminderTime?.toDateTimeToday()))
-                Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay()
-                    .plusHours(reminderTime?.hourOfDay ?: 8)
-                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
-                    .plusMinutes(1))
-            else
-                Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay()
-                    .plusDays(1)
-                    .plusHours(reminderTime?.hourOfDay ?: 8)
-                    .plusMinutes(reminderTime?.minuteOfHour ?: 30))
-
-            if (removePrevious) workManager.cancelAllWorkByTag(ReminderWorker::class.java.simpleName)
+            executionTime.plusHours(reminderTime?.hourOfDay ?: 8)
+                .plusMinutes(reminderTime?.minuteOfHour ?: 30)
 
             val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
-                .setInitialDelay(executionTime.standardMinutes, TimeUnit.MINUTES)
-                .addTag(ReminderWorker::class.java.simpleName)
+                .setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
+                    TimeUnit.MINUTES)
+                .addTag(this::class.java.simpleName)
                 .build()
-            workManager.enqueue(request)
+            manager.enqueue(request)
         }
     }
 }

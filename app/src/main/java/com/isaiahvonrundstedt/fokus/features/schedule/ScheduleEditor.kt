@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.layout_sheet_schedule.*
 import kotlinx.android.synthetic.main.layout_sheet_schedule.actionButton
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
+import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSheet() {

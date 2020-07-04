@@ -23,8 +23,7 @@ class TaskNotificationScheduler(context: Context, workerParameters: WorkerParame
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(convertTaskToData(task))
                 .build()
-            WorkManager.getInstance(applicationContext).enqueueUniqueWork(task.taskID,
-                ExistingWorkPolicy.REPLACE, request)
+            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE, request)
         }
 
         return Result.success()

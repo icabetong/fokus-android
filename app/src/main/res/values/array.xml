@@ -48,9 +48,9 @@
     </string-array>
 
     <string-array name="settings_subject_reminder_interval_items">
-        <item>@string/settings_subject_reminders_item_5_minutes</item>
-        <item>@string/settings_subject_reminders_item_15_minutes</item>
-        <item>@string/settings_subject_reminders_item_30_minutes</item>
+        <item>@string/settings_class_reminders_item_5_minutes</item>
+        <item>@string/settings_class_reminders_item_15_minutes</item>
+        <item>@string/settings_class_reminders_item_30_minutes</item>
     </string-array>
 
     <string-array name="settings_subject_reminder_interval_values">

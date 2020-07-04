@@ -138,12 +138,12 @@
     <string name="settings_event_reminders_item_quarter_hour">15 minutes before</string>
     <string name="settings_event_reminders_item_half_hour">30 minutes before</string>
     <string name="settings_event_reminders_item_hour">1 hour before</string>
-    <string name="settings_subject_schedules_title">Subject schedules</string>
-    <string name="settings_subject_schedules_summary">Show notifications about classes for my subjects this day</string>
-    <string name="settings_subject_reminders">Subject reminders</string>
-    <string name="settings_subject_reminders_item_5_minutes">5 minutes before</string>
-    <string name="settings_subject_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
-    <string name="settings_subject_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_classes_for_this_day_title">Classes for this day</string>
+    <string name="settings_classes_for_this_day_summary">Show notifications about classes for my subjects this day</string>
+    <string name="settings_class_reminders">Class reminder interval</string>
+    <string name="settings_class_reminders_item_5_minutes">5 minutes before</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
     <string name="settings_not_working_notifications_link">Learn more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>
@@ -173,6 +173,7 @@
     <string name="notification_channel_generic">Generic</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
+    <string name="notification_channel_class_reminders">Class Reminders</string>
 
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>

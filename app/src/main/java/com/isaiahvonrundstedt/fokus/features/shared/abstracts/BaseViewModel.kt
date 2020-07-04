@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.work.WorkManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
 abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
 
@@ -14,5 +15,9 @@ abstract class BaseViewModel(private val app: Application): AndroidViewModel(app
 
     protected val workManager by lazy {
         WorkManager.getInstance(app)
+    }
+
+    protected val preferenceManager by lazy {
+        PreferenceManager(app)
     }
 }

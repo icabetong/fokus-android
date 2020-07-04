@@ -86,10 +86,7 @@ class SettingsPreference: BasePreference() {
                     timePicker(show24HoursView = false) { _, datetime ->
                         preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
 
-                        ReminderWorker.Scheduler()
-                            .setTargetTime(preferences.reminderTime?.toDateTimeToday())
-                            .removePrevious(true)
-                            .schedule(requireContext())
+                        ReminderWorker.reschedule(requireContext())
                     }
                     positiveButton(R.string.button_done) { _ ->
                         it.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)

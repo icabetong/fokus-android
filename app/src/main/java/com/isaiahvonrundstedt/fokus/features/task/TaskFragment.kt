@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.shared.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_task.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -79,7 +79,11 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
                         createSnackbar(recyclerView, R.string.feedback_task_marked_as_finished).show()
-                        with(PreferenceManager(context)) {
+                        with(
+                            PreferenceManager(
+                                context
+                            )
+                        ) {
                             if (soundEnabled) {
                                 val uri: Uri = this.let {
                                     if (it.customSoundEnabled)

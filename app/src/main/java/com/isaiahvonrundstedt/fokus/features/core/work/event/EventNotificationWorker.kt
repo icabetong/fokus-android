@@ -7,7 +7,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.history.History
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -40,7 +40,9 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
             return Result.success()
         }
 
-        when (PreferenceManager(applicationContext).eventReminderInterval) {
+        when (PreferenceManager(
+            applicationContext
+        ).eventReminderInterval) {
             PreferenceManager.EVENT_REMINDER_INTERVAL_15_MINUTES -> event.schedule = event.schedule!!.minusMinutes(15)
             PreferenceManager.EVENT_REMINDER_INTERVAL_30_MINUTES -> event.schedule = event.schedule!!.minusMinutes(30)
             PreferenceManager.EVENT_REMINDER_INTERVAL_60_MINUTES -> event.schedule = event.schedule!!.minusMinutes(60)

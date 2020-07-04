@@ -1,16 +1,13 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Application
-import android.app.NotificationManager
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationWorker
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch

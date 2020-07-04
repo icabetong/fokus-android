@@ -90,12 +90,16 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     adapter.remove(t)
+                    createSnackbar(rootLayout, R.string.feedback_schedule_removed).run {
+                        setAction(R.string.button_undo) { adapter.insert(t) }
+                        show()
+                    }
                 }
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editor = ScheduleEditor(this)
                     editor.arguments = bundleOf(
-                        Pair(EXTRA_SUBJECT, subject.subjectID),
-                        Pair(EXTRA_SCHEDULE, t)
+                        Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
+                        Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
                     )
                     editor.invoke(supportFragmentManager)
                 }
@@ -109,7 +113,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         addItemButton.setOnClickListener {
             val editor = ScheduleEditor(this)
-            editor.arguments = bundleOf(Pair(EXTRA_SUBJECT, subject.subjectID))
+            editor.arguments = bundleOf(Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID))
             editor.invoke(supportFragmentManager)
         }
 

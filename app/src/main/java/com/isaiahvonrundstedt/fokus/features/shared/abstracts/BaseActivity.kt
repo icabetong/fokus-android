@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.appbar.MaterialToolbar
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
 abstract class BaseActivity: AppCompatActivity() {
 

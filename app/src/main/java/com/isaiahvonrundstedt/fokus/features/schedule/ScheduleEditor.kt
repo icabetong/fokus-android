@@ -33,9 +33,9 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.also {
-            schedule.subject = it.getString(extraSubjectID)
+            schedule.subject = it.getString(EXTRA_SUBJECT_ID)
 
-            it.getParcelable<Schedule>(extraSchedule)?.also { schedule ->
+            it.getParcelable<Schedule>(EXTRA_SCHEDULE)?.also { schedule ->
                 this.schedule = schedule
                 requestCode = REQUEST_CODE_UPDATE
 
@@ -162,7 +162,7 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
     companion object {
         const val REQUEST_CODE_INSERT = 43
         const val REQUEST_CODE_UPDATE = 89
-        const val extraSchedule = "extra:schedule"
-        const val extraSubjectID = "extra:subjectID"
+        const val EXTRA_SCHEDULE = "extra:schedule"
+        const val EXTRA_SUBJECT_ID = "extra:subject:id"
     }
 }

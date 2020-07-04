@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding"
-        android:text="@string/dialog_add_schedule"
+        android:text="@string/dialog_schedule_details"
         android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"/>
 
     <LinearLayout
@@ -147,6 +147,7 @@
         android:layout_height="?attr/listPreferredItemHeight"
         android:layout_marginHorizontal="@dimen/activity_padding"
         android:layout_marginBottom="16dp"
+        android:stateListAnimator="@null"
         android:text="@string/button_save"
         app:icon="@drawable/ic_outline_save_24"
         app:iconTint="@color/colorPrimary"

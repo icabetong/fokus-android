@@ -9,7 +9,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.repository.HistoryRepository
 import com.isaiahvonrundstedt.fokus.features.history.History
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
@@ -17,9 +17,9 @@ import org.joda.time.Duration
 import org.joda.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
-// This worker's function is to only show fokus
+// This worker's function is to only show reminders
 // based on the frequency the user has selected; daily or every weekends
-// This will show a fokus for pending tasks.
+// This will show a reminders for pending tasks.
 class ReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
@@ -31,7 +31,10 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
     private fun scheduleNextReminder() {
         Scheduler()
             .removePrevious(true)
-            .setTargetTime(PreferenceManager(applicationContext).reminderTime?.toDateTimeToday())
+            .setTargetTime(
+                PreferenceManager(
+                    applicationContext
+                ).reminderTime?.toDateTimeToday())
             .schedule(applicationContext)
     }
 
@@ -51,7 +54,9 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
             }
         }
 
-        if (PreferenceManager(applicationContext).reminderFrequency == PreferenceManager.DURATION_WEEKENDS
+        if (PreferenceManager(
+                applicationContext
+            ).reminderFrequency == PreferenceManager.DURATION_WEEKENDS
             && !(currentTime.dayOfWeek == DateTimeConstants.SATURDAY
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()
@@ -81,7 +86,9 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
         fun schedule(context: Context) {
             val workManager = WorkManager.getInstance(context)
 
-            val reminderTime = PreferenceManager(context).reminderTime
+            val reminderTime = PreferenceManager(
+                context
+            ).reminderTime
             val executionTime = if (DateTime.now().isBefore(reminderTime?.toDateTimeToday()))
                 Duration(DateTime.now(), DateTime.now().withTimeAtStartOfDay()
                     .plusHours(reminderTime?.hourOfDay ?: 8)

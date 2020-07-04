@@ -20,8 +20,8 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
-import com.isaiahvonrundstedt.fokus.features.shared.PermissionManager
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
@@ -37,7 +37,11 @@ class SettingsPreference: BasePreference() {
         setPreferencesFromResource(R.xml.xml_settings, rootKey)
     }
 
-    private val preferences by lazy { PreferenceManager(requireContext()) }
+    private val preferences by lazy {
+        PreferenceManager(
+            requireContext()
+        )
+    }
     private val manager by lazy { WorkManager.getInstance(requireContext()) }
 
     override fun onStart() {
@@ -98,7 +102,9 @@ class SettingsPreference: BasePreference() {
 
         findPreference<Preference>(R.string.key_custom_sound_uri)?.apply {
             setOnPreferenceClickListener {
-                if (!PermissionManager(requireContext()).storageReadGranted)
+                if (!PermissionManager(
+                        requireContext()
+                    ).storageReadGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                                        PermissionManager.REQUEST_CODE_STORAGE)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -163,7 +169,8 @@ class SettingsPreference: BasePreference() {
             context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            preferences.customSoundUri = data.data ?: Uri.parse(PreferenceManager.DEFAULT_SOUND)
+            preferences.customSoundUri = data.data ?: Uri.parse(
+                PreferenceManager.DEFAULT_SOUND)
         }
     }
 

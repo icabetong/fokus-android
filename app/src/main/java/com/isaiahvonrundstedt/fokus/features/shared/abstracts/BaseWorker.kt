@@ -1,17 +1,13 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
 import android.net.Uri
-import android.os.Build
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.Data
@@ -22,8 +18,8 @@ import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.core.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.history.History
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
@@ -101,7 +97,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertDataToHistory(workerData: Data): History {
             return History().apply {
-                historyID = workerData.getString(EXTRA_HISTORY_ID)!!
+                workerData.getString(EXTRA_HISTORY_ID)?.let { historyID = it }
                 title = workerData.getString(EXTRA_HISTORY_TITLE)
                 content = workerData.getString(EXTRA_HISTORY_CONTENT)
                 data = workerData.getString(EXTRA_HISTORY_DATA)
@@ -112,7 +108,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertDataToTask(workerData: Data): Task {
             return Task().apply {
-                taskID = workerData.getString(EXTRA_TASK_ID)!!
+                workerData.getString(EXTRA_TASK_ID)?.let { taskID = it }
                 name = workerData.getString(EXTRA_TASK_NAME)
                 notes = workerData.getString(EXTRA_TASK_NOTES)
                 subject = workerData.getString(EXTRA_TASK_SUBJECT)
@@ -123,7 +119,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         fun convertDataToEvent(workerData: Data): Event {
             return Event().apply {
-                eventID = workerData.getString(EXTRA_EVENT_ID)!!
+                workerData.getString(EXTRA_EVENT_ID)?.let { eventID = it }
                 name = workerData.getString(EXTRA_EVENT_NAME)
                 notes = workerData.getString(EXTRA_EVENT_NOTES)
                 location = workerData.getString(EXTRA_EVENT_LOCATION)
@@ -155,31 +151,12 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     }
 
     private fun createNotificationChannel(type: Int) {
-        with(NotificationManagerCompat.from(applicationContext)) {
-            val id = when (type) {
-                History.TYPE_TASK -> NOTIFICATION_CHANNEL_ID_TASK
-                History.TYPE_EVENT -> NOTIFICATION_CHANNEL_ID_EVENT
-                else -> NOTIFICATION_CHANNEL_ID_GENERIC
-            }
-            val resID = when (type) {
-                History.TYPE_TASK -> R.string.notification_channel_task_reminders
-                History.TYPE_EVENT -> R.string.notification_channel_event_reminders
-                else -> R.string.notification_channel_generic
-            }
-
-            val attributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-
-            if (getNotificationChannel(id) == null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    manager.createNotificationChannel(
-                        NotificationChannel(id, applicationContext.getString(resID),
-                            NotificationManager.IMPORTANCE_HIGH).apply {
-                                setSound(notificationSoundUri, attributes)
-                            })
-            }
+        val id = when (type) {
+            History.TYPE_TASK -> NotificationChannelManager.CHANNEL_ID_TASK
+            History.TYPE_EVENT -> NotificationChannelManager.CHANNEL_ID_EVENT
+            else -> NotificationChannelManager.CHANNEL_ID_GENERIC
         }
+        NotificationChannelManager(applicationContext).create(id)
     }
 
     private fun createNotification(history: History?, id: String,
@@ -208,7 +185,9 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     private val notificationSoundUri: Uri
         get() {
-            return PreferenceManager(applicationContext).let {
+            return PreferenceManager(
+                applicationContext
+            ).let {
                 if (it.customSoundEnabled) it.customSoundUri
                 else PreferenceManager.DEFAULT_SOUND_URI
             }

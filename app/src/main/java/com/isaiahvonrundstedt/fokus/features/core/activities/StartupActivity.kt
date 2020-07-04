@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
 class StartupActivity : AppCompatActivity() {
 
@@ -14,7 +14,8 @@ class StartupActivity : AppCompatActivity() {
         // Schedule a reminder based on the reminder frequency
         // preference.
         ReminderWorker.Scheduler()
-            .setTargetTime(PreferenceManager(this).reminderTime?.toDateTimeToday())
+            .setTargetTime(
+                PreferenceManager(this).reminderTime?.toDateTimeToday())
             .removePrevious(true)
             .schedule(this)
 

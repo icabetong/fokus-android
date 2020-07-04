@@ -15,7 +15,7 @@ class ColorConverter private constructor() {
         @JvmStatic
         @TypeConverter
         fun fromColor(tag: Subject.Tag): Int {
-            return tag.actualColor
+            return tag.color
         }
     }
 

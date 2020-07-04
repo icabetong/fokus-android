@@ -60,7 +60,7 @@
     <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
     <string name="dialog_confirm_deletion_title">Confirmer la suppression?</string>
     <string name="dialog_confirm_deletion_summary">Cette action ne peut être annulée.</string>
-    <string name="dialog_add_schedule">Ajouter un calendrier</string>
+    <string name="dialog_schedule_details">Détails du calendrier</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>
@@ -85,6 +85,7 @@
     <string name="feedback_subject_removed">Sujet supprimé</string>
     <string name="feedback_history_removed">Historique supprimé</string>
     <string name="feedback_task_removed">Tâche supprimée</string>
+    <string name="feedback_schedule_removed">Programme supprimée</string>
     <string name="feedback_event_removed">Événement supprimé</string>
     <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
     <string name="feedback_subject_empty_name">Vous avez oublié de saisir le code de l\'objet</string>

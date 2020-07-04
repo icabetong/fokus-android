@@ -61,7 +61,7 @@
     <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
     <string name="dialog_confirm_deletion_title">Löschung bestätigen?</string>
     <string name="dialog_confirm_deletion_summary">Diese Aktion kann nicht rückgängig gemacht werden.</string>
-    <string name="dialog_add_schedule">Zeitplan hinzufügen</string>
+    <string name="dialog_schedule_details">Einzelheiten zum Zeitplan</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -86,6 +86,7 @@
     <string name="feedback_subject_removed">Betreff entfernt</string>
     <string name="feedback_history_removed">Geschichte entfernt</string>
     <string name="feedback_task_removed">Aufgabe entfernt</string>
+    <string name="feedback_schedule_removed">Zeitplan entfernt</string>
     <string name="feedback_task_marked_as_finished">Als abgeschlossen markierte Aufgabe</string>
     <string name="feedback_event_removed">Ereignis entfernt</string>
     <string name="feedback_subject_empty_name">Sie haben vergessen, den Betreff-Code einzugeben</string>

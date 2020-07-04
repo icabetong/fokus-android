@@ -12,7 +12,6 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
 import kotlinx.android.parcel.Parcelize
-import org.jetbrains.annotations.NotNull
 import java.util.*
 
 @Parcelize
@@ -28,7 +27,7 @@ data class Subject @JvmOverloads constructor (
 ): Parcelable {
 
     // Used for the color tag of the subject
-    enum class Tag(val actualColor: Int) {
+    enum class Tag(val color: Int) {
         SKY(Color.parseColor("#2196f3")),
         GRASS(Color.parseColor("#71a234")),
         SUNSET(Color.parseColor("#ff7e0f")),
@@ -63,7 +62,7 @@ data class Subject @JvmOverloads constructor (
             private val colors: MutableMap<Int, Tag> = HashMap()
             init {
                 for (i in values())
-                    colors[i.actualColor] = i
+                    colors[i.color] = i
             }
 
             fun convertColorToTag(int: Int): Tag? = colors[int]
@@ -75,19 +74,11 @@ data class Subject @JvmOverloads constructor (
     }
 
     fun tintDrawable(drawable: Drawable?): Drawable? {
-        return Companion.tintDrawable(drawable, tag)
-    }
-
-    companion object {
-
-        fun tintDrawable(drawable: Drawable?, tag: Tag): Drawable? {
-            drawable?.let {
-                it.mutate()
-                it.colorFilter = BlendModeColorFilterCompat
-                    .createBlendModeColorFilterCompat(tag.actualColor, BlendModeCompat.SRC_ATOP)
-            }
-            return drawable
+        return drawable?.also {
+            it.mutate()
+            it.colorFilter = BlendModeColorFilterCompat
+                .createBlendModeColorFilterCompat(tag.color, BlendModeCompat.SRC_ATOP)
         }
-
     }
+
 }

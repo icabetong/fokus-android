@@ -9,7 +9,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.history.History
-import com.isaiahvonrundstedt.fokus.features.shared.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -46,7 +46,9 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
             return Result.success()
         }
 
-        when (PreferenceManager(applicationContext).taskReminderInterval) {
+        when (PreferenceManager(
+            applicationContext
+        ).taskReminderInterval) {
             PreferenceManager.TASK_REMINDER_INTERVAL_1_HOUR -> task.dueDate = task.dueDate!!.minusHours(1)
             PreferenceManager.TASK_REMINDER_INTERVAL_3_HOURS -> task.dueDate = task.dueDate!!.minusHours(3)
             PreferenceManager.TASK_REMINDER_INTERVAL_24_HOURS -> task.dueDate = task.dueDate!!.minusHours(24)

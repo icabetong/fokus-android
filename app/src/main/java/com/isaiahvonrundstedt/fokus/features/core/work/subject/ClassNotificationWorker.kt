@@ -1,10 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.core.work.subject
 
 import android.content.Context
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import androidx.work.WorkerParameters
+import androidx.work.*
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.history.History
@@ -32,7 +29,7 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
         request.setInputData(convertHistoryToData(history))
 
         schedule.getDaysAsList().forEach {
-            var triggerTime: DateTime = Schedule.getNextWeekDay(it)
+            var triggerTime: DateTime = Schedule.getNextWeekDay(it, schedule.startTime)
 
             when (preferenceManager.subjectReminderInterval) {
                 PreferenceManager.SUBJECT_REMINDER_INTERVAL_5_MINUTES ->
@@ -47,9 +44,19 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
                 request.setInitialDelay(Duration(DateTime.now(), triggerTime).standardMinutes,
                     TimeUnit.MINUTES)
 
-            workManager.enqueueUniqueWork(schedule.scheduleID, ExistingWorkPolicy.REPLACE,
+            workManager.enqueueUniqueWork(schedule.scheduleID, ExistingWorkPolicy.APPEND,
                 request.build())
+            reschedule(schedule.scheduleID, inputData, triggerTime)
         }
         return Result.success()
+    }
+
+    private fun reschedule(tag: String, data: Data, triggerTime: DateTime) {
+        val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
+            .setInputData(data)
+            .setInitialDelay(Duration(triggerTime, triggerTime.plusWeeks(1)).standardMinutes,
+                TimeUnit.MINUTES)
+        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.APPEND,
+            request.build())
     }
 }

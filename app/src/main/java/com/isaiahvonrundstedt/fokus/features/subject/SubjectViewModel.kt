@@ -21,10 +21,28 @@ class SubjectViewModel(app: Application): BaseViewModel(app) {
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
+
+        if (preferenceManager.subjectReminder) {
+            scheduleList.forEach {
+                it.subject = subject.code
+
+                val data = BaseWorker.convertScheduleToData(it)
+                val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
+                    .setInputData(data)
+                    .build()
+
+                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
+                    request)
+            }
+        }
     }
 
-    fun remove(subject: Subject) = viewModelScope.launch {
+    fun remove(subject: Subject, scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.remove(subject)
+
+        scheduleList.forEach {
+            workManager.cancelAllWorkByTag(it.scheduleID)
+        }
     }
 
     fun update(subject: Subject, scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {

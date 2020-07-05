@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.core.work
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -15,6 +16,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 import org.joda.time.Duration
 import org.joda.time.LocalDateTime
+import org.joda.time.format.DateTimeFormat
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to only show reminders
@@ -28,7 +30,7 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
     private var histories = database?.histories()
 
     override suspend fun doWork(): Result {
-        val currentTime = LocalDateTime.now()
+        val currentTime = DateTime.now()
         reschedule(applicationContext)
 
         val taskSize: Int = tasks?.fetchCount() ?: 0
@@ -62,15 +64,19 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
             val manager = WorkManager.getInstance(context)
             val preferences = PreferenceManager(context)
 
+            val reminderTime: DateTime? = preferences.reminderTime?.toDateTimeToday()
+            val executionTime: DateTime? = if (DateTime.now().isBefore(reminderTime))
+                DateTime.now().withTimeAtStartOfDay()
+                    .plusHours(reminderTime?.hourOfDay ?: 8)
+                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
+                    .plusMinutes(1)
+            else
+                DateTime.now().withTimeAtStartOfDay()
+                    .plusDays(1)
+                    .plusHours(reminderTime?.hourOfDay ?: 8)
+                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
+
             manager.cancelAllWorkByTag(this::class.java.simpleName)
-
-            val reminderTime = preferences.reminderTime?.toDateTimeToday()
-            val executionTime = DateTime.now().withTimeAtStartOfDay()
-            if (reminderTime?.isAfterNow == true)
-                executionTime.plusDays(1)
-
-            executionTime.plusHours(reminderTime?.hourOfDay ?: 8)
-                .plusMinutes(reminderTime?.minuteOfHour ?: 30)
 
             val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
                 .setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,

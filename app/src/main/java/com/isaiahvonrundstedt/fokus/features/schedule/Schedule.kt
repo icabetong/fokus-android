@@ -115,8 +115,10 @@ data class Schedule @JvmOverloads constructor (
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
 
-        fun getNextWeekDay(day: Int): DateTime {
-            var currentDate = DateTime.now()
+        fun getNextWeekDay(day: Int, time: LocalTime?): DateTime {
+            var currentDate = DateTime.now().withTimeAtStartOfDay()
+                .plusHours(time?.hourOfDay ?: 0)
+                .plusMinutes(time?.minuteOfHour ?: 0)
             if (currentDate.dayOfWeek >= day)
                 currentDate = currentDate.plusWeeks(1)
             return currentDate.withDayOfWeek(day)

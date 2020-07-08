@@ -150,7 +150,6 @@
         android:stateListAnimator="@null"
         android:text="@string/button_save"
         app:icon="@drawable/ic_outline_save_24"
-        app:iconTint="@color/colorPrimary"
         app:iconGravity="textStart"
         style="@style/Fokus.Widget.Button"/>
 

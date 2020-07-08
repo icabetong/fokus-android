@@ -105,7 +105,10 @@
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
-    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button"/>
+    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="iconTint">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">

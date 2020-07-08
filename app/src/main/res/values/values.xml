@@ -103,19 +103,9 @@
         <item name="trackTint">@color/selector_switch_track</item>
         <item name="switchPadding">0dp</item>
     </style>
-    <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">@color/colorWidgetTint</item>
-        <item name="tint">@color/colorPrimary</item>
-    </style>
-    <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
-        <item name="backgroundTint">@color/colorWidgetTint</item>
-        <item name="iconTint">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/colorWidgetTint</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
+    <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
+    <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
+    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button"/>
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">

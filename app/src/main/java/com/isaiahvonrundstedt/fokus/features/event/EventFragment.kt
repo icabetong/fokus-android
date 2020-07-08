@@ -1,6 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +11,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_event.*
 
 class EventFragment: BaseFragment(), BaseAdapter.ActionListener {

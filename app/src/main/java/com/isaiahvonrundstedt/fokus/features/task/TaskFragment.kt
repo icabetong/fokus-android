@@ -1,31 +1,37 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_task.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
-class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
+class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
@@ -78,19 +84,17 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
-                        createSnackbar(recyclerView, R.string.feedback_task_marked_as_finished).show()
-                        with(
-                            PreferenceManager(
-                                context
-                            )
-                        ) {
+                        createSnackbar(recyclerView,
+                            R.string.feedback_task_marked_as_finished).show()
+                        with(PreferenceManager(context)) {
                             if (soundEnabled) {
                                 val uri: Uri = this.let {
                                     if (it.customSoundEnabled)
                                         it.customSoundUri
                                     else PreferenceManager.DEFAULT_SOUND_URI
                                 }
-                                RingtoneManager.getRingtone(requireContext().applicationContext, uri).play()
+                                RingtoneManager.getRingtone(requireContext().applicationContext,
+                                    uri).play()
                             }
 
                             if (confettiEnabled) {
@@ -125,8 +129,10 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
-                     createSnackbar(recyclerView, R.string.feedback_task_removed).run {
-                        setAction(R.string.button_undo) { viewModel.insert(t.task, t.attachmentList) }
+                    createSnackbar(recyclerView, R.string.feedback_task_removed).run {
+                        setAction(R.string.button_undo) {
+                            viewModel.insert(t.task, t.attachmentList)
+                        }
                         show()
                     }
                 }
@@ -140,11 +146,12 @@ class TaskFragment: BaseFragment(), BaseAdapter.ActionListener {
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
         if (requestCode == TaskEditor.REQUEST_CODE_INSERT
-                || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
+            || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
-                val attachments: List<Attachment>? = data?.getParcelableArrayListExtra(TaskEditor.EXTRA_ATTACHMENTS)
+                val attachments: List<Attachment>? =
+                    data?.getParcelableArrayListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
                 task?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {

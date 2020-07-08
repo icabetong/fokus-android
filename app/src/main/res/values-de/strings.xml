@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Themen</string>
@@ -21,6 +24,8 @@
     <string name="navigation_events">Veranstaltungen</string>
     <string name="navigation_subjects">Themen</string>
 
+    <string name="button_add_task">Aufgabe hinzufügen</string>
+    <string name="button_add_event">Ereignis hinzufügen</string>
     <string name="button_add_attachment">Anhang hinzufügen</string>
     <string name="button_add">Hinzufügen</string>
     <string name="button_new">Neue</string>

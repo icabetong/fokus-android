@@ -16,9 +16,11 @@
         <activity android:name="com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/xml_shortcuts"/>
         </activity>
 
         <activity android:name=".features.core.activities.MainActivity"
@@ -35,6 +37,14 @@
 
         <activity android:name=".features.subject.selector.SubjectSelectorActivity"/>
 
+        <receiver android:name=".features.core.receiver.LocalizationReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
         <!-- OSSLicenses -->
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
@@ -46,13 +56,5 @@
         <service android:name=".features.core.service.NotificationActionService"
             android:exported="false"/>
 
-        <receiver android:name=".features.core.receiver.LocalizationReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.LOCALE_CHANGED"/>
-            </intent-filter>
-        </receiver>
     </application>
-
 </manifest>

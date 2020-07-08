@@ -93,6 +93,14 @@
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
+    <style name="Fokus.Widget.Navigation" parent="ExpandableBottomBar">
+        <item name="exb_backgroundCornerRadius">@dimen/surface_corner_radius</item>
+        <item name="exb_backgroundColor">?attr/colorSurface</item>
+        <item name="exb_itemBackgroundCornerRadius">32dp</item>
+        <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>
+        <item name="exb_transitionDuration">200</item>
+        <item name="layout_behavior">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</item>
+    </style>
     <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>

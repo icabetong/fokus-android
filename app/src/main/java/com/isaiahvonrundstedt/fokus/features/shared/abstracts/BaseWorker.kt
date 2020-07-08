@@ -62,8 +62,9 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
         private const val EXTRA_SCHEDULE_ID = "extra:schedule:id"
         private const val EXTRA_SCHEDULE_DAY_OF_WEEK = "extra:schedule:day"
-        private const val EXTRA_SCHEDULE_TIME = "extra:time"
-        private const val EXTRA_SCHEDULE_SUBJECT = "extra:subject"
+        private const val EXTRA_SCHEDULE_START_TIME = "extra:schedule:start:time"
+        private const val EXTRA_SCHEDULE_END_TIME = "extra:schedule:end:time"
+        private const val EXTRA_SCHEDULE_SUBJECT = "extra:schedule:subject"
 
         fun convertHistoryToData(history: History): Data {
             return Data.Builder().apply {
@@ -102,7 +103,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Data.Builder().apply {
                 putString(EXTRA_SCHEDULE_ID, schedule.scheduleID)
                 putString(EXTRA_SCHEDULE_SUBJECT, schedule.subject)
-                putString(EXTRA_SCHEDULE_TIME, DateTimeConverter.fromTime(schedule.startTime))
+                putString(EXTRA_SCHEDULE_START_TIME, DateTimeConverter.fromTime(schedule.startTime))
+                putString(EXTRA_SCHEDULE_END_TIME, DateTimeConverter.fromTime(schedule.endTime))
                 putInt(EXTRA_SCHEDULE_DAY_OF_WEEK, schedule.daysOfWeek)
             }.build()
         }
@@ -144,7 +146,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Schedule().apply {
                 workerData.getString(EXTRA_SCHEDULE_ID)?.let { scheduleID = it }
                 subject = workerData.getString(EXTRA_SCHEDULE_SUBJECT)
-                startTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_TIME))
+                startTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_START_TIME))
+                endTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_END_TIME))
                 daysOfWeek = workerData.getInt(EXTRA_SCHEDULE_DAY_OF_WEEK, 0)
             }
         }

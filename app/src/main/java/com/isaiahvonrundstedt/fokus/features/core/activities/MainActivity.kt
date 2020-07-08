@@ -18,6 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
+import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
@@ -49,7 +50,7 @@ class MainActivity: BaseActivity() {
 
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
         controller = navigationHost?.findNavController()
-        NavigationUI.setupWithNavController(navigationView, controller!!)
+        ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
     }
 
     override fun onResume() {

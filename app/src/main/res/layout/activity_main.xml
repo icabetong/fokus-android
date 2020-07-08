@@ -22,12 +22,15 @@
             app:navGraph="@navigation/navigation_graph"
             app:defaultNavHost="true"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/navigation_menu"
-            style="@style/Fokus.Widget.NavigationView"/>
+            app:layout_behavior="github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior"
+            app:exb_items="@menu/navigation_menu"
+            app:exb_itemBackgroundCornerRadius="32dp"
+            app:exb_itemInactiveColor="@color/colorOnSurface"
+            app:exb_backgroundColor="@color/colorSurface"/>
 
     </LinearLayout>
 

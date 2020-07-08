@@ -3,7 +3,7 @@
     <color name="colorPrimary">#0288d1</color>
     <color name="colorPrimaryDark">#005b9f</color>
     <color name="colorPrimaryLight">#5eb8ff</color>
-    <color name="colorOnPrimary">#000000</color>
+    <color name="colorOnPrimary">#ffffff</color>
     <color name="colorWidgetTint">#c1e4f8</color>
     <color name="colorSurface">#ffffff</color>
     <color name="colorOnSurface">#000000</color>

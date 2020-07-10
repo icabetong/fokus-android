@@ -32,6 +32,14 @@ data class Schedule @JvmOverloads constructor (
     var subject: String? = null
 ): Parcelable {
 
+    fun isToday(): Boolean {
+        getDaysAsList().forEach {
+            if (it == DateTime.now().dayOfWeek)
+                return@isToday true
+        }
+        return false
+    }
+
     fun format(context: Context): String {
         return StringBuilder().apply {
             append(formatDaysOfWeek(context))

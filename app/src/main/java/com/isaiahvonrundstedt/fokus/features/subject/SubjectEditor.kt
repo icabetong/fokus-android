@@ -48,7 +48,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         if (requestCode == REQUEST_CODE_UPDATE) {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
-            adapter.setItems(intent.getListExtra(EXTRA_SCHEDULE)!!)
+            adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE)!!)
 
             setTransitionName(codeEditText, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
             setTransitionName(descriptionEditText, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)

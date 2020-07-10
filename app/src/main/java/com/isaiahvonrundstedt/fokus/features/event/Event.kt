@@ -34,6 +34,10 @@ data class Event @JvmOverloads constructor(
     var dateAdded: DateTime = DateTime.now()
 ): Parcelable {
 
+    fun isToday(): Boolean {
+        return schedule?.isEqualNow ?: false
+    }
+
     fun formatScheduleDate(context: Context): String {
         return if (schedule!!.isEqualNow)
             context.getString(R.string.today)

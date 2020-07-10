@@ -17,14 +17,17 @@ interface TaskDAO {
     @Update
     suspend fun update(task: Task)
 
+    @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
+    suspend fun setFinished(taskID: String, status: Int)
+
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    suspend fun fetch(): List<Task>
+    suspend fun fetch(): List<TaskResource>
+
+    @Query("SELECT * FROM tasks WHERE isFinished = 0")
+    suspend fun fetchCore(): List<Task>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0")
     suspend fun fetchCount(): Int
-
-    @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
-    suspend fun setFinished(taskID: String, status: Int)
 
     @Transaction
     @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID ORDER BY dateAdded")

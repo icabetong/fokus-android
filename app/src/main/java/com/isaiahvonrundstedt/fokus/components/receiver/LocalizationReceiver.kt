@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.receiver
+package com.isaiahvonrundstedt.fokus.components.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

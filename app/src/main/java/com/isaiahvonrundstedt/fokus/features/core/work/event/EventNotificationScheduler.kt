@@ -7,7 +7,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import org.joda.time.DateTime
 
 // This worker's function is to reschedule all pending workers
 // that is supposed to trigger at its due minus the interval
@@ -19,7 +18,7 @@ class EventNotificationScheduler(context: Context, workerParameters: WorkerParam
     private var events = AppDatabase.getInstance(applicationContext)?.events()
 
     override suspend fun doWork(): Result {
-        val items = events?.fetch()
+        val items = events?.fetchCore()
 
         items?.forEach { event ->
             if (event.schedule!!.isAfterNow) {

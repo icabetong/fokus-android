@@ -58,7 +58,7 @@ class TaskEditor: BaseEditor() {
             task = intent.getParcelableExtra(EXTRA_TASK)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
             attachmentList.clear()
-            attachmentList.addAll(intent.getListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
+            attachmentList.addAll(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
             setTransitionName(nameEditText, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }

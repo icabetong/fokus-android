@@ -18,7 +18,7 @@ interface SubjectDAO {
     suspend fun update(subject: Subject)
 
     @Query("SELECT * FROM subjects")
-    fun fetch(): List<SubjectResource>
+    suspend fun fetch(): List<SubjectResource>
 
     @Transaction
     @Query("SELECT * FROM subjects")

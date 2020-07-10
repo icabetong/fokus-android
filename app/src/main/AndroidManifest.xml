@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Fokus.Theme.Core">
-        <activity android:name="com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity">
+
+        <activity android:name=".features.core.activities.MainActivity"
+            android:theme="@style/Fokus.Theme.Core.Navigation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,9 +24,6 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/xml_shortcuts"/>
         </activity>
-
-        <activity android:name=".features.core.activities.MainActivity"
-            android:theme="@style/Fokus.Theme.Core.Navigation" />
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.history.HistoryActivity" />
@@ -34,15 +33,56 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.event.EventEditor"
             android:windowSoftInputMode="adjustResize"/>
-
         <activity android:name=".features.subject.selector.SubjectSelectorActivity"/>
 
-        <receiver android:name=".features.core.receiver.LocalizationReceiver"
+        <service android:name=".components.service.NotificationActionService"
+            android:exported="false"/>
+        <service android:name=".features.task.widget.TaskWidgetRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name=".features.event.widget.EventWidgetRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name=".features.subject.widget.SubjectWidgetRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <receiver android:name=".components.receiver.LocalizationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCALE_CHANGED"/>
             </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".features.task.widget.TaskWidgetProvider"
+            android:label="@string/navigation_tasks">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_tasks"/>
+        </receiver>
+        <receiver
+            android:name=".features.event.widget.EventWidgetProvider"
+            android:label="@string/navigation_events">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_events"/>
+        </receiver>
+        <receiver
+            android:name=".features.subject.widget.SubjectWidgetProvider"
+            android:label="@string/navigation_subjects">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_subjects"/>
         </receiver>
 
         <!-- OSSLicenses -->
@@ -52,9 +92,6 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Fokus.Theme.Base"/>
-
-        <service android:name=".features.core.service.NotificationActionService"
-            android:exported="false"/>
 
     </application>
 </manifest>

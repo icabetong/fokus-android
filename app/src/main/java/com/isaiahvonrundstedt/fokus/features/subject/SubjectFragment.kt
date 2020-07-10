@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getListExtra
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -97,7 +97,7 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
                 val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-                val scheduleList: List<Schedule>? = data?.getListExtra(SubjectEditor.EXTRA_SCHEDULE)
+                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
                 subject?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {

@@ -23,7 +23,6 @@ import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.activities.StartupActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment

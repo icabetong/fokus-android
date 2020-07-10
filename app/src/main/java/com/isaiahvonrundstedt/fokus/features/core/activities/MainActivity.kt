@@ -6,15 +6,21 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
+import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
@@ -32,14 +38,47 @@ class MainActivity: BaseActivity() {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_tasks)
 
-        intent?.getStringExtra(StartupActivity.EXTRA_SHORTCUT_ACTION)?.let {
-            when (it) {
-                StartupActivity.SHORTCUT_ACTION_TASK ->
+        ReminderWorker.reschedule(this.applicationContext)
+
+        intent?.also {
+            when (it.action) {
+                ACTION_WIDGET_TASK -> {
+                    val task: Task? = it.getParcelableExtra(EXTRA_TASK)
+                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
+                    val attachments: List<Attachment>? = it.getParcelableListExtra(EXTRA_ATTACHMENTS)
+
+                    startActivityForResult(Intent(this, TaskEditor::class.java).apply {
+                        putExtra(TaskEditor.EXTRA_TASK, task)
+                        putExtra(TaskEditor.EXTRA_SUBJECT, subject)
+                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
+                    }, TaskEditor.REQUEST_CODE_INSERT)
+                }
+                ACTION_WIDGET_EVENT -> {
+                    val event: Event? = it.getParcelableExtra(EXTRA_EVENT)
+                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
+
+                    startActivityForResult(Intent(this, EventEditor::class.java).apply {
+                        putExtra(EventEditor.EXTRA_EVENT, event)
+                        putExtra(EventEditor.EXTRA_SUBJECT, subject)
+                    }, EventEditor.REQUEST_CODE_UPDATE)
+                }
+                ACTION_WIDGET_SUBJECT -> {
+                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
+                    val scheduleList: List<Schedule>? = it.getParcelableListExtra(EXTRA_SCHEDULES)
+
+                    startActivityForResult(Intent(this, SubjectEditor::class.java).apply {
+                        putExtra(EXTRA_SUBJECT, subject)
+                        putExtra(EXTRA_SCHEDULES, scheduleList ?: emptyList())
+                    }, SubjectEditor.REQUEST_CODE_UPDATE)
+                }
+                ACTION_SHORTCUT_TASK -> {
                     startActivityForResult(Intent(this, TaskEditor::class.java),
                         TaskEditor.REQUEST_CODE_INSERT)
-                StartupActivity.SHORTCUT_ACTION_EVENT ->
+                }
+                ACTION_SHORTCUT_EVENT -> {
                     startActivityForResult(Intent(this, EventEditor::class.java),
                         EventEditor.REQUEST_CODE_INSERT)
+                }
             }
         }
 
@@ -77,20 +116,36 @@ class MainActivity: BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == BaseEditor.RESULT_OK) {
             when (requestCode) {
-                TaskEditor.REQUEST_CODE_INSERT -> {
+                TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
                     val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
                     val attachments: List<Attachment>? =
-                        data?.getParcelableArrayListExtra(TaskEditor.EXTRA_ATTACHMENTS)
+                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
                     task?.also {
-                        tasksViewModel.insert(it, attachments ?: emptyList())
+                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
+                            tasksViewModel.insert(it, attachments ?: emptyList())
+                        else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
+                            tasksViewModel.update(it, attachments ?: emptyList())
                     }
                 }
-                EventEditor.REQUEST_CODE_INSERT -> {
+                EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
                     val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
 
                     event?.also {
-                        eventsViewModel.insert(it)
+                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
+                            eventsViewModel.insert(it)
+                        else eventsViewModel.update(it)
+                    }
+                }
+                SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
+                    val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+                    val schedules: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
+
+                    subject?.also {
+                        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)
+                            subjectsViewModel.insert(it, schedules ?: emptyList())
+                        else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
+                            subjectsViewModel.update(it, schedules ?: emptyList())
                     }
                 }
             }
@@ -103,6 +158,25 @@ class MainActivity: BaseActivity() {
 
     private val eventsViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
+    }
+
+    private val subjectsViewModel by lazy {
+        ViewModelProvider(this).get(SubjectViewModel::class.java)
+    }
+
+    companion object {
+        const val ACTION_SHORTCUT_TASK = "action:shortcut:task"
+        const val ACTION_SHORTCUT_EVENT = "action:shortcut:event"
+
+        const val ACTION_WIDGET_TASK = "action:widget:task"
+        const val ACTION_WIDGET_EVENT = "action:widget:event"
+        const val ACTION_WIDGET_SUBJECT = "action:widget:subject"
+
+        const val EXTRA_TASK = "extra:task"
+        const val EXTRA_EVENT = "extra:event"
+        const val EXTRA_SUBJECT = "extra:subject"
+        const val EXTRA_ATTACHMENTS = "extra:attachments"
+        const val EXTRA_SCHEDULES = "extra:schedules"
     }
 
 }

@@ -70,7 +70,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
         if (requestCode == REQUEST_CODE_UPDATE) {
             task = intent.getParcelableExtra(EXTRA_TASK)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
-            adapter.setItems(intent.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE) ?: emptyList())
+            adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
             setTransitionName(nameEditText, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }

@@ -91,6 +91,7 @@
     <string name="feedback_history_removed">Historique supprimé</string>
     <string name="feedback_task_removed">Tâche supprimée</string>
     <string name="feedback_schedule_removed">Programme supprimée</string>
+    <string name="feedback_attachment_removed">Pièce jointe retirée</string>
     <string name="feedback_event_removed">Événement supprimé</string>
     <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
     <string name="feedback_subject_empty_name">Vous avez oublié de saisir le code de l\'objet</string>

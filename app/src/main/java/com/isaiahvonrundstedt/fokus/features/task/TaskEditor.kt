@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -24,17 +25,25 @@ import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
+import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
+import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
+import kotlinx.android.synthetic.main.layout_editor_task.actionButton
+import kotlinx.android.synthetic.main.layout_editor_task.recyclerView
+import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
+import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TaskEditor: BaseEditor() {
+class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
 
     private var requestCode = 0
     private var task = Task()
@@ -42,11 +51,15 @@ class TaskEditor: BaseEditor() {
 
     private val attachmentRequestCode = 32
     private val attachmentList = ArrayList<Attachment>()
+    private val adapter = AttachmentAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
         // Check if the parent activity has extras sent then
         // determine if the editor will be in insert or
@@ -57,8 +70,7 @@ class TaskEditor: BaseEditor() {
         if (requestCode == REQUEST_CODE_UPDATE) {
             task = intent.getParcelableExtra(EXTRA_TASK)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
-            attachmentList.clear()
-            attachmentList.addAll(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
+            adapter.setItems(intent.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE) ?: emptyList())
 
             setTransitionName(nameEditText, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }
@@ -88,16 +100,23 @@ class TaskEditor: BaseEditor() {
                 clearButton.isVisible = true
             }
 
-            attachmentList.forEach { attachment ->
-                attachmentChipGroup.addView(createChip(attachment), 0)
-            }
-
             window.decorView.rootView.clearFocus()
         }
     }
 
     override fun onStart() {
         super.onStart()
+
+        addItemButton.setOnClickListener {
+            // Check if we have read storage permissions then request the permission
+            // if we have the permission, open up file picker
+            if (PermissionManager(this).storageReadGranted) {
+                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    .setType("*/*"), attachmentRequestCode)
+            } else
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PermissionManager.REQUEST_CODE_STORAGE)
+        }
 
         dueDateTextView.setOnClickListener { v ->
             MaterialDialog(this).show {
@@ -119,17 +138,6 @@ class TaskEditor: BaseEditor() {
             startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
                 SubjectSelectorActivity.REQUEST_CODE)
             overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
-        }
-
-        attachmentChip.setOnClickListener {
-            // Check if we have read storage permissions then request the permission
-            // if we have the permission, open up file picker
-            if (PermissionManager(this).storageReadGranted) {
-                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .setType("*/*"), attachmentRequestCode)
-            } else
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PermissionManager.REQUEST_CODE_STORAGE)
         }
 
         clearButton.setOnClickListener {
@@ -171,7 +179,7 @@ class TaskEditor: BaseEditor() {
             // Send the data back to the parent activity
             val data = Intent()
             data.putExtra(EXTRA_TASK, task)
-            data.putParcelableArrayListExtra(EXTRA_ATTACHMENTS, attachmentList.toArrayList())
+            data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
             setResult(RESULT_OK, data)
             supportFinishAfterTransition()
         }
@@ -201,8 +209,7 @@ class TaskEditor: BaseEditor() {
                 dateAttached = DateTime.now()
             }
 
-            attachmentList.add(attachment)
-            attachmentChipGroup.addView(createChip(attachment), 0)
+            adapter.insert(attachment)
         } else if (requestCode == SubjectSelectorActivity.REQUEST_CODE
                 && resultCode == Activity.RESULT_OK) {
 
@@ -225,27 +232,21 @@ class TaskEditor: BaseEditor() {
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun createChip(attachment: Attachment): Chip {
-        return Chip(this).apply {
-            text = attachment.uri!!.getFileName(this@TaskEditor)
-            tag = attachment.attachmentID
-            isCloseIconVisible = true
-            setOnClickListener(chipClickListener)
-            setOnCloseIconClickListener(chipRemoveListener)
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
+        if (t is Attachment) {
+            when (action) {
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    onParseIntent(t.uri)
+                }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    adapter.remove(t)
+                    createSnackbar(rootLayout, R.string.feedback_attachment_removed).run {
+                        setAction(R.string.button_undo) { adapter.insert(t) }
+                        show()
+                    }
+                }
+            }
         }
-    }
-
-    private val chipClickListener = View.OnClickListener {
-        val attachment = attachmentList.getUsingID(it.tag.toString())
-        if (attachment != null) onParseIntent(attachment.uri)
-    }
-
-    private val chipRemoveListener = View.OnClickListener {
-        val index = attachmentChipGroup.indexOfChild(it)
-        attachmentChipGroup.removeViewAt(index)
-
-        val attachment = attachmentList.getUsingID(it.tag.toString())
-        if (attachment != null) attachmentList.remove(attachment)
     }
 
     // This function invokes the corresponding application that

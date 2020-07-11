@@ -92,8 +92,9 @@
     <string name="feedback_history_removed">History removed</string>
     <string name="feedback_task_removed">Task removed</string>
     <string name="feedback_schedule_removed">Schedule removed</string>
-    <string name="feedback_task_marked_as_finished">Task marked as finished</string>
+    <string name="feedback_attachment_removed">Attachment removed</string>
     <string name="feedback_event_removed">Event removed</string>
+    <string name="feedback_task_marked_as_finished">Task marked as finished</string>
     <string name="feedback_subject_empty_name">You forgot to enter the subject code</string>
     <string name="feedback_subject_empty_description">You forgot to enter the description</string>
     <string name="feedback_subject_no_schedule">You forgot to add a schedule</string>

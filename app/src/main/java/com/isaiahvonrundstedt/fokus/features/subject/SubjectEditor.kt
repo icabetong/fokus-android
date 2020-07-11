@@ -21,6 +21,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
@@ -48,7 +49,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         if (requestCode == REQUEST_CODE_UPDATE) {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
-            adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE)!!)
+            adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE) ?: emptyList())
 
             setTransitionName(codeEditText, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
             setTransitionName(descriptionEditText, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
@@ -84,17 +85,9 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Schedule) {
             when (action) {
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    adapter.remove(t)
-                    createSnackbar(rootLayout, R.string.feedback_schedule_removed).run {
-                        setAction(R.string.button_undo) { adapter.insert(t) }
-                        show()
-                    }
-                }
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val editor = ScheduleEditor(this)
                     editor.arguments = bundleOf(
@@ -103,7 +96,13 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
                     )
                     editor.invoke(supportFragmentManager)
                 }
-                BaseAdapter.ActionListener.Action.MODIFY -> {}
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    adapter.remove(t)
+                    createSnackbar(rootLayout, R.string.feedback_schedule_removed).run {
+                        setAction(R.string.button_undo) { adapter.insert(t) }
+                        show()
+                    }
+                }
             }
         }
     }

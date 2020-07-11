@@ -1,9 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +13,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import kotlinx.android.synthetic.main.fragment_event.*
 
-class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
+class EventFragment: BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
@@ -60,12 +57,12 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is EventResource) {
             when (action) {
                 // Show up the editorUI and pass the extra
-                BaseAdapter.ActionListener.Action.SELECT -> {
+                BaseListAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, EventEditor::class.java).apply {
                         putExtra(EventEditor.EXTRA_EVENT, t.event)
                         putExtra(EventEditor.EXTRA_SUBJECT, t.subject)
@@ -73,7 +70,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
                     startActivityWithTransition(views, intent, EventEditor.REQUEST_CODE_UPDATE)
                 }
                 // Item has been swiped, notify database for deletion
-                BaseAdapter.ActionListener.Action.DELETE -> {
+                BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.event)
 
                     createSnackbar(recyclerView, R.string.feedback_event_removed).run {
@@ -81,7 +78,7 @@ class EventFragment: BaseFragment(), BaseAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseAdapter.ActionListener.Action.MODIFY -> { }
+                BaseListAdapter.ActionListener.Action.MODIFY -> { }
             }
         }
     }

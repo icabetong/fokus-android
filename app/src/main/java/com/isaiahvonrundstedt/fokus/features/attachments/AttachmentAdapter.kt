@@ -1,40 +1,38 @@
-package com.isaiahvonrundstedt.fokus.features.schedule
+package com.isaiahvonrundstedt.fokus.features.attachments
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
-import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
-class ScheduleAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<ScheduleAdapter.ViewHolder>() {
+class AttachmentAdapter(private var actionListener: ActionListener)
+    : BaseAdapter<AttachmentAdapter.ViewHolder>() {
 
-    val itemList = mutableListOf<Schedule>()
+    val itemList = mutableListOf<Attachment>()
 
-    fun setItems(items: List<Schedule>) {
+    fun setItems(items: List<Attachment>) {
         itemList.clear()
         itemList.addAll(items)
         notifyDataSetChanged()
     }
 
     override fun <T> insert(t: T) {
-        if (t is Schedule) {
+        if (t is Attachment) {
             itemList.add(t)
             val index = itemList.indexOf(t)
 
             notifyItemInserted(index)
-            notifyItemRangeInserted(index, itemList.size)
+            notifyItemRangeChanged(index, itemList.size)
         }
     }
 
     override fun <T> remove(t: T) {
-        if (t is Schedule) {
+        if (t is Attachment) {
             val index = itemList.indexOf(t)
 
             itemList.removeAt(index)
@@ -44,9 +42,8 @@ class ScheduleAdapter(private val actionListener: ActionListener)
     }
 
     override fun <T> update(t: T) {
-        if (t is Schedule) {
-            val index = itemList.getIndexByID(t.scheduleID)
-
+        if (t is Attachment) {
+            val index = itemList.getIndexByID(t.attachmentID)
             if (index != -1) {
                 itemList[index] = t
                 notifyItemChanged(index)
@@ -56,37 +53,36 @@ class ScheduleAdapter(private val actionListener: ActionListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_schedule,
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_attachment,
             parent, false)
         return ViewHolder(rowView, actionListener)
     }
+
+    override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(itemList[holder.adapterPosition])
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     class ViewHolder(itemView: View, actionListener: ActionListener)
-        : BaseAdapter.BaseViewHolder(itemView, actionListener) {
+        : BaseViewHolder(itemView, actionListener) {
 
         private val rootView: View = itemView.findViewById(R.id.rootView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
         private val removeButton: ImageButton = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
             with(t) {
-                if (this is Schedule) {
-                    titleView.text = formatDaysOfWeek(rootView.context)
-                    summaryView.text = formatBothTime()
-                }
-                removeButton.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.DELETE)
-                }
+                if (this is Attachment) {
+                    titleView.text = uri?.getFileName(itemView.context)
 
-                rootView.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT)
+                    rootView.setOnClickListener {
+                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT)
+                    }
+
+                    removeButton.setOnClickListener {
+                        actionListener.onActionPerformed(this, ActionListener.Action.DELETE)
+                    }
                 }
             }
         }

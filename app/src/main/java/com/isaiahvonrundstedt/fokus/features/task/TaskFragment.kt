@@ -1,20 +1,15 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,14 +18,14 @@ import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import kotlinx.android.synthetic.main.fragment_task.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
-class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
+class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
@@ -71,7 +66,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
     }
 
     // Callback from the RecyclerView Adapter
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is TaskResource) {
             when (action) {
@@ -80,7 +75,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
                 // play a fokus sound. Primarily, MODIFY is used when
                 // the checkbox is checked, indicating that the
                 // task has been marked as finished.
-                BaseAdapter.ActionListener.Action.MODIFY -> {
+                BaseListAdapter.ActionListener.Action.MODIFY -> {
                     viewModel.update(t.task)
                     if (t.task.isFinished) {
                         createSnackbar(recyclerView,
@@ -114,7 +109,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
                 }
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
-                BaseAdapter.ActionListener.Action.SELECT -> {
+                BaseListAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, TaskEditor::class.java).apply {
                         putExtra(TaskEditor.EXTRA_TASK, t.task)
                         putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
@@ -125,7 +120,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener {
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
                 // feedback
-                BaseAdapter.ActionListener.Action.DELETE -> {
+                BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
                     createSnackbar(recyclerView, R.string.feedback_task_removed).run {

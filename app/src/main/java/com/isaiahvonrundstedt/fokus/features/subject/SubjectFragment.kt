@@ -14,13 +14,13 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.fragment_subject.*
 
-class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
+class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -58,13 +58,13 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is SubjectResource) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result
-                BaseAdapter.ActionListener.Action.SELECT -> {
+                BaseListAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
                         putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
                         putParcelableArrayListExtra(SubjectEditor.EXTRA_SCHEDULE, t.scheduleList.toArrayList())
@@ -74,7 +74,7 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database
                 // then show a SnackBar feedback
-                BaseAdapter.ActionListener.Action.DELETE -> {
+                BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
                     createSnackbar(recyclerView, R.string.feedback_subject_removed).run {
@@ -82,7 +82,7 @@ class SubjectFragment: BaseFragment(), BaseAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseAdapter.ActionListener.Action.MODIFY -> {}
+                BaseListAdapter.ActionListener.Action.MODIFY -> {}
             }
         }
     }

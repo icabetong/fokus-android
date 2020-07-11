@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_appbar_selector.*
 
-class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
+class SubjectSelectorActivity: BaseActivity(), BaseListAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -72,18 +72,18 @@ class SubjectSelectorActivity: BaseActivity(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Subject) {
             when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
+                BaseListAdapter.ActionListener.Action.SELECT -> {
                     val result = Intent()
                     result.putExtra(EXTRA_SUBJECT, t)
                     setResult(Activity.RESULT_OK, result)
                     finish()
                 }
-                BaseAdapter.ActionListener.Action.MODIFY -> {}
-                BaseAdapter.ActionListener.Action.DELETE -> {}
+                BaseListAdapter.ActionListener.Action.MODIFY -> {}
+                BaseListAdapter.ActionListener.Action.DELETE -> {}
             }
         }
     }

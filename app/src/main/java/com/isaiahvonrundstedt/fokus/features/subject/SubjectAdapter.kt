@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class SubjectAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<SubjectResource, SubjectAdapter.SubjectViewHolder>(callback) {
+    : BaseListAdapter<SubjectResource, SubjectAdapter.SubjectViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,

@@ -3,18 +3,15 @@ package com.isaiahvonrundstedt.fokus.features.subject.selector
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
 class SubjectSelectorAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<SubjectResource, SubjectSelectorAdapter.ViewHolder>(callback) {
+    : BaseListAdapter<SubjectResource, SubjectSelectorAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_selector,

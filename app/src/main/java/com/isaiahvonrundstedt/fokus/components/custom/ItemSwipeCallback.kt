@@ -10,9 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
-class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var adapter: BaseAdapter<T, VH>)
+class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, private var asyncAdapter: BaseListAdapter<T, VH>)
     : ItemTouchHelper.Callback() {
 
     private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_outline_delete_24)
@@ -28,7 +28,7 @@ class ItemSwipeCallback<T, VH: RecyclerView.ViewHolder>(context: Context, privat
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        adapter.onSwipe(viewHolder.adapterPosition, direction)
+        asyncAdapter.onSwipe(viewHolder.adapterPosition, direction)
     }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {

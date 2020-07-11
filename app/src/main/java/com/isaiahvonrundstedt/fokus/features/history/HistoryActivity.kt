@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class HistoryActivity: BaseActivity(), BaseAdapter.ActionListener {
+class HistoryActivity: BaseActivity(), BaseListAdapter.ActionListener {
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this).get(HistoryViewModel::class.java)
@@ -48,11 +48,11 @@ class HistoryActivity: BaseActivity(), BaseAdapter.ActionListener {
         })
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is History) {
             when (action) {
-                BaseAdapter.ActionListener.Action.DELETE -> {
+                BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
                     val snackbar = Snackbar.make(recyclerView, R.string.feedback_history_removed,
                         Snackbar.LENGTH_SHORT)
@@ -61,8 +61,8 @@ class HistoryActivity: BaseActivity(), BaseAdapter.ActionListener {
                     }
                     snackbar.show()
                 }
-                BaseAdapter.ActionListener.Action.SELECT -> { }
-                BaseAdapter.ActionListener.Action.MODIFY -> { }
+                BaseListAdapter.ActionListener.Action.SELECT -> { }
+                BaseListAdapter.ActionListener.Action.MODIFY -> { }
             }
         }
     }

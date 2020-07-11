@@ -11,10 +11,10 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<EventResource, EventAdapter.EventViewHolder>(callback) {
+    : BaseListAdapter<EventResource, EventAdapter.EventViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,

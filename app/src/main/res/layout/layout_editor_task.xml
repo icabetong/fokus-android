@@ -173,23 +173,12 @@
                     android:text="@string/field_attachments"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/attachmentChipGroup"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:animateLayoutChanges="true"
-                    android:minHeight="?attr/listPreferredItemHeightSmall"
-                    android:paddingHorizontal="@dimen/activity_padding">
+                    android:layout_height="wrap_content"/>
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/attachmentChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/button_add_attachment"
-                        app:closeIconEnabled="false" />
-
-                </com.google.android.material.chip.ChipGroup>
+                <include layout="@layout/layout_item_add"/>
 
             </LinearLayout>
 

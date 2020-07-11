@@ -172,6 +172,16 @@
     <string name="tag_color_lavender">Lavender</string>
     <string name="tag_color_graphite">Graphite</string>
 
+    <string name="widget_task_name">Task Widget</string>
+    <string name="widget_task_title">Today\'s Tasks</string>
+    <string name="widget_task_empty">Relax. You have no tasks for today</string>
+    <string name="widget_event_name">Event Widget</string>
+    <string name="widget_event_title">Today\'s Events</string>
+    <string name="widget_event_empty">Relax. You have no events for today</string>
+    <string name="widget_class_name">Class Widget</string>
+    <string name="widget_class_title">Today\'s Classes</string>
+    <string name="widget_class_empty">Relax. You have no classes for today</string>
+
     <!-- Helper Text -->
     <string name="helper_this_is_important">Marking this as important means that it will show a persistent notification at your notification shade.</string>
 

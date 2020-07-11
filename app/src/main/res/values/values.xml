@@ -176,10 +176,11 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <style name="Fokus.TextAppearance.Widget.Item.Title" parent="Fokus.TextAppearance.Body.Medium">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/widget_title</item>
     </style>
     <style name="Fokus.TextAppearance.Widget.Item.Body" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">@dimen/widget_item_text_title</item>
     </style>
     <style name="Fokus.TextAppearance.List.Meta" parent="Fokus.TextAppearance"/>
     <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>

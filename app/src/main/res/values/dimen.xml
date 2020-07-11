@@ -11,4 +11,10 @@
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
 
     <dimen name="surface_corner_radius">8dp</dimen>
+
+    <!-- Widget -->
+    <dimen name="widget_title">16sp</dimen>
+    <dimen name="widget_title_padding">12sp</dimen>
+    <dimen name="widget_item_text_title">16sp</dimen>
+    <dimen name="widget_empty_text">14sp</dimen>
 </resources>

@@ -9,8 +9,6 @@ import com.isaiahvonrundstedt.fokus.R
 abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.ItemCallback<T>)
     : ListAdapter<T, VH>(callback) {
 
-    abstract fun onSwipe(position: Int, direction: Int)
-
     interface ActionListener {
         fun <T> onActionPerformed(t: T, action: Action, views: Map<String, View>)
 

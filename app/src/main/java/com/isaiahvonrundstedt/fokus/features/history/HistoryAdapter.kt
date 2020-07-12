@@ -8,10 +8,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class HistoryAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<History, HistoryAdapter.ViewHolder>(callback) {
+    : BaseListAdapter<History, HistoryAdapter.ViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)

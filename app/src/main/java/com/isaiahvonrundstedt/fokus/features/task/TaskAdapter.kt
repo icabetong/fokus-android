@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
@@ -16,7 +17,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class TaskAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback) {
+    : BaseListAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
@@ -22,8 +23,6 @@ class SubjectSelectorAdapter(private val actionListener: ActionListener)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(getItem(holder.adapterPosition))
     }
-
-    override fun onSwipe(position: Int, direction: Int) {}
 
     class ViewHolder(itemView: View, private val actionListener: ActionListener)
         : BaseViewHolder(itemView) {

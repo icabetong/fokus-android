@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_appbar_selector.*
@@ -63,8 +63,10 @@ class SubjectSelectorActivity: BaseActivity(), BaseListAdapter.ActionListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT && resultCode == Activity.RESULT_OK) {
-            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(SubjectEditor.EXTRA_SCHEDULE)
+            val subject: Subject? = data?.getParcelableExtra(
+                SubjectEditor.EXTRA_SUBJECT)
+            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(
+                SubjectEditor.EXTRA_SCHEDULE)
 
             subject?.let {
                 viewModel.insert(it, scheduleList ?: emptyList())

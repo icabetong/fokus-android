@@ -16,7 +16,7 @@ class ClassNotificationScheduler(context: Context, workerParameters: WorkerParam
         val subjectList = subjects?.fetch()
 
         subjectList?.forEach { resource ->
-            resource.scheduleList.forEach {
+            resource.schedules.forEach {
                 it.subject = resource.subject.code
 
                 val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)

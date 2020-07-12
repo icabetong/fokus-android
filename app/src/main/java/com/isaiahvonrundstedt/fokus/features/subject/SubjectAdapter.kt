@@ -54,7 +54,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
 
                     if (scheduleView.childCount > 0)
                         scheduleView.removeAllViews()
-                    scheduleList.forEach {
+                    schedules.forEach {
                         val chip = Chip(itemView.context).apply {
                             text = it.format(context)
                         }

@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.event
+package com.isaiahvonrundstedt.fokus.features.event.editor
 
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +17,8 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColo
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.features.event.Event
+import com.isaiahvonrundstedt.fokus.features.event.EventAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
@@ -38,12 +40,15 @@ class EventEditor: BaseEditor() {
 
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
-        requestCode = if (intent.hasExtra(EXTRA_EVENT)) REQUEST_CODE_UPDATE
+        requestCode = if (intent.hasExtra(
+                EXTRA_EVENT)) REQUEST_CODE_UPDATE
         else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
-            event = intent.getParcelableExtra(EXTRA_EVENT)!!
-            subject = intent.getParcelableExtra(EXTRA_SUBJECT)
+            event = intent.getParcelableExtra(
+                EXTRA_EVENT)!!
+            subject = intent.getParcelableExtra(
+                EXTRA_SUBJECT)
 
             setTransitionName(nameEditText, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
         }
@@ -145,7 +150,8 @@ class EventEditor: BaseEditor() {
 
             // Send the data back to the parent activity
             val data = Intent()
-            data.putExtra(EXTRA_EVENT, event)
+            data.putExtra(
+                EXTRA_EVENT, event)
             setResult(RESULT_OK, data)
             supportFinishAfterTransition()
         }
@@ -190,7 +196,8 @@ class EventEditor: BaseEditor() {
                     positiveButton(R.string.button_delete) {
                         // Send the data back to the parent activity
                         val data = Intent()
-                        data.putExtra(EXTRA_EVENT, event)
+                        data.putExtra(
+                            EXTRA_EVENT, event)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }
@@ -200,6 +207,26 @@ class EventEditor: BaseEditor() {
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        with(outState) {
+            putParcelable(EXTRA_EVENT, event)
+            putParcelable(EXTRA_SUBJECT, subject)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        with(savedInstanceState) {
+            getParcelable<Event>(EXTRA_EVENT)?.let {
+                this@EventEditor.event = it
+            }
+            getParcelable<Subject>(EXTRA_SUBJECT)?.let {
+                this@EventEditor.subject = it
+            }
+        }
     }
 
     companion object {

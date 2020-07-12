@@ -32,6 +32,7 @@
         <item name="floatingActionButtonStyle">@style/Fokus.Widget.FAB</item>
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -101,6 +102,20 @@
         <item name="exb_transitionDuration">200</item>
         <item name="layout_behavior">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</item>
     </style>
+    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="iconTint">@color/color_on_primary</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="cornerRadius">@dimen/surface_corner_radius</item>
+        <item name="android:textColor">@color/color_on_primary</item>
+    </style>
+    <style name="Fokus.Widget.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="iconTint">@color/color_primary</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">8dp</item>
+        <item name="cornerRadius">@dimen/surface_corner_radius</item>
+        <item name="android:textColor">@color/color_primary</item>
+    </style>
     <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
@@ -112,10 +127,7 @@
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
-    <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
-        <item name="iconTint">@color/color_on_primary</item>
-        <item name="android:textColor">@color/color_on_primary</item>
-    </style>
+
 
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
     <style name="Fokus.TextAppearance.Title" parent="Fokus.TextAppearance">
@@ -169,6 +181,10 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="Fokus.TextAppearance.BottomSheet.Title" parent="Fokus.TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="Fokus.TextAppearance.Widget.Title" parent="Fokus.TextAppearance">
         <item name="android:textSize">@dimen/widget_title</item>

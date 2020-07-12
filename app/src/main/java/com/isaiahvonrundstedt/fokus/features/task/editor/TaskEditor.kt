@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.task
+package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.Manifest
 import android.app.Activity
@@ -21,11 +21,14 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
+import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_editor_task.actionButton
@@ -35,16 +38,13 @@ import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
 
-class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
+class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     private var requestCode = 0
     private var task = Task()
     private var subject: Subject? = null
 
-    private val attachmentRequestCode = 32
-    private val attachmentList = ArrayList<Attachment>()
     private val adapter = AttachmentAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
         // determine if the editor will be in insert or
         // update mode
         requestCode = if (intent.hasExtra(EXTRA_TASK) && intent.hasExtra(EXTRA_SUBJECT)
-                && intent.hasExtra(EXTRA_ATTACHMENTS)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
+            && intent.hasExtra(EXTRA_ATTACHMENTS)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
             task = intent.getParcelableExtra(EXTRA_TASK)!!
@@ -89,7 +89,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
                     text = it.code
                     setTextColorFromResource(R.color.color_primary_text)
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
-                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
+                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
                 }
                 clearButton.isVisible = true
             }
@@ -106,7 +106,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
             // if we have the permission, open up file picker
             if (PermissionManager(this).storageReadGranted) {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .setType("*/*"), attachmentRequestCode)
+                    .setType("*/*"), REQUEST_CODE_ATTACHMENT)
             } else
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PermissionManager.REQUEST_CODE_STORAGE)
@@ -184,16 +184,16 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
         if (requestCode == PermissionManager.REQUEST_CODE_STORAGE
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                .setType("*/*"), attachmentRequestCode)
+                .setType("*/*"), REQUEST_CODE_ATTACHMENT)
         } else
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Check if the request codes are the same and the result code is successful
         // then create an Attachment object and a corresponding ChipView
         // attachments have to be inserted temporarily on the ArrayList
-        if (requestCode == attachmentRequestCode && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_ATTACHMENT && resultCode == Activity.RESULT_OK) {
             contentResolver?.takePersistableUriPermission(data?.data!!,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
@@ -205,7 +205,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
 
             adapter.insert(attachment)
         } else if (requestCode == SubjectSelectorActivity.REQUEST_CODE
-                && resultCode == Activity.RESULT_OK) {
+            && resultCode == Activity.RESULT_OK) {
 
             data?.getParcelableExtra<Subject>(SubjectSelectorActivity.EXTRA_SUBJECT)?.let { subject ->
                 clearButton.isVisible = true
@@ -245,7 +245,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
 
     // This function invokes the corresponding application that
     // will open the uri of the attachment if the user clicks
-    // on the ChipView
+    // on the attachment item
     private fun onParseIntent(uri: Uri?) {
         val intent = Intent(Intent.ACTION_VIEW)
             .setDataAndType(uri, contentResolver?.getType(uri!!))
@@ -271,7 +271,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
                         // Send the data back to the parent activity
                         val data = Intent()
                         data.putExtra(EXTRA_TASK, task)
-                        data.putExtra(EXTRA_ATTACHMENTS, attachmentList)
+                        data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }
@@ -283,6 +283,31 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
         return true
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        with(outState) {
+            putParcelable(EXTRA_TASK, task)
+            putParcelable(EXTRA_SUBJECT, subject)
+            putParcelableArrayList(EXTRA_ATTACHMENTS, adapter.itemList.toArrayList())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        with(savedInstanceState) {
+            getParcelable<Task>(EXTRA_TASK)?.let {
+                this@TaskEditor.task = it
+            }
+            getParcelable<Subject>(EXTRA_SUBJECT)?.let {
+                this@TaskEditor.subject = it
+            }
+            getParcelableArrayList<Attachment>(EXTRA_ATTACHMENTS)?.let {
+                this@TaskEditor.adapter.setItems(it)
+            }
+        }
+    }
+
     companion object {
         const val REQUEST_CODE_INSERT = 32
         const val REQUEST_CODE_UPDATE = 19
@@ -290,6 +315,8 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
         const val EXTRA_TASK = "extra:task"
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_ATTACHMENTS = "extra:attachments"
+
+        private const val REQUEST_CODE_ATTACHMENT = 20
     }
 
 }

@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.subject.widget
 
 import android.content.Intent
-import android.util.Log
 import android.widget.RemoteViewsService
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
@@ -23,7 +22,7 @@ class SubjectWidgetRemoteService: RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
         val items = mutableListOf<SubjectResource>()
         fetch()?.forEach { resource ->
-            resource.scheduleList.forEach {
+            resource.schedules.forEach {
                 if (it.isToday())
                     items.add(resource)
             }

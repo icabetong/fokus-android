@@ -21,6 +21,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import kotlinx.android.synthetic.main.fragment_task.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -113,7 +114,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener {
                     val intent = Intent(context, TaskEditor::class.java).apply {
                         putExtra(TaskEditor.EXTRA_TASK, t.task)
                         putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
-                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, t.attachmentList.toArrayList())
+                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, t.attachments.toArrayList())
                     }
                     startActivityWithTransition(views, intent, TaskEditor.REQUEST_CODE_UPDATE)
                 }
@@ -125,7 +126,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
                     createSnackbar(recyclerView, R.string.feedback_task_removed).run {
                         setAction(R.string.button_undo) {
-                            viewModel.insert(t.task, t.attachmentList)
+                            viewModel.insert(t.task, t.attachments)
                         }
                         show()
                     }
@@ -143,9 +144,11 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener {
             || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
+                val task: Task? = data?.getParcelableExtra(
+                    TaskEditor.EXTRA_TASK)
                 val attachments: List<Attachment>? =
-                    data?.getParcelableArrayListExtra(TaskEditor.EXTRA_ATTACHMENTS)
+                    data?.getParcelableArrayListExtra(
+                        TaskEditor.EXTRA_ATTACHMENTS)
 
                 task?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {

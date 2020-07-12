@@ -18,6 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
 
 class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
@@ -66,8 +67,10 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
                 // and wait for the result
                 BaseListAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
-                        putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
-                        putParcelableArrayListExtra(SubjectEditor.EXTRA_SCHEDULE, t.scheduleList.toArrayList())
+                        putExtra(
+                            SubjectEditor.EXTRA_SUBJECT, t.subject)
+                        putParcelableArrayListExtra(
+                            SubjectEditor.EXTRA_SCHEDULE, t.schedules.toArrayList())
                     }
                     startActivityWithTransition(views, intent, SubjectEditor.REQUEST_CODE_UPDATE)
                 }
@@ -78,7 +81,7 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
                     viewModel.remove(t.subject)
 
                     createSnackbar(recyclerView, R.string.feedback_subject_removed).run {
-                        setAction(R.string.button_undo) { viewModel.insert(t.subject, t.scheduleList) }
+                        setAction(R.string.button_undo) { viewModel.insert(t.subject, t.schedules) }
                         show()
                     }
                 }
@@ -96,8 +99,10 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
                 || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
+                val subject: Subject? = data?.getParcelableExtra(
+                    SubjectEditor.EXTRA_SUBJECT)
+                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(
+                    SubjectEditor.EXTRA_SCHEDULE)
 
                 subject?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {

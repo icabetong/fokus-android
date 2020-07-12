@@ -23,7 +23,7 @@ class TaskWidgetRemoteView(private var context: Context, private var items: List
     override fun getViewAt(position: Int): RemoteViews {
         val task = items[position].task
         val subject = items[position].subject
-        val attachments = items[position].attachmentList
+        val attachments = items[position].attachments
 
         val itemIntent = Intent().apply {
             putExtra(MainActivity.EXTRA_TASK, task)

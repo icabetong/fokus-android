@@ -9,6 +9,7 @@
     <dimen name="toolbar_keyline">16dp</dimen>
 
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
+    <dimen name="bottom_sheet_padding">24dp</dimen>
 
     <dimen name="surface_corner_radius">8dp</dimen>
 

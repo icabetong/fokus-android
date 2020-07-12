@@ -8,5 +8,5 @@ data class SubjectResource @JvmOverloads constructor (
     @Embedded
     var subject: Subject,
     @Relation(entity = Schedule::class, parentColumn = "subjectID", entityColumn = "subject")
-    var scheduleList: List<Schedule> = emptyList()
+    var schedules: List<Schedule> = emptyList()
 )

@@ -2,13 +2,9 @@ package com.isaiahvonrundstedt.fokus.features.subject.widget
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
@@ -25,7 +21,7 @@ class SubjectWidgetRemoteView(private var context: Context, private var items: L
 
     override fun getViewAt(position: Int): RemoteViews {
         val subject = items[position].subject
-        val schedules = items[position].scheduleList
+        val schedules = items[position].schedules
         val schedule: Schedule? = schedules.run {
             forEach {
                 if (it.isToday())

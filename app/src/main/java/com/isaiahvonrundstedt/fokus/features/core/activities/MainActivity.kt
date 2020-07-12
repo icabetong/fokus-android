@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -15,16 +14,16 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.EventEditor
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,9 +49,12 @@ class MainActivity: BaseActivity() {
                     val attachments: List<Attachment>? = it.getParcelableListExtra(EXTRA_ATTACHMENTS)
 
                     startActivityForResult(Intent(this, TaskEditor::class.java).apply {
-                        putExtra(TaskEditor.EXTRA_TASK, task)
-                        putExtra(TaskEditor.EXTRA_SUBJECT, subject)
-                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
+                        putExtra(
+                            TaskEditor.EXTRA_TASK, task)
+                        putExtra(
+                            TaskEditor.EXTRA_SUBJECT, subject)
+                        putExtra(
+                            TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
                     }, TaskEditor.REQUEST_CODE_INSERT)
                 }
                 ACTION_WIDGET_EVENT -> {
@@ -60,8 +62,10 @@ class MainActivity: BaseActivity() {
                     val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
 
                     startActivityForResult(Intent(this, EventEditor::class.java).apply {
-                        putExtra(EventEditor.EXTRA_EVENT, event)
-                        putExtra(EventEditor.EXTRA_SUBJECT, subject)
+                        putExtra(
+                            EventEditor.EXTRA_EVENT, event)
+                        putExtra(
+                            EventEditor.EXTRA_SUBJECT, subject)
                     }, EventEditor.REQUEST_CODE_UPDATE)
                 }
                 ACTION_WIDGET_SUBJECT -> {
@@ -122,9 +126,11 @@ class MainActivity: BaseActivity() {
         if (resultCode == BaseEditor.RESULT_OK) {
             when (requestCode) {
                 TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
-                    val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
+                    val task: Task? = data?.getParcelableExtra(
+                        TaskEditor.EXTRA_TASK)
                     val attachments: List<Attachment>? =
-                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
+                        data?.getParcelableListExtra(
+                            TaskEditor.EXTRA_ATTACHMENTS)
 
                     task?.also {
                         if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
@@ -134,7 +140,8 @@ class MainActivity: BaseActivity() {
                     }
                 }
                 EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
-                    val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
+                    val event: Event? = data?.getParcelableExtra(
+                        EventEditor.EXTRA_EVENT)
 
                     event?.also {
                         if (requestCode == EventEditor.REQUEST_CODE_INSERT)
@@ -143,8 +150,10 @@ class MainActivity: BaseActivity() {
                     }
                 }
                 SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
-                    val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-                    val schedules: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
+                    val subject: Subject? = data?.getParcelableExtra(
+                        SubjectEditor.EXTRA_SUBJECT)
+                    val schedules: List<Schedule>? = data?.getParcelableListExtra(
+                        SubjectEditor.EXTRA_SCHEDULE)
 
                     subject?.also {
                         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)

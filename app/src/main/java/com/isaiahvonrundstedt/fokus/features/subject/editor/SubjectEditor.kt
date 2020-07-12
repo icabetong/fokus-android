@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.subject
+package com.isaiahvonrundstedt.fokus.features.subject.editor
 
 import android.app.Activity
 import android.content.Intent
@@ -16,12 +16,15 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
+import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectAdapter
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_item_add.*
@@ -43,7 +46,8 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
         recyclerView.adapter = adapter
 
         // Check if the parent activity have passed some extras
-        requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
+        requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE
+            else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
@@ -65,7 +69,6 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
                 tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
                     ?.let { drawable -> tintDrawable(drawable) })
                 tagView.setText(tag.getNameResource())
-
             }
 
             tagView.setTextColorFromResource(R.color.color_primary_text)
@@ -118,14 +121,16 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
             MaterialDialog(it.context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_select_color_tag)
-                colorChooser(colors!!) { _, color ->
-                    subject.tag = Subject.Tag.convertColorToTag(color)!!
+                colorChooser(colors!!, waitForPositiveButton = false) { _, color ->
+                    subject.tag = Subject.Tag.convertColorToTag(
+                        color)!!
 
                     with(it as TextView) {
                         text = getString(subject.tag.getNameResource())
                         setTextColorFromResource(R.color.color_primary_text)
                         setCompoundDrawableAtStart(subject.tintDrawable(getCompoundDrawableAtStart()))
                     }
+                    this.dismiss()
                 }
             }
         }
@@ -186,6 +191,26 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        with(outState) {
+            putParcelable(EXTRA_SUBJECT, subject)
+            putParcelableArrayList(EXTRA_SCHEDULE, adapter.itemList.toArrayList())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        with(savedInstanceState) {
+            getParcelable<Subject>(EXTRA_SUBJECT)?.let {
+                this@SubjectEditor.subject = it
+            }
+            getParcelableArrayList<Schedule>(EXTRA_SCHEDULE)?.let {
+                this@SubjectEditor.adapter.setItems(it)
+            }
+        }
     }
 
     companion object {

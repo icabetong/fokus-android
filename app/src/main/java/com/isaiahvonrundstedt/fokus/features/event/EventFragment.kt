@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
@@ -92,7 +93,8 @@ class EventFragment: BaseFragment(), BaseListAdapter.ActionListener {
                 requestCode == EventEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
+                val event: Event? = data?.getParcelableExtra(
+                    EventEditor.EXTRA_EVENT)
 
                 event?.also {
                     if (resultCode == BaseEditor.RESULT_OK) {

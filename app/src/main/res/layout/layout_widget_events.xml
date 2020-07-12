@@ -39,7 +39,7 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_outline_event_24"
-                android:tint="@color/colorPrimary"/>
+                android:tint="@color/color_primary"/>
 
         </RelativeLayout>
         <ListView

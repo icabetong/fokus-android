@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat.setTransitionName
@@ -21,7 +20,6 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
@@ -70,7 +68,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
             }
 
-            tagView.setTextColorFromResource(R.color.colorPrimaryText)
+            tagView.setTextColorFromResource(R.color.color_primary_text)
 
             window.decorView.rootView.clearFocus()
         }
@@ -125,7 +123,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
                     with(it as TextView) {
                         text = getString(subject.tag.getNameResource())
-                        setTextColorFromResource(R.color.colorPrimaryText)
+                        setTextColorFromResource(R.color.color_primary_text)
                         setCompoundDrawableAtStart(subject.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 }

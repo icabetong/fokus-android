@@ -193,7 +193,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             setContentText(history?.content)
             setOngoing(history?.isPersistent == true)
             if (action != null) addAction(action)
-            color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
+            color = ContextCompat.getColor(applicationContext, R.color.color_primary)
         }.build()
     }
 

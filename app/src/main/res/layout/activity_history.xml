@@ -20,14 +20,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="@dimen/activity_padding_medium">
+        android:padding="@dimen/activity_padding_medium"
+        android:background="@color/color_window_background_secondary"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/ic_outline_history_24"
-            app:tint="@color/colorOnSurface"/>
+            app:tint="@color/color_on_surface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

@@ -39,6 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
@@ -66,6 +67,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
@@ -87,6 +89,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
@@ -104,7 +107,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="@string/tag_color_sky"
-                    android:textColor="@color/colorPrimaryText"
+                    android:textColor="@color/color_primary_text"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:clickable="true"
                     android:focusable="true"

@@ -54,7 +54,7 @@ class TaskAdapter(private var actionListener: ActionListener)
 
                         taskNameView.setStrikeThroughEffect(isFinished)
                         if (isFinished)
-                            taskNameView.setTextColorFromResource(R.color.colorSecondaryText)
+                            taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                     }
 
                     subjectView.isVisible = subject != null
@@ -70,7 +70,7 @@ class TaskAdapter(private var actionListener: ActionListener)
                             task.isFinished = isChecked
                             taskNameView.setStrikeThroughEffect(isChecked)
                             if (isChecked)
-                                taskNameView.setTextColorFromResource(R.color.colorSecondaryText)
+                                taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                         }
                         actionListener.onActionPerformed(this, ActionListener.Action.MODIFY,
                             emptyMap())

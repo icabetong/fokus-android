@@ -7,8 +7,8 @@ import com.isaiahvonrundstedt.fokus.R
 
 fun SwitchCompat.changeTextColorWhenChecked() {
     this.setOnCheckedChangeListener { _, isChecked ->
-        if (isChecked) this.setTextColorFromResource(R.color.colorPrimaryText)
-        else this.setTextColorFromResource(R.color.colorSecondaryText)
+        if (isChecked) this.setTextColorFromResource(R.color.color_primary_text)
+        else this.setTextColorFromResource(R.color.color_secondary_text)
     }
 }
 

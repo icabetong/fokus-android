@@ -64,14 +64,14 @@ class EventEditor: BaseEditor() {
             subject?.let {
                 with(subjectTextView) {
                     text = it.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setTextColorFromResource(R.color.color_primary_text)
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
                 }
                 clearButton.isVisible = true
             }
 
-            scheduleTextView.setTextColorFromResource(R.color.colorPrimaryText)
+            scheduleTextView.setTextColorFromResource(R.color.color_primary_text)
 
             window.decorView.rootView.clearFocus()
         }
@@ -91,7 +91,7 @@ class EventEditor: BaseEditor() {
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
                         v.text = event.formatSchedule(this@EventEditor)
-                        v.setTextColorFromResource(R.color.colorPrimaryText)
+                        v.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
@@ -111,7 +111,7 @@ class EventEditor: BaseEditor() {
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()
                 setText(R.string.field_not_set)
-                setTextColorFromResource(R.color.colorSecondaryText)
+                setTextColorFromResource(R.color.color_secondary_text)
             }
         }
 
@@ -161,7 +161,7 @@ class EventEditor: BaseEditor() {
 
                 with(subjectTextView) {
                     text = subject.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setTextColorFromResource(R.color.color_primary_text)
                     ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
                         setCompoundDrawableAtStart(subject.tintDrawable(it))
                     }
@@ -169,7 +169,7 @@ class EventEditor: BaseEditor() {
                 ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
                     subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
                 }
-                subjectTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                subjectTextView.setTextColorFromResource(R.color.color_primary_text)
                 subjectTextView.text = subject.code
             }
         } else super.onActivityResult(requestCode, resultCode, data)

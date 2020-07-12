@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,21 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
-import com.isaiahvonrundstedt.fokus.components.extensions.getUsingID
-import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
-import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_editor_task.actionButton
 import kotlinx.android.synthetic.main.layout_editor_task.recyclerView
@@ -85,7 +79,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
                 nameEditText.setText(name)
                 notesEditText.setText(notes)
                 dueDateTextView.text = formatDueDate(this@TaskEditor)
-                dueDateTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
                 prioritySwitch.isChecked = isImportant
                 statusSwitch.isChecked = isFinished
             }
@@ -93,7 +87,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
             subject?.let {
                 with(subjectTextView) {
                     text = it.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setTextColorFromResource(R.color.color_primary_text)
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable)} )
                 }
@@ -128,7 +122,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
                         v.text = task.formatDueDate(this@TaskEditor)
-                        v.setTextColorFromResource(R.color.colorPrimaryText)
+                        v.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
@@ -148,7 +142,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()
                 setText(R.string.field_not_set)
-                setTextColorFromResource(R.color.colorSecondaryText)
+                setTextColorFromResource(R.color.color_secondary_text)
             }
         }
 
@@ -220,7 +214,7 @@ class TaskEditor: BaseEditor(), BaseAdapter.ActionListener {
 
                 with(subjectTextView) {
                     text = subject.code
-                    setTextColorFromResource(R.color.colorPrimaryText)
+                    setTextColorFromResource(R.color.color_primary_text)
                     ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
                         this.setCompoundDrawableAtStart(it)
                     }

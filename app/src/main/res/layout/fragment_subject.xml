@@ -18,14 +18,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="@dimen/activity_padding_medium">
+        android:padding="@dimen/activity_padding_medium"
+        android:background="@color/color_window_background_secondary">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/ic_outline_square_foot_24"
-            app:tint="@color/colorOnSurface"/>
+            app:tint="@color/color_on_surface"/>
 
         <TextView
             android:layout_width="match_parent"

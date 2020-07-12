@@ -39,6 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
@@ -85,6 +86,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView
@@ -146,7 +148,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="@string/button_mark_as_important"
-                    android:textColor="@color/colorSecondaryText"
+                    android:textColor="@color/color_secondary_text"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -154,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
-                    android:textColor="@color/colorSecondaryText"
+                    android:textColor="@color/color_secondary_text"
                     android:drawableStart="@drawable/ic_outline_info_24"
                     android:drawablePadding="16dp"
                     app:drawableTint="?attr/colorControlNormal"/>
@@ -164,6 +166,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
                 style="@style/Fokus.LinearLayout.Editor">
 
                 <TextView

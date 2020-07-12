@@ -27,7 +27,7 @@
             android:layout_height="64dp"
             android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/ic_outline_square_foot_24"
-            app:tint="@color/colorOnSurface"/>
+            app:tint="@color/color_on_surface"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

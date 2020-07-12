@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.layout_sheet_schedule.*
 import kotlinx.android.synthetic.main.layout_sheet_schedule.actionButton
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
-import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSheet() {
@@ -44,8 +42,8 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
                 startTimeTextView.text = schedule.formatStartTime()
                 endTimeTextView.text = schedule.formatEndTime()
 
-                startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
-                endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
+                endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
 
                 schedule.getDaysAsList().forEach { day ->
                     when (day) {
@@ -79,8 +77,8 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
                         it.text = schedule.formatStartTime()
-                        it.setTextColorFromResource(R.color.colorPrimaryText)
-                        this@ScheduleEditor.endTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                        it.setTextColorFromResource(R.color.color_primary_text)
+                        this@ScheduleEditor.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
@@ -106,8 +104,8 @@ class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSh
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
                         it.text = schedule.formatEndTime()
-                        it.setTextColorFromResource(R.color.colorPrimaryText)
-                        this@ScheduleEditor.startTimeTextView.setTextColorFromResource(R.color.colorPrimaryText)
+                        it.setTextColorFromResource(R.color.color_primary_text)
+                        this@ScheduleEditor.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }

@@ -56,7 +56,7 @@ class EventAdapter(private var actionListener: ActionListener)
                         schedule?.isBeforeNow?.let {
                             nameView.setStrikeThroughEffect(it)
                             if (it)
-                                nameView.setTextColorFromResource(R.color.colorSecondaryText)
+                                nameView.setTextColorFromResource(R.color.color_secondary_text)
                         }
                     }
 

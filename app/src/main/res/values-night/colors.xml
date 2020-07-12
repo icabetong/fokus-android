@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorSurface">#121212</color>
-    <color name="colorOnSurface">#ffffff</color>
+    <color name="color_surface">#121212</color>
+    <color name="color_on_surface">#ffffff</color>
 
-    <color name="colorEditorSurface">@color/colorSurface</color>
-    <color name="colorEditorButton">#212121</color>
+    <color name="color_status_background">@color/color_surface</color>
+    <color name="color_toolbar_background">@color/color_surface</color>
+    <color name="color_window_background">#080808</color>
+    <color name="color_navigation_background">@color/color_window_background</color>
 
-    <color name="colorWindowBackground">#080808</color>
-    <color name="colorToolbarBackground">@color/colorWindowBackground</color>
-    <color name="colorSystemBarBackground">@color/colorWindowBackground</color>
-    <color name="colorPrimaryText">@color/colorOnSurface</color>
-    <color name="colorSecondaryText">#808080</color>
+    <color name="color_primary_text">@color/color_on_surface</color>
+    <color name="color_secondary_text">#808080</color>
 
+    <color name="color_window_background_secondary">@color/color_window_background</color>
+
+    <color name="color_editor_surface">#1c1c1c</color>
+    <color name="color_editor_remove_button">#212121</color>
 </resources>

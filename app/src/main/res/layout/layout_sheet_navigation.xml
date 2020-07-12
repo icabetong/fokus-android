@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding"
         android:text="@string/app_name"
-        android:textAppearance="@style/Fokus.TextAppearance.Editor.Title" />
+        android:textAppearance="@style/Fokus.TextAppearance.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

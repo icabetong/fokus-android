@@ -12,4 +12,8 @@
 
     <style name="Fokus.Theme.Core.Navigation"/>
 
+    <style name="Fokus.Theme.Core.Editor" parent="Fokus.Theme.Core">
+        <item name="android:windowBackground">@color/color_window_background_secondary</item>
+    </style>
+
 </resources>

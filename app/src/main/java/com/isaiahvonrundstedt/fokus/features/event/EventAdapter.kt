@@ -11,6 +11,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
@@ -52,7 +53,11 @@ class EventAdapter(private var actionListener: ActionListener)
                         dayView.text = formatScheduleDate(itemView.context)
                         timeView.text = formatScheduleTime()
 
-                        schedule?.isBeforeNow?.let { nameView.setStrikeThroughEffect(it) }
+                        schedule?.isBeforeNow?.let {
+                            nameView.setStrikeThroughEffect(it)
+                            if (it)
+                                nameView.setTextColorFromResource(R.color.colorSecondaryText)
+                        }
                     }
 
                     subjectView.isVisible = subject != null

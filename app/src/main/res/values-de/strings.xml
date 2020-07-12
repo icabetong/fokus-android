@@ -172,14 +172,14 @@
     <string name="tag_color_graphite">Graphit</string>
 
     <string name="widget_task_name">Aufgaben-Widget</string>
-    <string name="widget_task_title">Heutige Aufgaben</string>
-    <string name="widget_task_empty">Entspannen Sie sich. Sie haben keine Aufgaben für heute</string>
+    <string name="widget_task_title">Aufgaben</string>
+    <string name="widget_task_empty">Sie haben keine Aufgaben für heute</string>
     <string name="widget_event_name">Ereignis-Widget</string>
-    <string name="widget_event_title">Heutige Ereignisse</string>
-    <string name="widget_event_empty">Entspannen Sie sich. Sie haben keine Veranstaltungen für heute</string>
+    <string name="widget_event_title">Ereignisse</string>
+    <string name="widget_event_empty">Sie haben keine Veranstaltungen für heute</string>
     <string name="widget_class_name">Klassen-Widget</string>
-    <string name="widget_class_title">Heutige Klassen</string>
-    <string name="widget_class_empty">Entspannen Sie sich. Sie haben heute keinen Unterricht.</string>
+    <string name="widget_class_title">Klassen</string>
+    <string name="widget_class_empty">Sie haben heute keinen Unterricht.</string>
 
     <string name="helper_this_is_important">Wenn Sie dies als wichtig kennzeichnen, bedeutet dies, dass es eine anhaltende Benachrichtigung im Schatten Ihrer Benachrichtigung anzeigt.</string>
     

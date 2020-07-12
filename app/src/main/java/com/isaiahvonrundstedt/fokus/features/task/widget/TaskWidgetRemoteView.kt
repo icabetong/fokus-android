@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.task.widget
 
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.isaiahvonrundstedt.fokus.R
@@ -35,9 +36,9 @@ class TaskWidgetRemoteView(private var context: Context, private var items: List
             setTextViewText(R.id.titleView, task.name)
             setTextViewText(R.id.summaryView, task.formatDueDate(context))
             setOnClickFillInIntent(R.id.rootView, itemIntent)
-            subject?.let {
-                setInt(R.id.imageView, "setColorFilter", it.tag.color)
-            }
+            if (subject != null)
+                setInt(R.id.imageView, "setColorFilter", subject.tag.color)
+            else setViewVisibility(R.id.imageView, View.GONE)
         }
         return views
     }

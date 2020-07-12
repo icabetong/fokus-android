@@ -12,6 +12,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class TaskAdapter(private var actionListener: ActionListener)
@@ -51,7 +52,9 @@ class TaskAdapter(private var actionListener: ActionListener)
                         taskNameView.text = name
                         dueDateView.text = formatDueDate(rootView.context)
 
-                        taskNameView.setStrikeThroughEffect(task.isFinished)
+                        taskNameView.setStrikeThroughEffect(isFinished)
+                        if (isFinished)
+                            taskNameView.setTextColorFromResource(R.color.colorSecondaryText)
                     }
 
                     subjectView.isVisible = subject != null
@@ -63,9 +66,12 @@ class TaskAdapter(private var actionListener: ActionListener)
                     }
 
                     checkBox.setOnClickListener { view ->
-                        view as CheckBox
-                        task.isFinished = view.isChecked
-                        taskNameView.setStrikeThroughEffect(view.isChecked)
+                        with(view as CheckBox) {
+                            task.isFinished = isChecked
+                            taskNameView.setStrikeThroughEffect(isChecked)
+                            if (isChecked)
+                                taskNameView.setTextColorFromResource(R.color.colorSecondaryText)
+                        }
                         actionListener.onActionPerformed(this, ActionListener.Action.MODIFY,
                             emptyMap())
                     }

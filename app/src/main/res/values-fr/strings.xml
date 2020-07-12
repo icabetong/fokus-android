@@ -172,14 +172,14 @@
     <string name="tag_color_graphite">Graphite</string>
 
     <string name="widget_task_name">Widget des tâches</string>
-    <string name="widget_task_title">Les tâches d\'aujourd\'hui</string>
-    <string name="widget_task_empty">Détendez-vous. Vous n\'avez aucune tâche à accomplir aujourd\'hui</string>
-    <string name="widget_event_name">Widget de l\'événement</string>
+    <string name="widget_task_title">Tâches</string>
+    <string name="widget_task_empty">Vous n\'avez aucune tâche à accomplir aujourd\'hui</string>
+    <string name="widget_event_name">Événements</string>
     <string name="widget_event_title">Les événements du jour</string>
-    <string name="widget_event_empty">Détendez-vous. Vous n\'avez pas d\'événements pour aujourd\'hui</string>
+    <string name="widget_event_empty">Vous n\'avez pas d\'événements pour aujourd\'hui</string>
     <string name="widget_class_name">Widget de classe</string>
-    <string name="widget_class_title">Les cours d\'aujourd\'hui</string>
-    <string name="widget_class_empty">Détendez-vous. Vous n\'avez pas de cours pour aujourd\'hui</string>
+    <string name="widget_class_title">Cours</string>
+    <string name="widget_class_empty">Vous n\'avez pas de cours pour aujourd\'hui</string>
 
     <!-- Helper Text -->
     <string name="helper_this_is_important">Le fait de le marquer comme important signifie qu\'il affichera une notification persistante à votre nuance de notification.</string>

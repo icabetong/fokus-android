@@ -10,7 +10,9 @@
         android:id="@+id/emptyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/widget_empty_text_padding"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:text="@string/widget_class_empty"
         android:textSize="@dimen/widget_empty_text"
         android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
@@ -20,13 +22,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/widget_title_padding"
-            android:text="@string/widget_class_title"
-            android:textAppearance="@style/Fokus.TextAppearance.Widget.Title"/>
+            android:padding="@dimen/widget_title_padding">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/widget_class_title"
+                android:textAppearance="@style/Fokus.TextAppearance.Widget.Title"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_outline_square_foot_24"
+                android:tint="@color/colorPrimary"/>
+
+        </RelativeLayout>
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"

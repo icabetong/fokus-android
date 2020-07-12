@@ -1,7 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -90,6 +92,9 @@ class MainActivity: BaseActivity() {
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
         controller = navigationHost?.findNavController()
         ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
+
+        Log.e("density", resources.displayMetrics.density.toString())
+        Log.e("density dpi", resources.displayMetrics.densityDpi.toString())
     }
 
     override fun onResume() {

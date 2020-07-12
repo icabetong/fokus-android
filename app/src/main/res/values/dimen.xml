@@ -16,5 +16,8 @@
     <dimen name="widget_title">16sp</dimen>
     <dimen name="widget_title_padding">12sp</dimen>
     <dimen name="widget_item_text_title">16sp</dimen>
+    <dimen name="widget_item_tag_padding_end">8dp</dimen>
     <dimen name="widget_empty_text">14sp</dimen>
+    <dimen name="widget_empty_text_padding">8dp</dimen>
+
 </resources>

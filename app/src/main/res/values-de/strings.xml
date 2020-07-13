@@ -191,6 +191,7 @@
     <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
     <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>
 
+    <string name="student">student</string>
     <string name="hello">Hallo, %1$s</string>
     <string name="and">&#160;und&#160;</string>
     <string name="yesterday_at">Gestern um %1$s</string>

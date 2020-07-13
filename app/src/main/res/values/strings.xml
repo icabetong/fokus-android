@@ -195,6 +195,7 @@
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>
 
     <!-- used for concat and formatting -->
+    <string name="student">student</string>
     <string name="hello">Hello, %1$s</string>
     <string name="and">&#160;and&#160;</string>
     <string name="yesterday_at">Yesterday at %1$s</string>

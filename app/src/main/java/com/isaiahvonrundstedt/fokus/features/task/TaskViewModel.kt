@@ -24,6 +24,7 @@ class TaskViewModel(private var app: Application): BaseViewModel(app) {
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
         if (preferenceManager.taskReminder && !task.isFinished && task.dueDate!!.isAfterNow) {
+
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)

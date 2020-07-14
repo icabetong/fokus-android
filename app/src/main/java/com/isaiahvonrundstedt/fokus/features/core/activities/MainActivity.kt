@@ -49,12 +49,9 @@ class MainActivity: BaseActivity() {
                     val attachments: List<Attachment>? = it.getParcelableListExtra(EXTRA_ATTACHMENTS)
 
                     startActivityForResult(Intent(this, TaskEditor::class.java).apply {
-                        putExtra(
-                            TaskEditor.EXTRA_TASK, task)
-                        putExtra(
-                            TaskEditor.EXTRA_SUBJECT, subject)
-                        putExtra(
-                            TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
+                        putExtra(TaskEditor.EXTRA_TASK, task)
+                        putExtra(TaskEditor.EXTRA_SUBJECT, subject)
+                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
                     }, TaskEditor.REQUEST_CODE_INSERT)
                 }
                 ACTION_WIDGET_EVENT -> {
@@ -62,10 +59,8 @@ class MainActivity: BaseActivity() {
                     val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
 
                     startActivityForResult(Intent(this, EventEditor::class.java).apply {
-                        putExtra(
-                            EventEditor.EXTRA_EVENT, event)
-                        putExtra(
-                            EventEditor.EXTRA_SUBJECT, subject)
+                        putExtra(EventEditor.EXTRA_EVENT, event)
+                        putExtra(EventEditor.EXTRA_SUBJECT, subject)
                     }, EventEditor.REQUEST_CODE_UPDATE)
                 }
                 ACTION_WIDGET_SUBJECT -> {
@@ -96,9 +91,6 @@ class MainActivity: BaseActivity() {
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
         controller = navigationHost?.findNavController()
         ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
-
-        Log.e("density", resources.displayMetrics.density.toString())
-        Log.e("density dpi", resources.displayMetrics.densityDpi.toString())
     }
 
     override fun onResume() {
@@ -129,8 +121,7 @@ class MainActivity: BaseActivity() {
                     val task: Task? = data?.getParcelableExtra(
                         TaskEditor.EXTRA_TASK)
                     val attachments: List<Attachment>? =
-                        data?.getParcelableListExtra(
-                            TaskEditor.EXTRA_ATTACHMENTS)
+                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
                     task?.also {
                         if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
@@ -140,8 +131,7 @@ class MainActivity: BaseActivity() {
                     }
                 }
                 EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
-                    val event: Event? = data?.getParcelableExtra(
-                        EventEditor.EXTRA_EVENT)
+                    val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
 
                     event?.also {
                         if (requestCode == EventEditor.REQUEST_CODE_INSERT)

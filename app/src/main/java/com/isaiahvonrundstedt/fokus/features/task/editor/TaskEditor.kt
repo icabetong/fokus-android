@@ -79,10 +79,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             with(task) {
                 nameEditText.setText(name)
                 notesEditText.setText(notes)
-                dueDateTextView.text = formatDueDate(this@TaskEditor)
-                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
                 prioritySwitch.isChecked = isImportant
                 statusSwitch.isChecked = isFinished
+                dueDateTextView.text = formatDueDate(this@TaskEditor)
+                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
             }
 
             subject?.let {

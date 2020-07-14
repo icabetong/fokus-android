@@ -14,4 +14,4 @@
     app:iconTint="@color/color_on_surface"
     app:iconPadding="16dp"
     app:iconGravity="textStart"
-    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    style="@style/Fokus.Widget.Button.Text"/>

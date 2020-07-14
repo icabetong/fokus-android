@@ -6,18 +6,18 @@
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
         android:icon="@drawable/ic_outline_done_24"
-        app:exb_color="@color/color_primary"/>
+        app:exb_color="@color/color_theme_task"/>
 
     <item
         android:id="@+id/navigation_events"
         android:title="@string/navigation_events"
         android:icon="@drawable/ic_outline_event_24"
-        app:exb_color="@color/color_primary"/>
+        app:exb_color="@color/color_theme_events"/>
 
     <item
         android:id="@+id/navigation_subjects"
         android:title="@string/navigation_subjects"
         android:icon="@drawable/ic_outline_square_foot_24"
-        app:exb_color="@color/color_primary"/>
+        app:exb_color="@color/color_theme_subjects"/>
 
 </menu>

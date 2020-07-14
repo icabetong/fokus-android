@@ -22,6 +22,7 @@
     <color name="color_editor_surface">#eeeeee</color>
     <color name="color_editor_remove_button">#bcbcbc</color>
 
-    <color name="color_icon_blue">#0091ea</color>
-    <color name="color_icon_yellow">#ffab00</color>
+    <color name="color_theme_task">#0091ea</color>
+    <color name="color_theme_events">#ffab00</color>
+    <color name="color_theme_subjects">#ff1744</color>
 </resources>

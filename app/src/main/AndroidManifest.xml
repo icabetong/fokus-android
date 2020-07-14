@@ -28,13 +28,13 @@
         <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.history.HistoryActivity" />
         <activity android:name=".features.subject.editor.SubjectEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
+            android:theme="@style/Fokus.Theme.Core.Editor.Subjects"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.task.editor.TaskEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
+            android:theme="@style/Fokus.Theme.Core.Editor.Task"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.event.editor.EventEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
+            android:theme="@style/Fokus.Theme.Core.Editor.Events"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.subject.selector.SubjectSelectorActivity"/>
 

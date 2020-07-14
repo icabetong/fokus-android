@@ -31,7 +31,14 @@ data class History @JvmOverloads constructor (
 ): Parcelable {
 
     fun tintDrawable(sourceView: ImageView) {
-        val colorID = if (type == TYPE_GENERIC) R.color.color_icon_blue else R.color.color_icon_yellow
+        val colorID = when (type) {
+            TYPE_GENERIC -> R.color.color_primary
+            TYPE_TASK -> R.color.color_theme_task
+            TYPE_EVENT -> R.color.color_theme_events
+            TYPE_CLASS -> R.color.color_theme_subjects
+            else -> R.color.color_primary
+        }
+
         sourceView.setImageDrawable(sourceView.drawable.mutate().apply {
             colorFilter = BlendModeColorFilterCompat
                 .createBlendModeColorFilterCompat(ContextCompat.getColor(sourceView.context, colorID),

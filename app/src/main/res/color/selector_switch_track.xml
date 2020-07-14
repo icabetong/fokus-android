@@ -5,7 +5,7 @@
         android:alpha="0.18"
         android:state_checked="false"/>
 
-    <item android:color="?attr/colorPrimary"
+    <item android:color="?attr/colorSecondary"
         android:state_checked="true"/>
 
 </selector>

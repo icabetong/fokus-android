@@ -26,7 +26,6 @@ class AboutActivity: BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartF
         val configuration = AppBarConfiguration.Builder()
             .setFallbackOnNavigateUpListener { onNavigateUpOrFinish() }
             .build()
-
         toolbar.setupWithNavController(controller!!, configuration)
     }
 

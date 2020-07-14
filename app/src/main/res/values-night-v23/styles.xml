@@ -15,8 +15,24 @@
         <item name="android:navigationBarColor">@color/color_surface</item>
     </style>
 
-    <style name="Fokus.Theme.Core.Editor" parent="Fokus.Theme.Core">
+    <style name="Fokus.Theme.Core.Editor">
+        <item name="android:statusBarColor">@color/color_window_background_secondary</item>
         <item name="android:windowBackground">@color/color_window_background_secondary</item>
+    </style>
+
+    <style name="Fokus.Theme.Core.Editor.Task">
+        <item name="colorSecondary">@color/color_theme_task</item>
+        <item name="colorSecondaryVariant">@color/color_theme_task</item>
+    </style>
+
+    <style name="Fokus.Theme.Core.Editor.Events">
+        <item name="colorSecondary">@color/color_theme_events</item>
+        <item name="colorSecondaryVariant">@color/color_theme_events</item>
+    </style>
+
+    <style name="Fokus.Theme.Core.Editor.Subjects">
+        <item name="colorSecondary">@color/color_theme_subjects</item>
+        <item name="colorSecondaryVariant">@color/color_theme_subjects</item>
     </style>
 
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">

@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:src="@drawable/ic_outline_add_24"/>
+        android:src="@drawable/ic_outline_add_24"
+        app:backgroundTint="@color/color_theme_task"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

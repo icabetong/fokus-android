@@ -25,11 +25,14 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:background="@drawable/shape_background_icon"
+            android:backgroundTint="@color/color_theme_generic_variant"
             app:srcCompat="@drawable/ic_outline_history_24"
-            app:tint="@color/color_on_surface"/>
+            app:tint="@color/color_theme_generic"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -38,6 +41,7 @@
             android:gravity="center"
             android:text="@string/empty_view_no_history_title"
             android:textSize="18sp"
+            android:textColor="@color/color_theme_generic"
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
         <androidx.appcompat.widget.AppCompatTextView

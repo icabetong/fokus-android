@@ -22,11 +22,14 @@
         android:background="@color/color_window_background_secondary">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:background="@drawable/shape_background_icon"
+            android:backgroundTint="@color/color_theme_subjects_variant"
             app:srcCompat="@drawable/ic_outline_square_foot_24"
-            app:tint="@color/color_on_surface"/>
+            app:tint="@color/color_theme_subjects"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,6 +37,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_subjects_title"
+            android:textColor="@color/color_theme_subjects"
             android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
 
         <TextView

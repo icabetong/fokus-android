@@ -165,6 +165,8 @@
         <item name="android:textColor">@color/color_primary_text</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">16sp</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title.Strong" parent="Fokus.TextAppearance.Body">
@@ -187,7 +189,6 @@
     <style name="Fokus.TextAppearance.Widget.Title" parent="Fokus.TextAppearance">
         <item name="android:textSize">@dimen/widget_title</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/color_primary</item>
     </style>
     <style name="Fokus.TextAppearance.Widget.Item.Title" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textSize">@dimen/widget_item_text_title</item>

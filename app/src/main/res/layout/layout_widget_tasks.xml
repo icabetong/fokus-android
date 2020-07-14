@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/widget_task_title"
+                android:textColor="@color/color_theme_task"
                 android:textAppearance="@style/Fokus.TextAppearance.Widget.Title"/>
 
             <ImageView
@@ -39,7 +40,7 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_outline_done_24"
-                android:tint="@color/color_primary"/>
+                android:tint="@color/color_theme_task"/>
 
         </RelativeLayout>
 

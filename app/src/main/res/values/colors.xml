@@ -26,8 +26,8 @@
     <color name="color_theme_generic_variant">#591a237e</color>
     <color name="color_theme_task">#0091ea</color>
     <color name="color_theme_task_variant">#590091ea</color>
-    <color name="color_theme_events">#ffd600</color>
-    <color name="color_theme_events_variant">#59ffd600</color>
+    <color name="color_theme_events">#ffab00</color>
+    <color name="color_theme_events_variant">#59ffab00</color>
     <color name="color_theme_subjects">#ff1744</color>
     <color name="color_theme_subjects_variant">#59ff1744</color>
 </resources>

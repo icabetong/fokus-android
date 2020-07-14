@@ -7,34 +7,6 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
-/**
- *  Extension function a generic list that has types used by
- *  the application that will get the item using the items
- *  id from the list
- */
-fun <T> List<T>.getUsingID(id: String): T? {
-    this.forEach {
-        if (it is Task)
-            if (it.taskID == id) return it
-
-        if (it is Event)
-            if (it.eventID == id) return it
-
-        if (it is Subject)
-            if (it.subjectID == id) return it
-
-        if (it is Attachment)
-            if (it.attachmentID == id) return it
-
-        if (it is History)
-            if (it.historyID == id) return it
-
-        if (it is Schedule)
-            if (it.scheduleID == id) return it
-    }
-    return null
-}
-
 fun <T> List<T>.getIndexByID(id: String): Int {
     this.forEachIndexed { index, it ->
         if (it is Task)

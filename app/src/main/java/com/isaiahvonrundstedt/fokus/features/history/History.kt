@@ -2,6 +2,8 @@ package com.isaiahvonrundstedt.fokus.features.history
 
 import android.os.Parcelable
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -30,20 +32,16 @@ data class History @JvmOverloads constructor (
     var dateTimeTriggered: DateTime? = null
 ): Parcelable {
 
-    fun tintDrawable(sourceView: ImageView) {
-        val colorID = when (type) {
-            TYPE_GENERIC -> R.color.color_primary
-            TYPE_TASK -> R.color.color_theme_task
-            TYPE_EVENT -> R.color.color_theme_events
-            TYPE_CLASS -> R.color.color_theme_subjects
-            else -> R.color.color_primary
+    fun setIconToView(sourceView: ImageView) {
+        with(sourceView) {
+            background = ContextCompat.getDrawable(this.context,
+                R.drawable.shape_background_icon)?.also {
+                it.setTint(ContextCompat.getColor(this.context, getIconBackgroundColorResource()))
+            }
+            setImageDrawable(ContextCompat.getDrawable(this.context, getIconResource())?.also {
+                it.setTint(ContextCompat.getColor(this.context, getIconColorResource()))
+            })
         }
-
-        sourceView.setImageDrawable(sourceView.drawable.mutate().apply {
-            colorFilter = BlendModeColorFilterCompat
-                .createBlendModeColorFilterCompat(ContextCompat.getColor(sourceView.context, colorID),
-                    BlendModeCompat.SRC_ATOP)
-        })
     }
 
     fun formatDateTime(): String {
@@ -55,6 +53,39 @@ data class History @JvmOverloads constructor (
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
             DateTimeFormat.forPattern("MMMM d").print(dateTimeTriggered!!)
         else DateTimeFormat.forPattern("MMMM d yyyy").print(dateTimeTriggered!!)
+    }
+
+    @DrawableRes
+    private fun getIconResource(): Int {
+        return when(type) {
+            TYPE_TASK -> R.drawable.ic_outline_done_24
+            TYPE_EVENT -> R.drawable.ic_outline_event_24
+            TYPE_CLASS -> R.drawable.ic_outline_square_foot_24
+            TYPE_GENERIC -> R.drawable.ic_outline_emoji_objects_24
+            else -> R.drawable.ic_outline_emoji_objects_24
+        }
+    }
+
+    @ColorRes
+    private fun getIconColorResource(): Int {
+        return when(type) {
+            TYPE_TASK -> R.color.color_theme_task
+            TYPE_EVENT -> R.color.color_theme_events
+            TYPE_CLASS -> R.color.color_theme_subjects
+            TYPE_GENERIC -> R.color.color_theme_generic
+            else -> R.color.color_theme_generic
+        }
+    }
+
+    @ColorRes
+    private fun getIconBackgroundColorResource(): Int {
+        return when(type) {
+            TYPE_TASK -> R.color.color_theme_task_variant
+            TYPE_EVENT -> R.color.color_theme_events_variant
+            TYPE_CLASS -> R.color.color_theme_subjects_variant
+            TYPE_GENERIC -> R.color.color_theme_generic_variant
+            else -> R.color.color_theme_generic_variant
+        }
     }
 
     companion object {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_padding">
+
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:padding="16dp"
+        android:background="@drawable/shape_background_icon"
+        android:src="@drawable/ic_outline_event_24"
+        app:tint="@color/color_theme_task"/>
+
+</FrameLayout>

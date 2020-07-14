@@ -42,7 +42,7 @@ class HistoryAdapter(private var actionListener: ActionListener)
                     titleView.text = title
                     summaryView.text = content
                     dateTimeView.text = formatDateTime()
-                    tintDrawable(iconView)
+                    setIconToView(iconView)
                 }
             }
         }

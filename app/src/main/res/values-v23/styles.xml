@@ -7,10 +7,12 @@
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
-    <style name="Fokus.Theme.Core">
+    <style name="Fokus.Theme.Core" parent="Fokus.Theme.Base">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Fokus.Theme.Core.Navigation"/>
 
     <style name="Fokus.Theme.Core.Editor" parent="Fokus.Theme.Core">
         <item name="android:windowBackground">@color/color_window_background_secondary</item>

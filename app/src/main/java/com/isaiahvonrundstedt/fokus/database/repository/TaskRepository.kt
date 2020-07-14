@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 
-class TaskRepository private constructor (app: Application) {
+class TaskRepository private constructor(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var tasks = database?.tasks()

@@ -16,7 +16,7 @@ import java.util.*
 @Entity(tableName = "tasks", foreignKeys = [
     ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
         childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)])
-data class Task @JvmOverloads constructor (
+data class Task @JvmOverloads constructor(
     @PrimaryKey
     @ColumnInfo(index = true)
     var taskID: String = UUID.randomUUID().toString(),
@@ -29,7 +29,7 @@ data class Task @JvmOverloads constructor (
     @TypeConverters(DateTimeConverter::class)
     var dueDate: DateTime? = null,
     var isFinished: Boolean = false
-): Parcelable {
+) : Parcelable {
 
     fun isDueToday(): Boolean {
         return dueDate!!.toLocalDate().isEqual(LocalDate.now())

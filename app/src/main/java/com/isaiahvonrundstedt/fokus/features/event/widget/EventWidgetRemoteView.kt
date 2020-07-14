@@ -12,8 +12,7 @@ import com.isaiahvonrundstedt.fokus.features.event.EventResource
 class EventWidgetRemoteView(private var context: Context, private var items: List<EventResource>)
     : RemoteViewsService.RemoteViewsFactory {
 
-    override fun getLoadingView(): RemoteViews
-            = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

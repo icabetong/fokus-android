@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.event.EventResource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class EventWidgetRemoteService: RemoteViewsService() {
+class EventWidgetRemoteService : RemoteViewsService() {
 
     private fun fetch(): List<EventResource>? {
         val events = AppDatabase.getInstance(applicationContext)?.events()

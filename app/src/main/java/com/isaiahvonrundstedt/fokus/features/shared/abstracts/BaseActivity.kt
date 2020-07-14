@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.appbar.MaterialToolbar
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
-abstract class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
 
-        when (PreferenceManager(this).theme){
+        when (PreferenceManager(this).theme) {
             PreferenceManager.Theme.LIGHT ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             PreferenceManager.Theme.DARK ->

@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 
-class EventViewModel(private var app: Application): BaseViewModel(app) {
+class EventViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
     private var items: LiveData<List<EventResource>>? = repository.fetch()

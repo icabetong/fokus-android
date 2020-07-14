@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
-abstract class BaseViewModel(private val app: Application): AndroidViewModel(app) {
+abstract class BaseViewModel(private val app: Application) : AndroidViewModel(app) {
 
     protected val notificationManager by lazy {
         app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager

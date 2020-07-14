@@ -163,7 +163,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                     action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
-           notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
+            notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
                 createNotification(history, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(R.drawable.ic_outline_done_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))

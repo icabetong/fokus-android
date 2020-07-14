@@ -20,7 +20,7 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "histories")
-data class History @JvmOverloads constructor (
+data class History @JvmOverloads constructor(
     @PrimaryKey
     var historyID: String = UUID.randomUUID().toString(),
     var title: String? = null,
@@ -30,7 +30,7 @@ data class History @JvmOverloads constructor (
     var isPersistent: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateTimeTriggered: DateTime? = null
-): Parcelable {
+) : Parcelable {
 
     fun setIconToView(sourceView: ImageView) {
         with(sourceView) {
@@ -57,7 +57,7 @@ data class History @JvmOverloads constructor (
 
     @DrawableRes
     private fun getIconResource(): Int {
-        return when(type) {
+        return when (type) {
             TYPE_TASK -> R.drawable.ic_outline_done_24
             TYPE_EVENT -> R.drawable.ic_outline_event_24
             TYPE_CLASS -> R.drawable.ic_outline_square_foot_24
@@ -68,7 +68,7 @@ data class History @JvmOverloads constructor (
 
     @ColorRes
     private fun getIconColorResource(): Int {
-        return when(type) {
+        return when (type) {
             TYPE_TASK -> R.color.color_theme_task
             TYPE_EVENT -> R.color.color_theme_events
             TYPE_CLASS -> R.color.color_theme_subjects
@@ -79,7 +79,7 @@ data class History @JvmOverloads constructor (
 
     @ColorRes
     private fun getIconBackgroundColorResource(): Int {
-        return when(type) {
+        return when (type) {
             TYPE_TASK -> R.color.color_theme_task_variant
             TYPE_EVENT -> R.color.color_theme_events_variant
             TYPE_CLASS -> R.color.color_theme_subjects_variant

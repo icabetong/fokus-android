@@ -15,7 +15,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters)
 
     private var notifications = AppDatabase.getInstance(applicationContext)?.histories()
 
-    override suspend fun doWork(): Result  {
+    override suspend fun doWork(): Result {
         val notification = convertDataToHistory(inputData)
         notification.dateTimeTriggered = DateTime.now()
 

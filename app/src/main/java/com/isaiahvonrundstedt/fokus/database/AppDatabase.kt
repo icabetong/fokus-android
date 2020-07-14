@@ -22,7 +22,7 @@ import java.util.*
 @Database(entities = [Subject::class, Task::class, Attachment::class,
     History::class, Event::class, Schedule::class], version = 2, exportSchema = false)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun tasks(): TaskDAO
     abstract fun attachments(): AttachmentDAO
@@ -46,7 +46,7 @@ abstract class AppDatabase: RoomDatabase() {
             return instance
         }
 
-        private var migration_1_2 = object: Migration(1, 2) {
+        private var migration_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     // attachments

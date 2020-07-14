@@ -15,7 +15,7 @@ abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffU
         enum class Action { SELECT, MODIFY, DELETE }
     }
 
-    abstract class BaseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         protected val rootView: View = itemView.findViewById(R.id.rootView)
 
         abstract fun <T> onBind(t: T)

@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
-class EventEditor: BaseEditor() {
+class EventEditor : BaseEditor() {
 
     private var requestCode = 0
     private var event = Event()

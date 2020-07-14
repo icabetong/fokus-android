@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseEditor: BaseActivity() {
+abstract class BaseEditor : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -57,7 +57,9 @@ abstract class BaseEditor: BaseActivity() {
     }
 
     protected val animation: Animation
-        get() { return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in) }
+        get() {
+            return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in)
+        }
 
     companion object {
         const val RESULT_OK = Activity.RESULT_OK

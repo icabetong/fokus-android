@@ -18,7 +18,7 @@ import java.util.*
     parentColumns = arrayOf("taskID"), childColumns = arrayOf("task"),
     onDelete = ForeignKey.CASCADE)
 ])
-data class Attachment @JvmOverloads constructor (
+data class Attachment @JvmOverloads constructor(
     @PrimaryKey
     var attachmentID: String = UUID.randomUUID().toString(),
     @TypeConverters(UriConverter::class)
@@ -26,4 +26,4 @@ data class Attachment @JvmOverloads constructor (
     var task: String = "",
     @TypeConverters(DateTimeConverter::class)
     var dateAttached: DateTime? = DateTime.now()
-): Parcelable
+) : Parcelable

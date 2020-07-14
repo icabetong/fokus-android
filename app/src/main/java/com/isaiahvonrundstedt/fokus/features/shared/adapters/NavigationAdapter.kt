@@ -12,7 +12,8 @@ import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 
-class NavigationAdapter(private val activity: Activity?, private val navigationListener: NavigationListener)
+class NavigationAdapter(private val activity: Activity?,
+                        private val navigationListener: NavigationListener)
     : RecyclerView.Adapter<NavigationAdapter.ViewHolder>() {
 
     private var itemList = mutableListOf<NavigationItem>()

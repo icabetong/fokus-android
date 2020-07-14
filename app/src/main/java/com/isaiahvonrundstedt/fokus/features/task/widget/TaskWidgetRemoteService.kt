@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class TaskWidgetRemoteService: RemoteViewsService() {
+class TaskWidgetRemoteService : RemoteViewsService() {
 
     private fun fetch(): List<TaskResource>? {
         val tasks = AppDatabase.getInstance(applicationContext)?.tasks()

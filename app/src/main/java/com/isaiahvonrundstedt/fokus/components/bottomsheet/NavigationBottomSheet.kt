@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.NavigationAdapter
 import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 
-class NavigationBottomSheet: BaseBottomSheet(), NavigationAdapter.NavigationListener {
+class NavigationBottomSheet : BaseBottomSheet(), NavigationAdapter.NavigationListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.layout_sheet_navigation, container, false)

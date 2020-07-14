@@ -8,7 +8,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 
-class NoticesFragment: BasePreference() {
+class NoticesFragment : BasePreference() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.xml_notices, rootKey)

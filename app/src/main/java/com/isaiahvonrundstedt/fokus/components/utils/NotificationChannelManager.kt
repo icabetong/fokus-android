@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
-class NotificationChannelManager (private var context: Context?) {
+class NotificationChannelManager(private var context: Context?) {
 
     private val manager by lazy {
         context?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -29,7 +29,7 @@ class NotificationChannelManager (private var context: Context?) {
 
     @StringRes
     private fun getResourceString(id: String): Int {
-        return when(id) {
+        return when (id) {
             CHANNEL_ID_TASK -> R.string.notification_channel_task_reminders
             CHANNEL_ID_EVENT -> R.string.notification_channel_event_reminders
             CHANNEL_ID_CLASS -> R.string.notification_channel_class_reminders

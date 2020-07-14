@@ -13,13 +13,14 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
-class ItemSwipeCallback<T: SwipeDelegate>(context: Context, private var t: T)
+class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
     : ItemTouchHelper.Callback() {
 
     private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_outline_delete_24)
     private var background: ColorDrawable = ColorDrawable(Color.parseColor("#ea4335"))
 
-    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+    override fun getMovementFlags(recyclerView: RecyclerView,
+                                  viewHolder: RecyclerView.ViewHolder): Int {
         return makeMovementFlags(0, ItemTouchHelper.START)
     }
 
@@ -36,7 +37,8 @@ class ItemSwipeCallback<T: SwipeDelegate>(context: Context, private var t: T)
         return defaultValue * 10
     }
 
-    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView,
+                             viewHolder: RecyclerView.ViewHolder,
                              dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 

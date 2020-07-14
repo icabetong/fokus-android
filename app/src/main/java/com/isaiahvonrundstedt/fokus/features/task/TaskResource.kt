@@ -10,7 +10,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
  *  of tasks, subjects and its attachments
  *  in the UI
  */
-data class TaskResource @JvmOverloads constructor (
+data class TaskResource @JvmOverloads constructor(
     @Embedded
     var task: Task,
     @Embedded

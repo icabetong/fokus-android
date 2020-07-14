@@ -8,7 +8,7 @@ import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 
-class AboutPreference: BasePreference() {
+class AboutPreference : BasePreference() {
 
     companion object {
         const val ABOUT_REPOSITORY_URL = "https://github.com/reichsadmiral/fokus/issues/new"

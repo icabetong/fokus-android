@@ -12,7 +12,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 
-class SubjectViewModel(app: Application): BaseViewModel(app) {
+class SubjectViewModel(app: Application) : BaseViewModel(app) {
 
     private var repository = SubjectRepository.getInstance(app)
     private var items: LiveData<List<SubjectResource>>? = repository.fetch()
@@ -37,7 +37,8 @@ class SubjectViewModel(app: Application): BaseViewModel(app) {
         }
     }
 
-    fun remove(subject: Subject, scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
+    fun remove(subject: Subject,
+               scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.remove(subject)
 
         scheduleList.forEach {
@@ -45,7 +46,8 @@ class SubjectViewModel(app: Application): BaseViewModel(app) {
         }
     }
 
-    fun update(subject: Subject, scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
+    fun update(subject: Subject,
+               scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.update(subject, scheduleList)
 
         if (preferenceManager.subjectReminder) {

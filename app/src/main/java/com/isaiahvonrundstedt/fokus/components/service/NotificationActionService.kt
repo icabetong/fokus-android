@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 // based on what the user tapped on the fokus
 // Since PendingIntents can trigger Workers, this service
 // acts like a middle man
-class NotificationActionService: IntentService(SERVICE_NAME) {
+class NotificationActionService : IntentService(SERVICE_NAME) {
 
     companion object {
         const val SERVICE_NAME = "notificationActionService"

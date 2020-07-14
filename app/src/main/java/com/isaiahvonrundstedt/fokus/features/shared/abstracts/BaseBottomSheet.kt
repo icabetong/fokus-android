@@ -15,13 +15,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseBottomSheet: BottomSheetDialogFragment() {
+abstract class BaseBottomSheet : BottomSheetDialogFragment() {
 
     interface DismissListener {
         fun <T> onDismiss(t: T, requestCode: Int)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         dialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -35,8 +36,8 @@ abstract class BaseBottomSheet: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-        = BottomSheetDialog(requireContext(), theme)
+    override fun onCreateDialog(
+        savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
     fun invoke(fragmentManager: FragmentManager) {
         if (!this.isAdded)

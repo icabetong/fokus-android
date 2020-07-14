@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_item_add.*
 
-class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.ActionListener {
+class SubjectEditor : BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.ActionListener {
 
     private var requestCode = 0
     private var subject = Subject()
@@ -47,7 +47,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
 
         // Check if the parent activity have passed some extras
         requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE
-            else REQUEST_CODE_INSERT
+        else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
@@ -78,7 +78,7 @@ class SubjectEditor: BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.
     }
 
     override fun <T> onDismiss(t: T, requestCode: Int) {
-        if (t is Schedule){
+        if (t is Schedule) {
             when (requestCode) {
                 ScheduleEditor.REQUEST_CODE_INSERT -> adapter.insert(t)
                 ScheduleEditor.REQUEST_CODE_UPDATE -> adapter.update(t)

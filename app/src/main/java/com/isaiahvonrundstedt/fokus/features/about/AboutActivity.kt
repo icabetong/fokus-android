@@ -12,7 +12,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class AboutActivity: BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class AboutActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     private var controller: NavController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +36,7 @@ class AboutActivity: BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartF
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean
-            = Navigation.findNavController(this, R.id.navigationHostFragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean = Navigation.findNavController(this, R.id.navigationHostFragment).navigateUp()
             || super.onSupportNavigateUp()
 
     private fun onNavigateUpOrFinish(): Boolean {

@@ -9,7 +9,7 @@ import android.widget.RemoteViews
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 
-class TaskWidgetProvider: AppWidgetProvider() {
+class TaskWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?,
                           appWidgetIds: IntArray?) {

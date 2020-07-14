@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.history.History
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class HistoryRepository private constructor (app: Application) {
+class HistoryRepository private constructor(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var histories = database?.histories()

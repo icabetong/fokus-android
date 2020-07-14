@@ -16,7 +16,7 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "subjects")
-data class Subject @JvmOverloads constructor (
+data class Subject @JvmOverloads constructor(
     @PrimaryKey
     @ColumnInfo(index = true)
     var subjectID: String = UUID.randomUUID().toString(),
@@ -24,7 +24,7 @@ data class Subject @JvmOverloads constructor (
     var description: String? = null,
     @TypeConverters(ColorConverter::class)
     var tag: Tag = Tag.SKY
-): Parcelable {
+) : Parcelable {
 
     // Used for the color tag of the subject
     enum class Tag(val color: Int) {
@@ -60,6 +60,7 @@ data class Subject @JvmOverloads constructor (
 
         companion object {
             private val colors: MutableMap<Int, Tag> = HashMap()
+
             init {
                 for (i in values())
                     colors[i.color] = i

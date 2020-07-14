@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
-class SubjectRepository private constructor (app: Application) {
+class SubjectRepository private constructor(app: Application) {
 
     companion object {
         private var instance: SubjectRepository? = null

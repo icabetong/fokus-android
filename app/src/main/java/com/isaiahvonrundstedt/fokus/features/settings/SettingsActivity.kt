@@ -5,7 +5,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class SettingsActivity: BaseActivity() {
+class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

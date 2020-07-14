@@ -18,10 +18,11 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
 
-class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
+class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -67,10 +68,8 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
                 // and wait for the result
                 BaseListAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
-                        putExtra(
-                            SubjectEditor.EXTRA_SUBJECT, t.subject)
-                        putParcelableArrayListExtra(
-                            SubjectEditor.EXTRA_SCHEDULE, t.schedules.toArrayList())
+                        putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
+                        putExtra(SubjectEditor.EXTRA_SCHEDULE, t.schedules)
                     }
                     startActivityWithTransition(views, intent, SubjectEditor.REQUEST_CODE_UPDATE)
                 }
@@ -85,7 +84,8 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {}
+                BaseListAdapter.ActionListener.Action.MODIFY -> {
+                }
             }
         }
     }
@@ -96,27 +96,28 @@ class SubjectFragment: BaseFragment(), BaseListAdapter.ActionListener {
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT
-                || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
+            || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val subject: Subject? = data?.getParcelableExtra(
-                    SubjectEditor.EXTRA_SUBJECT)
-                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(
-                    SubjectEditor.EXTRA_SCHEDULE)
+                val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
                 subject?.also {
-                    if (resultCode == BaseEditor.RESULT_OK) {
-                        when (requestCode) {
-                            SubjectEditor.REQUEST_CODE_INSERT ->
-                                viewModel.insert(it, scheduleList ?: emptyList())
-                            SubjectEditor.REQUEST_CODE_UPDATE ->
-                                viewModel.update(it, scheduleList ?: emptyList())
+                    when (resultCode) {
+                        BaseEditor.RESULT_OK -> {
+                            when (requestCode) {
+                                SubjectEditor.REQUEST_CODE_INSERT ->
+                                    viewModel.insert(it, scheduleList ?: emptyList())
+                                SubjectEditor.REQUEST_CODE_UPDATE ->
+                                    viewModel.update(it, scheduleList ?: emptyList())
+                            }
                         }
-                    } else if (resultCode == BaseEditor.RESULT_DELETE) {
-                        viewModel.remove(it)
-                        createSnackbar(recyclerView, R.string.feedback_subject_removed).apply {
-                            setAction(R.string.button_undo) { _ -> viewModel.insert(it, scheduleList ?: emptyList()) }
-                            show()
+                        BaseEditor.RESULT_DELETE -> {
+                            viewModel.remove(it)
+                            createSnackbar(recyclerView, R.string.feedback_subject_removed).apply {
+                                setAction(R.string.button_undo) { _ -> viewModel.insert(it, scheduleList ?: emptyList()) }
+                                show()
+                            }
                         }
                     }
                 }

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 
-class LocalizationReceiver: BroadcastReceiver() {
+class LocalizationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {

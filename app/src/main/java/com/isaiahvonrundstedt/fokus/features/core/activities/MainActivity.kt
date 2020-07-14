@@ -29,7 +29,7 @@ import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNa
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class MainActivity: BaseActivity() {
+class MainActivity : BaseActivity() {
 
     private var controller: NavController? = null
 
@@ -105,8 +105,8 @@ class MainActivity: BaseActivity() {
 
     private val navigationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         when (destination.id) {
-            R.id.navigation_tasks ->  setToolbarTitle(R.string.activity_tasks)
-            R.id.navigation_events ->  setToolbarTitle(R.string.activity_events)
+            R.id.navigation_tasks -> setToolbarTitle(R.string.activity_tasks)
+            R.id.navigation_events -> setToolbarTitle(R.string.activity_events)
             R.id.navigation_subjects -> setToolbarTitle(R.string.activity_subjects)
         }
     }

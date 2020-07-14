@@ -46,12 +46,14 @@ class SubjectSelectorAdapter(private val actionListener: ActionListener)
     }
 
     companion object {
-        val callback = object: DiffUtil.ItemCallback<SubjectResource>() {
-            override fun areItemsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
+        val callback = object : DiffUtil.ItemCallback<SubjectResource>() {
+            override fun areItemsTheSame(oldItem: SubjectResource,
+                                         newItem: SubjectResource): Boolean {
                 return oldItem.subject.subjectID == newItem.subject.subjectID
             }
 
-            override fun areContentsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
+            override fun areContentsTheSame(oldItem: SubjectResource,
+                                            newItem: SubjectResource): Boolean {
                 return oldItem == newItem
             }
         }

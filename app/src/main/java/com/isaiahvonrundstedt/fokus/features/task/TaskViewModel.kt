@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private var app: Application): BaseViewModel(app) {
+class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
     private var items: LiveData<List<TaskResource>>? = repository.fetch()

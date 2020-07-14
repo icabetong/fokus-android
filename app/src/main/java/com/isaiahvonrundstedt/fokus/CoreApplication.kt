@@ -3,7 +3,7 @@ package com.isaiahvonrundstedt.fokus
 import android.app.Application
 import net.danlew.android.joda.JodaTimeAndroid
 
-class CoreApplication: Application() {
+class CoreApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

@@ -17,7 +17,7 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class HistoryActivity: BaseActivity(), BaseListAdapter.ActionListener {
+class HistoryActivity : BaseActivity(), BaseListAdapter.ActionListener {
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this).get(HistoryViewModel::class.java)
@@ -61,8 +61,10 @@ class HistoryActivity: BaseActivity(), BaseListAdapter.ActionListener {
                     }
                     snackbar.show()
                 }
-                BaseListAdapter.ActionListener.Action.SELECT -> { }
-                BaseListAdapter.ActionListener.Action.MODIFY -> { }
+                BaseListAdapter.ActionListener.Action.SELECT -> {
+                }
+                BaseListAdapter.ActionListener.Action.MODIFY -> {
+                }
             }
         }
     }

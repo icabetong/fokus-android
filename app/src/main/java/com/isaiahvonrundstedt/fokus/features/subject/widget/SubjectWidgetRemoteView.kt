@@ -9,11 +9,11 @@ import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 
-class SubjectWidgetRemoteView(private var context: Context, private var items: List<SubjectResource>)
+class SubjectWidgetRemoteView(private var context: Context,
+                              private var items: List<SubjectResource>)
     : RemoteViewsService.RemoteViewsFactory {
 
-    override fun getLoadingView(): RemoteViews
-            = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

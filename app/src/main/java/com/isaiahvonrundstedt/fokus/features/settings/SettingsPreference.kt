@@ -27,7 +27,7 @@ import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 
-class SettingsPreference: BasePreference() {
+class SettingsPreference : BasePreference() {
 
     companion object {
         const val REQUEST_CODE_SOUND = 32
@@ -38,11 +38,11 @@ class SettingsPreference: BasePreference() {
     }
 
     private val preferences by lazy {
-        PreferenceManager(
-            requireContext()
-        )
+        PreferenceManager(requireContext())
     }
-    private val manager by lazy { WorkManager.getInstance(requireContext()) }
+    private val manager by lazy {
+        WorkManager.getInstance(requireContext())
+    }
 
     override fun onStart() {
         super.onStart()
@@ -103,9 +103,9 @@ class SettingsPreference: BasePreference() {
                         requireContext()
                     ).storageReadGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                                       PermissionManager.REQUEST_CODE_STORAGE)
+                        PermissionManager.REQUEST_CODE_STORAGE)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                                                .setType("audio/*"), REQUEST_CODE_SOUND)
+                    .setType("audio/*"), REQUEST_CODE_SOUND)
                 true
             }
         }
@@ -156,7 +156,7 @@ class SettingsPreference: BasePreference() {
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PermissionManager.REQUEST_CODE_STORAGE
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("audio/*"), REQUEST_CODE_SOUND)
     }

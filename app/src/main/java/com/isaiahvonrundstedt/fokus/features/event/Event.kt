@@ -32,7 +32,7 @@ data class Event @JvmOverloads constructor(
     var schedule: DateTime? = null,
     @TypeConverters(DateTimeConverter::class)
     var dateAdded: DateTime = DateTime.now()
-): Parcelable {
+) : Parcelable {
 
     fun isToday(): Boolean {
         return schedule?.isEqualNow ?: false

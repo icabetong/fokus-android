@@ -20,7 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_appbar_selector.*
 
-class SubjectSelectorActivity: BaseActivity(), BaseListAdapter.ActionListener {
+class SubjectSelectorActivity : BaseActivity(), BaseListAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -84,8 +84,10 @@ class SubjectSelectorActivity: BaseActivity(), BaseListAdapter.ActionListener {
                     setResult(Activity.RESULT_OK, result)
                     finish()
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {}
-                BaseListAdapter.ActionListener.Action.DELETE -> {}
+                BaseListAdapter.ActionListener.Action.MODIFY -> {
+                }
+                BaseListAdapter.ActionListener.Action.DELETE -> {
+                }
             }
         }
     }

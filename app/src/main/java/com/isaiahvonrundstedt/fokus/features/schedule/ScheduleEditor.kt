@@ -19,7 +19,7 @@ import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import java.util.*
 
-class ScheduleEditor(private val dismissListener: DismissListener): BaseBottomSheet() {
+class ScheduleEditor(private val dismissListener: DismissListener) : BaseBottomSheet() {
 
     private var schedule: Schedule = Schedule()
     private var requestCode: Int = REQUEST_CODE_INSERT

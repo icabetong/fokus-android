@@ -82,12 +82,13 @@ class EventAdapter(private var actionListener: ActionListener)
     companion object {
         const val TRANSITION_EVENT_NAME = "transition:name:"
 
-        val callback = object: DiffUtil.ItemCallback<EventResource>() {
+        val callback = object : DiffUtil.ItemCallback<EventResource>() {
             override fun areItemsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {
                 return oldItem.event.eventID == newItem.event.eventID
             }
 
-            override fun areContentsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {
+            override fun areContentsTheSame(oldItem: EventResource,
+                                            newItem: EventResource): Boolean {
                 return oldItem == newItem
             }
         }

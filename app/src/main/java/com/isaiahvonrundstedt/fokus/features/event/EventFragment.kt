@@ -19,7 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import kotlinx.android.synthetic.main.fragment_event.*
 
-class EventFragment: BaseFragment(), BaseListAdapter.ActionListener {
+class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
@@ -79,7 +79,8 @@ class EventFragment: BaseFragment(), BaseListAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> { }
+                BaseListAdapter.ActionListener.Action.MODIFY -> {
+                }
             }
         }
     }
@@ -90,23 +91,27 @@ class EventFragment: BaseFragment(), BaseListAdapter.ActionListener {
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
         if (requestCode == EventEditor.REQUEST_CODE_INSERT ||
-                requestCode == EventEditor.REQUEST_CODE_UPDATE) {
+            requestCode == EventEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val event: Event? = data?.getParcelableExtra(
-                    EventEditor.EXTRA_EVENT)
+                val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
 
                 event?.also {
-                    if (resultCode == BaseEditor.RESULT_OK) {
-                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
-                            viewModel.insert(it)
-                        else viewModel.update(it)
-                    } else {
-                        viewModel.remove(it)
-
-                        createSnackbar(recyclerView, R.string.feedback_event_removed).apply {
-                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
-                            show()
+                    when (resultCode) {
+                        BaseEditor.RESULT_OK -> {
+                            when (requestCode) {
+                                EventEditor.REQUEST_CODE_INSERT ->
+                                    viewModel.insert(it)
+                                EventEditor.REQUEST_CODE_UPDATE ->
+                                    viewModel.update(it)
+                            }
+                        }
+                        BaseEditor.RESULT_DELETE -> {
+                            viewModel.remove(it)
+                            createSnackbar(recyclerView, R.string.feedback_event_removed).apply {
+                                setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                                show()
+                            }
                         }
                     }
                 }

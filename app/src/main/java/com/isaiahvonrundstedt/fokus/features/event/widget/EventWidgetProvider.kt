@@ -9,7 +9,7 @@ import android.widget.RemoteViews
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 
-class EventWidgetProvider: AppWidgetProvider() {
+class EventWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?,
                           appWidgetIds: IntArray?) {

@@ -75,12 +75,14 @@ class SubjectAdapter(private var actionListener: ActionListener)
         const val TRANSITION_CODE_ID = "transition:code:"
         const val TRANSITION_DESCRIPTION_ID = "transition:description:"
 
-        val callback = object: DiffUtil.ItemCallback<SubjectResource>() {
-            override fun areItemsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
+        val callback = object : DiffUtil.ItemCallback<SubjectResource>() {
+            override fun areItemsTheSame(oldItem: SubjectResource,
+                                         newItem: SubjectResource): Boolean {
                 return oldItem.subject.subjectID == newItem.subject.subjectID
             }
 
-            override fun areContentsTheSame(oldItem: SubjectResource, newItem: SubjectResource): Boolean {
+            override fun areContentsTheSame(oldItem: SubjectResource,
+                                            newItem: SubjectResource): Boolean {
                 return oldItem == newItem
             }
         }

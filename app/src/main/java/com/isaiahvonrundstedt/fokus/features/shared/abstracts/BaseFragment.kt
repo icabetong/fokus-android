@@ -8,9 +8,10 @@ import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
-abstract class BaseFragment: Fragment() {
+abstract class BaseFragment : Fragment() {
 
-    protected fun startActivityWithTransition(views: Map<String, View>, intent: Intent, requestCode: Int) {
+    protected fun startActivityWithTransition(views: Map<String, View>, intent: Intent,
+                                              requestCode: Int) {
         val sharedElements = views.mapNotNull {
             Pair.create(it.value, it.key)
         }.toTypedArray()

@@ -21,7 +21,7 @@ import java.util.*
 @Entity(tableName = "schedules", foreignKeys = [ForeignKey(entity = Subject::class,
     parentColumns = arrayOf("subjectID"), childColumns = arrayOf("subject"),
     onDelete = ForeignKey.CASCADE)])
-data class Schedule @JvmOverloads constructor (
+data class Schedule @JvmOverloads constructor(
     @PrimaryKey
     var scheduleID: String = UUID.randomUUID().toString(),
     var daysOfWeek: Int = 0,
@@ -30,7 +30,7 @@ data class Schedule @JvmOverloads constructor (
     @TypeConverters(DateTimeConverter::class)
     var endTime: LocalTime? = null,
     var subject: String? = null
-): Parcelable {
+) : Parcelable {
 
     fun isToday(): Boolean {
         getDaysAsList().forEach {

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -145,30 +146,29 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener {
             || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
 
             if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val task: Task? = data?.getParcelableExtra(
-                    TaskEditor.EXTRA_TASK)
-                val attachments: List<Attachment>? =
-                    data?.getParcelableArrayListExtra(
-                        TaskEditor.EXTRA_ATTACHMENTS)
+                val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
+                val attachments: List<Attachment>? = data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
                 task?.also {
-                    if (resultCode == BaseEditor.RESULT_OK) {
-                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
-                            viewModel.insert(it, attachments ?: emptyList())
-                        else viewModel.update(it, attachments ?: emptyList())
-                    } else {
-                        viewModel.remove(it)
-                        createSnackbar(recyclerView, R.string.feedback_task_removed).apply {
-                            setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
-                            show()
+                    when (resultCode) {
+                        BaseEditor.RESULT_OK -> {
+                            when (requestCode) {
+                                TaskEditor.REQUEST_CODE_INSERT ->
+                                    viewModel.insert(it, attachments ?: emptyList())
+                                TaskEditor.REQUEST_CODE_UPDATE ->
+                                    viewModel.update(it, attachments ?: emptyList())
+                            }
+                        }
+                        BaseEditor.RESULT_DELETE -> {
+                            viewModel.remove(it)
+                            createSnackbar(recyclerView, R.string.feedback_task_removed).apply {
+                                setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
+                                show()
+                            }
                         }
                     }
                 }
             }
         }
-    }
-
-    companion object {
-        const val TRANSITION_NAME_ROOT = "transition:root"
     }
 }

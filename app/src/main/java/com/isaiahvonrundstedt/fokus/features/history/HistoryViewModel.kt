@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.database.repository.HistoryRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(app: Application): BaseViewModel(app) {
+class HistoryViewModel(app: Application) : BaseViewModel(app) {
 
     private var repository = HistoryRepository.getInstance(app)
     private var items: LiveData<List<History>>? = repository.fetch()

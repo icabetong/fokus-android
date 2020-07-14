@@ -13,8 +13,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskResource
 class TaskWidgetRemoteView(private var context: Context, private var items: List<TaskResource>)
     : RemoteViewsService.RemoteViewsFactory {
 
-    override fun getLoadingView(): RemoteViews
-            = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

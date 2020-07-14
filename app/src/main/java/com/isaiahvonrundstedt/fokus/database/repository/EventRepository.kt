@@ -6,7 +6,7 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventResource
 
-class EventRepository private constructor (app: Application) {
+class EventRepository private constructor(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
     private var events = database?.events()

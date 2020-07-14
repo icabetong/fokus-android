@@ -17,8 +17,10 @@ fun Uri.getFileName(context: Context): String {
         try {
             if (cursor != null && cursor.moveToFirst())
                 result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-        } catch (ex: Exception) {}
-        finally { cursor?.close() }
+        } catch (ex: Exception) {
+        } finally {
+            cursor?.close()
+        }
     } else {
         result = this.path.toString()
         val index = result.lastIndexOf('/')

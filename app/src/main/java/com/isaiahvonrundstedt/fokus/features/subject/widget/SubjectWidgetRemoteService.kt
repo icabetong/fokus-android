@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class SubjectWidgetRemoteService: RemoteViewsService() {
+class SubjectWidgetRemoteService : RemoteViewsService() {
 
     private fun fetch(): List<SubjectResource>? {
         val subjects = AppDatabase.getInstance(applicationContext)?.subjects()

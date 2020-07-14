@@ -4,9 +4,9 @@ import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 
-abstract class BasePreference: PreferenceFragmentCompat() {
+abstract class BasePreference : PreferenceFragmentCompat() {
 
-    fun <T: Preference> findPreference(@StringRes id: Int): T? {
+    fun <T : Preference> findPreference(@StringRes id: Int): T? {
         return findPreference(requireContext().getString(id)) as? T
     }
 

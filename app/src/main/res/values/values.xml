@@ -195,7 +195,6 @@
     </style>
     <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>
 
-
     <!-- Layout Styles -->
     <style name="Fokus.LinearLayout">
         <item name="android:orientation">vertical</item>

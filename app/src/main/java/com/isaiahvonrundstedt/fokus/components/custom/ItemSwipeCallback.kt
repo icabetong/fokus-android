@@ -25,9 +25,7 @@ class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder): Boolean {
-        return false
-    }
+                        target: RecyclerView.ViewHolder): Boolean = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         t.onSwipe(viewHolder.adapterPosition, direction)
@@ -45,9 +43,11 @@ class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
         val itemView: View = viewHolder.itemView
         val backgroundCornerOffset = 20
 
-        background.setBounds(itemView.right + dX.toInt() - backgroundCornerOffset,
-            itemView.top, itemView.right, itemView.bottom)
-        background.draw(c)
+        with(background) {
+            setBounds(itemView.right + dX.toInt() - backgroundCornerOffset, itemView.top,
+                itemView.right, itemView.bottom)
+            draw(c)
+        }
 
         icon?.let {
             it.setTint(Color.WHITE)

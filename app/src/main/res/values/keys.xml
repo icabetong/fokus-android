@@ -27,4 +27,6 @@
     <string translatable="false" name="key_credit_notification_sound">notificationSoundKey</string>
     <string translatable="false" name="key_credit_launcher_icon">launcherIconKey</string>
 
+    <string translatable="false" name="behavior_expandable_bottom_bar">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</string>
+
 </resources>

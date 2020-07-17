@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.forEach
+import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -19,7 +20,7 @@ import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import java.util.*
 
-class ScheduleEditor(private val dismissListener: DismissListener) : BaseBottomSheet() {
+class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 
     private var schedule: Schedule = Schedule()
     private var requestCode: Int = REQUEST_CODE_INSERT
@@ -150,13 +151,9 @@ class ScheduleEditor(private val dismissListener: DismissListener) : BaseBottomS
                 return@setOnClickListener
             }
 
-            setResult(schedule, requestCode)
+            callback?.invoke(schedule)
+            this.dismiss()
         }
-    }
-
-    private fun <T> setResult(t: T, requestCode: Int) {
-        dismissListener.onDismiss(t, requestCode)
-        dismiss()
     }
 
     companion object {

@@ -43,17 +43,17 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
             return Result.success()
         }
 
-        var executionTime = task.dueDate!!
+        var executionTime = task.dueDate
         when (preferenceManager.taskReminderInterval) {
             PreferenceManager.TASK_REMINDER_INTERVAL_1_HOUR ->
-                executionTime = task.dueDate!!.minusHours(1)
+                executionTime = task.dueDate?.minusHours(1)
             PreferenceManager.TASK_REMINDER_INTERVAL_3_HOURS ->
-                executionTime = task.dueDate!!.minusHours(3)
+                executionTime = task.dueDate?.minusHours(3)
             PreferenceManager.TASK_REMINDER_INTERVAL_24_HOURS ->
-                executionTime = task.dueDate!!.minusHours(24)
+                executionTime = task.dueDate?.minusHours(24)
         }
 
-        if (executionTime.isAfterNow)
+        if (executionTime?.isAfterNow == true)
             request.setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
                 TimeUnit.MINUTES)
 

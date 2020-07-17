@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -11,12 +10,15 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
+import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
+import com.isaiahvonrundstedt.fokus.features.history.HistoryActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -85,7 +87,18 @@ class MainActivity : BaseActivity() {
 
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_outline_menu_24)
         toolbar?.setNavigationOnClickListener {
-            NavigationBottomSheet().invoke(supportFragmentManager)
+            NavigationBottomSheet(supportFragmentManager).show {
+                result { actionID ->
+                    when (actionID) {
+                        R.id.action_history ->
+                            startActivity(Intent(context, HistoryActivity::class.java))
+                        R.id.action_settings ->
+                            startActivity(Intent(context, SettingsActivity::class.java))
+                        R.id.action_about ->
+                            startActivity(Intent(context, AboutActivity::class.java))
+                    }
+                }
+            }
         }
 
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)

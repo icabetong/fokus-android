@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager

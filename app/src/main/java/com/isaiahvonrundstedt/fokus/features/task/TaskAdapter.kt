@@ -51,9 +51,12 @@ class TaskAdapter(private var actionListener: ActionListener)
                     with(task) {
                         checkBox.isChecked = isFinished
                         taskNameView.text = name
-                        dueDateView.text = formatDueDate(rootView.context)
-
                         taskNameView.setStrikeThroughEffect(isFinished)
+
+                        if (hasDueDate())
+                            dueDateView.text = formatDueDate(rootView.context)
+                        else dueDateView.isVisible = false
+
                         if (isFinished)
                             taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                     }

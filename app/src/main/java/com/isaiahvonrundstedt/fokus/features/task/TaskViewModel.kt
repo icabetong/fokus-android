@@ -23,7 +23,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
-        if (preferenceManager.taskReminder && !task.isFinished && task.dueDate!!.isAfterNow) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
 
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -48,13 +48,13 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         // If we have a persistent notification,
         // we should dismiss it when the user updates
         // the task to finish
-        if (task.isFinished || !task.isImportant || task.dueDate!!.isBeforeNow)
+        if (task.isFinished || !task.isImportant || task.dueDate?.isBeforeNow == true)
             notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (preferenceManager.taskReminder && !task.isFinished && task.dueDate!!.isAfterNow) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)

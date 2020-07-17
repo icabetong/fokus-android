@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
@@ -15,7 +16,9 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.NavigationAdapter
 import kotlinx.android.synthetic.main.layout_sheet_navigation.*
 
-class NavigationBottomSheet : BaseBottomSheet(), NavigationAdapter.NavigationListener {
+class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager)
+    , NavigationAdapter.NavigationListener {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.layout_sheet_navigation, container, false)
@@ -34,11 +37,7 @@ class NavigationBottomSheet : BaseBottomSheet(), NavigationAdapter.NavigationLis
     }
 
     override fun onNavigate(id: Int) {
-        when (id) {
-            R.id.action_history -> startActivity(Intent(context, HistoryActivity::class.java))
-            R.id.action_settings -> startActivity(Intent(context, SettingsActivity::class.java))
-            R.id.action_about -> startActivity(Intent(context, AboutActivity::class.java))
-        }
+        callback?.invoke(id)
         this.dismiss()
     }
 }

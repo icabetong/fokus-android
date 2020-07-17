@@ -31,22 +31,35 @@ data class Task @JvmOverloads constructor(
     var isFinished: Boolean = false
 ) : Parcelable {
 
-    fun isDueToday(): Boolean {
-        return dueDate!!.toLocalDate().isEqual(LocalDate.now())
+    fun hasDueDate(): Boolean {
+        return dueDate != null
     }
 
-    fun formatDueDate(context: Context): String {
-        val currentDateTime = LocalDate.now()
+    fun isDueDateInFuture(): Boolean {
+        return if (hasDueDate())
+            dueDate?.isAfterNow == true
+        else false
+    }
+
+    fun isDueToday(): Boolean {
+        return dueDate?.isEqualNow ?: false
+    }
+
+    fun formatDueDate(context: Context): String? {
+        val currentDateTime = DateTime.now()
+
+        if (!hasDueDate())
+            return null
 
         // Check if the day on the task's due is today
-        return if (dueDate!!.toLocalDate().isEqual(currentDateTime))
+        return if (dueDate?.isEqualNow == true)
             String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
         // Now check if the day is yesterday
-        else if (currentDateTime.minusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
+        else if (currentDateTime.minusDays(1).compareTo(dueDate) == 0)
             String.format(context.getString(R.string.yesterday_at),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
         // Now check if its tomorrow
-        else if (currentDateTime.plusDays(1).compareTo(dueDate!!.toLocalDate()) == 0)
+        else if (currentDateTime.plusDays(1).compareTo(dueDate) == 0)
             String.format(context.getString(R.string.tomorrow_at),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
         // Just print the date what could go wrong?

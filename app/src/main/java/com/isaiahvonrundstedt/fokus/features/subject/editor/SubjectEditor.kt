@@ -21,7 +21,6 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectAdapter
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_item_add.*
 
-class SubjectEditor : BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter.ActionListener {
+class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     private var requestCode = 0
     private var subject = Subject()
@@ -77,25 +76,17 @@ class SubjectEditor : BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter
         }
     }
 
-    override fun <T> onDismiss(t: T, requestCode: Int) {
-        if (t is Schedule) {
-            when (requestCode) {
-                ScheduleEditor.REQUEST_CODE_INSERT -> adapter.insert(t)
-                ScheduleEditor.REQUEST_CODE_UPDATE -> adapter.update(t)
-            }
-        }
-    }
-
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val editor = ScheduleEditor(this)
-                    editor.arguments = bundleOf(
-                        Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
-                        Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
-                    )
-                    editor.invoke(supportFragmentManager)
+                    ScheduleEditor(supportFragmentManager).show {
+                        arguments = bundleOf(
+                            Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
+                            Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
+                        )
+                        result { adapter.update(it) }
+                    }
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     adapter.remove(t)
@@ -112,9 +103,12 @@ class SubjectEditor : BaseEditor(), BaseBottomSheet.DismissListener, BaseAdapter
         super.onStart()
 
         addItemButton.setOnClickListener {
-            val editor = ScheduleEditor(this)
-            editor.arguments = bundleOf(Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID))
-            editor.invoke(supportFragmentManager)
+            ScheduleEditor(supportFragmentManager).show {
+                arguments = bundleOf(
+                    Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID)
+                )
+                result { adapter.insert(it) }
+            }
         }
 
         tagView.setOnClickListener {

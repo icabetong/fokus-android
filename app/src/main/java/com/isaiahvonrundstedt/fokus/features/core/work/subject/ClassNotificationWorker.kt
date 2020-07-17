@@ -21,7 +21,7 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
             title = schedule.subject
             content = schedule.format(applicationContext)
             type = Log.TYPE_CLASS
-            isPersistent = false
+            isImportant = false
             data = schedule.scheduleID
         }
 

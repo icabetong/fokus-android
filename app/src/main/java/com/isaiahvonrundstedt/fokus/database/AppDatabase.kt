@@ -79,10 +79,9 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("INSERT INTO schedules (`scheduleID`, `daysOfWeek`, `startTime`, `endTime`, `subject`) SELECT `id` AS scheduleID,`daysOfWeek`, `startTime`, `endTime`, `id` AS subject FROM subjects_old")
 
                     // histories
-                    execSQL("CREATE TABLE IF NOT EXISTS `logs` (`historyID` TEXT NOT NULL, `title` TEXT, `content` TEXT, `data` TEXT, `type` INTEGER NOT NULL, `isPersistent` INTEGER NOT NULL, `dateTimeTriggered` TEXT, PRIMARY KEY(`historyID`))")
-                    execSQL("INSERT INTO histories_new SELECT * FROM histories")
+                    execSQL("CREATE TABLE IF NOT EXISTS `logs` (`logID` TEXT NOT NULL, `title` TEXT, `content` TEXT, `data` TEXT, `type` INTEGER NOT NULL, `isImportant` INTEGER NOT NULL, `dateTimeTriggered` TEXT, PRIMARY KEY(`logID`))")
+                    execSQL("INSERT INTO logs  (`logID`, `title`, `content`, `data`, `type`, `isImportant`, `dateTimeTriggered`) SELECT `historyID`, `title`, `content`, `data`, `type`, `isPersistent`, `dateTimeTriggered` FROM histories")
                     execSQL("DROP TABLE histories")
-                    execSQL("ALTER TABLE histories_new RENAME TO histories")
 
                     execSQL("DROP TABLE subjects_old")
                 }

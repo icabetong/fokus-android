@@ -25,13 +25,13 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
             content = event.formatSchedule(applicationContext)
             type = Log.TYPE_EVENT
             data = event.eventID
-            isPersistent = event.isImportant
+            isImportant = event.isImportant
         }
 
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         request.setInputData(convertLogToData(notification))
 
-        if (notification.isPersistent) {
+        if (notification.isImportant) {
             workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
                 request.build())
             return Result.success()

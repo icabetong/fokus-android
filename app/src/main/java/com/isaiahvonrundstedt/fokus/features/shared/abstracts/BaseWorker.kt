@@ -72,7 +72,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(EXTRA_LOG_CONTENT, log.content)
                 putString(EXTRA_LOG_DATA, log.data)
                 putInt(EXTRA_LOG_TYPE, log.type)
-                putBoolean(EXTRA_LOG_PERSISTENCE, log.isPersistent)
+                putBoolean(EXTRA_LOG_PERSISTENCE, log.isImportant)
             }.build()
         }
 
@@ -115,7 +115,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 content = workerData.getString(EXTRA_LOG_CONTENT)
                 data = workerData.getString(EXTRA_LOG_DATA)
                 type = workerData.getInt(EXTRA_LOG_TYPE, Log.TYPE_GENERIC)
-                isPersistent = workerData.getBoolean(EXTRA_LOG_PERSISTENCE, false)
+                isImportant = workerData.getBoolean(EXTRA_LOG_PERSISTENCE, false)
             }
         }
 
@@ -159,7 +159,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
                     putExtra(NotificationActionService.EXTRA_TASK_ID, log.data)
-                    putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, log.isPersistent)
+                    putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, log.isImportant)
                     action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -191,7 +191,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             setContentIntent(contentIntent)
             setContentTitle(log?.title)
             setContentText(log?.content)
-            setOngoing(log?.isPersistent == true)
+            setOngoing(log?.isImportant == true)
             if (action != null) addAction(action)
             color = ContextCompat.getColor(applicationContext, R.color.color_primary)
         }.build()

@@ -36,9 +36,7 @@ data class Task @JvmOverloads constructor(
     }
 
     fun isDueDateInFuture(): Boolean {
-        return if (hasDueDate())
-            dueDate?.isAfterNow == true
-        else false
+        return dueDate?.isAfterNow == true
     }
 
     fun isDueToday(): Boolean {

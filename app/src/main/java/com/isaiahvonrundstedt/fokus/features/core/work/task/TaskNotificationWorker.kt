@@ -24,19 +24,22 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
 
         val task = convertDataToTask(inputData)
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at
-        val notification = Log().apply {
+        val log = Log().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
             type = Log.TYPE_TASK
-            isPersistent = task.isImportant
+            isImportant = task.isImportant
             data = task.taskID
         }
 
-        val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        request.setInputData(convertLogToData(notification))
+        if (!task.isImportant && !task.hasDueDate())
+            return Result.success()
 
-        if (notification.isPersistent) {
+        val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
+            .setInputData(convertLogToData(log))
+
+        if (log.isImportant) {
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request.build())
             return Result.success()

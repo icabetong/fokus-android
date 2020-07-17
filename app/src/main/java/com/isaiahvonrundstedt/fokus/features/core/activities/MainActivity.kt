@@ -88,8 +88,8 @@ class MainActivity : BaseActivity() {
         toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_outline_menu_24)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet(supportFragmentManager).show {
-                result { actionID ->
-                    when (actionID) {
+                result { id ->
+                    when (id) {
                         R.id.action_history ->
                             startActivity(Intent(context, LogActivity::class.java))
                         R.id.action_settings ->

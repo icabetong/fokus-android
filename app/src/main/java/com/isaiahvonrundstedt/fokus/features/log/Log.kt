@@ -25,7 +25,7 @@ data class Log @JvmOverloads constructor(
     var content: String? = null,
     var data: String? = null,
     var type: Int = TYPE_GENERIC,
-    var isPersistent: Boolean = false,
+    var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateTimeTriggered: DateTime? = null
 ) : Parcelable {

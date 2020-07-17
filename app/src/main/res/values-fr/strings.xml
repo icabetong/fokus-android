@@ -6,13 +6,13 @@
     <string name="activity_tasks">Vos tâches</string>
     <string name="activity_events">Vos événements</string>
     <string name="activity_subjects">Vos sujets</string>
-    <string name="activity_history">Votre histoire</string>
+    <string name="activity_logs">Vos journaux de notification</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_notices">Avis aux tiers</string>
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
 
-    <string name="menu_history">Histoire</string>
+    <string name="menu_logs">Journaux de notification</string>
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Points clairs</string>
@@ -41,8 +41,8 @@
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
     <string name="empty_view_no_tasks_title">Pas de tâches en suspens</string>
     <string name="empty_view_no_tasks_summary">Vous n\'avez actuellement aucune tâche en cours. Si vous en avez une, ajoutez-la en utilisant le bouton ci-dessous.</string>
-    <string name="empty_view_no_history_title">Pas d\'historique enregistré</string>
-    <string name="empty_view_no_history_summary">Une fois qu\'une tâche, un événement ou un rappel quelconque apparaîtra à l\'ombre de votre notification, il apparaîtra également ici.</string>
+    <string name="empty_view_no_logs_title">Pas de journaux enregistré</string>
+    <string name="empty_view_no_logs_summary">Une fois qu\'une tâche, un événement ou un rappel quelconque apparaîtra à l\'ombre de votre notification, il apparaîtra également ici.</string>
     <string name="empty_view_no_events_title">Aucun événement prévu</string>
     <string name="empty_view_no_events_summary">Vous n\'avez actuellement aucun événement prévu. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>
 

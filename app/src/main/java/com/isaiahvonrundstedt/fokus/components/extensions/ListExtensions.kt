@@ -2,7 +2,7 @@ package com.isaiahvonrundstedt.fokus.components.extensions
 
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
@@ -21,8 +21,8 @@ fun <T> List<T>.getIndexByID(id: String): Int {
         if (it is Attachment)
             if (it.attachmentID == id) return index
 
-        if (it is History)
-            if (it.historyID == id) return index
+        if (it is Log)
+            if (it.logID == id) return index
 
         if (it is Schedule)
             if (it.scheduleID == id) return index

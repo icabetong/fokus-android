@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.history
+package com.isaiahvonrundstedt.fokus.features.log
 
 import android.os.Bundle
 import android.view.Menu
@@ -14,22 +14,22 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
-import kotlinx.android.synthetic.main.activity_history.*
+import kotlinx.android.synthetic.main.activity_logs.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class HistoryActivity : BaseActivity(), BaseListAdapter.ActionListener {
+class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
 
-    private val viewModel: HistoryViewModel by lazy {
-        ViewModelProvider(this).get(HistoryViewModel::class.java)
+    private val viewModel: LogViewModel by lazy {
+        ViewModelProvider(this).get(LogViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_history)
+        setContentView(R.layout.activity_logs)
         setPersistentActionBar(toolbar)
-        setToolbarTitle(R.string.activity_history)
+        setToolbarTitle(R.string.activity_logs)
 
-        adapter = HistoryAdapter(this)
+        adapter = LogAdapter(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -38,7 +38,7 @@ class HistoryActivity : BaseActivity(), BaseListAdapter.ActionListener {
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private var adapter: HistoryAdapter? = null
+    private var adapter: LogAdapter? = null
     override fun onStart() {
         super.onStart()
 
@@ -50,7 +50,7 @@ class HistoryActivity : BaseActivity(), BaseListAdapter.ActionListener {
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is History) {
+        if (t is Log) {
             when (action) {
                 BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)

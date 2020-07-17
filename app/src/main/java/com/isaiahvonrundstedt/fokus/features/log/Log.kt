@@ -1,12 +1,10 @@
-package com.isaiahvonrundstedt.fokus.features.history
+package com.isaiahvonrundstedt.fokus.features.log
 
 import android.os.Parcelable
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -19,10 +17,10 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
-@Entity(tableName = "histories")
-data class History @JvmOverloads constructor(
+@Entity(tableName = "logs")
+data class Log @JvmOverloads constructor(
     @PrimaryKey
-    var historyID: String = UUID.randomUUID().toString(),
+    var logID: String = UUID.randomUUID().toString(),
     var title: String? = null,
     var content: String? = null,
     var data: String? = null,

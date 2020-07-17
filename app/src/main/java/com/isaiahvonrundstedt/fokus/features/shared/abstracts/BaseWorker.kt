@@ -18,7 +18,7 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -38,19 +38,19 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         const val NOTIFICATION_TAG_GENERIC = "com:isaiahvonrundstedt:fokus:generic"
         const val NOTIFICATION_CHANNEL_ID_GENERIC = "channel:generic"
 
-        private const val EXTRA_HISTORY_ID = "extra:history:id"
-        private const val EXTRA_HISTORY_TITLE = "extra:history:title"
-        private const val EXTRA_HISTORY_CONTENT = "extra:history:content"
-        private const val EXTRA_HISTORY_TYPE = "extra:history:type"
-        private const val EXTRA_HISTORY_DATA = "extra:history:data"
-        private const val EXTRA_HISTORY_PERSISTENCE = "extra:history:isPersistent"
+        private const val EXTRA_LOG_ID = "extra:history:id"
+        private const val EXTRA_LOG_TITLE = "extra:history:title"
+        private const val EXTRA_LOG_CONTENT = "extra:history:content"
+        private const val EXTRA_LOG_TYPE = "extra:history:type"
+        private const val EXTRA_LOG_DATA = "extra:history:data"
+        private const val EXTRA_LOG_PERSISTENCE = "extra:history:persistence"
 
         private const val EXTRA_TASK_ID = "extra:task:id"
         private const val EXTRA_TASK_NAME = "extra:task:name"
         private const val EXTRA_TASK_NOTES = "extra:task:notes"
         private const val EXTRA_TASK_SUBJECT = "extra:task:subject"
         private const val EXTRA_TASK_DUE = "extra:task:due"
-        private const val EXTRA_TASK_IMPORTANCE = "extra:task:isImportant"
+        private const val EXTRA_TASK_IMPORTANCE = "extra:task:importance"
 
         private const val EXTRA_EVENT_ID = "extra:event:id"
         private const val EXTRA_EVENT_NAME = "extra:event:name"
@@ -65,14 +65,14 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         private const val EXTRA_SCHEDULE_END_TIME = "extra:schedule:end:time"
         private const val EXTRA_SCHEDULE_SUBJECT = "extra:schedule:subject"
 
-        fun convertHistoryToData(history: History): Data {
+        fun convertLogToData(log: Log): Data {
             return Data.Builder().apply {
-                putString(EXTRA_HISTORY_ID, history.historyID)
-                putString(EXTRA_HISTORY_TITLE, history.title)
-                putString(EXTRA_HISTORY_CONTENT, history.content)
-                putString(EXTRA_HISTORY_DATA, history.data)
-                putInt(EXTRA_HISTORY_TYPE, history.type)
-                putBoolean(EXTRA_HISTORY_PERSISTENCE, history.isPersistent)
+                putString(EXTRA_LOG_ID, log.logID)
+                putString(EXTRA_LOG_TITLE, log.title)
+                putString(EXTRA_LOG_CONTENT, log.content)
+                putString(EXTRA_LOG_DATA, log.data)
+                putInt(EXTRA_LOG_TYPE, log.type)
+                putBoolean(EXTRA_LOG_PERSISTENCE, log.isPersistent)
             }.build()
         }
 
@@ -108,14 +108,14 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             }.build()
         }
 
-        fun convertDataToHistory(workerData: Data): History {
-            return History().apply {
-                workerData.getString(EXTRA_HISTORY_ID)?.let { historyID = it }
-                title = workerData.getString(EXTRA_HISTORY_TITLE)
-                content = workerData.getString(EXTRA_HISTORY_CONTENT)
-                data = workerData.getString(EXTRA_HISTORY_DATA)
-                type = workerData.getInt(EXTRA_HISTORY_TYPE, History.TYPE_GENERIC)
-                isPersistent = workerData.getBoolean(EXTRA_HISTORY_PERSISTENCE, false)
+        fun convertDataToLog(workerData: Data): Log {
+            return Log().apply {
+                workerData.getString(EXTRA_LOG_ID)?.let { logID = it }
+                title = workerData.getString(EXTRA_LOG_TITLE)
+                content = workerData.getString(EXTRA_LOG_CONTENT)
+                data = workerData.getString(EXTRA_LOG_DATA)
+                type = workerData.getInt(EXTRA_LOG_TYPE, Log.TYPE_GENERIC)
+                isPersistent = workerData.getBoolean(EXTRA_LOG_PERSISTENCE, false)
             }
         }
 
@@ -153,45 +153,45 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     }
 
-    protected fun sendNotification(history: History, @Nullable tag: String? = null) {
-        createNotificationChannel(history.type)
-        if (history.type == History.TYPE_TASK) {
+    protected fun sendNotification(log: Log, @Nullable tag: String? = null) {
+        createNotificationChannel(log.type)
+        if (log.type == Log.TYPE_TASK) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
-                    putExtra(NotificationActionService.EXTRA_TASK_ID, history.data)
-                    putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, history.isPersistent)
+                    putExtra(NotificationActionService.EXTRA_TASK_ID, log.data)
+                    putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, log.isPersistent)
                     action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
             notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
-                createNotification(history, NOTIFICATION_CHANNEL_ID_TASK,
+                createNotification(log, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(R.drawable.ic_outline_done_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
-        } else if (history.type == History.TYPE_EVENT)
+        } else if (log.type == Log.TYPE_EVENT)
             notificationManager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
-                createNotification(history, NOTIFICATION_CHANNEL_ID_EVENT))
+                createNotification(log, NOTIFICATION_CHANNEL_ID_EVENT))
         else notificationManager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
-            createNotification(history, NOTIFICATION_CHANNEL_ID_GENERIC))
+            createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC))
     }
 
     private fun createNotificationChannel(type: Int) {
         val id = when (type) {
-            History.TYPE_TASK -> NotificationChannelManager.CHANNEL_ID_TASK
-            History.TYPE_EVENT -> NotificationChannelManager.CHANNEL_ID_EVENT
+            Log.TYPE_TASK -> NotificationChannelManager.CHANNEL_ID_TASK
+            Log.TYPE_EVENT -> NotificationChannelManager.CHANNEL_ID_EVENT
             else -> NotificationChannelManager.CHANNEL_ID_GENERIC
         }
         NotificationChannelManager(applicationContext).create(id)
     }
 
-    private fun createNotification(history: History?, id: String,
+    private fun createNotification(log: Log?, id: String,
                                    @Nullable action: NotificationCompat.Action? = null): Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
             setSmallIcon(R.drawable.ic_outline_done_all_24)
             setContentIntent(contentIntent)
-            setContentTitle(history?.title)
-            setContentText(history?.content)
-            setOngoing(history?.isPersistent == true)
+            setContentTitle(log?.title)
+            setContentText(log?.content)
+            setOngoing(log?.isPersistent == true)
             if (action != null) addAction(action)
             color = ContextCompat.getColor(applicationContext, R.color.color_primary)
         }.build()
@@ -217,9 +217,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     private val notificationSoundUri: Uri
         get() {
-            return PreferenceManager(
-                applicationContext
-            ).let {
+            return PreferenceManager(applicationContext).let {
                 if (it.customSoundEnabled) it.customSoundUri
                 else PreferenceManager.DEFAULT_SOUND_URI
             }

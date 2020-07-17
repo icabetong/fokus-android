@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.*
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -17,16 +17,16 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
     override suspend fun doWork(): Result {
 
         val schedule = convertDataToSchedule(inputData)
-        val history = History().apply {
+        val history = Log().apply {
             title = schedule.subject
             content = schedule.format(applicationContext)
-            type = History.TYPE_CLASS
+            type = Log.TYPE_CLASS
             isPersistent = false
             data = schedule.scheduleID
         }
 
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        request.setInputData(convertHistoryToData(history))
+        request.setInputData(convertLogToData(history))
 
         schedule.getDaysAsList().forEach {
             var triggerTime: DateTime = Schedule.getNextWeekDay(it, schedule.startTime)

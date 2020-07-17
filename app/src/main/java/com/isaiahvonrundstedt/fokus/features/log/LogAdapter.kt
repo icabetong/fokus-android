@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.history
+package com.isaiahvonrundstedt.fokus.features.log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +11,12 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
-class HistoryAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<History, HistoryAdapter.ViewHolder>(callback), SwipeDelegate {
+class LogAdapter(private var actionListener: ActionListener)
+    : BaseListAdapter<Log, LogAdapter.ViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_item_history, parent, false)
+            .inflate(R.layout.layout_item_log, parent, false)
         return ViewHolder(rowView)
     }
 
@@ -38,7 +38,7 @@ class HistoryAdapter(private var actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             with(t) {
-                if (this is History) {
+                if (this is Log) {
                     titleView.text = title
                     summaryView.text = content
                     dateTimeView.text = formatDateTime()
@@ -49,12 +49,12 @@ class HistoryAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<History>() {
-            override fun areItemsTheSame(oldItem: History, newItem: History): Boolean {
-                return oldItem.historyID == newItem.historyID
+        val callback = object : DiffUtil.ItemCallback<Log>() {
+            override fun areItemsTheSame(oldItem: Log, newItem: Log): Boolean {
+                return oldItem.logID == newItem.logID
             }
 
-            override fun areContentsTheSame(oldItem: History, newItem: History): Boolean {
+            override fun areContentsTheSame(oldItem: Log, newItem: Log): Boolean {
                 return oldItem == newItem
             }
         }

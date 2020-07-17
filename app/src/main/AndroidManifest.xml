@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.about.AboutActivity" />
-        <activity android:name=".features.history.HistoryActivity" />
+        <activity android:name=".features.log.LogActivity" />
         <activity android:name=".features.subject.editor.SubjectEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Subjects"
             android:windowSoftInputMode="adjustResize"/>

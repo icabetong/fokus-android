@@ -1,22 +1,17 @@
 package com.isaiahvonrundstedt.fokus.features.core.work
 
-import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.database.repository.HistoryRepository
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 import org.joda.time.Duration
-import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to only show reminders
@@ -27,20 +22,20 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
 
     private var database = AppDatabase.getInstance(applicationContext)
     private var tasks = database?.tasks()
-    private var histories = database?.histories()
+    private var histories = database?.logs()
 
     override suspend fun doWork(): Result {
         val currentTime = DateTime.now()
         reschedule(applicationContext)
 
         val taskSize: Int = tasks?.fetchCount() ?: 0
-        var history: History? = null
+        var log: Log? = null
         if (taskSize > 0) {
-            history = History().apply {
+            log = Log().apply {
                 title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
                     taskSize)
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
-                type = History.TYPE_GENERIC
+                type = Log.TYPE_GENERIC
                 dateTimeTriggered = DateTime.now()
             }
         }
@@ -50,9 +45,9 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
                     || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
             return Result.success()
 
-        if (history != null) {
-            histories?.insert(history)
-            sendNotification(history)
+        if (log != null) {
+            histories?.insert(log)
+            sendNotification(log)
         }
 
         return Result.success()

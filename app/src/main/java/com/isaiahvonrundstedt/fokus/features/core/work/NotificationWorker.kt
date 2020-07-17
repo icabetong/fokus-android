@@ -13,10 +13,10 @@ import org.joda.time.DateTime
 class NotificationWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var notifications = AppDatabase.getInstance(applicationContext)?.histories()
+    private var notifications = AppDatabase.getInstance(applicationContext)?.logs()
 
     override suspend fun doWork(): Result {
-        val notification = convertDataToHistory(inputData)
+        val notification = convertDataToLog(inputData)
         notification.dateTimeTriggered = DateTime.now()
 
         notifications?.insert(notification)

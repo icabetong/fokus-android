@@ -13,21 +13,20 @@ import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import java.util.*
 
 @Database(entities = [Subject::class, Task::class, Attachment::class,
-    History::class, Event::class, Schedule::class], version = 2, exportSchema = false)
+    Log::class, Event::class, Schedule::class], version = 2, exportSchema = false)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun tasks(): TaskDAO
     abstract fun attachments(): AttachmentDAO
     abstract fun subjects(): SubjectDAO
-    abstract fun histories(): HistoryDAO
+    abstract fun logs(): LogDAO
     abstract fun events(): EventDAO
     abstract fun schedules(): ScheduleDAO
 
@@ -80,7 +79,7 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("INSERT INTO schedules (`scheduleID`, `daysOfWeek`, `startTime`, `endTime`, `subject`) SELECT `id` AS scheduleID,`daysOfWeek`, `startTime`, `endTime`, `id` AS subject FROM subjects_old")
 
                     // histories
-                    execSQL("CREATE TABLE IF NOT EXISTS `histories_new` (`historyID` TEXT NOT NULL, `title` TEXT, `content` TEXT, `data` TEXT, `type` INTEGER NOT NULL, `isPersistent` INTEGER NOT NULL, `dateTimeTriggered` TEXT, PRIMARY KEY(`historyID`))")
+                    execSQL("CREATE TABLE IF NOT EXISTS `logs` (`historyID` TEXT NOT NULL, `title` TEXT, `content` TEXT, `data` TEXT, `type` INTEGER NOT NULL, `isPersistent` INTEGER NOT NULL, `dateTimeTriggered` TEXT, PRIMARY KEY(`historyID`))")
                     execSQL("INSERT INTO histories_new SELECT * FROM histories")
                     execSQL("DROP TABLE histories")
                     execSQL("ALTER TABLE histories_new RENAME TO histories")

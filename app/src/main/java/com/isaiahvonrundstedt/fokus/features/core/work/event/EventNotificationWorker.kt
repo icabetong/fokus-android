@@ -5,7 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -20,16 +20,16 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
     override suspend fun doWork(): Result {
 
         val event = convertDataToEvent(inputData)
-        val notification = History().apply {
+        val notification = Log().apply {
             title = event.name
             content = event.formatSchedule(applicationContext)
-            type = History.TYPE_EVENT
+            type = Log.TYPE_EVENT
             data = event.eventID
             isPersistent = event.isImportant
         }
 
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        request.setInputData(convertHistoryToData(notification))
+        request.setInputData(convertLogToData(notification))
 
         if (notification.isPersistent) {
             workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,

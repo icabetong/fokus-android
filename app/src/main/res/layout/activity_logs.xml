@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_history_title"
+            android:text="@string/empty_view_no_logs_title"
             android:textSize="18sp"
             android:textColor="@color/color_theme_generic"
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_history_summary"/>
+            android:text="@string/empty_view_no_logs_summary"/>
 
     </LinearLayout>
 

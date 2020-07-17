@@ -3,12 +3,11 @@ package com.isaiahvonrundstedt.fokus.features.core.work.task
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.NotificationWorker
-import com.isaiahvonrundstedt.fokus.features.history.History
+import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import org.joda.time.DateTime
@@ -25,17 +24,17 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
 
         val task = convertDataToTask(inputData)
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at
-        val notification = History().apply {
+        val notification = Log().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
                 DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
-            type = History.TYPE_TASK
+            type = Log.TYPE_TASK
             isPersistent = task.isImportant
             data = task.taskID
         }
 
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        request.setInputData(convertHistoryToData(notification))
+        request.setInputData(convertLogToData(notification))
 
         if (notification.isPersistent) {
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,

@@ -7,13 +7,13 @@
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Themen</string>
-    <string name="activity_history">Ihre Geschichte</string>
+    <string name="activity_logs">Ihre Benachrichtigungsprotokolle</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_history">Geschichte</string>
+    <string name="menu_logs">Benachrichtigungsprotokolle</string>
     <string name="menu_settings">@string/activity_settings</string>
     <string name="menu_about">@string/activity_about</string>
     <string name="menu_clear_items">Artikel löschen</string>
@@ -42,8 +42,8 @@
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
     <string name="empty_view_no_tasks_title">Keine anhängigen Aufgaben</string>
     <string name="empty_view_no_tasks_summary">Sie haben derzeit keine offenen Aufgaben. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
-    <string name="empty_view_no_history_title">Keine Geschichte aufgezeichnet</string>
-    <string name="empty_view_no_history_summary">Sobald eine Aufgabe, ein Ereignis oder eine Erinnerung in Ihrem Benachrichtigungsfenster erscheint, wird sie auch hier angezeigt.</string>
+    <string name="empty_view_no_logs_title">Keine aufgezeichneten Protokolle</string>
+    <string name="empty_view_no_logs_summary">Sobald eine Aufgabe, ein Ereignis oder eine Erinnerung in Ihrem Benachrichtigungsfenster erscheint, wird sie auch hier angezeigt.</string>
     <string name="empty_view_no_events_title">Keine geplanten Ereignisse</string>
     <string name="empty_view_no_events_summary">Sie haben derzeit keine geplanten Veranstaltungen. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
 

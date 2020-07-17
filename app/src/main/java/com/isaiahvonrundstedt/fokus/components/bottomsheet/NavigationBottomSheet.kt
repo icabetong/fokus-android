@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.components.bottomsheet
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
-import com.isaiahvonrundstedt.fokus.features.history.HistoryActivity
-import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.NavigationAdapter

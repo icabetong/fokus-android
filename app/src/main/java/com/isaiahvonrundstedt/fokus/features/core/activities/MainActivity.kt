@@ -16,7 +16,7 @@ import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
-import com.isaiahvonrundstedt.fokus.features.history.HistoryActivity
+import com.isaiahvonrundstedt.fokus.features.log.LogActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity() {
                 result { actionID ->
                     when (actionID) {
                         R.id.action_history ->
-                            startActivity(Intent(context, HistoryActivity::class.java))
+                            startActivity(Intent(context, LogActivity::class.java))
                         R.id.action_settings ->
                             startActivity(Intent(context, SettingsActivity::class.java))
                         R.id.action_about ->

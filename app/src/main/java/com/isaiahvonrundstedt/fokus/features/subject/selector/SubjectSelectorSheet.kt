@@ -3,16 +3,17 @@ package com.isaiahvonrundstedt.fokus.features.subject.selector
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
@@ -20,21 +21,25 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_appbar_selector.*
 
-class SubjectSelectorActivity : BaseActivity(), BaseListAdapter.ActionListener {
+class SubjectSelectorSheet(fragmentManager: FragmentManager)
+    : BaseBottomSheet<Subject>(fragmentManager), BaseListAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_selector_subject)
-        setPersistentActionBar(toolbar)
-        setToolbarTitle(R.string.dialog_select_subject)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.layout_sheet_subject, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val adapter = SubjectSelectorAdapter(this)
-        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
+            DividerItemDecoration.VERTICAL))
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
         viewModel.fetch()?.observe(this, Observer {
@@ -43,30 +48,14 @@ class SubjectSelectorActivity : BaseActivity(), BaseListAdapter.ActionListener {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_selector, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_new -> {
-                startActivityForResult(Intent(this, SubjectEditor::class.java),
-                    SubjectEditor.REQUEST_CODE_INSERT)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT && resultCode == Activity.RESULT_OK) {
-            val subject: Subject? = data?.getParcelableExtra(
-                SubjectEditor.EXTRA_SUBJECT)
-            val scheduleList: List<Schedule>? = data?.getParcelableArrayListExtra(
-                SubjectEditor.EXTRA_SCHEDULE)
+            val subject: Subject?
+                    = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+            val scheduleList: List<Schedule>?
+                    = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
             subject?.let {
                 viewModel.insert(it, scheduleList ?: emptyList())
@@ -79,26 +68,12 @@ class SubjectSelectorActivity : BaseActivity(), BaseListAdapter.ActionListener {
         if (t is Subject) {
             when (action) {
                 BaseListAdapter.ActionListener.Action.SELECT -> {
-                    val result = Intent()
-                    result.putExtra(EXTRA_SUBJECT, t)
-                    setResult(Activity.RESULT_OK, result)
-                    finish()
+                    callback?.invoke(t)
+                    this.dismiss()
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {
-                }
-                BaseListAdapter.ActionListener.Action.DELETE -> {
-                }
+                BaseListAdapter.ActionListener.Action.MODIFY -> { }
+                BaseListAdapter.ActionListener.Action.DELETE -> { }
             }
         }
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.anim_nothing, R.anim.anim_slide_down)
-    }
-
-    companion object {
-        const val REQUEST_CODE = 43
-        const val EXTRA_SUBJECT = "extra:subject"
     }
 }

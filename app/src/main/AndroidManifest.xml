@@ -36,7 +36,6 @@
         <activity android:name=".features.event.editor.EventEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Events"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.subject.selector.SubjectSelectorActivity"/>
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>

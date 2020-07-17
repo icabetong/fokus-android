@@ -26,10 +26,9 @@ import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
+import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
-import com.isaiahvonrundstedt.fokus.features.task.TaskFragment
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_editor_task.actionButton
@@ -130,9 +129,25 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
 
         subjectTextView.setOnClickListener {
-            startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
-                SubjectSelectorActivity.REQUEST_CODE)
-            overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
+            SubjectSelectorSheet(supportFragmentManager).show {
+                result { result ->
+                    this@TaskEditor.clearButton.isVisible = true
+                    task.subject = result.subjectID
+                    subject = result
+
+                    with(this@TaskEditor.subjectTextView) {
+                        text = result.code
+                        setTextColorFromResource(R.color.color_primary_text)
+                        ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                            this.setCompoundDrawableAtStart(it)
+                        }
+                    }
+                    ContextCompat.getDrawable(this@TaskEditor, R.drawable.shape_color_holder)?.let {
+                        this@TaskEditor.subjectTextView
+                            .setCompoundDrawableAtStart(result.tintDrawable(it))
+                    }
+                }
+            }
         }
 
         clearButton.setOnClickListener {
@@ -205,25 +220,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
 
             adapter.insert(attachment)
-        } else if (requestCode == SubjectSelectorActivity.REQUEST_CODE
-            && resultCode == Activity.RESULT_OK) {
-
-            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.EXTRA_SUBJECT)?.let { subject ->
-                clearButton.isVisible = true
-                task.subject = subject.subjectID
-                this.subject = subject
-
-                with(subjectTextView) {
-                    text = subject.code
-                    setTextColorFromResource(R.color.color_primary_text)
-                    ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
-                        this.setCompoundDrawableAtStart(it)
-                    }
-                }
-                ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-                    subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
-                }
-            }
         } else super.onActivityResult(requestCode, resultCode, data)
     }
 

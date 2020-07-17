@@ -21,9 +21,17 @@ import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorActivity
+import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
+import kotlinx.android.synthetic.main.layout_editor_event.actionButton
+import kotlinx.android.synthetic.main.layout_editor_event.clearButton
+import kotlinx.android.synthetic.main.layout_editor_event.nameEditText
+import kotlinx.android.synthetic.main.layout_editor_event.notesEditText
+import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
+import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
+import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
+import kotlinx.android.synthetic.main.layout_editor_task.*
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -40,15 +48,12 @@ class EventEditor : BaseEditor() {
 
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
-        requestCode = if (intent.hasExtra(
-                EXTRA_EVENT)) REQUEST_CODE_UPDATE
-        else REQUEST_CODE_INSERT
+        requestCode = if (intent.hasExtra(EXTRA_EVENT)) REQUEST_CODE_UPDATE
+            else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
-            event = intent.getParcelableExtra(
-                EXTRA_EVENT)!!
-            subject = intent.getParcelableExtra(
-                EXTRA_SUBJECT)
+            event = intent.getParcelableExtra(EXTRA_EVENT)!!
+            subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
             setTransitionName(nameEditText, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
         }
@@ -103,9 +108,25 @@ class EventEditor : BaseEditor() {
         }
 
         subjectTextView.setOnClickListener {
-            startActivityForResult(Intent(this, SubjectSelectorActivity::class.java),
-                SubjectSelectorActivity.REQUEST_CODE)
-            overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_nothing)
+            SubjectSelectorSheet(supportFragmentManager).show {
+                result { result ->
+                    this@EventEditor.clearButton.isVisible = true
+                    event.subject = result.subjectID
+                    subject = result
+
+                    with(this@EventEditor.subjectTextView) {
+                        text = result.code
+                        setTextColorFromResource(R.color.color_primary_text)
+                        ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                            this.setCompoundDrawableAtStart(it)
+                        }
+                    }
+                    ContextCompat.getDrawable(this@EventEditor, R.drawable.shape_color_holder)?.let {
+                        this@EventEditor.subjectTextView
+                            .setCompoundDrawableAtStart(result.tintDrawable(it))
+                    }
+                }
+            }
         }
 
         clearButton.setOnClickListener {
@@ -150,35 +171,11 @@ class EventEditor : BaseEditor() {
 
             // Send the data back to the parent activity
             val data = Intent()
-            data.putExtra(
-                EXTRA_EVENT, event)
+            data.putExtra(EXTRA_EVENT, event)
             setResult(RESULT_OK, data)
             supportFinishAfterTransition()
         }
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SubjectSelectorActivity.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.getParcelableExtra<Subject>(SubjectSelectorActivity.EXTRA_SUBJECT)?.let { subject ->
-                clearButton.isVisible = true
-                event.subject = subject.subjectID
-                this.subject = subject
-
-                with(subjectTextView) {
-                    text = subject.code
-                    setTextColorFromResource(R.color.color_primary_text)
-                    ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
-                        setCompoundDrawableAtStart(subject.tintDrawable(it))
-                    }
-                }
-                ContextCompat.getDrawable(this, R.drawable.shape_color_holder)?.let {
-                    subjectTextView.setCompoundDrawableAtStart(subject.tintDrawable(it))
-                }
-                subjectTextView.setTextColorFromResource(R.color.color_primary_text)
-                subjectTextView.text = subject.code
-            }
-        } else super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

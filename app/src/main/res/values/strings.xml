@@ -89,7 +89,7 @@
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
-    <string name="feedback_history_removed">History removed</string>
+    <string name="feedback_log_removed">Log removed</string>
     <string name="feedback_task_removed">Task removed</string>
     <string name="feedback_schedule_removed">Schedule removed</string>
     <string name="feedback_attachment_removed">Attachment removed</string>

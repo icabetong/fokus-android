@@ -88,7 +88,7 @@
     <string name="field_not_set">Non fixé</string>
 
     <string name="feedback_subject_removed">Sujet supprimé</string>
-    <string name="feedback_history_removed">Historique supprimé</string>
+    <string name="feedback_log_removed">Journal supprimé</string>
     <string name="feedback_task_removed">Tâche supprimée</string>
     <string name="feedback_schedule_removed">Programme supprimée</string>
     <string name="feedback_attachment_removed">Pièce jointe retirée</string>

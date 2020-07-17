@@ -54,7 +54,7 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
             when (action) {
                 BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_history_removed,
+                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_log_removed,
                         Snackbar.LENGTH_SHORT)
                     snackbar.setAction(R.string.button_undo) {
                         viewModel.insert(t)

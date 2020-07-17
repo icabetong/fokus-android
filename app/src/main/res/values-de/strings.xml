@@ -89,7 +89,7 @@
     <string name="field_not_set">Nicht gesetzt</string>
 
     <string name="feedback_subject_removed">Betreff entfernt</string>
-    <string name="feedback_history_removed">Geschichte entfernt</string>
+    <string name="feedback_log_removed">Protokoll entfernt</string>
     <string name="feedback_task_removed">Aufgabe entfernt</string>
     <string name="feedback_schedule_removed">Zeitplan entfernt</string>
     <string name="feedback_attachment_removed">Anhang entfernt</string>

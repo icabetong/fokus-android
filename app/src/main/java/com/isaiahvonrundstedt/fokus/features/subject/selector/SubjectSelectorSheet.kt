@@ -19,7 +19,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.*
-import kotlinx.android.synthetic.main.layout_appbar_selector.*
 
 class SubjectSelectorSheet(fragmentManager: FragmentManager)
     : BaseBottomSheet<Subject>(fragmentManager), BaseListAdapter.ActionListener {
@@ -46,21 +45,6 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
             adapter.submitList(it)
             emptyView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         })
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT && resultCode == Activity.RESULT_OK) {
-            val subject: Subject?
-                    = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-            val scheduleList: List<Schedule>?
-                    = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
-
-            subject?.let {
-                viewModel.insert(it, scheduleList ?: emptyList())
-            }
-        }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,

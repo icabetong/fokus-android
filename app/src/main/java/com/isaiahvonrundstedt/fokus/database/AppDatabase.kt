@@ -74,13 +74,13 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("ALTER TABLE subjects_new RENAME TO subjects")
                     execSQL("CREATE INDEX IF NOT EXISTS `index_subjects_subjectID` ON `subjects` (`subjectID`)")
 
-                    // schedule
+                    // schedules
                     execSQL("CREATE TABLE IF NOT EXISTS `schedules` (`scheduleID` TEXT NOT NULL, `daysOfWeek` INTEGER NOT NULL, `startTime` TEXT, `endTime` TEXT, `subject` TEXT, PRIMARY KEY(`scheduleID`), FOREIGN KEY(`subject`) REFERENCES `subjects`(`subjectID`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                     execSQL("INSERT INTO schedules (`scheduleID`, `daysOfWeek`, `startTime`, `endTime`, `subject`) SELECT `id` AS scheduleID,`daysOfWeek`, `startTime`, `endTime`, `id` AS subject FROM subjects_old")
 
-                    // histories
+                    // logs
                     execSQL("CREATE TABLE IF NOT EXISTS `logs` (`logID` TEXT NOT NULL, `title` TEXT, `content` TEXT, `data` TEXT, `type` INTEGER NOT NULL, `isImportant` INTEGER NOT NULL, `dateTimeTriggered` TEXT, PRIMARY KEY(`logID`))")
-                    execSQL("INSERT INTO logs  (`logID`, `title`, `content`, `data`, `type`, `isImportant`, `dateTimeTriggered`) SELECT `historyID`, `title`, `content`, `data`, `type`, `isPersistent`, `dateTimeTriggered` FROM histories")
+                    execSQL("INSERT INTO logs  (`logID`, `title`, `content`, `data`, `type`, `isImportant`, `dateTimeTriggered`) SELECT `id`, `title`, `content`, `data`, `type`, `isPersistent`, `dateTimeTriggered` FROM histories")
                     execSQL("DROP TABLE histories")
 
                     execSQL("DROP TABLE subjects_old")

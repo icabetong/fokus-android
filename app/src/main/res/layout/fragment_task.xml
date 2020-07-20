@@ -26,14 +26,11 @@
         android:background="@color/color_window_background_secondary">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="8dp"
-            android:background="@drawable/shape_background_icon"
-            android:backgroundTint="@color/color_theme_task_variant"
-            app:srcCompat="@drawable/ic_outline_done_24"
-            app:tint="@color/color_theme_task"/>
+            app:srcCompat="@drawable/undraw_walking_outside"/>
 
         <TextView
             android:layout_width="match_parent"

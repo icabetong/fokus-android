@@ -26,4 +26,15 @@
             android:targetPackage="com.isaiahvonrundstedt.fokus"/>
     </shortcut>
 
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/shortcut_icon_subject"
+        android:shortcutId="shortcut:subject"
+        android:shortcutShortLabel="@string/shortcut_add_subject">
+        <intent
+            android:action="action:shortcut:subject"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity"
+            android:targetPackage="com.isaiahvonrundstedt.fokus"/>
+    </shortcut>
+
 </shortcuts>

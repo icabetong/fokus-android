@@ -27,6 +27,7 @@ class AboutActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
             .setFallbackOnNavigateUpListener { onNavigateUpOrFinish() }
             .build()
         toolbar.setupWithNavController(controller!!, configuration)
+        toolbar.setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
     }
 
     override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?,

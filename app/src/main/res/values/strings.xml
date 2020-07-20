@@ -3,6 +3,7 @@
 
     <string name="shortcut_add_task">@string/button_add_task</string>
     <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">Your Tasks</string>
     <string name="activity_events">Your Events</string>
@@ -26,6 +27,7 @@
 
     <string name="button_add_task">Add Task</string>
     <string name="button_add_event">Add Event</string>
+    <string name="button_add_subject">Add Subject</string>
     <string name="button_add_attachment">Add Attachment</string>
     <string name="button_add">Add</string>
     <string name="button_new">New</string>

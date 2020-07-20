@@ -34,4 +34,16 @@
         android:label="@string/activity_subjects"
         tools:layout="@layout/fragment_subject"/>
 
+    <action
+        android:id="@+id/action_to_navigation_tasks"
+        app:destination="@id/navigation_tasks"/>
+
+    <action
+        android:id="@+id/action_to_navigation_events"
+        app:destination="@id/navigation_events"/>
+
+    <action
+        android:id="@+id/action_to_navigation_subjects"
+        app:destination="@id/navigation_subjects"/>
+
 </navigation>

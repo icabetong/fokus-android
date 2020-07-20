@@ -2,6 +2,7 @@
 
     <string name="shortcut_add_task">@string/button_add_task</string>
     <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">Vos tâches</string>
     <string name="activity_events">Vos événements</string>
@@ -25,6 +26,7 @@
 
     <string name="button_add_task">Ajouter une tâche</string>
     <string name="button_add_event">Ajouter un événement</string>
+    <string name="button_add_subject">Ajouter un sujets</string>
     <string name="button_add_attachment">Ajouter une pièce jointe</string>
     <string name="button_add">Ajouter</string>
     <string name="button_new">Nouveau</string>

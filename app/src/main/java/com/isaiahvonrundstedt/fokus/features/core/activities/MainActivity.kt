@@ -82,10 +82,14 @@ class MainActivity : BaseActivity() {
                     startActivityForResult(Intent(this, EventEditor::class.java),
                         EventEditor.REQUEST_CODE_INSERT)
                 }
+                ACTION_SHORTCUT_SUBJECT -> {
+                    startActivityForResult(Intent(this, SubjectEditor::class.java),
+                        SubjectEditor.REQUEST_CODE_INSERT)
+                }
             }
         }
 
-        toolbar?.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_outline_menu_24)
+        toolbar?.setNavigationIcon(R.drawable.ic_outline_menu_24)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet(supportFragmentManager).show {
                 result { id ->
@@ -131,8 +135,8 @@ class MainActivity : BaseActivity() {
         if (resultCode == BaseEditor.RESULT_OK) {
             when (requestCode) {
                 TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
-                    val task: Task? = data?.getParcelableExtra(
-                        TaskEditor.EXTRA_TASK)
+                    val task: Task? =
+                        data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
                     val attachments: List<Attachment>? =
                         data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
 
@@ -142,6 +146,7 @@ class MainActivity : BaseActivity() {
                         else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
                             tasksViewModel.update(it, attachments ?: emptyList())
                     }
+                    controller?.navigate(R.id.action_to_navigation_tasks)
                 }
                 EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
                     val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
@@ -151,12 +156,13 @@ class MainActivity : BaseActivity() {
                             eventsViewModel.insert(it)
                         else eventsViewModel.update(it)
                     }
+                    controller?.navigate(R.id.action_to_navigation_events)
                 }
                 SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
-                    val subject: Subject? = data?.getParcelableExtra(
-                        SubjectEditor.EXTRA_SUBJECT)
-                    val schedules: List<Schedule>? = data?.getParcelableListExtra(
-                        SubjectEditor.EXTRA_SCHEDULE)
+                    val subject: Subject?
+                            = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+                    val schedules: List<Schedule>?
+                            = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
                     subject?.also {
                         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)
@@ -164,6 +170,7 @@ class MainActivity : BaseActivity() {
                         else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
                             subjectsViewModel.update(it, schedules ?: emptyList())
                     }
+                    controller?.navigate(R.id.action_to_navigation_subjects)
                 }
             }
         }
@@ -184,6 +191,7 @@ class MainActivity : BaseActivity() {
     companion object {
         const val ACTION_SHORTCUT_TASK = "action:shortcut:task"
         const val ACTION_SHORTCUT_EVENT = "action:shortcut:event"
+        const val ACTION_SHORTCUT_SUBJECT = "action:shortcut:subject"
 
         const val ACTION_WIDGET_TASK = "action:widget:task"
         const val ACTION_WIDGET_EVENT = "action:widget:event"

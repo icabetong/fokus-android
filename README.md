@@ -51,4 +51,4 @@ This is an open-source personal project and I am very happy to accept community 
 ### Other materials used
 * [Launcher Icon](https://flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat
-
+* [Vector Illustrations](https://www.undraw.co) - UnDraw.co

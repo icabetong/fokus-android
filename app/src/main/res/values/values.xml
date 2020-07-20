@@ -99,7 +99,7 @@
         <item name="exb_backgroundColor">?attr/colorSurface</item>
         <item name="exb_itemBackgroundCornerRadius">32dp</item>
         <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>
-        <item name="exb_transitionDuration">200</item>
+        <item name="exb_transitionDuration">100</item>
         <item name="layout_behavior">@string/behavior_expandable_bottom_bar</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">

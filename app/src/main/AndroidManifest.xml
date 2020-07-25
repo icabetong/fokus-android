@@ -27,25 +27,26 @@
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.log.LogActivity" />
-        <activity android:name=".features.subject.editor.SubjectEditor"
+        <activity android:name=".features.core.activities.DokiActivity"/>
+        <activity android:name=".features.subject.SubjectEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Subjects"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.task.editor.TaskEditor"
+        <activity android:name=".features.task.TaskEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Task"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.event.editor.EventEditor"
+        <activity android:name=".features.event.EventEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Events"
             android:windowSoftInputMode="adjustResize"/>
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>
-        <service android:name=".features.task.widget.TaskWidgetRemoteService"
+        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name=".features.event.widget.EventWidgetRemoteService"
+        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name=".features.subject.widget.SubjectWidgetRemoteService"
+        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
@@ -57,7 +58,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".features.task.widget.TaskWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider"
             android:label="@string/widget_task_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -67,7 +68,7 @@
                 android:resource="@xml/xml_widget_tasks"/>
         </receiver>
         <receiver
-            android:name=".features.event.widget.EventWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider"
             android:label="@string/widget_event_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -77,7 +78,7 @@
                 android:resource="@xml/xml_widget_events"/>
         </receiver>
         <receiver
-            android:name=".features.subject.widget.SubjectWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetProvider"
             android:label="@string/widget_class_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

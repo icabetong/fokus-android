@@ -10,6 +10,7 @@
     <string name="activity_subjects">Ihre Themen</string>
     <string name="activity_logs">Ihre Benachrichtigungsprotokolle</string>
     <string name="activity_settings">Einstellungen</string>
+    <string name="activity_doki">@string/settings_group_debugging</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>

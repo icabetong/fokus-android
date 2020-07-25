@@ -1,17 +1,39 @@
-package com.isaiahvonrundstedt.fokus.features.subject.widget
+package com.isaiahvonrundstedt.fokus.features.widget.subject
 
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
-class SubjectWidgetRemoteView(private var context: Context,
-                              private var items: List<SubjectResource>)
+class SubjectWidgetRemoteView(private var context: Context)
     : RemoteViewsService.RemoteViewsFactory {
+    
+    private var itemList = mutableListOf<SubjectResource>()
+    
+    private fun fetch() {
+        itemList.clear()
+
+        val subjects = AppDatabase.getInstance(context)?.subjects()
+        var items = emptyList<SubjectResource>()
+        runBlocking {
+            val job = async { subjects?.fetch() }
+            items = job.await() ?: emptyList()
+            items.forEach { resource ->
+                resource.schedules.forEach {
+                    if (it.isToday()) itemList.add(resource)
+                }
+            }
+        }
+    }
+
+    override fun onDataSetChanged() = fetch()
 
     override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
@@ -20,8 +42,8 @@ class SubjectWidgetRemoteView(private var context: Context,
     override fun hasStableIds(): Boolean = true
 
     override fun getViewAt(position: Int): RemoteViews {
-        val subject = items[position].subject
-        val schedules = items[position].schedules
+        val subject = itemList[position].subject
+        val schedules = itemList[position].schedules
         val schedule: Schedule? = schedules.run {
             forEach {
                 if (it.isToday())
@@ -45,12 +67,11 @@ class SubjectWidgetRemoteView(private var context: Context,
         return views
     }
 
-    override fun getCount(): Int = items.size
+    override fun getCount(): Int = itemList.size
 
     override fun getViewTypeCount(): Int = 1
 
     override fun onCreate() {}
     override fun onDestroy() {}
-    override fun onDataSetChanged() {}
 
 }

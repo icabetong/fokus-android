@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.task.widget
+package com.isaiahvonrundstedt.fokus.features.widget.task
 
 import android.content.Context
 import android.content.Intent
@@ -7,11 +7,30 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
+import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.task.TaskResource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
-class TaskWidgetRemoteView(private var context: Context, private var items: List<TaskResource>)
+class TaskWidgetRemoteView(private var context: Context)
     : RemoteViewsService.RemoteViewsFactory {
+
+    private var itemList = mutableListOf<TaskResource>()
+
+    private fun fetch() {
+        itemList.clear()
+
+        val tasks = AppDatabase.getInstance(context)?.tasks()
+        var items = emptyList<TaskResource>()
+        runBlocking {
+            val job = async { tasks?.fetch()  }
+            items = job.await() ?: emptyList()
+            items.forEach { if (it.task.isDueToday()) itemList.add(it) }
+        }
+    }
+
+    override fun onDataSetChanged() = fetch()
 
     override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
@@ -20,9 +39,9 @@ class TaskWidgetRemoteView(private var context: Context, private var items: List
     override fun hasStableIds(): Boolean = true
 
     override fun getViewAt(position: Int): RemoteViews {
-        val task = items[position].task
-        val subject = items[position].subject
-        val attachments = items[position].attachments
+        val task = itemList[position].task
+        val subject = itemList[position].subject
+        val attachments = itemList[position].attachments
 
         val itemIntent = Intent().apply {
             putExtra(MainActivity.EXTRA_TASK, task)
@@ -42,12 +61,12 @@ class TaskWidgetRemoteView(private var context: Context, private var items: List
         return views
     }
 
-    override fun getCount(): Int = items.size
+    override fun getCount(): Int = itemList.size
 
     override fun getViewTypeCount(): Int = 1
 
     override fun onCreate() {}
+
     override fun onDestroy() {}
-    override fun onDataSetChanged() {}
 
 }

@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.task.editor
+package com.isaiahvonrundstedt.fokus.features.task
 
 import android.Manifest
 import android.app.Activity
@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.layout_editor_task.recyclerView
 import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
 import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
-import org.joda.time.LocalDateTime
+import org.joda.time.LocalDateTime.fromCalendarFields
 import java.util.*
 
 class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
@@ -116,8 +116,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = task.dueDate?.toDateTime()?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    task.dueDate = LocalDateTime.fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = task.dueDate?.toCalendar(Locale.getDefault())) { _, datetime ->
+                    task.dueDate = fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
@@ -175,7 +175,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            if (task.dueDate == null) {
+            if (!task.hasDueDate()) {
                 createSnackbar(rootLayout, R.string.feedback_task_empty_due_date).show()
                 dueDateTextView.performClick()
                 return@setOnClickListener

@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -14,7 +13,7 @@ import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
+import com.isaiahvonrundstedt.fokus.features.event.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.log.LogActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -22,10 +21,10 @@ import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.task.TaskEditor
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,6 +41,10 @@ class MainActivity : BaseActivity() {
         setToolbarTitle(R.string.activity_tasks)
 
         ReminderWorker.reschedule(this.applicationContext)
+
+        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
+        controller = navigationHost?.findNavController()
+        ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
 
         intent?.also {
             when (it.action) {
@@ -86,6 +89,15 @@ class MainActivity : BaseActivity() {
                     startActivityForResult(Intent(this, SubjectEditor::class.java),
                         SubjectEditor.REQUEST_CODE_INSERT)
                 }
+                ACTION_NAVIGATION_TASK -> {
+                    controller?.navigate(R.id.action_to_navigation_tasks)
+                }
+                ACTION_NAVIGATION_EVENT -> {
+                    controller?.navigate(R.id.action_to_navigation_events)
+                }
+                ACTION_NAVIGATION_SUBJECT -> {
+                    controller?.navigate(R.id.action_to_navigation_subjects)
+                }
             }
         }
 
@@ -104,10 +116,6 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-
-        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
-        controller = navigationHost?.findNavController()
-        ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
     }
 
     override fun onResume() {
@@ -196,6 +204,10 @@ class MainActivity : BaseActivity() {
         const val ACTION_WIDGET_TASK = "action:widget:task"
         const val ACTION_WIDGET_EVENT = "action:widget:event"
         const val ACTION_WIDGET_SUBJECT = "action:widget:subject"
+
+        const val ACTION_NAVIGATION_TASK = "action:navigation:task"
+        const val ACTION_NAVIGATION_EVENT = "action:navigation:event"
+        const val ACTION_NAVIGATION_SUBJECT = "action:navigation:subject"
 
         const val EXTRA_TASK = "extra:task"
         const val EXTRA_EVENT = "extra:event"

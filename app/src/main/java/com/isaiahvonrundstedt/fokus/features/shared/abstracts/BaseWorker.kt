@@ -82,7 +82,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(EXTRA_TASK_NAME, task.name)
                 putString(EXTRA_TASK_NOTES, task.notes)
                 putString(EXTRA_TASK_SUBJECT, task.subject)
-                putString(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate!!))
+                putString(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate))
                 putBoolean(EXTRA_TASK_IMPORTANCE, task.isImportant)
             }.build()
         }
@@ -126,7 +126,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 notes = workerData.getString(EXTRA_TASK_NOTES)
                 subject = workerData.getString(EXTRA_TASK_SUBJECT)
                 isImportant = workerData.getBoolean(EXTRA_TASK_IMPORTANCE, false)
-                dueDate = DateTimeConverter.toDateTime(workerData.getString(EXTRA_TASK_DUE)!!)
+                dueDate = DateTimeConverter.toDateTime(workerData.getString(EXTRA_TASK_DUE))
             }
         }
 

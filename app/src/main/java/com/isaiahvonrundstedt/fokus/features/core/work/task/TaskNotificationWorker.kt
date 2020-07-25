@@ -27,7 +27,7 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
         val log = Log().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
-                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate!!))
+                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(task.dueDate))
             type = Log.TYPE_TASK
             isImportant = task.isImportant
             data = task.taskID

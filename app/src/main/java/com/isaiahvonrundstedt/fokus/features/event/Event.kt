@@ -35,7 +35,7 @@ data class Event @JvmOverloads constructor(
 ) : Parcelable {
 
     fun isToday(): Boolean {
-        return schedule?.isEqualNow ?: false
+        return schedule?.toLocalDate()?.compareTo(LocalDate.now()) == 0
     }
 
     fun formatScheduleDate(context: Context): String {

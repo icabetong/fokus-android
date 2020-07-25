@@ -10,23 +10,13 @@
         android:id="@+id/navigation_tasks"
         android:name="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
         android:label="@string/navigation_tasks"
-        tools:layout="@layout/fragment_task">
-        <action
-            android:id="@+id/action_navigation_tasks_to_navigation_events"
-            app:destination="@id/navigation_events"/>
-    </fragment>
+        tools:layout="@layout/fragment_task"/>
 
     <fragment
         android:id="@+id/navigation_events"
         android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
         android:label="@string/navigation_events"
-        tools:layout="@layout/fragment_event">
-
-        <action
-            android:id="@+id/action_navigation_events_to_navigation_subjects"
-            app:destination="@id/navigation_subjects"/>
-
-    </fragment>
+        tools:layout="@layout/fragment_event"/>
 
     <fragment
         android:id="@+id/navigation_subjects"

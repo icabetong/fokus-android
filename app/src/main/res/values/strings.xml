@@ -10,6 +10,7 @@
     <string name="activity_subjects">Your Subjects</string>
     <string name="activity_logs">Your Notification Logs</string>
     <string name="activity_settings">Settings</string>
+    <string name="activity_doki">@string/settings_group_debugging</string>
     <string name="activity_notices">Third Party Notices</string>
     <string name="activity_open_source_licenses">Open Source Licenses</string>
     <string name="activity_about">About</string>

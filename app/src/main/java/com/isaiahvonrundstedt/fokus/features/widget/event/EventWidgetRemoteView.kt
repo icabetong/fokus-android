@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.event.widget
+package com.isaiahvonrundstedt.fokus.features.widget.event
 
 import android.content.Context
 import android.content.Intent
@@ -6,11 +6,30 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.event.EventResource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
-class EventWidgetRemoteView(private var context: Context, private var items: List<EventResource>)
+class EventWidgetRemoteView(private var context: Context)
     : RemoteViewsService.RemoteViewsFactory {
+
+    private var itemList = mutableListOf<EventResource>()
+
+    private fun fetch() {
+        itemList.clear()
+
+        val events = AppDatabase.getInstance(context)?.events()
+        var items = emptyList<EventResource>()
+        runBlocking {
+            val job = async { events?.fetch() }
+            items = job.await() ?: emptyList()
+            items.forEach { if (it.event.isToday()) itemList.add(it) }
+        }
+    }
+
+    override fun onDataSetChanged() = fetch()
 
     override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
@@ -19,8 +38,8 @@ class EventWidgetRemoteView(private var context: Context, private var items: Lis
     override fun hasStableIds(): Boolean = true
 
     override fun getViewAt(position: Int): RemoteViews {
-        val event = items[position].event
-        val subject = items[position].subject
+        val event = itemList[position].event
+        val subject = itemList[position].subject
 
         val itemIntent = Intent().apply {
             putExtra(MainActivity.EXTRA_EVENT, event)
@@ -39,12 +58,11 @@ class EventWidgetRemoteView(private var context: Context, private var items: Lis
         return views
     }
 
-    override fun getCount(): Int = items.size
+    override fun getCount(): Int = itemList.size
 
     override fun getViewTypeCount(): Int = 1
 
     override fun onCreate() {}
     override fun onDestroy() {}
-    override fun onDataSetChanged() {}
 
 }

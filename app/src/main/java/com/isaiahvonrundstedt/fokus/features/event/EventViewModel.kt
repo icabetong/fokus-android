@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationWorker
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
@@ -28,6 +29,8 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+
+        EventWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(event: Event) = viewModelScope.launch {
@@ -37,6 +40,8 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
             notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
         workManager.cancelUniqueWork(event.eventID)
+
+        EventWidgetProvider.triggerRefresh(app)
     }
 
     fun update(event: Event) = viewModelScope.launch {
@@ -52,5 +57,7 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+
+        EventWidgetProvider.triggerRefresh(app)
     }
 }

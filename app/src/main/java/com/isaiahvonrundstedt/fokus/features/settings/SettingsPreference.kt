@@ -22,8 +22,8 @@ import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationSc
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.core.activities.DokiActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import dev.doubledot.doki.ui.DokiActivity
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 
@@ -131,7 +131,7 @@ class SettingsPreference : BasePreference() {
 
         findPreference<Preference>(R.string.key_not_working_notifications)?.apply {
             setOnPreferenceClickListener {
-                DokiActivity.start(requireContext())
+                startActivity(Intent(requireContext(), DokiActivity::class.java))
                 true
             }
         }

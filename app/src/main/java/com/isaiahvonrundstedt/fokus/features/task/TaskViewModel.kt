@@ -9,6 +9,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider
 import kotlinx.coroutines.launch
 
 class TaskViewModel(private var app: Application) : BaseViewModel(app) {
@@ -31,6 +32,8 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+
+        TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(task: Task) = viewModelScope.launch {
@@ -40,6 +43,8 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
             notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         workManager.cancelUniqueWork(task.taskID)
+
+        TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
@@ -62,5 +67,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
                 .build()
             workManager.enqueue(request)
         }
+
+        TaskWidgetProvider.triggerRefresh(app)
     }
 }

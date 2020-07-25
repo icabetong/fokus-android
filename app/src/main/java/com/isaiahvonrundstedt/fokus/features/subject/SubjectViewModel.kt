@@ -10,9 +10,10 @@ import com.isaiahvonrundstedt.fokus.features.core.work.subject.ClassNotification
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetProvider
 import kotlinx.coroutines.launch
 
-class SubjectViewModel(app: Application) : BaseViewModel(app) {
+class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = SubjectRepository.getInstance(app)
     private var items: LiveData<List<SubjectResource>>? = repository.fetch()
@@ -35,6 +36,8 @@ class SubjectViewModel(app: Application) : BaseViewModel(app) {
                     request)
             }
         }
+
+        SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(subject: Subject,
@@ -44,6 +47,8 @@ class SubjectViewModel(app: Application) : BaseViewModel(app) {
         scheduleList.forEach {
             workManager.cancelAllWorkByTag(it.scheduleID)
         }
+
+        SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun update(subject: Subject,
@@ -63,6 +68,8 @@ class SubjectViewModel(app: Application) : BaseViewModel(app) {
                     request)
             }
         }
+
+        SubjectWidgetProvider.triggerRefresh(app)
     }
 
 }

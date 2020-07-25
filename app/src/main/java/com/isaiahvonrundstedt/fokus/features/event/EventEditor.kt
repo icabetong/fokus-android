@@ -1,6 +1,5 @@
-package com.isaiahvonrundstedt.fokus.features.event.editor
+package com.isaiahvonrundstedt.fokus.features.event
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -17,8 +16,6 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColo
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
-import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.EventAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
@@ -31,7 +28,6 @@ import kotlinx.android.synthetic.main.layout_editor_event.notesEditText
 import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
 import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
 import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
-import kotlinx.android.synthetic.main.layout_editor_task.*
 import org.joda.time.LocalDateTime
 import java.util.*
 

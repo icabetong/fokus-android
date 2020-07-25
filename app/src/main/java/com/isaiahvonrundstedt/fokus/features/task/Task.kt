@@ -40,7 +40,7 @@ data class Task @JvmOverloads constructor(
     }
 
     fun isDueToday(): Boolean {
-        return dueDate?.isEqualNow ?: false
+        return dueDate?.toLocalDate()?.compareTo(LocalDate.now()) == 0
     }
 
     fun formatDueDate(context: Context): String? {
@@ -51,7 +51,8 @@ data class Task @JvmOverloads constructor(
 
         // Check if the day on the task's due is today
         return if (dueDate?.isEqualNow == true)
-            String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
+            String.format(context.getString(R.string.today_at),
+                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dueDate))
         // Now check if the day is yesterday
         else if (currentDateTime.minusDays(1).compareTo(dueDate) == 0)
             String.format(context.getString(R.string.yesterday_at),

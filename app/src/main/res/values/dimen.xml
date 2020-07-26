@@ -21,4 +21,6 @@
     <dimen name="widget_empty_text">14sp</dimen>
     <dimen name="widget_empty_text_padding">8dp</dimen>
 
+    <dimen name="drawable_icon_padding">8dp</dimen>
+
 </resources>

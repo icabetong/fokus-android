@@ -190,8 +190,7 @@ class EventEditor : BaseEditor() {
                     positiveButton(R.string.button_delete) {
                         // Send the data back to the parent activity
                         val data = Intent()
-                        data.putExtra(
-                            EXTRA_EVENT, event)
+                        data.putExtra(EXTRA_EVENT, event)
                         setResult(RESULT_DELETE, data)
                         finish()
                     }

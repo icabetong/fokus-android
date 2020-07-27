@@ -168,7 +168,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         when (item.itemId) {
             R.id.action_delete -> {
                 MaterialDialog(this).show {
-                    title(R.string.dialog_confirm_deletion_title)
+                    title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
+                        subject.code))
                     message(R.string.dialog_confirm_deletion_summary)
                     positiveButton(R.string.button_delete) {
                         // Pass the intent to the parent activity

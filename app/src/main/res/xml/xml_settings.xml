@@ -132,7 +132,7 @@
 
         <Preference
             app:key="@string/key_not_working_notifications"
-            app:title="@string/settings_not_working_notifications_link"/>
+            app:title="@string/settings_not_working_notifications"/>
 
     </PreferenceCategory>
 

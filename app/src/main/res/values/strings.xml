@@ -29,7 +29,6 @@
     <string name="button_add_task">Add Task</string>
     <string name="button_add_event">Add Event</string>
     <string name="button_add_subject">Add Subject</string>
-    <string name="button_add_attachment">Add Attachment</string>
     <string name="button_add">Add</string>
     <string name="button_new">New</string>
     <string name="button_save">Save</string>
@@ -41,7 +40,7 @@
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
 
-    <string name="empty_view_no_subjects_title">You have no subjects added</string>
+    <string name="empty_view_no_subjects_title">No Added Subjects</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
     <string name="empty_view_no_tasks_title">No Pending Tasks</string>
     <string name="empty_view_no_tasks_summary">You currently have no pending tasks. If you have one, add it using the button below.</string>
@@ -63,12 +62,11 @@
     <string name="dialog_select_color_tag">Select color tag</string>
     <string name="dialog_select_subject">Select subject</string>
     <string name="dialog_select_notification_interval">Select notification interval</string>
-    <string name="dialog_select_priority">Select priority</string>
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
-    <string name="dialog_confirm_deletion_title">Confirm Deletion?</string>
-    <string name="dialog_confirm_deletion_summary">This action cannot be undone.</string>
+    <string name="dialog_confirm_deletion_title">Are you sure you want to remove %1$s?</string>
+    <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
 
     <string name="field_subject_code">Subject Code</string>
@@ -88,7 +86,6 @@
     <string name="field_color_tag">Color Tag</string>
     <string name="field_priority">Priority</string>
     <string name="field_status">Status</string>
-    <string name="field_class_schedule">Class Schedule</string>
     <string name="field_not_set">Not Set</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
@@ -140,7 +137,7 @@
     <string name="settings_task_reminders">Task reminder interval</string>
     <string name="settings_task_reminders_item_hour">1 hour before</string>
     <string name="settings_task_reminders_item_three_hours">3 hours before</string>
-    <string name="settings_task_reminders_item_day">1 day before</string>
+    <string name="settings_task_reminders_item_day">@string/settings_task_reminders_item_hour</string>
     <string name="settings_incoming_events_title">Incoming events</string>
     <string name="settings_incoming_events_summary">Show notifications about incoming events this day</string>
     <string name="settings_event_reminders">Event reminder interval</string>
@@ -154,7 +151,7 @@
     <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
-    <string name="settings_not_working_notifications_link">Learn more</string>
+    <string name="settings_not_working_notifications">Learn more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>
 
     <string name="settings_translate">Translate</string>

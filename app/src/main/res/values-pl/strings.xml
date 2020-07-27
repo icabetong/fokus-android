@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Twoje Zadania</string>
+    <string name="activity_events">Twoje Wydarzenia</string>
+    <string name="activity_subjects">Twoi Poddani</string>
+    <string name="activity_logs">Dzienniki Powiadomień</string>
+    <string name="activity_settings">Ustawienia</string>
+    <string name="activity_doki">Zgłoszenie Debugowanie</string>
+    <string name="activity_notices">Powiadomienia osób Trzecich</string>
+    <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
+    <string name="activity_about">O</string>
+
+    <string name="menu_logs">Dzienniki</string>
+    <string name="menu_settings">@string/activity_settings</string>
+    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_clear_items">Pozycje Jasne</string>
+    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_new">@string/button_new</string>
+
+    <string name="navigation_tasks">Zadania</string>
+    <string name="navigation_events">Wydarzenia</string>
+    <string name="navigation_subjects">Tematy</string>
+
+    <string name="button_add_task">Dodaj Zadanie</string>
+    <string name="button_add_event">Dodaj Wydarzenie</string>
+    <string name="button_add_subject">Dodaj Tematy</string>
+    <string name="button_add">Dodaj</string>
+    <string name="button_new">Nowy</string>
+    <string name="button_save">Zapisz</string>
+    <string name="button_done">Sporządzono</string>
+    <string name="button_undo">Undo</string>
+    <string name="button_continue">Kontynuuj</string>
+    <string name="button_mark_as_finished">Oznaczyć jako skończone</string>
+    <string name="button_mark_as_important">Zaznaczyć jako ważne</string>
+    <string name="button_delete">Skreślić</string>
+    <string name="button_cancel">Anuluj</string>
+
+    <string name="empty_view_no_subjects_title">Brak tematów Dodano</string>
+    <string name="empty_view_no_subjects_summary">Tematy pomagają w sortowaniu zadań, aby je dodać, dotknij ikony dodawania.</string>
+    <string name="empty_view_no_tasks_title">Brak zadań oczekujących</string>
+    <string name="empty_view_no_tasks_summary">Obecnie nie masz żadnych zadań do wykonania. Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
+    <string name="empty_view_no_logs_title">Brak zapisanych dzienników</string>
+    <string name="empty_view_no_logs_summary">Gdy zadanie, zdarzenie lub jakiekolwiek przypomnienie pojawi się w cieniu powiadomienia, pojawi się ono również tutaj.</string>
+    <string name="empty_view_no_events_title">Brak zaplanowanych wydarzeń</string>
+    <string name="empty_view_no_events_summary">Obecnie nie masz żadnych zaplanowanych wydarzeń. Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
+
+    <string name="days_of_week_item_sunday">Niedziela</string>
+    <string name="days_of_week_item_monday">Poniedziałek</string>
+    <string name="days_of_week_item_tuesday">Wtorek</string>
+    <string name="days_of_week_item_wednesday">Środa</string>
+    <string name="days_of_week_item_thursday">Czwartek</string>
+    <string name="days_of_week_item_friday">Piątek</string>
+    <string name="days_of_week_item_saturday">Sobota</string>
+
+    <string name="dialog_select_start_time">Wybierz Czas rozpoczęcia</string>
+    <string name="dialog_select_end_time">Wybierz czas końcowy</string>
+    <string name="dialog_select_color_tag">Wybierz Kolorowy znacznik</string>
+    <string name="dialog_select_subject">Wybierz temat</string>
+    <string name="dialog_select_notification_interval">Wybierz Interwał powiadamiania</string>
+    <string name="dialog_choose_theme">Wybierz temat</string>
+    <string name="dialog_your_name_title">Jak cię nazwiemy</string>
+    <string name="dialog_your_name_summary">Możesz zostawić to puste miejsce. Jednak cokolwiek wprowadzisz na tym polu, pozostanie na tym urządzeniu.</string>
+    <string name="dialog_confirm_deletion_title">Jesteś pewien, że chcesz usunąć %1$s?</string>
+    <string name="dialog_confirm_deletion_summary">Po usunięciu tej pozycji, nie można jej odzyskać.</string>
+    <string name="dialog_schedule_details">Szczegóły Harmonogramu</string>
+
+    <string name="field_subject_code">Kod Przedmiotu</string>
+    <string name="field_description">Opis</string>
+    <string name="field_days_of_week">Dni Tygodnia</string>
+    <string name="field_start_time">Czas Rozpoczęcia</string>
+    <string name="field_end_time">Czas Końcowy</string>
+    <string name="field_task_name">Nazwa Zadania</string>
+    <string name="field_notes">Uwagi</string>
+    <string name="field_subject">Przedmiot</string>
+    <string name="field_due_date">Termin wymagalności</string>
+    <string name="field_event_name">Nazwa zdarzenia</string>
+    <string name="field_schedule">Rozkład jazdy</string>
+    <string name="field_location">Lokalizacja</string>
+    <string name="field_attachments">Załączniki</string>
+    <string name="field_class_time">Czas zajęć</string>
+    <string name="field_color_tag">Kolorowy znacznik</string>
+    <string name="field_priority">Priorytet</string>
+    <string name="field_status">Status</string>
+    <string name="field_not_set">Nie Jest Ustawiony</string>
+
+    <string name="feedback_subject_removed">Temat usunięty</string>
+    <string name="feedback_log_removed">Usunięty dziennik</string>
+    <string name="feedback_task_removed">Zadanie usunięte</string>
+    <string name="feedback_schedule_removed">Usunięty harmonogram</string>
+    <string name="feedback_attachment_removed">Usunięty załącznik</string>
+    <string name="feedback_event_removed">Zdarzenie usunięte</string>
+    <string name="feedback_task_marked_as_finished">Zadanie oznaczone jako zakończone</string>
+    <string name="feedback_subject_empty_name">Zapomniałeś wpisać kod tematyczny</string>
+    <string name="feedback_subject_empty_description">Zapomniałeś wprowadzić opis</string>
+    <string name="feedback_subject_no_schedule">Zapomniałeś dodać harmonogram</string>
+    <string name="feedback_schedule_empty_days">Zapomniałeś określić dni</string>
+    <string name="feedback_schedule_empty_start_time">Zapomniałeś wpisać godzinę rozpoczęcia</string>
+    <string name="feedback_schedule_empty_end_time">Zapomniałeś wprowadzić godzinę końcową</string>
+    <string name="feedback_task_empty_name">Zapomniałeś wpisać nazwę zadania</string>
+    <string name="feedback_task_empty_due_date">Zapomniałeś określić termin jego wymagalności</string>
+    <string name="feedback_event_empty_name">Zapomniałeś wpisać nazwę wydarzenia</string>
+    <string name="feedback_event_empty_location">Zapomniałeś wprowadzić lokalizację</string>
+    <string name="feedback_event_empty_schedule">Zapomniałeś wprowadzić harmonogram</string>
+
+    <string name="settings_group_interface">Interfejs</string>
+    <string name="settings_group_sound">Dźwięk</string>
+    <string name="settings_group_notification">Powiadomienia</string>
+    <string name="settings_group_debugging">Debugowanie</string>
+    <string name="settings_group_contribute">Wkład</string>
+
+    <string name="settings_name">Twoje Imię i Nazwisko</string>
+
+    <string name="settings_theme">Temat</string>
+    <string name="settings_theme_item_system">System śledzenia</string>
+    <string name="settings_theme_item_dark">Ciemny</string>
+    <string name="settings_theme_item_light">Światło</string>
+
+    <string name="settings_confetti_title">Confetti</string>
+    <string name="settings_confetti_summary">Pokaż konfetti, gdy zadania są oznaczone jako zakończone</string>
+    <string name="settings_completion_sounds_title">Zakończenie Dźwięk</string>
+    <string name="settings_completion_sounds_summary">Odtwarzanie dźwięku po zaznaczeniu zadania jako ukończonego</string>
+    <string name="settings_custom_notification_sound_title">Użyj niestandardowego dźwięku</string>
+    <string name="settings_custom_notification_sound_summary">Wyłącz dźwięk powiadomienia systemowego; wybierz jeden z poniższych sposobów, aby użyć własnego</string>
+    <string name="settings_select_sound">Wybierz plik dźwiękowy</string>
+
+    <string name="settings_reminder_frequency_title">Częstotliwość przypomnień</string>
+    <string name="settings_reminder_frequency_item_everyday">Codziennie</string>
+    <string name="settings_reminder_frequency_item_weekends">Weekendy</string>
+    <string name="settings_remind_me_in_time_of_day">Przypomnij mi w tej chwili</string>
+    <string name="settings_when_nearing_due_title">Gdy zbliża się termin wykonania zadania</string>
+    <string name="settings_when_nearing_due_summary">Pokaż powiadomienia dotyczące zadań, które zbliżają się do terminu realizacji</string>
+    <string name="settings_task_reminders">Przypomnienie o zadaniu Odstęp czasowy</string>
+    <string name="settings_task_reminders_item_hour">1 godzina wcześniej</string>
+    <string name="settings_task_reminders_item_three_hours">3 godziny wcześniej</string>
+    <string name="settings_task_reminders_item_day">1 dzień wcześniej</string>
+    <string name="settings_incoming_events_title">Wydarzenia nadchodzące</string>
+    <string name="settings_incoming_events_summary">Pokaż powiadomienia o nadchodzących wydarzeniach tego dnia</string>
+    <string name="settings_event_reminders">Przypomnienie o wydarzeniu Odstęp czasowy</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 minut wcześniej</string>
+    <string name="settings_event_reminders_item_half_hour">30 minut wcześniej</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Zajęcia na ten dzień</string>
+    <string name="settings_classes_for_this_day_summary">Pokaż powiadomienia o zajęciach dla moich przedmiotów w tym dniu</string>
+    <string name="settings_class_reminders">Klasa Przypomnienie Odstęp czasowy</string>
+    <string name="settings_class_reminders_item_5_minutes">5 minut wcześniej</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">More Settings</string>
+    <string name="settings_not_working_notifications">Learn more</string>
+    <string name="settings_not_working_notifications_info">Czasami Twoje powiadomienie może nie zadziałać z powodu agresywnej optymalizacji baterii przez producenta telefonu.</string>
+
+    <string name="settings_translate">Tłumaczenie</string>
+    <string name="settings_report_an_issue">Zgłosić problem</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Wersja budowlana</string>
+
+    <string name="tag_color_sky">Sky</string>
+    <string name="tag_color_grass">Trawa</string>
+    <string name="tag_color_sunset">Zachód słońca</string>
+    <string name="tag_color_lemon">Lemon</string>
+    <string name="tag_color_sea">Morze</string>
+    <string name="tag_color_grape">Grono</string>
+    <string name="tag_color_cherry">Cherry</string>
+    <string name="tag_color_coral">Coral</string>
+    <string name="tag_color_midnight">Północ</string>
+    <string name="tag_color_mint">Mennica</string>
+    <string name="tag_color_lavender">Lawenda</string>
+    <string name="tag_color_graphite">Grafit</string>
+
+    <string name="widget_task_name">Widżet zadaniowy</string>
+    <string name="widget_task_title">Zadania</string>
+    <string name="widget_task_empty">Nie masz żadnych zadań na dzisiaj</string>
+    <string name="widget_event_name">Widżet wydarzenia</string>
+    <string name="widget_event_title">Wydarzenia</string>
+    <string name="widget_event_empty">Nie masz żadnych wydarzeń na dzisiaj</string>
+    <string name="widget_class_name">Widżet klasy</string>
+    <string name="widget_class_title">Klasy</string>
+    <string name="widget_class_empty">Nie masz żadnych zajęć na dzisiaj</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Oznakowanie tego jako ważnego oznacza, że będzie on pokazywał uporczywe powiadomienie w Twoim odcieniu powiadomienia.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_generic">Generyczny</string>
+    <string name="notification_channel_task_reminders">Przypomnienia o zadaniach</string>
+    <string name="notification_channel_event_reminders">Przypomnienia o wydarzeniach</string>
+    <string name="notification_channel_class_reminders">Klasa Przypomnienia</string>
+
+    <string name="notification_pending_tasks_title">Masz %1$ zadań do wykonania</string>
+    <string name="notification_pending_tasks_summary">Może warto by było rzucić okiem</string>
+
+    <!-- used for concat and formatting -->
+    <string name="student">student</string>
+    <string name="hello">Witam, %1$s</string>
+    <string name="and">&#160;oraz&#160;</string>
+    <string name="yesterday_at">Wczoraj na %1$s</string>
+    <string name="yesterday">Wczoraj</string>
+    <string name="tomorrow_at">Jutro w %1$s</string>
+    <string name="tomorrow">Jutro</string>
+    <string name="today_at">Dzisiaj w %1$s</string>
+    <string name="today">Dziś</string>
+    <string name="due_today_at">Należne dziś w %1$</string>
+    <string name="due_tomorrow_at">Należność jutro w %1$</string>
+
+    <string name="open_source_libraries">Biblioteki Open Source</string>
+    <string name="credit_other_resources">Inne Zasoby</string>
+    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Powiadomienie Dźwięk</string>
+    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
+    <string name="credit_launcher_icon_summary">Ikona Wyrzutni</string>
+
+</resources>

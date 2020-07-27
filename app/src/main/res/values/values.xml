@@ -95,7 +95,6 @@
         <item name="android:paddingEnd">0dp</item>
     </style>
     <style name="Fokus.Widget.Navigation" parent="ExpandableBottomBar">
-        <item name="exb_backgroundCornerRadius">@dimen/surface_corner_radius</item>
         <item name="exb_backgroundColor">?attr/colorSurface</item>
         <item name="exb_itemBackgroundCornerRadius">32dp</item>
         <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>

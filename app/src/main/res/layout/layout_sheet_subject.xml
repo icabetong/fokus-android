@@ -18,7 +18,7 @@
             android:paddingStart="@dimen/bottom_sheet_padding"
             android:paddingEnd="@dimen/bottom_sheet_padding"
             android:layout_marginBottom="16dp"
-            android:text="@string/dialog_schedule_details"
+            android:text="@string/dialog_select_subject"
             android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
 
         <androidx.recyclerview.widget.RecyclerView

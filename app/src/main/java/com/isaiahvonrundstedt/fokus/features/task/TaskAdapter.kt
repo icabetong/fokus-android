@@ -1,13 +1,15 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
@@ -38,7 +40,7 @@ class TaskAdapter(private var actionListener: ActionListener)
     class TaskViewHolder(itemView: View, private val actionListener: ActionListener)
         : BaseViewHolder(itemView) {
 
-        private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
+        private val checkBox: AppCompatCheckBox = itemView.findViewById(R.id.checkBox)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
         private val taskNameView: TextView = itemView.findViewById(R.id.taskNameView)
         private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)
@@ -70,7 +72,7 @@ class TaskAdapter(private var actionListener: ActionListener)
                     }
 
                     checkBox.setOnClickListener { view ->
-                        with(view as CheckBox) {
+                        with(view as AppCompatCheckBox) {
                             task.isFinished = isChecked
                             taskNameView.setStrikeThroughEffect(isChecked)
                             if (isChecked)

@@ -108,8 +108,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), REQUEST_CODE_ATTACHMENT)
             } else
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PermissionManager.REQUEST_CODE_STORAGE)
+                PermissionManager.requestStoragePermission(this)
         }
 
         dueDateTextView.setOnClickListener { v ->

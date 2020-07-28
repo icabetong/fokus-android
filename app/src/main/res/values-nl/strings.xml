@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Uw taken</string>
+    <string name="activity_events">Uw evenementen</string>
+    <string name="activity_subjects">Uw onderwerpen</string>
+    <string name="activity_logs">Meldingslogboeken</string>
+    <string name="activity_settings">Instellingen</string>
+    <string name="activity_doki">Kennisgeving Debugging</string>
+    <string name="activity_notices">Mededelingen van derden</string>
+    <string name="activity_open_source_licenses">Open Source Licenties</string>
+    <string name="activity_about">Over</string>
+
+    <string name="menu_logs">Logboeken</string>
+    <string name="menu_settings">@string/activity_settings</string>
+    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_clear_items">Duidelijke items</string>
+    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_new">@string/button_new</string>
+
+    <string name="navigation_tasks">Taken</string>
+    <string name="navigation_events">Evenementen</string>
+    <string name="navigation_subjects">Onderwerpen</string>
+
+    <string name="button_add_task">Taak toevoegen</string>
+    <string name="button_add_event">Evenement toevoegen</string>
+    <string name="button_add_subject">Onderwerp toevoegen</string>
+    <string name="button_add">Voeg toe</string>
+    <string name="button_new">Nieuw</string>
+    <string name="button_save">Bespaar</string>
+    <string name="button_done">Gedaan</string>
+    <string name="button_undo">Maak ongedaan</string>
+    <string name="button_continue">Ga verder met</string>
+    <string name="button_mark_as_finished">Markeer als Afgewerkt</string>
+    <string name="button_mark_as_important">Markeer als Belangrijk</string>
+    <string name="button_delete">Verwijder</string>
+    <string name="button_cancel">Annuleer</string>
+
+    <string name="empty_view_no_subjects_title">Geen toegevoegde onderwerpen</string>
+    <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken, om er een toe te voegen tikt u op het add-icoontje</string>
+    <string name="empty_view_no_tasks_title">Geen hangende taken</string>
+    <string name="empty_view_no_tasks_summary">U hebt momenteel geen lopende taken. Als u er een hebt, voeg deze dan toe met behulp van de onderstaande knop.</string>
+    <string name="empty_view_no_logs_title">Geen Opgenomen Logboeken</string>
+    <string name="empty_view_no_logs_summary">Zodra een taak, een gebeurtenis of een herinnering in de schaduw van uw melding verschijnt, zal deze ook hier verschijnen.</string>
+    <string name="empty_view_no_events_title">Geen geplande gebeurtenissen</string>
+    <string name="empty_view_no_events_summary">U heeft momenteel geen geplande evenementen. Als u er een heeft, voeg deze dan toe met behulp van de onderstaande knop.</string>
+
+    <string name="days_of_week_item_sunday">Zondag</string>
+    <string name="days_of_week_item_monday">Maandag</string>
+    <string name="days_of_week_item_tuesday">Dinsdag</string>
+    <string name="days_of_week_item_wednesday">Woensdag</string>
+    <string name="days_of_week_item_thursday">Donderdag</string>
+    <string name="days_of_week_item_friday">Vrijdag</string>
+    <string name="days_of_week_item_saturday">Zaterdag</string>
+
+    <string name="dialog_select_start_time">Selecteer Begintijd</string>
+    <string name="dialog_select_end_time">Selecteer Eindtijd</string>
+    <string name="dialog_select_color_tag">Selecteer Kleurmarkering</string>
+    <string name="dialog_select_subject">Select Onderwerp</string>
+    <string name="dialog_select_notification_interval">Selecteer Notificatie-interval</string>
+    <string name="dialog_choose_theme">Kies Thema</string>
+    <string name="dialog_your_name_title">Hoe zullen we je noemen?</string>
+    <string name="dialog_your_name_summary">U kunt ervoor kiezen om dit leeg te laten. Wat u echter op dit veld invoert, blijft op dit apparaat staan.</string>
+    <string name="dialog_confirm_deletion_title">Weet u zeker dat u %1$s wilt verwijderen?</string>
+    <string name="dialog_confirm_deletion_summary">Als dit item eenmaal is verwijderd, kan het niet meer worden gerecupereerd.</string>
+    <string name="dialog_schedule_details">Details van de planning</string>
+
+    <string name="field_subject_code">Onderwerp Code</string>
+    <string name="field_description">Beschrijving</string>
+    <string name="field_days_of_week">Dagen van de week</string>
+    <string name="field_start_time">Starttijd</string>
+    <string name="field_end_time">Enddtijd</string>
+    <string name="field_task_name">Taaknaam</string>
+    <string name="field_notes">Opmerkingen</string>
+    <string name="field_subject">Onderwerp</string>
+    <string name="field_due_date">Vervaldatum</string>
+    <string name="field_event_name">Naam van het evenement</string>
+    <string name="field_schedule">Plan</string>
+    <string name="field_location">Locatie</string>
+    <string name="field_attachments">Bijlagen</string>
+    <string name="field_class_time">Klassentijd</string>
+    <string name="field_color_tag">Kleurmarkering</string>
+    <string name="field_priority">Prioriteit</string>
+    <string name="field_status">Status</string>
+    <string name="field_not_set">Niet ingesteld</string>
+
+    <string name="feedback_subject_removed">Onderwerp verwijderd</string>
+    <string name="feedback_log_removed">Logboek verwijderd</string>
+    <string name="feedback_task_removed">Taak verwijderd</string>
+    <string name="feedback_schedule_removed">Schema verwijderd</string>
+    <string name="feedback_attachment_removed">Bevestiging verwijderd</string>
+    <string name="feedback_event_removed">Evenement verwijderd</string>
+    <string name="feedback_task_marked_as_finished">Taak gemarkeerd als voltooid</string>
+    <string name="feedback_subject_empty_name">U bent vergeten de onderwerpcode in te voeren</string>
+    <string name="feedback_subject_empty_description">Je bent vergeten de beschrijving in te voeren</string>
+    <string name="feedback_subject_no_schedule">Je bent vergeten een schema toe te voegen</string>
+    <string name="feedback_schedule_empty_days">U bent vergeten de dagen op te geven</string>
+    <string name="feedback_schedule_empty_start_time">Je bent vergeten de starttijd in te voeren</string>
+    <string name="feedback_schedule_empty_end_time">Je bent vergeten de eindtijd in te voeren</string>
+    <string name="feedback_task_empty_name">U bent vergeten de naam van de taak in te voeren</string>
+    <string name="feedback_task_empty_due_date">U bent vergeten de vervaldatum te specificeren</string>
+    <string name="feedback_event_empty_name">Je bent vergeten de naam van het evenement in te voeren</string>
+    <string name="feedback_event_empty_location">Je bent vergeten de locatie in te voeren</string>
+    <string name="feedback_event_empty_schedule">Je bent vergeten het schema in te voeren</string>
+
+    <string name="settings_group_interface">Interface</string>
+    <string name="settings_group_sound">Geluid</string>
+    <string name="settings_group_notification">Kennisgevingen</string>
+    <string name="settings_group_debugging">Debuggen</string>
+    <string name="settings_group_contribute">Bijdragen</string>
+
+    <string name="settings_name">Uw naam</string>
+
+    <string name="settings_theme">Thema</string>
+    <string name="settings_theme_item_system">Systeem Standaard</string>
+    <string name="settings_theme_item_dark">Donker</string>
+    <string name="settings_theme_item_light">Licht</string>
+
+    <string name="settings_confetti_title">Confetti</string>
+    <string name="settings_confetti_summary">Toon confetti wanneer taken als voltooid zijn gemarkeerd</string>
+    <string name="settings_completion_sounds_title">Voltooiing Geluiden</string>
+    <string name="settings_completion_sounds_summary">Speel een geluid af wanneer u een taak als voltooid markeert</string>
+    <string name="settings_custom_notification_sound_title">Gebruik aangepast geluid</string>
+    <string name="settings_custom_notification_sound_summary">Override system notification sound; selecteer er één hieronder om uw eigen systeem te gebruiken</string>
+    <string name="settings_select_sound">Selecteer geluidsbestand</string>
+
+    <string name="settings_reminder_frequency_title">Herinneringsfrequentie</string>
+    <string name="settings_reminder_frequency_item_everyday">Dagelijks</string>
+    <string name="settings_reminder_frequency_item_weekends">Weekends</string>
+    <string name="settings_remind_me_in_time_of_day">Herinner me er op dit moment aan</string>
+    <string name="settings_when_nearing_due_title">Wanneer een taak bijna klaar is</string>
+    <string name="settings_when_nearing_due_summary">Toon meldingen voor taken die de deadline naderen</string>
+    <string name="settings_task_reminders">Taakherinnering Interval</string>
+    <string name="settings_task_reminders_item_hour">1 uur voor</string>
+    <string name="settings_task_reminders_item_three_hours">3 uur voor</string>
+    <string name="settings_task_reminders_item_day">1 dag voordien</string>
+    <string name="settings_incoming_events_title">Inkomende gebeurtenissen</string>
+    <string name="settings_incoming_events_summary">Toon meldingen over binnenkomende evenementen deze dag</string>
+    <string name="settings_event_reminders">Gebeurtenisherinnering interval</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 minuten voor</string>
+    <string name="settings_event_reminders_item_half_hour">30 minuten voor</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Klassen voor deze dag</string>
+    <string name="settings_classes_for_this_day_summary">Toon meldingen over lessen voor mijn onderwerpen deze dag</string>
+    <string name="settings_class_reminders">Class reminder interval</string>
+    <string name="settings_class_reminders_item_5_minutes">5 minuten voor</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">Meer instellingen</string>
+    <string name="settings_not_working_notifications">Meer informatie</string>
+    <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>
+
+    <string name="settings_translate">Vertaal</string>
+    <string name="settings_report_an_issue">Rapporteer een probleem</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Build-versie</string>
+
+    <string name="tag_color_sky">Sky</string>
+    <string name="tag_color_grass">Gras</string>
+    <string name="tag_color_sunset">Zonsondergang</string>
+    <string name="tag_color_lemon">Citroen</string>
+    <string name="tag_color_sea">Zee</string>
+    <string name="tag_color_grape">Druif</string>
+    <string name="tag_color_cherry">Karsen</string>
+    <string name="tag_color_coral">Koraal</string>
+    <string name="tag_color_midnight">Middernacht</string>
+    <string name="tag_color_mint">Munt</string>
+    <string name="tag_color_lavender">Lavendel</string>
+    <string name="tag_color_graphite">Grafiet</string>
+
+    <string name="widget_task_name">Taak Widget</string>
+    <string name="widget_task_title">Taken</string>
+    <string name="widget_task_empty">Je hebt geen taken voor vandaag</string>
+    <string name="widget_event_name">Evenement Widget</string>
+    <string name="widget_event_title">Evenementen</string>
+    <string name="widget_event_empty">Je hebt geen evenementen voor vandaag</string>
+    <string name="widget_class_name">Klasse Widget</string>
+    <string name="widget_class_title">Klassen</string>
+    <string name="widget_class_empty">Je hebt geen lessen voor vandaag</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Door dit als belangrijk te markeren, zal het een aanhoudende melding in de schaduw van uw melding laten zien.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_generic">Generiek</string>
+    <string name="notification_channel_task_reminders">Taakherinneringen</string>
+    <string name="notification_channel_event_reminders">Evenement Herinneringen</string>
+    <string name="notification_channel_class_reminders">Klasse Herinneringen</string>
+
+    <string name="notification_pending_tasks_title">Je hebt %1$s taken in behandeling</string>
+    <string name="notification_pending_tasks_summary">Het is misschien de moeite waard om een kijkje te nemen</string>
+
+    <!-- used for concat and formatting -->
+    <string name="student">student</string>
+    <string name="hello">Hallo, %1$s</string>
+    <string name="and">&#160;en&#160;</string>
+    <string name="yesterday_at">Gisteren bij %1$s</string>
+    <string name="yesterday">Gisteren</string>
+    <string name="tomorrow_at">Morgen bij %1$s</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="today_at">Vandaag op %1$s</string>
+    <string name="today">Vandaag</string>
+    <string name="due_today_at">Vandaag verschuldigd aan %1$s</string>
+    <string name="due_tomorrow_at">Morgen te betalen aan %1$s</string>
+
+    <string name="open_source_libraries">Open Source Bibliotheken</string>
+    <string name="credit_other_resources">Andere middelen</string>
+    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Notificatie Geluid</string>
+    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
+    <string name="credit_launcher_icon_summary">Lanceerpictogram</string>
+
+</resources>

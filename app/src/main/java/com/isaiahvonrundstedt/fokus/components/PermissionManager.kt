@@ -10,18 +10,31 @@ import androidx.core.app.ActivityCompat
 class PermissionManager(var context: Context) {
 
     companion object {
-        const val REQUEST_CODE_STORAGE = 3
+        const val STORAGE_READ_REQUEST_CODE = 3
+        const val STORAGE_WRITE_REQUEST_CODE = 4
 
-        fun requestStoragePermission(activity: Activity) {
+        fun requestReadStoragePermission(activity: Activity) {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_CODE_STORAGE)
+                STORAGE_READ_REQUEST_CODE)
+        }
+
+        fun requestWriteStoragePermission(activity: Activity) {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                STORAGE_WRITE_REQUEST_CODE)
         }
     }
 
-    val storageReadGranted: Boolean
+    val readStorageGranted: Boolean
         get() {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            else true
+        }
+
+    val writeStorageGranted: Boolean
+        get() {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
             else true
         }
 }

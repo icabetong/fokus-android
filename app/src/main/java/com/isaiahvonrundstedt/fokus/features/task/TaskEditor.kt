@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
@@ -27,8 +25,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
-import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_editor_task.actionButton
@@ -104,11 +100,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         addItemButton.setOnClickListener {
             // Check if we have read storage permissions then request the permission
             // if we have the permission, open up file picker
-            if (PermissionManager(this).storageReadGranted) {
+            if (PermissionManager(this).readStorageGranted) {
                 startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("*/*"), REQUEST_CODE_ATTACHMENT)
             } else
-                PermissionManager.requestStoragePermission(this)
+                PermissionManager.requestReadStoragePermission(this)
         }
 
         dueDateTextView.setOnClickListener { v ->
@@ -196,7 +192,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
-        if (requestCode == PermissionManager.REQUEST_CODE_STORAGE
+        if (requestCode == PermissionManager.STORAGE_READ_REQUEST_CODE
             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("*/*"), REQUEST_CODE_ATTACHMENT)

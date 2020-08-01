@@ -32,7 +32,8 @@ class DateTimeConverter private constructor() {
             return LocalTime.parse(time)
         }
 
-        const val timeFormat = "h:mm a"
+        const val FORMAT_TIME = "h:mm a"
+        const val FORMAT_DATE_FORMAL = "MMM d yyyy"
     }
 
 }

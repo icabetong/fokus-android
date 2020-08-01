@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.about
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
@@ -15,13 +16,14 @@ import kotlinx.android.synthetic.main.layout_appbar.*
 class AboutActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     private var controller: NavController? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_about)
 
-        controller = Navigation.findNavController(this, R.id.navigationHostFragment)
+        controller = findNavController(R.id.navigationHostFragment)
 
         val configuration = AppBarConfiguration.Builder()
             .setFallbackOnNavigateUpListener { onNavigateUpOrFinish() }
@@ -37,7 +39,8 @@ class AboutActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean = Navigation.findNavController(this, R.id.navigationHostFragment).navigateUp()
+    override fun onSupportNavigateUp(): Boolean =
+        Navigation.findNavController(this, R.id.navigationHostFragment).navigateUp()
             || super.onSupportNavigateUp()
 
     private fun onNavigateUpOrFinish(): Boolean {

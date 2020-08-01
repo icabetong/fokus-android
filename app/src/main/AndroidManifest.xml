@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:name=".CoreApplication"
@@ -49,6 +51,8 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <service android:name=".components.service.NotificationActionService"
+            android:exported="false"/>
+        <service android:name=".components.service.BackupRestoreService"
             android:exported="false"/>
         <service android:name="com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetRemoteService"
             android:exported="false"

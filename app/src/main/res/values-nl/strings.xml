@@ -110,6 +110,7 @@
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>
     <string name="settings_group_notification">Kennisgevingen</string>
+    <string name="settings_group_advanced">Gevorderde</string>
     <string name="settings_group_debugging">Debuggen</string>
     <string name="settings_group_contribute">Bijdragen</string>
 
@@ -151,6 +152,12 @@
     <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Meer instellingen</string>
+
+    <string name="settings_backup_and_restore">Back-up en Herstel</string>
+    <string name="settings_backup">Back-up</string>
+    <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
+    <string name="settings_restore">Herstel</string>
+
     <string name="settings_not_working_notifications">Meer informatie</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>
 
@@ -190,9 +197,18 @@
     <string name="notification_channel_task_reminders">Taakherinneringen</string>
     <string name="notification_channel_event_reminders">Evenement Herinneringen</string>
     <string name="notification_channel_class_reminders">Klasse Herinneringen</string>
+    <string name="notification_channel_backups">Back-ups</string>
 
     <string name="notification_pending_tasks_title">Je hebt %1$s taken in behandeling</string>
     <string name="notification_pending_tasks_summary">Het is misschien de moeite waard om een kijkje te nemen</string>
+
+    <string name="notification_backup_ongoing">Het uitvoeren van Back-up</string>
+    <string name="notification_backup_error">Back-up mislukt</string>
+    <string name="notification_backup_success">Back-up voltooid</string>
+
+    <string name="notification_restore_ongoing">Back-up herstellen</string>
+    <string name="notification_restore_error">Herstel Mislukt</string>
+    <string name="notification_restore_success">Herstel Voltooid</string>
 
     <!-- used for concat and formatting -->
     <string name="student">student</string>

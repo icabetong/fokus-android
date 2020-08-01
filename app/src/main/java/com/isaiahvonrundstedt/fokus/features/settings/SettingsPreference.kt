@@ -34,7 +34,7 @@ class SettingsPreference : BasePreference() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.xml_settings, rootKey)
+        setPreferencesFromResource(R.xml.xml_settings_main, rootKey)
     }
 
     private val preferences by lazy {
@@ -80,7 +80,7 @@ class SettingsPreference : BasePreference() {
         }
 
         findPreference<Preference>(R.string.key_reminder_time)?.apply {
-            summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(preferences.reminderTime)
+            summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(preferences.reminderTime)
             setOnPreferenceClickListener {
                 MaterialDialog(requireContext()).show {
                     timePicker(show24HoursView = false) { _, datetime ->
@@ -89,7 +89,7 @@ class SettingsPreference : BasePreference() {
                         ReminderWorker.reschedule(requireContext())
                     }
                     positiveButton(R.string.button_done) { _ ->
-                        it.summary = DateTimeFormat.forPattern(DateTimeConverter.timeFormat)
+                        it.summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME)
                             .print(preferences.reminderTime)
                     }
                 }
@@ -101,9 +101,9 @@ class SettingsPreference : BasePreference() {
             setOnPreferenceClickListener {
                 if (!PermissionManager(
                         requireContext()
-                    ).storageReadGranted)
+                    ).readStorageGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        PermissionManager.REQUEST_CODE_STORAGE)
+                        PermissionManager.STORAGE_READ_REQUEST_CODE)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("audio/*"), REQUEST_CODE_SOUND)
                 true
@@ -155,7 +155,7 @@ class SettingsPreference : BasePreference() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PermissionManager.REQUEST_CODE_STORAGE
+        if (requestCode == PermissionManager.STORAGE_READ_REQUEST_CODE
             && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("audio/*"), REQUEST_CODE_SOUND)

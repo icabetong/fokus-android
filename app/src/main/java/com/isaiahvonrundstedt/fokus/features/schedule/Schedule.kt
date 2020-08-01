@@ -10,6 +10,7 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
@@ -18,6 +19,7 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "schedules", foreignKeys = [ForeignKey(entity = Subject::class,
     parentColumns = arrayOf("subjectID"), childColumns = arrayOf("subject"),
     onDelete = ForeignKey.CASCADE)])
@@ -133,7 +135,7 @@ data class Schedule @JvmOverloads constructor(
         }
 
         fun formatTime(time: LocalTime?): String {
-            return DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(time)
+            return DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(time)
         }
     }
 }

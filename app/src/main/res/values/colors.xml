@@ -22,8 +22,8 @@
     <color name="color_editor_surface">#eeeeee</color>
     <color name="color_editor_remove_button">#bcbcbc</color>
 
-    <color name="color_theme_generic">#8e24aa</color>
-    <color name="color_theme_generic_variant">#598e24aa</color>
+    <color name="color_theme_generic">#00685b</color>
+    <color name="color_theme_generic_variant">#5900685b</color>
     <color name="color_theme_task">#0091ea</color>
     <color name="color_theme_task_variant">#590091ea</color>
     <color name="color_theme_events">#ffab00</color>

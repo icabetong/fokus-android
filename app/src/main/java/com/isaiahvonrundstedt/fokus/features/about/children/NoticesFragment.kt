@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 class NoticesFragment : BasePreference() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.xml_notices, rootKey)
+        setPreferencesFromResource(R.xml.xml_about_notices, rootKey)
     }
 
     override fun onStart() {

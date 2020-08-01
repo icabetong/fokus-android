@@ -11,10 +11,13 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "subjects")
 data class Subject @JvmOverloads constructor(
     @PrimaryKey

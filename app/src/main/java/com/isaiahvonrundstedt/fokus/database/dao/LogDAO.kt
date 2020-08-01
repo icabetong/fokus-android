@@ -17,6 +17,9 @@ interface LogDAO {
     suspend fun update(log: Log)
 
     @Query("SELECT * FROM logs")
+    suspend fun fetchCore(): List<Log>
+
+    @Query("SELECT * FROM logs")
     fun fetch(): LiveData<List<Log>>
 
     @Query("DELETE FROM logs")

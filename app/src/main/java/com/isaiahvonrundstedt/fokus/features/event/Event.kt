@@ -9,6 +9,7 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -16,6 +17,7 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "events", foreignKeys = [
     ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
         childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)
@@ -56,13 +58,13 @@ data class Event @JvmOverloads constructor(
         val currentDateTime = LocalDate.now()
 
         return if (schedule!!.toLocalDate().isEqual(currentDateTime))
-            String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(schedule))
+            String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
         else if (currentDateTime.minusDays(1).compareTo(schedule!!.toLocalDate()) == 0)
             String.format(context.getString(R.string.yesterday_at),
-                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(schedule))
+                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
         else if (currentDateTime.plusDays(1).compareTo(schedule!!.toLocalDate()) == 0)
             String.format(context.getString(R.string.tomorrow_at),
-                DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(schedule))
+                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
         else
             DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(schedule)
     }

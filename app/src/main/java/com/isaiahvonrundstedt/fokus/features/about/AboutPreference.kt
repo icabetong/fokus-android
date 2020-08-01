@@ -16,7 +16,7 @@ class AboutPreference : BasePreference() {
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.xml_about, rootKey)
+        setPreferencesFromResource(R.xml.xml_about_main, rootKey)
     }
 
     override fun onStart() {

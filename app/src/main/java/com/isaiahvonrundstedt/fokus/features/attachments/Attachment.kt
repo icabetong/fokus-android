@@ -9,11 +9,14 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import java.util.*
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "attachments", foreignKeys = [ForeignKey(entity = Task::class,
     parentColumns = arrayOf("taskID"), childColumns = arrayOf("task"),
     onDelete = ForeignKey.CASCADE)

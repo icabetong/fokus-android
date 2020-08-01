@@ -8,6 +8,9 @@
     <string translatable="false" name="key_sound">soundKey</string>
     <string translatable="false" name="key_custom_sound">customSoundKey</string>
     <string translatable="false" name="key_custom_sound_uri">soundUriKey</string>
+    <string translatable="false" name="key_backup_restore">backupRestoreKey</string>
+    <string translatable="false" name="key_backup">backupKey</string>
+    <string translatable="false" name="key_restore">restoreKey</string>
     <string translatable="false" name="key_reminder_frequency">reminderFrequencyKey</string>
     <string translatable="false" name="key_reminder_time">reminderTimeKey</string>
     <string translatable="false" name="key_task_reminder">taskReminderKey</string>

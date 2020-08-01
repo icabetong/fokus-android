@@ -15,6 +15,9 @@ interface ScheduleDAO {
     @Update
     suspend fun update(schedule: Schedule)
 
+    @Query("SELECT * FROM schedules")
+    suspend fun fetch(): List<Schedule>
+
     @Query("DELETE FROM schedules WHERE subject = :id")
     suspend fun removeUsingSubjectID(id: String)
 

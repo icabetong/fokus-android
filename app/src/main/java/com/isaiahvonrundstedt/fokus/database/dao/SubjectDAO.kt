@@ -20,6 +20,9 @@ interface SubjectDAO {
     @Query("SELECT * FROM subjects")
     suspend fun fetch(): List<SubjectResource>
 
+    @Query("SELECT * FROM subjects")
+    suspend fun fetchCore(): List<Subject>
+
     @Transaction
     @Query("SELECT * FROM subjects")
     fun fetchLiveData(): LiveData<List<SubjectResource>>

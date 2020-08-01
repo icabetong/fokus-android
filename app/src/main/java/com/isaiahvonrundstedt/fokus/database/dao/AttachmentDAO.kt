@@ -15,6 +15,9 @@ interface AttachmentDAO {
     @Update
     suspend fun update(attachment: Attachment)
 
+    @Query("SELECT * FROM attachments")
+    suspend fun fetch(): List<Attachment>
+
     @Query("DELETE FROM attachments WHERE task = :id")
     suspend fun removeUsingTaskID(id: String)
 }

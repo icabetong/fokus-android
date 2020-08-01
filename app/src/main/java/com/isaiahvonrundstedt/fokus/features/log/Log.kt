@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -17,6 +18,7 @@ import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 @Parcelize
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "logs")
 data class Log @JvmOverloads constructor(
     @PrimaryKey
@@ -47,7 +49,7 @@ data class Log @JvmOverloads constructor(
 
         // Formats the dateTime object for human reading
         return if (dateTimeTriggered!!.toLocalDate().isEqual(currentDateTime))
-            DateTimeFormat.forPattern(DateTimeConverter.timeFormat).print(dateTimeTriggered)
+            DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dateTimeTriggered)
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
             DateTimeFormat.forPattern("MMMM d").print(dateTimeTriggered!!)
         else DateTimeFormat.forPattern("MMMM d yyyy").print(dateTimeTriggered!!)

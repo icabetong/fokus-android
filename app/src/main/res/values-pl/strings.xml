@@ -109,6 +109,7 @@
     <string name="settings_group_interface">Interfejs</string>
     <string name="settings_group_sound">Dźwięk</string>
     <string name="settings_group_notification">Powiadomienia</string>
+    <string name="settings_group_advanced">Zaawansowane</string>
     <string name="settings_group_debugging">Debugowanie</string>
     <string name="settings_group_contribute">Wkład</string>
 
@@ -150,6 +151,12 @@
     <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
+
+    <string name="settings_backup_and_restore">Tworzenie i Przywracanie kopii Zapasowych</string>
+    <string name="settings_backup">Kopia Zapasowa</string>
+    <string name="settings_backup_summary_no_previous">Brak wcześniejszych kopii zapasowych</string>
+    <string name="settings_restore">Przywrócenie</string>
+
     <string name="settings_not_working_notifications">Learn more</string>
     <string name="settings_not_working_notifications_info">Czasami Twoje powiadomienie może nie zadziałać z powodu agresywnej optymalizacji baterii przez producenta telefonu.</string>
 
@@ -189,9 +196,18 @@
     <string name="notification_channel_task_reminders">Przypomnienia o zadaniach</string>
     <string name="notification_channel_event_reminders">Przypomnienia o wydarzeniach</string>
     <string name="notification_channel_class_reminders">Klasa Przypomnienia</string>
+    <string name="notification_channel_backups">Kopie zapasowe</string>
 
     <string name="notification_pending_tasks_title">Masz %1$ zadań do wykonania</string>
     <string name="notification_pending_tasks_summary">Może warto by było rzucić okiem</string>
+
+    <string name="notification_backup_ongoing">Wykonywanie kopii zapasowych</string>
+    <string name="notification_backup_error">Kopia zapasowa nie powiodła się</string>
+    <string name="notification_backup_success">Kopia zapasowa ukończona</string>
+
+    <string name="notification_restore_ongoing">Przywracanie kopii zapasowych</string>
+    <string name="notification_restore_error">Przywrócenie nie powiodło się</string>
+    <string name="notification_restore_success">Przywrócony Ukończony</string>
 
     <!-- used for concat and formatting -->
     <string name="student">student</string>

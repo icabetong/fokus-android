@@ -109,6 +109,7 @@
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>
     <string name="settings_group_notification">Notifications</string>
+    <string name="settings_group_advanced">Avancé</string>
     <string name="settings_group_debugging">Débogage</string>
     <string name="settings_group_contribute">Contribuer</string>
 
@@ -150,6 +151,12 @@
     <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Plus de paramètres</string>
+
+    <string name="settings_backup_and_restore">Sauvegarde et Restauration</string>
+    <string name="settings_backup">Sauvegarde</string>
+    <string name="settings_backup_summary_no_previous">Pas de sauvegardes antérieures</string>
+    <string name="settings_restore">Restaurer</string>
+
     <string name="settings_not_working_notifications">En savoir plus</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>
 
@@ -189,9 +196,18 @@
     <string name="notification_channel_task_reminders">Rappels de tâches</string>
     <string name="notification_channel_event_reminders">Rappels d\'événements</string>
     <string name="notification_channel_class_reminders">Rappels de classe</string>
+    <string name="notification_channel_backups">Sauvegardes</string>
 
     <string name="notification_pending_tasks_title">Vous avez %1$d tâches en suspens</string>
     <string name="notification_pending_tasks_summary">Il pourrait être utile de jeter un coup d\'œil</string>
+
+    <string name="notification_backup_ongoing">Effectuer des sauvegardes</string>
+    <string name="notification_backup_error">Échec de la sauvegarde</string>
+    <string name="notification_backup_success">Sauvegarde terminée</string>
+
+    <string name="notification_restore_ongoing">Restauration de la sauvegarde</string>
+    <string name="notification_restore_error">Echec de la restauration</string>
+    <string name="notification_restore_success">Restauration terminée</string>
 
     <!-- used for concat and formatting -->
     <string name="student">étudiant</string>

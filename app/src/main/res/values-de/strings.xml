@@ -110,6 +110,7 @@
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>
     <string name="settings_group_notification">Benachrichtigungen</string>
+    <string name="settings_group_advanced">Fortgeschrittene</string>
     <string name="settings_group_debugging">Fehlerbehebung</string>
     <string name="settings_group_contribute">Beitragen</string>
 
@@ -150,6 +151,12 @@
     <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Weitere Einstellungen</string>
+
+    <string name="settings_backup_and_restore">Sichern und Wiederherstellen</string>
+    <string name="settings_backup">Sicherung</string>
+    <string name="settings_backup_summary_no_previous">Keine früheren Sicherungen</string>
+    <string name="settings_restore">Wiederherstellen</string>
+
     <string name="settings_not_working_notifications">Weitere Informationen</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>
 
@@ -187,9 +194,18 @@
     <string name="notification_channel_task_reminders">Aufgaben-Erinnerungen</string>
     <string name="notification_channel_event_reminders">Ereignis-Erinnerungen</string>
     <string name="notification_channel_class_reminders">Klassen-Erinnerungen</string>
+    <string name="notification_channel_backups">Sicherungen</string>
 
     <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
     <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>
+
+    <string name="notification_backup_ongoing">Durchführen einer Sicherung</string>
+    <string name="notification_backup_error">Sicherung fehlgeschlagen</string>
+    <string name="notification_backup_success">Sicherung abgeschlossen</string>
+
+    <string name="notification_restore_ongoing">Sicherung wiederherstellen</string>
+    <string name="notification_restore_error">Wiederherstellung fehlgeschlagen</string>
+    <string name="notification_restore_success">Wiederherstellung abgeschlossen</string>
 
     <string name="student">student</string>
     <string name="hello">Hallo, %1$s</string>

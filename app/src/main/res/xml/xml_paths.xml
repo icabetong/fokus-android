@@ -2,5 +2,8 @@
 <paths>
     <files-path
         name="share"
+        path="files"/>
+    <external-files-path
+        name="share"
         path="external_files"/>
 </paths>

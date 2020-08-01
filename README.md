@@ -47,6 +47,8 @@ This is an open-source personal project and I am very happy to accept community 
 * [Doki](https://github.com/doubledotlabs/doki) - Double Dot Labs
 * [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
 * [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar) - Alexander Dadukin
+* [Moshi](https://github.com/square/moshi) - Square
+* [Okio](https://github.com/square/okio) - Square
 
 ### Other materials used
 * [Launcher Icon](https://flaticon.com/authors/freepik) - Freepik via Flaticon

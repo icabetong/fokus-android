@@ -46,13 +46,13 @@ data class Task @JvmOverloads constructor(
     }
 
     fun formatDueDate(context: Context): String? {
-        val currentDateTime = DateTime.now()
-
-        if (!hasDueDate())
+        if (dueDate == null)
             return null
 
+        val currentDateTime = DateTime.now()
+
         // Check if the day on the task's due is today
-        return if (dueDate?.isEqualNow == true)
+        return if (dueDate?.toLocalDate()?.isEqual(LocalDate.now()) == true)
             String.format(context.getString(R.string.today_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if the day is yesterday
@@ -65,6 +65,6 @@ data class Task @JvmOverloads constructor(
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Just print the date what could go wrong?
         else
-            DateTimeFormat.forPattern("MMMM d, h:mm a").print(dueDate)
+            DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
     }
 }

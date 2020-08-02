@@ -16,16 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Fokus.Theme.Core">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.isaiahvonrundstedt.fokus"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/xml_paths"/>
-        </provider>
-
         <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" >
             <intent-filter>
@@ -34,21 +24,22 @@
             </intent-filter>
 
             <meta-data android:name="android.app.shortcuts"
-                android:resource="@xml/xml_shortcuts"/>
+                android:resource="@xml/xml_launcher_shortcuts"/>
         </activity>
-        <activity android:name=".features.settings.SettingsActivity" />
-        <activity android:name=".features.about.AboutActivity" />
-        <activity android:name=".features.log.LogActivity" />
-        <activity android:name=".features.core.activities.DokiActivity"/>
-        <activity android:name=".features.subject.SubjectEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor.Subjects"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity android:name=".features.task.TaskEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Task"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.event.EventEditor"
             android:theme="@style/Fokus.Theme.Core.Editor.Events"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".features.subject.SubjectEditor"
+            android:theme="@style/Fokus.Theme.Core.Editor.Subjects"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".features.settings.SettingsActivity" />
+        <activity android:name=".features.about.AboutActivity" />
+        <activity android:name=".features.log.LogActivity" />
+        <activity android:name=".features.core.activities.DokiActivity"/>
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>

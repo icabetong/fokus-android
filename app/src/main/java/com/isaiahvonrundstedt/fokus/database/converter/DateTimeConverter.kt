@@ -11,7 +11,8 @@ class DateTimeConverter private constructor() {
         @JvmStatic
         @TypeConverter
         fun toDateTime(time: String?): DateTime? {
-            return DateTime.parse(time)
+            return if (time != null) DateTime.parse(time)
+                else null
         }
 
         @JvmStatic
@@ -33,7 +34,7 @@ class DateTimeConverter private constructor() {
         }
 
         const val FORMAT_TIME = "h:mm a"
-        const val FORMAT_DATE_FORMAL = "MMM d yyyy"
+        const val FORMAT_DATE = "MMMM d, h:mm a"
     }
 
 }

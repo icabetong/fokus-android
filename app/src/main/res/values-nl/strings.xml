@@ -63,6 +63,7 @@
     <string name="dialog_select_subject">Select Onderwerp</string>
     <string name="dialog_select_notification_interval">Selecteer Notificatie-interval</string>
     <string name="dialog_choose_theme">Kies Thema</string>
+    <string name="dialog_choose_backup">Kies een back-upbestand</string>
     <string name="dialog_your_name_title">Hoe zullen we je noemen?</string>
     <string name="dialog_your_name_summary">U kunt ervoor kiezen om dit leeg te laten. Wat u echter op dit veld invoert, blijft op dit apparaat staan.</string>
     <string name="dialog_confirm_deletion_title">Weet u zeker dat u %1$s wilt verwijderen?</string>
@@ -106,6 +107,8 @@
     <string name="feedback_event_empty_name">Je bent vergeten de naam van het evenement in te voeren</string>
     <string name="feedback_event_empty_location">Je bent vergeten de locatie in te voeren</string>
     <string name="feedback_event_empty_schedule">Je bent vergeten het schema in te voeren</string>
+    <string name="feedback_backup_invalid">Back-upbestand ongeldig</string>
+    <string name="feedback_backup_corrupted">Back-upbestand beschadigd of onleesbaar</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>

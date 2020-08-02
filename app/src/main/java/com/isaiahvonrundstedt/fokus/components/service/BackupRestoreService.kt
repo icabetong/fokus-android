@@ -1,23 +1,25 @@
 package com.isaiahvonrundstedt.fokus.components.service
 
 import android.app.Notification
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.IBinder
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.json.DateTimeJSONAdapter
 import com.isaiahvonrundstedt.fokus.components.json.LocalTimeJSONAdapter
 import com.isaiahvonrundstedt.fokus.components.json.UriJSONAdapter
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.log.Log
@@ -29,6 +31,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okio.Okio
@@ -57,10 +60,14 @@ class BackupRestoreService: BaseService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent?.action == ACTION_BACKUP)
-            startBackup()
-        else if (intent?.action == ACTION_RESTORE)
-            intent.data?.also { startRestore(it) }
+        intent?.data?.also {
+            when (intent.action) {
+                ACTION_BACKUP ->
+                    startBackup(it)
+                ACTION_RESTORE ->
+                    startRestore(it)
+            }
+        }
         return START_NOT_STICKY
     }
 
@@ -73,9 +80,9 @@ class BackupRestoreService: BaseService() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startForeground(NOTIFICATION_RESTORE_ONGOING,
-                createNotification(R.string.notification_restore_ongoing, true))
+                createNotification(R.string.notification_restore_ongoing, ongoing = true))
         else manager?.notify(NOTIFICATION_RESTORE_ONGOING,
-            createNotification(R.string.notification_restore_ongoing, true))
+            createNotification(R.string.notification_restore_ongoing, ongoing = true))
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
@@ -86,71 +93,81 @@ class BackupRestoreService: BaseService() {
             val e = archive.entries()
             while (e.hasMoreElements()) {
                 val entry = e.nextElement() as ZipEntry
-                val inputStream: InputStream = archive.getInputStream(entry)
-
-                when (entry.name) {
-                    FILE_BACKUP_NAME_SUBJECTS -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Subject::class.java)
-                            items?.forEach { database?.subjects()?.insert(it) }
+                archive.getInputStream(entry).use { stream ->
+                    when (entry.name) {
+                        FILE_BACKUP_NAME_SUBJECTS -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Subject::class.java)
+                                items?.forEach { database?.subjects()?.insert(it) }
+                            }
                         }
-                    }
-                    FILE_BACKUP_NAME_SCHEDULES -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Schedule::class.java)
-                            items?.forEach { database?.schedules()?.insert(it) }
+                        FILE_BACKUP_NAME_SCHEDULES -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Schedule::class.java)
+                                items?.forEach { database?.schedules()?.insert(it) }
+                            }
                         }
-                    }
-                    FILE_BACKUP_NAME_TASKS -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Task::class.java)
-                            items?.forEach { database?.tasks()?.insert(it) }
+                        FILE_BACKUP_NAME_TASKS -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Task::class.java)
+                                items?.forEach { database?.tasks()?.insert(it) }
+                            }
                         }
-                    }
-                    FILE_BACKUP_NAME_ATTACHMENTS -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Attachment::class.java)
-                            items?.forEach { database?.attachments()?.insert(it) }
+                        FILE_BACKUP_NAME_ATTACHMENTS -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Attachment::class.java)
+                                items?.forEach { database?.attachments()?.insert(it) }
+                            }
                         }
-                    }
-                    FILE_BACKUP_NAME_EVENTS -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Event::class.java)
-                            items?.forEach { database?.events()?.insert(it) }
+                        FILE_BACKUP_NAME_EVENTS -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Event::class.java)
+                                items?.forEach { database?.events()?.insert(it) }
+                            }
                         }
-                    }
-                    FILE_BACKUP_NAME_LOGS -> {
-                        runBlocking {
-                            val items = encodeFromJSON(inputStream, Log::class.java)
-                            items?.forEach { database?.logs()?.insert(it) }
+                        FILE_BACKUP_NAME_LOGS -> {
+                            runBlocking {
+                                val items = encodeFromJSON(stream, Log::class.java)
+                                items?.forEach { database?.logs()?.insert(it) }
+                            }
                         }
+                        else -> {}
                     }
                 }
             }
             archive.close()
 
+            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
                 createNotification(R.string.notification_restore_success))
+        } catch (e: EOFException) {
+            e.printStackTrace()
+
+            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
+            manager?.notify(NOTIFICATION_RESTORE_FAILED,
+                createNotification(R.string.notification_restore_error,
+                    R.string.feedback_backup_corrupted))
         } catch (e: Exception) {
             e.printStackTrace()
+
+            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                createNotification(R.string.notification_restore_error))
-        } finally {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                stopForeground(true)
-            else manager?.cancel(NOTIFICATION_BACKUP_ONGOING)
+                createNotification(R.string.notification_restore_error,
+                    R.string.feedback_backup_invalid))
         }
 
         terminateService()
     }
 
-    private fun startBackup() {
+    private fun removeOngoingNotification(id: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            stopForeground(true)
+        else manager?.cancel(id)
+    }
+
+    private fun startBackup(destination: Uri) {
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
             return
-
-        val backupFolder = File(getExternalFilesDir(null), FOLDER_BACKUP_NAME)
-
-        if (!backupFolder.exists()) backupFolder.mkdirs()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             with(NotificationChannelManager(this)) {
@@ -160,61 +177,63 @@ class BackupRestoreService: BaseService() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startForeground(NOTIFICATION_BACKUP_ONGOING,
-                createNotification(R.string.notification_backup_ongoing, true))
+                createNotification(R.string.notification_backup_ongoing, ongoing = true))
         else manager?.notify(NOTIFICATION_BACKUP_ONGOING,
-            createNotification(R.string.notification_backup_ongoing, true))
+            createNotification(R.string.notification_backup_ongoing, ongoing = true))
 
         try {
             runBlocking {
-                val files = mutableListOf<File>()
+                val items = mutableListOf<File>()
+                var fetchJob: Job
+                var jsonString: String
 
-                val subjects = async { database?.subjects()?.fetchCore() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_SUBJECTS,
-                    encodeToJSON(subjects.await() ?: emptyList(), Subject::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.subjects()?.fetchCore() }
+                jsonString = encodeToJSON(fetchJob.await(), Subject::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_SUBJECTS, jsonString))
 
-                val schedules = async { database?.schedules()?.fetch() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_SCHEDULES,
-                    encodeToJSON(schedules.await() ?: emptyList(), Schedule::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.schedules()?.fetch() }
+                jsonString = encodeToJSON(fetchJob.await(), Schedule::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_SCHEDULES, jsonString))
 
-                val tasks = async { database?.tasks()?.fetchCore() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_TASKS,
-                    encodeToJSON(tasks.await() ?: emptyList(), Task::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.tasks()?.fetchCore() }
+                jsonString = encodeToJSON(fetchJob.await(), Task::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_TASKS, jsonString))
 
-                val attachments = async { database?.attachments()?.fetch() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_ATTACHMENTS,
-                    encodeToJSON(attachments.await() ?: emptyList(), Attachment::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.attachments()?.fetch() }
+                jsonString = encodeToJSON(fetchJob.await(), Attachment::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_ATTACHMENTS, jsonString))
 
-                val events = async { database?.events()?.fetchCore() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_EVENTS,
-                    encodeToJSON(events.await() ?: emptyList(), Event::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.events()?.fetchCore() }
+                jsonString = encodeToJSON(fetchJob.await(), Event::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_EVENTS, jsonString))
 
-                val logs = async { database?.logs()?.fetchCore() }
-                files.add(saveAsFile(backupFolder, FILE_BACKUP_NAME_LOGS,
-                    encodeToJSON(logs.await() ?: emptyList(), Log::class.java)
-                        .toByteArray()))
+                fetchJob = async { database?.logs()?.fetchCore() }
+                jsonString = encodeToJSON(fetchJob.await(), Log::class.java)
+                if (jsonString.isNotEmpty())
+                    items.add(createCache(FILE_BACKUP_NAME_LOGS, jsonString))
 
-                zip(files, backupFolder.path)
+
+                if (items.isEmpty())
+                    terminateService(BROADCAST_BACKUP_EMPTY)
+                else zip(items, destination)
             }
 
+            removeOngoingNotification(NOTIFICATION_BACKUP_ONGOING)
             manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
                 createNotification(R.string.notification_backup_success))
 
-            PreferenceManager(this).backupSummary = DateTimeConverter
-                .fromDateTime(DateTime.now())
+            PreferenceManager(this).backupDate = DateTime.now()
         } catch (e: Exception) {
             e.printStackTrace()
 
+            removeOngoingNotification(NOTIFICATION_BACKUP_ONGOING)
             manager?.notify(NOTIFICATION_BACKUP_FAILED,
                 createNotification(R.string.notification_backup_error))
-        } finally {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                stopForeground(true)
-            else manager?.cancel(NOTIFICATION_BACKUP_ONGOING)
         }
 
         terminateService(BROADCAST_BACKUP_SUCCESS)
@@ -229,56 +248,43 @@ class BackupRestoreService: BaseService() {
         return adapter.fromJson(Okio.buffer(Okio.source(stream)))
     }
 
-    private fun <T> encodeToJSON(items: List<T>, dataClass: Class<T>): String {
-        if (items.isEmpty()) return ""
+    private fun <T> encodeToJSON(items: List<T>?, dataClass: Class<T>): String {
+        if (items == null || items.isEmpty()) return ""
 
         val type = Types.newParameterizedType(List::class.java, dataClass)
         val adapter: JsonAdapter<List<T>> = moshi.adapter(type)
         return adapter.toJson(items)
     }
 
-    private fun saveAsFile(parent: File, name: String, buffer: ByteArray): File {
-        val targetFile = File(parent, name)
-        targetFile.createNewFile()
-
-        with(FileOutputStream(targetFile)) {
-            write(buffer)
-            flush()
-            close()
+    private fun createCache(name: String, json: String): File {
+        return File(cacheDir, name).apply {
+            FileOutputStream(this).use {
+                it.write(json.toByteArray())
+                it.flush()
+            }
         }
-        return targetFile
     }
 
-    private fun zip(files: List<File>, zipDirectory: String) {
-        try {
-            var origin: BufferedInputStream
+    private fun zip(items: List<File>, destination: Uri) {
+        val buffer = 8096
 
-            val buffer = 8096
-            val destination = FileOutputStream("$zipDirectory/$FILE_BACKUP_NAME_ARCHIVE")
-            val out = ZipOutputStream(BufferedOutputStream(destination))
-            val data = ByteArray(buffer)
+        contentResolver.openOutputStream(destination).use { stream ->
+            ZipOutputStream(BufferedOutputStream(stream)).use { zip ->
+                items.forEach { temp ->
+                    BufferedInputStream(FileInputStream(temp), buffer).use { inputStream ->
+                        zip.putNextEntry(ZipEntry(temp.name))
 
-            files.forEach {
-                val inputStream = FileInputStream(it)
-                origin = BufferedInputStream(inputStream, buffer)
-
-                val entry = ZipEntry(it.path.substring(it.path.lastIndexOf("/") + 1))
-                out.putNextEntry(entry)
-                var count = 0
-
-                while ({count = origin.read(data, 0, buffer); count }() != -1) {
-                    out.write(data, 0, count);
+                        inputStream.copyTo(zip, buffer)
+                    }
                 }
-                it.delete()
-                origin.close()
+                zip.flush()
             }
-            out.flush()
-            out.close()
-        } catch (e: Exception) { e.printStackTrace() }
+            stream?.flush()
+        }
     }
 
     private fun terminateService(status: String = "") {
-        if (status.isNotBlank())
+        if (status.isNotEmpty())
             LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
                     putExtra(EXTRA_BROADCAST_STATUS, status)
@@ -286,21 +292,23 @@ class BackupRestoreService: BaseService() {
         stopSelf()
     }
 
-    private fun createNotification(@StringRes id: Int, ongoing: Boolean = false): Notification {
+    private fun createNotification(@StringRes id: Int, @StringRes content: Int = 0,
+                                   ongoing: Boolean = false): Notification {
         return NotificationCompat.Builder(this,
             NotificationChannelManager.CHANNEL_ID_BACKUP).apply {
             setSmallIcon(R.drawable.ic_outline_done_all_24)
             setContentTitle(getString(id))
+            if (content != 0) setContentText(getString(content))
             setOngoing(ongoing)
             setCategory(Notification.CATEGORY_SERVICE)
             setChannelId(NotificationChannelManager.CHANNEL_ID_BACKUP)
+            if (ongoing) setProgress(0, 0, true)
             color = ContextCompat.getColor(this@BackupRestoreService, R.color.color_primary)
         }.build()
     }
 
     companion object {
-        const val FOLDER_BACKUP_NAME = "backups"
-        const val FILE_BACKUP_NAME_ARCHIVE = "backup.zip"
+        const val FILE_BACKUP_NAME_ARCHIVE = "backup.ffs"
         const val FILE_BACKUP_NAME_SUBJECTS = "backup_1_subjects.json"
         const val FILE_BACKUP_NAME_SCHEDULES = "backup_2_schedules.json"
         const val FILE_BACKUP_NAME_TASKS = "backup_3_tasks.json"
@@ -323,5 +331,6 @@ class BackupRestoreService: BaseService() {
         const val EXTRA_BROADCAST_STATUS = "extra:broadcast:status"
         const val BROADCAST_BACKUP_SUCCESS = "broadcast:backup:success"
         const val BROADCAST_BACKUP_FAILED = "broadcast:backup:failed"
+        const val BROADCAST_BACKUP_EMPTY = "broadcast:backup:empty"
     }
 }

@@ -62,6 +62,7 @@
     <string name="dialog_select_subject">Sélectionnez un sujet</string>
     <string name="dialog_select_notification_interval">Sélectionnez l\'intervalle de notification</string>
     <string name="dialog_choose_theme">Choisissez un thème</string>
+    <string name="dialog_choose_backup">Choisissez un fichier de sauvegarde</string>
     <string name="dialog_your_name_title">Comment devrions-nous vous appeler?</string>
     <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
     <string name="dialog_confirm_deletion_title">Êtes-vous sûr de vouloir supprimer les %1$ ?</string>
@@ -105,6 +106,8 @@
     <string name="feedback_event_empty_name">Vous avez oublié de saisir le nom de l\'événement</string>
     <string name="feedback_event_empty_location">Vous avez oublié de saisir le lieu</string>
     <string name="feedback_event_empty_schedule">Vous avez oublié d\'entrer l\'horaire</string>
+    <string name="feedback_backup_invalid">Fichier de sauvegarde non valable</string>
+    <string name="feedback_backup_corrupted">Fichier de sauvegarde corrompu ou illisible</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>

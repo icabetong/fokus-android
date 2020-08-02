@@ -32,4 +32,7 @@
 
     <string translatable="false" name="behavior_expandable_bottom_bar">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</string>
 
+    <string translatable="false" name="backup_directory_name">backups</string>
+    <string translatable="false" name="backup_directory_path">backups/</string>
+
 </resources>

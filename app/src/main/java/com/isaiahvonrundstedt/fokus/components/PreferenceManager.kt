@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import org.joda.time.DateTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 
@@ -65,20 +66,19 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
-    var backupSummary: String?
+    var backupDate: DateTime?
         get() {
-            val value = sharedPreference.getString(R.string.key_backup_restore, null)
-            return if (value != null)
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE_FORMAL)
-                    .print(DateTimeConverter.toDateTime(value))
-            else context?.getString(R.string.settings_backup_summary_no_previous)
+            return DateTimeConverter.toDateTime(sharedPreference
+                .getString(R.string.key_backup, null))
         }
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_backup_restore, value)
+                putString(R.string.key_backup,
+                    DateTimeConverter.fromDateTime(value))
                 apply()
             }
         }
+
 
     val reminderFrequency: String
         get() = sharedPreference.getString(R.string.key_reminder_frequency,

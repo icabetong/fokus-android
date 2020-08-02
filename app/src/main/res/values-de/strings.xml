@@ -63,6 +63,7 @@
     <string name="dialog_select_subject">Betreff auswählen</string>
     <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
     <string name="dialog_choose_theme">Thema wählen</string>
+    <string name="dialog_choose_backup">Wählen Sie eine Sicherungsdatei</string>
     <string name="dialog_your_name_title">Wie sollen wir Sie nennen?</string>
     <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
     <string name="dialog_confirm_deletion_title">Sind Sie sicher, dass Sie %1$s entfernen möchten?</string>
@@ -106,6 +107,8 @@
     <string name="feedback_event_empty_name">Sie haben vergessen, den Namen der Veranstaltung einzugeben</string>
     <string name="feedback_event_empty_location">Sie haben vergessen, den Standort einzugeben</string>
     <string name="feedback_event_empty_schedule">Sie haben vergessen, den Zeitplan einzugeben</string>
+    <string name="feedback_backup_invalid">Sicherungsdatei ungültig</string>
+    <string name="feedback_backup_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>

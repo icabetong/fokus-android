@@ -17,6 +17,7 @@ import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 
 class BackupRestorePreference: BasePreference() {
@@ -38,7 +39,7 @@ class BackupRestorePreference: BasePreference() {
                 if (intent.getStringExtra(BackupRestoreService.EXTRA_BROADCAST_STATUS)
                     == BackupRestoreService.BROADCAST_BACKUP_SUCCESS)
                     findPreference<Preference>(R.string.key_backup)?.apply {
-                        summary = manager.backupSummary
+                        summary = manager.backupDate.parseForSummary()
                     }
             }
         }
@@ -48,9 +49,14 @@ class BackupRestorePreference: BasePreference() {
         super.onStart()
 
         findPreference<Preference>(R.string.key_backup)?.apply {
-            summary = manager.backupSummary
+            summary = manager.backupDate.parseForSummary()
             setOnPreferenceClickListener {
-                startBackupService()
+                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME_ARCHIVE)
+                    type = "application/octet-stream"
+                }
+                startActivityForResult(intent, REQUEST_CODE_BACKUP_FILE)
                 true
             }
         }
@@ -59,8 +65,8 @@ class BackupRestorePreference: BasePreference() {
             setOnPreferenceClickListener {
                 val chooserIntent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     type = "*/*"
-                }, "Choose file")
-                startActivityForResult(chooserIntent, REQUEST_CODE_BACKUP_FILE)
+                }, getString(R.string.dialog_choose_backup))
+                startActivityForResult(chooserIntent, REQUEST_CODE_RESTORE_FILE)
                 true
             }
         }
@@ -74,24 +80,36 @@ class BackupRestorePreference: BasePreference() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_BACKUP_FILE &&
-                resultCode == Activity.RESULT_OK)
-            data?.data?.let { startRestoreProcedure(it) }
+        if (resultCode != Activity.RESULT_OK)
+            return
+
+        data?.data?.also {
+            when (requestCode) {
+                REQUEST_CODE_BACKUP_FILE ->
+                    startBackupService(it)
+                REQUEST_CODE_RESTORE_FILE -> {
+                    startRestoreProcedure(it)
+                }
+            }
+        }
     }
 
     private fun startRestoreProcedure(uri: Uri) {
-        val service = Intent(context, BackupRestoreService::class.java)
-        service.action = BackupRestoreService.ACTION_RESTORE
-        service.data = uri
+        val service = Intent(context, BackupRestoreService::class.java).apply {
+            action = BackupRestoreService.ACTION_RESTORE
+            data = uri
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             context?.startForegroundService(service)
         else context?.startService(service)
     }
 
-    private fun startBackupService() {
-        val service = Intent(context, BackupRestoreService::class.java)
-        service.action = BackupRestoreService.ACTION_BACKUP
+    private fun startBackupService(uri: Uri) {
+        val service = Intent(context, BackupRestoreService::class.java).apply {
+            action = BackupRestoreService.ACTION_BACKUP
+            data = uri
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             context?.startForegroundService(service)
@@ -102,7 +120,26 @@ class BackupRestorePreference: BasePreference() {
         PreferenceManager(requireContext())
     }
 
+    private fun DateTime?.parseForSummary(): String {
+        if (this == null)
+            return getString(R.string.settings_backup_summary_no_previous)
+
+        val currentDateTime = DateTime.now()
+
+        return if (this.toLocalDate().isEqual(LocalDate.now()))
+            String.format(getString(R.string.today_at),
+                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
+        else if (this.minusDays(1)?.compareTo(currentDateTime) == 0)
+            String.format(getString(R.string.yesterday_at),
+                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
+        else if (this.plusDays(1)?.compareTo(currentDateTime) == 0)
+            String.format(getString(R.string.tomorrow_at),
+                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
+        else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(this)
+    }
+
     companion object {
         const val REQUEST_CODE_BACKUP_FILE = 43
+        const val REQUEST_CODE_RESTORE_FILE = 78
     }
 }

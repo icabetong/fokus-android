@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/undraw_walking_outside"/>
+            app:srcCompat="@drawable/undraw_working_from_anywhere"/>
 
         <TextView
             android:layout_width="match_parent"

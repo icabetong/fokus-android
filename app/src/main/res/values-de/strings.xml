@@ -15,16 +15,16 @@
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_logs">Protokolle</string>
-    <string name="menu_settings">@string/activity_settings</string>
-    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_export">Exportieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
     <string name="menu_delete">@string/button_delete</string>
-    <string name="menu_new">@string/button_new</string>
 
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
     <string name="navigation_subjects">Betreff</string>
+    <string name="navigation_logs">Protokolle</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
 
     <string name="button_add_task">Aufgabe hinzufügen</string>
     <string name="button_add_event">Ereignis hinzufügen</string>

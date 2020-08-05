@@ -14,16 +14,16 @@
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
 
-    <string name="menu_logs">Journaux</string>
-    <string name="menu_settings">@string/activity_settings</string>
-    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_export">Exporter</string>
     <string name="menu_clear_items">Points clairs</string>
     <string name="menu_delete">@string/button_delete</string>
-    <string name="menu_new">@string/button_new</string>
 
     <string name="navigation_tasks">Tâches</string>
     <string name="navigation_events">Événements</string>
     <string name="navigation_subjects">Sujets</string>
+    <string name="navigation_logs">Journaux</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
 
     <string name="button_add_task">Ajouter une tâche</string>
     <string name="button_add_event">Ajouter un événement</string>
@@ -68,6 +68,7 @@
     <string name="dialog_confirm_deletion_title">Êtes-vous sûr de vouloir supprimer les %1$ ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois que ce poste a été supprimé, il ne peut plus être récupéré.</string>
     <string name="dialog_schedule_details">Détails du calendrier</string>
+    <string name="dialog_export_to">Exporter vers</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>

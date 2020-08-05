@@ -14,16 +14,16 @@
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
 
-    <string name="menu_logs">Dzienniki</string>
-    <string name="menu_settings">@string/activity_settings</string>
-    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_export">Eksport</string>
     <string name="menu_clear_items">Pozycje Jasne</string>
     <string name="menu_delete">@string/button_delete</string>
-    <string name="menu_new">@string/button_new</string>
 
     <string name="navigation_tasks">Zadania</string>
     <string name="navigation_events">Wydarzenia</string>
     <string name="navigation_subjects">Tematy</string>
+    <string name="navigation_logs">Dzienniki</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
 
     <string name="button_add_task">Dodaj Zadanie</string>
     <string name="button_add_event">Dodaj Wydarzenie</string>
@@ -68,6 +68,7 @@
     <string name="dialog_confirm_deletion_title">Jesteś pewien, że chcesz usunąć %1$s?</string>
     <string name="dialog_confirm_deletion_summary">Po usunięciu tej pozycji, nie można jej odzyskać.</string>
     <string name="dialog_schedule_details">Szczegóły Harmonogramu</string>
+    <string name="dialog_export_to">Eksport do</string>
 
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>

@@ -16,6 +16,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColo
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.utils.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
@@ -225,6 +226,7 @@ class EventEditor : BaseEditor() {
     companion object {
         const val REQUEST_CODE_INSERT = 24
         const val REQUEST_CODE_UPDATE = 56
+
         const val EXTRA_EVENT = "extra:event"
         const val EXTRA_SUBJECT = "extra:subject"
     }

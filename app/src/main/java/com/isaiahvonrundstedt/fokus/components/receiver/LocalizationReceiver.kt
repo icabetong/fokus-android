@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
+import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
 
 class LocalizationReceiver : BroadcastReceiver() {
 
@@ -13,10 +13,10 @@ class LocalizationReceiver : BroadcastReceiver() {
             return
 
         if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {
-            with(NotificationChannelManager(context)) {
-                create(NotificationChannelManager.CHANNEL_ID_TASK)
-                create(NotificationChannelManager.CHANNEL_ID_EVENT)
-                create(NotificationChannelManager.CHANNEL_ID_GENERIC)
+            with(AppNotificationManager(context)) {
+                create(AppNotificationManager.CHANNEL_ID_TASK)
+                create(AppNotificationManager.CHANNEL_ID_EVENT)
+                create(AppNotificationManager.CHANNEL_ID_GENERIC)
             }
         }
     }

@@ -20,6 +20,8 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
+import com.isaiahvonrundstedt.fokus.components.utils.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
@@ -201,21 +203,25 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        // Check if the request codes are the same and the result code is successful
-        // then create an Attachment object and a corresponding ChipView
-        // attachments have to be inserted temporarily on the ArrayList
-        if (requestCode == REQUEST_CODE_ATTACHMENT && resultCode == Activity.RESULT_OK) {
-            contentResolver?.takePersistableUriPermission(data?.data!!,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        super.onActivityResult(requestCode, resultCode, data)
 
-            val attachment = Attachment().apply {
-                task = this@TaskEditor.task.taskID
-                uri = data?.data
-                dateAttached = DateTime.now()
+        if (resultCode != Activity.RESULT_OK)
+            return
+
+        when (requestCode) {
+            REQUEST_CODE_ATTACHMENT -> {
+                contentResolver?.takePersistableUriPermission(data?.data!!,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                val attachment = Attachment().apply {
+                    task = this@TaskEditor.task.taskID
+                    uri = data?.data
+                    dateAttached = DateTime.now()
+                }
+
+                adapter.insert(attachment)
             }
-
-            adapter.insert(attachment)
-        } else super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {

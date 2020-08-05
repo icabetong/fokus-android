@@ -54,7 +54,7 @@ class BackupRestorePreference: BasePreference() {
                 val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME_ARCHIVE)
-                    type = "application/octet-stream"
+                    type = BackupRestoreService.MIME_TYPE_ZIP
                 }
                 startActivityForResult(intent, REQUEST_CODE_BACKUP_FILE)
                 true
@@ -64,7 +64,7 @@ class BackupRestorePreference: BasePreference() {
         findPreference<Preference>(R.string.key_restore)?.apply {
             setOnPreferenceClickListener {
                 val chooserIntent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    type = "*/*"
+                    type = BackupRestoreService.MIME_TYPE_ZIP
                 }, getString(R.string.dialog_choose_backup))
                 startActivityForResult(chooserIntent, REQUEST_CODE_RESTORE_FILE)
                 true

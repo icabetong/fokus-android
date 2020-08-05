@@ -15,16 +15,16 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
-    <string name="menu_logs">Logboeken</string>
-    <string name="menu_settings">@string/activity_settings</string>
-    <string name="menu_about">@string/activity_about</string>
+    <string name="menu_export">Exporteer</string>
     <string name="menu_clear_items">Duidelijke items</string>
     <string name="menu_delete">@string/button_delete</string>
-    <string name="menu_new">@string/button_new</string>
 
     <string name="navigation_tasks">Taken</string>
     <string name="navigation_events">Evenementen</string>
     <string name="navigation_subjects">Onderwerpen</string>
+    <string name="navigation_logs">Logboeken</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
 
     <string name="button_add_task">Taak toevoegen</string>
     <string name="button_add_event">Evenement toevoegen</string>
@@ -69,6 +69,7 @@
     <string name="dialog_confirm_deletion_title">Weet u zeker dat u %1$s wilt verwijderen?</string>
     <string name="dialog_confirm_deletion_summary">Als dit item eenmaal is verwijderd, kan het niet meer worden gerecupereerd.</string>
     <string name="dialog_schedule_details">Details van de planning</string>
+    <string name="dialog_export_to">Exporteren naar</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>

@@ -20,7 +20,7 @@ import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
+import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -176,11 +176,11 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     private fun createNotificationChannel(type: Int) {
         val id = when (type) {
-            Log.TYPE_TASK -> NotificationChannelManager.CHANNEL_ID_TASK
-            Log.TYPE_EVENT -> NotificationChannelManager.CHANNEL_ID_EVENT
-            else -> NotificationChannelManager.CHANNEL_ID_GENERIC
+            Log.TYPE_TASK -> AppNotificationManager.CHANNEL_ID_TASK
+            Log.TYPE_EVENT -> AppNotificationManager.CHANNEL_ID_EVENT
+            else -> AppNotificationManager.CHANNEL_ID_GENERIC
         }
-        NotificationChannelManager(applicationContext).create(id)
+        AppNotificationManager(applicationContext).create(id)
     }
 
     private fun createNotification(log: Log?, id: String,

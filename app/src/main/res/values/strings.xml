@@ -69,7 +69,6 @@
     <string name="dialog_confirm_deletion_title">Are you sure you want to remove %1$s?</string>
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
-    <string name="dialog_export_to">Exportieren nach</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -117,8 +116,6 @@
     <string name="settings_group_advanced">Advanced</string>
     <string name="settings_group_debugging">Debugging</string>
     <string name="settings_group_contribute">Contribute</string>
-
-    <string name="settings_name">Your Name</string>
 
     <string name="settings_theme">Theme</string>
     <string name="settings_theme_item_system">System default</string>
@@ -214,9 +211,13 @@
     <string name="notification_restore_error">Restore Failed</string>
     <string name="notification_restore_success">Restore Completed</string>
 
+    <!-- Greetings -->
+    <string name="greeting_default">Good day!</string>
+    <string name="greeting_morning">Good morning!</string>
+    <string name="greeting_afternoon">Good afternoon!</string>
+    <string name="greeting_evening">Good evening!</string>
+
     <!-- used for concat and formatting -->
-    <string name="student">student</string>
-    <string name="hello">Hello, %1$s</string>
     <string name="and">&#160;and&#160;</string>
     <string name="yesterday_at">Yesterday at %1$s</string>
     <string name="yesterday">Yesterday</string>

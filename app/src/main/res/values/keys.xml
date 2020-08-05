@@ -2,7 +2,6 @@
 <resources>
 
     <!-- Preference Keys -->
-    <string translatable="false" name="key_username">usernameKey</string>
     <string translatable="false" name="key_theme">themeKey</string>
     <string translatable="false" name="key_confetti">confettiKey</string>
     <string translatable="false" name="key_sound">soundKey</string>

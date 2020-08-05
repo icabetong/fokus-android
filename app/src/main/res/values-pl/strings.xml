@@ -68,7 +68,6 @@
     <string name="dialog_confirm_deletion_title">Jesteś pewien, że chcesz usunąć %1$s?</string>
     <string name="dialog_confirm_deletion_summary">Po usunięciu tej pozycji, nie można jej odzyskać.</string>
     <string name="dialog_schedule_details">Szczegóły Harmonogramu</string>
-    <string name="dialog_export_to">Eksport do</string>
 
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>
@@ -116,8 +115,6 @@
     <string name="settings_group_advanced">Zaawansowane</string>
     <string name="settings_group_debugging">Debugowanie</string>
     <string name="settings_group_contribute">Wkład</string>
-
-    <string name="settings_name">Twoje Imię i Nazwisko</string>
 
     <string name="settings_theme">Temat</string>
     <string name="settings_theme_item_system">System śledzenia</string>
@@ -213,9 +210,13 @@
     <string name="notification_restore_error">Przywrócenie nie powiodło się</string>
     <string name="notification_restore_success">Przywrócony Ukończony</string>
 
+    <!-- Greetings -->
+    <string name="greeting_default">Dobry dzień!</string>
+    <string name="greeting_morning"> Dzień dobry!</string>
+    <string name="greeting_afternoon">Dzień dobry!</string>
+    <string name="greeting_evening">Dobry wieczór!</string>
+
     <!-- used for concat and formatting -->
-    <string name="student">student</string>
-    <string name="hello">Witam, %1$s</string>
     <string name="and">&#160;oraz&#160;</string>
     <string name="yesterday_at">Wczoraj na %1$s</string>
     <string name="yesterday">Wczoraj</string>

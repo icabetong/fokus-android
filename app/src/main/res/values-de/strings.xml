@@ -117,7 +117,6 @@
     <string name="settings_group_debugging">Fehlerbehebung</string>
     <string name="settings_group_contribute">Beitragen</string>
 
-    <string name="settings_name">Ihr Name</string>
     <string name="settings_theme">Thema</string>
     <string name="settings_theme_item_system">Systemvorgabe</string>
     <string name="settings_theme_item_dark">Dunkel</string>
@@ -210,8 +209,12 @@
     <string name="notification_restore_error">Wiederherstellung fehlgeschlagen</string>
     <string name="notification_restore_success">Wiederherstellung abgeschlossen</string>
 
-    <string name="student">student</string>
-    <string name="hello">Hallo, %1$s</string>
+    <!-- Greetings -->
+    <string name="greeting_default">Guten tag!</string>
+    <string name="greeting_morning">Guten morgen!</string>
+    <string name="greeting_afternoon">Guten tag!</string>
+    <string name="greeting_evening">Guten abend!</string>
+
     <string name="and">&#160;und&#160;</string>
     <string name="yesterday_at">Gestern um %1$s</string>
     <string name="yesterday">Gestern</string>

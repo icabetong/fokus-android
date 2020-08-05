@@ -68,7 +68,6 @@
     <string name="dialog_confirm_deletion_title">Êtes-vous sûr de vouloir supprimer les %1$ ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois que ce poste a été supprimé, il ne peut plus être récupéré.</string>
     <string name="dialog_schedule_details">Détails du calendrier</string>
-    <string name="dialog_export_to">Exporter vers</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>
@@ -116,8 +115,6 @@
     <string name="settings_group_advanced">Avancé</string>
     <string name="settings_group_debugging">Débogage</string>
     <string name="settings_group_contribute">Contribuer</string>
-
-    <string name="settings_name">Votre nom</string>
 
     <string name="settings_theme">Thème</string>
     <string name="settings_theme_item_system">Défaut du système</string>
@@ -213,9 +210,13 @@
     <string name="notification_restore_error">Echec de la restauration</string>
     <string name="notification_restore_success">Restauration terminée</string>
 
+    <!-- Greetings -->
+    <string name="greeting_default">Bonne journée !</string>
+    <string name="greeting_morning">Bonjour !</string>
+    <string name="greeting_afternoon">Bon après-midi !</string>
+    <string name="greeting_evening">Bonsoir !</string>
+
     <!-- used for concat and formatting -->
-    <string name="student">étudiant</string>
-    <string name="hello">Bonjour, %1$s</string>
     <string name="and">&#160;et&#160;</string>
     <string name="yesterday_at">Hier à %1$s</string>
     <string name="yesterday">Hier</string>

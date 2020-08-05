@@ -69,7 +69,6 @@
     <string name="dialog_confirm_deletion_title">Weet u zeker dat u %1$s wilt verwijderen?</string>
     <string name="dialog_confirm_deletion_summary">Als dit item eenmaal is verwijderd, kan het niet meer worden gerecupereerd.</string>
     <string name="dialog_schedule_details">Details van de planning</string>
-    <string name="dialog_export_to">Exporteren naar</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
@@ -117,8 +116,6 @@
     <string name="settings_group_advanced">Gevorderde</string>
     <string name="settings_group_debugging">Debuggen</string>
     <string name="settings_group_contribute">Bijdragen</string>
-
-    <string name="settings_name">Uw naam</string>
 
     <string name="settings_theme">Thema</string>
     <string name="settings_theme_item_system">Systeem Standaard</string>
@@ -214,9 +211,13 @@
     <string name="notification_restore_error">Herstel Mislukt</string>
     <string name="notification_restore_success">Herstel Voltooid</string>
 
+    <!-- Greetings -->
+    <string name="greeting_default">Goedendag!</string>
+    <string name="greeting_morning">Goedemorgen!</string>
+    <string name="greeting_afternoon">Goedemiddag!</string>
+    <string name="greeting_evening">Goedenavond!</string>
+
     <!-- used for concat and formatting -->
-    <string name="student">student</string>
-    <string name="hello">Hallo, %1$s</string>
     <string name="and">&#160;en&#160;</string>
     <string name="yesterday_at">Gisteren bij %1$s</string>
     <string name="yesterday">Gisteren</string>

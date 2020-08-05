@@ -33,9 +33,6 @@ class PreferenceManager(private val context: Context?) {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    val name: String?
-        get() = sharedPreference.getString(R.string.key_username, context?.getString(R.string.student))
-
     var theme: Theme
         get() = Theme.parse(sharedPreference.getString(R.string.key_theme,
             Theme.SYSTEM.toString()))

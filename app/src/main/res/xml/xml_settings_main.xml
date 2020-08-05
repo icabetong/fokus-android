@@ -3,20 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <EditTextPreference
-        app:key="@string/key_username"
-        app:title="@string/settings_name"
-        app:dialogTitle="@string/dialog_your_name_title"
-        app:dialogMessage="@string/dialog_your_name_summary"
-        app:useSimpleSummaryProvider="true"/>
-
     <PreferenceCategory
         app:title="@string/settings_group_interface">
 
         <ListPreference
             app:key="@string/key_theme"
             app:title="@string/settings_theme"
-            app:summary="%s"
             app:dialogTitle="@string/dialog_choose_theme"
             app:entries="@array/settings_dark_theme_items"
             app:entryValues="@array/settings_dark_theme_values"
@@ -78,12 +70,12 @@
         <ListPreference
             app:key="@string/key_task_reminder_interval"
             app:title="@string/settings_task_reminders"
-            app:summary="%s"
             app:entries="@array/settings_task_reminder_interval_items"
             app:entryValues="@array/settings_task_reminder_interval_values"
             app:defaultValue="3"
             app:dialogTitle="@string/dialog_select_notification_interval"
-            app:dependency="@string/key_task_reminder"/>
+            app:dependency="@string/key_task_reminder"
+            app:useSimpleSummaryProvider="true"/>
 
         <SwitchPreferenceCompat
             app:key="@string/key_event_reminder"
@@ -94,12 +86,12 @@
         <ListPreference
             app:key="@string/key_event_reminder_interval"
             app:title="@string/settings_event_reminders"
-            app:summary="%s"
             app:entries="@array/settings_event_reminder_interval_items"
             app:entryValues="@array/settings_event_reminder_interval_values"
             app:defaultValue="30"
             app:dialogTitle="@string/dialog_select_notification_interval"
-            app:dependency="@string/key_event_reminder"/>
+            app:dependency="@string/key_event_reminder"
+            app:useSimpleSummaryProvider="true"/>
 
         <SwitchPreferenceCompat
             app:key="@string/key_subject_reminder"
@@ -110,12 +102,12 @@
         <ListPreference
             app:key="@string/key_subject_reminder_interval"
             app:title="@string/settings_class_reminders"
-            app:summary="%s"
             app:entries="@array/settings_subject_reminder_interval_items"
             app:entryValues="@array/settings_subject_reminder_interval_values"
             app:defaultValue="5"
             app:dialogTitle="@string/dialog_select_notification_interval"
-            app:dependency="@string/key_subject_reminder"/>
+            app:dependency="@string/key_subject_reminder"
+            app:useSimpleSummaryProvider="true"/>
 
         <Preference
             app:key="@string/key_more_notification_settings"

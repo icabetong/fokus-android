@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableL
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
+import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_tasks)
 
-        ReminderWorker.reschedule(this.applicationContext)
+        TaskReminderWorker.reschedule(this.applicationContext)
 
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
         controller = navigationHost?.findNavController()

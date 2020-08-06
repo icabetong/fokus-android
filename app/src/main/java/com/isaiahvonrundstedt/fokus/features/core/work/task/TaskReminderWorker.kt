@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.work
+package com.isaiahvonrundstedt.fokus.features.core.work.task
 
 import android.content.Context
 import androidx.work.OneTimeWorkRequest
@@ -17,12 +17,12 @@ import java.util.concurrent.TimeUnit
 // This worker's function is to only show reminders
 // based on the frequency the user has selected; daily or every weekends
 // This will show a reminders for pending tasks.
-class ReminderWorker(context: Context, workerParameters: WorkerParameters)
+class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var database = AppDatabase.getInstance(applicationContext)
     private var tasks = database?.tasks()
-    private var histories = database?.logs()
+    private var logs = database?.logs()
 
     override suspend fun doWork(): Result {
         val currentTime = DateTime.now()
@@ -35,7 +35,7 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
                 title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
                     taskSize)
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
-                type = Log.TYPE_GENERIC
+                type = Log.TYPE_TASK
                 dateTimeTriggered = DateTime.now()
             }
         }
@@ -46,7 +46,7 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
             return Result.success()
 
         if (log != null) {
-            histories?.insert(log)
+            logs?.insert(log)
             sendNotification(log)
         }
 
@@ -73,7 +73,7 @@ class ReminderWorker(context: Context, workerParameters: WorkerParameters)
 
             manager.cancelAllWorkByTag(this::class.java.simpleName)
 
-            val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
+            val request = OneTimeWorkRequest.Builder(TaskReminderWorker::class.java)
                 .setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
                     TimeUnit.MINUTES)
                 .addTag(this::class.java.simpleName)

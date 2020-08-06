@@ -17,7 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.features.core.work.ReminderWorker
+import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
@@ -86,7 +86,7 @@ class SettingsPreference : BasePreference() {
                     timePicker(show24HoursView = false) { _, datetime ->
                         preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
 
-                        ReminderWorker.reschedule(requireContext())
+                        TaskReminderWorker.reschedule(requireContext())
                     }
                     positiveButton(R.string.button_done) { _ ->
                         it.summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME)

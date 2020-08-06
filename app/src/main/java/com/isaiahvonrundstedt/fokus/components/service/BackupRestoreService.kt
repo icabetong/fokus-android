@@ -17,6 +17,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.coroutines.*
+import okio.Okio
 import org.joda.time.DateTime
 import java.io.*
 import java.util.zip.ZipEntry
@@ -196,7 +197,7 @@ class BackupRestoreService: BaseService() {
 
     private fun createCache(name: String, json: String): File {
         return File(cacheDir, name).apply {
-            FileOutputStream(this).use {
+            Okio.buffer(Okio.sink(this)).use {
                 it.write(json.toByteArray())
                 it.flush()
             }

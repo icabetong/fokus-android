@@ -6,7 +6,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
@@ -154,7 +156,9 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     }
 
     protected fun sendNotification(log: Log, @Nullable tag: String? = null) {
-        createNotificationChannel(log.type)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createNotificationChannel(log.type)
+
         if (log.type == Log.TYPE_TASK) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
@@ -174,6 +178,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC))
     }
 
+    @RequiresApi(26)
     private fun createNotificationChannel(type: Int) {
         val id = when (type) {
             Log.TYPE_TASK -> AppNotificationManager.CHANNEL_ID_TASK
@@ -197,7 +202,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         }.build()
     }
 
-    protected val notificationManager by lazy {
+    private val notificationManager by lazy {
         applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 

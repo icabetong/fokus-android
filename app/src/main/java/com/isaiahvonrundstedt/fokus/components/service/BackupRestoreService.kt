@@ -1,19 +1,12 @@
 package com.isaiahvonrundstedt.fokus.components.service
 
-import android.app.Notification
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.os.IBinder
-import androidx.annotation.StringRes
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
-import com.isaiahvonrundstedt.fokus.components.utils.JsonDataStreamer
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.components.utils.ZipArchiveManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -49,117 +42,97 @@ class BackupRestoreService: BaseService() {
     }
 
     private fun startRestore(uri: Uri) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(AppNotificationManager(this)) {
-                create(AppNotificationManager.CHANNEL_ID_BACKUP)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startForeground(NOTIFICATION_RESTORE_ONGOING,
-                createNotification(R.string.notification_restore_ongoing, ongoing = true))
-        else manager?.notify(NOTIFICATION_RESTORE_ONGOING,
+        startForegroundCompat(NOTIFICATION_RESTORE_ONGOING,
             createNotification(R.string.notification_restore_ongoing, ongoing = true))
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
             val archive = ZipArchiveManager.convertInputStream(this, archiveStream)
+            runBlocking {
 
-            val e = archive.entries()
-            while (e.hasMoreElements()) {
-                val entry = e.nextElement() as ZipEntry
-                archive.getInputStream(entry).use { stream ->
+                val entries = mutableListOf<ZipEntry>()
+                val e = archive.entries()
+                while (e.hasMoreElements()) {
+                    val entry = e.nextElement() as ZipEntry
                     when (entry.name) {
-                        FILE_BACKUP_NAME_SUBJECTS -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Subject::class.java)?.run {
-                                    forEach { database?.subjects()?.insert(it) }
-                                }
-                            }
-                        }
-                        FILE_BACKUP_NAME_SCHEDULES -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Schedule::class.java)?.run {
-                                    forEach { database?.schedules()?.insert(it) }
-                                }
-                            }
-                        }
-                        FILE_BACKUP_NAME_TASKS -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Task::class.java)?.run {
-                                    forEach { database?.tasks()?.insert(it) }
-                                }
-                            }
-                        }
-                        FILE_BACKUP_NAME_ATTACHMENTS -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Attachment::class.java)?.run {
-                                    forEach { database?.attachments()?.insert(it) }
-                                }
-                            }
-                        }
-                        FILE_BACKUP_NAME_EVENTS -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Event::class.java)?.run {
-                                    forEach { database?.events()?.insert(it) }
-                                }
-                            }
-                        }
-                        FILE_BACKUP_NAME_LOGS -> {
-                            runBlocking {
-                                JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
-                                    forEach { database?.logs()?.insert(it) }
-                                }
-                            }
-                        }
-                        else -> {}
+                        FILE_BACKUP_NAME_SUBJECTS -> entries.add(0, entry)
+                        FILE_BACKUP_NAME_SCHEDULES -> entries.add(1, entry)
+                        FILE_BACKUP_NAME_TASKS -> entries.add(2, entry)
+                        FILE_BACKUP_NAME_ATTACHMENTS -> entries.add(3, entry)
+                        FILE_BACKUP_NAME_EVENTS -> entries.add(4, entry)
+                        FILE_BACKUP_NAME_LOGS -> entries.add(5, entry)
                     }
                 }
+                entries.forEach { entry ->
+                    archive.getInputStream(entry)?.use { tryParse(entry.name, it) }
+                }
+                entries.clear()
+
+                stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
+                manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
+                    createNotification(R.string.notification_restore_success))
+                terminateService()
             }
             archive.close()
-
-            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
-            manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
-                createNotification(R.string.notification_restore_success))
         } catch (e: EOFException) {
             e.printStackTrace()
 
-            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
+            stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_FAILED,
                 createNotification(R.string.notification_restore_error,
-                    R.string.feedback_backup_corrupted))
+                    R.string.feedback_restore_corrupted))
+            terminateService()
         } catch (e: Exception) {
             e.printStackTrace()
 
-            removeOngoingNotification(NOTIFICATION_RESTORE_ONGOING)
+            stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_FAILED,
                 createNotification(R.string.notification_restore_error,
-                    R.string.feedback_backup_invalid))
+                    R.string.feedback_restore_invalid))
+            terminateService()
         }
-
-        terminateService()
     }
 
-    private fun removeOngoingNotification(id: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            stopForeground(true)
-        else manager?.cancel(id)
+    private suspend fun tryParse(name: String, stream: InputStream) {
+        when (name) {
+            FILE_BACKUP_NAME_SUBJECTS -> {
+                JsonDataStreamer.decodeFromJson(stream, Subject::class.java)?.run {
+                    forEach { database?.subjects()?.insert(it) }
+                }
+            }
+            FILE_BACKUP_NAME_SCHEDULES -> {
+                JsonDataStreamer.decodeFromJson(stream, Schedule::class.java)?.run {
+                    forEach { database?.schedules()?.insert(it) }
+                }
+            }
+            FILE_BACKUP_NAME_TASKS -> {
+                JsonDataStreamer.decodeFromJson(stream, Task::class.java)?.run {
+                    forEach { database?.tasks()?.insert(it) }
+                }
+            }
+            FILE_BACKUP_NAME_ATTACHMENTS -> {
+                JsonDataStreamer.decodeFromJson(stream, Attachment::class.java)?.run {
+                    forEach { database?.attachments()?.insert(it) }
+                }
+            }
+            FILE_BACKUP_NAME_EVENTS -> {
+                JsonDataStreamer.decodeFromJson(stream, Event::class.java)?.run {
+                    forEach { database?.events()?.insert(it) }
+                }
+            }
+            FILE_BACKUP_NAME_LOGS -> {
+                JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
+                    forEach { database?.logs()?.insert(it) }
+                }
+            }
+        }
     }
 
     private fun startBackup(destination: Uri) {
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
             return
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(AppNotificationManager(this)) {
-                create(AppNotificationManager.CHANNEL_ID_BACKUP)
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startForeground(NOTIFICATION_BACKUP_ONGOING,
-                createNotification(R.string.notification_backup_ongoing, ongoing = true))
-        else manager?.notify(NOTIFICATION_BACKUP_ONGOING,
+        startForegroundCompat(NOTIFICATION_BACKUP_ONGOING,
             createNotification(R.string.notification_backup_ongoing, ongoing = true))
 
         try {
@@ -197,29 +170,28 @@ class BackupRestoreService: BaseService() {
                     items.add(createCache(FILE_BACKUP_NAME_LOGS, it))
                 }
 
-                if (items.isEmpty())
-                    terminateService(BROADCAST_BACKUP_EMPTY)
-                else
+                if (items.isNotEmpty())
                     ZipArchiveManager.Create(this@BackupRestoreService)
                         .fromSource(items)
                         .toDestination(destination)
-                        .compress()
-            }
+                        .start()
+                else terminateService(BROADCAST_BACKUP_EMPTY)
 
-            removeOngoingNotification(NOTIFICATION_BACKUP_ONGOING)
-            manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
-                createNotification(R.string.notification_backup_success))
+                stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
+                manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
+                    createNotification(R.string.notification_backup_success))
+                terminateService(BROADCAST_BACKUP_SUCCESS)
+            }
 
             PreferenceManager(this).backupDate = DateTime.now()
         } catch (e: Exception) {
             e.printStackTrace()
 
-            removeOngoingNotification(NOTIFICATION_BACKUP_ONGOING)
+            stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
             manager?.notify(NOTIFICATION_BACKUP_FAILED,
                 createNotification(R.string.notification_backup_error))
+            terminateService(BROADCAST_BACKUP_FAILED)
         }
-
-        terminateService(BROADCAST_BACKUP_SUCCESS)
     }
 
     private fun createCache(name: String, json: String): File {
@@ -231,38 +203,14 @@ class BackupRestoreService: BaseService() {
         }
     }
 
-    private fun terminateService(status: String = "") {
-        if (status.isNotEmpty())
-            LocalBroadcastManager.getInstance(this)
-                .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
-                    putExtra(EXTRA_BROADCAST_STATUS, status)
-                })
-        stopSelf()
-    }
-
-    private fun createNotification(@StringRes id: Int, @StringRes content: Int = 0,
-                                   ongoing: Boolean = false): Notification {
-        return NotificationCompat.Builder(this,
-            AppNotificationManager.CHANNEL_ID_BACKUP).apply {
-            setSmallIcon(R.drawable.ic_outline_done_all_24)
-            setContentTitle(getString(id))
-            if (content != 0) setContentText(getString(content))
-            setOngoing(ongoing)
-            setCategory(Notification.CATEGORY_SERVICE)
-            setChannelId(AppNotificationManager.CHANNEL_ID_BACKUP)
-            if (ongoing) setProgress(0, 0, true)
-            color = ContextCompat.getColor(this@BackupRestoreService, R.color.color_primary)
-        }.build()
-    }
-
     companion object {
         const val FILE_BACKUP_NAME_ARCHIVE = "backup.zip"
-        const val FILE_BACKUP_NAME_SUBJECTS = "backup_1_subjects.json"
-        const val FILE_BACKUP_NAME_SCHEDULES = "backup_2_schedules.json"
-        const val FILE_BACKUP_NAME_TASKS = "backup_3_tasks.json"
-        const val FILE_BACKUP_NAME_ATTACHMENTS = "backup_4_attachments.json"
-        const val FILE_BACKUP_NAME_EVENTS = "backup_5_events.json"
-        const val FILE_BACKUP_NAME_LOGS = "backup_6_logs.json"
+        const val FILE_BACKUP_NAME_SUBJECTS = "subjects.json"
+        const val FILE_BACKUP_NAME_SCHEDULES = "schedules.json"
+        const val FILE_BACKUP_NAME_TASKS = "tasks.json"
+        const val FILE_BACKUP_NAME_ATTACHMENTS = "attachments.json"
+        const val FILE_BACKUP_NAME_EVENTS = "events.json"
+        const val FILE_BACKUP_NAME_LOGS = "logs.json"
 
         const val ACTION_BACKUP = "action:backup"
         const val ACTION_RESTORE = "action:restore"
@@ -274,8 +222,6 @@ class BackupRestoreService: BaseService() {
         const val NOTIFICATION_RESTORE_SUCCESS = 5
         const val NOTIFICATION_RESTORE_FAILED = 6
 
-        const val ACTION_SERVICE_BROADCAST = "action:service:status"
-        const val EXTRA_BROADCAST_STATUS = "extra:broadcast:status"
         const val BROADCAST_BACKUP_SUCCESS = "broadcast:backup:success"
         const val BROADCAST_BACKUP_FAILED = "broadcast:backup:failed"
         const val BROADCAST_BACKUP_EMPTY = "broadcast:backup:empty"

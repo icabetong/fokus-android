@@ -9,4 +9,9 @@
         app:iconTint="@color/color_on_surface"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/menu_export"
+        app:showAsAction="never"/>
+
 </menu>

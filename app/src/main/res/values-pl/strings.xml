@@ -15,6 +15,7 @@
     <string name="activity_about">O</string>
 
     <string name="menu_export">Eksport</string>
+    <string name="menu_import">Import</string>
     <string name="menu_clear_items">Pozycje Jasne</string>
     <string name="menu_delete">@string/button_delete</string>
 
@@ -106,8 +107,14 @@
     <string name="feedback_event_empty_name">Zapomniałeś wpisać nazwę wydarzenia</string>
     <string name="feedback_event_empty_location">Zapomniałeś wprowadzić lokalizację</string>
     <string name="feedback_event_empty_schedule">Zapomniałeś wprowadzić harmonogram</string>
-    <string name="feedback_backup_invalid">Nieważny plik kopii zapasowej</string>
-    <string name="feedback_backup_corrupted">Plik zapasowy uszkodzony lub nieczytelny</string>
+    <string name="feedback_restore_invalid">Nieważny plik kopii zapasowej</string>
+    <string name="feedback_restore_corrupted">Plik zapasowy uszkodzony lub nieczytelny</string>
+    <string name="feedback_backup_empty">Nie ma żadnych przedmiotów do zrobienia kopii zapasowej</string>
+    <string name="feedback_backup_failed">W procesie tworzenia kopii zapasowej wystąpił błąd</string>
+    <string name="feedback_export_success">Eksport Udany</string>
+    <string name="feedback_export_failed">Eksport nie powiodło się</string>
+    <string name="feedback_import_success">Import Udany</string>
+    <string name="feedback_import_failed">Importowany Nieudany</string>
 
     <string name="settings_group_interface">Interfejs</string>
     <string name="settings_group_sound">Dźwięk</string>

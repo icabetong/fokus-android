@@ -16,6 +16,7 @@
     <string name="activity_about">Über</string>
 
     <string name="menu_export">Exportieren</string>
+    <string name="menu_import">Importieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
     <string name="menu_delete">@string/button_delete</string>
 
@@ -107,8 +108,14 @@
     <string name="feedback_event_empty_name">Sie haben vergessen, den Namen der Veranstaltung einzugeben</string>
     <string name="feedback_event_empty_location">Sie haben vergessen, den Standort einzugeben</string>
     <string name="feedback_event_empty_schedule">Sie haben vergessen, den Zeitplan einzugeben</string>
-    <string name="feedback_backup_invalid">Sicherungsdatei ungültig</string>
-    <string name="feedback_backup_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
+    <string name="feedback_restore_invalid">Sicherungsdatei ungültig</string>
+    <string name="feedback_restore_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
+    <string name="feedback_backup_empty">Es sind keine Artikel zu sichern</string>
+    <string name="feedback_backup_failed">Sicherungsprozess stieß auf einen Fehler</string>
+    <string name="feedback_export_success">Export erfolgreich</string>
+    <string name="feedback_export_failed">Export fehlgeschlagen</string>
+    <string name="feedback_import_success">Import erfolgreich</string>
+    <string name="feedback_import_failed">Import fehlgeschlagen</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>

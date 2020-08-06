@@ -22,6 +22,7 @@ class ZipArchiveManager private constructor(private var context: Context) {
 
                         inputStream.copyTo(zip, BUFFER)
                     }
+                    it.delete()
                 }
                 zip.flush()
             }
@@ -41,7 +42,7 @@ class ZipArchiveManager private constructor(private var context: Context) {
             return this
         }
 
-        fun compress() = zip.archive()
+        fun start() = zip.archive()
     }
 
     companion object {

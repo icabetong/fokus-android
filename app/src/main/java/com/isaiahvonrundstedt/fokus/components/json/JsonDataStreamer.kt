@@ -1,24 +1,54 @@
-package com.isaiahvonrundstedt.fokus.components.utils
+package com.isaiahvonrundstedt.fokus.components.json
 
-import com.isaiahvonrundstedt.fokus.components.json.DateTimeJSONAdapter
-import com.isaiahvonrundstedt.fokus.components.json.LocalTimeJSONAdapter
-import com.isaiahvonrundstedt.fokus.components.json.UriJSONAdapter
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import android.net.Uri
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okio.Okio
-import java.io.InputStream
+import org.joda.time.DateTime
+import org.joda.time.LocalTime
+import java.io.*
 
-class JsonDataStreamer {
+abstract class JsonDataStreamer {
+
+    class DateTimeAdapter {
+
+        @FromJson
+        fun toDateTime(string: String): DateTime?
+            = DateTimeConverter.toDateTime(string)
+
+        @ToJson
+        fun fromDateTime(dateTime: DateTime): String?
+            = DateTimeConverter.fromDateTime(dateTime)
+    }
+
+    class LocalTimeAdapter {
+
+        @FromJson
+        fun toLocalTime(string: String): LocalTime?
+                = DateTimeConverter.toTime(string)
+
+        @ToJson
+        fun fromLocalTime(time: LocalTime): String?
+                = DateTimeConverter.fromTime(time)
+    }
+
+    class UriAdapter {
+
+        @FromJson
+        fun toUri(data: String): Uri = Uri.parse(data)
+
+        @ToJson
+        fun fromUri(uri: Uri): String = uri.toString()
+    }
 
     companion object {
         val moshi: Moshi
             get() = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
-                .add(DateTimeJSONAdapter())
-                .add(LocalTimeJSONAdapter())
-                .add(UriJSONAdapter())
+                .add(DateTimeAdapter())
+                .add(LocalTimeAdapter())
+                .add(UriAdapter())
                 .build()
 
         fun <T> encodeToJson(data: T?, dataType: Class<T>): String? {

@@ -15,6 +15,7 @@
     <string name="activity_about">À propos de</string>
 
     <string name="menu_export">Exporter</string>
+    <string name="menu_import">Importer</string>
     <string name="menu_clear_items">Points clairs</string>
     <string name="menu_delete">@string/button_delete</string>
 
@@ -106,8 +107,14 @@
     <string name="feedback_event_empty_name">Vous avez oublié de saisir le nom de l\'événement</string>
     <string name="feedback_event_empty_location">Vous avez oublié de saisir le lieu</string>
     <string name="feedback_event_empty_schedule">Vous avez oublié d\'entrer l\'horaire</string>
-    <string name="feedback_backup_invalid">Fichier de sauvegarde non valable</string>
-    <string name="feedback_backup_corrupted">Fichier de sauvegarde corrompu ou illisible</string>
+    <string name="feedback_restore_invalid">Fichier de sauvegarde non valable</string>
+    <string name="feedback_restore_corrupted">Fichier de sauvegarde corrompu ou illisible</string>
+    <string name="feedback_backup_empty">Il n\'y a pas d\'éléments à sauvegarder</string>
+    <string name="feedback_backup_failed">Le processus de sauvegarde a rencontré une erreur</string>
+    <string name="feedback_export_success">Exporter avec succès</string>
+    <string name="feedback_export_failed">Échec de l\'exportation</string>
+    <string name="feedback_import_success">L\'importation réussie</string>
+    <string name="feedback_import_failed">Échec de l\'importation</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>

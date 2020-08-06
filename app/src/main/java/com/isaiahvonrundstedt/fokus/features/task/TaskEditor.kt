@@ -20,8 +20,6 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
-import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
-import com.isaiahvonrundstedt.fokus.components.utils.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor

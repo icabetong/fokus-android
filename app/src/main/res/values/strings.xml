@@ -16,6 +16,7 @@
     <string name="activity_about">About</string>
 
     <string name="menu_export">Export</string>
+    <string name="menu_import">Import</string>
     <string name="menu_clear_items">Clear Items</string>
     <string name="menu_delete">@string/button_delete</string>
 
@@ -107,8 +108,14 @@
     <string name="feedback_event_empty_name">You forgot to enter the event name</string>
     <string name="feedback_event_empty_location">You forgot to enter the location</string>
     <string name="feedback_event_empty_schedule">You forgot to enter the schedule</string>
-    <string name="feedback_backup_invalid">Backup file is invalid</string>
-    <string name="feedback_backup_corrupted">Backup file is corrupted or unreadable</string>
+    <string name="feedback_restore_invalid">Backup file is invalid</string>
+    <string name="feedback_restore_corrupted">Backup file is corrupted or unreadable</string>
+    <string name="feedback_backup_empty">There are no items to backup</string>
+    <string name="feedback_backup_failed">Backup process encountered an error</string>
+    <string name="feedback_export_success">Export successful</string>
+    <string name="feedback_export_failed">Export failed</string>
+    <string name="feedback_import_success">Import successful</string>
+    <string name="feedback_import_failed">Import failed</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>

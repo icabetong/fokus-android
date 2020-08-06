@@ -10,12 +10,14 @@ import android.os.Build
 import android.os.Bundle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.Preference
+import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
@@ -26,7 +28,7 @@ class BackupRestorePreference: BasePreference() {
         super.onCreate(savedInstanceState)
 
         LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(receiver, IntentFilter(BackupRestoreService.ACTION_SERVICE_BROADCAST))
+            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -35,12 +37,17 @@ class BackupRestorePreference: BasePreference() {
 
     private var receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == BackupRestoreService.ACTION_SERVICE_BROADCAST) {
-                if (intent.getStringExtra(BackupRestoreService.EXTRA_BROADCAST_STATUS)
-                    == BackupRestoreService.BROADCAST_BACKUP_SUCCESS)
-                    findPreference<Preference>(R.string.key_backup)?.apply {
-                        summary = manager.backupDate.parseForSummary()
-                    }
+            if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
+                when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
+                    BackupRestoreService.BROADCAST_BACKUP_SUCCESS ->
+                        findPreference<Preference>(R.string.key_backup)?.apply {
+                            summary = manager.backupDate.parseForSummary()
+                        }
+                    BackupRestoreService.BROADCAST_BACKUP_FAILED ->
+                        createSnackbar(requireView(), R.string.feedback_backup_failed).show()
+                    BackupRestoreService.BROADCAST_BACKUP_EMPTY ->
+                        createSnackbar(requireView(), R.string.feedback_backup_empty).show()
+                }
             }
         }
     }

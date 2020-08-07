@@ -134,6 +134,7 @@
         <item name="boxCornerRadiusBottomEnd">@dimen/surface_corner_radius</item>
         <item name="boxStrokeColor">@color/color_text_input_stroke</item>
         <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
     </style>
     <style name="Fokus.Widget.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@android:color/transparent</item>
@@ -166,24 +167,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">14sp</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Title" parent="Fokus.TextAppearance">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">24sp</item>
-    </style>
-    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
+    <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Body">
         <item name="android:letterSpacing">0.08</item>
-        <item name="android:textColor">@color/color_secondary_text</item>
+        <item name="android:textColor">@color/color_primary_text</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-    </style>
-    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body">
-        <item name="android:textColor">@color/color_secondary_text</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-    <style name="Fokus.TextAppearance.List.Overline" parent="Fokus.TextAppearance.Editor.Hint">
-        <item name="android:textColor">@color/color_primary_text</item>
     </style>
     <style name="Fokus.TextAppearance.List.Title" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textSize">16sp</item>
@@ -197,6 +186,19 @@
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
     <style name="Fokus.TextAppearance.List.Meta" parent="Fokus.TextAppearance"/>
+    <style name="Fokus.TextAppearance.Editor.Title" parent="Fokus.TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body.Medium">
+        <item name="android:textColor">@color/color_secondary_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="Fokus.TextAppearance.Status.Title" parent="Fokus.TextAppearance.Body.Medium">
         <item name="android:textSize">18sp</item>
     </style>

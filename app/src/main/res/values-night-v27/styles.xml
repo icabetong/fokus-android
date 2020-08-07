@@ -13,7 +13,9 @@
         <item name="android:navigationBarColor">@color/color_surface</item>
     </style>
 
-    <style name="Fokus.Theme.Core.Editor"/>
+    <style name="Fokus.Theme.Core.Editor">
+        <item name="android:statusBarColor">@color/color_window_background</item>
+    </style>
     <style name="Fokus.Theme.Core.Editor.Task">
         <item name="colorPrimary">@color/color_theme_task</item>
         <item name="colorPrimaryVariant">@color/color_theme_task</item>

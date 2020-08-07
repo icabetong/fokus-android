@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:layout_marginVertical="8dp"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
             android:background="@drawable/shape_surface_background">
 
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:layout_marginVertical="8dp"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
             android:background="@drawable/shape_surface_background">
 
@@ -99,6 +99,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:background="?attr/selectableItemBackground"
                 android:text="@string/tag_color_sky"
                 android:textColor="@color/color_primary_text"
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"

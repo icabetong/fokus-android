@@ -17,6 +17,9 @@
     <dimen name="item_offset_vertical">8dp</dimen>
     <dimen name="item_offset_horizontal">12dp</dimen>
 
+    <dimen name="editor_container_padding">8dp</dimen>
+    <dimen name="editor_item_height">36dp</dimen>
+
     <!-- Widget -->
     <dimen name="widget_title">16sp</dimen>
     <dimen name="widget_title_padding">12sp</dimen>

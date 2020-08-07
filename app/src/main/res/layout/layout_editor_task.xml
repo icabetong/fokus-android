@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_padding"
             android:hint="@string/field_task_name"
+            app:hintTextAppearance="@style/Fokus.TextAppearance.Editor.Hint"
             style="@style/Fokus.Widget.TextInput.Layout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:layout_marginVertical="8dp"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
             android:background="@drawable/shape_surface_background">
 
@@ -54,7 +55,7 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/statusSwitch"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="@dimen/editor_item_height"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -65,7 +66,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/editor_container_padding"
                 android:paddingHorizontal="16dp"
                 android:text="@string/field_due_date"
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
@@ -73,12 +74,13 @@
             <TextView
                 android:id="@+id/dueDateTextView"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="@dimen/editor_item_height"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:background="?attr/selectableItemBackground"
                 android:text="@string/field_not_set"
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:layout_marginVertical="8dp"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
             android:background="@drawable/shape_surface_background">
 
@@ -102,8 +104,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/editor_item_height"
+                android:background="?attr/selectableItemBackground">
 
                 <TextView
                     android:id="@+id/subjectTextView"
@@ -139,7 +141,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/editor_container_padding"
                 android:paddingHorizontal="16dp"
                 android:text="@string/field_priority"
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
@@ -147,7 +149,7 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/prioritySwitch"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:layout_height="@dimen/editor_item_height"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
@@ -158,6 +160,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/editor_container_padding"
                 android:paddingHorizontal="16dp"
                 android:text="@string/helper_this_is_important"
                 android:textColor="@color/color_secondary_text"
@@ -172,7 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:layout_marginVertical="8dp"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
             android:background="@drawable/shape_surface_background">
 

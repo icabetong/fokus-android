@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout"
@@ -7,126 +7,117 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_padding">
+
+        <include layout="@layout/layout_appbar_editor"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_padding"
+            android:hint="@string/field_subject_code"
+            style="@style/Fokus.Widget.TextInput.Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/codeTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
+
+                <requestFocus/>
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_padding"
+            android:hint="@string/field_description"
+            style="@style/Fokus.Widget.TextInput.Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_padding"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="16dp"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_padding">
+            android:background="@drawable/shape_surface_background">
 
-            <include layout="@layout/layout_appbar_editor"/>
-
-            <EditText
-                android:id="@+id/codeEditText"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:inputType="textCapWords"
-                android:hint="@string/field_subject_code"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"
-                android:importantForAutofill="no"
-                android:background="@android:color/transparent">
+                android:paddingHorizontal="16dp"
+                android:text="@string/field_schedule"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <requestFocus/>
-
-            </EditText>
-
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                style="@style/Fokus.LinearLayout.Editor">
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_description"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <EditText
-                    android:id="@+id/descriptionEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="?attr/listPreferredItemHeightSmall"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:inputType="textCapWords"
-                    android:importantForAutofill="no"
-                    android:hint="@string/field_not_set"
-                    android:background="@android:color/transparent"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                style="@style/Fokus.LinearLayout.Editor">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_schedule"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <include layout="@layout/layout_item_add"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                style="@style/Fokus.LinearLayout.Editor">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_color_tag"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-                <TextView
-                    android:id="@+id/tagView"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/listPreferredItemHeightSmall"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/tag_color_sky"
-                    android:textColor="@color/color_primary_text"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:drawableStart="@drawable/shape_color_holder"
-                    android:drawablePadding="16dp"/>
-
-            </LinearLayout>
+            <include layout="@layout/layout_item_add"/>
 
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_padding"
+            android:layout_marginVertical="8dp"
+            android:paddingVertical="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/shape_surface_background">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/actionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_padding"
-        android:layout_gravity="bottom|end"
-        android:text="@string/button_save"
-        app:icon="@drawable/ic_outline_save_24"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:text="@string/field_color_tag"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <TextView
+                android:id="@+id/tagView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/tag_color_sky"
+                android:textColor="@color/color_primary_text"
+                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                android:clickable="true"
+                android:focusable="true"
+                android:drawableStart="@drawable/shape_color_holder"
+                android:drawablePadding="16dp"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionButton"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_margin="@dimen/activity_padding"
+            android:text="@string/button_save"
+            app:icon="@drawable/ic_outline_save_24"
+            style="@style/Fokus.Widget.Button"/>
+
+    </LinearLayout>
+
+</ScrollView>

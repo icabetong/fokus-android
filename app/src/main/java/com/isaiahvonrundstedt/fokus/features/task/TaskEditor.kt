@@ -60,7 +60,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
             adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
-            setTransitionName(nameEditText, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
+            setTransitionName(nameTextInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }
 
         statusSwitch.changeTextColorWhenChecked()
@@ -70,8 +70,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         // will be shown in their respective fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(task) {
-                nameEditText.setText(name)
-                notesEditText.setText(notes)
+                nameTextInput.setText(name)
+                notesTextInput.setText(notes)
                 prioritySwitch.isChecked = isImportant
                 statusSwitch.isChecked = isFinished
                 dueDateTextView.text = formatDueDate(this@TaskEditor)
@@ -162,9 +162,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             // show a snackbar feedback then direct the user's
             // attention to the field. Then return to stop the execution
             // of the code.
-            if (nameEditText.text.isNullOrEmpty()) {
+            if (nameTextInput.text.isNullOrEmpty()) {
                 createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
-                nameEditText.requestFocus()
+                nameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
@@ -174,8 +174,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            task.name = nameEditText.text.toString()
-            task.notes = notesEditText.text.toString()
+            task.name = nameTextInput.text.toString()
+            task.notes = notesTextInput.text.toString()
             task.isImportant = prioritySwitch.isChecked
             task.isFinished = statusSwitch.isChecked
 

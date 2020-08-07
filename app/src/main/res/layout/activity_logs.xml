@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:padding="8dp"
-            app:srcCompat="@drawable/undraw_empty"/>
+            app:srcCompat="@drawable/undraw_no_data"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:gravity="center"
             android:text="@string/empty_view_no_logs_title"
             android:textSize="18sp"
-            android:textColor="@color/color_theme_generic"
+            android:textColor="@color/color_primary"
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
         <androidx.appcompat.widget.AppCompatTextView

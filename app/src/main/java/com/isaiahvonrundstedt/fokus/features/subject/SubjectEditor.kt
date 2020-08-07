@@ -50,7 +50,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
             adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE) ?: emptyList())
 
-            setTransitionName(codeEditText, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
+            setTransitionName(codeTextInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
             setTransitionName(descriptionEditText, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
         }
 
@@ -61,7 +61,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         // be shown to the fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(subject) {
-                codeEditText.setText(code)
+                codeTextInput.setText(code)
                 descriptionEditText.setText(description)
                 tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
                     ?.let { drawable -> tintDrawable(drawable) })
@@ -129,9 +129,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
 
-            if (codeEditText.text.isNullOrEmpty()) {
+            if (codeTextInput.text.isNullOrEmpty()) {
                 createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
-                codeEditText.requestFocus()
+                codeTextInput.requestFocus()
                 return@setOnClickListener
             }
 
@@ -146,7 +146,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            subject.code = codeEditText.text.toString()
+            subject.code = codeTextInput.text.toString()
             subject.description = descriptionEditText.text.toString()
 
             // Pass the intent to the parent activity

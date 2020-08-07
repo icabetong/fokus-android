@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.layout_editor_event.*
 import kotlinx.android.synthetic.main.layout_editor_event.actionButton
 import kotlinx.android.synthetic.main.layout_editor_event.clearButton
 import kotlinx.android.synthetic.main.layout_editor_event.nameEditText
-import kotlinx.android.synthetic.main.layout_editor_event.notesEditText
+import kotlinx.android.synthetic.main.layout_editor_event.notesTextInput
 import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
 import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
 import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
@@ -61,7 +61,7 @@ class EventEditor : BaseEditor() {
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(event) {
                 nameEditText.setText(name)
-                notesEditText.setText(notes)
+                notesTextInput.setText(notes)
                 locationEditText.setText(location)
                 scheduleTextView.text = formatSchedule(this@EventEditor)
                 prioritySwitch.isChecked = isImportant
@@ -161,7 +161,7 @@ class EventEditor : BaseEditor() {
             }
 
             event.name = nameEditText.text.toString()
-            event.notes = notesEditText.text.toString()
+            event.notes = notesTextInput.text.toString()
             event.location = locationEditText.text.toString()
             event.isImportant = prioritySwitch.isChecked
 

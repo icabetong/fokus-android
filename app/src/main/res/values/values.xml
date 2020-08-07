@@ -127,7 +127,14 @@
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
-    <style name="Fokus.Widget.TextInput.Layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"/>
+    <style name="Fokus.Widget.TextInput.Layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">@dimen/surface_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/surface_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/surface_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/surface_corner_radius</item>
+        <item name="boxStrokeColor">@color/color_text_input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
     <style name="Fokus.Widget.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@android:color/transparent</item>
         <item name="strokeColor">@color/color_surface_stroke</item>
@@ -208,18 +215,6 @@
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
     <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>
-
-    <!-- Layout Styles -->
-    <style name="Fokus.LinearLayout">
-        <item name="android:orientation">vertical</item>
-    </style>
-    <style name="Fokus.LinearLayout.Editor">
-        <item name="android:background">@drawable/shape_surface_background</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
-    </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#000051</color>

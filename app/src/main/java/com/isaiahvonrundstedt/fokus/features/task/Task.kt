@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Parcelable
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
@@ -42,29 +45,26 @@ data class Task @JvmOverloads constructor(
     }
 
     fun isDueToday(): Boolean {
-        return dueDate?.toLocalDate()?.compareTo(LocalDate.now()) == 0
+        return dueDate?.isToday() == true
     }
 
     fun formatDueDate(context: Context): String? {
         if (dueDate == null)
             return null
 
-        val currentDateTime = DateTime.now()
-
         // Check if the day on the task's due is today
-        return if (dueDate?.toLocalDate()?.isEqual(LocalDate.now()) == true)
+        return if (dueDate!!.isToday())
             String.format(context.getString(R.string.today_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if the day is yesterday
-        else if (currentDateTime.minusDays(1).compareTo(dueDate) == 0)
+        else if (dueDate!!.isYesterday())
             String.format(context.getString(R.string.yesterday_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if its tomorrow
-        else if (currentDateTime.plusDays(1).compareTo(dueDate) == 0)
+        else if (dueDate!!.isTomorrow())
             String.format(context.getString(R.string.tomorrow_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Just print the date what could go wrong?
-        else
-            DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
+        else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
     }
 }

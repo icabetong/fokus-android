@@ -7,6 +7,9 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
+import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
@@ -41,11 +44,11 @@ data class Event @JvmOverloads constructor(
     }
 
     fun formatScheduleDate(context: Context): String {
-        return if (schedule!!.isEqualNow)
+        return if (schedule?.isToday() == true)
             context.getString(R.string.today)
-        else if (DateTime.now().minusDays(1).compareTo(schedule!!) == 0)
+        else if (schedule?.isYesterday() == true)
             context.getString(R.string.yesterday)
-        else if (DateTime.now().plusDays(1).compareTo(schedule!!) == 0)
+        else if (schedule?.isTomorrow() == true)
             context.getString(R.string.tomorrow)
         else DateTimeFormat.forPattern("MMMM d").print(schedule)
     }
@@ -55,18 +58,17 @@ data class Event @JvmOverloads constructor(
     }
 
     fun formatSchedule(context: Context): String {
-        val currentDateTime = LocalDate.now()
+        return if (schedule?.isToday() == true)
+                String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
+            else if (schedule?.isYesterday() == true)
+                String.format(context.getString(R.string.yesterday_at),
+                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
+            else if (schedule?.isTomorrow() == true)
+                String.format(context.getString(R.string.tomorrow_at),
+                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
+            else
+                DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(schedule)
 
-        return if (schedule!!.toLocalDate().isEqual(currentDateTime))
-            String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
-        else if (currentDateTime.minusDays(1).compareTo(schedule!!.toLocalDate()) == 0)
-            String.format(context.getString(R.string.yesterday_at),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
-        else if (currentDateTime.plusDays(1).compareTo(schedule!!.toLocalDate()) == 0)
-            String.format(context.getString(R.string.tomorrow_at),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
-        else
-            DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(schedule)
     }
 
 }

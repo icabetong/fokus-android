@@ -11,7 +11,11 @@
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
     <dimen name="bottom_sheet_padding">24dp</dimen>
 
-    <dimen name="surface_corner_radius">8dp</dimen>
+    <dimen name="surface_corner_radius">12dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="item_offset_vertical">8dp</dimen>
+    <dimen name="item_offset_horizontal">12dp</dimen>
 
     <!-- Widget -->
     <dimen name="widget_title">16sp</dimen>

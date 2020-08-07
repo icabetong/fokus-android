@@ -5,9 +5,9 @@ import android.view.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -30,8 +30,8 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = SubjectSelectorAdapter(this)
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
-            DividerItemDecoration.VERTICAL))
+        recyclerView.addItemDecoration(ItemDecoration(requireContext(),
+            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

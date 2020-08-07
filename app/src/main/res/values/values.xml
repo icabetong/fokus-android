@@ -33,6 +33,7 @@
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
+        <item name="materialCardViewStyle">@style/Fokus.Widget.CardView</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -126,6 +127,15 @@
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
+    <style name="Fokus.Widget.TextInput.Layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"/>
+    <style name="Fokus.Widget.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+        <item name="strokeColor">@color/color_surface_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+        <item name="cardCornerRadius">@dimen/surface_corner_radius</item>
+    </style>
 
     <!-- TextAppearance -->
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
@@ -133,6 +143,11 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/color_on_surface</item>
+    </style>
+    <style name="Fokus.TextAppearance.Title.Collapsing" parent="Fokus.TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/color_on_surface</item>
     </style>
     <style name="Fokus.TextAppearance.Body" parent="Fokus.TextAppearance">

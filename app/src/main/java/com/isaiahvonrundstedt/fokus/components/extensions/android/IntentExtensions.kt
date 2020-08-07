@@ -12,7 +12,3 @@ fun <T : Parcelable> Intent.putExtra(key: String, items: List<T>) {
 fun <T : Parcelable> Intent.getParcelableListExtra(key: String): List<T>? {
     return getParcelableArrayListExtra<T>(key)?.toList()
 }
-
-fun Intent.putStringListExtra(key: String, items: List<String>) {
-    putStringArrayListExtra(key, ArrayList(items))
-}

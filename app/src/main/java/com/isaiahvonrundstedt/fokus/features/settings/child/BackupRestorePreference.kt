@@ -8,12 +8,14 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.extensions.android.startForegroundServiceCompat
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
@@ -107,9 +109,7 @@ class BackupRestorePreference: BasePreference() {
             data = uri
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            context?.startForegroundService(service)
-        else context?.startService(service)
+        context?.startForegroundServiceCompat(service)
     }
 
     private fun startBackupService(uri: Uri) {
@@ -118,9 +118,7 @@ class BackupRestorePreference: BasePreference() {
             data = uri
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            context?.startForegroundService(service)
-        else context?.startService(service)
+        context?.startForegroundServiceCompat(service)
     }
 
     private val manager by lazy {

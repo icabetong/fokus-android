@@ -10,7 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_window_background_secondary"
         app:navigationIcon="@drawable/ic_outline_clear_24"/>
 
 </com.google.android.material.appbar.AppBarLayout>

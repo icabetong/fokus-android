@@ -4,12 +4,13 @@ import android.net.Uri
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okio.BufferedSource
 import okio.Okio
 import org.joda.time.DateTime
 import org.joda.time.LocalTime
 import java.io.*
 
-abstract class JsonDataStreamer {
+class JsonDataStreamer private constructor () {
 
     class DateTimeAdapter {
 
@@ -64,6 +65,13 @@ abstract class JsonDataStreamer {
             val type = Types.newParameterizedType(List::class.java, dataType)
             val adapter: JsonAdapter<List<T>> = moshi.adapter(type)
             return adapter.toJson(dataItems)
+        }
+
+        fun <T> decodeOnceFromJson(stream: InputStream, dataType: Class<T>): T? {
+            if (stream.isEmpty()) return null
+
+            val adapter: JsonAdapter<T> = moshi.adapter(dataType)
+            return adapter.fromJson(Okio.buffer(Okio.source(stream)))
         }
 
         fun <T> decodeFromJson(stream: InputStream, dataType: Class<T>): List<T>? {

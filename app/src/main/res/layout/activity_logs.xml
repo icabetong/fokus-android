@@ -21,7 +21,6 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="@dimen/activity_padding_medium"
-        android:background="@color/color_window_background_secondary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.AppCompatImageView

@@ -39,9 +39,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
-        
-        textInputLayout.hint = getString(R.string.field_subject_code)
-        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -54,7 +51,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
             adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE) ?: emptyList())
 
-            setTransitionName(textInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
+            setTransitionName(codeTextInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
             setTransitionName(descriptionTextInput, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
         }
 
@@ -65,7 +62,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         // be shown to the fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(subject) {
-                textInput.setText(code)
+                codeTextInput.setText(code)
                 descriptionTextInput.setText(description)
                 tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
                     ?.let { drawable -> tintDrawable(drawable) })
@@ -131,45 +128,46 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        actionButton.setOnClickListener {
-
-            if (textInput.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
-                textInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (descriptionTextInput.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_subject_empty_description).show()
-                descriptionTextInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (adapter.itemCount == 0) {
-                createSnackbar(rootLayout, R.string.feedback_subject_no_schedule).show()
-                return@setOnClickListener
-            }
-
-            subject.code = textInput.text.toString()
-            subject.description = descriptionTextInput.text.toString()
-
-            // Pass the intent to the parent activity
-            val data = Intent()
-            data.putExtra(EXTRA_SUBJECT, subject)
-            data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
-            setResult(Activity.RESULT_OK, data)
-            supportFinishAfterTransition()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == REQUEST_CODE_UPDATE)
-            super.onCreateOptionsMenu(menu)
-        else false
+        return if (requestCode == REQUEST_CODE_UPDATE) {
+            menuInflater.inflate(R.menu.menu_editor_update, menu)
+            true
+        } else super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_save -> {
+
+                if (codeTextInput.text.isNullOrEmpty()) {
+                    createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
+                    codeTextInput.requestFocus()
+                    return false
+                }
+
+                if (descriptionTextInput.text.isNullOrEmpty()) {
+                    createSnackbar(rootLayout, R.string.feedback_subject_empty_description).show()
+                    descriptionTextInput.requestFocus()
+                    return false
+                }
+
+                if (adapter.itemCount == 0) {
+                    createSnackbar(rootLayout, R.string.feedback_subject_no_schedule).show()
+                    return false
+                }
+
+                subject.code = codeTextInput.text.toString()
+                subject.description = descriptionTextInput.text.toString()
+
+                // Pass the intent to the parent activity
+                val data = Intent()
+                data.putExtra(EXTRA_SUBJECT, subject)
+                data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
+                setResult(Activity.RESULT_OK, data)
+                supportFinishAfterTransition()
+            }
             R.id.action_delete -> {
                 MaterialDialog(this).show {
                     title(text = String.format(getString(R.string.dialog_confirm_deletion_title),

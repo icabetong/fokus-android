@@ -38,6 +38,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPersistentActionBar(toolbar)
+        //setToolbarTitle(R.string.activity_tasks)
         setToolbarTitle(R.string.activity_tasks)
 
         TaskReminderWorker.reschedule(this.applicationContext)
@@ -130,9 +131,12 @@ class MainActivity : BaseActivity() {
 
     private val navigationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         when (destination.id) {
-            R.id.navigation_tasks -> setToolbarTitle(R.string.activity_tasks)
-            R.id.navigation_events -> setToolbarTitle(R.string.activity_events)
-            R.id.navigation_subjects -> setToolbarTitle(R.string.activity_subjects)
+            R.id.navigation_tasks ->
+                setToolbarTitle(R.string.activity_tasks)
+            R.id.navigation_events ->
+                setToolbarTitle(R.string.activity_events)
+            R.id.navigation_subjects ->
+                setToolbarTitle(R.string.activity_subjects)
         }
     }
 

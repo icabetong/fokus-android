@@ -9,7 +9,6 @@
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_logs">Journaux de notification</string>
     <string name="activity_settings">Paramètres</string>
-    <string name="activity_doki">@string/settings_group_debugging</string>
     <string name="activity_notices">Avis aux tiers</string>
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
@@ -17,6 +16,7 @@
     <string name="menu_export">Exporter</string>
     <string name="menu_import">Importer</string>
     <string name="menu_clear_items">Points clairs</string>
+    <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
 
     <string name="navigation_tasks">Tâches</string>

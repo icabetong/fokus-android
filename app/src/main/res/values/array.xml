@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="oem_battery_optimization">
+        <item>oneplus</item>
+        <item>samsung</item>
+        <item>huawei</item>
+        <item>meizu</item>
+        <item>xiaomi</item>
+        <item>wiko</item>
+        <item>asus</item>
+        <item>lenovo</item>
+        <item>oppo</item>
+        <item>nokia</item>
+        <item>sony</item>
+        <item>google</item>
+        <item>htc</item>
+    </string-array>
+
     <string-array name="settings_dark_theme_items">
         <item>@string/settings_theme_item_system</item>
         <item>@string/settings_theme_item_dark</item>

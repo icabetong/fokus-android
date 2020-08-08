@@ -1,209 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:animateLayoutChanges="true">
 
-    <LinearLayout
+    <include layout="@layout/layout_appbar_editor" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_padding">
-
-        <include layout="@layout/layout_appbar_editor" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_padding"
-            android:layout_marginVertical="8dp"
-            android:paddingVertical="@dimen/editor_container_padding"
             android:orientation="vertical"
-            android:background="@drawable/shape_surface_background">
+            android:paddingBottom="@dimen/activity_padding">
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:text="@string/field_status"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+                android:layout_marginVertical="@dimen/editor_container_padding"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_gravity="bottom"
+                android:hint="@string/field_task_name"
+                style="@style/Fokus.Widget.TextInput.Layout">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/statusSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_item_height"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/button_mark_as_finished"
-                android:textColor="@color/color_secondary_text"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/taskNameTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/editor_container_padding"
-                android:paddingHorizontal="16dp"
-                android:text="@string/field_due_date"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+                    <requestFocus/>
 
-            <TextView
-                android:id="@+id/dueDateTextView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_item_height"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:background="?attr/selectableItemBackground"
-                android:text="@string/field_not_set"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                </com.google.android.material.textfield.TextInputEditText>
 
-        </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_padding"
-            android:layout_marginVertical="8dp"
-            android:paddingVertical="@dimen/editor_container_padding"
-            android:orientation="vertical"
-            android:background="@drawable/shape_surface_background">
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:text="@string/field_subject"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_item_height"
-                android:background="?attr/selectableItemBackground">
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
 
                 <TextView
-                    android:id="@+id/subjectTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="48dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_status"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/statusSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/button_mark_as_finished"
+                    android:textColor="@color/color_secondary_text"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/editor_container_padding"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_due_date"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <TextView
+                    android:id="@+id/dueDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:background="?attr/selectableItemBackground"
                     android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:drawablePadding="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
-                <ImageButton
-                    android:id="@+id/clearButton"
-                    android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@null"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/shape_button_remove"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/subjectTextView"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:background="?attr/selectableItemBackground">
 
-            <TextView
+                    <TextView
+                        android:id="@+id/subjectTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:drawablePadding="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <ImageButton
+                        android:id="@+id/clearButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/shape_button_remove"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/subjectTextView"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/editor_container_padding"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_priority"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/prioritySwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/button_mark_as_important"
+                    android:textColor="@color/color_secondary_text"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/helper_this_is_important"
+                    android:textColor="@color/color_secondary_text"
+                    android:drawableStart="@drawable/ic_outline_info_24"
+                    android:drawablePadding="16dp"
+                    app:drawableTint="?attr/colorControlNormal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/editor_container_padding"
-                android:paddingHorizontal="16dp"
-                android:text="@string/field_priority"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_surface_background">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/prioritySwitch"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/editor_item_height"
-                android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/button_mark_as_important"
-                android:textColor="@color/color_secondary_text"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_attachments"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <include layout="@layout/layout_item_add"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
-                android:text="@string/helper_this_is_important"
-                android:textColor="@color/color_secondary_text"
-                android:drawableStart="@drawable/ic_outline_info_24"
-                android:drawablePadding="16dp"
-                app:drawableTint="?attr/colorControlNormal"/>
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:hint="@string/field_notes"
+                style="@style/Fokus.Widget.TextInput.Layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notesTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="6"
+                    android:minLines="2"
+                    android:scrollbars="vertical"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_padding"
-            android:layout_marginVertical="8dp"
-            android:paddingVertical="@dimen/editor_container_padding"
-            android:orientation="vertical"
-            android:background="@drawable/shape_surface_background">
+    </ScrollView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:text="@string/field_attachments"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <include layout="@layout/layout_item_add"/>
-
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_padding"
-            android:hint="@string/field_notes"
-            style="@style/Fokus.Widget.TextInput.Layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notesTextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:lines="4"
-                android:maxLines="6"
-                android:minLines="2"
-                android:scrollbars="vertical"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/actionButton"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:layout_margin="@dimen/activity_padding"
-            android:paddingVertical="4dp"
-            android:text="@string/button_save"
-            app:icon="@drawable/ic_outline_save_24"
-            style="@style/Fokus.Widget.Button"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.work.OneTimeWorkRequest
@@ -22,26 +23,15 @@ import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationSc
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.core.activities.DokiActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
+import java.util.*
 
 class SettingsPreference : BasePreference() {
 
-    companion object {
-        const val REQUEST_CODE_SOUND = 32
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.xml_settings_main, rootKey)
-    }
-
-    private val preferences by lazy {
-        PreferenceManager(requireContext())
-    }
-    private val manager by lazy {
-        WorkManager.getInstance(requireContext())
     }
 
     override fun onStart() {
@@ -63,7 +53,7 @@ class SettingsPreference : BasePreference() {
                     .addTag(TaskNotificationScheduler::class.java.simpleName)
                     .build()
 
-                manager.enqueue(request)
+                workManager.enqueue(request)
                 true
             }
         }
@@ -74,7 +64,7 @@ class SettingsPreference : BasePreference() {
                     .addTag(EventNotificationScheduler::class.java.simpleName)
                     .build()
 
-                manager.enqueue(request)
+                workManager.enqueue(request)
                 true
             }
         }
@@ -99,9 +89,7 @@ class SettingsPreference : BasePreference() {
 
         findPreference<Preference>(R.string.key_custom_sound_uri)?.apply {
             setOnPreferenceClickListener {
-                if (!PermissionManager(
-                        requireContext()
-                    ).readStorageGranted)
+                if (!PermissionManager(requireContext()).readStorageGranted)
                     requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                         PermissionManager.STORAGE_READ_REQUEST_CODE)
                 else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -131,7 +119,16 @@ class SettingsPreference : BasePreference() {
 
         findPreference<Preference>(R.string.key_not_working_notifications)?.apply {
             setOnPreferenceClickListener {
-                startActivity(Intent(requireContext(), DokiActivity::class.java))
+                val manufacturerArray = resources.getStringArray(R.array.oem_battery_optimization)
+
+                var manufacturer = Build.MANUFACTURER.toLowerCase(Locale.getDefault())
+                if (!manufacturerArray.contains(manufacturer))
+                    manufacturer = "generic"
+
+                val browserIntent = CustomTabsIntent.Builder().build()
+                browserIntent.launchUrl(requireContext(), Uri.parse(SETTINGS_URL_BATTERY_OPTIMIZATION
+                        + manufacturer))
+
                 true
             }
         }
@@ -169,6 +166,18 @@ class SettingsPreference : BasePreference() {
             preferences.customSoundUri = data.data ?: Uri.parse(
                 PreferenceManager.DEFAULT_SOUND)
         }
+    }
+
+    private val preferences by lazy {
+        PreferenceManager(requireContext())
+    }
+    private val workManager by lazy {
+        WorkManager.getInstance(requireContext())
+    }
+
+    companion object {
+        const val REQUEST_CODE_SOUND = 32
+        const val SETTINGS_URL_BATTERY_OPTIMIZATION = "https://www.dontkillmyapp.com/"
     }
 
 }

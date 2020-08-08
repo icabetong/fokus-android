@@ -39,7 +39,6 @@
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.log.LogActivity" />
-        <activity android:name=".features.core.activities.DokiActivity"/>
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>

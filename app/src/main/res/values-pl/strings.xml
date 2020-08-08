@@ -9,7 +9,6 @@
     <string name="activity_subjects">Twoi Poddani</string>
     <string name="activity_logs">Dzienniki Powiadomień</string>
     <string name="activity_settings">Ustawienia</string>
-    <string name="activity_doki">Zgłoszenie Debugowanie</string>
     <string name="activity_notices">Powiadomienia osób Trzecich</string>
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
@@ -17,6 +16,7 @@
     <string name="menu_export">Eksport</string>
     <string name="menu_import">Import</string>
     <string name="menu_clear_items">Pozycje Jasne</string>
+    <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
 
     <string name="navigation_tasks">Zadania</string>

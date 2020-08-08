@@ -1,9 +1,12 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.os.Build
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 

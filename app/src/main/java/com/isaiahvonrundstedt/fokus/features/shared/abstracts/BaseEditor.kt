@@ -38,7 +38,7 @@ abstract class BaseEditor : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_editor, menu)
+        menuInflater.inflate(R.menu.menu_editor_insert, menu)
         return true
     }
 

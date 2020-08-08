@@ -44,7 +44,6 @@ This is an open-source personal project and I am very happy to accept community 
 ### Libraries used
 * [Material Dialogs](https://github.com/afollestad/material-dialogs) - Aidan Follestad
 * [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
-* [Doki](https://github.com/doubledotlabs/doki) - Double Dot Labs
 * [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
 * [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar) - Alexander Dadukin
 * [Moshi](https://github.com/square/moshi) - Square

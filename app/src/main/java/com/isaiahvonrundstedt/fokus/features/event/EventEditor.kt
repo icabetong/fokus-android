@@ -19,10 +19,10 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
-import kotlinx.android.synthetic.main.layout_editor_event.actionButton
 import kotlinx.android.synthetic.main.layout_editor_event.clearButton
 import kotlinx.android.synthetic.main.layout_editor_event.notesTextInput
 import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
@@ -41,9 +41,6 @@ class EventEditor : BaseEditor() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_event)
         setPersistentActionBar(toolbar)
-        
-        textInputLayout.hint = getString(R.string.field_event_name)
-        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
@@ -54,7 +51,7 @@ class EventEditor : BaseEditor() {
             event = intent.getParcelableExtra(EXTRA_EVENT)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-            setTransitionName(textInput, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
+            setTransitionName(eventNameTextInput, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()
@@ -63,7 +60,7 @@ class EventEditor : BaseEditor() {
         // corresponding fields
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(event) {
-                textInput.setText(name)
+                eventNameTextInput.setText(name)
                 notesTextInput.setText(notes)
                 locationTextInput.setText(location)
                 scheduleTextView.text = formatSchedule(this@EventEditor)
@@ -139,52 +136,50 @@ class EventEditor : BaseEditor() {
                 setTextColorFromResource(R.color.color_secondary_text)
             }
         }
-
-        actionButton.setOnClickListener {
-
-            // Conditions to check if the fields are null or blank
-            // then if resulted true, show a feedback then direct
-            // user focus to the field and stop code execution.
-            if (textInput.text.isNullOrBlank()) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_name).show()
-                textInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (locationTextInput.text.isNullOrBlank()) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_location).show()
-                locationTextInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (event.schedule == null) {
-                createSnackbar(rootLayout, R.string.feedback_event_empty_schedule).show()
-                scheduleTextView.performClick()
-                return@setOnClickListener
-            }
-
-            event.name = textInput.text.toString()
-            event.notes = notesTextInput.text.toString()
-            event.location = locationTextInput.text.toString()
-            event.isImportant = prioritySwitch.isChecked
-
-            // Send the data back to the parent activity
-            val data = Intent()
-            data.putExtra(EXTRA_EVENT, event)
-            setResult(RESULT_OK, data)
-            supportFinishAfterTransition()
-        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == REQUEST_CODE_UPDATE)
-            super.onCreateOptionsMenu(menu)
-        else false
+        return if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
+            menuInflater.inflate(R.menu.menu_editor_update, menu)
+            true
+        } else super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_save -> {
+                // Conditions to check if the fields are null or blank
+                // then if resulted true, show a feedback then direct
+                // user focus to the field and stop code execution.
+                if (eventNameTextInput.text.isNullOrBlank()) {
+                    createSnackbar(rootLayout, R.string.feedback_event_empty_name).show()
+                    eventNameTextInput.requestFocus()
+                    return false
+                }
+
+                if (locationTextInput.text.isNullOrBlank()) {
+                    createSnackbar(rootLayout, R.string.feedback_event_empty_location).show()
+                    locationTextInput.requestFocus()
+                    return false
+                }
+
+                if (event.schedule == null) {
+                    createSnackbar(rootLayout, R.string.feedback_event_empty_schedule).show()
+                    scheduleTextView.performClick()
+                    return false
+                }
+
+                event.name = eventNameTextInput.text.toString()
+                event.notes = notesTextInput.text.toString()
+                event.location = locationTextInput.text.toString()
+                event.isImportant = prioritySwitch.isChecked
+
+                // Send the data back to the parent activity
+                val data = Intent()
+                data.putExtra(EXTRA_EVENT, event)
+                setResult(RESULT_OK, data)
+                supportFinishAfterTransition()
+            }
             R.id.action_delete -> {
                 MaterialDialog(this).show {
                     title(text = String.format(getString(R.string.dialog_confirm_deletion_title),

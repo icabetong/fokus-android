@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
@@ -34,7 +35,9 @@ class AboutPreference : BasePreference() {
 
         findPreference<Preference>(R.string.key_report_issue)?.apply {
             setOnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ABOUT_REPOSITORY_URL)))
+                val browserIntent = CustomTabsIntent.Builder().build()
+                browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_REPOSITORY_URL))
+
                 true
             }
         }

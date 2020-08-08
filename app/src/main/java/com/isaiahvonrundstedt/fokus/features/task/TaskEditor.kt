@@ -20,12 +20,12 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
-import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -47,9 +47,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
 
-        textInputLayout.hint = getString(R.string.field_task_name)
-        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
-
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -64,7 +61,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
             adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
-            setTransitionName(textInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
+            setTransitionName(taskNameTextInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }
 
         statusSwitch.changeTextColorWhenChecked()
@@ -74,7 +71,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         // will be shown in their respective fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(task) {
-                textInput.setText(name)
+                taskNameTextInput.setText(name)
                 notesTextInput.setText(notes)
                 prioritySwitch.isChecked = isImportant
                 statusSwitch.isChecked = isFinished
@@ -158,38 +155,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 setTextColorFromResource(R.color.color_secondary_text)
             }
         }
-
-        actionButton.setOnClickListener {
-
-            // These if checks if the user have entered the
-            // values on the fields, if we don't have the value required,
-            // show a snackbar feedback then direct the user's
-            // attention to the field. Then return to stop the execution
-            // of the code.
-            if (textInput.text.isNullOrEmpty()) {
-                createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
-                textInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (!task.hasDueDate()) {
-                createSnackbar(rootLayout, R.string.feedback_task_empty_due_date).show()
-                dueDateTextView.performClick()
-                return@setOnClickListener
-            }
-
-            task.name = textInput.text.toString()
-            task.notes = notesTextInput.text.toString()
-            task.isImportant = prioritySwitch.isChecked
-            task.isFinished = statusSwitch.isChecked
-
-            // Send the data back to the parent activity
-            val data = Intent()
-            data.putExtra(EXTRA_TASK, task)
-            data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
-            setResult(RESULT_OK, data)
-            supportFinishAfterTransition()
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
@@ -254,13 +219,45 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == REQUEST_CODE_UPDATE)
-            super.onCreateOptionsMenu(menu)
-        else false
+        return if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
+            menuInflater.inflate(R.menu.menu_editor_update, menu)
+            true
+        } else super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_save -> {
+
+                // These if checks if the user have entered the
+                // values on the fields, if we don't have the value required,
+                // show a snackbar feedback then direct the user's
+                // attention to the field. Then return to stop the execution
+                // of the code.
+                if (taskNameTextInput.text.isNullOrEmpty()) {
+                    createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
+                    taskNameTextInput.requestFocus()
+                    return false
+                }
+
+                if (!task.hasDueDate()) {
+                    createSnackbar(rootLayout, R.string.feedback_task_empty_due_date).show()
+                    dueDateTextView.performClick()
+                    return false
+                }
+
+                task.name = taskNameTextInput.text.toString()
+                task.notes = notesTextInput.text.toString()
+                task.isImportant = prioritySwitch.isChecked
+                task.isFinished = statusSwitch.isChecked
+
+                // Send the data back to the parent activity
+                val data = Intent()
+                data.putExtra(EXTRA_TASK, task)
+                data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
+                setResult(RESULT_OK, data)
+                supportFinishAfterTransition()
+            }
             R.id.action_delete -> {
                 MaterialDialog(this).show {
                     title(text = String.format(getString(R.string.dialog_confirm_deletion_title),

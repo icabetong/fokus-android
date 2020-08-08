@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
@@ -23,7 +24,6 @@ import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import kotlinx.android.synthetic.main.layout_editor_event.actionButton
 import kotlinx.android.synthetic.main.layout_editor_event.clearButton
-import kotlinx.android.synthetic.main.layout_editor_event.nameEditText
 import kotlinx.android.synthetic.main.layout_editor_event.notesTextInput
 import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
 import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
@@ -41,6 +41,9 @@ class EventEditor : BaseEditor() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_event)
         setPersistentActionBar(toolbar)
+        
+        textInputLayout.hint = getString(R.string.field_event_name)
+        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
         // Check if the parent activity has passed some
         // extras so that we'll show it to the user
@@ -51,7 +54,7 @@ class EventEditor : BaseEditor() {
             event = intent.getParcelableExtra(EXTRA_EVENT)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-            setTransitionName(nameEditText, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
+            setTransitionName(textInput, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()
@@ -60,9 +63,9 @@ class EventEditor : BaseEditor() {
         // corresponding fields
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(event) {
-                nameEditText.setText(name)
+                textInput.setText(name)
                 notesTextInput.setText(notes)
-                locationEditText.setText(location)
+                locationTextInput.setText(location)
                 scheduleTextView.text = formatSchedule(this@EventEditor)
                 prioritySwitch.isChecked = isImportant
             }
@@ -142,15 +145,15 @@ class EventEditor : BaseEditor() {
             // Conditions to check if the fields are null or blank
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.
-            if (nameEditText.text.isNullOrBlank()) {
+            if (textInput.text.isNullOrBlank()) {
                 createSnackbar(rootLayout, R.string.feedback_event_empty_name).show()
-                nameEditText.requestFocus()
+                textInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (locationEditText.text.isNullOrBlank()) {
+            if (locationTextInput.text.isNullOrBlank()) {
                 createSnackbar(rootLayout, R.string.feedback_event_empty_location).show()
-                locationEditText.requestFocus()
+                locationTextInput.requestFocus()
                 return@setOnClickListener
             }
 
@@ -160,9 +163,9 @@ class EventEditor : BaseEditor() {
                 return@setOnClickListener
             }
 
-            event.name = nameEditText.text.toString()
+            event.name = textInput.text.toString()
             event.notes = notesTextInput.text.toString()
-            event.location = locationEditText.text.toString()
+            event.location = locationTextInput.text.toString()
             event.isImportant = prioritySwitch.isChecked
 
             // Send the data back to the parent activity

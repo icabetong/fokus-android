@@ -18,32 +18,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_padding"
-            android:hint="@string/field_subject_code"
-            style="@style/Fokus.Widget.TextInput.Layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/codeTextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
-
-                <requestFocus/>
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
             android:hint="@string/field_description"
             style="@style/Fokus.Widget.TextInput.Layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descriptionEditText"
+                android:id="@+id/descriptionTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
@@ -105,15 +85,15 @@
                 android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                 android:clickable="true"
                 android:focusable="true"
-                android:drawableStart="@drawable/shape_color_holder"
-                android:drawablePadding="16dp"/>
+                android:drawablePadding="16dp"
+                app:drawableStartCompat="@drawable/shape_color_holder" />
 
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/actionButton"
             android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:layout_margin="@dimen/activity_padding"
             android:text="@string/button_save"
             app:icon="@drawable/ic_outline_save_24"

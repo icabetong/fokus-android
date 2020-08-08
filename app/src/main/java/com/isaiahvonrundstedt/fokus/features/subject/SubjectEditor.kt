@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -38,6 +39,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
+        
+        textInputLayout.hint = getString(R.string.field_subject_code)
+        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -50,8 +54,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
             adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE) ?: emptyList())
 
-            setTransitionName(codeTextInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
-            setTransitionName(descriptionEditText, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
+            setTransitionName(textInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
+            setTransitionName(descriptionTextInput, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
         }
 
         // Get actual values for the items
@@ -61,8 +65,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         // be shown to the fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(subject) {
-                codeTextInput.setText(code)
-                descriptionEditText.setText(description)
+                textInput.setText(code)
+                descriptionTextInput.setText(description)
                 tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
                     ?.let { drawable -> tintDrawable(drawable) })
                 tagView.setText(tag.getNameResource())
@@ -129,15 +133,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         actionButton.setOnClickListener {
 
-            if (codeTextInput.text.isNullOrEmpty()) {
+            if (textInput.text.isNullOrEmpty()) {
                 createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
-                codeTextInput.requestFocus()
+                textInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (descriptionEditText.text.isNullOrEmpty()) {
+            if (descriptionTextInput.text.isNullOrEmpty()) {
                 createSnackbar(rootLayout, R.string.feedback_subject_empty_description).show()
-                descriptionEditText.requestFocus()
+                descriptionTextInput.requestFocus()
                 return@setOnClickListener
             }
 
@@ -146,8 +150,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            subject.code = codeTextInput.text.toString()
-            subject.description = descriptionEditText.text.toString()
+            subject.code = textInput.text.toString()
+            subject.description = descriptionTextInput.text.toString()
 
             // Pass the intent to the parent activity
             val data = Intent()

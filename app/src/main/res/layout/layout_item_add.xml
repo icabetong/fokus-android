@@ -9,11 +9,12 @@
     android:gravity="center"
     android:letterSpacing="0.08"
     android:text="@string/button_add"
-    android:textSize="14sp"
+    android:textSize="16sp"
     android:textColor="@color/color_on_surface"
     android:textAllCaps="true"
     android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
     app:icon="@drawable/ic_outline_add_24"
     app:iconTint="@color/color_on_surface"
+    app:iconPadding="8dp"
     app:iconGravity="textStart"
     style="@style/Widget.MaterialComponents.Button.TextButton"/>

@@ -15,26 +15,6 @@
 
         <include layout="@layout/layout_appbar_editor"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_padding"
-            android:hint="@string/field_event_name"
-            style="@style/Fokus.Widget.TextInput.Layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
-
-                <requestFocus/>
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,11 +51,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_padding"
+            android:layout_marginVertical="8dp"
             android:hint="@string/field_location"
             style="@style/Fokus.Widget.TextInput.Layout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/locationEditText"
+                android:id="@+id/locationTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
@@ -190,7 +171,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/actionButton"
             android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:layout_margin="@dimen/activity_padding"
             android:text="@string/button_save"
             app:icon="@drawable/ic_outline_save_24"

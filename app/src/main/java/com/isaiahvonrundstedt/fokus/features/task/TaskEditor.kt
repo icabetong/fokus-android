@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
@@ -46,6 +47,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
 
+        textInputLayout.hint = getString(R.string.field_task_name)
+        textInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -60,7 +64,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
             adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
-            setTransitionName(nameTextInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
+            setTransitionName(textInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
         }
 
         statusSwitch.changeTextColorWhenChecked()
@@ -70,7 +74,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         // will be shown in their respective fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
             with(task) {
-                nameTextInput.setText(name)
+                textInput.setText(name)
                 notesTextInput.setText(notes)
                 prioritySwitch.isChecked = isImportant
                 statusSwitch.isChecked = isFinished
@@ -162,9 +166,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             // show a snackbar feedback then direct the user's
             // attention to the field. Then return to stop the execution
             // of the code.
-            if (nameTextInput.text.isNullOrEmpty()) {
+            if (textInput.text.isNullOrEmpty()) {
                 createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
-                nameTextInput.requestFocus()
+                textInput.requestFocus()
                 return@setOnClickListener
             }
 
@@ -174,7 +178,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            task.name = nameTextInput.text.toString()
+            task.name = textInput.text.toString()
             task.notes = notesTextInput.text.toString()
             task.isImportant = prioritySwitch.isChecked
             task.isFinished = statusSwitch.isChecked

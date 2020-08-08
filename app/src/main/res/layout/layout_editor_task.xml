@@ -15,27 +15,6 @@
 
         <include layout="@layout/layout_appbar_editor" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_padding"
-            android:hint="@string/field_task_name"
-            app:hintTextAppearance="@style/Fokus.TextAppearance.Editor.Hint"
-            style="@style/Fokus.Widget.TextInput.Layout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nameTextInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"
-                android:textAppearance="@style/Fokus.TextAppearance.Editor.Value">
-
-                <requestFocus/>
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -218,8 +197,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/actionButton"
             android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
             android:layout_margin="@dimen/activity_padding"
+            android:paddingVertical="4dp"
             android:text="@string/button_save"
             app:icon="@drawable/ic_outline_save_24"
             style="@style/Fokus.Widget.Button"/>

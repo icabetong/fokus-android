@@ -41,7 +41,7 @@ class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
         val itemView: View = viewHolder.itemView
-        val backgroundCornerOffset = 20
+        val backgroundCornerOffset = 40
 
         with(background) {
             setBounds(itemView.right + dX.toInt() - backgroundCornerOffset, itemView.top,

@@ -10,7 +10,23 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/color_window_background"
         app:navigationIcon="@drawable/ic_outline_clear_24"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/editor_container_padding"
+        android:layout_marginHorizontal="@dimen/activity_padding"
+        style="@style/Fokus.Widget.TextInput.Layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </com.google.android.material.appbar.AppBarLayout>

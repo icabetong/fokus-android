@@ -19,8 +19,8 @@ class ItemDecoration(private var context: Context,
         val verticalOffset: Int = context.resources.getDimension(this.v).toInt()
         val horizontalOffset: Int = context.resources.getDimension(this.h).toInt()
 
-        if (parent.getChildAdapterPosition(view) != 1)
-            outRect.set(horizontalOffset, verticalOffset, horizontalOffset, 0)
+        if (parent.getChildAdapterPosition(view) != 0)
+            outRect.set(horizontalOffset, 0, horizontalOffset, verticalOffset)
         else outRect.set(horizontalOffset, verticalOffset, horizontalOffset, verticalOffset)
     }
 

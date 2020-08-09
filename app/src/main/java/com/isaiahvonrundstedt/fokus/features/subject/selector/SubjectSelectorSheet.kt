@@ -49,7 +49,6 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
                     callback?.invoke(t)
                     this.dismiss()
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> { }
                 BaseListAdapter.ActionListener.Action.DELETE -> { }
             }
         }

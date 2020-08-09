@@ -34,6 +34,7 @@
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
         <item name="materialCardViewStyle">@style/Fokus.Widget.CardView</item>
+        <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -79,6 +80,7 @@
         <item name="android:background">@color/color_toolbar_background</item>
     </style>
     <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="navigationIcon">@drawable/ic_hero_arrow_left_24</item>
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
         <item name="maxButtonHeight">48dp</item>
@@ -88,7 +90,6 @@
     </style>
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/color_on_surface</item>
-        <item name="srcCompat">@drawable/ic_hero_arrow_left_24</item>
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -146,6 +147,7 @@
         <item name="cardMaxElevation">0dp</item>
         <item name="cardCornerRadius">@dimen/surface_corner_radius</item>
     </style>
+    <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
 
     <!-- TextAppearance -->
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
@@ -218,7 +220,7 @@
     <style name="Fokus.TextAppearance.Widget.Item.Body" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
-    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline"/>
+    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.Body.Medium"/>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#000051</color>

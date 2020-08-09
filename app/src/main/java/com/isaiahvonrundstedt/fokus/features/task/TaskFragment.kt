@@ -73,30 +73,31 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     override fun <T> onTaskCompleted(t: T, isChecked: Boolean) {
         if (t is TaskResource) {
             viewModel.update(t.task)
-            createSnackbar(recyclerView, R.string.button_mark_as_finished).show()
+            if (isChecked) {
+                createSnackbar(recyclerView, R.string.button_mark_as_finished).show()
 
-            with(PreferenceManager(context)) {
-                if (confettiEnabled) {
-                    confettiView.build()
-                        .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN,
-                            Color.GREEN, Color.RED, Color.BLUE)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(1000L)
-                        .addShapes(Shape.Square, Shape.Circle)
-                        .addSizes(Size(12, 5f))
-                        .setPosition(confettiView.x + confettiView.width / 2,
-                            confettiView.y + confettiView.height / 3)
-                        .burst(100)
-                }
+                with(PreferenceManager(context)) {
+                    if (confettiEnabled) {
+                        confettiView.build()
+                            .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
+                            .setDirection(0.0, 359.0)
+                            .setSpeed(1f, 5f)
+                            .setFadeOutEnabled(true)
+                            .setTimeToLive(1000L)
+                            .addShapes(Shape.Square, Shape.Circle)
+                            .addSizes(Size(12, 5f))
+                            .setPosition(confettiView.x + confettiView.width / 2,
+                                confettiView.y + confettiView.height / 3)
+                            .burst(100)
+                    }
 
-                if (soundEnabled) {
-                    var soundUri: Uri = PreferenceManager.DEFAULT_SOUND_URI
-                    if (customSoundEnabled)
-                       soundUri = this.customSoundUri
+                    if (soundEnabled) {
+                        var soundUri: Uri = PreferenceManager.DEFAULT_SOUND_URI
+                        if (customSoundEnabled)
+                            soundUri = this.customSoundUri
 
-                    RingtoneManager.getRingtone(requireContext(), soundUri).play()
+                        RingtoneManager.getRingtone(requireContext(), soundUri).play()
+                    }
                 }
             }
         }

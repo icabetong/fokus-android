@@ -38,7 +38,7 @@ abstract class BaseEditor : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_editor_insert, menu)
+        menuInflater.inflate(R.menu.menu_editor, menu)
         return true
     }
 
@@ -60,10 +60,5 @@ abstract class BaseEditor : BaseActivity() {
         get() {
             return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in)
         }
-
-    companion object {
-        const val RESULT_OK = Activity.RESULT_OK
-        const val RESULT_DELETE = 2
-    }
 
 }

@@ -16,13 +16,14 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThrou
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
-class TaskAdapter(private var actionListener: ActionListener)
+class TaskAdapter(private var actionListener: ActionListener,
+                  private var taskCompletionListener: TaskCompletionListener)
     : BaseListAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
             parent, false)
-        return TaskViewHolder(rowView, actionListener)
+        return TaskViewHolder(rowView)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
@@ -35,8 +36,7 @@ class TaskAdapter(private var actionListener: ActionListener)
                 emptyMap())
     }
 
-    class TaskViewHolder(itemView: View, private val actionListener: ActionListener)
-        : BaseViewHolder(itemView) {
+    inner class TaskViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         private val checkBox: AppCompatCheckBox = itemView.findViewById(R.id.checkBox)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
@@ -76,8 +76,7 @@ class TaskAdapter(private var actionListener: ActionListener)
                             if (isChecked)
                                 taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                         }
-                        actionListener.onActionPerformed(this, ActionListener.Action.MODIFY,
-                            emptyMap())
+                        taskCompletionListener.onTaskCompleted(this, view.isChecked)
                     }
 
                     rootView.setOnClickListener {
@@ -87,6 +86,10 @@ class TaskAdapter(private var actionListener: ActionListener)
                 }
             }
         }
+    }
+
+    interface TaskCompletionListener {
+        fun <T> onTaskCompleted(t: T, isChecked: Boolean)
     }
 
     companion object {

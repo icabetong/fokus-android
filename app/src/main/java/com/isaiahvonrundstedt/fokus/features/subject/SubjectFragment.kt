@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -83,8 +84,6 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {
-                }
             }
         }
     }
@@ -92,33 +91,23 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        if (resultCode != Activity.RESULT_OK)
+            return
+
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
         if (requestCode == SubjectEditor.REQUEST_CODE_INSERT
             || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
 
-            if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-                val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
+            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+            val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
 
-                subject?.also {
-                    when (resultCode) {
-                        BaseEditor.RESULT_OK -> {
-                            when (requestCode) {
-                                SubjectEditor.REQUEST_CODE_INSERT ->
-                                    viewModel.insert(it, scheduleList ?: emptyList())
-                                SubjectEditor.REQUEST_CODE_UPDATE ->
-                                    viewModel.update(it, scheduleList ?: emptyList())
-                            }
-                        }
-                        BaseEditor.RESULT_DELETE -> {
-                            viewModel.remove(it)
-                            createSnackbar(recyclerView, R.string.feedback_subject_removed).apply {
-                                setAction(R.string.button_undo) { _ -> viewModel.insert(it, scheduleList ?: emptyList()) }
-                                show()
-                            }
-                        }
-                    }
+            subject?.also {
+                when (requestCode) {
+                    SubjectEditor.REQUEST_CODE_INSERT ->
+                        viewModel.insert(it, scheduleList ?: emptyList())
+                    SubjectEditor.REQUEST_CODE_UPDATE ->
+                        viewModel.update(it, scheduleList ?: emptyList())
                 }
             }
         }

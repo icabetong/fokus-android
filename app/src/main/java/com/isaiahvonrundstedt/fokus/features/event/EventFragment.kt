@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -78,8 +79,6 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                         show()
                     }
                 }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {
-                }
             }
         }
     }
@@ -87,34 +86,24 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        if (resultCode != Activity.RESULT_OK)
+            return
+
         // Check the request code first if the data was from TaskEditor
         // so that it doesn't crash when casting the Parcelable object
         if (requestCode == EventEditor.REQUEST_CODE_INSERT ||
             requestCode == EventEditor.REQUEST_CODE_UPDATE) {
+            val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
 
-            if (resultCode == BaseEditor.RESULT_OK || resultCode == BaseEditor.RESULT_DELETE) {
-                val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
-
-                event?.also {
-                    when (resultCode) {
-                        BaseEditor.RESULT_OK -> {
-                            when (requestCode) {
-                                EventEditor.REQUEST_CODE_INSERT ->
-                                    viewModel.insert(it)
-                                EventEditor.REQUEST_CODE_UPDATE ->
-                                    viewModel.update(it)
-                            }
-                        }
-                        BaseEditor.RESULT_DELETE -> {
-                            viewModel.remove(it)
-                            createSnackbar(recyclerView, R.string.feedback_event_removed).apply {
-                                setAction(R.string.button_undo) { _ -> viewModel.insert(it) }
-                                show()
-                            }
-                        }
-                    }
+            event?.also {
+                when (requestCode) {
+                    EventEditor.REQUEST_CODE_INSERT ->
+                        viewModel.insert(it)
+                    EventEditor.REQUEST_CODE_UPDATE ->
+                        viewModel.update(it)
                 }
             }
+
         }
     }
 }

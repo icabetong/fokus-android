@@ -130,13 +130,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == REQUEST_CODE_UPDATE) {
-            menuInflater.inflate(R.menu.menu_editor_update, menu)
-            true
-        } else super.onCreateOptionsMenu(menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_save -> {
@@ -167,21 +160,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
                 setResult(Activity.RESULT_OK, data)
                 supportFinishAfterTransition()
-            }
-            R.id.action_delete -> {
-                MaterialDialog(this).show {
-                    title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                        subject.code))
-                    message(R.string.dialog_confirm_deletion_summary)
-                    positiveButton(R.string.button_delete) {
-                        // Pass the intent to the parent activity
-                        val data = Intent()
-                        data.putExtra(EXTRA_SUBJECT, subject)
-                        setResult(RESULT_DELETE, data)
-                        finish()
-                    }
-                    negativeButton(R.string.button_cancel)
-                }
             }
             else -> super.onOptionsItemSelected(item)
         }

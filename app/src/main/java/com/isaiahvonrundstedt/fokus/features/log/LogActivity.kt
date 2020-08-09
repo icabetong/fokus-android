@@ -62,10 +62,7 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
                     }
                     snackbar.show()
                 }
-                BaseListAdapter.ActionListener.Action.SELECT -> {
-                }
-                BaseListAdapter.ActionListener.Action.MODIFY -> {
-                }
+                BaseListAdapter.ActionListener.Action.SELECT -> { }
             }
         }
     }

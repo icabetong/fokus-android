@@ -33,7 +33,6 @@
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
-        <item name="materialCardViewStyle">@style/Fokus.Widget.CardView</item>
         <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
@@ -138,14 +137,6 @@
         <item name="boxStrokeColor">@color/color_text_input_stroke</item>
         <item name="boxStrokeWidth">1dp</item>
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
-    </style>
-    <style name="Fokus.Widget.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@android:color/transparent</item>
-        <item name="strokeColor">@color/color_surface_stroke</item>
-        <item name="strokeWidth">1dp</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardMaxElevation">0dp</item>
-        <item name="cardCornerRadius">@dimen/surface_corner_radius</item>
     </style>
     <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
 

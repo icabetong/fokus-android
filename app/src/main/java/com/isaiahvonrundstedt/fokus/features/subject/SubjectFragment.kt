@@ -15,7 +15,6 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
@@ -36,8 +35,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SubjectAdapter(this)
-        recyclerView.addItemDecoration(ItemDecoration(requireContext(),
-            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
+        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

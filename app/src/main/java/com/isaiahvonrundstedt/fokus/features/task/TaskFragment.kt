@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.Preference
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
@@ -42,8 +41,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         super.onViewCreated(view, savedInstanceState)
 
         adapter = TaskAdapter(this, this)
-        recyclerView.addItemDecoration(ItemDecoration(requireContext(),
-            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
+        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

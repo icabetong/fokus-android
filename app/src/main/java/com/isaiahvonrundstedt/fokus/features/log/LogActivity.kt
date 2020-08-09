@@ -30,8 +30,7 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
         setToolbarTitle(R.string.activity_logs)
 
         adapter = LogAdapter(this)
-        recyclerView.addItemDecoration(ItemDecoration(this,
-            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
+        recyclerView.addItemDecoration(ItemDecoration(this))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 

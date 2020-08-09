@@ -15,7 +15,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import kotlinx.android.synthetic.main.fragment_event.*
 
@@ -34,8 +33,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = EventAdapter(this)
-        recyclerView.addItemDecoration(ItemDecoration(requireContext(),
-            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
+        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

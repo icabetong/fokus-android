@@ -30,8 +30,7 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = SubjectSelectorAdapter(this)
-        recyclerView.addItemDecoration(ItemDecoration(requireContext(),
-            R.dimen.item_offset_vertical, R.dimen.item_offset_horizontal))
+        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 

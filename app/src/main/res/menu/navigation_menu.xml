@@ -5,19 +5,19 @@
     <item
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
-        android:icon="@drawable/ic_outline_done_24"
+        android:icon="@drawable/ic_hero_clipboard_list_24"
         app:exb_color="@color/color_theme_task"/>
 
     <item
         android:id="@+id/navigation_events"
         android:title="@string/navigation_events"
-        android:icon="@drawable/ic_outline_event_24"
+        android:icon="@drawable/ic_hero_calendar_24"
         app:exb_color="@color/color_theme_events"/>
 
     <item
         android:id="@+id/navigation_subjects"
         android:title="@string/navigation_subjects"
-        android:icon="@drawable/ic_outline_square_foot_24"
+        android:icon="@drawable/ic_hero_beaker_24"
         app:exb_color="@color/color_theme_subjects"/>
 
 </menu>

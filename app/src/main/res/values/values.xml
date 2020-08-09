@@ -88,10 +88,12 @@
     </style>
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="tint">@color/color_on_surface</item>
+        <item name="srcCompat">@drawable/ic_hero_arrow_left_24</item>
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="tint">@color/color_on_surface</item>
+        <item name="srcCompat">@drawable/ic_hero_dots_vertical_24</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
@@ -99,7 +101,7 @@
         <item name="exb_backgroundColor">?attr/colorSurface</item>
         <item name="exb_itemBackgroundCornerRadius">32dp</item>
         <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>
-        <item name="exb_transitionDuration">100</item>
+        <item name="exb_transitionDuration">50</item>
         <item name="layout_behavior">@string/behavior_expandable_bottom_bar</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">

@@ -6,12 +6,12 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
 
 abstract class BaseService: Service() {
@@ -33,13 +33,16 @@ abstract class BaseService: Service() {
         else manager?.cancel(id)
     }
 
-    protected fun createNotification(@StringRes id: Int, @StringRes content: Int = 0,
-                                   ongoing: Boolean = false): Notification {
+    protected fun createNotification(ongoing: Boolean = false,
+                                     @StringRes titleRes: Int,
+                                     @StringRes contentRes: Int = 0,
+                                     @DrawableRes iconRes: Int = R.drawable.ic_hero_check_24): Notification {
+
         return NotificationCompat.Builder(this,
             AppNotificationManager.CHANNEL_ID_BACKUP).apply {
-            setSmallIcon(R.drawable.ic_outline_done_all_24)
-            setContentTitle(getString(id))
-            if (content != 0) setContentText(getString(content))
+            setSmallIcon(iconRes)
+            setContentTitle(getString(titleRes))
+            if (contentRes != 0) setContentText(getString(contentRes))
             setOngoing(ongoing)
             setCategory(Notification.CATEGORY_SERVICE)
             setChannelId(AppNotificationManager.CHANNEL_ID_BACKUP)

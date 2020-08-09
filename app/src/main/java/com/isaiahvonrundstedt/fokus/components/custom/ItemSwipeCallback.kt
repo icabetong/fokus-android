@@ -16,7 +16,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
     : ItemTouchHelper.Callback() {
 
-    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_outline_delete_24)
+    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_hero_trash_24)
     private var background: ColorDrawable = ColorDrawable(Color.parseColor("#ea4335"))
 
     override fun getMovementFlags(recyclerView: RecyclerView,

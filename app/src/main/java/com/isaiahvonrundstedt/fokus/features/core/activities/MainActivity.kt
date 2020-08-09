@@ -102,7 +102,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        toolbar?.setNavigationIcon(R.drawable.ic_outline_menu_24)
+        toolbar?.setNavigationIcon(R.drawable.ic_hero_menu_24)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet(supportFragmentManager).show {
                 result { id ->

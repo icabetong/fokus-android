@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_new"
         android:title="@string/button_new"
-        android:icon="@drawable/ic_outline_add_24"
+        android:icon="@drawable/ic_hero_plus_24"
         app:showAsAction="ifRoom"/>
 
 </menu>

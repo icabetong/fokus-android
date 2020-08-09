@@ -44,7 +44,7 @@ class BackupRestoreService: BaseService() {
 
     private fun startRestore(uri: Uri) {
         startForegroundCompat(NOTIFICATION_RESTORE_ONGOING,
-            createNotification(R.string.notification_restore_ongoing, ongoing = true))
+            createNotification(true, R.string.notification_restore_ongoing))
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
@@ -71,7 +71,7 @@ class BackupRestoreService: BaseService() {
 
                 stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
                 manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
-                    createNotification(R.string.notification_restore_success))
+                    createNotification(titleRes = R.string.notification_restore_success))
                 terminateService()
             }
             archive.close()
@@ -80,16 +80,16 @@ class BackupRestoreService: BaseService() {
 
             stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                createNotification(R.string.notification_restore_error,
-                    R.string.feedback_restore_corrupted))
+                createNotification(titleRes = R.string.notification_restore_error,
+                    contentRes = R.string.feedback_restore_corrupted))
             terminateService()
         } catch (e: Exception) {
             e.printStackTrace()
 
             stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
             manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                createNotification(R.string.notification_restore_error,
-                    R.string.feedback_restore_invalid))
+                createNotification(titleRes = R.string.notification_restore_error,
+                    contentRes = R.string.feedback_restore_invalid))
             terminateService()
         }
     }
@@ -134,7 +134,7 @@ class BackupRestoreService: BaseService() {
             return
 
         startForegroundCompat(NOTIFICATION_BACKUP_ONGOING,
-            createNotification(R.string.notification_backup_ongoing, ongoing = true))
+            createNotification(ongoing = true, titleRes = R.string.notification_backup_ongoing))
 
         try {
             runBlocking {
@@ -180,7 +180,7 @@ class BackupRestoreService: BaseService() {
 
                 stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
                 manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
-                    createNotification(R.string.notification_backup_success))
+                    createNotification(titleRes = R.string.notification_backup_success))
                 terminateService(BROADCAST_BACKUP_SUCCESS)
             }
 
@@ -190,7 +190,7 @@ class BackupRestoreService: BaseService() {
 
             stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
             manager?.notify(NOTIFICATION_BACKUP_FAILED,
-                createNotification(R.string.notification_backup_error))
+                createNotification(titleRes = R.string.notification_backup_error))
             terminateService(BROADCAST_BACKUP_FAILED)
         }
     }

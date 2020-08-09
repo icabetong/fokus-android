@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_outline_event_24"
-                android:tint="@color/color_theme_events"/>
+                android:src="@drawable/ic_hero_calendar_24"
+                app:tint="@color/color_theme_events"/>
 
         </RelativeLayout>
         <ListView

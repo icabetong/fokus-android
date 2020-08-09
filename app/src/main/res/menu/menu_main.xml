@@ -5,16 +5,16 @@
     <item
         android:id="@+id/action_history"
         android:title="@string/navigation_logs"
-        android:icon="@drawable/ic_outline_history_24"/>
+        android:icon="@drawable/ic_hero_archive_24"/>
 
     <item
         android:id="@+id/action_settings"
         android:title="@string/navigation_settings"
-        android:icon="@drawable/ic_outline_settings_24"/>
+        android:icon="@drawable/ic_hero_cog_24"/>
 
     <item
         android:id="@+id/action_about"
         android:title="@string/navigation_about"
-        android:icon="@drawable/ic_outline_info_24"/>
+        android:icon="@drawable/ic_hero_information_circle_24"/>
 
 </menu>

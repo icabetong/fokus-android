@@ -139,7 +139,7 @@ class EventEditor : BaseEditor() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
+        return if (requestCode == REQUEST_CODE_UPDATE) {
             menuInflater.inflate(R.menu.menu_editor_update, menu)
             true
         } else super.onCreateOptionsMenu(menu)

@@ -13,7 +13,7 @@
     android:textColor="@color/color_on_surface"
     android:textAllCaps="true"
     android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
-    app:icon="@drawable/ic_outline_add_24"
+    app:icon="@drawable/ic_hero_plus_24"
     app:iconTint="@color/color_on_surface"
     app:iconPadding="8dp"
     app:iconGravity="textStart"

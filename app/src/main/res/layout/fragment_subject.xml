@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_outline_add_24"
+        app:srcCompat="@drawable/ic_hero_plus_24"
         app:backgroundTint="@color/color_theme_subjects"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

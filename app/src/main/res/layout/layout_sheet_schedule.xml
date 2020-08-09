@@ -150,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeightSmall"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_outline_save_24"
+        app:icon="@drawable/ic_hero_check_24"
         style="@style/Fokus.Widget.Button"/>
 
 </LinearLayout>

@@ -169,7 +169,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
             notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
                 createNotification(log, NOTIFICATION_CHANNEL_ID_TASK,
-                    NotificationCompat.Action(R.drawable.ic_outline_done_24,
+                    NotificationCompat.Action(R.drawable.ic_hero_check_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
         } else if (log.type == Log.TYPE_EVENT)
             notificationManager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
@@ -183,6 +183,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         val id = when (type) {
             Log.TYPE_TASK -> AppNotificationManager.CHANNEL_ID_TASK
             Log.TYPE_EVENT -> AppNotificationManager.CHANNEL_ID_EVENT
+            Log.TYPE_CLASS -> AppNotificationManager.CHANNEL_ID_CLASS
             else -> AppNotificationManager.CHANNEL_ID_GENERIC
         }
         AppNotificationManager(applicationContext).create(id)
@@ -192,7 +193,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                                    @Nullable action: NotificationCompat.Action? = null): Notification {
         return NotificationCompat.Builder(applicationContext, id).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(R.drawable.ic_outline_done_all_24)
+            setSmallIcon(log?.getIconResource() ?: R.drawable.ic_hero_check_24)
             setContentIntent(contentIntent)
             setContentTitle(log?.title)
             setContentText(log?.content)

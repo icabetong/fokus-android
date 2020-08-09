@@ -35,6 +35,7 @@
     <string name="button_save">Speichern</string>
     <string name="button_done">Erledigt</string>
     <string name="button_undo">Rückgängig machen</string>
+    <string name="button_remove">Entfernen</string>
     <string name="button_continue">Fortfahren</string>
     <string name="button_mark_as_finished">Als beendet markieren</string>
     <string name="button_mark_as_important">Als wichtig markieren</string>

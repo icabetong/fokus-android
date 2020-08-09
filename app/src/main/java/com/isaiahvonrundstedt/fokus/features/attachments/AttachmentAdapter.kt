@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
@@ -69,7 +70,7 @@ class AttachmentAdapter(private var actionListener: ActionListener)
 
         private val rootView: View = itemView.findViewById(R.id.rootView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val removeButton: ImageButton = itemView.findViewById(R.id.removeButton)
+        private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
             with(t) {

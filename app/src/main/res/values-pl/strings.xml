@@ -34,6 +34,7 @@
     <string name="button_save">Zapisz</string>
     <string name="button_done">Sporządzono</string>
     <string name="button_undo">Undo</string>
+    <string name="button_remove">Usuń</string>
     <string name="button_continue">Kontynuuj</string>
     <string name="button_mark_as_finished">Oznaczyć jako skończone</string>
     <string name="button_mark_as_important">Zaznaczyć jako ważne</string>

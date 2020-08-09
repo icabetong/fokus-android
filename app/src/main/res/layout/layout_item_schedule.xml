@@ -30,13 +30,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="8:00AM to 2:00PM"/>
 
-        <ImageButton
+        <com.google.android.material.chip.Chip
             android:id="@+id/removeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/shape_button_remove"
-            android:contentDescription="@null"
+            android:text="@string/button_remove"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

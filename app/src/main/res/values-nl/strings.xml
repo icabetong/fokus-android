@@ -34,6 +34,7 @@
     <string name="button_new">Nieuw</string>
     <string name="button_save">Bespaar</string>
     <string name="button_done">Gedaan</string>
+    <string name="button_remove">Verwijder</string>
     <string name="button_undo">Maak ongedaan</string>
     <string name="button_continue">Ga verder met</string>
     <string name="button_mark_as_finished">Markeer als Afgewerkt</string>

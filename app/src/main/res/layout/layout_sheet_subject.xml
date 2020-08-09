@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/rootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/bottom_sheet_padding"
+        android:paddingStart="@dimen/bottom_sheet_padding"
+        android:paddingEnd="@dimen/bottom_sheet_padding"
+        android:layout_marginBottom="16dp"
+        android:text="@string/dialog_select_subject"
+        android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/bottom_sheet_padding"
-            android:paddingStart="@dimen/bottom_sheet_padding"
-            android:paddingEnd="@dimen/bottom_sheet_padding"
-            android:layout_marginBottom="16dp"
-            android:text="@string/dialog_select_subject"
-            android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -27,31 +27,31 @@
             android:layout_height="match_parent"
             android:clipChildren="false" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/activity_padding_medium">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:srcCompat="@drawable/undraw_studying"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
+            android:id="@+id/emptyView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_title"
-            android:textColor="@color/color_theme_subjects"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+            android:padding="@dimen/activity_padding_medium">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:srcCompat="@drawable/undraw_studying"/>
 
-</RelativeLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/empty_view_no_subjects_title"
+                android:textColor="@color/color_theme_subjects"
+                android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

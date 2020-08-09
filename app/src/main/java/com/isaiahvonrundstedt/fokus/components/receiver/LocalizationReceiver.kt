@@ -14,9 +14,9 @@ class LocalizationReceiver : BroadcastReceiver() {
 
         if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {
             with(AppNotificationManager(context)) {
-                create(AppNotificationManager.CHANNEL_ID_TASK)
-                create(AppNotificationManager.CHANNEL_ID_EVENT)
-                create(AppNotificationManager.CHANNEL_ID_GENERIC)
+                createChannel(AppNotificationManager.CHANNEL_ID_TASK)
+                createChannel(AppNotificationManager.CHANNEL_ID_EVENT)
+                createChannel(AppNotificationManager.CHANNEL_ID_GENERIC)
             }
         }
     }

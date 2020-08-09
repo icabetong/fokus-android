@@ -5,13 +5,10 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
-import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import androidx.core.app.NotificationManagerCompat
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-
 
 class AppNotificationManager(private var context: Context?) {
 
@@ -19,12 +16,12 @@ class AppNotificationManager(private var context: Context?) {
             = context?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
 
     @RequiresApi(26)
-    fun exists(id: String): Boolean {
+    fun channelExists(id: String): Boolean {
         return manager?.getNotificationChannel(id) == null
     }
 
     @RequiresApi(26)
-    fun recreate(id: String, importance: Int = NotificationManager.IMPORTANCE_HIGH) {
+    fun recreateChannel(id: String, importance: Int = NotificationManager.IMPORTANCE_HIGH) {
         manager?.createNotificationChannel(
             NotificationChannel(id, context?.getString(getResourceString(id)),
                 importance).apply {
@@ -33,9 +30,9 @@ class AppNotificationManager(private var context: Context?) {
     }
 
     @RequiresApi(26)
-    fun create(id: String, importance: Int = NotificationManager.IMPORTANCE_HIGH) {
-        if (exists(id))
-            recreate(id, importance)
+    fun createChannel(id: String, importance: Int = NotificationManager.IMPORTANCE_HIGH) {
+        if (!channelExists(id))
+            recreateChannel(id, importance)
     }
 
     @StringRes

@@ -186,7 +186,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             Log.TYPE_CLASS -> AppNotificationManager.CHANNEL_ID_CLASS
             else -> AppNotificationManager.CHANNEL_ID_GENERIC
         }
-        AppNotificationManager(applicationContext).create(id)
+        AppNotificationManager(applicationContext).createChannel(id)
     }
 
     private fun createNotification(log: Log?, id: String,

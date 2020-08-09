@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.components.utils
 import android.content.Context
 import android.net.Uri
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
+import okio.Okio
 import java.io.File
 import java.io.FileOutputStream
 
@@ -15,14 +16,15 @@ class DataExporter<T: Any> private constructor(private var context: Context) {
     private var name: String = FILE_NAME_TEMP
 
     fun export(): File? {
-        var file: File? = null
+        var cache: File? = null
 
         JsonDataStreamer.encodeToJson(source, type!!)?.toByteArray()?.run {
             if (isCache) {
-                file = File(context.cacheDir, name)
-                FileOutputStream(file).use {
-                    it.write(this)
-                    it.flush()
+                cache = File(context.cacheDir, name).also {
+                    Okio.buffer(Okio.sink(it)).use { bufferedSink ->
+                        bufferedSink.write(this)
+                        bufferedSink.flush()
+                    }
                 }
             } else {
                 context.contentResolver.openOutputStream(destination!!)?.use {
@@ -31,8 +33,7 @@ class DataExporter<T: Any> private constructor(private var context: Context) {
                 }
             }
         }
-
-        return file
+        return cache
     }
 
     class Builder<T: Any>(context: Context) {

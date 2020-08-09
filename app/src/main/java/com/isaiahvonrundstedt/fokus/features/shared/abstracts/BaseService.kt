@@ -19,7 +19,7 @@ abstract class BaseService: Service() {
     protected fun startForegroundCompat(id: Int, notification: Notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             with(AppNotificationManager(this)) {
-                create(AppNotificationManager.CHANNEL_ID_BACKUP)
+                createChannel(AppNotificationManager.CHANNEL_ID_BACKUP)
             }
 
             startForeground(id, notification)

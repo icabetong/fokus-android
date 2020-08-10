@@ -5,12 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputType
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -20,12 +17,12 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -61,7 +58,20 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
             adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
-            setTransitionName(taskNameTextInput, TaskAdapter.TRANSITION_NAME_ID + task.taskID)
+            taskNameTextInput.transitionName = TRANSITION_ID_NAME + task.taskID
+        } else if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_TITLE)) {
+
+            task.name = intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_TITLE)
+
+            taskNameTextInput.setText(task.name)
+            taskNameTextInput.transitionName = TRANSITION_ID_NAME
+
+            if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_DUE)) {
+                task.dueDate = DateTimeConverter.toDateTime(
+                    intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_DUE))
+                dueDateTextView.text = task.formatDueDate(this)
+                dueDateTextView.transitionName = TRANSITION_ID_DUE
+            }
         }
 
         statusSwitch.changeTextColorWhenChecked()
@@ -288,6 +298,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         const val EXTRA_TASK = "extra:task"
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_ATTACHMENTS = "extra:attachments"
+
+        const val TRANSITION_ID_NAME = "transition:task:name:"
+        const val TRANSITION_ID_DUE = "transition:task:due:"
 
         private const val REQUEST_CODE_ATTACHMENT = 20
     }

@@ -3,8 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -51,8 +49,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)!!
             adapter.setItems(intent.getParcelableListExtra(EXTRA_SCHEDULE) ?: emptyList())
 
-            setTransitionName(codeTextInput, SubjectAdapter.TRANSITION_CODE_ID + subject.subjectID)
-            setTransitionName(descriptionTextInput, SubjectAdapter.TRANSITION_DESCRIPTION_ID + subject.subjectID)
+            setTransitionName(codeTextInput, TRANSITION_ID_CODE + subject.subjectID)
+            setTransitionName(descriptionTextInput, TRANSITION_ID_DESCRIPTION + subject.subjectID)
         }
 
         // Get actual values for the items
@@ -192,5 +190,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_SCHEDULE = "extra:schedule"
+
+        const val TRANSITION_ID_CODE = "transition:subject:code:"
+        const val TRANSITION_ID_DESCRIPTION = "transition:subject:description:"
     }
 }

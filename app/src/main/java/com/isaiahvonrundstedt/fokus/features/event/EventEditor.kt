@@ -51,7 +51,7 @@ class EventEditor : BaseEditor() {
             event = intent.getParcelableExtra(EXTRA_EVENT)!!
             subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-            setTransitionName(eventNameTextInput, EventAdapter.TRANSITION_EVENT_NAME + event.eventID)
+            setTransitionName(eventNameTextInput, TRANSITION_ID_NAME + event.eventID)
         }
 
         prioritySwitch.changeTextColorWhenChecked()
@@ -204,5 +204,7 @@ class EventEditor : BaseEditor() {
 
         const val EXTRA_EVENT = "extra:event"
         const val EXTRA_SUBJECT = "extra:subject"
+
+        const val TRANSITION_ID_NAME = "transition:event:name"
     }
 }

@@ -37,6 +37,7 @@
     <string name="button_undo">Rückgängig machen</string>
     <string name="button_remove">Entfernen</string>
     <string name="button_continue">Fortfahren</string>
+    <string name="button_expand">Erweitern Sie</string>
     <string name="button_mark_as_finished">Als beendet markieren</string>
     <string name="button_mark_as_important">Als wichtig markieren</string>
     <string name="button_delete">Löschen</string>

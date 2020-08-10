@@ -37,6 +37,7 @@
     <string name="button_remove">Verwijder</string>
     <string name="button_undo">Maak ongedaan</string>
     <string name="button_continue">Ga verder met</string>
+    <string name="button_expand">Uitbreiden</string>
     <string name="button_mark_as_finished">Markeer als Afgewerkt</string>
     <string name="button_mark_as_important">Markeer als Belangrijk</string>
     <string name="button_delete">Verwijder</string>

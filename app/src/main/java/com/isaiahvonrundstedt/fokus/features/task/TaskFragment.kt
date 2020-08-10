@@ -60,8 +60,9 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         super.onResume()
 
         actionButton.setOnClickListener {
-            startActivityForResult(Intent(context, TaskEditor::class.java),
-                TaskEditor.REQUEST_CODE_INSERT)
+            TaskEditorSheet(childFragmentManager).show {
+                result { viewModel.insert(it) }
+            }
         }
     }
 

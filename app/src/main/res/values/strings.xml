@@ -37,6 +37,7 @@
     <string name="button_undo">Undo</string>
     <string name="button_remove">Remove</string>
     <string name="button_continue">Continue</string>
+    <string name="button_expand">Expand</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
     <string name="button_mark_as_important">Mark as Important</string>
     <string name="button_delete">Delete</string>

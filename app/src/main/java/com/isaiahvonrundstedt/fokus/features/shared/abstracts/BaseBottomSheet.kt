@@ -53,7 +53,9 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     }
 
     protected fun showFeedback(@StringRes id: Int): Toast {
-        return Toast.makeText(requireContext(), getString(id), Toast.LENGTH_SHORT)
+        return Toast.makeText(requireContext(), getString(id), Toast.LENGTH_SHORT).apply {
+            show()
+        }
     }
 }
 

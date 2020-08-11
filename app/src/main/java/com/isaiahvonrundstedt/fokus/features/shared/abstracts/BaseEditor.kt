@@ -5,15 +5,9 @@ import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.Nullable
-import androidx.annotation.StringRes
-import androidx.core.view.isVisible
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseEditor : BaseActivity() {

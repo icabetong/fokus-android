@@ -6,9 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import androidx.annotation.Nullable
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
@@ -16,13 +14,12 @@ import androidx.work.Data
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
-import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.log.Log
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -210,7 +207,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     private val notificationSoundUri: Uri
         get() {
             return PreferenceManager(applicationContext).let {
-                if (it.customSoundEnabled) it.customSoundUri
+                if (it.customSound) it.customSoundUri
                 else PreferenceManager.DEFAULT_SOUND_URI
             }
         }

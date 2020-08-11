@@ -5,8 +5,8 @@ import android.net.Uri
 import android.os.Environment
 import android.os.IBinder
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.utils.ZipArchiveManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -16,10 +16,14 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import okio.Okio
 import org.joda.time.DateTime
-import java.io.*
+import java.io.EOFException
+import java.io.File
+import java.io.InputStream
 import java.util.zip.ZipEntry
 
 class BackupRestoreService: BaseService() {
@@ -184,7 +188,7 @@ class BackupRestoreService: BaseService() {
                 terminateService(BROADCAST_BACKUP_SUCCESS)
             }
 
-            PreferenceManager(this).backupDate = DateTime.now()
+            PreferenceManager(this).previousBackupDate = DateTime.now()
         } catch (e: Exception) {
             e.printStackTrace()
 

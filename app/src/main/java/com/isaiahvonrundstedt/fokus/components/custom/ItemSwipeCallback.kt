@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
     : ItemTouchHelper.Callback() {

@@ -18,13 +18,8 @@ import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 abstract class BaseService: Service() {
 
     protected fun startForegroundCompat(id: Int, notification: Notification) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(NotificationChannelManager(this)) {
-                register(NotificationChannelManager.CHANNEL_ID_GENERIC)
-            }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startForeground(id, notification)
-        }
         else manager?.notify(id, notification)
     }
 

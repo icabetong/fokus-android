@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
 
 class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
@@ -72,9 +73,12 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                 BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.event)
 
-                    createSnackbar(recyclerView, R.string.feedback_event_removed).run {
+                    createSnackbar(R.string.feedback_event_removed, recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.event) }
-                        show()
+                    }
+
+                    createSnackbar(R.string.feedback_event_removed, recyclerView).run {
+                        setAction(R.string.button_undo) { viewModel.insert(t.event) }
                     }
                 }
             }

@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 
 class NotificationChannelManager(private var context: Context) {
 
@@ -70,7 +69,7 @@ class NotificationChannelManager(private var context: Context) {
     private val notificationSoundUri: Uri
         get() {
             return PreferenceManager(context).let {
-                if (it.customSoundEnabled) it.customSoundUri
+                if (it.customSound) it.customSoundUri
                 else PreferenceManager.DEFAULT_SOUND_URI
             }
         }

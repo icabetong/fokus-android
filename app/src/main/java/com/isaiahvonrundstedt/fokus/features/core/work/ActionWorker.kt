@@ -2,8 +2,8 @@ package com.isaiahvonrundstedt.fokus.features.core.work
 
 import android.content.Context
 import androidx.work.WorkerParameters
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
+import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
 // This worker's primary function perform the action

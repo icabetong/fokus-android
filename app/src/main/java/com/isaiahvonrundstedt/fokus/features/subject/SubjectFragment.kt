@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
-import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_subject.*
 
 class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
@@ -77,9 +78,8 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
                 BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
-                    createSnackbar(recyclerView, R.string.feedback_subject_removed).run {
+                    createSnackbar(R.string.feedback_subject_removed, recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.subject, t.schedules) }
-                        show()
                     }
                 }
             }

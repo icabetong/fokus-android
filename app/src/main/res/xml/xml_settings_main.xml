@@ -139,7 +139,7 @@
             tools:layout="@layout/layout_preference_info"/>
 
         <Preference
-            app:key="@string/key_not_working_notifications"
+            app:key="@string/key_battery_optimization"
             app:title="@string/settings_not_working_notifications"/>
 
     </PreferenceCategory>

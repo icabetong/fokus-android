@@ -9,7 +9,6 @@ import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.database.converter.UriConverter
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime

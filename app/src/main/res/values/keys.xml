@@ -20,7 +20,7 @@
     <string translatable="false" name="key_backup">backupKey</string>
     <string translatable="false" name="key_restore">restoreKey</string>
     <string translatable="false" name="key_no_import">noImportKey</string>
-    <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
+    <string translatable="false" name="key_battery_optimization">batteryOptimizationKey</string>
     <string translatable="false" name="key_report_issue">issueKey</string>
     <string translatable="false" name="key_translate">translateKey</string>
     <string translatable="false" name="key_notices">noticesKey</string>

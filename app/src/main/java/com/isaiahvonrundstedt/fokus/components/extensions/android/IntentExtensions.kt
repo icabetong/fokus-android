@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.components.extensions.android
 
 import android.content.Intent
-import android.os.Parcel
 import android.os.Parcelable
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 

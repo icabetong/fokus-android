@@ -12,10 +12,10 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import kotlinx.android.synthetic.main.layout_sheet_schedule.*
-import kotlinx.android.synthetic.main.layout_sheet_schedule.actionButton
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import java.util.*
@@ -135,18 +135,18 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
             // the corresponding field then return to stop
             // the execution of the code
             if (schedule.daysOfWeek == 0) {
-                showFeedback(R.string.feedback_schedule_empty_days).show()
+                createToast(R.string.feedback_schedule_empty_days)
                 return@setOnClickListener
             }
 
             if (schedule.startTime == null) {
-                showFeedback(R.string.feedback_schedule_empty_start_time).show()
+                createToast(R.string.feedback_schedule_empty_start_time)
                 startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             if (schedule.endTime == null) {
-                showFeedback(R.string.feedback_schedule_empty_end_time).show()
+                createToast(R.string.feedback_schedule_empty_end_time)
                 endTimeTextView.performClick()
                 return@setOnClickListener
             }

@@ -6,17 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.Preference
-import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.PermissionManager
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.startForegroundServiceCompat
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
@@ -43,12 +40,12 @@ class BackupRestorePreference: BasePreference() {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     BackupRestoreService.BROADCAST_BACKUP_SUCCESS ->
                         findPreference<Preference>(R.string.key_backup)?.apply {
-                            summary = manager.backupDate.parseForSummary()
+                            summary = manager.previousBackupDate.parseForSummary()
                         }
                     BackupRestoreService.BROADCAST_BACKUP_FAILED ->
-                        createSnackbar(requireView(), R.string.feedback_backup_failed).show()
+                        createSnackbar(R.string.feedback_backup_failed, requireView())
                     BackupRestoreService.BROADCAST_BACKUP_EMPTY ->
-                        createSnackbar(requireView(), R.string.feedback_backup_empty).show()
+                        createSnackbar(R.string.feedback_backup_empty, requireView())
                 }
             }
         }
@@ -58,7 +55,7 @@ class BackupRestorePreference: BasePreference() {
         super.onStart()
 
         findPreference<Preference>(R.string.key_backup)?.apply {
-            summary = manager.backupDate.parseForSummary()
+            summary = manager.previousBackupDate.parseForSummary()
             setOnPreferenceClickListener {
                 val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)

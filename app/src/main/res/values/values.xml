@@ -34,6 +34,7 @@
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
         <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
+        <item name="drawerArrowStyle">@style/Fokus.Widget.ArrowToggle</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -79,7 +80,6 @@
         <item name="android:background">@color/color_toolbar_background</item>
     </style>
     <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="navigationIcon">@drawable/ic_hero_arrow_left_24</item>
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
         <item name="maxButtonHeight">48dp</item>
@@ -93,7 +93,6 @@
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="tint">@color/color_on_surface</item>
-        <item name="srcCompat">@drawable/ic_hero_dots_vertical_24</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
@@ -139,6 +138,9 @@
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
     </style>
     <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
+    <style name="Fokus.Widget.ArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/color_on_surface</item>
+    </style>
 
     <!-- TextAppearance -->
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>

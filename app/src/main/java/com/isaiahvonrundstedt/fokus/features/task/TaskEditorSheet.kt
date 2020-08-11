@@ -13,12 +13,11 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import kotlinx.android.synthetic.main.layout_sheet_task.*
-import kotlinx.android.synthetic.main.layout_sheet_task.dueDateTextView
-import kotlinx.android.synthetic.main.layout_sheet_task.taskNameTextInput
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -76,13 +75,13 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
             task.name = taskNameTextInput.text.toString()
 
             if (task.name.isNullOrEmpty()) {
-                showFeedback(R.string.feedback_task_empty_name)
+                createToast(R.string.feedback_task_empty_name)
                 taskNameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!task.hasDueDate()) {
-                showFeedback(R.string.feedback_task_empty_due_date)
+                createToast(R.string.feedback_task_empty_due_date)
                 dueDateTextView.performClick()
                 return@setOnClickListener
             }

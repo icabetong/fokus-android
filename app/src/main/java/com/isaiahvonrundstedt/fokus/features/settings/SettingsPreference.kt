@@ -17,12 +17,12 @@ import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
-import com.isaiahvonrundstedt.fokus.components.PermissionManager
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
+import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -117,7 +117,7 @@ class SettingsPreference : BasePreference() {
             }
         }
 
-        findPreference<Preference>(R.string.key_not_working_notifications)?.apply {
+        findPreference<Preference>(R.string.key_battery_optimization)?.apply {
             setOnPreferenceClickListener {
                 val manufacturerArray = resources.getStringArray(R.array.oem_battery_optimization)
 

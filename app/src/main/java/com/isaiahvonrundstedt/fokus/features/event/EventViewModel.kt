@@ -4,12 +4,12 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequest
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationWorker
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider
 import kotlinx.coroutines.launch
 
 class EventViewModel(private var app: Application) : BaseViewModel(app) {

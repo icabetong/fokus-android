@@ -2,8 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.event
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -16,15 +14,9 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
-import kotlinx.android.synthetic.main.layout_editor_event.clearButton
-import kotlinx.android.synthetic.main.layout_editor_event.notesTextInput
-import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
-import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
-import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
 import org.joda.time.LocalDateTime
 import java.util.*
 

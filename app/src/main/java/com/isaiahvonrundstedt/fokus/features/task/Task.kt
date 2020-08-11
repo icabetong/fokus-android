@@ -12,7 +12,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
-import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 

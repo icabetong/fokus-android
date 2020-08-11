@@ -14,11 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -73,10 +74,10 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         if (t is TaskResource) {
             viewModel.update(t.task)
             if (isChecked) {
-                createSnackbar(recyclerView, R.string.button_mark_as_finished).show()
+                createSnackbar(R.string.button_mark_as_finished, recyclerView)
 
                 with(PreferenceManager(context)) {
-                    if (confettiEnabled) {
+                    if (confetti) {
                         confettiView.build()
                             .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
                             .setDirection(0.0, 359.0)
@@ -90,9 +91,9 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                             .burst(100)
                     }
 
-                    if (soundEnabled) {
+                    if (sounds) {
                         var soundUri: Uri = PreferenceManager.DEFAULT_SOUND_URI
-                        if (customSoundEnabled)
+                        if (customSound)
                             soundUri = this.customSoundUri
 
                         RingtoneManager.getRingtone(requireContext(), soundUri).play()
@@ -123,11 +124,10 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                 BaseListAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
-                    createSnackbar(recyclerView, R.string.feedback_task_removed).run {
+                    createSnackbar(R.string.feedback_task_removed, recyclerView).run {
                         setAction(R.string.button_undo) {
                             viewModel.insert(t.task, t.attachments)
                         }
-                        show()
                     }
                 }
             }

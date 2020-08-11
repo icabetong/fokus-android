@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.os.IBinder
-import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService

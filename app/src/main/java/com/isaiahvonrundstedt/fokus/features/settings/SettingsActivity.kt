@@ -28,7 +28,6 @@ class SettingsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceSt
             .setFallbackOnNavigateUpListener { onNavigateUpOrFinish() }
             .build()
         toolbar.setupWithNavController(controller!!, configuration)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_hero_arrow_left_24)
     }
 
     override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?,

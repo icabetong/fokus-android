@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -50,12 +48,6 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     inline fun show(sheet: BaseBottomSheet<T>.() -> Unit) {
         this.sheet()
         this.show()
-    }
-
-    protected fun showFeedback(@StringRes id: Int): Toast {
-        return Toast.makeText(requireContext(), getString(id), Toast.LENGTH_SHORT).apply {
-            show()
-        }
     }
 }
 

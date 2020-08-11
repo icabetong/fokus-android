@@ -3,14 +3,11 @@ package com.isaiahvonrundstedt.fokus.features.schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class ScheduleAdapter(private val actionListener: ActionListener)
     : BaseAdapter<ScheduleAdapter.ViewHolder>() {

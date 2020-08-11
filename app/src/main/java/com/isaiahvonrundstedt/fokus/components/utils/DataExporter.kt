@@ -5,7 +5,6 @@ import android.net.Uri
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import okio.Okio
 import java.io.File
-import java.io.FileOutputStream
 
 class DataExporter<T: Any> private constructor(private var context: Context) {
 

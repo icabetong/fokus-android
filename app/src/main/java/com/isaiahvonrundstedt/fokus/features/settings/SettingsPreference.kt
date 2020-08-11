@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.SwitchPreference
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog

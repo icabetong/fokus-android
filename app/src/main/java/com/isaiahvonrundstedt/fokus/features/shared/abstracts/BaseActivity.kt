@@ -4,8 +4,10 @@ import android.os.Build
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import kotlinx.android.synthetic.main.layout_appbar.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -32,7 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         this.toolbar?.setNavigationOnClickListener { onBackPressed() }
-        supportActionBar?.title = null
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -87,9 +87,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     adapter.remove(t)
-                    createSnackbar(rootLayout, R.string.feedback_schedule_removed).run {
+                    createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {
                         setAction(R.string.button_undo) { adapter.insert(t) }
-                        show()
                     }
                 }
             }
@@ -133,19 +132,19 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             R.id.action_save -> {
 
                 if (codeTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(rootLayout, R.string.feedback_subject_empty_name).show()
+                    createSnackbar(R.string.feedback_subject_empty_name, rootLayout)
                     codeTextInput.requestFocus()
                     return false
                 }
 
                 if (descriptionTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(rootLayout, R.string.feedback_subject_empty_description).show()
+                    createSnackbar(R.string.feedback_subject_empty_description, rootLayout)
                     descriptionTextInput.requestFocus()
                     return false
                 }
 
                 if (adapter.itemCount == 0) {
-                    createSnackbar(rootLayout, R.string.feedback_subject_no_schedule).show()
+                    createSnackbar(R.string.feedback_subject_no_schedule, rootLayout).show()
                     return false
                 }
 

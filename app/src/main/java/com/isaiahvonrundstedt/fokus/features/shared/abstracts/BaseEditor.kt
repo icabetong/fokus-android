@@ -51,12 +51,6 @@ abstract class BaseEditor : BaseActivity() {
         }
     }
 
-    protected fun createSnackbar(@Nullable view: View?,
-                                 @StringRes id: Int,
-                                 timeOut: Int = Snackbar.LENGTH_SHORT): Snackbar {
-        return Snackbar.make(view ?: window.decorView.rootView, id, timeOut)
-    }
-
     protected val animation: Animation
         get() {
             return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in)

@@ -42,7 +42,7 @@ class AppNotificationManager(private var context: Context?) {
             CHANNEL_ID_EVENT -> R.string.notification_channel_event_reminders
             CHANNEL_ID_CLASS -> R.string.notification_channel_class_reminders
             CHANNEL_ID_BACKUP -> R.string.notification_channel_backups
-            CHANNEL_ID_GENERIC -> R.string.notification_channel_generic
+            CHANNEL_ID_GENERIC -> R.string.notification_channel_general
             else -> 0
         }
     }

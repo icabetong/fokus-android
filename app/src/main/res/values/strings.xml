@@ -42,6 +42,7 @@
     <string name="button_mark_as_important">Mark as Important</string>
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_discard">Discard</string>
 
     <string name="empty_view_no_subjects_title">No Added Subjects</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -67,11 +68,10 @@
     <string name="dialog_select_notification_interval">Select notification interval</string>
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_choose_backup">Choose a backup file</string>
-    <string name="dialog_your_name_title">What shall we call you?</string>
-    <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
-    <string name="dialog_confirm_deletion_title">Do you want to remove "%1$s"?</string>
+    <string name="dialog_confirm_deletion_title">Do you want to remove \"%1$s\"?</string>
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
+    <string name="dialog_discard_changes">Discard changes?</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -206,7 +206,7 @@
     <string name="helper_this_is_important">Marking this as important means that it will show a persistent notification at your notification shade.</string>
 
     <!-- Notifications -->
-    <string name="notification_channel_generic">Generic</string>
+    <string name="notification_channel_general">Generic</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
     <string name="notification_channel_class_reminders">Class Reminders</string>

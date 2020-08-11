@@ -41,6 +41,7 @@
     <string name="button_mark_as_important">Marquer comme important</string>
     <string name="button_delete">Supprimer</string>
     <string name="button_cancel">Annuler</string>
+    <string name="button_discard">Jeter</string>
 
     <string name="empty_view_no_subjects_title">Aucun sujet ajouté</string>
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
@@ -66,11 +67,10 @@
     <string name="dialog_select_notification_interval">Sélectionnez l\'intervalle de notification</string>
     <string name="dialog_choose_theme">Choisissez un thème</string>
     <string name="dialog_choose_backup">Choisissez un fichier de sauvegarde</string>
-    <string name="dialog_your_name_title">Comment devrions-nous vous appeler?</string>
-    <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
-    <string name="dialog_confirm_deletion_title">Voulez-vous supprimer les "%1$" ?</string>
+    <string name="dialog_confirm_deletion_title">Voulez-vous supprimer les \"%1$\" ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois que ce poste a été supprimé, il ne peut plus être récupéré.</string>
     <string name="dialog_schedule_details">Détails du calendrier</string>
+    <string name="dialog_discard_changes">Abandonner les changements ?</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>
@@ -205,7 +205,7 @@
     <string name="helper_this_is_important">Le fait de le marquer comme important signifie qu\'il affichera une notification persistante à votre nuance de notification.</string>
 
     <!-- Notifications -->
-    <string name="notification_channel_generic">Générique</string>
+    <string name="notification_channel_general">Généralités</string>
     <string name="notification_channel_task_reminders">Rappels de tâches</string>
     <string name="notification_channel_event_reminders">Rappels d\'événements</string>
     <string name="notification_channel_class_reminders">Rappels de classe</string>

@@ -13,10 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.changeTextColorWhenChecked
-import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
@@ -145,19 +142,19 @@ class EventEditor : BaseEditor() {
                 // then if resulted true, show a feedback then direct
                 // user focus to the field and stop code execution.
                 if (eventNameTextInput.text.isNullOrBlank()) {
-                    createSnackbar(rootLayout, R.string.feedback_event_empty_name).show()
+                    createSnackbar(R.string.feedback_event_empty_name, rootLayout)
                     eventNameTextInput.requestFocus()
                     return false
                 }
 
                 if (locationTextInput.text.isNullOrBlank()) {
-                    createSnackbar(rootLayout, R.string.feedback_event_empty_location).show()
+                    createSnackbar(R.string.feedback_event_empty_location, rootLayout)
                     locationTextInput.requestFocus()
                     return false
                 }
 
                 if (event.schedule == null) {
-                    createSnackbar(rootLayout, R.string.feedback_event_empty_schedule).show()
+                    createSnackbar(R.string.feedback_event_empty_schedule, rootLayout)
                     scheduleTextView.performClick()
                     return false
                 }

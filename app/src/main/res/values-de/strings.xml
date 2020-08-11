@@ -42,6 +42,7 @@
     <string name="button_mark_as_important">Als wichtig markieren</string>
     <string name="button_delete">Löschen</string>
     <string name="button_cancel">Abbrechen</string>
+    <string name="button_discard">Verwerfen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
@@ -67,11 +68,10 @@
     <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
     <string name="dialog_choose_theme">Thema wählen</string>
     <string name="dialog_choose_backup">Wählen Sie eine Sicherungsdatei</string>
-    <string name="dialog_your_name_title">Wie sollen wir Sie nennen?</string>
-    <string name="dialog_your_name_summary">Sie können dieses Feld leer lassen. Alles, was Sie in dieses Feld eingeben, bleibt jedoch auf diesem Gerät.</string>
-    <string name="dialog_confirm_deletion_title">Wollen Sie "%1$s" entfernen?</string>
+    <string name="dialog_confirm_deletion_title">Wollen Sie \"%1$s\" entfernen?</string>
     <string name="dialog_confirm_deletion_summary">Wenn dieses Element einmal gelöscht wurde, kann es nicht wiederhergestellt werden.</string>
     <string name="dialog_schedule_details">Einzelheiten zum Zeitplan</string>
+    <string name="dialog_discard_changes">Änderungen verwerfen?</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -204,7 +204,7 @@
 
     <string name="helper_this_is_important">Wenn Sie dies als wichtig kennzeichnen, bedeutet dies, dass es eine anhaltende Benachrichtigung im Schatten Ihrer Benachrichtigung anzeigt.</string>
     
-    <string name="notification_channel_generic">Generisch</string>
+    <string name="notification_channel_general">Allgemein</string>
     <string name="notification_channel_task_reminders">Aufgaben-Erinnerungen</string>
     <string name="notification_channel_event_reminders">Ereignis-Erinnerungen</string>
     <string name="notification_channel_class_reminders">Klassen-Erinnerungen</string>

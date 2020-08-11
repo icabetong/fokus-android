@@ -12,6 +12,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.documentfile.provider.DocumentFile
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -75,6 +76,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             task.name = intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_TITLE)
 
             taskNameTextInput.setText(task.name)
+            taskNameTextInput.requestFocus()
             taskNameTextInput.transitionName = TRANSITION_ID_NAME
 
             if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_DUE)) {
@@ -193,7 +195,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     AttachmentImportService.BROADCAST_IMPORT_ONGOING -> {
-                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_ongoing,
+                        snackbar = createSnackbar(R.string.feedback_import_ongoing, rootLayout,
                             Snackbar.LENGTH_INDEFINITE)
                         snackbar?.show()
                     }
@@ -201,7 +203,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         if (snackbar?.isShown == true)
                             snackbar?.dismiss()
 
-                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_completed)
+                        snackbar = createSnackbar(R.string.feedback_import_completed, rootLayout)
                         snackbar?.show()
                         adapter.insert(createAttachment(
                             intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)))
@@ -210,7 +212,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         if (snackbar?.isShown == true)
                             snackbar?.dismiss()
 
-                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_failed)
+                        snackbar = createSnackbar(R.string.feedback_import_failed, rootLayout)
                         snackbar?.show()
                     }
                 }
@@ -265,10 +267,21 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     onParseIntent(t.uri)
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
-                    adapter.remove(t)
-                    createSnackbar(rootLayout, R.string.feedback_attachment_removed).run {
-                        setAction(R.string.button_undo) { adapter.insert(t) }
-                        show()
+                    MaterialDialog(this).show {
+                        title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
+                            t.uri?.getFileName(this@TaskEditor)))
+                        message(R.string.dialog_confirm_deletion_summary)
+                        positiveButton(R.string.button_delete) {
+                            adapter.remove(t)
+
+
+                            if (!PreferenceManager(this@TaskEditor).noImport){
+                                t.uri?.let { data ->
+                                    DocumentFile.fromSingleUri(this@TaskEditor, data)?.delete()
+                                }
+                            }
+                        }
+                        negativeButton(R.string.button_cancel)
                     }
                 }
             }
@@ -297,13 +310,13 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 // attention to the field. Then return to stop the execution
                 // of the code.
                 if (taskNameTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(rootLayout, R.string.feedback_task_empty_name).show()
+                    createSnackbar(R.string.feedback_task_empty_name, rootLayout)
                     taskNameTextInput.requestFocus()
                     return false
                 }
 
                 if (!task.hasDueDate()) {
-                    createSnackbar(rootLayout, R.string.feedback_task_empty_due_date).show()
+                    createSnackbar(R.string.feedback_task_empty_due_date, rootLayout)
                     dueDateTextView.performClick()
                     return false
                 }

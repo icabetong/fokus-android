@@ -41,6 +41,7 @@
     <string name="button_mark_as_important">Zaznaczyć jako ważne</string>
     <string name="button_delete">Skreślić</string>
     <string name="button_cancel">Anuluj</string>
+    <string name="button_discard">Odrzuć</string>
 
     <string name="empty_view_no_subjects_title">Brak tematów Dodano</string>
     <string name="empty_view_no_subjects_summary">Tematy pomagają w sortowaniu zadań, aby je dodać, dotknij ikony dodawania.</string>
@@ -66,11 +67,10 @@
     <string name="dialog_select_notification_interval">Wybierz Interwał powiadamiania</string>
     <string name="dialog_choose_theme">Wybierz temat</string>
     <string name="dialog_choose_backup">Wybierz plik kopii zapasowej</string>
-    <string name="dialog_your_name_title">Jak cię nazwiemy</string>
-    <string name="dialog_your_name_summary">Możesz zostawić to puste miejsce. Jednak cokolwiek wprowadzisz na tym polu, pozostanie na tym urządzeniu.</string>
-    <string name="dialog_confirm_deletion_title">Jesteś pewien, że chcesz usunąć %1$s?</string>
+    <string name="dialog_confirm_deletion_title">Jesteś pewien, że chcesz usunąć \"%1$s\"?</string>
     <string name="dialog_confirm_deletion_summary">Po usunięciu tej pozycji, nie można jej odzyskać.</string>
     <string name="dialog_schedule_details">Szczegóły Harmonogramu</string>
+    <string name="dialog_discard_changes">Odrzucić zmiany?</string>
 
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>
@@ -205,7 +205,7 @@
     <string name="helper_this_is_important">Oznakowanie tego jako ważnego oznacza, że będzie on pokazywał uporczywe powiadomienie w Twoim odcieniu powiadomienia.</string>
 
     <!-- Notifications -->
-    <string name="notification_channel_generic">Generyczny</string>
+    <string name="notification_channel_general">Odrzuć</string>
     <string name="notification_channel_task_reminders">Przypomnienia o zadaniach</string>
     <string name="notification_channel_event_reminders">Przypomnienia o wydarzeniach</string>
     <string name="notification_channel_class_reminders">Klasa Przypomnienia</string>

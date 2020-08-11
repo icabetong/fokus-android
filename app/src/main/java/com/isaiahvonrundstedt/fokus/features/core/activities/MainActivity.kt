@@ -39,7 +39,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPersistentActionBar(toolbar)
-        //setToolbarTitle(R.string.activity_tasks)
         setToolbarTitle(R.string.activity_tasks)
 
         TaskReminderWorker.reschedule(this.applicationContext)

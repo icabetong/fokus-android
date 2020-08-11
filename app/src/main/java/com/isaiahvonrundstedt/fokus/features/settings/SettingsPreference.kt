@@ -132,7 +132,6 @@ class SettingsPreference : BasePreference() {
                 true
             }
         }
-
     }
 
     private fun notifyAppCompatDelegate(newTheme: String) {

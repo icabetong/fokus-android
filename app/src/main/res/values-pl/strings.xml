@@ -115,8 +115,9 @@
     <string name="feedback_backup_failed">W procesie tworzenia kopii zapasowej wystąpił błąd</string>
     <string name="feedback_export_success">Eksport Udany</string>
     <string name="feedback_export_failed">Eksport nie powiodło się</string>
-    <string name="feedback_import_success">Import Udany</string>
-    <string name="feedback_import_failed">Importowany Nieudany</string>
+    <string name="feedback_import_ongoing">Załącznik importowy</string>
+    <string name="feedback_import_completed">Przywóz zakończony</string>
+    <string name="feedback_import_failed">Import nie powiódł się</string>
 
     <string name="settings_group_interface">Interfejs</string>
     <string name="settings_group_sound">Dźwięk</string>
@@ -166,6 +167,8 @@
     <string name="settings_backup">Kopia Zapasowa</string>
     <string name="settings_backup_summary_no_previous">Brak wcześniejszych kopii zapasowych</string>
     <string name="settings_restore">Przywrócenie</string>
+    <string name="settings_no_import_title">Używaj linków do załączników</string>
+    <string name="settings_no_import_summary">Zamiast importować pliki do folderu aplikacji, użyj łącza, aby zaoszczędzić miejsce. (Stosowany tylko do nowych załączników).</string>
 
     <string name="settings_not_working_notifications">Learn more</string>
     <string name="settings_not_working_notifications_info">Czasami Twoje powiadomienie może nie zadziałać z powodu agresywnej optymalizacji baterii przez producenta telefonu.</string>

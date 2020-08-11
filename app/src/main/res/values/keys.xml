@@ -7,9 +7,6 @@
     <string translatable="false" name="key_sound">soundKey</string>
     <string translatable="false" name="key_custom_sound">customSoundKey</string>
     <string translatable="false" name="key_custom_sound_uri">soundUriKey</string>
-    <string translatable="false" name="key_backup_restore">backupRestoreKey</string>
-    <string translatable="false" name="key_backup">backupKey</string>
-    <string translatable="false" name="key_restore">restoreKey</string>
     <string translatable="false" name="key_reminder_frequency">reminderFrequencyKey</string>
     <string translatable="false" name="key_reminder_time">reminderTimeKey</string>
     <string translatable="false" name="key_task_reminder">taskReminderKey</string>
@@ -19,6 +16,10 @@
     <string translatable="false" name="key_subject_reminder">subjectReminderKey</string>
     <string translatable="false" name="key_subject_reminder_interval">subjectReminderIntervalKey</string>
     <string translatable="false" name="key_more_notification_settings">moreNotificationKey</string>
+    <string translatable="false" name="key_backup_restore">backupRestoreKey</string>
+    <string translatable="false" name="key_backup">backupKey</string>
+    <string translatable="false" name="key_restore">restoreKey</string>
+    <string translatable="false" name="key_no_import">noImportKey</string>
     <string translatable="false" name="key_not_working_notifications">notWorkingNotificationKey</string>
     <string translatable="false" name="key_report_issue">issueKey</string>
     <string translatable="false" name="key_translate">translateKey</string>

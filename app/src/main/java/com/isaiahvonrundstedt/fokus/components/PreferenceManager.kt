@@ -117,6 +117,9 @@ class PreferenceManager(private val context: Context?) {
         )
             ?: SUBJECT_REMINDER_INTERVAL_5_MINUTES
 
+    val noImport: Boolean
+        get() = sharedPreference.getBoolean(R.string.key_no_import, false)
+
     /**
      *  Extension functions for SharedPreference object
      *  to accept String Resource ID as Keys

@@ -44,13 +44,15 @@
             android:exported="false"/>
         <service android:name=".components.service.BackupRestoreService"
             android:exported="false"/>
-        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetRemoteService"
+        <service android:name=".components.service.AttachmentImportService"
+            android:exported="false"/>
+        <service android:name=".features.widget.task.TaskWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetRemoteService"
+        <service android:name=".features.widget.event.EventWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name="com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetRemoteService"
+        <service android:name=".features.widget.subject.SubjectWidgetRemoteService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 

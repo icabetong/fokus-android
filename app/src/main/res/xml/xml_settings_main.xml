@@ -123,6 +123,12 @@
             app:title="@string/settings_backup_and_restore"
             app:fragment="com.isaiahvonrundstedt.features.settings.child.BackupRestorePreference"/>
 
+        <SwitchPreference
+            app:key="@string/key_no_import"
+            app:title="@string/settings_no_import_title"
+            app:summary="@string/settings_no_import_summary"
+            app:defaultValue="FALSE"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -1,7 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -9,19 +12,24 @@ import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.service.AttachmentImportService
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
@@ -43,6 +51,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_task)
         setPersistentActionBar(toolbar)
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -167,6 +178,46 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(receiver)
+        startService(Intent(this, AttachmentImportService::class.java).apply {
+            action = AttachmentImportService.ACTION_CANCEL
+        })
+        super.onDestroy()
+    }
+
+    var snackbar: Snackbar? = null
+    private var receiver = object: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
+                when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
+                    AttachmentImportService.BROADCAST_IMPORT_ONGOING -> {
+                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_ongoing,
+                            Snackbar.LENGTH_INDEFINITE)
+                        snackbar?.show()
+                    }
+                    AttachmentImportService.BROADCAST_IMPORT_COMPLETED -> {
+                        if (snackbar?.isShown == true)
+                            snackbar?.dismiss()
+
+                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_completed)
+                        snackbar?.show()
+                        adapter.insert(createAttachment(
+                            intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)))
+                    }
+                    AttachmentImportService.BROADCAST_IMPORT_FAILED -> {
+                        if (snackbar?.isShown == true)
+                            snackbar?.dismiss()
+
+                        snackbar = createSnackbar(rootLayout, R.string.feedback_import_failed)
+                        snackbar?.show()
+                    }
+                }
+            }
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
                                             grantResults: IntArray) {
         if (requestCode == PermissionManager.STORAGE_READ_REQUEST_CODE
@@ -177,6 +228,14 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    private fun createAttachment(attachmentUri: Uri?): Attachment {
+        return Attachment().apply {
+            task = this@TaskEditor.task.taskID
+            uri = attachmentUri
+            dateAttached = DateTime.now()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -185,16 +244,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         when (requestCode) {
             REQUEST_CODE_ATTACHMENT -> {
-                contentResolver?.takePersistableUriPermission(data?.data!!,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                if (PreferenceManager(this).noImport) {
+                    contentResolver?.takePersistableUriPermission(data?.data!!,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-                val attachment = Attachment().apply {
-                    task = this@TaskEditor.task.taskID
-                    uri = data?.data
-                    dateAttached = DateTime.now()
-                }
-
-                adapter.insert(attachment)
+                    adapter.insert(createAttachment(data?.data))
+                } else
+                    startService(Intent(this, AttachmentImportService::class.java).apply {
+                            setData(data?.data)
+                            action = AttachmentImportService.ACTION_START
+                        })
             }
         }
     }

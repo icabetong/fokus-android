@@ -5,7 +5,10 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.os.Parcelable
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
@@ -51,11 +54,13 @@ abstract class BaseService: Service() {
         }.build()
     }
 
-    protected fun terminateService(status: String? = null) {
+    protected fun terminateService(status: String? = null, uri: Uri? = null) {
         if (status != null)
             LocalBroadcastManager.getInstance(this)
                 .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
                     putExtra(EXTRA_BROADCAST_STATUS, status)
+                    if (uri != null)
+                        putExtra(EXTRA_BROADCAST_DATA, uri)
                 })
         stopSelf()
     }
@@ -67,6 +72,7 @@ abstract class BaseService: Service() {
     companion object {
         const val ACTION_SERVICE_BROADCAST = "action:service:status"
         const val EXTRA_BROADCAST_STATUS = "extra:broadcast:status"
+        const val EXTRA_BROADCAST_DATA = "extra:broadcast:data"
     }
 
 }

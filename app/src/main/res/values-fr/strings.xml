@@ -68,7 +68,7 @@
     <string name="dialog_choose_backup">Choisissez un fichier de sauvegarde</string>
     <string name="dialog_your_name_title">Comment devrions-nous vous appeler?</string>
     <string name="dialog_your_name_summary">Vous pouvez choisir de laisser ce champ vide. Cependant, tout ce que vous entrez dans ce champ restera sur cet appareil.</string>
-    <string name="dialog_confirm_deletion_title">Êtes-vous sûr de vouloir supprimer les %1$ ?</string>
+    <string name="dialog_confirm_deletion_title">Voulez-vous supprimer les "%1$" ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois que ce poste a été supprimé, il ne peut plus être récupéré.</string>
     <string name="dialog_schedule_details">Détails du calendrier</string>
 
@@ -115,8 +115,9 @@
     <string name="feedback_backup_failed">Le processus de sauvegarde a rencontré une erreur</string>
     <string name="feedback_export_success">Exporter avec succès</string>
     <string name="feedback_export_failed">Échec de l\'exportation</string>
-    <string name="feedback_import_success">L\'importation réussie</string>
-    <string name="feedback_import_failed">Échec de l\'importation</string>
+    <string name="feedback_import_ongoing">Importation de pièces jointes</string>
+    <string name="feedback_import_completed">Importation terminée</string>
+    <string name="feedback_import_failed">L\'importation a échoué</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>
@@ -166,6 +167,8 @@
     <string name="settings_backup">Sauvegarde</string>
     <string name="settings_backup_summary_no_previous">Pas de sauvegardes antérieures</string>
     <string name="settings_restore">Restaurer</string>
+    <string name="settings_no_import_title">Utiliser les liens pour les pièces jointes</string>
+    <string name="settings_no_import_summary">Plutôt que d\'importer des fichiers dans le dossier de candidature, utilisez un lien pour gagner de la place. (Ne s\'applique qu\'aux nouvelles pièces jointes).</string>
 
     <string name="settings_not_working_notifications">En savoir plus</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>

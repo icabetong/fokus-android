@@ -51,8 +51,10 @@ abstract class BaseEditor : BaseActivity() {
         }
     }
 
-    protected fun createSnackbar(@Nullable view: View?, @StringRes id: Int): Snackbar {
-        return Snackbar.make(view ?: window.decorView.rootView, id, Snackbar.LENGTH_SHORT)
+    protected fun createSnackbar(@Nullable view: View?,
+                                 @StringRes id: Int,
+                                 timeOut: Int = Snackbar.LENGTH_SHORT): Snackbar {
+        return Snackbar.make(view ?: window.decorView.rootView, id, timeOut)
     }
 
     protected val animation: Animation

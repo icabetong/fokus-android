@@ -69,7 +69,7 @@
     <string name="dialog_choose_backup">Choose a backup file</string>
     <string name="dialog_your_name_title">What shall we call you?</string>
     <string name="dialog_your_name_summary">You may choose to leave this blank. However, whatever you enter on this field will stay on this device.</string>
-    <string name="dialog_confirm_deletion_title">Are you sure you want to remove %1$s?</string>
+    <string name="dialog_confirm_deletion_title">Do you want to remove "%1$s"?</string>
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
 
@@ -116,7 +116,8 @@
     <string name="feedback_backup_failed">Backup process encountered an error</string>
     <string name="feedback_export_success">Export successful</string>
     <string name="feedback_export_failed">Export failed</string>
-    <string name="feedback_import_success">Import successful</string>
+    <string name="feedback_import_ongoing">Importing attachment</string>
+    <string name="feedback_import_completed">Import completed</string>
     <string name="feedback_import_failed">Import failed</string>
 
     <string name="settings_group_interface">Interface</string>
@@ -167,6 +168,8 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No Previous Backups</string>
     <string name="settings_restore">Restore</string>
+    <string name="settings_no_import_title">Use Links for Attachments</string>
+    <string name="settings_no_import_summary">Rather than importing files to the application folder, use a link to save space. (Applied only to new attachments).</string>
 
     <string name="settings_not_working_notifications">Learn more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>

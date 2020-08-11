@@ -203,12 +203,13 @@
     <string name="widget_class_empty">Sie haben heute keinen Unterricht.</string>
 
     <string name="helper_this_is_important">Wenn Sie dies als wichtig kennzeichnen, bedeutet dies, dass es eine anhaltende Benachrichtigung im Schatten Ihrer Benachrichtigung anzeigt.</string>
-    
+
+    <string name="notification_channel_group_reminders">Erinnerungen</string>
+
     <string name="notification_channel_general">Allgemein</string>
     <string name="notification_channel_task_reminders">Aufgaben-Erinnerungen</string>
     <string name="notification_channel_event_reminders">Ereignis-Erinnerungen</string>
     <string name="notification_channel_class_reminders">Klassen-Erinnerungen</string>
-    <string name="notification_channel_backups">Sicherungen</string>
 
     <string name="notification_pending_tasks_title">Sie haben %1$d anstehende Aufgabe</string>
     <string name="notification_pending_tasks_summary">Es könnte sich lohnen, einen Blick zu werfen</string>

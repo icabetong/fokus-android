@@ -206,11 +206,12 @@
     <string name="helper_this_is_important">Marking this as important means that it will show a persistent notification at your notification shade.</string>
 
     <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Reminders</string>
+
     <string name="notification_channel_general">Generic</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
     <string name="notification_channel_class_reminders">Class Reminders</string>
-    <string name="notification_channel_backups">Backups</string>
 
     <string name="notification_pending_tasks_title">You have %1$d tasks pending</string>
     <string name="notification_pending_tasks_summary">It might be worth to take a look</string>

@@ -205,11 +205,12 @@
     <string name="helper_this_is_important">Oznakowanie tego jako ważnego oznacza, że będzie on pokazywał uporczywe powiadomienie w Twoim odcieniu powiadomienia.</string>
 
     <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Przypomnienia</string>
+
     <string name="notification_channel_general">Odrzuć</string>
     <string name="notification_channel_task_reminders">Przypomnienia o zadaniach</string>
     <string name="notification_channel_event_reminders">Przypomnienia o wydarzeniach</string>
     <string name="notification_channel_class_reminders">Klasa Przypomnienia</string>
-    <string name="notification_channel_backups">Kopie zapasowe</string>
 
     <string name="notification_pending_tasks_title">Masz %1$ zadań do wykonania</string>
     <string name="notification_pending_tasks_summary">Może warto by było rzucić okiem</string>

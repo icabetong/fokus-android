@@ -1,10 +1,11 @@
 package com.isaiahvonrundstedt.fokus.components.receiver
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
+import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 
 class LocalizationReceiver : BroadcastReceiver() {
 
@@ -13,10 +14,17 @@ class LocalizationReceiver : BroadcastReceiver() {
             return
 
         if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {
-            with(AppNotificationManager(context)) {
-                createChannel(AppNotificationManager.CHANNEL_ID_TASK)
-                createChannel(AppNotificationManager.CHANNEL_ID_EVENT)
-                createChannel(AppNotificationManager.CHANNEL_ID_GENERIC)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                with(NotificationChannelManager(context!!)) {
+                    register(NotificationChannelManager.CHANNEL_ID_GENERIC,
+                        NotificationManager.IMPORTANCE_DEFAULT)
+                    register(NotificationChannelManager.CHANNEL_ID_TASK,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                    register(NotificationChannelManager.CHANNEL_ID_EVENT,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                    register(NotificationChannelManager.CHANNEL_ID_CLASS,
+                        groupID = NotificationChannelManager.CHANNEL_ID_CLASS)
+                }
             }
         }
     }

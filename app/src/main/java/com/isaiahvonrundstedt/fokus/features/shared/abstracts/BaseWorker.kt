@@ -22,7 +22,7 @@ import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.components.PreferenceManager
-import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
+import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
@@ -156,9 +156,6 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     }
 
     protected fun sendNotification(log: Log, @Nullable tag: String? = null) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            createNotificationChannel(log.type)
-
         if (log.type == Log.TYPE_TASK) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
@@ -176,17 +173,6 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 createNotification(log, NOTIFICATION_CHANNEL_ID_EVENT))
         else notificationManager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
             createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC))
-    }
-
-    @RequiresApi(26)
-    private fun createNotificationChannel(type: Int) {
-        val id = when (type) {
-            Log.TYPE_TASK -> AppNotificationManager.CHANNEL_ID_TASK
-            Log.TYPE_EVENT -> AppNotificationManager.CHANNEL_ID_EVENT
-            Log.TYPE_CLASS -> AppNotificationManager.CHANNEL_ID_CLASS
-            else -> AppNotificationManager.CHANNEL_ID_GENERIC
-        }
-        AppNotificationManager(applicationContext).createChannel(id)
     }
 
     private fun createNotification(log: Log?, id: String,

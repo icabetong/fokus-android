@@ -1,15 +1,24 @@
 package com.isaiahvonrundstedt.fokus.features.core.activities
 
 import android.app.Activity
+import android.app.NotificationChannelGroup
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
+import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
@@ -20,7 +29,6 @@ import com.isaiahvonrundstedt.fokus.features.log.LogActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
@@ -115,6 +123,23 @@ class MainActivity : BaseActivity() {
                             startActivity(Intent(context, AboutActivity::class.java))
                     }
                 }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            with(NotificationChannelManager(this)) {
+                register(NotificationChannelManager.CHANNEL_ID_GENERIC,
+                    NotificationManager.IMPORTANCE_DEFAULT)
+                register(NotificationChannelManager.CHANNEL_ID_TASK,
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                register(NotificationChannelManager.CHANNEL_ID_EVENT,
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                register(NotificationChannelManager.CHANNEL_ID_CLASS,
+                    groupID = NotificationChannelManager.CHANNEL_ID_CLASS)
             }
         }
     }

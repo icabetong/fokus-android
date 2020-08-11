@@ -7,22 +7,20 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.os.Parcelable
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.utils.AppNotificationManager
+import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 
 abstract class BaseService: Service() {
 
     protected fun startForegroundCompat(id: Int, notification: Notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(AppNotificationManager(this)) {
-                createChannel(AppNotificationManager.CHANNEL_ID_BACKUP)
+            with(NotificationChannelManager(this)) {
+                register(NotificationChannelManager.CHANNEL_ID_GENERIC)
             }
 
             startForeground(id, notification)
@@ -42,13 +40,13 @@ abstract class BaseService: Service() {
                                      @DrawableRes iconRes: Int = R.drawable.ic_hero_check_24): Notification {
 
         return NotificationCompat.Builder(this,
-            AppNotificationManager.CHANNEL_ID_BACKUP).apply {
+            NotificationChannelManager.CHANNEL_ID_GENERIC).apply {
             setSmallIcon(iconRes)
             setContentTitle(getString(titleRes))
             if (contentRes != 0) setContentText(getString(contentRes))
             setOngoing(ongoing)
             setCategory(Notification.CATEGORY_SERVICE)
-            setChannelId(AppNotificationManager.CHANNEL_ID_BACKUP)
+            setChannelId(NotificationChannelManager.CHANNEL_ID_GENERIC)
             if (ongoing) setProgress(0, 0, true)
             color = ContextCompat.getColor(this@BaseService, R.color.color_primary)
         }.build()

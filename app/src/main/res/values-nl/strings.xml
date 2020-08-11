@@ -206,11 +206,12 @@
     <string name="helper_this_is_important">Door dit als belangrijk te markeren, zal het een aanhoudende melding in de schaduw van uw melding laten zien.</string>
 
     <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Herinneringen</string>
+
     <string name="notification_channel_general">Algemeen</string>
     <string name="notification_channel_task_reminders">Taakherinneringen</string>
     <string name="notification_channel_event_reminders">Evenement Herinneringen</string>
     <string name="notification_channel_class_reminders">Klasse Herinneringen</string>
-    <string name="notification_channel_backups">Back-ups</string>
 
     <string name="notification_pending_tasks_title">Je hebt %1$s taken in behandeling</string>
     <string name="notification_pending_tasks_summary">Het is misschien de moeite waard om een kijkje te nemen</string>

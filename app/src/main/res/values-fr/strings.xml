@@ -205,11 +205,12 @@
     <string name="helper_this_is_important">Le fait de le marquer comme important signifie qu\'il affichera une notification persistante à votre nuance de notification.</string>
 
     <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Rappels</string>
+
     <string name="notification_channel_general">Généralités</string>
     <string name="notification_channel_task_reminders">Rappels de tâches</string>
     <string name="notification_channel_event_reminders">Rappels d\'événements</string>
     <string name="notification_channel_class_reminders">Rappels de classe</string>
-    <string name="notification_channel_backups">Sauvegardes</string>
 
     <string name="notification_pending_tasks_title">Vous avez %1$d tâches en suspens</string>
     <string name="notification_pending_tasks_summary">Il pourrait être utile de jeter un coup d\'œil</string>

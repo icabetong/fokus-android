@@ -195,6 +195,17 @@ class EventEditor : BaseEditor() {
         }
     }
 
+    override fun onBackPressed() {
+        if (eventNameTextInput.text?.isNotEmpty() == true || event.schedule != null ||
+                locationTextInput.text?.isNotEmpty() == true || notesTextInput.text?.isNotEmpty() == true) {
+            MaterialDialog(this).show {
+                title(R.string.dialog_discard_changes)
+                positiveButton(R.string.button_discard) { super.onBackPressed() }
+                negativeButton(R.string.button_cancel)
+            }
+        }
+    }
+
     companion object {
         const val REQUEST_CODE_INSERT = 24
         const val REQUEST_CODE_UPDATE = 56

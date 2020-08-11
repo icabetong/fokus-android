@@ -363,6 +363,26 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
+    override fun onBackPressed() {
+        if (adapter.itemCount > 0 || taskNameTextInput.text?.isNotEmpty() == true
+            || task.subject != null || task.hasDueDate()
+            || notesTextInput.text?.isNotEmpty() == true) {
+
+            MaterialDialog(this).show {
+                title(R.string.dialog_discard_changes)
+                positiveButton(R.string.button_discard) {
+                    adapter.itemList.forEach {
+                        it.uri?.let { path ->
+                            DocumentFile.fromSingleUri(this@TaskEditor, path)?.delete()
+                        }
+                    }
+                    super.onBackPressed()
+                }
+                negativeButton(R.string.button_cancel)
+            }
+        }
+    }
+
     companion object {
         const val REQUEST_CODE_INSERT = 32
         const val REQUEST_CODE_UPDATE = 19

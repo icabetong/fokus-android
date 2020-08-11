@@ -183,6 +183,18 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
+    override fun onBackPressed() {
+        if (codeTextInput.text?.isNotEmpty() == true || adapter.itemCount > 0
+            || descriptionTextInput.text?.isNotEmpty() == true) {
+
+            MaterialDialog(this).show {
+                title(R.string.dialog_discard_changes)
+                positiveButton(R.string.button_discard) { super.onBackPressed() }
+                negativeButton(R.string.button_cancel)
+            }
+        }
+    }
+
     companion object {
         const val REQUEST_CODE_INSERT = 27
         const val REQUEST_CODE_UPDATE = 13

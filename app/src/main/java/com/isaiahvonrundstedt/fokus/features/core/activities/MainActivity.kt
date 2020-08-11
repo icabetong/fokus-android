@@ -139,7 +139,7 @@ class MainActivity : BaseActivity() {
                 register(NotificationChannelManager.CHANNEL_ID_EVENT,
                     groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
                 register(NotificationChannelManager.CHANNEL_ID_CLASS,
-                    groupID = NotificationChannelManager.CHANNEL_ID_CLASS)
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
             }
         }
     }

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat.setTransitionName
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -30,6 +31,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     private var requestCode = 0
     private var subject = Subject()
     private var colors: IntArray? = null
+    private var hasFieldChange = false
 
     private val adapter = ScheduleAdapter(this)
 
@@ -82,11 +84,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                             Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
                             Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
                         )
-                        result { adapter.update(it) }
+                        result {
+                            adapter.update(it)
+                            hasFieldChange = true
+                        }
                     }
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     adapter.remove(t)
+                    hasFieldChange = true
                     createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {
                         setAction(R.string.button_undo) { adapter.insert(t) }
                     }
@@ -97,6 +103,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onStart() {
         super.onStart()
+
+        codeTextInput.addTextChangedListener { hasFieldChange = true }
+        descriptionTextInput.addTextChangedListener { hasFieldChange = true }
 
         addItemButton.setOnClickListener {
             ScheduleEditor(supportFragmentManager).show {
@@ -115,6 +124,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                     subject.tag = Subject.Tag.convertColorToTag(
                         color)!!
 
+                    hasFieldChange = true
                     with(it as TextView) {
                         text = getString(subject.tag.getNameResource())
                         setTextColorFromResource(R.color.color_primary_text)
@@ -184,15 +194,13 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onBackPressed() {
-        if (codeTextInput.text?.isNotEmpty() == true || adapter.itemCount > 0
-            || descriptionTextInput.text?.isNotEmpty() == true) {
-
+        if (hasFieldChange) {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) { super.onBackPressed() }
                 negativeButton(R.string.button_cancel)
             }
-        }
+        } else super.onBackPressed()
     }
 
     companion object {

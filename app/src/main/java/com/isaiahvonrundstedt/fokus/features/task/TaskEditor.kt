@@ -12,6 +12,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.documentfile.provider.DocumentFile
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +46,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     private var requestCode = 0
     private var task = Task()
     private var subject: Subject? = null
+    private var hasFieldChange = false
 
     private val adapter = AttachmentAdapter(this)
 
@@ -119,6 +121,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onStart() {
         super.onStart()
 
+        taskNameTextInput.addTextChangedListener { hasFieldChange = true }
+        notesTextInput.addTextChangedListener { hasFieldChange = true }
+
         addItemButton.setOnClickListener {
             // Check if we have read storage permissions then request the permission
             // if we have the permission, open up file picker
@@ -141,6 +146,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         v.text = task.formatDueDate(this@TaskEditor)
                         v.setTextColorFromResource(R.color.color_primary_text)
                     }
+                    hasFieldChange = true
                 }
             }
         }
@@ -163,6 +169,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         this@TaskEditor.subjectTextView
                             .setCompoundDrawableAtStart(result.tintDrawable(it))
                     }
+                    hasFieldChange = true
                 }
             }
         }
@@ -231,6 +238,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     private fun createAttachment(attachmentUri: Uri?): Attachment {
+        hasFieldChange = true
         return Attachment().apply {
             task = this@TaskEditor.task.taskID
             uri = attachmentUri
@@ -263,9 +271,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Attachment) {
             when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    onParseIntent(t.uri)
-                }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     MaterialDialog(this).show {
                         title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
@@ -274,15 +279,18 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         positiveButton(R.string.button_delete) {
                             adapter.remove(t)
 
-
                             if (!PreferenceManager(this@TaskEditor).noImport){
                                 t.uri?.let { data ->
                                     DocumentFile.fromSingleUri(this@TaskEditor, data)?.delete()
                                 }
                             }
+                            hasFieldChange = true
                         }
                         negativeButton(R.string.button_cancel)
                     }
+                }
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    onParseIntent(t.uri)
                 }
             }
         }
@@ -364,10 +372,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onBackPressed() {
-        if (adapter.itemCount > 0 || taskNameTextInput.text?.isNotEmpty() == true
-            || task.subject != null || task.hasDueDate()
-            || notesTextInput.text?.isNotEmpty() == true) {
-
+        if (hasFieldChange) {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) {
@@ -380,7 +385,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 }
                 negativeButton(R.string.button_cancel)
             }
-        }
+        } else super.onBackPressed()
     }
 
     companion object {

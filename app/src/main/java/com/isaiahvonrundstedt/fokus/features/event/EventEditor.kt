@@ -25,6 +25,7 @@ class EventEditor : BaseEditor() {
     private var requestCode = 0
     private var event = Event()
     private var subject: Subject? = null
+    private var hasFieldChange = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +85,7 @@ class EventEditor : BaseEditor() {
                     event.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
+                    hasFieldChange = true
                     if (v is AppCompatTextView) {
                         v.text = event.formatSchedule(this@EventEditor)
                         v.setTextColorFromResource(R.color.color_primary_text)
@@ -110,11 +112,13 @@ class EventEditor : BaseEditor() {
                         this@EventEditor.subjectTextView
                             .setCompoundDrawableAtStart(result.tintDrawable(it))
                     }
+                    hasFieldChange = true
                 }
             }
         }
 
         clearButton.setOnClickListener {
+            hasFieldChange = true
             subjectTextView.startAnimation(animation)
 
             it.isVisible = false
@@ -188,14 +192,13 @@ class EventEditor : BaseEditor() {
     }
 
     override fun onBackPressed() {
-        if (eventNameTextInput.text?.isNotEmpty() == true || event.schedule != null ||
-                locationTextInput.text?.isNotEmpty() == true || notesTextInput.text?.isNotEmpty() == true) {
+        if (hasFieldChange) {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) { super.onBackPressed() }
                 negativeButton(R.string.button_cancel)
             }
-        }
+        } else super.onBackPressed()
     }
 
     companion object {

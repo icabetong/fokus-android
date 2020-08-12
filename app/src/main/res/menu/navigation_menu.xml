@@ -6,18 +6,18 @@
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
         android:icon="@drawable/ic_hero_clipboard_list_24"
-        app:exb_color="@color/color_theme_task"/>
+        app:exb_color="?attr/colorPrimary"/>
 
     <item
         android:id="@+id/navigation_events"
         android:title="@string/navigation_events"
         android:icon="@drawable/ic_hero_calendar_24"
-        app:exb_color="@color/color_theme_events"/>
+        app:exb_color="?attr/colorPrimary"/>
 
     <item
         android:id="@+id/navigation_subjects"
         android:title="@string/navigation_subjects"
         android:icon="@drawable/ic_hero_beaker_24"
-        app:exb_color="@color/color_theme_subjects"/>
+        app:exb_color="?attr/colorPrimary"/>
 
 </menu>

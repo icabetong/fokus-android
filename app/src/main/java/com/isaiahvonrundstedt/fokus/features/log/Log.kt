@@ -69,22 +69,22 @@ data class Log @JvmOverloads constructor(
     @ColorRes
     private fun getIconColorResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.color.color_theme_task
-            TYPE_EVENT -> R.color.color_theme_events
-            TYPE_CLASS -> R.color.color_theme_subjects
-            TYPE_GENERIC -> R.color.color_theme_generic
-            else -> R.color.color_theme_generic
+            TYPE_TASK -> R.color.color_blue
+            TYPE_EVENT -> R.color.color_yellow
+            TYPE_CLASS -> R.color.color_red
+            TYPE_GENERIC -> R.color.color_teal
+            else -> R.color.color_teal
         }
     }
 
     @ColorRes
     private fun getIconBackgroundColorResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.color.color_theme_task_variant
-            TYPE_EVENT -> R.color.color_theme_events_variant
-            TYPE_CLASS -> R.color.color_theme_subjects_variant
-            TYPE_GENERIC -> R.color.color_theme_generic_variant
-            else -> R.color.color_theme_generic_variant
+            TYPE_TASK -> R.color.color_blue_variant
+            TYPE_EVENT -> R.color.color_amber_variant
+            TYPE_CLASS -> R.color.color_red_variant
+            TYPE_GENERIC -> R.color.color_teal_variant
+            else -> R.color.color_teal_variant
         }
     }
 

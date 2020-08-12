@@ -37,7 +37,6 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_tasks_title"
-            android:textColor="@color/color_theme_task"
             android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
 
         <TextView
@@ -55,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        android:src="@drawable/ic_hero_plus_24"
-        app:backgroundTint="@color/color_theme_task"/>
+        android:src="@drawable/ic_hero_plus_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

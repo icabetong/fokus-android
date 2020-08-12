@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:srcCompat="@drawable/undraw_studying"/>
+                app:srcCompat="@drawable/undraw_researching"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -47,7 +47,6 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="@string/empty_view_no_subjects_title"
-                android:textColor="@color/color_theme_subjects"
                 android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
 
         </LinearLayout>

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -111,7 +112,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
                 }
-                clearButton.isVisible = true
+                removeButton.isVisible = true
             }
 
             window.decorView.rootView.clearFocus()
@@ -154,7 +155,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         subjectTextView.setOnClickListener {
             SubjectSelectorSheet(supportFragmentManager).show {
                 result { result ->
-                    this@TaskEditor.clearButton.isVisible = true
+                    this@TaskEditor.removeButton.isVisible = true
                     task.subject = result.subjectID
                     subject = result
 
@@ -174,10 +175,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        clearButton.setOnClickListener {
+        removeButton.setOnClickListener {
+            hasFieldChange = true
             subjectTextView.startAnimation(animation)
 
-            it.isVisible = false
+            it.visibility = View.INVISIBLE
             this.task.subject = null
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()

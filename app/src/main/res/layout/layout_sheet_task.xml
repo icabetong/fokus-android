@@ -27,36 +27,23 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/editor_container_padding"
-        android:background="@drawable/shape_surface_background"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout">
 
-        <TextView
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dueDateChip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
             android:text="@string/field_due_date"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+            app:chipIcon="@drawable/ic_hero_clock_24"
+            app:chipIconTint="@color/color_on_surface"
+            app:iconStartPadding="8dp" />
 
-        <TextView
-            android:id="@+id/dueDateTextView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/editor_item_height"
-            android:paddingHorizontal="16dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:text="@string/field_not_set"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-    </LinearLayout>
+    </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/expandButton"
@@ -67,7 +54,7 @@
         app:icon="@drawable/ic_hero_chevron_up_24"
         app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/Fokus.Widget.Button.Outlined"/>
+        style="@style/Fokus.Widget.Button.Text"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/actionButton"

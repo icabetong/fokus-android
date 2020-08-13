@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -109,7 +110,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/editor_item_height"
+                    android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground">
 
                     <TextView
@@ -125,21 +126,22 @@
                         android:text="@string/field_not_set"
                         android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                         android:drawablePadding="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <ImageButton
-                        android:id="@+id/clearButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@null"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/shape_button_remove"
-                        android:visibility="gone"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/subjectTextView"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/removeButton"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/removeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_padding"
+                        android:text="@string/button_remove"
+                        android:visibility="invisible"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:visibility="visible"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

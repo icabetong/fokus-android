@@ -5,7 +5,7 @@
     <item
         android:id="@+id/navigation_tasks"
         android:title="@string/navigation_tasks"
-        android:icon="@drawable/ic_hero_clipboard_list_24"
+        android:icon="@drawable/ic_hero_check_24"
         app:exb_color="?attr/colorPrimary"/>
 
     <item

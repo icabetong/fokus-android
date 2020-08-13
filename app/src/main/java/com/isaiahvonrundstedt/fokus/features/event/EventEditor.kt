@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
@@ -64,7 +65,7 @@ class EventEditor : BaseEditor() {
                     setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
                         R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
                 }
-                clearButton.isVisible = true
+                removeButton.isVisible = true
             }
 
             scheduleTextView.setTextColorFromResource(R.color.color_primary_text)
@@ -97,7 +98,7 @@ class EventEditor : BaseEditor() {
         subjectTextView.setOnClickListener {
             SubjectSelectorSheet(supportFragmentManager).show {
                 result { result ->
-                    this@EventEditor.clearButton.isVisible = true
+                    this@EventEditor.removeButton.isVisible = true
                     event.subject = result.subjectID
                     subject = result
 
@@ -117,11 +118,11 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        clearButton.setOnClickListener {
+        removeButton.setOnClickListener {
             hasFieldChange = true
             subjectTextView.startAnimation(animation)
 
-            it.isVisible = false
+            it.visibility = View.INVISIBLE
             event.subject = null
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()

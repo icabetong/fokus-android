@@ -21,12 +21,12 @@
 
     <color name="color_editor_remove_button">#bcbcbc</color>
 
-    <color name="color_teal">#00685b</color>
-    <color name="color_teal_variant">#5900685b</color>
-    <color name="color_blue">#0288d1</color>
-    <color name="color_blue_variant">#590288d1</color>
-    <color name="color_yellow">#ffab00</color>
-    <color name="color_amber_variant">#59ffab00</color>
-    <color name="color_red">#ff1744</color>
-    <color name="color_red_variant">#59ff1744</color>
+    <color name="color_theme_teal">#00685b</color>
+    <color name="color_theme_teal_variant">#5900685b</color>
+    <color name="color_theme_blue">#0288d1</color>
+    <color name="color_theme_blue_variant">#590288d1</color>
+    <color name="color_theme_amber">#ffab00</color>
+    <color name="color_theme_amber_variant">#59ffab00</color>
+    <color name="color_theme_red">#ff1744</color>
+    <color name="color_theme_red_variant">#59ff1744</color>
 </resources>

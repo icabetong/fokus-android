@@ -58,7 +58,7 @@ data class Log @JvmOverloads constructor(
     @DrawableRes
     fun getIconResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.drawable.ic_hero_clipboard_list_24
+            TYPE_TASK -> R.drawable.ic_hero_check_24
             TYPE_EVENT -> R.drawable.ic_hero_calendar_24
             TYPE_CLASS -> R.drawable.ic_hero_beaker_24
             TYPE_GENERIC -> R.drawable.ic_hero_light_bulb_24
@@ -69,22 +69,22 @@ data class Log @JvmOverloads constructor(
     @ColorRes
     private fun getIconColorResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.color.color_blue
-            TYPE_EVENT -> R.color.color_yellow
-            TYPE_CLASS -> R.color.color_red
-            TYPE_GENERIC -> R.color.color_teal
-            else -> R.color.color_teal
+            TYPE_TASK -> R.color.color_theme_blue
+            TYPE_EVENT -> R.color.color_theme_amber
+            TYPE_CLASS -> R.color.color_theme_red
+            TYPE_GENERIC -> R.color.color_theme_teal
+            else -> R.color.color_theme_teal
         }
     }
 
     @ColorRes
     private fun getIconBackgroundColorResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.color.color_blue_variant
-            TYPE_EVENT -> R.color.color_amber_variant
-            TYPE_CLASS -> R.color.color_red_variant
-            TYPE_GENERIC -> R.color.color_teal_variant
-            else -> R.color.color_teal_variant
+            TYPE_TASK -> R.color.color_theme_blue_variant
+            TYPE_EVENT -> R.color.color_theme_amber_variant
+            TYPE_CLASS -> R.color.color_theme_red_variant
+            TYPE_GENERIC -> R.color.color_theme_teal_variant
+            else -> R.color.color_theme_teal_variant
         }
     }
 

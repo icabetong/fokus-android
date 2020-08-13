@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_hero_clipboard_list_24"
+                android:src="@drawable/ic_hero_check_24"
                 android:tint="@color/color_primary"
                 tools:ignore="UseAppTint" />
 

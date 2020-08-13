@@ -18,8 +18,11 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.layout_empty_events.*
 
 class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
+
+    private val adapter = EventAdapter(this)
 
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
@@ -33,21 +36,19 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = EventAdapter(this)
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
-            adapter?.submitList(items)
-            emptyView.isVisible = items.isEmpty()
+        viewModel.fetch()?.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+            emptyView.isVisible = it.isEmpty()
         })
     }
 
-    private var adapter: EventAdapter? = null
     override fun onResume() {
         super.onResume()
 
@@ -105,7 +106,6 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                         viewModel.update(it)
                 }
             }
-
         }
     }
 }

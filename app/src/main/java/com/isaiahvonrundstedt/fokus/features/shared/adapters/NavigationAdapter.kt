@@ -37,7 +37,7 @@ class NavigationAdapter(private val activity: Activity?,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_menu,
+        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_navigation,
             parent, false)
         return ViewHolder(rowView)
     }

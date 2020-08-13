@@ -16,37 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <LinearLayout
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/activity_padding_medium">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/undraw_working_from_anywhere"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="@string/empty_view_no_tasks_title"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="@string/empty_view_no_tasks_summary"/>
-
-    </LinearLayout>
+    <include layout="@layout/layout_empty_tasks"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/actionButton"

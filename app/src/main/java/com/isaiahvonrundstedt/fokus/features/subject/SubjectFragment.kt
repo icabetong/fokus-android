@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,8 +21,11 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_subject.*
+import kotlinx.android.synthetic.main.layout_empty_subjects.*
 
 class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
+
+    private val adapter = SubjectAdapter(this)
 
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -35,21 +39,19 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = SubjectAdapter(this)
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
-            adapter?.submitList(items)
-            emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        viewModel.fetch()?.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+            emptyView.isVisible = it.isEmpty()
         })
     }
 
-    private var adapter: SubjectAdapter? = null
     override fun onResume() {
         super.onResume()
 
@@ -110,5 +112,4 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
             }
         }
     }
-
 }

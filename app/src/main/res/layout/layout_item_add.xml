@@ -8,6 +8,6 @@
     android:layout_gravity="center_horizontal"
     android:text="@string/button_add"
     app:icon="@drawable/ic_hero_plus_24"
-    style="@style/Fokus.Widget.Button.Text"/>
+    style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
 

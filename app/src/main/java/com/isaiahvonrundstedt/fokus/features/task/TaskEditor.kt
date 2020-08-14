@@ -341,7 +341,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 data.putExtra(EXTRA_TASK, task)
                 data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
                 setResult(RESULT_OK, data)
-                supportFinishAfterTransition()
+                if (requestCode == REQUEST_CODE_UPDATE)
+                    supportFinishAfterTransition()
+                else finish()
             }
             else -> super.onOptionsItemSelected(item)
         }

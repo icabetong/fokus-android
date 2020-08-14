@@ -165,7 +165,9 @@ class EventEditor : BaseEditor() {
                 val data = Intent()
                 data.putExtra(EXTRA_EVENT, event)
                 setResult(RESULT_OK, data)
-                supportFinishAfterTransition()
+                if (requestCode == REQUEST_CODE_UPDATE)
+                    supportFinishAfterTransition()
+                else finish()
             }
             else -> super.onOptionsItemSelected(item)
         }

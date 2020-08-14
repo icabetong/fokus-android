@@ -166,7 +166,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 data.putExtra(EXTRA_SUBJECT, subject)
                 data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
                 setResult(Activity.RESULT_OK, data)
-                supportFinishAfterTransition()
+                if (requestCode == REQUEST_CODE_UPDATE)
+                    supportFinishAfterTransition()
+                else finish()
             }
             else -> super.onOptionsItemSelected(item)
         }

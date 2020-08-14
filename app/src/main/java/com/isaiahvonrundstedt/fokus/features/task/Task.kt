@@ -52,15 +52,15 @@ data class Task @JvmOverloads constructor(
             return null
 
         // Check if the day on the task's due is today
-        return if (dueDate!!.isToday())
+        return if (dueDate?.isToday() == true)
             String.format(context.getString(R.string.today_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if the day is yesterday
-        else if (dueDate!!.isYesterday())
+        else if (dueDate?.isYesterday() == true)
             String.format(context.getString(R.string.yesterday_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if its tomorrow
-        else if (dueDate!!.isTomorrow())
+        else if (dueDate?.isTomorrow() == true)
             String.format(context.getString(R.string.tomorrow_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Just print the date what could go wrong?

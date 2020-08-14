@@ -15,8 +15,8 @@ import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
     : ItemTouchHelper.Callback() {
 
-    private var icon: Drawable? = ContextCompat.getDrawable(context, R.drawable.ic_hero_trash_24)
-    private var background: ColorDrawable = ColorDrawable(Color.parseColor("#ea4335"))
+    private var icon = ContextCompat.getDrawable(context, R.drawable.ic_hero_trash_24)
+    private var background = ColorDrawable(Color.parseColor("#66ea4335"))
 
     override fun getMovementFlags(recyclerView: RecyclerView,
                                   viewHolder: RecyclerView.ViewHolder): Int {
@@ -49,7 +49,7 @@ class ItemSwipeCallback<T : SwipeDelegate>(context: Context, private var t: T)
         }
 
         icon?.let {
-            it.setTint(Color.WHITE)
+            it.setTint(Color.parseColor("#ea4335"))
 
             val iconMargin: Int = (itemView.height - it.intrinsicHeight) / 2
 

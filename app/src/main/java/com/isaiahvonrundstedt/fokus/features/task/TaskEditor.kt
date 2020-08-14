@@ -87,6 +87,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_DUE))
                 dueDateTextView.text = task.formatDueDate(this)
                 dueDateTextView.transitionName = TRANSITION_ID_DUE
+                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
             }
         }
 
@@ -322,12 +323,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 if (taskNameTextInput.text.isNullOrEmpty()) {
                     createSnackbar(R.string.feedback_task_empty_name, rootLayout)
                     taskNameTextInput.requestFocus()
-                    return false
-                }
-
-                if (!task.hasDueDate()) {
-                    createSnackbar(R.string.feedback_task_empty_due_date, rootLayout)
-                    dueDateTextView.performClick()
                     return false
                 }
 

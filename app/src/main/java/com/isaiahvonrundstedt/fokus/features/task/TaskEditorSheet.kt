@@ -87,12 +87,6 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
                 return@setOnClickListener
             }
 
-            if (!task.hasDueDate()) {
-                createToast(R.string.feedback_task_empty_due_date)
-                dueDateChip.performClick()
-                return@setOnClickListener
-            }
-
             callback?.invoke(task)
         }
     }

@@ -3,7 +3,7 @@ package com.isaiahvonrundstedt.fokus.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskResource
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
 @Dao
 interface TaskDAO {
@@ -21,7 +21,7 @@ interface TaskDAO {
     suspend fun setFinished(taskID: String, status: Int)
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    suspend fun fetch(): List<TaskResource>
+    suspend fun fetch(): List<TaskPackage>
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
     suspend fun fetchCore(): List<Task>
@@ -31,6 +31,6 @@ interface TaskDAO {
 
     @Transaction
     @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID ORDER BY dateAdded")
-    fun fetchLiveData(): LiveData<List<TaskResource>>
+    fun fetchLiveData(): LiveData<List<TaskPackage>>
 
 }

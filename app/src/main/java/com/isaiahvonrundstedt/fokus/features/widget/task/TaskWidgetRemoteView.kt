@@ -9,20 +9,20 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
-import com.isaiahvonrundstedt.fokus.features.task.TaskResource
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class TaskWidgetRemoteView(private var context: Context)
     : RemoteViewsService.RemoteViewsFactory {
 
-    private var itemList = mutableListOf<TaskResource>()
+    private var itemList = mutableListOf<TaskPackage>()
 
     private fun fetch() {
         itemList.clear()
 
         val tasks = AppDatabase.getInstance(context)?.tasks()
-        var items = emptyList<TaskResource>()
+        var items = emptyList<TaskPackage>()
         runBlocking {
             val job = async { tasks?.fetch()  }
             items = job.await() ?: emptyList()

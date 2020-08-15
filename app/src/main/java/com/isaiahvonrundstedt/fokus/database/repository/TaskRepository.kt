@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskResource
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
 class TaskRepository private constructor(app: Application) {
 
@@ -26,7 +26,7 @@ class TaskRepository private constructor(app: Application) {
         }
     }
 
-    fun fetch(): LiveData<List<TaskResource>>? = tasks?.fetchLiveData()
+    fun fetch(): LiveData<List<TaskPackage>>? = tasks?.fetchLiveData()
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks?.insert(task)

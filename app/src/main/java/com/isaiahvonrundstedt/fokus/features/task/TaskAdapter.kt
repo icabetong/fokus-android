@@ -18,7 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var taskCompletionListener: TaskCompletionListener)
-    : BaseListAdapter<TaskResource, TaskAdapter.TaskViewHolder>(callback), SwipeDelegate {
+    : BaseListAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
@@ -45,7 +45,7 @@ class TaskAdapter(private var actionListener: ActionListener,
 
         override fun <T> onBind(t: T) {
             with(t) {
-                if (this is TaskResource) {
+                if (this is TaskPackage) {
                     taskNameView.transitionName = TaskEditor.TRANSITION_ID_NAME + task.taskID
 
                     with(task) {
@@ -93,12 +93,12 @@ class TaskAdapter(private var actionListener: ActionListener,
     }
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<TaskResource>() {
-            override fun areItemsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {
+        val callback = object : DiffUtil.ItemCallback<TaskPackage>() {
+            override fun areItemsTheSame(oldItem: TaskPackage, newItem: TaskPackage): Boolean {
                 return oldItem.task.taskID == newItem.task.taskID
             }
 
-            override fun areContentsTheSame(oldItem: TaskResource, newItem: TaskResource): Boolean {
+            override fun areContentsTheSame(oldItem: TaskPackage, newItem: TaskPackage): Boolean {
                 return oldItem == newItem
             }
         }

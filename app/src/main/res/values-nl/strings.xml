@@ -43,6 +43,7 @@
     <string name="button_delete">Verwijder</string>
     <string name="button_cancel">Annuleer</string>
     <string name="button_discard">Gooi  weg</string>
+    <string name="button_learn_more">Meer informatie</string>
 
     <string name="empty_view_no_subjects_title">Geen toegevoegde onderwerpen</string>
     <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken, om er een toe te voegen tikt u op het add-icoontje</string>
@@ -114,11 +115,10 @@
     <string name="feedback_restore_corrupted">Back-upbestand beschadigd of onleesbaar</string>
     <string name="feedback_backup_empty">Er zijn geen items om een back-up te maken</string>
     <string name="feedback_backup_failed">Back-up proces stuitte op een fout</string>
-    <string name="feedback_export_success">Succesvol exporteren</string>
-    <string name="feedback_export_failed">Exporteren Mislukt</string>
     <string name="feedback_import_ongoing">Importeren van bijlage</string>
     <string name="feedback_import_completed">Invoer voltooid</string>
     <string name="feedback_import_failed">De invoer is mislukt</string>
+    <string name="feedback_background_restricted">Achtergrondactiviteit is beperkt voor deze app</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>
@@ -171,7 +171,7 @@
     <string name="settings_no_import_title">Gebruik links voor bijlagen</string>
     <string name="settings_no_import_summary">Gebruik in plaats van het importeren van bestanden naar de applicatiemap, een link om ruimte te besparen. (Alleen van toepassing op nieuwe bijlagen).</string>
 
-    <string name="settings_not_working_notifications">Meer informatie</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>
 
     <string name="settings_translate">Vertaal</string>

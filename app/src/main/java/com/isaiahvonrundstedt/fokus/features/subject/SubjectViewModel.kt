@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = SubjectRepository.getInstance(app)
-    private var items: LiveData<List<SubjectResource>>? = repository.fetch()
+    private var items: LiveData<List<SubjectPackage>>? = repository.fetch()
 
-    fun fetch(): LiveData<List<SubjectResource>>? = items
+    fun fetch(): LiveData<List<SubjectPackage>>? = items
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)

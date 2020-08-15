@@ -16,7 +16,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<EventResource, EventAdapter.EventViewHolder>(callback), SwipeDelegate {
+    : BaseListAdapter<EventPackage, EventAdapter.EventViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,
@@ -45,7 +45,7 @@ class EventAdapter(private var actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             with(t) {
-                if (this is EventResource) {
+                if (this is EventPackage) {
                     nameView.transitionName = EventEditor.TRANSITION_ID_NAME + event.eventID
 
                     with(event) {
@@ -80,13 +80,13 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<EventResource>() {
-            override fun areItemsTheSame(oldItem: EventResource, newItem: EventResource): Boolean {
+        val callback = object : DiffUtil.ItemCallback<EventPackage>() {
+            override fun areItemsTheSame(oldItem: EventPackage, newItem: EventPackage): Boolean {
                 return oldItem.event.eventID == newItem.event.eventID
             }
 
-            override fun areContentsTheSame(oldItem: EventResource,
-                                            newItem: EventResource): Boolean {
+            override fun areContentsTheSame(oldItem: EventPackage,
+                                            newItem: EventPackage): Boolean {
                 return oldItem == newItem
             }
         }

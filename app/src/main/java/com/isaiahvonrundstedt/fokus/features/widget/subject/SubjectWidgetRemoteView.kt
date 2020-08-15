@@ -8,20 +8,20 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 class SubjectWidgetRemoteView(private var context: Context)
     : RemoteViewsService.RemoteViewsFactory {
     
-    private var itemList = mutableListOf<SubjectResource>()
+    private var itemList = mutableListOf<SubjectPackage>()
     
     private fun fetch() {
         itemList.clear()
 
         val subjects = AppDatabase.getInstance(context)?.subjects()
-        var items = emptyList<SubjectResource>()
+        var items = emptyList<SubjectPackage>()
         runBlocking {
             val job = async { subjects?.fetch() }
             items = job.await() ?: emptyList()

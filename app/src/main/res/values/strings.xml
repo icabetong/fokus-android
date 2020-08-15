@@ -43,6 +43,7 @@
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_discard">Discard</string>
+    <string name="button_learn_more">Learn More</string>
 
     <string name="empty_view_no_subjects_title">No Added Subjects</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -114,11 +115,10 @@
     <string name="feedback_restore_corrupted">Backup file is corrupted or unreadable</string>
     <string name="feedback_backup_empty">There are no items to backup</string>
     <string name="feedback_backup_failed">Backup process encountered an error</string>
-    <string name="feedback_export_success">Export successful</string>
-    <string name="feedback_export_failed">Export failed</string>
     <string name="feedback_import_ongoing">Importing attachment</string>
     <string name="feedback_import_completed">Import completed</string>
     <string name="feedback_import_failed">Import failed</string>
+    <string name="feedback_background_restricted">Background activity is restricted for this app</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>
@@ -171,7 +171,7 @@
     <string name="settings_no_import_title">Use Links for Attachments</string>
     <string name="settings_no_import_summary">Rather than importing files to the application folder, use a link to save space. (Applied only to new attachments).</string>
 
-    <string name="settings_not_working_notifications">Learn more</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>
 
     <string name="settings_translate">Translate</string>

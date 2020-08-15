@@ -63,7 +63,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is SubjectResource) {
+        if (t is SubjectPackage) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result

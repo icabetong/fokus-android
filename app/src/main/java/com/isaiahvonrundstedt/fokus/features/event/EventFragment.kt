@@ -60,7 +60,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is EventResource) {
+        if (t is EventPackage) {
             when (action) {
                 // Show up the editorUI and pass the extra
                 BaseListAdapter.ActionListener.Action.SELECT -> {

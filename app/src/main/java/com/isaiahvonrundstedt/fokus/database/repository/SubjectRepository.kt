@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
 class SubjectRepository private constructor(app: Application) {
 
@@ -26,7 +26,7 @@ class SubjectRepository private constructor(app: Application) {
     private var subjects = database?.subjects()
     private var schedules = database?.schedules()
 
-    fun fetch(): LiveData<List<SubjectResource>>? = subjects?.fetchLiveData()
+    fun fetch(): LiveData<List<SubjectPackage>>? = subjects?.fetchLiveData()
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
         subjects?.insert(subject)

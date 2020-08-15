@@ -14,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class SubjectAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<SubjectResource, SubjectAdapter.SubjectViewHolder>(callback), SwipeDelegate {
+    : BaseListAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), SwipeDelegate {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,
@@ -42,7 +42,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             with(t) {
-                if (this is SubjectResource) {
+                if (this is SubjectPackage) {
                     with(this.subject) {
                         nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
                         descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
@@ -72,14 +72,14 @@ class SubjectAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        val callback = object : DiffUtil.ItemCallback<SubjectResource>() {
-            override fun areItemsTheSame(oldItem: SubjectResource,
-                                         newItem: SubjectResource): Boolean {
+        val callback = object : DiffUtil.ItemCallback<SubjectPackage>() {
+            override fun areItemsTheSame(oldItem: SubjectPackage,
+                                         newItem: SubjectPackage): Boolean {
                 return oldItem.subject.subjectID == newItem.subject.subjectID
             }
 
-            override fun areContentsTheSame(oldItem: SubjectResource,
-                                            newItem: SubjectResource): Boolean {
+            override fun areContentsTheSame(oldItem: SubjectPackage,
+                                            newItem: SubjectPackage): Boolean {
                 return oldItem == newItem
             }
         }

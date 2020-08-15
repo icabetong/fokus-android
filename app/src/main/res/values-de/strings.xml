@@ -7,7 +7,7 @@
 
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
-    <string name="activity_subjects">Ihre Themen</string>
+    <string name="activity_subjects">Ihre Betreff</string>
     <string name="activity_logs">Benachrichtigungsprotokolle</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
@@ -43,6 +43,7 @@
     <string name="button_delete">Löschen</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_discard">Verwerfen</string>
+    <string name="button_learn_more">Weitere Informationen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
@@ -114,11 +115,10 @@
     <string name="feedback_restore_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
     <string name="feedback_backup_empty">Es sind keine Artikel zu sichern</string>
     <string name="feedback_backup_failed">Sicherungsprozess stieß auf einen Fehler</string>
-    <string name="feedback_export_success">Export erfolgreich</string>
-    <string name="feedback_export_failed">Export fehlgeschlagen</string>
     <string name="feedback_import_ongoing">Anlage importieren</string>
     <string name="feedback_import_completed">Import abgeschlossen</string>
     <string name="feedback_import_failed">Import fehlgeschlagen</string>
+    <string name="feedback_background_restricted">Die Hintergrundaktivität ist für diese App eingeschränkt.</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>
@@ -171,7 +171,7 @@
     <string name="settings_no_import_title">Links für Anhänge verwenden</string>
     <string name="settings_no_import_summary">Anstatt Dateien in den Anwendungsordner zu importieren, verwenden Sie einen Link, um Platz zu sparen. (Wird nur auf neue Anhänge angewendet).</string>
 
-    <string name="settings_not_working_notifications">Weitere Informationen</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>
 
     <string name="settings_translate">Übersetzen</string>

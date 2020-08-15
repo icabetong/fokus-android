@@ -48,11 +48,12 @@ This is an open-source personal project and I am very happy to accept community 
 * [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
 * [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
 * [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar) - Alexander Dadukin
+* [CommonsIO](https://commons.apache.org/proper/commons-io/) - Apache
 * [Moshi](https://github.com/square/moshi) - Square
 * [Okio](https://github.com/square/okio) - Square
 
 ### Other materials used
-* [HeroIcons](https://www.heroicons.dev) HeroIcons
+* [HeroIcons](https://www.heroicons.dev) - Tailwind
 * [Launcher Icon](https://www.flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat
 * [Vector Illustrations](https://www.undraw.co) - UnDraw.co

@@ -42,6 +42,7 @@
     <string name="button_delete">Supprimer</string>
     <string name="button_cancel">Annuler</string>
     <string name="button_discard">Jeter</string>
+    <string name="button_learn_more">En savoir plus</string>
 
     <string name="empty_view_no_subjects_title">Aucun sujet ajouté</string>
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
@@ -113,11 +114,10 @@
     <string name="feedback_restore_corrupted">Fichier de sauvegarde corrompu ou illisible</string>
     <string name="feedback_backup_empty">Il n\'y a pas d\'éléments à sauvegarder</string>
     <string name="feedback_backup_failed">Le processus de sauvegarde a rencontré une erreur</string>
-    <string name="feedback_export_success">Exporter avec succès</string>
-    <string name="feedback_export_failed">Échec de l\'exportation</string>
     <string name="feedback_import_ongoing">Importation de pièces jointes</string>
     <string name="feedback_import_completed">Importation terminée</string>
     <string name="feedback_import_failed">L\'importation a échoué</string>
+    <string name="feedback_background_restricted">L\'activité de fond est limitée pour cette application</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>
@@ -170,7 +170,7 @@
     <string name="settings_no_import_title">Utiliser les liens pour les pièces jointes</string>
     <string name="settings_no_import_summary">Plutôt que d\'importer des fichiers dans le dossier de candidature, utilisez un lien pour gagner de la place. (Ne s\'applique qu\'aux nouvelles pièces jointes).</string>
 
-    <string name="settings_not_working_notifications">En savoir plus</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>
 
     <string name="settings_translate">Traduire</string>

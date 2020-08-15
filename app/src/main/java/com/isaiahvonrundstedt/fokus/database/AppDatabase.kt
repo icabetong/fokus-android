@@ -23,12 +23,12 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 @TypeConverters(DateTimeConverter::class, ColorConverter::class, UriConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun subjects(): SubjectDAO
+    abstract fun schedules(): ScheduleDAO
     abstract fun tasks(): TaskDAO
     abstract fun attachments(): AttachmentDAO
-    abstract fun subjects(): SubjectDAO
-    abstract fun logs(): LogDAO
     abstract fun events(): EventDAO
-    abstract fun schedules(): ScheduleDAO
+    abstract fun logs(): LogDAO
 
     companion object {
         private var instance: AppDatabase? = null

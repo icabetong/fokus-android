@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +58,6 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
         })
-
     }
 
     override fun onResume() {
@@ -76,7 +77,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     // snackbar feedback and also if the sounds if turned on
     // play a fokus sound.
     override fun <T> onTaskCompleted(t: T, isChecked: Boolean) {
-        if (t is TaskResource) {
+        if (t is TaskPackage) {
             viewModel.update(t.task)
             if (isChecked) {
                 createSnackbar(R.string.button_mark_as_finished, recyclerView)
@@ -111,7 +112,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     // Callback from the RecyclerView Adapter
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is TaskResource) {
+        if (t is TaskPackage) {
             when (action) {
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.

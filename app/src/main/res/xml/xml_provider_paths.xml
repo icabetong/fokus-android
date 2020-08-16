@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <!-- Path must be same value with DataImporterService.DIRECTORY_ATTACHMENTS -->
+    <external-files-path
+        name="attachments" path="attachments"/>
+
+    <!-- Path must be same value with DataImporterService.DIRECTORY_ASSETS -->
+    <external-files-path
+        name="assets" path="assets"/>
+
+</paths>

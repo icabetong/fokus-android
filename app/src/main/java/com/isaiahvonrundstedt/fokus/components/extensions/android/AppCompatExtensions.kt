@@ -1,11 +1,20 @@
 package com.isaiahvonrundstedt.fokus.components.extensions.android
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+
+fun Context.startForegroundServiceCompat(service: Intent) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        startForegroundService(service)
+    else startService(service)
+}
 
 fun AppCompatActivity.createSnackbar(@StringRes textRes: Int,
                                      view: View = window.decorView.rootView,

@@ -16,6 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/Fokus.Theme.Core">
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.isaiahvonrundstedt.fokus.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/xml_provider_paths"/>
+        </provider>
+
         <activity android:name=".features.core.activities.MainActivity"
             android:theme="@style/Fokus.Theme.Core.Navigation" >
             <intent-filter>
@@ -41,7 +51,7 @@
             android:exported="false"/>
         <service android:name=".components.service.BackupRestoreService"
             android:exported="false"/>
-        <service android:name=".components.service.AttachmentImportService"
+        <service android:name=".components.service.DataImporterService"
             android:exported="false"/>
         <service android:name=".features.widget.task.TaskWidgetRemoteService"
             android:exported="false"

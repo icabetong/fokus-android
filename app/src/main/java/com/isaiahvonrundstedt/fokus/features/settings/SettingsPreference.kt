@@ -2,22 +2,29 @@ package com.isaiahvonrundstedt.fokus.features.settings
 
 import android.Manifest
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.SwitchPreference
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.custom.ProgressDialog
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -25,6 +32,7 @@ import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationSc
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
@@ -35,8 +43,8 @@ class SettingsPreference : BasePreference() {
         setPreferencesFromResource(R.xml.xml_settings_main, rootKey)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         findPreference<ListPreference>(R.string.key_theme)?.apply {
             setOnPreferenceChangeListener { _, value ->
@@ -84,17 +92,6 @@ class SettingsPreference : BasePreference() {
                             .print(preferences.reminderTime)
                     }
                 }
-                true
-            }
-        }
-
-        findPreference<Preference>(R.string.key_custom_sound_uri)?.apply {
-            setOnPreferenceClickListener {
-                if (!PermissionManager(requireContext()).readStorageGranted)
-                    requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                        PermissionManager.STORAGE_READ_REQUEST_CODE)
-                else startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .setType("audio/*"), REQUEST_CODE_SOUND)
                 true
             }
         }
@@ -156,16 +153,6 @@ class SettingsPreference : BasePreference() {
             && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                 .setType("audio/*"), REQUEST_CODE_SOUND)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_SOUND && resultCode == Activity.RESULT_OK) {
-            context?.contentResolver!!.takePersistableUriPermission(data?.data!!,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            preferences.customSoundUri = data.data ?: Uri.parse(
-                PreferenceManager.DEFAULT_SOUND)
-        }
     }
 
     private val preferences by lazy {

@@ -24,7 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
-import com.isaiahvonrundstedt.fokus.components.service.AttachmentImportService
+import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -193,8 +193,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(receiver)
-        startService(Intent(this, AttachmentImportService::class.java).apply {
-            action = AttachmentImportService.ACTION_CANCEL
+        startService(Intent(this, DataImporterService::class.java).apply {
+            action = DataImporterService.ACTION_CANCEL
         })
         super.onDestroy()
     }
@@ -204,12 +204,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
-                    AttachmentImportService.BROADCAST_IMPORT_ONGOING -> {
+                    DataImporterService.BROADCAST_IMPORT_ONGOING -> {
                         snackbar = createSnackbar(R.string.feedback_import_ongoing, rootLayout,
                             Snackbar.LENGTH_INDEFINITE)
                         snackbar?.show()
                     }
-                    AttachmentImportService.BROADCAST_IMPORT_COMPLETED -> {
+                    DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         if (snackbar?.isShown == true)
                             snackbar?.dismiss()
 
@@ -218,7 +218,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         adapter.insert(createAttachment(
                             intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)))
                     }
-                    AttachmentImportService.BROADCAST_IMPORT_FAILED -> {
+                    DataImporterService.BROADCAST_IMPORT_FAILED -> {
                         if (snackbar?.isShown == true)
                             snackbar?.dismiss()
 
@@ -262,11 +262,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
                     adapter.insert(createAttachment(data?.data))
-                } else
-                    startService(Intent(this, AttachmentImportService::class.java).apply {
-                            setData(data?.data)
-                            action = AttachmentImportService.ACTION_START
-                        })
+                } else {
+                    val service = Intent(this, DataImporterService::class.java).apply {
+                        action = DataImporterService.ACTION_START
+                        setData(data?.data)
+                        putExtra(DataImporterService.EXTRA_DIRECTORY,
+                            DataImporterService.DIRECTORY_ATTACHMENTS)
+                    }
+
+                    startService(service)
+                }
             }
         }
     }
@@ -284,7 +289,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
                             if (!PreferenceManager(this@TaskEditor).noImport){
                                 t.uri?.let { data ->
-                                    DocumentFile.fromSingleUri(this@TaskEditor, data)?.delete()
+                                    contentResolver.delete(data, null, null)
                                 }
                             }
                             hasFieldChange = true
@@ -375,11 +380,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) {
-                    adapter.itemList.forEach {
-                        it.uri?.let { path ->
-                            DocumentFile.fromSingleUri(this@TaskEditor, path)?.delete()
+                    if (!PreferenceManager(this@TaskEditor).noImport)
+                        adapter.itemList.forEach {
+                            it.uri?.let { path ->
+                                contentResolver.delete(path, null, null)
+                            }
                         }
-                    }
                     super.onBackPressed()
                 }
                 negativeButton(R.string.button_cancel)

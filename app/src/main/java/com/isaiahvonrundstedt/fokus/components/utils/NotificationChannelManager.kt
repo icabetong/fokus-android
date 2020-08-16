@@ -67,12 +67,7 @@ class NotificationChannelManager(private var context: Context) {
             .build()
 
     private val notificationSoundUri: Uri
-        get() {
-            return PreferenceManager(context).let {
-                if (it.customSound) it.customSoundUri
-                else PreferenceManager.DEFAULT_SOUND_URI
-            }
-        }
+        get() = Uri.parse(PreferenceManager.DEFAULT_SOUND)
 
     companion object {
         const val CHANNEL_ID_TASK = "channel:task"

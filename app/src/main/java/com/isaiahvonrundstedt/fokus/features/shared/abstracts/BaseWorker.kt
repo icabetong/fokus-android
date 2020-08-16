@@ -205,11 +205,6 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
         }
 
     private val notificationSoundUri: Uri
-        get() {
-            return PreferenceManager(applicationContext).let {
-                if (it.customSound) it.customSoundUri
-                else PreferenceManager.DEFAULT_SOUND_URI
-            }
-        }
+        get() = Uri.parse(PreferenceManager.DEFAULT_SOUND)
 
 }

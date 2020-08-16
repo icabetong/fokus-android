@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -97,13 +98,9 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                             .burst(100)
                     }
 
-                    if (sounds) {
-                        var soundUri: Uri = PreferenceManager.DEFAULT_SOUND_URI
-                        if (customSound)
-                            soundUri = this.customSoundUri
-
-                        RingtoneManager.getRingtone(requireContext(), soundUri).play()
-                    }
+                    if (sounds)
+                        RingtoneManager.getRingtone(requireContext(),
+                            Uri.parse(PreferenceManager.DEFAULT_SOUND)).play()
                 }
             }
         }
@@ -131,6 +128,20 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                     viewModel.remove(t.task)
 
                     createSnackbar(R.string.feedback_task_removed, recyclerView).run {
+                        addCallback(object: Snackbar.Callback() {
+                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                                super.onDismissed(transientBottomBar, event)
+
+                                if (event != DISMISS_EVENT_ACTION
+                                    && !PreferenceManager(requireContext()).noImport) {
+                                    t.attachments.forEach { attachment ->
+                                        attachment.uri?.let {
+                                            context.contentResolver.delete(it, null, null)
+                                        }
+                                    }
+                                }
+                            }
+                        })
                         setAction(R.string.button_undo) {
                             viewModel.insert(t.task, t.attachments)
                         }

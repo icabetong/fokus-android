@@ -153,7 +153,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     }
 
     protected fun sendNotification(log: Log, @Nullable tag: String? = null) {
-        if (log.type == Log.TYPE_TASK) {
+        if (log.type == Log.TYPE_TASK && log.data != null) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.finishID,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
                     putExtra(NotificationActionService.EXTRA_TASK_ID, log.data)

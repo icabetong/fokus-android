@@ -163,8 +163,8 @@
     <string name="settings_backup">Sicherung</string>
     <string name="settings_backup_summary_no_previous">Keine früheren Sicherungen</string>
     <string name="settings_restore">Wiederherstellen</string>
-    <string name="settings_no_import_title">Links für Anhänge verwenden</string>
-    <string name="settings_no_import_summary">Anstatt Dateien in den Anwendungsordner zu importieren, verwenden Sie einen Link, um Platz zu sparen. (Wird nur auf neue Anhänge angewendet).</string>
+    <string name="settings_no_import_title">Anhänge nicht importieren</string>
+    <string name="settings_no_import_summary">Anstatt Dateien in den Anwendungsordner zu importieren, verknüpfen Sie ihn, um Platz zu sparen.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>

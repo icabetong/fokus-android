@@ -163,8 +163,8 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No Previous Backups</string>
     <string name="settings_restore">Restore</string>
-    <string name="settings_no_import_title">Use Links for Attachments</string>
-    <string name="settings_no_import_summary">Rather than importing files to the application folder, use a link to save space. (Applied only to new attachments).</string>
+    <string name="settings_no_import_title">Don\'t import attachments</string>
+    <string name="settings_no_import_summary">Rather than importing files to the application folder, link it to save space.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>

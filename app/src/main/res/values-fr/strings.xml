@@ -162,8 +162,8 @@
     <string name="settings_backup">Sauvegarde</string>
     <string name="settings_backup_summary_no_previous">Pas de sauvegardes antérieures</string>
     <string name="settings_restore">Restaurer</string>
-    <string name="settings_no_import_title">Utiliser les liens pour les pièces jointes</string>
-    <string name="settings_no_import_summary">Plutôt que d\'importer des fichiers dans le dossier de candidature, utilisez un lien pour gagner de la place. (Ne s\'applique qu\'aux nouvelles pièces jointes).</string>
+    <string name="settings_no_import_title">Ne pas importer de pièces jointes</string>
+    <string name="settings_no_import_summary">Plutôt que d\'importer des fichiers dans le dossier de candidature, il est préférable de le lier pour économiser de l\'espace.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>

@@ -1,0 +1,246 @@
+<resources>
+    <string translatable="false" name="app_name">Fokus</string>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Твои Задачи</string>
+    <string name="activity_events">Ваши События</string>
+    <string name="activity_subjects">Ваши предметы</string>
+    <string name="activity_logs">Журналы уведомлений</string>
+    <string name="activity_settings">Настройки</string>
+    <string name="activity_backup">Резервное копирование и восстановление</string>
+    <string name="activity_notices">Уведомления третьих лиц</string>
+    <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
+    <string name="activity_about">О сайте</string>
+
+    <string name="menu_clear_items">Чистые предметы</string>
+    <string name="menu_save">@string/button_save</string>
+    <string name="menu_delete">@string/button_delete</string>
+
+    <string name="navigation_tasks">Задачи</string>
+    <string name="navigation_events">События</string>
+    <string name="navigation_subjects">Предметы</string>
+    <string name="navigation_logs">Журналы</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
+
+    <string name="button_add_task">Добавить задачу</string>
+    <string name="button_add_event">Добавить Событие</string>
+    <string name="button_add_subject">Добавить Предмет</string>
+    <string name="button_add">Добавить</string>
+    <string name="button_new">Новый сайт</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_done">Готово</string>
+    <string name="button_undo">Отменить</string>
+    <string name="button_remove">Удалить</string>
+    <string name="button_continue">Продолжать</string>
+    <string name="button_expand">Развернуть</string>
+    <string name="button_mark_as_finished">Отметить как законченный</string>
+    <string name="button_mark_as_important">Отметить как важный</string>
+    <string name="button_delete">Удалить</string>
+    <string name="button_cancel">Отменить</string>
+    <string name="button_discard">Бросить</string>
+    <string name="button_learn_more">Узнать больше</string>
+
+    <string name="empty_view_no_subjects_title">Не добавлены Субъекты</string>
+    <string name="empty_view_no_subjects_summary">Темы помогают сортировать ваши задачи, чтобы добавить одну из них, нажмите значок добавления.</string>
+    <string name="empty_view_no_tasks_title">Нет Отложенных Задач</string>
+    <string name="empty_view_no_tasks_summary">В настоящее время у вас нет незавершённых дел. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
+    <string name="empty_view_no_logs_title">Нет записанных журналов</string>
+    <string name="empty_view_no_logs_summary">Как только задание, событие или любое напоминание появится в тени уведомления, оно также появится здесь.</string>
+    <string name="empty_view_no_events_title">Нет Запланированных событий</string>
+    <string name="empty_view_no_events_summary">В настоящее время у вас нет запланированных мероприятий. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
+
+    <string name="days_of_week_item_sunday">воскресенье</string>
+    <string name="days_of_week_item_monday">Понедельник</string>
+    <string name="days_of_week_item_tuesday">вторник</string>
+    <string name="days_of_week_item_wednesday">среда</string>
+    <string name="days_of_week_item_thursday">четверг</string>
+    <string name="days_of_week_item_friday">пятница</string>
+    <string name="days_of_week_item_saturday">суббота</string>
+
+    <string name="dialog_select_start_time">Выберите время начала</string>
+    <string name="dialog_select_end_time">Выберите время окончания</string>
+    <string name="dialog_select_color_tag">Выберите цветной тег</string>
+    <string name="dialog_select_subject">Выберите Предмет</string>
+    <string name="dialog_select_notification_interval">Выберите интервал уведомления</string>
+    <string name="dialog_choose_theme">Выберите тему</string>
+    <string name="dialog_choose_backup">Выберите резервный файл</string>
+    <string name="dialog_confirm_deletion_title">Вы хотите удалить \ "%1$s\"?</string>
+    <string name="dialog_confirm_deletion_summary">После удаления этот пункт не может быть восстановлен.</string>
+    <string name="dialog_schedule_details">Подробная информация о расписании</string>
+    <string name="dialog_discard_changes">Отбрасывать изменения?</string>
+
+    <string name="field_subject_code">Предметный код</string>
+    <string name="field_description">Описание</string>
+    <string name="field_days_of_week">Дни недели</string>
+    <string name="field_start_time">Время начала</string>
+    <string name="field_end_time">Время окончания</string>
+    <string name="field_task_name">Имя задачи</string>
+    <string name="field_notes">Примечания</string>
+    <string name="field_subject">Предмет</string>
+    <string name="field_due_date">Срок исполнения</string>
+    <string name="field_event_name">Название события</string>
+    <string name="field_schedule">Расписание</string>
+    <string name="field_location">Местоположение</string>
+    <string name="field_attachments">Приложения</string>
+    <string name="field_class_time">Классное время</string>
+    <string name="field_color_tag">Цветная метка</string>
+    <string name="field_priority">Приоритет</string>
+    <string name="field_status">Статус</string>
+    <string name="field_not_set">Не установлен</string>
+
+    <string name="feedback_subject_removed">Предмет удален</string>
+    <string name="feedback_log_removed">Журнал удален</string>
+    <string name="feedback_task_removed">Задача снята</string>
+    <string name="feedback_schedule_removed">Расписание удалено</string>
+    <string name="feedback_attachment_removed">Крепление удалено</string>
+    <string name="feedback_event_removed">Событие удалено</string>
+    <string name="feedback_task_marked_as_finished">Задача обозначена как Готово</string>
+    <string name="feedback_subject_empty_name">Вы забыли ввести код Предмет</string>
+    <string name="feedback_subject_empty_description">Вы забыли ввести описание</string>
+    <string name="feedback_subject_no_schedule">Ты забыл добавить расписание</string>
+    <string name="feedback_schedule_empty_days">Вы забыли указать дни</string>
+    <string name="feedback_schedule_empty_start_time">Ты забыл ввести время начала</string>
+    <string name="feedback_schedule_empty_end_time">Ты забыл ввести время окончания</string>
+    <string name="feedback_task_empty_name">Вы забыли ввести имя задачи</string>
+    <string name="feedback_task_empty_due_date">Вы забыли указать срок его исполнения</string>
+    <string name="feedback_event_empty_name">Вы забыли ввести название мероприятия</string>
+    <string name="feedback_event_empty_location">Вы забыли указать место</string>
+    <string name="feedback_event_empty_schedule">Вы забыли войти в расписание</string>
+    <string name="feedback_restore_invalid">Резервный файл недействителен</string>
+    <string name="feedback_restore_corrupted">Резервный файл поврежден или нечитаем.</string>
+    <string name="feedback_backup_empty">Нет пунктов для резервного копирования</string>
+    <string name="feedback_backup_failed">В процессе резервного копирования произошла ошибка</string>
+    <string name="feedback_import_ongoing">Импортное крепление</string>
+    <string name="feedback_import_completed">Завершённый импорт</string>
+    <string name="feedback_import_failed">Импорт не состоялся</string>
+
+    <string name="settings_group_interface">Интерфейс</string>
+    <string name="settings_group_sound">Звуковой</string>
+    <string name="settings_group_notification">Уведомления</string>
+    <string name="settings_group_advanced">Расширенный сайт</string>
+    <string name="settings_group_debugging">Отладка</string>
+    <string name="settings_group_contribute">Делать вклад</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_item_system">Стандартная система</string>
+    <string name="settings_theme_item_dark">Темный</string>
+    <string name="settings_theme_item_light">Свет</string>
+    <string name="settings_confetti_title">Конфетти</string>
+    <string name="settings_confetti_summary">Показывать конфетти, когда задачи помечены как завершенные</string>
+
+    <string name="settings_completion_sounds_title">Звуки завершения</string>
+    <string name="settings_completion_sounds_summary">Воспроизвести звук, когда вы отмечаете задачу как выполненную</string>
+
+    <string name="settings_reminder_frequency_title">Частота напоминаний</string>
+    <string name="settings_reminder_frequency_item_everyday">Ежедневно</string>
+    <string name="settings_reminder_frequency_item_weekends">Выходные</string>
+    <string name="settings_remind_me_in_time_of_day">Напомни мне сейчас</string>
+    <string name="settings_when_nearing_due_title">Когда задача близка к выполнению.</string>
+    <string name="settings_when_nearing_due_summary">Показывать уведомления о задачах, которые приближаются к своему сроку выполнения</string>
+    <string name="settings_task_reminders">Интервал напоминания о задаче</string>
+    <string name="settings_task_reminders_item_hour">за 1 час до</string>
+    <string name="settings_task_reminders_item_three_hours">за 3 часа до</string>
+    <string name="settings_task_reminders_item_day">за 1 день до</string>
+    <string name="settings_incoming_events_title">Всплывающие события</string>
+    <string name="settings_incoming_events_summary">Показывать уведомления о входящих событиях в этот день</string>
+    <string name="settings_event_reminders">Интервал напоминаний о событиях</string>
+    <string name="settings_event_reminders_item_quarter_hour">за 15 минут до</string>
+    <string name="settings_event_reminders_item_half_hour">за 30 минут до</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Занятия по сей день</string>
+    <string name="settings_classes_for_this_day_summary">Показывать уведомления об уроках по моим предметам в этот день</string>
+    <string name="settings_class_reminders">Интервал напоминания класса</string>
+    <string name="settings_class_reminders_item_5_minutes">за 5 минут до</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">Дополнительные настройки</string>
+
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
+    <string name="settings_backup">Резервное копирование</string>
+    <string name="settings_backup_summary_no_previous">Нет предыдущих резервных копий</string>
+    <string name="settings_restore">Восстановление</string>
+    <string name="settings_no_import_title">Не импортируйте вложения</string>
+    <string name="settings_no_import_summary">Вместо того, чтобы импортировать файлы в папку приложения, свяжите ее для экономии места.</string>
+
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
+    <string name="settings_not_working_notifications_info">Иногда ваше уведомление может не сработать из-за агрессивной оптимизации батареи производителем вашего телефона.</string>
+
+    <string name="settings_translate">Перевести</string>
+    <string name="settings_report_an_issue">Сообщить о проблеме</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Версия для строительства</string>
+
+    <string name="tag_color_sky">Sky</string>
+    <string name="tag_color_grass">Трава</string>
+    <string name="tag_color_sunset">Закат</string>
+    <string name="tag_color_lemon">Lemon</string>
+    <string name="tag_color_sea">Море</string>
+    <string name="tag_color_grape">Виноград</string>
+    <string name="tag_color_cherry">Вишня</string>
+    <string name="tag_color_coral">Коралл</string>
+    <string name="tag_color_midnight">Midnight</string>
+    <string name="tag_color_mint">Мятный двор</string>
+    <string name="tag_color_lavender">Лаванда</string>
+    <string name="tag_color_graphite">Графит</string>
+
+    <string name="widget_task_name">Виджет задач</string>
+    <string name="widget_task_title">Задачи</string>
+    <string name="widget_task_empty">У вас нет задач на сегодня.</string>
+    <string name="widget_event_name">Ивент-виджет</string>
+    <string name="widget_event_title">События</string>
+    <string name="widget_event_empty">У вас нет никаких событий на сегодня.</string>
+    <string name="widget_class_name">Виджет класса</string>
+    <string name="widget_class_title">Занятия</string>
+    <string name="widget_class_empty">У тебя сегодня нет занятий.</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Пометка "важно" означает, что он будет показывать постоянное уведомление в тени уведомления.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Напоминания</string>
+
+    <string name="notification_channel_general">Общие сведения</string>
+    <string name="notification_channel_task_reminders">Напоминания о задачах</string>
+    <string name="notification_channel_event_reminders">Напоминания о событиях</string>
+    <string name="notification_channel_class_reminders">Напоминатели класса</string>
+
+    <string name="notification_pending_tasks_title">У вас есть задачи %1$d</string>
+    <string name="notification_pending_tasks_summary">Возможно, стоит взглянуть</string>
+
+    <string name="notification_backup_ongoing">Выполнение резервного копирования</string>
+    <string name="notification_backup_error">Резервное копирование не удалось</string>
+    <string name="notification_backup_success">Резервное копирование Завершено</string>
+
+    <string name="notification_restore_ongoing">Восстановление резервного копирования</string>
+    <string name="notification_restore_error">Восстановить Не удалось</string>
+    <string name="notification_restore_success">Восстановлено Завершено</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">Добрый день!</string>
+    <string name="greeting_morning">Доброе утро!</string>
+    <string name="greeting_afternoon">Добрый день!</string>
+    <string name="greeting_evening">Добрый вечер!</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and">&#160;и&#160;</string>
+    <string name="yesterday_at">Вчера на %1$s</string>
+    <string name="yesterday">Вчера</string>
+    <string name="tomorrow_at">Завтра на %1$s</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="today_at">Сегодня на %1$s</string>
+    <string name="today">Сегодня</string>
+    <string name="due_today_at">Срок исполнения сегодня %1$s</string>
+    <string name="due_tomorrow_at">Срок исполнения завтрашнего дня %1$s</string>
+
+    <string name="open_source_libraries">Библиотеки с открытым исходным кодом</string>
+    <string name="credit_other_resources">Прочие ресурсы</string>
+    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Звук уведомления</string>
+    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
+    <string name="credit_launcher_icon_summary">икона-лаунчер</string>
+
+</resources>

@@ -163,8 +163,8 @@
     <string name="settings_backup">Back-up</string>
     <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
     <string name="settings_restore">Herstel</string>
-    <string name="settings_no_import_title">Gebruik links voor bijlagen</string>
-    <string name="settings_no_import_summary">Gebruik in plaats van het importeren van bestanden naar de applicatiemap, een link om ruimte te besparen. (Alleen van toepassing op nieuwe bijlagen).</string>
+    <string name="settings_no_import_title">Importeer geen bijlagen</string>
+    <string name="settings_no_import_summary">In plaats van bestanden te importeren naar de applicatiemap, moet u deze koppelen om ruimte te besparen.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>

@@ -9,6 +9,7 @@
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_logs">Journaux de notification</string>
     <string name="activity_settings">Paramètres</string>
+    <string name="activity_backup">Sauvegarde et Restauration</string>
     <string name="activity_notices">Avis aux tiers</string>
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
@@ -157,7 +158,7 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Plus de paramètres</string>
 
-    <string name="settings_backup_and_restore">Sauvegarde et Restauration</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Sauvegarde</string>
     <string name="settings_backup_summary_no_previous">Pas de sauvegardes antérieures</string>
     <string name="settings_restore">Restaurer</string>

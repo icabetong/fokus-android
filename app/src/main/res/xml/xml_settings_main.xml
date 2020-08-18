@@ -108,8 +108,7 @@
 
         <Preference
             app:key="@string/key_backup_restore"
-            app:title="@string/settings_backup_and_restore"
-            app:fragment="com.isaiahvonrundstedt.features.settings.child.BackupRestorePreference"/>
+            app:title="@string/settings_backup_and_restore" />
 
         <SwitchPreference
             app:key="@string/key_no_import"

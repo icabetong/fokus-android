@@ -8,6 +8,7 @@
     <string name="activity_subjects">I vostri soggetti</string>
     <string name="activity_logs">Registri delle notifiche</string>
     <string name="activity_settings">Impostazioni</string>
+    <string name="activity_backup">Backup e Ripristino</string>
     <string name="activity_notices">Avvisi di terzi</string>
     <string name="activity_open_source_licenses">Licenze Open Source</string>
     <string name="activity_about">Informazioni</string>
@@ -156,7 +157,7 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Altre impostazioni</string>
 
-    <string name="settings_backup_and_restore">Backup e Ripristino</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">Nessun backup precedente</string>
     <string name="settings_restore">Ripristina</string>

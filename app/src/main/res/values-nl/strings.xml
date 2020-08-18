@@ -10,6 +10,7 @@
     <string name="activity_subjects">Uw onderwerpen</string>
     <string name="activity_logs">Meldingslogboeken</string>
     <string name="activity_settings">Instellingen</string>
+    <string name="activity_backup">Back-up en Herstel</string>
     <string name="activity_notices">Mededelingen van derden</string>
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
@@ -158,7 +159,7 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Meer instellingen</string>
 
-    <string name="settings_backup_and_restore">Back-up en Herstel</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Back-up</string>
     <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
     <string name="settings_restore">Herstel</string>

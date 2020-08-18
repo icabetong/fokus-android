@@ -1,12 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.settings
 
-import android.Manifest
-import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,7 +8,6 @@ import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.work.OneTimeWorkRequest
@@ -22,17 +15,12 @@ import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.custom.ProgressDialog
-import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
-import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
-import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.util.*
@@ -146,15 +134,6 @@ class SettingsPreference : BasePreference() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                                            grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PermissionManager.STORAGE_READ_REQUEST_CODE
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                .setType("audio/*"), REQUEST_CODE_SOUND)
-    }
-
     private val preferences by lazy {
         PreferenceManager(requireContext())
     }
@@ -163,7 +142,6 @@ class SettingsPreference : BasePreference() {
     }
 
     companion object {
-        const val REQUEST_CODE_SOUND = 32
         const val SETTINGS_URL_BATTERY_OPTIMIZATION = "https://www.dontkillmyapp.com/"
     }
 

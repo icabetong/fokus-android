@@ -13,8 +13,6 @@
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
 
-    <string name="menu_export">Exporter</string>
-    <string name="menu_import">Importer</string>
     <string name="menu_clear_items">Points clairs</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -117,7 +115,6 @@
     <string name="feedback_import_ongoing">Importation de pièces jointes</string>
     <string name="feedback_import_completed">Importation terminée</string>
     <string name="feedback_import_failed">L\'importation a échoué</string>
-    <string name="feedback_background_restricted">L\'activité de fond est limitée pour cette application</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Son</string>
@@ -130,14 +127,11 @@
     <string name="settings_theme_item_system">Défaut du système</string>
     <string name="settings_theme_item_dark">Foncé</string>
     <string name="settings_theme_item_light">Lumière</string>
-
     <string name="settings_confetti_title">Confetti</string>
     <string name="settings_confetti_summary">Afficher les confettis lorsque les tâches sont marquées comme étant terminées</string>
+
     <string name="settings_completion_sounds_title">Sons d\'achèvement</string>
     <string name="settings_completion_sounds_summary">Jouez un son lorsque vous marquez une tâche comme étant terminée</string>
-    <string name="settings_custom_notification_sound_title">Use custom sound</string>
-    <string name="settings_custom_notification_sound_summary">Annulez le son de notification du système ; sélectionnez-en un ci-dessous pour utiliser votre propre</string>
-    <string name="settings_select_sound">Sélectionner un fichier son</string>
 
     <string name="settings_reminder_frequency_title">Fréquence des rappels</string>
     <string name="settings_reminder_frequency_item_everyday">Tous les jours</string>

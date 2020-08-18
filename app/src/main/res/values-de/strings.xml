@@ -14,8 +14,6 @@
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_export">Exportieren</string>
-    <string name="menu_import">Importieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -118,7 +116,6 @@
     <string name="feedback_import_ongoing">Anlage importieren</string>
     <string name="feedback_import_completed">Import abgeschlossen</string>
     <string name="feedback_import_failed">Import fehlgeschlagen</string>
-    <string name="feedback_background_restricted">Die Hintergrundaktivität ist für diese App eingeschränkt.</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>
@@ -131,14 +128,11 @@
     <string name="settings_theme_item_system">Systemvorgabe</string>
     <string name="settings_theme_item_dark">Dunkel</string>
     <string name="settings_theme_item_light">Licht</string>
-
     <string name="settings_confetti_title">Konfetti</string>
     <string name="settings_confetti_summary">Konfetti anzeigen, wenn Aufgaben als erledigt markiert sind</string>
+
     <string name="settings_completion_sounds_title">Vervollständigung klingt</string>
     <string name="settings_completion_sounds_summary">"Spielen Sie einen Ton ab, wenn Sie eine Aufgabe als erledigt markieren "</string>
-    <string name="settings_custom_notification_sound_summary">Systembenachrichtigungston überschreiben; wählen Sie unten einen aus, um Ihren eigenen zu verwenden</string>
-    <string name="settings_custom_notification_sound_title">Benutzerdefinierten Ton verwenden</string>
-    <string name="settings_select_sound">Sounddatei auswählen</string>
 
     <string name="settings_reminder_frequency_title">Häufigkeit von Erinnerungen</string>
     <string name="settings_reminder_frequency_item_everyday">Täglich</string>

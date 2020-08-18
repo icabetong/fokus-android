@@ -14,8 +14,6 @@
     <string name="activity_open_source_licenses">Open Source Licenses</string>
     <string name="activity_about">About</string>
 
-    <string name="menu_export">Export</string>
-    <string name="menu_import">Import</string>
     <string name="menu_clear_items">Clear Items</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -118,7 +116,6 @@
     <string name="feedback_import_ongoing">Importing attachment</string>
     <string name="feedback_import_completed">Import completed</string>
     <string name="feedback_import_failed">Import failed</string>
-    <string name="feedback_background_restricted">Background activity is restricted for this app</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>
@@ -131,14 +128,11 @@
     <string name="settings_theme_item_system">System default</string>
     <string name="settings_theme_item_dark">Dark</string>
     <string name="settings_theme_item_light">Light</string>
-
     <string name="settings_confetti_title">Confetti</string>
     <string name="settings_confetti_summary">Show confetti when tasks are marked as finished</string>
+
     <string name="settings_completion_sounds_title">Completion Sounds</string>
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
-    <string name="settings_custom_notification_sound_title">Use custom sound</string>
-    <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
-    <string name="settings_select_sound">Select sound file</string>
 
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
@@ -208,7 +202,7 @@
     <!-- Notifications -->
     <string name="notification_channel_group_reminders">Reminders</string>
 
-    <string name="notification_channel_general">Generic</string>
+    <string name="notification_channel_general">General</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
     <string name="notification_channel_class_reminders">Class Reminders</string>

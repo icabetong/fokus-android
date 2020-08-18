@@ -25,6 +25,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 * French
 * Polish
 * Dutch
+* Italian
 
 ## Built with
 * Kotlin

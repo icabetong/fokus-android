@@ -13,8 +13,6 @@
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
 
-    <string name="menu_export">Eksport</string>
-    <string name="menu_import">Import</string>
     <string name="menu_clear_items">Pozycje Jasne</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -117,7 +115,6 @@
     <string name="feedback_import_ongoing">Załącznik importowy</string>
     <string name="feedback_import_completed">Przywóz zakończony</string>
     <string name="feedback_import_failed">Import nie powiódł się</string>
-    <string name="feedback_background_restricted">Działalność kontekstowa jest ograniczona dla tej aplikacji.</string>
 
     <string name="settings_group_interface">Interfejs</string>
     <string name="settings_group_sound">Dźwięk</string>
@@ -130,14 +127,11 @@
     <string name="settings_theme_item_system">System śledzenia</string>
     <string name="settings_theme_item_dark">Ciemny</string>
     <string name="settings_theme_item_light">Światło</string>
-
     <string name="settings_confetti_title">Confetti</string>
     <string name="settings_confetti_summary">Pokaż konfetti, gdy zadania są oznaczone jako zakończone</string>
+
     <string name="settings_completion_sounds_title">Zakończenie Dźwięk</string>
     <string name="settings_completion_sounds_summary">Odtwarzanie dźwięku po zaznaczeniu zadania jako ukończonego</string>
-    <string name="settings_custom_notification_sound_title">Użyj niestandardowego dźwięku</string>
-    <string name="settings_custom_notification_sound_summary">Wyłącz dźwięk powiadomienia systemowego; wybierz jeden z poniższych sposobów, aby użyć własnego</string>
-    <string name="settings_select_sound">Wybierz plik dźwiękowy</string>
 
     <string name="settings_reminder_frequency_title">Częstotliwość przypomnień</string>
     <string name="settings_reminder_frequency_item_everyday">Codziennie</string>

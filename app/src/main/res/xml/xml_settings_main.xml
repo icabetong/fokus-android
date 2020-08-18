@@ -110,7 +110,7 @@
             app:key="@string/key_backup_restore"
             app:title="@string/settings_backup_and_restore" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             app:key="@string/key_no_import"
             app:title="@string/settings_no_import_title"
             app:summary="@string/settings_no_import_summary"

@@ -48,7 +48,7 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
         if (t is Subject) {
             when (action) {
                 BaseListAdapter.ActionListener.Action.SELECT -> {
-                    callback?.invoke(t)
+                    receiver?.onReceive(t)
                     this.dismiss()
                 }
                 BaseListAdapter.ActionListener.Action.DELETE -> { }

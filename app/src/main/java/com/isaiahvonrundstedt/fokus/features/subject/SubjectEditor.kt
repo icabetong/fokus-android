@@ -84,7 +84,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                             Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
                             Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
                         )
-                        result {
+                        waitForResult {
                             adapter.update(it)
                             hasFieldChange = true
                         }
@@ -112,7 +112,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 arguments = bundleOf(
                     Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID)
                 )
-                result { adapter.insert(it) }
+                waitForResult { adapter.insert(it) }
             }
         }
 

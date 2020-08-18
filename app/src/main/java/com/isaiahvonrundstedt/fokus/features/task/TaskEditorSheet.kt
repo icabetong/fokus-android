@@ -23,7 +23,6 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
-import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_sheet_task.*
 import kotlinx.android.synthetic.main.layout_sheet_task.taskNameTextInput
 import org.joda.time.LocalDateTime
@@ -87,7 +86,7 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
                 return@setOnClickListener
             }
 
-            callback?.invoke(task)
+            receiver?.onReceive(task)
         }
     }
 

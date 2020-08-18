@@ -26,6 +26,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 * Polish
 * Dutch
 * Italian
+* Russian
 
 ## Built with
 * Kotlin
@@ -54,7 +55,7 @@ This is an open-source personal project and I am very happy to accept community 
 * [Okio](https://github.com/square/okio) - Square
 
 ### Other materials used
-* [HeroIcons](https://www.heroicons.dev) - Tailwind
+* [HeroIcons](https://www.heroicons.dev) - Tailwind Labs
 * [Launcher Icon](https://www.flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat
 * [Vector Illustrations](https://www.undraw.co) - UnDraw.co

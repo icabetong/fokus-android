@@ -34,7 +34,6 @@
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
         <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
-        <item name="drawerArrowStyle">@style/Fokus.Widget.ArrowToggle</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -124,9 +123,8 @@
     </style>
     <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice"/>
     <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
-        <item name="thumbTint">@color/selector_switch_thumb</item>
-        <item name="trackTint">@color/selector_switch_track</item>
-        <item name="switchPadding">0dp</item>
+        <item name="track">@drawable/selector_switch_track</item>
+        <item name="android:thumb">@drawable/selector_switch_thumb</item>
     </style>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
@@ -140,9 +138,6 @@
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
     </style>
     <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
-    <style name="Fokus.Widget.ArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/color_on_surface</item>
-    </style>
 
     <!-- TextAppearance -->
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
@@ -216,7 +211,9 @@
     <style name="Fokus.TextAppearance.Widget.Item.Body" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
-    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.Body.Medium"/>
+    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#000051</color>

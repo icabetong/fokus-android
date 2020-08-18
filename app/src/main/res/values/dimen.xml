@@ -32,4 +32,10 @@
 
     <dimen name="drawable_icon_padding">8dp</dimen>
 
+    <!-- Switch -->
+    <dimen name="switch_thumb_size">20dp</dimen>
+    <dimen name="switch_thumb_stroke_size">1dp</dimen>
+    <dimen name="switch_track_radius">20dp</dimen>
+    <dimen name="switch_track_stroke_size">1dp</dimen>
+
 </resources>

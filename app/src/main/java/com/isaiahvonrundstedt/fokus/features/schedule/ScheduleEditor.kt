@@ -151,7 +151,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 return@setOnClickListener
             }
 
-            callback?.invoke(schedule)
+            receiver?.onReceive(schedule)
             this.dismiss()
         }
     }

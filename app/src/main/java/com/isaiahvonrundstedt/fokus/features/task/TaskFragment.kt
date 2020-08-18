@@ -66,7 +66,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
 
         actionButton.setOnClickListener {
             TaskEditorSheet(childFragmentManager).show {
-                result {
+                waitForResult {
                     viewModel.insert(it)
                     dismiss()
                 }
@@ -132,11 +132,12 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                 super.onDismissed(transientBottomBar, event)
 
-                                if (event != DISMISS_EVENT_ACTION
-                                    && !PreferenceManager(requireContext()).noImport) {
-                                    t.attachments.forEach { attachment ->
-                                        attachment.uri?.let {
-                                            context.contentResolver.delete(it, null, null)
+                                if (event != DISMISS_EVENT_ACTION) {
+                                    if (!PreferenceManager(requireContext()).noImport) {
+                                        t.attachments.forEach { attachment ->
+                                            attachment.uri?.let {
+                                                context.contentResolver.delete(it, null, null)
+                                            }
                                         }
                                     }
                                 }

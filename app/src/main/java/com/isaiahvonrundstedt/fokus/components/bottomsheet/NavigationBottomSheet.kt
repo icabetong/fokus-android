@@ -40,7 +40,7 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
     }
 
     override fun onNavigate(id: Int) {
-        callback?.invoke(id)
+        receiver?.onReceive(id)
         this.dismiss()
     }
 }

@@ -97,7 +97,7 @@ class EventEditor : BaseEditor() {
 
         subjectTextView.setOnClickListener {
             SubjectSelectorSheet(supportFragmentManager).show {
-                result { result ->
+                waitForResult { result ->
                     this@EventEditor.removeButton.isVisible = true
                     event.subject = result.subjectID
                     subject = result

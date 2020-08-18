@@ -14,7 +14,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
-import androidx.documentfile.provider.DocumentFile
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -155,7 +154,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         subjectTextView.setOnClickListener {
             SubjectSelectorSheet(supportFragmentManager).show {
-                result { result ->
+                waitForResult { result ->
                     this@TaskEditor.removeButton.isVisible = true
                     task.subject = result.subjectID
                     subject = result

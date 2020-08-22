@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
 
+    <external-cache-path
+        name="temp" path="."/>
+
     <!-- Path must be same value with DataImporterService.DIRECTORY_ATTACHMENTS -->
     <external-files-path
         name="attachments" path="attachments"/>

@@ -1,74 +1,134 @@
 package com.isaiahvonrundstedt.fokus.components.service
 
 import android.content.Intent
-import android.net.Uri
-import android.os.Environment
 import android.os.IBinder
-import androidx.core.content.FileProvider
+import android.os.Parcelable
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
+import com.isaiahvonrundstedt.fokus.components.json.Metadata
+import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
+import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.event.Event
+import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import org.apache.commons.io.FileUtils
 import java.io.File
+import java.lang.Exception
+import java.util.zip.ZipEntry
 
 class DataImporterService: BaseService() {
-
-    private lateinit var targetDirectory: File
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when (intent?.action) {
-            ACTION_START -> {
-                targetDirectory = File(getExternalFilesDir(null),
-                    intent.getStringExtra(EXTRA_DIRECTORY) ?: DIRECTORY_GENERIC)
-
-                intent.data?.let { onStartCopy(it, intent.getStringExtra(EXTRA_FILE_NAME)) }
-            }
-            ACTION_CANCEL -> terminateService()
-        }
+        onImport(intent)
         return START_REDELIVER_INTENT
     }
 
-    private fun onStartCopy(uri: Uri, name: String? = null) {
-        if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
+    private fun onImport(intent: Intent?) {
+        if (intent?.data == null)
             terminateService(BROADCAST_IMPORT_FAILED)
-            return
-        }
 
-        LocalBroadcastManager.getInstance(this)
-            .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
-                putExtra(EXTRA_BROADCAST_STATUS, BROADCAST_IMPORT_ONGOING)
-            })
+        contentResolver.openInputStream(intent?.data!!)?.use { inputStream ->
+            val archive = DataArchiver.parseInputStream(this, inputStream)
 
-        try {
-            contentResolver.openInputStream(uri)?.use {
-                val imported = File(targetDirectory, name ?: uri.getFileName(this))
-                FileUtils.copyToFile(it, imported)
+            try {
+                archive.getInputStream(archive.getEntry(Metadata.FILE_NAME)).use { it ->
+                    val metadata = Metadata.fromInputStream(it)
+                    if (metadata.validate(Metadata.DATA_SUBJECT) &&
+                        intent.action == ACTION_IMPORT_SUBJECT) {
 
-                terminateService(BROADCAST_IMPORT_COMPLETED,
-                    FileProvider.getUriForFile(this,
-                        "${applicationContext.packageName}.provider", imported))
+                        val subjectPackage = SubjectPackage(Subject())
+                        for (entry: ZipEntry in archive.entries()) {
+
+                            if (entry.name == Streamable.FILE_NAME_SUBJECT) {
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    subjectPackage.subject = Subject.fromInputStream(inputStream)
+                                }
+                            } else if (entry.name == Streamable.FILE_NAME_SCHEDULE) {
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    JsonDataStreamer.decodeFromJson(inputStream, Schedule::class.java)?.also { items ->
+                                        subjectPackage.schedules = items
+                                    }
+                                }
+                            }
+                        }
+
+                        sendResult(subjectPackage)
+                    } else if (metadata.validate(Metadata.DATA_TASK) &&
+                            intent.action == ACTION_IMPORT_TASK) {
+
+                        val taskPackage = TaskPackage(Task())
+                        for (entry: ZipEntry in archive.entries()) {
+
+                            if (entry.name == Streamable.FILE_NAME_TASK) {
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    taskPackage.task = Task.fromInputStream(inputStream)
+                                }
+                            } else if (entry.name == Streamable.FILE_NAME_ATTACHMENT) {
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    JsonDataStreamer.decodeFromJson(inputStream, Attachment::class.java)?.also { items ->
+                                        taskPackage.attachments = items
+                                    }
+                                }
+                            } else if (entry.name.contains(FileImporterService.DIRECTORY_ATTACHMENTS)
+                                && !entry.isDirectory) {
+
+                                val targetDirectory = File(getExternalFilesDir(null),
+                                    FileImporterService.DIRECTORY_ATTACHMENTS)
+
+                                val destination = File(targetDirectory, File(entry.name).name)
+
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    FileUtils.copyToFile(inputStream, destination)
+                                }
+                            }
+                        }
+
+                        sendResult(taskPackage)
+                    } else if (metadata.validate(Metadata.DATA_EVENT) &&
+                            intent.action == ACTION_IMPORT_EVENT) {
+
+                        val eventPackage = EventPackage(Event())
+                        for (entry: ZipEntry in archive.entries()) {
+                            if (entry.name == Streamable.FILE_NAME_EVENT) {
+                                archive.getInputStream(entry)?.use { inputStream ->
+                                    eventPackage.event = Event.fromInputStream(inputStream)
+                                }
+                            }
+                        }
+                        sendResult(eventPackage)
+                    } else terminateService(BROADCAST_IMPORT_FAILED)
+                }
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+                terminateService(BROADCAST_IMPORT_FAILED)
             }
-        } catch (e: Exception) {
-
-            e.printStackTrace()
-            terminateService(BROADCAST_IMPORT_FAILED)
         }
     }
 
+    private fun <T: Parcelable> sendResult(t: T) {
+        LocalBroadcastManager.getInstance(this)
+            .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
+                putExtra(EXTRA_BROADCAST_STATUS, BROADCAST_IMPORT_COMPLETED)
+                putExtra(EXTRA_BROADCAST_DATA, t)
+            })
+        terminateService()
+    }
+
     companion object {
-        const val ACTION_START = "action:start"
-        const val ACTION_CANCEL = "action:cancel"
-
-        const val EXTRA_DIRECTORY = "extra:directory"
-        const val EXTRA_FILE_NAME = "extra:filename"
-
-        const val DIRECTORY_GENERIC = "unspecified"
-        const val DIRECTORY_ATTACHMENTS = "attachments"
-        const val DIRECTORY_ASSETS = "assets"
+        const val ACTION_IMPORT_TASK = "action:import:task"
+        const val ACTION_IMPORT_SUBJECT = "action:import:subject"
+        const val ACTION_IMPORT_EVENT = "action:import:event"
 
         const val BROADCAST_IMPORT_ONGOING = "broadcast:import:ongoing"
         const val BROADCAST_IMPORT_COMPLETED = "broadcast:import:completed"

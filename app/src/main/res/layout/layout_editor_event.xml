@@ -8,18 +8,18 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
-    <include layout="@layout/layout_appbar_editor"/>
-
     <ScrollView
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="@dimen/activity_padding">
+
+            <include layout="@layout/layout_appbar_editor"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -200,6 +200,14 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_padding"
+        android:src="@drawable/ic_hero_check_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

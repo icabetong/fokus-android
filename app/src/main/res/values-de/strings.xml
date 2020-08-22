@@ -15,6 +15,9 @@
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
+    <string name="menu_share">Teilen</string>
+    <string name="menu_import">Importieren</string>
+    <string name="menu_export">Exportieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -72,6 +75,8 @@
     <string name="dialog_confirm_deletion_summary">Wenn dieses Element einmal gelöscht wurde, kann es nicht wiederhergestellt werden.</string>
     <string name="dialog_schedule_details">Einzelheiten zum Zeitplan</string>
     <string name="dialog_discard_changes">Änderungen verwerfen?</string>
+    <string name="dialog_select_file_import">Zu importierende Datei auswählen</string>
+    <string name="dialog_send_to">Senden an</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -114,9 +119,12 @@
     <string name="feedback_restore_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
     <string name="feedback_backup_empty">Es sind keine Artikel zu sichern</string>
     <string name="feedback_backup_failed">Sicherungsprozess stieß auf einen Fehler</string>
-    <string name="feedback_import_ongoing">Anlage importieren</string>
+    <string name="feedback_import_ongoing">Import im Gange</string>
     <string name="feedback_import_completed">Import abgeschlossen</string>
     <string name="feedback_import_failed">Import fehlgeschlagen</string>
+    <string name="feedback_export_ongoing">Export im Gange</string>
+    <string name="feedback_export_completed">Export abgeschlossen</string>
+    <string name="feedback_export_failed">Export fehlgeschlagen</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>
@@ -163,8 +171,6 @@
     <string name="settings_backup">Sicherung</string>
     <string name="settings_backup_summary_no_previous">Keine früheren Sicherungen</string>
     <string name="settings_restore">Wiederherstellen</string>
-    <string name="settings_no_import_title">Anhänge nicht importieren</string>
-    <string name="settings_no_import_summary">Anstatt Dateien in den Anwendungsordner zu importieren, verknüpfen Sie ihn, um Platz zu sparen.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>

@@ -13,4 +13,8 @@ class CoreApplication : Application() {
         JodaTimeAndroid.init(this)
     }
 
+    companion object {
+        const val PROVIDER_AUTHORITY = "com.isaiahvonrundstedt.fokus.provider"
+    }
+
 }

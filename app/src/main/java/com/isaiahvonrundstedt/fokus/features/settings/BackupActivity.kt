@@ -12,6 +12,7 @@ import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.startForegroundServiceCompat
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -72,7 +73,7 @@ class BackupActivity: BaseActivity() {
                         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                             addCategory(Intent.CATEGORY_OPENABLE)
                             putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME_ARCHIVE)
-                            type = BackupRestoreService.MIME_TYPE_ZIP
+                            type = Streamable.MIME_TYPE_ZIP
                         }
                         startActivityForResult(intent, REQUEST_CODE_BACKUP_FILE)
                         true
@@ -82,7 +83,7 @@ class BackupActivity: BaseActivity() {
                 findPreference<Preference>(R.string.key_restore)?.apply {
                     setOnPreferenceClickListener {
                         val chooserIntent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                            type = BackupRestoreService.MIME_TYPE_ZIP
+                            type = Streamable.MIME_TYPE_ZIP
                         }, getString(R.string.dialog_choose_backup))
                         startActivityForResult(chooserIntent, REQUEST_CODE_RESTORE_FILE)
                         true

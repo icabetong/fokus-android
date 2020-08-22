@@ -8,11 +8,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
+import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class LogAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<Log, LogAdapter.ViewHolder>(callback), SwipeDelegate {
+    : BaseListAdapter<Log, LogAdapter.ViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)

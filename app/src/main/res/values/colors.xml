@@ -10,6 +10,8 @@
     <color name="color_surface_stroke">#e2e6f0</color>
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#ffffff</color>
+    <color name="color_neutral">#a4a4a4</color>
+    <color name="color_neutral_variant">#494949</color>
 
     <color name="color_status_background">@color/color_surface</color>
     <color name="color_toolbar_background">@color/color_surface</color>

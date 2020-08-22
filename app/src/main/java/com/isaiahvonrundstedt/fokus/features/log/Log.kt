@@ -9,12 +9,17 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import okio.Okio
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Parcelize
@@ -30,7 +35,7 @@ data class Log @JvmOverloads constructor(
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var dateTimeTriggered: DateTime? = null
-) : Parcelable {
+) : Parcelable, Streamable {
 
     fun setIconToView(sourceView: ImageView) {
         with(sourceView) {
@@ -85,6 +90,29 @@ data class Log @JvmOverloads constructor(
             TYPE_CLASS -> R.color.color_theme_red_variant
             TYPE_GENERIC -> R.color.color_theme_teal_variant
             else -> R.color.color_theme_teal_variant
+        }
+    }
+
+    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Log::class.java)
+
+    override fun writeToFile(destination: File, name: String): File {
+        return File(destination, name).apply {
+            Okio.buffer(Okio.sink(this)).use {
+                toJson()?.also { json -> it.write(json.toByteArray()) }
+                it.flush()
+            }
+        }
+    }
+
+    override fun parseInputStream(inputStream: InputStream) {
+        JsonDataStreamer.decodeOnceFromJson(inputStream, Log::class.java)?.also {
+            logID = it.logID
+            title = it.title
+            content = it.content
+            type = it.type
+            isImportant = it.isImportant
+            data = it.data
+            dateTimeTriggered = it.dateTimeTriggered
         }
     }
 

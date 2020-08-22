@@ -12,7 +12,7 @@
     <dimen name="surface_corner_radius">4dp</dimen>
 
     <dimen name="editor_container_padding">12dp</dimen>
-    <dimen name="editor_item_height">36dp</dimen>
+    <dimen name="editor_item_height">48dp</dimen>
 
     <!-- RecyclerView -->
     <dimen name="item_padding">16dp</dimen>

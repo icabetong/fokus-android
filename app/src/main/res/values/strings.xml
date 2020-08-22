@@ -15,6 +15,9 @@
     <string name="activity_open_source_licenses">Open Source Licenses</string>
     <string name="activity_about">About</string>
 
+    <string name="menu_share">Share</string>
+    <string name="menu_import">Import</string>
+    <string name="menu_export">Export</string>
     <string name="menu_clear_items">Clear Items</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -72,6 +75,8 @@
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
     <string name="dialog_discard_changes">Discard changes?</string>
+    <string name="dialog_select_file_import">Select file to import</string>
+    <string name="dialog_send_to">Send to</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -114,9 +119,12 @@
     <string name="feedback_restore_corrupted">Backup file is corrupted or unreadable</string>
     <string name="feedback_backup_empty">There are no items to backup</string>
     <string name="feedback_backup_failed">Backup process encountered an error</string>
-    <string name="feedback_import_ongoing">Importing attachment</string>
+    <string name="feedback_import_ongoing">Import in progress</string>
     <string name="feedback_import_completed">Import completed</string>
     <string name="feedback_import_failed">Import failed</string>
+    <string name="feedback_export_ongoing">Export in progress</string>
+    <string name="feedback_export_completed">Export completed</string>
+    <string name="feedback_export_failed">Export failed</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>
@@ -163,8 +171,6 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No Previous Backups</string>
     <string name="settings_restore">Restore</string>
-    <string name="settings_no_import_title">Don\'t import attachments</string>
-    <string name="settings_no_import_summary">Rather than importing files to the application folder, link it to save space.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>

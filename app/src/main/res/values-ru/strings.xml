@@ -15,6 +15,9 @@
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
 
+    <string name="menu_share">Поделиться</string>
+    <string name="menu_import">Импорт</string>
+    <string name="menu_export">Экспорт</string>
     <string name="menu_clear_items">Чистые предметы</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -72,6 +75,8 @@
     <string name="dialog_confirm_deletion_summary">После удаления этот пункт не может быть восстановлен.</string>
     <string name="dialog_schedule_details">Подробная информация о расписании</string>
     <string name="dialog_discard_changes">Отбрасывать изменения?</string>
+    <string name="dialog_select_file_import">Выберите файл для импорта</string>
+    <string name="dialog_send_to">Отправить</string>
 
     <string name="field_subject_code">Предметный код</string>
     <string name="field_description">Описание</string>
@@ -114,9 +119,12 @@
     <string name="feedback_restore_corrupted">Резервный файл поврежден или нечитаем.</string>
     <string name="feedback_backup_empty">Нет пунктов для резервного копирования</string>
     <string name="feedback_backup_failed">В процессе резервного копирования произошла ошибка</string>
-    <string name="feedback_import_ongoing">Импортное крепление</string>
+    <string name="feedback_import_ongoing">Импорт в процессе осуществления</string>
     <string name="feedback_import_completed">Завершённый импорт</string>
     <string name="feedback_import_failed">Импорт не состоялся</string>
+    <string name="feedback_export_ongoing">Экспорт продолжается</string>
+    <string name="feedback_export_completed">Экспорт завершен</string>
+    <string name="feedback_export_failed">Экспорт не состоялся</string>
 
     <string name="settings_group_interface">Интерфейс</string>
     <string name="settings_group_sound">Звуковой</string>
@@ -163,8 +171,6 @@
     <string name="settings_backup">Резервное копирование</string>
     <string name="settings_backup_summary_no_previous">Нет предыдущих резервных копий</string>
     <string name="settings_restore">Восстановление</string>
-    <string name="settings_no_import_title">Не импортируйте вложения</string>
-    <string name="settings_no_import_summary">Вместо того, чтобы импортировать файлы в папку приложения, свяжите ее для экономии места.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Иногда ваше уведомление может не сработать из-за агрессивной оптимизации батареи производителем вашего телефона.</string>

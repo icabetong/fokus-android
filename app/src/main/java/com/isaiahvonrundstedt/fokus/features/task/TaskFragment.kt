@@ -5,9 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +29,7 @@ import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_empty_tasks.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
+import java.io.File
 
 class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
@@ -55,7 +54,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer {
+        viewModel.fetch()?.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
         })
@@ -132,15 +131,10 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                 super.onDismissed(transientBottomBar, event)
 
-                                if (event != DISMISS_EVENT_ACTION) {
-                                    if (!PreferenceManager(requireContext()).noImport) {
-                                        t.attachments.forEach { attachment ->
-                                            attachment.uri?.let {
-                                                context.contentResolver.delete(it, null, null)
-                                            }
-                                        }
+                                if (event != DISMISS_EVENT_ACTION)
+                                    t.attachments.forEach { attachment ->
+                                        attachment.target?.also { File(it).delete() }
                                     }
-                                }
                             }
                         })
                         setAction(R.string.button_undo) {

@@ -15,6 +15,9 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
+    <string name="menu_share">Deel</string>
+    <string name="menu_import">Importeer</string>
+    <string name="menu_export">Exporteer</string>
     <string name="menu_clear_items">Duidelijke items</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -72,6 +75,8 @@
     <string name="dialog_confirm_deletion_summary">Als dit item eenmaal is verwijderd, kan het niet meer worden gerecupereerd.</string>
     <string name="dialog_schedule_details">Details van de planning</string>
     <string name="dialog_discard_changes">Veranderingen weggooien?</string>
+    <string name="dialog_select_file_import">Selecteer bestand om te importeren</string>
+    <string name="dialog_send_to">Stuur naar</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
@@ -114,9 +119,12 @@
     <string name="feedback_restore_corrupted">Back-upbestand beschadigd of onleesbaar</string>
     <string name="feedback_backup_empty">Er zijn geen items om een back-up te maken</string>
     <string name="feedback_backup_failed">Back-up proces stuitte op een fout</string>
-    <string name="feedback_import_ongoing">Importeren van bijlage</string>
+    <string name="feedback_import_ongoing">Import in uitvoering</string>
     <string name="feedback_import_completed">Invoer voltooid</string>
     <string name="feedback_import_failed">De invoer is mislukt</string>
+    <string name="feedback_export_ongoing">Export in uitvoering</string>
+    <string name="feedback_export_completed">Uitvoer voltooid</string>
+    <string name="feedback_export_failed">De export is mislukt</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>
@@ -163,8 +171,6 @@
     <string name="settings_backup">Back-up</string>
     <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
     <string name="settings_restore">Herstel</string>
-    <string name="settings_no_import_title">Importeer geen bijlagen</string>
-    <string name="settings_no_import_summary">In plaats van bestanden te importeren naar de applicatiemap, moet u deze koppelen om ruimte te besparen.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>

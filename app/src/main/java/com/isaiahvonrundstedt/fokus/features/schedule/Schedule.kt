@@ -8,14 +8,19 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import okio.Okio
 import org.joda.time.DateTime
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Parcelize
@@ -32,7 +37,7 @@ data class Schedule @JvmOverloads constructor(
     @TypeConverters(DateTimeConverter::class)
     var endTime: LocalTime? = null,
     var subject: String? = null
-) : Parcelable {
+) : Parcelable, Streamable {
 
     fun isToday(): Boolean {
         getDaysAsList().forEach {
@@ -116,6 +121,26 @@ data class Schedule @JvmOverloads constructor(
         return days
     }
 
+    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Schedule::class.java)
+
+    override fun writeToFile(destination: File, name: String): File {
+        return File(destination, name).apply {
+            Okio.buffer(Okio.sink(this)).use {
+                toJson()?.also { json -> it.write(json.toByteArray()) }
+            }
+        }
+    }
+
+    override fun parseInputStream(inputStream: InputStream) {
+        JsonDataStreamer.decodeOnceFromJson(inputStream, Schedule::class.java)?.also {
+            scheduleID = it.scheduleID
+            daysOfWeek = it.daysOfWeek
+            startTime = it.startTime
+            endTime = it.endTime
+            subject = it.subject
+        }
+    }
+
     companion object {
         const val BIT_VALUE_SUNDAY = 1
         const val BIT_VALUE_MONDAY = 2
@@ -124,6 +149,16 @@ data class Schedule @JvmOverloads constructor(
         const val BIT_VALUE_THURSDAY = 16
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
+
+        fun writeToFile(items: List<Schedule>, destination: File, name: String): File {
+            return File(destination, name).apply {
+                Okio.buffer(Okio.sink(this)).use {
+                    JsonDataStreamer.encodeToJson(items, Schedule::class.java)?.also { json ->
+                        it.write(json.toByteArray())
+                    }
+                }
+            }
+        }
 
         fun getNextWeekDay(day: Int, time: LocalTime?): DateTime {
             var currentDate = DateTime.now().withTimeAtStartOfDay()

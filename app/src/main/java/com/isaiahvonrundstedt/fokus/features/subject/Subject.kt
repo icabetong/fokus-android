@@ -10,9 +10,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import okio.Okio
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Parcelize
@@ -26,7 +31,7 @@ data class Subject @JvmOverloads constructor(
     var description: String? = null,
     @TypeConverters(ColorConverter::class)
     var tag: Tag = Tag.SKY
-) : Parcelable {
+) : Parcelable, Streamable {
 
     // Used for the color tag of the subject
     enum class Tag(val color: Int) {
@@ -81,6 +86,34 @@ data class Subject @JvmOverloads constructor(
             it.mutate()
             it.colorFilter = BlendModeColorFilterCompat
                 .createBlendModeColorFilterCompat(tag.color, BlendModeCompat.SRC_ATOP)
+        }
+    }
+
+    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Subject::class.java)
+
+    override fun writeToFile(destination: File, name: String): File {
+        return File(destination, name).apply {
+            Okio.buffer(Okio.sink(this)).use {
+                toJson()?.also { json -> it.write(json.toByteArray()) }
+            }
+        }
+    }
+
+    override fun parseInputStream(inputStream: InputStream) {
+        JsonDataStreamer.decodeOnceFromJson(inputStream, Subject::class.java)?.also {
+            subjectID = it.subjectID
+            code = it.code
+            description = it.description
+            tag = it.tag
+        }
+    }
+
+    companion object {
+
+        fun fromInputStream(inputStream: InputStream): Subject {
+            return Subject().apply {
+                this.parseInputStream(inputStream)
+            }
         }
     }
 

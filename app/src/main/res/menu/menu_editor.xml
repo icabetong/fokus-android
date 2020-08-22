@@ -3,8 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_save"
-        android:title="@string/menu_save"
+        android:id="@+id/action_share"
+        android:title="@string/menu_share"
+        android:icon="@drawable/ic_hero_share"
+        app:iconTint="@color/color_on_surface"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_import"
+        android:title="@string/menu_import"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/menu_export"
+        app:showAsAction="never"/>
 
 </menu>

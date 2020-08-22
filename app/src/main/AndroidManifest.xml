@@ -53,6 +53,10 @@
             android:exported="false"/>
         <service android:name=".components.service.BackupRestoreService"
             android:exported="false"/>
+        <service android:name=".components.service.FileImporterService"
+            android:exported="false"/>
+        <service android:name=".components.service.DataExporterService"
+            android:exported="false"/>
         <service android:name=".components.service.DataImporterService"
             android:exported="false"/>
         <service android:name=".features.widget.task.TaskWidgetRemoteService"

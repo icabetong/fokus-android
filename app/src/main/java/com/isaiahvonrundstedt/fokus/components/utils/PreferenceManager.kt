@@ -74,9 +74,6 @@ class PreferenceManager(private val context: Context?) {
     val subjectReminder: Boolean
         get() = sharedPreference.getBoolean(R.string.key_subject_reminder, true)
 
-    val noImport: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_no_import, false)
-
     val reminderFrequency: String
         get() = sharedPreference.getString(R.string.key_reminder_frequency,
             DURATION_EVERYDAY)

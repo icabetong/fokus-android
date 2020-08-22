@@ -48,15 +48,19 @@ abstract class BaseService: Service() {
         }.build()
     }
 
-    protected fun terminateService(status: String? = null, uri: Uri? = null) {
+    protected fun terminateService(status: String? = null, data: String? = null) {
         if (status != null)
-            LocalBroadcastManager.getInstance(this)
-                .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
-                    putExtra(EXTRA_BROADCAST_STATUS, status)
-                    if (uri != null)
-                        putExtra(EXTRA_BROADCAST_DATA, uri)
-                })
+            sendLocalBroadcast(status, data)
         stopSelf()
+    }
+
+    protected fun sendLocalBroadcast(status: String, data: String? = null) {
+        LocalBroadcastManager.getInstance(this)
+            .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
+                putExtra(EXTRA_BROADCAST_STATUS, status)
+                if (data != null)
+                    putExtra(EXTRA_BROADCAST_DATA, data)
+            })
     }
 
     protected val manager by lazy {

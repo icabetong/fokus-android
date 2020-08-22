@@ -13,6 +13,9 @@
     <string name="activity_open_source_licenses">Licenze Open Source</string>
     <string name="activity_about">Informazioni</string>
 
+    <string name="menu_share">Condividi</string>
+    <string name="menu_import">Importazione</string>
+    <string name="menu_export">Esportazione</string>
     <string name="menu_clear_items">Cancella gli articoli</string>
     <string name="menu_save">@string/button_save</string>
     <string name="menu_delete">@string/button_delete</string>
@@ -70,6 +73,8 @@
     <string name="dialog_confirm_deletion_summary">Una volta che questo elemento è stato eliminato, non può essere recuperato.</string>
     <string name="dialog_schedule_details">Dettagli del programma</string>
     <string name="dialog_discard_changes">Cambiamenti di scarto?</string>
+    <string name="dialog_select_file_import">Selezionare il file da importare</string>
+    <string name="dialog_send_to">Inviare a</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>
@@ -112,9 +117,12 @@
     <string name="feedback_restore_corrupted">Il file di backup è corrotto o illeggibile</string>
     <string name="feedback_backup_empty">Non ci sono elementi di backup</string>
     <string name="feedback_backup_failed">Processo di backup incontrato un errore</string>
-    <string name="feedback_import_ongoing">Importazione di un allegato</string>
+    <string name="feedback_import_ongoing">Importazione in corso</string>
     <string name="feedback_import_completed">Importazione completata</string>
     <string name="feedback_import_failed">Importazione fallita</string>
+    <string name="feedback_export_ongoing">Esportazione in corso</string>
+    <string name="feedback_export_completed">Esportazione completata</string>
+    <string name="feedback_export_failed">Esportazione fallita</string>
 
     <string name="settings_group_interface">Interfaccia</string>
     <string name="settings_group_sound">Suono</string>
@@ -161,8 +169,6 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">Nessun backup precedente</string>
     <string name="settings_restore">Ripristina</string>
-    <string name="settings_no_import_title">Non importare gli allegati</string>
-    <string name="settings_no_import_summary">Piuttosto che importare file nella cartella dell\'applicazione, collegarla per risparmiare spazio.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">A volte, la notifica potrebbe non scattare a causa dell\'aggressiva ottimizzazione della batteria da parte del produttore del telefono.</string>

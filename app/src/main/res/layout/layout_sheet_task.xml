@@ -54,7 +54,7 @@
         app:icon="@drawable/ic_hero_chevron_up_24"
         app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/Fokus.Widget.Button.Text"/>
+        style="@style/Fokus.Widget.Button.Text.Dialog"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/actionButton"

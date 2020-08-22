@@ -7,7 +7,7 @@ import android.os.IBinder
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.components.utils.ZipArchiveManager
+import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
@@ -52,7 +52,7 @@ class BackupRestoreService: BaseService() {
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
-            val archive = ZipArchiveManager.convertInputStream(this, archiveStream)
+            val archive = DataArchiver.parseInputStream(this, archiveStream)
             runBlocking {
 
                 val entries = mutableListOf<ZipEntry>()
@@ -176,8 +176,8 @@ class BackupRestoreService: BaseService() {
                 }
 
                 if (items.isNotEmpty())
-                    ZipArchiveManager.Create(this@BackupRestoreService)
-                        .fromSource(items)
+                    DataArchiver.Create(this@BackupRestoreService)
+                        .addSource(items)
                         .toDestination(destination)
                         .start()
                 else terminateService(BROADCAST_BACKUP_EMPTY)
@@ -230,7 +230,5 @@ class BackupRestoreService: BaseService() {
         const val BROADCAST_BACKUP_SUCCESS = "broadcast:backup:success"
         const val BROADCAST_BACKUP_FAILED = "broadcast:backup:failed"
         const val BROADCAST_BACKUP_EMPTY = "broadcast:backup:empty"
-
-        const val MIME_TYPE_ZIP = "application/zip"
     }
 }

@@ -1,30 +1,50 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.core.app.ShareCompat
+import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.widget.addTextChangedListener
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.snackbar.Snackbar
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
+import com.isaiahvonrundstedt.fokus.components.json.Metadata
+import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
+import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
+import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
+import kotlinx.android.synthetic.main.layout_editor_subject.actionButton
+import kotlinx.android.synthetic.main.layout_editor_subject.rootLayout
 import kotlinx.android.synthetic.main.layout_item_add.*
+import java.io.File
+import java.util.zip.ZipEntry
 
 class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
@@ -39,6 +59,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_editor_subject)
         setPersistentActionBar(toolbar)
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -61,43 +84,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         // The extras passed by the parent activity will
         // be shown to the fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
-            with(subject) {
-                codeTextInput.setText(code)
-                descriptionTextInput.setText(description)
-                tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
-                    ?.let { drawable -> tintDrawable(drawable) })
-                tagView.setText(tag.getNameResource())
-            }
-
-            tagView.setTextColorFromResource(R.color.color_primary_text)
-
+            onValueChanged()
             window.decorView.rootView.clearFocus()
         }
-    }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
-        if (t is Schedule) {
-            when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    ScheduleEditor(supportFragmentManager).show {
-                        arguments = bundleOf(
-                            Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
-                            Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
-                        )
-                        waitForResult {
-                            adapter.update(it)
-                            hasFieldChange = true
-                        }
-                    }
-                }
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    adapter.remove(t)
-                    hasFieldChange = true
-                    createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {
-                        setAction(R.string.button_undo) { adapter.insert(t) }
-                    }
-                }
-            }
+        var currentScrollPosition = 0
+        contentView.viewTreeObserver.addOnScrollChangedListener {
+            if (contentView.scrollY > currentScrollPosition) actionButton.hide()
+            else actionButton.show()
+            currentScrollPosition = contentView.scrollY
         }
     }
 
@@ -135,40 +130,162 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
+        actionButton.setOnClickListener {
+            if (codeTextInput.text.isNullOrEmpty()) {
+                createSnackbar(R.string.feedback_subject_empty_name, rootLayout)
+                codeTextInput.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (descriptionTextInput.text.isNullOrEmpty()) {
+                createSnackbar(R.string.feedback_subject_empty_description, rootLayout)
+                descriptionTextInput.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (adapter.itemCount == 0) {
+                createSnackbar(R.string.feedback_subject_no_schedule, rootLayout).show()
+                return@setOnClickListener
+            }
+
+            subject.code = codeTextInput.text.toString()
+            subject.description = descriptionTextInput.text.toString()
+
+            // Pass the intent to the parent activity
+            val data = Intent()
+            data.putExtra(EXTRA_SUBJECT, subject)
+            data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
+            setResult(Activity.RESULT_OK, data)
+            if (requestCode == REQUEST_CODE_UPDATE)
+                supportFinishAfterTransition()
+            else finish()
+        }
+    }
+
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
+        if (t is Schedule) {
+            when (action) {
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    ScheduleEditor(supportFragmentManager).show {
+                        arguments = bundleOf(
+                            Pair(ScheduleEditor.EXTRA_SUBJECT_ID, subject.subjectID),
+                            Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
+                        )
+                        waitForResult {
+                            adapter.update(it)
+                            hasFieldChange = true
+                        }
+                    }
+                }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    adapter.remove(t)
+                    hasFieldChange = true
+                    createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {
+                        setAction(R.string.button_undo) { adapter.insert(t) }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(receiver)
+    }
+
+    private var receiver = object: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                DataExporterService.BROADCAST_EXPORT_ONGOING -> {
+                    createSnackbar(R.string.feedback_export_ongoing, rootLayout,
+                        Snackbar.LENGTH_INDEFINITE)
+                }
+                DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
+                    createSnackbar(R.string.feedback_export_completed, rootLayout)
+
+                    if (intent.hasExtra(BaseService.EXTRA_BROADCAST_DATA)) {
+                        val path = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)
+
+                        val uri = FileProvider.getUriForFile(this@SubjectEditor,
+                            CoreApplication.PROVIDER_AUTHORITY, File(path!!))
+
+                        startActivity(ShareCompat.IntentBuilder.from(this@SubjectEditor)
+                            .addStream(uri)
+                            .setType(Streamable.MIME_TYPE_ZIP)
+                            .setChooserTitle(R.string.dialog_send_to)
+                            .intent)
+                    }
+                }
+                DataExporterService.BROADCAST_EXPORT_FAILED -> {
+                    createSnackbar(R.string.feedback_export_failed, rootLayout)
+                }
+                DataImporterService.BROADCAST_IMPORT_ONGOING -> {
+                    createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                }
+                DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
+                    createSnackbar(R.string.feedback_import_completed, rootLayout)
+
+                    intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                        this@SubjectEditor.subject = it.subject
+                        adapter.setItems(it.schedules)
+                        onValueChanged()
+                    }
+                }
+                DataImporterService.BROADCAST_IMPORT_FAILED -> {
+                    createSnackbar(R.string.feedback_import_failed, rootLayout)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode != Activity.RESULT_OK)
+            return
+
+        when (requestCode) {
+            REQUEST_CODE_IMPORT ->
+                startService(Intent(this, DataImporterService::class.java).apply {
+                    this.data = data?.data
+                    action = DataImporterService.ACTION_IMPORT_SUBJECT
+                })
+            REQUEST_CODE_EXPORT ->
+                startService(Intent(this, DataExporterService::class.java).apply {
+                    this.data = data?.data
+                    action = DataExporterService.ACTION_EXPORT_SUBJECT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, subject)
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                })
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_save -> {
+            R.id.action_share -> {
+                startService(Intent(this, DataExporterService::class.java).apply {
+                    action = DataExporterService.ACTION_EXPORT_SUBJECT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, subject)
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                })
+            }
+            R.id.action_import -> {
+                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = Streamable.MIME_TYPE_ZIP
+                }, getString(R.string.dialog_select_file_import))
 
-                if (codeTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(R.string.feedback_subject_empty_name, rootLayout)
-                    codeTextInput.requestFocus()
-                    return false
+                startActivityForResult(chooser, REQUEST_CODE_IMPORT)
+            }
+            R.id.action_export -> {
+                val fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
+
+                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, fileName)
+                    type = Streamable.MIME_TYPE_ZIP
                 }
-
-                if (descriptionTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(R.string.feedback_subject_empty_description, rootLayout)
-                    descriptionTextInput.requestFocus()
-                    return false
-                }
-
-                if (adapter.itemCount == 0) {
-                    createSnackbar(R.string.feedback_subject_no_schedule, rootLayout).show()
-                    return false
-                }
-
-                subject.code = codeTextInput.text.toString()
-                subject.description = descriptionTextInput.text.toString()
-
-                // Pass the intent to the parent activity
-                val data = Intent()
-                data.putExtra(EXTRA_SUBJECT, subject)
-                data.putExtra(EXTRA_SCHEDULE, adapter.itemList)
-                setResult(Activity.RESULT_OK, data)
-                if (requestCode == REQUEST_CODE_UPDATE)
-                    supportFinishAfterTransition()
-                else finish()
+                startActivityForResult(export, REQUEST_CODE_EXPORT)
             }
             else -> super.onOptionsItemSelected(item)
         }
@@ -205,6 +322,18 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         } else super.onBackPressed()
     }
 
+    override fun onValueChanged() {
+        with(subject) {
+            codeTextInput.setText(code)
+            descriptionTextInput.setText(description)
+            tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
+                ?.let { drawable -> tintDrawable(drawable) })
+            tagView.setText(tag.getNameResource())
+        }
+
+        tagView.setTextColorFromResource(R.color.color_primary_text)
+    }
+
     companion object {
         const val REQUEST_CODE_INSERT = 27
         const val REQUEST_CODE_UPDATE = 13
@@ -214,5 +343,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         const val TRANSITION_ID_CODE = "transition:subject:code:"
         const val TRANSITION_ID_DESCRIPTION = "transition:subject:description:"
+
+        private const val REQUEST_CODE_EXPORT = 32
+        private const val REQUEST_CODE_IMPORT = 95
     }
 }

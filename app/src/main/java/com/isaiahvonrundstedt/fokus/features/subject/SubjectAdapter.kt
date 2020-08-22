@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.delegates.SwipeDelegate
+import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class SubjectAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), SwipeDelegate {
+    : BaseListAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,

@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
@@ -78,6 +79,9 @@ class EventEditor : BaseEditor() {
 
     override fun onStart() {
         super.onStart()
+
+        eventNameTextInput.addTextChangedListener { hasFieldChange = true }
+        locationTextInput.addTextChangedListener { hasFieldChange = true }
 
         scheduleTextView.setOnClickListener { v ->
             MaterialDialog(this).show {
@@ -210,7 +214,8 @@ class EventEditor : BaseEditor() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                if (requestCode == REQUEST_CODE_INSERT && !eventNameTextInput.text.isNullOrEmpty()
+                    && event.schedule != null && !locationTextInput.text.isNullOrEmpty()) {
                     MaterialDialog(this).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)

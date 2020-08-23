@@ -386,7 +386,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                if (requestCode == REQUEST_CODE_INSERT && !taskNameTextInput.text.isNullOrEmpty()
+                    && task.hasDueDate()) {
                     MaterialDialog(this@TaskEditor).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)

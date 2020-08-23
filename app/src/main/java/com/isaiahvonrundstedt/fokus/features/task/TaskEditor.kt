@@ -24,17 +24,14 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.custom.ProgressDialog
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
-import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
-import com.isaiahvonrundstedt.fokus.components.json.Metadata
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
-import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
@@ -45,24 +42,11 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
-import kotlinx.android.synthetic.main.layout_editor_task.actionButton
-import kotlinx.android.synthetic.main.layout_editor_task.notesTextInput
-import kotlinx.android.synthetic.main.layout_editor_task.prioritySwitch
-import kotlinx.android.synthetic.main.layout_editor_task.removeButton
-import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
-import kotlinx.android.synthetic.main.layout_editor_task.subjectTextView
 import kotlinx.android.synthetic.main.layout_item_add.*
-import kotlinx.coroutines.*
-import org.apache.commons.io.FileUtils
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime.fromCalendarFields
-import java.io.BufferedInputStream
 import java.io.File
-import java.io.FileInputStream
-import java.lang.Exception
 import java.util.*
-import java.util.zip.ZipEntry
-import kotlin.coroutines.CoroutineContext
 
 class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
@@ -401,35 +385,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
+            R.id.action_share_options -> {
                 if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
-                    MaterialDialog(this).show {
+                    MaterialDialog(this@TaskEditor).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)
                         positiveButton(R.string.button_done) { dismiss() }
-                    }
-                    return false
-                }
-
-                startService(Intent(this, DataExporterService::class.java).apply {
-                    action = DataExporterService.ACTION_EXPORT_TASK
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
-                })
-            }
-            R.id.action_import -> {
-                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    type = Streamable.MIME_TYPE_ZIP
-                }, getString(R.string.dialog_select_file_import))
-
-                startActivityForResult(chooser, REQUEST_CODE_IMPORT)
-            }
-            R.id.action_export -> {
-                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
-                    MaterialDialog(this).show {
-                        title(R.string.feedback_unable_to_export_title)
-                        message(R.string.feedback_unable_to_export_message)
-                        positiveButton(R.string.button_dismiss) { dismiss() }
                     }
                     return false
                 }
@@ -440,11 +401,33 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     REQUEST_CODE_UPDATE -> fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
                 }
 
-                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    putExtra(Intent.EXTRA_TITLE, fileName)
-                    addCategory(Intent.CATEGORY_OPENABLE)
+                ShareOptionsBottomSheet(supportFragmentManager).show {
+                    waitForResult { id ->
+                        when (id) {
+                            R.id.action_export -> {
+                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                                    putExtra(Intent.EXTRA_TITLE, fileName)
+                                    addCategory(Intent.CATEGORY_OPENABLE)
+                                    type = Streamable.MIME_TYPE_ZIP
+                                }, REQUEST_CODE_EXPORT)
+                            }
+                            R.id.action_share -> {
+                                startService(Intent(context, DataExporterService::class.java).apply {
+                                    action = DataExporterService.ACTION_EXPORT_TASK
+                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
+                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+            R.id.action_import -> {
+                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     type = Streamable.MIME_TYPE_ZIP
-                }, REQUEST_CODE_EXPORT)
+                }, getString(R.string.dialog_select_file_import))
+
+                startActivityForResult(chooser, REQUEST_CODE_IMPORT)
             }
             else -> super.onOptionsItemSelected(item)
         }

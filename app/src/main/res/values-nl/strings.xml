@@ -17,10 +17,9 @@
 
     <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>
-    <string name="menu_export">Exporteer</string>
     <string name="menu_clear_items">Duidelijke items</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">Exporteren naar bestand</string>
+    <string name="menu_share_directly">Rechtstreeks delen</string>
 
     <string name="navigation_tasks">Taken</string>
     <string name="navigation_events">Evenementen</string>
@@ -78,6 +77,7 @@
     <string name="dialog_discard_changes">Veranderingen weggooien?</string>
     <string name="dialog_select_file_import">Selecteer bestand om te importeren</string>
     <string name="dialog_send_to">Stuur naar</string>
+    <string name="dialog_sharing_options">Deelmogelijkheden</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
@@ -128,8 +128,6 @@
     <string name="feedback_export_failed">De export is mislukt</string>
     <string name="feedback_unable_to_share_title">Niet te delen</string>
     <string name="feedback_unable_to_share_message">Er is geen geldige informatie die kan worden gedeeld</string>
-    <string name="feedback_unable_to_export_title">Niet in staat om te exporteren</string>
-    <string name="feedback_unable_to_export_message">Er zijn geen geldige gegevens die kunnen worden geëxporteerd</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>

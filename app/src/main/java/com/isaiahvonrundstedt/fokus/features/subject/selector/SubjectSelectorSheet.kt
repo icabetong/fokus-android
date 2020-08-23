@@ -14,7 +14,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
-import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.fragment_subject.recyclerView
 import kotlinx.android.synthetic.main.layout_sheet_subject.*
 

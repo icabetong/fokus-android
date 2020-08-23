@@ -17,10 +17,9 @@
 
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>
-    <string name="menu_export">Экспорт</string>
     <string name="menu_clear_items">Чистые предметы</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">Экспорт в файл</string>
+    <string name="menu_share_directly">Поделиться напрямую</string>
 
     <string name="navigation_tasks">Задачи</string>
     <string name="navigation_events">События</string>
@@ -78,6 +77,7 @@
     <string name="dialog_discard_changes">Отбрасывать изменения?</string>
     <string name="dialog_select_file_import">Выберите файл для импорта</string>
     <string name="dialog_send_to">Отправить</string>
+    <string name="dialog_sharing_options">Совместное использование опционов</string>
 
     <string name="field_subject_code">Предметный код</string>
     <string name="field_description">Описание</string>
@@ -128,8 +128,6 @@
     <string name="feedback_export_failed">Экспорт не состоялся</string>
     <string name="feedback_unable_to_share_title">Невозможно поделиться</string>
     <string name="feedback_unable_to_share_message">Нет никакой достоверной информации, которой можно было бы поделиться</string>
-    <string name="feedback_unable_to_export_title">Невыполнение обязательств по экспорту</string>
-    <string name="feedback_unable_to_export_message">Нет никакой действительной информации, которую можно экспортировать</string>
 
     <string name="settings_group_interface">Интерфейс</string>
     <string name="settings_group_sound">Звуковой</string>

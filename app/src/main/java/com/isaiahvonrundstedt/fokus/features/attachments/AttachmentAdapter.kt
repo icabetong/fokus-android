@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.io.File

@@ -15,10 +15,9 @@
 
     <string name="menu_share">Condividi</string>
     <string name="menu_import">Importazione</string>
-    <string name="menu_export">Esportazione</string>
     <string name="menu_clear_items">Cancella gli articoli</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">Esportazione su file</string>
+    <string name="menu_share_directly">Condividi direttamente</string>
 
     <string name="navigation_tasks">Compiti</string>
     <string name="navigation_events">Eventi</string>
@@ -76,6 +75,7 @@
     <string name="dialog_discard_changes">Cambiamenti di scarto?</string>
     <string name="dialog_select_file_import">Selezionare il file da importare</string>
     <string name="dialog_send_to">Inviare a</string>
+    <string name="dialog_sharing_options">Opzioni di condivisione</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>
@@ -126,8 +126,6 @@
     <string name="feedback_export_failed">Esportazione fallita</string>
     <string name="feedback_unable_to_share_title">Incapace di condividere</string>
     <string name="feedback_unable_to_share_message">Non ci sono informazioni valide che possono essere condivise</string>
-    <string name="feedback_unable_to_export_title">Impossibile esportare</string>
-    <string name="feedback_unable_to_export_message">Non ci sono informazioni valide che possono essere esportate</string>
 
     <string name="settings_group_interface">Interfaccia</string>
     <string name="settings_group_sound">Suono</string>

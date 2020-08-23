@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -16,22 +15,18 @@ import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
-import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
-import com.isaiahvonrundstedt.fokus.components.json.Metadata
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
-import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
@@ -41,10 +36,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_editor_subject.actionButton
+import kotlinx.android.synthetic.main.layout_editor_subject.contentView
 import kotlinx.android.synthetic.main.layout_editor_subject.rootLayout
 import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
-import java.util.zip.ZipEntry
 
 class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
@@ -112,7 +107,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
 
         tagView.setOnClickListener {
-            MaterialDialog(it.context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            MaterialDialog(this).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_select_color_tag)
                 colorChooser(colors!!, waitForPositiveButton = false) { _, color ->
@@ -263,7 +258,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
+            R.id.action_share_options -> {
                 if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange){
                     MaterialDialog(this).show {
                         title(R.string.feedback_unable_to_share_title)
@@ -273,11 +268,32 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                     return false
                 }
 
-                startService(Intent(this, DataExporterService::class.java).apply {
-                    action = DataExporterService.ACTION_EXPORT_SUBJECT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, subject)
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
-                })
+                var fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
+                when (requestCode) {
+                    REQUEST_CODE_INSERT -> fileName = codeTextInput.text.toString()
+                    REQUEST_CODE_UPDATE -> fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
+                }
+
+                ShareOptionsBottomSheet(supportFragmentManager).show {
+                    waitForResult { id ->
+                        when (id) {
+                            R.id.action_export -> {
+                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                                    addCategory(Intent.CATEGORY_OPENABLE)
+                                    putExtra(Intent.EXTRA_TITLE, fileName)
+                                    type = Streamable.MIME_TYPE_ZIP
+                                }, REQUEST_CODE_EXPORT)
+                            }
+                            R.id.action_share -> {
+                                startService(Intent(context, DataExporterService::class.java).apply {
+                                    action = DataExporterService.ACTION_EXPORT_SUBJECT
+                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, subject)
+                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                                })
+                            }
+                        }
+                    }
+                }
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -285,25 +301,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 }, getString(R.string.dialog_select_file_import))
 
                 startActivityForResult(chooser, REQUEST_CODE_IMPORT)
-            }
-            R.id.action_export -> {
-                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
-                    MaterialDialog(this).show {
-                        title(R.string.feedback_unable_to_export_title)
-                        message(R.string.feedback_unable_to_export_message)
-                        positiveButton(R.string.button_dismiss) { dismiss() }
-                    }
-                    return false
-                }
-
-                val fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
-
-                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    putExtra(Intent.EXTRA_TITLE, fileName)
-                    type = Streamable.MIME_TYPE_ZIP
-                }
-                startActivityForResult(export, REQUEST_CODE_EXPORT)
             }
             else -> super.onOptionsItemSelected(item)
         }

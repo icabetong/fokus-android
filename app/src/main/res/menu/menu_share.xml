@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/menu_export_to_file"
+        android:icon="@drawable/ic_hero_upload_24"
+        app:iconTint="@color/color_on_surface"/>
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/menu_share_directly"
+        android:icon="@drawable/ic_hero_share"
+        app:iconTint="@color/color_on_surface"/>
+
+</menu>

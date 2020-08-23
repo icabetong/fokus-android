@@ -17,10 +17,9 @@
 
     <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
-    <string name="menu_export">Exportieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">In Datei exportieren</string>
+    <string name="menu_share_directly">Direkt teilen</string>
 
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
@@ -78,6 +77,7 @@
     <string name="dialog_discard_changes">Änderungen verwerfen?</string>
     <string name="dialog_select_file_import">Zu importierende Datei auswählen</string>
     <string name="dialog_send_to">Senden an</string>
+    <string name="dialog_sharing_options">Optionen zur gemeinsamen Nutzung</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -128,8 +128,6 @@
     <string name="feedback_export_failed">Export fehlgeschlagen</string>
     <string name="feedback_unable_to_share_title">Unfähig zu teilen</string>
     <string name="feedback_unable_to_share_message">Es gibt keine gültigen Informationen, die weitergegeben werden können.</string>
-    <string name="feedback_unable_to_export_title">Export nicht möglich</string>
-    <string name="feedback_unable_to_export_message">Es gibt keine gültigen Informationen, die exportiert werden können.</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>

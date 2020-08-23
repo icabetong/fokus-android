@@ -3,10 +3,8 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

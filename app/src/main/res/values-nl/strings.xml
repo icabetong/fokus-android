@@ -45,6 +45,7 @@
     <string name="button_delete">Verwijder</string>
     <string name="button_cancel">Annuleer</string>
     <string name="button_discard">Gooi  weg</string>
+    <string name="button_dismiss">Ontslag</string>
     <string name="button_learn_more">Meer informatie</string>
 
     <string name="empty_view_no_subjects_title">Geen toegevoegde onderwerpen</string>
@@ -125,6 +126,10 @@
     <string name="feedback_export_ongoing">Export in uitvoering</string>
     <string name="feedback_export_completed">Uitvoer voltooid</string>
     <string name="feedback_export_failed">De export is mislukt</string>
+    <string name="feedback_unable_to_share_title">Niet te delen</string>
+    <string name="feedback_unable_to_share_message">Er is geen geldige informatie die kan worden gedeeld</string>
+    <string name="feedback_unable_to_export_title">Niet in staat om te exporteren</string>
+    <string name="feedback_unable_to_export_message">Er zijn geen geldige gegevens die kunnen worden geëxporteerd</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>

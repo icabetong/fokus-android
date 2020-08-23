@@ -43,6 +43,7 @@
     <string name="button_delete">Cancellare</string>
     <string name="button_cancel">Annulla</string>
     <string name="button_discard">Scartare</string>
+    <string name="button_dismiss">Licenziare</string>
     <string name="button_learn_more">Per saperne di più</string>
 
     <string name="empty_view_no_subjects_title">Nessun soggetto aggiunto</string>
@@ -123,6 +124,10 @@
     <string name="feedback_export_ongoing">Esportazione in corso</string>
     <string name="feedback_export_completed">Esportazione completata</string>
     <string name="feedback_export_failed">Esportazione fallita</string>
+    <string name="feedback_unable_to_share_title">Incapace di condividere</string>
+    <string name="feedback_unable_to_share_message">Non ci sono informazioni valide che possono essere condivise</string>
+    <string name="feedback_unable_to_export_title">Impossibile esportare</string>
+    <string name="feedback_unable_to_export_message">Non ci sono informazioni valide che possono essere esportate</string>
 
     <string name="settings_group_interface">Interfaccia</string>
     <string name="settings_group_sound">Suono</string>

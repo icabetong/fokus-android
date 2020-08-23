@@ -44,6 +44,7 @@
     <string name="button_delete">Skreślić</string>
     <string name="button_cancel">Anuluj</string>
     <string name="button_discard">Odrzuć</string>
+    <string name="button_dismiss">Oddalić</string>
     <string name="button_learn_more">Dowiedz się więcej</string>
 
     <string name="empty_view_no_subjects_title">Brak tematów Dodano</string>
@@ -124,6 +125,10 @@
     <string name="feedback_export_ongoing">Eksport w toku</string>
     <string name="feedback_export_completed">Eksport zakończony</string>
     <string name="feedback_export_failed">Eksport nie powiódł się</string>
+    <string name="feedback_unable_to_share_title">Nie można udostępniać</string>
+    <string name="feedback_unable_to_share_message">Nie ma ważnych informacji, którymi można by się dzielić</string>
+    <string name="feedback_unable_to_export_title">Nie można eksportować</string>
+    <string name="feedback_unable_to_export_message">Nie ma ważnych informacji, które mogą być eksportowane</string>
 
     <string name="settings_group_interface">Interfejs</string>
     <string name="settings_group_sound">Dźwięk</string>

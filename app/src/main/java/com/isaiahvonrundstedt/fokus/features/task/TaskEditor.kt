@@ -402,6 +402,15 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
+                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                    MaterialDialog(this).show {
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
+
                 startService(Intent(this, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_TASK
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
@@ -416,6 +425,15 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 startActivityForResult(chooser, REQUEST_CODE_IMPORT)
             }
             R.id.action_export -> {
+                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                    MaterialDialog(this).show {
+                        title(R.string.feedback_unable_to_export_title)
+                        message(R.string.feedback_unable_to_export_message)
+                        positiveButton(R.string.button_dismiss) { dismiss() }
+                    }
+                    return false
+                }
+
                 var fileName: String = Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
                     REQUEST_CODE_INSERT -> fileName = taskNameTextInput.text.toString()

@@ -45,6 +45,7 @@
     <string name="button_delete">Löschen</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_discard">Verwerfen</string>
+    <string name="button_dismiss">Entlassen</string>
     <string name="button_learn_more">Weitere Informationen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
@@ -125,6 +126,10 @@
     <string name="feedback_export_ongoing">Export im Gange</string>
     <string name="feedback_export_completed">Export abgeschlossen</string>
     <string name="feedback_export_failed">Export fehlgeschlagen</string>
+    <string name="feedback_unable_to_share_title">Unfähig zu teilen</string>
+    <string name="feedback_unable_to_share_message">Es gibt keine gültigen Informationen, die weitergegeben werden können.</string>
+    <string name="feedback_unable_to_export_title">Export nicht möglich</string>
+    <string name="feedback_unable_to_export_message">Es gibt keine gültigen Informationen, die exportiert werden können.</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>

@@ -45,6 +45,7 @@
     <string name="button_delete">Удалить</string>
     <string name="button_cancel">Отменить</string>
     <string name="button_discard">Бросить</string>
+    <string name="button_dismiss">Свободен</string>
     <string name="button_learn_more">Узнать больше</string>
 
     <string name="empty_view_no_subjects_title">Не добавлены Субъекты</string>
@@ -125,6 +126,10 @@
     <string name="feedback_export_ongoing">Экспорт продолжается</string>
     <string name="feedback_export_completed">Экспорт завершен</string>
     <string name="feedback_export_failed">Экспорт не состоялся</string>
+    <string name="feedback_unable_to_share_title">Невозможно поделиться</string>
+    <string name="feedback_unable_to_share_message">Нет никакой достоверной информации, которой можно было бы поделиться</string>
+    <string name="feedback_unable_to_export_title">Невыполнение обязательств по экспорту</string>
+    <string name="feedback_unable_to_export_message">Нет никакой действительной информации, которую можно экспортировать</string>
 
     <string name="settings_group_interface">Интерфейс</string>
     <string name="settings_group_sound">Звуковой</string>

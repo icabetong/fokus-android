@@ -214,6 +214,15 @@ class EventEditor : BaseEditor() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
+                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                    MaterialDialog(this).show {
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_dismiss) { dismiss() }
+                    }
+                    return false
+                }
+
                 startService(Intent(this, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_EVENT
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, event)
@@ -227,6 +236,15 @@ class EventEditor : BaseEditor() {
                 startActivityForResult(chooser, REQUEST_CODE_IMPORT)
             }
             R.id.action_export -> {
+                if (requestCode == REQUEST_CODE_INSERT && !hasFieldChange) {
+                    MaterialDialog(this).show {
+                        title(R.string.feedback_unable_to_export_title)
+                        message(R.string.feedback_unable_to_export_message)
+                        positiveButton(R.string.button_dismiss) { dismiss() }
+                    }
+                    return false
+                }
+
                 val fileName = event.name ?: Streamable.ARCHIVE_NAME_GENERIC
 
                 val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {

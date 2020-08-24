@@ -64,10 +64,11 @@
     <string name="days_of_week_item_friday">пятница</string>
     <string name="days_of_week_item_saturday">суббота</string>
 
-    <string name="dialog_select_start_time">Выберите время начала</string>
-    <string name="dialog_select_end_time">Выберите время окончания</string>
-    <string name="dialog_select_color_tag">Выберите цветной тег</string>
-    <string name="dialog_select_subject">Выберите Предмет</string>
+    <string name="dialog_assign_subject">Назначить Предмет</string>
+    <string name="dialog_create_task">Создать задачу</string>
+    <string name="dialog_pick_start_time">Выберите время начала</string>
+    <string name="dialog_pick_end_time">Выберите время окончания</string>
+    <string name="dialog_pick_color_tag">Выберите цветной тег</string>
     <string name="dialog_select_notification_interval">Выберите интервал уведомления</string>
     <string name="dialog_choose_theme">Выберите тему</string>
     <string name="dialog_choose_backup">Выберите резервный файл</string>

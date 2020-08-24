@@ -4,14 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_padding">
+    android:padding="@dimen/bottom_sheet_padding">
+
+    <TextView
+        android:id="@+id/menuTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_create_task"
+        android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="@string/field_task_name"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuTitleView"
         style="@style/Fokus.Widget.TextInput.Layout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -65,6 +75,6 @@
         app:icon="@drawable/ic_hero_check_24"
         app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Fokus.Widget.Button.Outlined"/>
+        style="@style/Fokus.Widget.Button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

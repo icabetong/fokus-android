@@ -63,10 +63,11 @@
     <string name="days_of_week_item_friday">Piątek</string>
     <string name="days_of_week_item_saturday">Sobota</string>
 
-    <string name="dialog_select_start_time">Wybierz Czas rozpoczęcia</string>
-    <string name="dialog_select_end_time">Wybierz czas końcowy</string>
-    <string name="dialog_select_color_tag">Wybierz Kolorowy znacznik</string>
-    <string name="dialog_select_subject">Wybierz temat</string>
+    <string name="dialog_assign_subject">Przydzielić Podmiot</string>
+    <string name="dialog_create_task">Tworzenie Zadania</string>
+    <string name="dialog_pick_start_time">Wybierz czas rozpoczęcia</string>
+    <string name="dialog_pick_end_time">Wybierz czas końcowy</string>
+    <string name="dialog_pick_color_tag">Wybierz kolorowy znacznik</string>
     <string name="dialog_select_notification_interval">Wybierz Interwał powiadamiania</string>
     <string name="dialog_choose_theme">Wybierz temat</string>
     <string name="dialog_choose_backup">Wybierz plik kopii zapasowej</string>

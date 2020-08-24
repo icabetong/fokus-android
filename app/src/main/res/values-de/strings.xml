@@ -64,10 +64,11 @@
     <string name="days_of_week_item_friday">Freitag</string>
     <string name="days_of_week_item_saturday">Samstag</string>
 
-    <string name="dialog_select_start_time">Startzeit auswählen</string>
-    <string name="dialog_select_end_time">Endzeit auswählen</string>
-    <string name="dialog_select_color_tag">Farb-Tag auswählen</string>
-    <string name="dialog_select_subject">Betreff auswählen</string>
+    <string name="dialog_assign_subject">Betreff zuweisen</string>
+    <string name="dialog_create_task">Aufgabe erstellen</string>
+    <string name="dialog_pick_start_time">Wählen Sie eine Startzeit</string>
+    <string name="dialog_pick_end_time">Wählen Sie eine Endzeit</string>
+    <string name="dialog_pick_color_tag">Wählen Sie eine Farbmarkierung aus</string>
     <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
     <string name="dialog_choose_theme">Thema wählen</string>
     <string name="dialog_choose_backup">Wählen Sie eine Sicherungsdatei</string>

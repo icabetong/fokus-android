@@ -64,10 +64,11 @@
     <string name="days_of_week_item_friday">Friday</string>
     <string name="days_of_week_item_saturday">Saturday</string>
 
-    <string name="dialog_select_start_time">Select Start Time</string>
-    <string name="dialog_select_end_time">Select End Time</string>
-    <string name="dialog_select_color_tag">Select color tag</string>
-    <string name="dialog_select_subject">Select subject</string>
+    <string name="dialog_assign_subject">Assign Subject</string>
+    <string name="dialog_create_task">Create Task</string>
+    <string name="dialog_pick_start_time">Pick a Start Time</string>
+    <string name="dialog_pick_end_time">Pick an End Time</string>
+    <string name="dialog_pick_color_tag">Pick a color tag</string>
     <string name="dialog_select_notification_interval">Select notification interval</string>
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_choose_backup">Choose a backup file</string>

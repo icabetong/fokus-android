@@ -109,7 +109,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         tagView.setOnClickListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@SubjectEditor)
-                title(R.string.dialog_select_color_tag)
+                title(R.string.dialog_pick_color_tag)
                 colorChooser(colors!!, waitForPositiveButton = false) { _, color ->
                     subject.tag = Subject.Tag.convertColorToTag(
                         color)!!

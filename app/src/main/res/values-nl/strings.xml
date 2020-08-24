@@ -64,10 +64,11 @@
     <string name="days_of_week_item_friday">Vrijdag</string>
     <string name="days_of_week_item_saturday">Zaterdag</string>
 
-    <string name="dialog_select_start_time">Selecteer Begintijd</string>
-    <string name="dialog_select_end_time">Selecteer Eindtijd</string>
-    <string name="dialog_select_color_tag">Selecteer Kleurmarkering</string>
-    <string name="dialog_select_subject">Select Onderwerp</string>
+    <string name="dialog_assign_subject">Onderwerp Toewijzen</string>
+    <string name="dialog_create_task">Taak Aanmaken</string>
+    <string name="dialog_pick_start_time">Kies een starttijd</string>
+    <string name="dialog_pick_end_time">Kies een eindtijd</string>
+    <string name="dialog_pick_color_tag">Kies een kleurmarkering</string>
     <string name="dialog_select_notification_interval">Selecteer Notificatie-interval</string>
     <string name="dialog_choose_theme">Kies Thema</string>
     <string name="dialog_choose_backup">Kies een back-upbestand</string>

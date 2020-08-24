@@ -8,6 +8,7 @@
     android:layout_gravity="center_horizontal"
     android:text="@string/button_add"
     app:icon="@drawable/ic_hero_plus_24"
+    app:iconGravity="textStart"
     style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
 

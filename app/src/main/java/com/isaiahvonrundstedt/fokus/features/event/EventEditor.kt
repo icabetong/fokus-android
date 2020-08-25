@@ -214,20 +214,30 @@ class EventEditor : BaseEditor() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                if (requestCode == REQUEST_CODE_INSERT && !eventNameTextInput.text.isNullOrEmpty()
-                    && event.schedule != null && !locationTextInput.text.isNullOrEmpty()) {
-                    MaterialDialog(this).show {
-                        title(R.string.feedback_unable_to_share_title)
-                        message(R.string.feedback_unable_to_share_message)
-                        positiveButton(R.string.button_dismiss) { dismiss() }
-                    }
-                    return false
-                }
 
                 var fileName = event.name ?: Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
-                    REQUEST_CODE_INSERT -> fileName = eventNameTextInput.text.toString()
-                    REQUEST_CODE_UPDATE -> fileName = event.name ?: Streamable.ARCHIVE_NAME_GENERIC
+                    REQUEST_CODE_INSERT -> {
+                        if (eventNameTextInput.text.isNullOrEmpty() || event.schedule == null ||
+                                locationTextInput.text.isNullOrEmpty()) {
+                            MaterialDialog(this).show {
+                                title(R.string.feedback_unable_to_share_title)
+                                message(R.string.feedback_unable_to_share_message)
+                                positiveButton(R.string.button_dismiss) { dismiss() }
+                            }
+                            return false
+                        }
+
+                        fileName = eventNameTextInput.text.toString()
+                    }
+                    REQUEST_CODE_UPDATE -> {
+                        fileName = event.name ?: Streamable.ARCHIVE_NAME_GENERIC
+
+                        if (!eventNameTextInput.text.isNullOrEmpty())
+                            event.name = eventNameTextInput.text.toString()
+                        if (!locationTextInput.text.isNullOrEmpty())
+                            event.location = locationTextInput.text.toString()
+                    }
                 }
 
                 ShareOptionsBottomSheet(supportFragmentManager).show {

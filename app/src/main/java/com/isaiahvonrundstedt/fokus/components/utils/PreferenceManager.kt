@@ -40,7 +40,7 @@ class PreferenceManager(private val context: Context?) {
 
     var previousBackupDate: DateTime?
         get() = DateTimeConverter.toDateTime(
-            sharedPreference.getString(context?.getString(R.string.key_backup_restore), null))
+            sharedPreference.getString(context?.getString(R.string.key_backup), null))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_backup,

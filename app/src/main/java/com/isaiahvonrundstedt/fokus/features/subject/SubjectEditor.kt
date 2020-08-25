@@ -259,20 +259,29 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                if (requestCode == REQUEST_CODE_INSERT && !codeTextInput.text.isNullOrEmpty()
-                    && descriptionTextInput.text.isNullOrEmpty() && adapter.itemCount > 0){
-                    MaterialDialog(this).show {
-                        title(R.string.feedback_unable_to_share_title)
-                        message(R.string.feedback_unable_to_share_message)
-                        positiveButton(R.string.button_dismiss) { dismiss() }
-                    }
-                    return false
-                }
 
                 var fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
-                    REQUEST_CODE_INSERT -> fileName = codeTextInput.text.toString()
-                    REQUEST_CODE_UPDATE -> fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
+                    REQUEST_CODE_INSERT -> {
+                        if (codeTextInput.text.isNullOrEmpty() || descriptionTextInput.text.isNullOrEmpty()
+                            || adapter.itemCount < 1) {
+                            MaterialDialog(this).show {
+                                title(R.string.feedback_unable_to_share_title)
+                                message(R.string.feedback_unable_to_share_message)
+                                positiveButton(R.string.button_dismiss) { dismiss() }
+                            }
+                            return false
+                        }
+                        fileName = codeTextInput.text.toString()
+                    }
+                    REQUEST_CODE_UPDATE -> {
+                        fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
+
+                        if (!codeTextInput.text.isNullOrEmpty())
+                            subject.code = codeTextInput.text.toString()
+                        if (!descriptionTextInput.text.isNullOrEmpty())
+                            subject.description = descriptionTextInput.text.toString()
+                    }
                 }
 
                 ShareOptionsBottomSheet(supportFragmentManager).show {

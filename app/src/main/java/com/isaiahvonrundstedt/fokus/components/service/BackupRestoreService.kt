@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Environment
 import android.os.IBinder
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
@@ -20,11 +21,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okio.Okio
+import org.apache.commons.io.FileUtils
 import org.joda.time.DateTime
 import java.io.EOFException
 import java.io.File
 import java.io.InputStream
 import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 
 class BackupRestoreService: BaseService() {
 
@@ -53,31 +56,18 @@ class BackupRestoreService: BaseService() {
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
             val archive = DataArchiver.parseInputStream(this, archiveStream)
-            runBlocking {
 
-                val entries = mutableListOf<ZipEntry>()
-                val e = archive.entries()
-                while (e.hasMoreElements()) {
-                    val entry = e.nextElement() as ZipEntry
-                    when (entry.name) {
-                        FILE_BACKUP_NAME_SUBJECTS -> entries.add(0, entry)
-                        FILE_BACKUP_NAME_SCHEDULES -> entries.add(1, entry)
-                        FILE_BACKUP_NAME_TASKS -> entries.add(2, entry)
-                        FILE_BACKUP_NAME_ATTACHMENTS -> entries.add(3, entry)
-                        FILE_BACKUP_NAME_EVENTS -> entries.add(4, entry)
-                        FILE_BACKUP_NAME_LOGS -> entries.add(5, entry)
-                    }
+            for (entry: ZipEntry in archive.entries()) {
+                archive.getInputStream(entry)?.use {
+                    tryParse(archive, entry, it)
                 }
-                entries.forEach { entry ->
-                    archive.getInputStream(entry)?.use { tryParse(entry.name, it) }
-                }
-                entries.clear()
-
-                stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
-                manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
-                    createNotification(titleRes = R.string.notification_restore_success))
-                terminateService()
             }
+
+            stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
+            manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
+                createNotification(titleRes = R.string.notification_restore_success))
+            terminateService()
+
             archive.close()
         } catch (e: EOFException) {
             e.printStackTrace()
@@ -98,37 +88,41 @@ class BackupRestoreService: BaseService() {
         }
     }
 
-    private suspend fun tryParse(name: String, stream: InputStream) {
-        when (name) {
-            FILE_BACKUP_NAME_SUBJECTS -> {
-                JsonDataStreamer.decodeFromJson(stream, Subject::class.java)?.run {
-                    forEach { database?.subjects()?.insert(it) }
-                }
+    private fun tryParse(archive: ZipFile, entry: ZipEntry, stream: InputStream) {
+        if (entry.name == Streamable.FILE_NAME_SUBJECT) {
+            JsonDataStreamer.decodeFromJson(stream, Subject::class.java)?.run {
+                runBlocking { forEach { database?.subjects()?.insert(it) } }
             }
-            FILE_BACKUP_NAME_SCHEDULES -> {
-                JsonDataStreamer.decodeFromJson(stream, Schedule::class.java)?.run {
-                    forEach { database?.schedules()?.insert(it) }
-                }
+        } else if (entry.name == Streamable.FILE_NAME_SCHEDULE) {
+            JsonDataStreamer.decodeFromJson(stream, Schedule::class.java)?.run {
+                runBlocking { forEach { database?.schedules()?.insert(it) } }
             }
-            FILE_BACKUP_NAME_TASKS -> {
-                JsonDataStreamer.decodeFromJson(stream, Task::class.java)?.run {
-                    forEach { database?.tasks()?.insert(it) }
-                }
+        } else if (entry.name == Streamable.FILE_NAME_TASK) {
+            JsonDataStreamer.decodeFromJson(stream, Task::class.java)?.run {
+                runBlocking { forEach { database?.tasks()?.insert(it) } }
             }
-            FILE_BACKUP_NAME_ATTACHMENTS -> {
-                JsonDataStreamer.decodeFromJson(stream, Attachment::class.java)?.run {
-                    forEach { database?.attachments()?.insert(it) }
-                }
+        } else if (entry.name == Streamable.FILE_NAME_ATTACHMENT) {
+            JsonDataStreamer.decodeFromJson(stream, Attachment::class.java)?.run {
+                runBlocking { forEach { database?.attachments()?.insert(it) } }
             }
-            FILE_BACKUP_NAME_EVENTS -> {
-                JsonDataStreamer.decodeFromJson(stream, Event::class.java)?.run {
-                    forEach { database?.events()?.insert(it) }
-                }
+        } else if (entry.name == Streamable.FILE_NAME_EVENT) {
+            JsonDataStreamer.decodeFromJson(stream, Event::class.java)?.run {
+                runBlocking { forEach { database?.events()?.insert(it) } }
             }
-            FILE_BACKUP_NAME_LOGS -> {
-                JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
-                    forEach { database?.logs()?.insert(it) }
-                }
+        } else if (entry.name == Streamable.FILE_NAME_LOG) {
+            JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
+                runBlocking { forEach { database?.logs()?.insert(it) } }
+            }
+        } else if (entry.name.contains(FileImporterService.DIRECTORY_ATTACHMENTS)
+            && !entry.isDirectory) {
+
+            val targetDirectory = File(getExternalFilesDir(null),
+                FileImporterService.DIRECTORY_ATTACHMENTS)
+
+            val destination = File(targetDirectory, File(entry.name).name)
+
+            archive.getInputStream(entry)?.use { inputStream ->
+                FileUtils.copyToFile(inputStream, destination)
             }
         }
     }
@@ -147,48 +141,61 @@ class BackupRestoreService: BaseService() {
 
                 fetchJob = async { database?.subjects()?.fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Subject::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_SUBJECTS, it))
+                    items.add(createCache(Streamable.FILE_NAME_SUBJECT, it))
                 }
 
                 fetchJob = async { database?.schedules()?.fetch() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Schedule::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_SCHEDULES, it))
+                    items.add(createCache(Streamable.FILE_NAME_SCHEDULE, it))
                 }
 
                 fetchJob = async { database?.tasks()?.fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Task::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_TASKS, it))
+                    items.add(createCache(Streamable.FILE_NAME_TASK, it))
                 }
 
                 fetchJob = async { database?.attachments()?.fetch() }
-                JsonDataStreamer.encodeToJson(fetchJob.await(), Attachment::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_ATTACHMENTS, it))
+                val attachments: List<Attachment>? = fetchJob.await()
+                JsonDataStreamer.encodeToJson(attachments, Attachment::class.java)?.let {
+                    items.add(createCache(Streamable.FILE_NAME_ATTACHMENT, it))
                 }
+                val attachmentFolder = File(cacheDir,
+                    FileImporterService.DIRECTORY_ATTACHMENTS)
+                if (!attachmentFolder.exists()) attachmentFolder.mkdir()
+                attachments?.forEach {
+                    if (it.target != null)
+                        FileUtils.copyFileToDirectory(File(it.target!!),
+                            attachmentFolder)
+                }
+                items.add(attachmentFolder)
 
                 fetchJob = async { database?.events()?.fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Event::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_EVENTS, it))
+                    items.add(createCache(Streamable.FILE_NAME_EVENT, it))
                 }
 
                 fetchJob = async { database?.logs()?.fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Log::class.java)?.let {
-                    items.add(createCache(FILE_BACKUP_NAME_LOGS, it))
+                    items.add(createCache(Streamable.FILE_NAME_LOG, it))
                 }
 
-                if (items.isNotEmpty())
-                    DataArchiver.Create(this@BackupRestoreService)
-                        .addSource(items)
-                        .toDestination(destination)
-                        .start()
-                else terminateService(BROADCAST_BACKUP_EMPTY)
+                if (items.isEmpty()) {
+                    stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
+                    terminateService(BROADCAST_BACKUP_EMPTY)
+                }
+
+                DataArchiver.Create(this@BackupRestoreService)
+                    .addSource(items)
+                    .toDestination(destination)
+                    .start()
+
+                PreferenceManager(this@BackupRestoreService).previousBackupDate = DateTime.now()
 
                 stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
                 manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
                     createNotification(titleRes = R.string.notification_backup_success))
                 terminateService(BROADCAST_BACKUP_SUCCESS)
             }
-
-            PreferenceManager(this).previousBackupDate = DateTime.now()
         } catch (e: Exception) {
             e.printStackTrace()
 
@@ -209,13 +216,7 @@ class BackupRestoreService: BaseService() {
     }
 
     companion object {
-        const val FILE_BACKUP_NAME_ARCHIVE = "backup.zip"
-        const val FILE_BACKUP_NAME_SUBJECTS = "subjects.json"
-        const val FILE_BACKUP_NAME_SCHEDULES = "schedules.json"
-        const val FILE_BACKUP_NAME_TASKS = "tasks.json"
-        const val FILE_BACKUP_NAME_ATTACHMENTS = "attachments.json"
-        const val FILE_BACKUP_NAME_EVENTS = "events.json"
-        const val FILE_BACKUP_NAME_LOGS = "logs.json"
+        const val FILE_BACKUP_NAME = "backup.ffs"
 
         const val ACTION_BACKUP = "action:backup"
         const val ACTION_RESTORE = "action:restore"

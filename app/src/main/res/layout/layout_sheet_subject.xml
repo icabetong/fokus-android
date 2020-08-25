@@ -14,7 +14,6 @@
         android:layout_marginStart="@dimen/bottom_sheet_padding"
         android:layout_marginEnd="@dimen/bottom_sheet_padding"
         android:layout_marginBottom="16dp"
-        android:gravity="center"
         android:text="@string/dialog_assign_subject"
         android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
 

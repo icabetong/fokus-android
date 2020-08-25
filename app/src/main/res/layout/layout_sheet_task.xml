@@ -75,6 +75,6 @@
         app:icon="@drawable/ic_hero_check_24"
         app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Fokus.Widget.Button"/>
+        style="@style/Fokus.Widget.Button.Outlined"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

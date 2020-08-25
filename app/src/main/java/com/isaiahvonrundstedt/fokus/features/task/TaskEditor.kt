@@ -253,12 +253,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_export_completed, rootLayout)
 
-                        if (intent.hasExtra(BaseService.EXTRA_BROADCAST_DATA)) {
-                            android.util.Log.e("DEBUG", "has extra")
-                            val path = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)
-
-                            val uri = FileProvider.getUriForFile(this@TaskEditor,
-                                CoreApplication.PROVIDER_AUTHORITY, File(path!!))
+                        intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            val uri = CoreApplication.obtainUriForFile(this@TaskEditor, File(it))
 
                             startActivity(ShareCompat.IntentBuilder.from(this@TaskEditor)
                                 .addStream(uri)
@@ -386,20 +382,31 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                if (requestCode == REQUEST_CODE_INSERT && !taskNameTextInput.text.isNullOrEmpty()
-                    && task.hasDueDate()) {
-                    MaterialDialog(this@TaskEditor).show {
-                        title(R.string.feedback_unable_to_share_title)
-                        message(R.string.feedback_unable_to_share_message)
-                        positiveButton(R.string.button_done) { dismiss() }
-                    }
-                    return false
-                }
 
                 var fileName: String = Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
-                    REQUEST_CODE_INSERT -> fileName = taskNameTextInput.text.toString()
-                    REQUEST_CODE_UPDATE -> fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
+                    REQUEST_CODE_INSERT -> {
+                        if (taskNameTextInput.text.isNullOrEmpty() || !task.hasDueDate()) {
+                            MaterialDialog(this@TaskEditor).show {
+                                title(R.string.feedback_unable_to_share_title)
+                                message(R.string.feedback_unable_to_share_message)
+                                positiveButton(R.string.button_done) { dismiss() }
+                            }
+
+                            return false
+                        }
+
+                        fileName = taskNameTextInput.text.toString()
+                    }
+                    REQUEST_CODE_UPDATE -> {
+                        fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
+
+                        if (!taskNameTextInput.text.isNullOrEmpty())
+                            task.name = taskNameTextInput.text.toString()
+
+                        if (!notesTextInput.text.isNullOrEmpty())
+                            task.notes = notesTextInput.text.toString()
+                    }
                 }
 
                 ShareOptionsBottomSheet(supportFragmentManager).show {

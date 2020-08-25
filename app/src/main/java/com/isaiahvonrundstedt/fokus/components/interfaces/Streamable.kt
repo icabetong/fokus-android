@@ -18,9 +18,8 @@ interface Streamable {
         const val FILE_NAME_SUBJECT = "subject.json"
         const val FILE_NAME_SCHEDULE = "schedule.json"
         const val FILE_NAME_EVENT = "event.json"
+        const val FILE_NAME_LOG = "log.json"
 
         const val MIME_TYPE_ZIP = "application/zip"
-
-        const val BUFFER_SIZE = 4096
     }
 }

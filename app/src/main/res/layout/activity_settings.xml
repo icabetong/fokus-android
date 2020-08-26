@@ -9,13 +9,11 @@
     <include layout="@layout/layout_appbar"/>
 
     <fragment
-        android:id="@+id/navigationHostFragment"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/settings_graph"
-        app:defaultNavHost="true"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity$Companion$SettingsFragment"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="FragmentTagUsage" />
+        tools:ignore="FragmentTagUsage"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

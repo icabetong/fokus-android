@@ -29,19 +29,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:ellipsize="end"
+            android:lines="1"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/summaryView"
             app:layout_constraintStart_toEndOf="@id/iconView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            tools:text="COMSCI 2101"/>
+            tools:text="COMSCI 210"/>
 
         <TextView
             android:id="@+id/summaryView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:ellipsize="end"
             android:textAppearance="@style/Fokus.TextAppearance.List.Body"
             app:layout_constraintTop_toBottomOf="@id/titleView"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +60,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             android:textAppearance="@style/Fokus.TextAppearance.List.Meta"
             tools:text="h:mm"/>
 

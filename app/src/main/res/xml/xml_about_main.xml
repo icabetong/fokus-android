@@ -4,8 +4,7 @@
 
     <Preference
         app:key="@string/key_notices"
-        app:title="@string/settings_third_party_notices"
-        app:fragment="com.isaiahvonrundstedt.fokus.features.about.children.NoticesFragment"/>
+        app:title="@string/settings_third_party_notices" />
 
     <Preference
         app:key="@string/key_version"

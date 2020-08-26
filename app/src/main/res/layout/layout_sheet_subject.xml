@@ -10,11 +10,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/bottom_sheet_padding"
-        android:paddingStart="@dimen/bottom_sheet_padding"
-        android:paddingEnd="@dimen/bottom_sheet_padding"
+        android:layout_marginTop="@dimen/bottom_sheet_padding"
+        android:layout_marginStart="@dimen/bottom_sheet_padding"
+        android:layout_marginEnd="@dimen/bottom_sheet_padding"
         android:layout_marginBottom="16dp"
-        android:text="@string/dialog_select_subject"
+        android:text="@string/dialog_assign_subject"
         android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:srcCompat="@drawable/undraw_studying"/>
+                app:srcCompat="@drawable/undraw_researching"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -47,7 +47,6 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="@string/empty_view_no_subjects_title"
-                android:textColor="@color/color_theme_subjects"
                 android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
 
         </LinearLayout>

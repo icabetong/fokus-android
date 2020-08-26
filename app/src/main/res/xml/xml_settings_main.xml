@@ -24,25 +24,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:title="@string/settings_group_sound"
-        app:initialExpandedChildrenCount="1">
+        app:title="@string/settings_group_sound">
 
         <SwitchPreferenceCompat
             app:key="@string/key_sound"
             app:title="@string/settings_completion_sounds_title"
             app:summary="@string/settings_completion_sounds_summary"
             app:defaultValue="true"/>
-
-        <SwitchPreferenceCompat
-            app:key="@string/key_custom_sound"
-            app:title="@string/settings_custom_notification_sound_title"
-            app:summary="@string/settings_custom_notification_sound_summary"
-            app:defaultValue="false" />
-
-        <Preference
-            app:key="@string/key_custom_sound_uri"
-            app:title="@string/settings_select_sound"
-            app:dependency="@string/key_custom_sound"/>
 
     </PreferenceCategory>
 
@@ -120,14 +108,7 @@
 
         <Preference
             app:key="@string/key_backup_restore"
-            app:title="@string/settings_backup_and_restore"
-            app:fragment="com.isaiahvonrundstedt.features.settings.child.BackupRestorePreference"/>
-
-        <SwitchPreference
-            app:key="@string/key_no_import"
-            app:title="@string/settings_no_import_title"
-            app:summary="@string/settings_no_import_summary"
-            app:defaultValue="FALSE"/>
+            app:title="@string/settings_backup_and_restore" />
 
     </PreferenceCategory>
 

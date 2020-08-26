@@ -7,11 +7,11 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
@@ -33,7 +33,7 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dueDateTextView.setOnClickListener { v ->
+        dueDateChip.setOnClickListener { chip ->
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(this@TaskEditorSheet)
                 dateTimePicker(requireFutureDateTime = true,
@@ -41,9 +41,9 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
                     task.dueDate = LocalDateTime.fromCalendarFields(datetime).toDateTime()
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView) {
-                        v.text = task.formatDueDate(context)
-                        v.setTextColorFromResource(R.color.color_primary_text)
+                    if (chip is Chip) {
+                        chip.text = task.formatDueDate(context)
+                        chip.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
@@ -51,7 +51,6 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
 
         expandButton.setOnClickListener {
             taskNameTextInput.transitionName = TaskEditor.TRANSITION_ID_NAME
-            dueDateTextView.transitionName = TaskEditor.TRANSITION_ID_DUE
 
             task.name = taskNameTextInput.text.toString()
             val editor = Intent(context, TaskEditor::class.java)
@@ -60,8 +59,8 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
             if (task.hasDueDate())
                 editor.putExtra(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate))
 
-            val sharedViews = mapOf<String, View>(TaskEditor.TRANSITION_ID_NAME to taskNameTextInput,
-                TaskEditor.TRANSITION_ID_DUE to dueDateTextView).mapNotNull {
+            val sharedViews = mapOf<String, View>(TaskEditor.TRANSITION_ID_NAME
+                    to taskNameTextInput).mapNotNull {
                 Pair.create(it.value, it.key)
             }.toTypedArray()
 
@@ -82,11 +81,11 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
 
             if (!task.hasDueDate()) {
                 createToast(R.string.feedback_task_empty_due_date)
-                dueDateTextView.performClick()
+                dueDateChip.performClick()
                 return@setOnClickListener
             }
 
-            callback?.invoke(task)
+            receiver?.onReceive(task)
         }
     }
 

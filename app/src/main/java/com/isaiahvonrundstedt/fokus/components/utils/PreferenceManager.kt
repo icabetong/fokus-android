@@ -38,18 +38,9 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
-    var customSoundUri: Uri
-        get() = Uri.parse(sharedPreference.getString(R.string.key_custom_sound_uri, DEFAULT_SOUND))
-        set(value) {
-            sharedPreference.edit().run {
-                putString(R.string.key_custom_sound_uri, value.toString())
-                apply()
-            }
-        }
-
     var previousBackupDate: DateTime?
         get() = DateTimeConverter.toDateTime(
-            sharedPreference.getString(context?.getString(R.string.key_backup_restore), null))
+            sharedPreference.getString(context?.getString(R.string.key_backup), null))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_backup,
@@ -74,9 +65,6 @@ class PreferenceManager(private val context: Context?) {
     val sounds: Boolean
         get() = sharedPreference.getBoolean(R.string.key_sound, true)
 
-    val customSound: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_custom_sound, false)
-
     val taskReminder: Boolean
         get() = sharedPreference.getBoolean(R.string.key_task_reminder, true)
 
@@ -85,9 +73,6 @@ class PreferenceManager(private val context: Context?) {
 
     val subjectReminder: Boolean
         get() = sharedPreference.getBoolean(R.string.key_subject_reminder, true)
-
-    val noImport: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_no_import, false)
 
     val reminderFrequency: String
         get() = sharedPreference.getString(R.string.key_reminder_frequency,
@@ -126,9 +111,6 @@ class PreferenceManager(private val context: Context?) {
     }
 
     companion object {
-        val DEFAULT_SOUND_URI: Uri
-            get() = Uri.parse(DEFAULT_SOUND)
-
         const val DEFAULT_SOUND =
             "${ContentResolver.SCHEME_ANDROID_RESOURCE}://${BuildConfig.APPLICATION_ID}/${R.raw.fokus}"
 

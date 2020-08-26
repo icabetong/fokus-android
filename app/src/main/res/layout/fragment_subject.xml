@@ -12,37 +12,7 @@
         android:clipChildren="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <LinearLayout
-        android:id="@+id/emptyView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/activity_padding_medium">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/undraw_studying" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:text="@string/empty_view_no_subjects_title"
-            android:textColor="@color/color_theme_subjects"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/empty_view_no_subjects_summary"/>
-
-    </LinearLayout>
+    <include layout="@layout/layout_empty_subjects"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/actionButton"
@@ -50,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_hero_plus_24"
-        app:backgroundTint="@color/color_theme_subjects"/>
+        app:srcCompat="@drawable/ic_hero_plus_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,27 +18,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_constraintWidth_percent="0.25"
+            android:padding="@dimen/item_padding"
+            app:layout_constraintWidth_percent="0.3"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/dayView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:minLines="1"
-                android:textAppearance="@style/Fokus.TextAppearance.Body"
-                tools:text="2/23/2010"/>
+                android:layout_gravity="end"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+                tools:text="August 10"/>
 
             <TextView
                 android:id="@+id/timeView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:minLines="1"
+                android:layout_gravity="end"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Body"
                 tools:text="10:00AM"/>
 
@@ -49,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/item_padding"
             app:layout_constraintWidth_percent="0.75"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,29 +61,33 @@
                 android:id="@+id/nameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginBottom="@dimen/item_spacing_small"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/locationView"
-                tools:text="Feed the Cat"/>
+                tools:text="Academic Seminar"/>
 
             <TextView
                 android:id="@+id/locationView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Body"
                 app:layout_constraintTop_toBottomOf="@id/nameView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:text="San Jose City"/>
+                tools:text="CLSU Auditorium"/>
 
             <TextView
                 android:id="@+id/subjectNameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/item_spacing_large"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
-                android:drawableStart="@drawable/shape_color_holder_chip"
-                android:drawablePadding="16dp"
+                android:drawablePadding="@dimen/item_spacing_large"
+                app:drawableStartCompat="@drawable/shape_color_holder_chip"
                 tools:text="Intech 1100"/>
 
         </LinearLayout>

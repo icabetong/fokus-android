@@ -3,7 +3,7 @@ package com.isaiahvonrundstedt.fokus.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectResource
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
 @Dao
 interface SubjectDAO {
@@ -18,13 +18,13 @@ interface SubjectDAO {
     suspend fun update(subject: Subject)
 
     @Query("SELECT * FROM subjects")
-    suspend fun fetch(): List<SubjectResource>
+    suspend fun fetch(): List<SubjectPackage>
 
     @Query("SELECT * FROM subjects")
     suspend fun fetchCore(): List<Subject>
 
     @Transaction
     @Query("SELECT * FROM subjects")
-    fun fetchLiveData(): LiveData<List<SubjectResource>>
+    fun fetchLiveData(): LiveData<List<SubjectPackage>>
 
 }

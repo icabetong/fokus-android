@@ -8,16 +8,16 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.shared.adapters.NavigationAdapter
-import kotlinx.android.synthetic.main.layout_sheet_navigation.*
+import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
+import kotlinx.android.synthetic.main.layout_sheet_options.*
 import org.joda.time.LocalTime
 
 class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
-    NavigationAdapter.NavigationListener {
+    MenuAdapter.MenuItemListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_navigation, container, false)
+        return inflater.inflate(R.layout.layout_sheet_options, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,14 +33,14 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
                 else -> getString(R.string.greeting_default)
             }
 
-        val adapter = NavigationAdapter(activity, this)
+        val adapter = MenuAdapter(activity, this)
         adapter.setItems(R.menu.menu_main)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
     }
 
-    override fun onNavigate(id: Int) {
-        callback?.invoke(id)
+    override fun onItemSelected(id: Int) {
+        receiver?.onReceive(id)
         this.dismiss()
     }
 }

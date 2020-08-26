@@ -63,7 +63,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
         startTimeTextView.setOnClickListener {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
-                title(R.string.dialog_select_start_time)
+                title(R.string.dialog_pick_start_time)
                 timePicker(show24HoursView = false,
                     currentTime = schedule.startTime?.toDateTimeToday()?.toCalendar(Locale.getDefault())) { _, time ->
                     val startTime = LocalTime.fromCalendarFields(time)
@@ -89,7 +89,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
         endTimeTextView.setOnClickListener {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
-                title(R.string.dialog_select_end_time)
+                title(R.string.dialog_pick_end_time)
                 timePicker(show24HoursView = false,
                     currentTime = schedule.endTime?.toDateTimeToday()?.toCalendar(
                         Locale.getDefault())) { _, time ->
@@ -151,7 +151,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 return@setOnClickListener
             }
 
-            callback?.invoke(schedule)
+            receiver?.onReceive(schedule)
             this.dismiss()
         }
     }

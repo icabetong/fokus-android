@@ -107,7 +107,7 @@ class MainActivity : BaseActivity() {
         toolbar?.setNavigationIcon(R.drawable.ic_hero_menu_24)
         toolbar?.setNavigationOnClickListener {
             NavigationBottomSheet(supportFragmentManager).show {
-                result { id ->
+                waitForResult { id ->
                     when (id) {
                         R.id.action_history ->
                             startActivity(Intent(context, LogActivity::class.java))

@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:padding="@dimen/item_padding_small">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="4dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/widget_item_tag_padding_end"
+        android:layout_marginEnd="@dimen/item_spacing_medium"
         android:contentDescription="@null"
         android:src="@drawable/shape_color_holder_vertical"/>
 
@@ -25,6 +25,8 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
             android:textAppearance="@style/Fokus.TextAppearance.Widget.Item.Title"
             tools:text="Make Dinner"/>
 
@@ -33,6 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:lines="1"
+            android:ellipsize="end"
             android:textAppearance="@style/Fokus.TextAppearance.Widget.Item.Body"
             tools:text="7:30PM"/>
 

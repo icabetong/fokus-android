@@ -34,7 +34,6 @@
         <item name="materialButtonStyle">@style/Fokus.Widget.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Fokus.Widget.Button.Outlined</item>
         <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
-        <item name="drawerArrowStyle">@style/Fokus.Widget.ArrowToggle</item>
 
         <item name="textAppearanceBody1">@style/Fokus.TextAppearance.Body</item>
         <item name="textAppearanceBody2">@style/Fokus.TextAppearance.Body.Medium</item>
@@ -53,8 +52,8 @@
         <item name="colorSecondary">@color/color_primary</item>
         <item name="colorSurface">@color/color_surface</item>
         <item name="colorOnSurface">@color/color_on_surface</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text</item>
-        <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
     </style>
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -80,6 +79,7 @@
         <item name="android:background">@color/color_toolbar_background</item>
     </style>
     <style name="Fokus.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="navigationIcon">@drawable/ic_hero_arrow_left_24</item>
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
         <item name="maxButtonHeight">48dp</item>
@@ -92,6 +92,7 @@
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="srcCompat">@drawable/ic_hero_dots_vertical_24</item>
         <item name="tint">@color/color_on_surface</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
@@ -105,27 +106,24 @@
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
         <item name="iconTint">@color/color_on_primary</item>
-        <item name="iconGravity">textStart</item>
-        <item name="iconPadding">8dp</item>
+        <item name="iconGravity">end</item>
+        <item name="iconPadding">@dimen/button_icon_padding</item>
         <item name="cornerRadius">@dimen/surface_corner_radius</item>
         <item name="android:textColor">@color/color_on_primary</item>
     </style>
     <style name="Fokus.Widget.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="iconTint">@color/color_primary</item>
-        <item name="iconGravity">textStart</item>
-        <item name="iconPadding">8dp</item>
+        <item name="iconGravity">end</item>
+        <item name="iconPadding">@dimen/button_icon_padding</item>
         <item name="cornerRadius">@dimen/surface_corner_radius</item>
         <item name="android:textColor">@color/color_primary</item>
     </style>
-    <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+    <style name="Fokus.Widget.Button.Text" parent="Widget.MaterialComponents.Button.TextButton"/>
+    <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
     <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice"/>
-    <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
-        <item name="thumbTint">@color/selector_switch_thumb</item>
-        <item name="trackTint">@color/selector_switch_track</item>
-        <item name="switchPadding">0dp</item>
-    </style>
+    <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch"/>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>
     <style name="Fokus.Widget.TextInput.Layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
@@ -138,9 +136,6 @@
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
     </style>
     <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
-    <style name="Fokus.Widget.ArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/color_on_surface</item>
-    </style>
 
     <!-- TextAppearance -->
     <style name="Fokus.TextAppearance" parent="TextAppearance.AppCompat"/>
@@ -189,14 +184,16 @@
     </style>
     <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">?attr/colorPrimary</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body.Medium">
+    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance">
         <item name="android:textColor">@color/color_secondary_text</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="Fokus.TextAppearance.Status.Title" parent="Fokus.TextAppearance.Body.Medium">
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textSize">18sp</item>
     </style>
     <style name="Fokus.TextAppearance.BottomSheet.Title" parent="Fokus.TextAppearance">
@@ -213,7 +210,9 @@
     <style name="Fokus.TextAppearance.Widget.Item.Body" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
-    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.Body.Medium"/>
+    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->
     <color name="ic_launcher_background">#000051</color>

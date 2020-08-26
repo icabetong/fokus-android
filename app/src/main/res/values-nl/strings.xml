@@ -10,15 +10,16 @@
     <string name="activity_subjects">Uw onderwerpen</string>
     <string name="activity_logs">Meldingslogboeken</string>
     <string name="activity_settings">Instellingen</string>
+    <string name="activity_backup">Back-up en Herstel</string>
     <string name="activity_notices">Mededelingen van derden</string>
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
-    <string name="menu_export">Exporteer</string>
+    <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>
     <string name="menu_clear_items">Duidelijke items</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">Exporteren naar bestand</string>
+    <string name="menu_share_directly">Rechtstreeks delen</string>
 
     <string name="navigation_tasks">Taken</string>
     <string name="navigation_events">Evenementen</string>
@@ -43,6 +44,8 @@
     <string name="button_delete">Verwijder</string>
     <string name="button_cancel">Annuleer</string>
     <string name="button_discard">Gooi  weg</string>
+    <string name="button_dismiss">Ontslag</string>
+    <string name="button_learn_more">Meer informatie</string>
 
     <string name="empty_view_no_subjects_title">Geen toegevoegde onderwerpen</string>
     <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken, om er een toe te voegen tikt u op het add-icoontje</string>
@@ -61,10 +64,11 @@
     <string name="days_of_week_item_friday">Vrijdag</string>
     <string name="days_of_week_item_saturday">Zaterdag</string>
 
-    <string name="dialog_select_start_time">Selecteer Begintijd</string>
-    <string name="dialog_select_end_time">Selecteer Eindtijd</string>
-    <string name="dialog_select_color_tag">Selecteer Kleurmarkering</string>
-    <string name="dialog_select_subject">Select Onderwerp</string>
+    <string name="dialog_assign_subject">Onderwerp Toewijzen</string>
+    <string name="dialog_create_task">Taak Aanmaken</string>
+    <string name="dialog_pick_start_time">Kies een starttijd</string>
+    <string name="dialog_pick_end_time">Kies een eindtijd</string>
+    <string name="dialog_pick_color_tag">Kies een kleurmarkering</string>
     <string name="dialog_select_notification_interval">Selecteer Notificatie-interval</string>
     <string name="dialog_choose_theme">Kies Thema</string>
     <string name="dialog_choose_backup">Kies een back-upbestand</string>
@@ -72,6 +76,9 @@
     <string name="dialog_confirm_deletion_summary">Als dit item eenmaal is verwijderd, kan het niet meer worden gerecupereerd.</string>
     <string name="dialog_schedule_details">Details van de planning</string>
     <string name="dialog_discard_changes">Veranderingen weggooien?</string>
+    <string name="dialog_select_file_import">Selecteer bestand om te importeren</string>
+    <string name="dialog_send_to">Stuur naar</string>
+    <string name="dialog_sharing_options">Deelmogelijkheden</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
@@ -114,11 +121,14 @@
     <string name="feedback_restore_corrupted">Back-upbestand beschadigd of onleesbaar</string>
     <string name="feedback_backup_empty">Er zijn geen items om een back-up te maken</string>
     <string name="feedback_backup_failed">Back-up proces stuitte op een fout</string>
-    <string name="feedback_export_success">Succesvol exporteren</string>
-    <string name="feedback_export_failed">Exporteren Mislukt</string>
-    <string name="feedback_import_ongoing">Importeren van bijlage</string>
+    <string name="feedback_import_ongoing">Import in uitvoering</string>
     <string name="feedback_import_completed">Invoer voltooid</string>
     <string name="feedback_import_failed">De invoer is mislukt</string>
+    <string name="feedback_export_ongoing">Export in uitvoering</string>
+    <string name="feedback_export_completed">Uitvoer voltooid</string>
+    <string name="feedback_export_failed">De export is mislukt</string>
+    <string name="feedback_unable_to_share_title">Niet te delen</string>
+    <string name="feedback_unable_to_share_message">Er is geen geldige informatie die kan worden gedeeld</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Geluid</string>
@@ -131,14 +141,11 @@
     <string name="settings_theme_item_system">Systeem Standaard</string>
     <string name="settings_theme_item_dark">Donker</string>
     <string name="settings_theme_item_light">Licht</string>
-
     <string name="settings_confetti_title">Confetti</string>
     <string name="settings_confetti_summary">Toon confetti wanneer taken als voltooid zijn gemarkeerd</string>
+
     <string name="settings_completion_sounds_title">Voltooiing Geluiden</string>
     <string name="settings_completion_sounds_summary">Speel een geluid af wanneer u een taak als voltooid markeert</string>
-    <string name="settings_custom_notification_sound_title">Gebruik aangepast geluid</string>
-    <string name="settings_custom_notification_sound_summary">Override system notification sound; selecteer er één hieronder om uw eigen systeem te gebruiken</string>
-    <string name="settings_select_sound">Selecteer geluidsbestand</string>
 
     <string name="settings_reminder_frequency_title">Herinneringsfrequentie</string>
     <string name="settings_reminder_frequency_item_everyday">Dagelijks</string>
@@ -164,14 +171,12 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Meer instellingen</string>
 
-    <string name="settings_backup_and_restore">Back-up en Herstel</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Back-up</string>
     <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
     <string name="settings_restore">Herstel</string>
-    <string name="settings_no_import_title">Gebruik links voor bijlagen</string>
-    <string name="settings_no_import_summary">Gebruik in plaats van het importeren van bestanden naar de applicatiemap, een link om ruimte te besparen. (Alleen van toepassing op nieuwe bijlagen).</string>
 
-    <string name="settings_not_working_notifications">Meer informatie</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>
 
     <string name="settings_translate">Vertaal</string>

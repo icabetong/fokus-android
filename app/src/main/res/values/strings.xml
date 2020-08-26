@@ -10,15 +10,16 @@
     <string name="activity_subjects">Your Subjects</string>
     <string name="activity_logs">Notification Logs</string>
     <string name="activity_settings">Settings</string>
+    <string name="activity_backup">Backup and Restore</string>
     <string name="activity_notices">Third Party Notices</string>
     <string name="activity_open_source_licenses">Open Source Licenses</string>
     <string name="activity_about">About</string>
 
-    <string name="menu_export">Export</string>
+    <string name="menu_share">Share</string>
     <string name="menu_import">Import</string>
     <string name="menu_clear_items">Clear Items</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">Export to file</string>
+    <string name="menu_share_directly">Share directly</string>
 
     <string name="navigation_tasks">Tasks</string>
     <string name="navigation_events">Events</string>
@@ -43,6 +44,8 @@
     <string name="button_delete">Delete</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_discard">Discard</string>
+    <string name="button_dismiss">Dismiss</string>
+    <string name="button_learn_more">Learn More</string>
 
     <string name="empty_view_no_subjects_title">No Added Subjects</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks, to add one, tap the add icon.</string>
@@ -61,10 +64,11 @@
     <string name="days_of_week_item_friday">Friday</string>
     <string name="days_of_week_item_saturday">Saturday</string>
 
-    <string name="dialog_select_start_time">Select Start Time</string>
-    <string name="dialog_select_end_time">Select End Time</string>
-    <string name="dialog_select_color_tag">Select color tag</string>
-    <string name="dialog_select_subject">Select subject</string>
+    <string name="dialog_assign_subject">Assign Subject</string>
+    <string name="dialog_create_task">Create Task</string>
+    <string name="dialog_pick_start_time">Pick a Start Time</string>
+    <string name="dialog_pick_end_time">Pick an End Time</string>
+    <string name="dialog_pick_color_tag">Pick a color tag</string>
     <string name="dialog_select_notification_interval">Select notification interval</string>
     <string name="dialog_choose_theme">Choose theme</string>
     <string name="dialog_choose_backup">Choose a backup file</string>
@@ -72,6 +76,9 @@
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_schedule_details">Schedule Details</string>
     <string name="dialog_discard_changes">Discard changes?</string>
+    <string name="dialog_select_file_import">Select file to import</string>
+    <string name="dialog_send_to">Send to</string>
+    <string name="dialog_sharing_options">Sharing options</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -114,11 +121,14 @@
     <string name="feedback_restore_corrupted">Backup file is corrupted or unreadable</string>
     <string name="feedback_backup_empty">There are no items to backup</string>
     <string name="feedback_backup_failed">Backup process encountered an error</string>
-    <string name="feedback_export_success">Export successful</string>
-    <string name="feedback_export_failed">Export failed</string>
-    <string name="feedback_import_ongoing">Importing attachment</string>
+    <string name="feedback_import_ongoing">Import in progress</string>
     <string name="feedback_import_completed">Import completed</string>
     <string name="feedback_import_failed">Import failed</string>
+    <string name="feedback_export_ongoing">Export in progress</string>
+    <string name="feedback_export_completed">Export completed</string>
+    <string name="feedback_export_failed">Export failed</string>
+    <string name="feedback_unable_to_share_title">Unable to share</string>
+    <string name="feedback_unable_to_share_message">There are no valid information that can be shared</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>
@@ -131,14 +141,11 @@
     <string name="settings_theme_item_system">System default</string>
     <string name="settings_theme_item_dark">Dark</string>
     <string name="settings_theme_item_light">Light</string>
-
     <string name="settings_confetti_title">Confetti</string>
     <string name="settings_confetti_summary">Show confetti when tasks are marked as finished</string>
+
     <string name="settings_completion_sounds_title">Completion Sounds</string>
     <string name="settings_completion_sounds_summary">Play a sound when you mark a task as completed</string>
-    <string name="settings_custom_notification_sound_title">Use custom sound</string>
-    <string name="settings_custom_notification_sound_summary">Override system notification sound; select one below to use your own</string>
-    <string name="settings_select_sound">Select sound file</string>
 
     <string name="settings_reminder_frequency_title">Reminder frequency</string>
     <string name="settings_reminder_frequency_item_everyday">Everyday</string>
@@ -164,14 +171,12 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
 
-    <string name="settings_backup_and_restore">Backup and Restore</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No Previous Backups</string>
     <string name="settings_restore">Restore</string>
-    <string name="settings_no_import_title">Use Links for Attachments</string>
-    <string name="settings_no_import_summary">Rather than importing files to the application folder, use a link to save space. (Applied only to new attachments).</string>
 
-    <string name="settings_not_working_notifications">Learn more</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Sometimes, your notification might not trigger due to the aggressive battery optimization by your phone manufacturer.</string>
 
     <string name="settings_translate">Translate</string>
@@ -208,7 +213,7 @@
     <!-- Notifications -->
     <string name="notification_channel_group_reminders">Reminders</string>
 
-    <string name="notification_channel_general">Generic</string>
+    <string name="notification_channel_general">General</string>
     <string name="notification_channel_task_reminders">Task Reminders</string>
     <string name="notification_channel_event_reminders">Event Reminders</string>
     <string name="notification_channel_class_reminders">Class Reminders</string>

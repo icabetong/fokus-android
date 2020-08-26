@@ -2,22 +2,28 @@
 <resources>
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="activity_padding_medium">32dp</dimen>
-    <dimen name="item_padding">16dp</dimen>
 
+    <dimen name="toolbar_height">128dp</dimen>
     <dimen name="toolbar_padding_horizontal">4dp</dimen>
     <dimen name="toolbar_keyline">16dp</dimen>
+
+    <dimen name="button_icon_padding">32dp</dimen>
 
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
     <dimen name="bottom_sheet_padding">24dp</dimen>
 
     <dimen name="surface_corner_radius">4dp</dimen>
 
-    <!-- RecyclerView -->
-    <dimen name="item_offset_vertical">8dp</dimen>
-    <dimen name="item_offset_horizontal">12dp</dimen>
-
     <dimen name="editor_container_padding">12dp</dimen>
-    <dimen name="editor_item_height">36dp</dimen>
+    <dimen name="editor_item_height">48dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="item_padding">16dp</dimen>
+    <dimen name="item_padding_small">8dp</dimen>
+    <dimen name="item_spacing_small">4dp</dimen>
+    <dimen name="item_spacing_medium">8dp</dimen>
+    <dimen name="item_spacing_large">16dp</dimen>
+    <dimen name="item_spacing_huge">32dp</dimen>
 
     <!-- Widget -->
     <dimen name="widget_title">16sp</dimen>
@@ -28,5 +34,11 @@
     <dimen name="widget_empty_text_padding">8dp</dimen>
 
     <dimen name="drawable_icon_padding">8dp</dimen>
+
+    <!-- Switch -->
+    <dimen name="switch_thumb_size">20dp</dimen>
+    <dimen name="switch_thumb_stroke_size">1dp</dimen>
+    <dimen name="switch_track_radius">20dp</dimen>
+    <dimen name="switch_track_stroke_size">1dp</dimen>
 
 </resources>

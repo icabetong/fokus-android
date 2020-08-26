@@ -10,13 +10,18 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import okio.Okio
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Parcelize
@@ -37,7 +42,7 @@ data class Event @JvmOverloads constructor(
     var schedule: DateTime? = null,
     @TypeConverters(DateTimeConverter::class)
     var dateAdded: DateTime = DateTime.now()
-) : Parcelable {
+) : Parcelable, Streamable {
 
     fun isToday(): Boolean {
         return schedule?.toLocalDate()?.compareTo(LocalDate.now()) == 0
@@ -71,4 +76,35 @@ data class Event @JvmOverloads constructor(
 
     }
 
+    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Event::class.java)
+
+    override fun writeToFile(destination: File, name: String): File {
+        return File(destination, name).apply {
+            Okio.buffer(Okio.sink(this)).use {
+                toJson()?.also { json -> it.write(json.toByteArray()) }
+            }
+        }
+    }
+
+    override fun parseInputStream(inputStream: InputStream) {
+        JsonDataStreamer.decodeOnceFromJson(inputStream, Event::class.java)?.also {
+            eventID = it.eventID
+            name = it.name
+            location = it.location
+            schedule = it.schedule
+            dateAdded = it.dateAdded
+            isImportant = it.isImportant
+            notes = it.notes
+            subject = it.subject
+        }
+    }
+
+    companion object {
+
+        fun fromInputStream(inputStream: InputStream): Event {
+            return Event().apply {
+                this.parseInputStream(inputStream)
+            }
+        }
+    }
 }

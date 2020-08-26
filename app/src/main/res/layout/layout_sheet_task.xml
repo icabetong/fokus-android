@@ -4,14 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_padding">
+    android:padding="@dimen/bottom_sheet_padding">
+
+    <TextView
+        android:id="@+id/menuTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_create_task"
+        android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="@string/field_task_name"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuTitleView"
         style="@style/Fokus.Widget.TextInput.Layout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -27,36 +37,23 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:orientation="vertical"
-        android:paddingVertical="@dimen/editor_container_padding"
-        android:background="@drawable/shape_surface_background"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout">
 
-        <TextView
-            android:layout_width="match_parent"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dueDateChip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
             android:text="@string/field_due_date"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+            app:chipIcon="@drawable/ic_hero_clock_24"
+            app:chipIconTint="@color/color_on_surface"
+            app:iconStartPadding="8dp" />
 
-        <TextView
-            android:id="@+id/dueDateTextView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/editor_item_height"
-            android:paddingHorizontal="16dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
-            android:text="@string/field_not_set"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
-
-    </LinearLayout>
+    </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/expandButton"
@@ -67,7 +64,7 @@
         app:icon="@drawable/ic_hero_chevron_up_24"
         app:layout_constraintTop_toBottomOf="@id/container"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/Fokus.Widget.Button.Outlined"/>
+        style="@style/Fokus.Widget.Button.Text.Dialog"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/actionButton"
@@ -77,6 +74,7 @@
         android:text="@string/button_save"
         app:icon="@drawable/ic_hero_check_24"
         app:layout_constraintTop_toBottomOf="@id/container"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Fokus.Widget.Button.Outlined"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

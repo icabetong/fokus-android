@@ -12,24 +12,4 @@
 
     <style name="Fokus.Theme.Core.Navigation"/>
 
-    <style name="Fokus.Theme.Core.Editor"/>
-    <style name="Fokus.Theme.Core.Editor.Task">
-        <item name="colorPrimary">@color/color_theme_task</item>
-        <item name="colorPrimaryVariant">@color/color_theme_task</item>
-        <item name="colorSecondary">@color/color_theme_task</item>
-        <item name="colorSecondaryVariant">@color/color_theme_task</item>
-    </style>
-    <style name="Fokus.Theme.Core.Editor.Events">
-        <item name="colorPrimary">@color/color_theme_events</item>
-        <item name="colorPrimaryVariant">@color/color_theme_events</item>
-        <item name="colorSecondary">@color/color_theme_events</item>
-        <item name="colorSecondaryVariant">@color/color_theme_events</item>
-    </style>
-    <style name="Fokus.Theme.Core.Editor.Subjects">
-        <item name="colorPrimary">@color/color_theme_subjects</item>
-        <item name="colorPrimaryVariant">@color/color_theme_subjects</item>
-        <item name="colorSecondary">@color/color_theme_subjects</item>
-        <item name="colorSecondaryVariant">@color/color_theme_subjects</item>
-    </style>
-
 </resources>

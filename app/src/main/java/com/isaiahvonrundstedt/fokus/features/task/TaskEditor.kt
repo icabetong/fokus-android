@@ -9,22 +9,28 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.documentfile.provider.DocumentFile
+import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
-import com.isaiahvonrundstedt.fokus.components.service.AttachmentImportService
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
+import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
+import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
-import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
@@ -38,6 +44,7 @@ import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime.fromCalendarFields
+import java.io.File
 import java.util.*
 
 class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
@@ -45,6 +52,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     private var requestCode = 0
     private var task = Task()
     private var subject: Subject? = null
+    private var hasFieldChange = false
 
     private val adapter = AttachmentAdapter(this)
 
@@ -84,6 +92,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_DUE))
                 dueDateTextView.text = task.formatDueDate(this)
                 dueDateTextView.transitionName = TRANSITION_ID_DUE
+                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
             }
         }
 
@@ -93,31 +102,23 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         // The passed extras from the parent activity
         // will be shown in their respective fields.
         if (requestCode == REQUEST_CODE_UPDATE) {
-            with(task) {
-                taskNameTextInput.setText(name)
-                notesTextInput.setText(notes)
-                prioritySwitch.isChecked = isImportant
-                statusSwitch.isChecked = isFinished
-                dueDateTextView.text = formatDueDate(this@TaskEditor)
-                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
-            }
-
-            subject?.let {
-                with(subjectTextView) {
-                    text = it.code
-                    setTextColorFromResource(R.color.color_primary_text)
-                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
-                        R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
-                }
-                clearButton.isVisible = true
-            }
-
+            onValueChanged()
             window.decorView.rootView.clearFocus()
+        }
+
+        var currentScrollPosition = 0
+        contentView.viewTreeObserver.addOnScrollChangedListener {
+            if (contentView.scrollY > currentScrollPosition) actionButton.hide()
+            else actionButton.show()
+            currentScrollPosition = contentView.scrollY
         }
     }
 
     override fun onStart() {
         super.onStart()
+
+        taskNameTextInput.addTextChangedListener { hasFieldChange = true }
+        notesTextInput.addTextChangedListener { hasFieldChange = true }
 
         addItemButton.setOnClickListener {
             // Check if we have read storage permissions then request the permission
@@ -141,14 +142,15 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         v.text = task.formatDueDate(this@TaskEditor)
                         v.setTextColorFromResource(R.color.color_primary_text)
                     }
+                    hasFieldChange = true
                 }
             }
         }
 
         subjectTextView.setOnClickListener {
             SubjectSelectorSheet(supportFragmentManager).show {
-                result { result ->
-                    this@TaskEditor.clearButton.isVisible = true
+                waitForResult { result ->
+                    this@TaskEditor.removeButton.isVisible = true
                     task.subject = result.subjectID
                     subject = result
 
@@ -163,14 +165,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         this@TaskEditor.subjectTextView
                             .setCompoundDrawableAtStart(result.tintDrawable(it))
                     }
+                    hasFieldChange = true
                 }
             }
         }
 
-        clearButton.setOnClickListener {
+        removeButton.setOnClickListener {
+            hasFieldChange = true
             subjectTextView.startAnimation(animation)
 
-            it.isVisible = false
+            it.visibility = View.INVISIBLE
             this.task.subject = null
             with(subjectTextView) {
                 removeCompoundDrawableAtStart()
@@ -178,42 +182,103 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 setTextColorFromResource(R.color.color_secondary_text)
             }
         }
+
+        actionButton.setOnClickListener {
+
+            // These if checks if the user have entered the
+            // values on the fields, if we don't have the value required,
+            // show a snackbar feedback then direct the user's
+            // attention to the field. Then return to stop the execution
+            // of the code.
+            if (taskNameTextInput.text.isNullOrEmpty()) {
+                createSnackbar(R.string.feedback_task_empty_name, rootLayout)
+                taskNameTextInput.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (!task.hasDueDate()) {
+                createSnackbar(R.string.feedback_task_empty_due_date, rootLayout)
+                dueDateTextView.performClick()
+                return@setOnClickListener
+            }
+
+            task.name = taskNameTextInput.text.toString()
+            task.notes = notesTextInput.text.toString()
+            task.isImportant = prioritySwitch.isChecked
+            task.isFinished = statusSwitch.isChecked
+
+            // Send the data back to the parent activity
+            val data = Intent()
+            data.putExtra(EXTRA_TASK, task)
+            data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
+            setResult(RESULT_OK, data)
+            if (requestCode == REQUEST_CODE_UPDATE)
+                supportFinishAfterTransition()
+            else finish()
+        }
     }
 
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(receiver)
-        startService(Intent(this, AttachmentImportService::class.java).apply {
-            action = AttachmentImportService.ACTION_CANCEL
+        startService(Intent(this, FileImporterService::class.java).apply {
+            action = FileImporterService.ACTION_CANCEL
         })
         super.onDestroy()
     }
 
-    var snackbar: Snackbar? = null
     private var receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
-                    AttachmentImportService.BROADCAST_IMPORT_ONGOING -> {
-                        snackbar = createSnackbar(R.string.feedback_import_ongoing, rootLayout,
+                    FileImporterService.BROADCAST_IMPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_import_ongoing, rootLayout,
                             Snackbar.LENGTH_INDEFINITE)
-                        snackbar?.show()
                     }
-                    AttachmentImportService.BROADCAST_IMPORT_COMPLETED -> {
-                        if (snackbar?.isShown == true)
-                            snackbar?.dismiss()
+                    FileImporterService.BROADCAST_IMPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_import_completed, rootLayout)
 
-                        snackbar = createSnackbar(R.string.feedback_import_completed, rootLayout)
-                        snackbar?.show()
-                        adapter.insert(createAttachment(
-                            intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)))
+                        val attachment = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.let {
+                            createAttachment(it)
+                        }
+                        adapter.insert(attachment)
                     }
-                    AttachmentImportService.BROADCAST_IMPORT_FAILED -> {
-                        if (snackbar?.isShown == true)
-                            snackbar?.dismiss()
+                    FileImporterService.BROADCAST_IMPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_import_failed, rootLayout)
+                    }
+                    DataExporterService.BROADCAST_EXPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_export_ongoing, rootLayout)
+                    }
+                    DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_export_completed, rootLayout)
 
-                        snackbar = createSnackbar(R.string.feedback_import_failed, rootLayout)
-                        snackbar?.show()
+                        intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            val uri = CoreApplication.obtainUriForFile(this@TaskEditor, File(it))
+
+                            startActivity(ShareCompat.IntentBuilder.from(this@TaskEditor)
+                                .addStream(uri)
+                                .setType(Streamable.MIME_TYPE_ZIP)
+                                .setChooserTitle(R.string.dialog_send_to)
+                                .intent)
+                        }
+                    }
+                    DataExporterService.BROADCAST_EXPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_export_failed, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_import_completed, rootLayout)
+
+                        intent.getParcelableExtra<TaskPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            this@TaskEditor.task = it.task
+                            adapter.setItems(it.attachments)
+                            onValueChanged()
+                        }
+                    }
+                    DataImporterService.BROADCAST_IMPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_import_failed, rootLayout)
                     }
                 }
             }
@@ -230,10 +295,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun createAttachment(attachmentUri: Uri?): Attachment {
+    private fun createAttachment(targetPath: String): Attachment {
+        hasFieldChange = true
         return Attachment().apply {
             task = this@TaskEditor.task.taskID
-            uri = attachmentUri
+            target = targetPath
             dateAttached = DateTime.now()
         }
     }
@@ -246,42 +312,53 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         when (requestCode) {
             REQUEST_CODE_ATTACHMENT -> {
-                if (PreferenceManager(this).noImport) {
-                    contentResolver?.takePersistableUriPermission(data?.data!!,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val service = Intent(this, FileImporterService::class.java).apply {
+                    action = FileImporterService.ACTION_START
+                    setData(data?.data)
+                    putExtra(FileImporterService.EXTRA_DIRECTORY,
+                        FileImporterService.DIRECTORY_ATTACHMENTS)
+                }
 
-                    adapter.insert(createAttachment(data?.data))
-                } else
-                    startService(Intent(this, AttachmentImportService::class.java).apply {
-                            setData(data?.data)
-                            action = AttachmentImportService.ACTION_START
-                        })
+                startService(service)
+            }
+            REQUEST_CODE_EXPORT -> {
+                startService(Intent(this, DataExporterService::class.java).apply {
+                    this.data = data?.data
+                    action = DataExporterService.ACTION_EXPORT_TASK
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                })
+            }
+            REQUEST_CODE_IMPORT -> {
+                startService(Intent(this, DataImporterService::class.java).apply {
+                    this.data = data?.data
+                    action = DataImporterService.ACTION_IMPORT_TASK
+                })
             }
         }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action) {
         if (t is Attachment) {
+            val attachment = t.target?.let { File(it) }
+
             when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    onParseIntent(t.uri)
-                }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     MaterialDialog(this).show {
                         title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                            t.uri?.getFileName(this@TaskEditor)))
+                            attachment?.name))
                         message(R.string.dialog_confirm_deletion_summary)
                         positiveButton(R.string.button_delete) {
                             adapter.remove(t)
-
-
-                            if (!PreferenceManager(this@TaskEditor).noImport){
-                                t.uri?.let { data ->
-                                    DocumentFile.fromSingleUri(this@TaskEditor, data)?.delete()
-                                }
-                            }
+                            attachment?.delete()
+                            hasFieldChange = true
                         }
                         negativeButton(R.string.button_cancel)
+                    }
+                }
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    if (attachment != null) {
+                        onParseIntent(CoreApplication.obtainUriForFile(this, attachment))
                     }
                 }
             }
@@ -302,36 +379,65 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_save -> {
+            R.id.action_share_options -> {
 
-                // These if checks if the user have entered the
-                // values on the fields, if we don't have the value required,
-                // show a snackbar feedback then direct the user's
-                // attention to the field. Then return to stop the execution
-                // of the code.
-                if (taskNameTextInput.text.isNullOrEmpty()) {
-                    createSnackbar(R.string.feedback_task_empty_name, rootLayout)
-                    taskNameTextInput.requestFocus()
-                    return false
+                var fileName: String = Streamable.ARCHIVE_NAME_GENERIC
+                when (requestCode) {
+                    REQUEST_CODE_INSERT -> {
+                        if (taskNameTextInput.text.isNullOrEmpty() || !task.hasDueDate()) {
+                            MaterialDialog(this@TaskEditor).show {
+                                title(R.string.feedback_unable_to_share_title)
+                                message(R.string.feedback_unable_to_share_message)
+                                positiveButton(R.string.button_done) { dismiss() }
+                            }
+
+                            return false
+                        }
+
+                        fileName = taskNameTextInput.text.toString()
+                    }
+                    REQUEST_CODE_UPDATE -> {
+                        fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
+
+                        if (!taskNameTextInput.text.isNullOrEmpty())
+                            task.name = taskNameTextInput.text.toString()
+
+                        if (!notesTextInput.text.isNullOrEmpty())
+                            task.notes = notesTextInput.text.toString()
+                    }
                 }
 
-                if (!task.hasDueDate()) {
-                    createSnackbar(R.string.feedback_task_empty_due_date, rootLayout)
-                    dueDateTextView.performClick()
-                    return false
+                ShareOptionsBottomSheet(supportFragmentManager).show {
+                    waitForResult { id ->
+                        when (id) {
+                            R.id.action_export -> {
+                                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                                    addCategory(Intent.CATEGORY_OPENABLE)
+                                    putExtra(Intent.EXTRA_TITLE, fileName)
+                                    type = Streamable.MIME_TYPE_ZIP
+                                }
+
+                                this@TaskEditor.startActivityForResult(exportIntent, REQUEST_CODE_EXPORT)
+                            }
+                            R.id.action_share -> {
+                                val serviceIntent = Intent(this@TaskEditor, DataExporterService::class.java).apply {
+                                    action = DataExporterService.ACTION_EXPORT_TASK
+                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
+                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
+                                }
+
+                                this@TaskEditor.startService(serviceIntent)
+                            }
+                        }
+                    }
                 }
+            }
+            R.id.action_import -> {
+                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = Streamable.MIME_TYPE_ZIP
+                }, getString(R.string.dialog_select_file_import))
 
-                task.name = taskNameTextInput.text.toString()
-                task.notes = notesTextInput.text.toString()
-                task.isImportant = prioritySwitch.isChecked
-                task.isFinished = statusSwitch.isChecked
-
-                // Send the data back to the parent activity
-                val data = Intent()
-                data.putExtra(EXTRA_TASK, task)
-                data.putExtra(EXTRA_ATTACHMENTS, adapter.itemList)
-                setResult(RESULT_OK, data)
-                supportFinishAfterTransition()
+                startActivityForResult(chooser, REQUEST_CODE_IMPORT)
             }
             else -> super.onOptionsItemSelected(item)
         }
@@ -364,23 +470,41 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onBackPressed() {
-        if (adapter.itemCount > 0 || taskNameTextInput.text?.isNotEmpty() == true
-            || task.subject != null || task.hasDueDate()
-            || notesTextInput.text?.isNotEmpty() == true) {
-
+        if (hasFieldChange) {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) {
-                    adapter.itemList.forEach {
-                        it.uri?.let { path ->
-                            DocumentFile.fromSingleUri(this@TaskEditor, path)?.delete()
-                        }
+                    adapter.itemList.forEach { attachment ->
+                        attachment.target?.also { File(it).delete() }
                     }
                     super.onBackPressed()
                 }
                 negativeButton(R.string.button_cancel)
             }
+        } else super.onBackPressed()
+    }
+
+    override fun onValueChanged() {
+        with(task) {
+            taskNameTextInput.setText(name)
+            notesTextInput.setText(notes)
+            prioritySwitch.isChecked = isImportant
+            statusSwitch.isChecked = isFinished
+            dueDateTextView.text = formatDueDate(this@TaskEditor)
+            dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
         }
+
+        subject?.let {
+            with(subjectTextView) {
+                text = it.code
+                setTextColorFromResource(R.color.color_primary_text)
+                setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
+                    R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
+            }
+            removeButton.isVisible = true
+        }
+
+        window.decorView.rootView.clearFocus()
     }
 
     companion object {
@@ -395,6 +519,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         const val TRANSITION_ID_DUE = "transition:task:due:"
 
         private const val REQUEST_CODE_ATTACHMENT = 20
+        private const val REQUEST_CODE_EXPORT = 49
+        private const val REQUEST_CODE_IMPORT = 68
     }
 
 }

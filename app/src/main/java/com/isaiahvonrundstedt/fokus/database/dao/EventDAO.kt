@@ -3,7 +3,7 @@ package com.isaiahvonrundstedt.fokus.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.EventResource
+import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 
 @Dao
 interface EventDAO {
@@ -18,13 +18,13 @@ interface EventDAO {
     suspend fun update(event: Event)
 
     @Query("SELECT * FROM events")
-    suspend fun fetch(): List<EventResource>
+    suspend fun fetch(): List<EventPackage>
 
     @Query("SELECT * FROM events")
     suspend fun fetchCore(): List<Event>
 
     @Transaction
     @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID")
-    fun fetchLiveData(): LiveData<List<EventResource>>
+    fun fetchLiveData(): LiveData<List<EventPackage>>
 
 }

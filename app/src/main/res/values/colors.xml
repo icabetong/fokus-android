@@ -10,6 +10,8 @@
     <color name="color_surface_stroke">#e2e6f0</color>
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#ffffff</color>
+    <color name="color_neutral">#a4a4a4</color>
+    <color name="color_neutral_variant">#494949</color>
 
     <color name="color_status_background">@color/color_surface</color>
     <color name="color_toolbar_background">@color/color_surface</color>
@@ -21,12 +23,12 @@
 
     <color name="color_editor_remove_button">#bcbcbc</color>
 
-    <color name="color_theme_generic">#00685b</color>
-    <color name="color_theme_generic_variant">#5900685b</color>
-    <color name="color_theme_task">#0091ea</color>
-    <color name="color_theme_task_variant">#590091ea</color>
-    <color name="color_theme_events">#ffab00</color>
-    <color name="color_theme_events_variant">#59ffab00</color>
-    <color name="color_theme_subjects">#ff1744</color>
-    <color name="color_theme_subjects_variant">#59ff1744</color>
+    <color name="color_theme_teal">#00685b</color>
+    <color name="color_theme_teal_variant">#5900685b</color>
+    <color name="color_theme_blue">#0288d1</color>
+    <color name="color_theme_blue_variant">#590288d1</color>
+    <color name="color_theme_amber">#ffab00</color>
+    <color name="color_theme_amber_variant">#59ffab00</color>
+    <color name="color_theme_red">#ff1744</color>
+    <color name="color_theme_red_variant">#59ff1744</color>
 </resources>

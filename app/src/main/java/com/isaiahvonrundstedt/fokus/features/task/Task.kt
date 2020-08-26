@@ -7,12 +7,17 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
 import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
+import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+import okio.Okio
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Parcelize
@@ -33,7 +38,7 @@ data class Task @JvmOverloads constructor(
     @TypeConverters(DateTimeConverter::class)
     var dueDate: DateTime? = null,
     var isFinished: Boolean = false
-) : Parcelable {
+) : Parcelable, Streamable {
 
     fun hasDueDate(): Boolean {
         return dueDate != null
@@ -52,18 +57,51 @@ data class Task @JvmOverloads constructor(
             return null
 
         // Check if the day on the task's due is today
-        return if (dueDate!!.isToday())
+        return if (dueDate?.isToday() == true)
             String.format(context.getString(R.string.today_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if the day is yesterday
-        else if (dueDate!!.isYesterday())
+        else if (dueDate?.isYesterday() == true)
             String.format(context.getString(R.string.yesterday_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Now check if its tomorrow
-        else if (dueDate!!.isTomorrow())
+        else if (dueDate?.isTomorrow() == true)
             String.format(context.getString(R.string.tomorrow_at),
                 DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
         // Just print the date what could go wrong?
         else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
     }
+
+    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Task::class.java)
+
+    override fun writeToFile(destination: File, name: String): File {
+        return File(destination, name).apply {
+            Okio.buffer(Okio.sink(this)).use {
+                toJson()?.also { json -> it.write(json.toByteArray()) }
+            }
+        }
+    }
+
+    override fun parseInputStream(inputStream: InputStream) {
+        JsonDataStreamer.decodeOnceFromJson(inputStream, Task::class.java)?.also {
+            taskID = it.taskID
+            name = it.name
+            dueDate = it.dueDate
+            notes = it.notes
+            subject = it.subject
+            dateAdded = it.dateAdded
+            isImportant = it.isImportant
+            isFinished = it.isFinished
+        }
+    }
+
+    companion object {
+
+        fun fromInputStream(inputStream: InputStream): Task {
+            return Task().apply {
+                this.parseInputStream(inputStream)
+            }
+        }
+    }
+
 }

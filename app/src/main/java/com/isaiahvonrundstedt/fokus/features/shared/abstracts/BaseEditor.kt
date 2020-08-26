@@ -45,6 +45,8 @@ abstract class BaseEditor : BaseActivity() {
         }
     }
 
+    abstract fun onValueChanged()
+
     protected val animation: Animation
         get() {
             return AnimationUtils.loadAnimation(this, R.anim.anim_fade_in)

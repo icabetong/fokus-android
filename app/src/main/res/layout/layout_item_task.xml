@@ -17,7 +17,7 @@
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_padding_medium"
+            android:layout_marginStart="@dimen/item_spacing_huge"
             android:button="@drawable/selector_checkbox"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="16dp"
+            android:paddingVertical="@dimen/item_padding"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/checkBox"
@@ -37,30 +37,39 @@
 
             <TextView
                 android:id="@+id/taskNameView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginBottom="@dimen/item_spacing_small"
+                android:layout_marginStart="@dimen/item_padding"
+                android:layout_marginEnd="@dimen/item_padding"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
-                tools:text="Feed the Cat"/>
+                tools:text="Draw the Flowchart"/>
 
             <TextView
                 android:id="@+id/dueDateView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/item_padding"
+                android:layout_marginEnd="@dimen/item_padding"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Body"
-                tools:text="Sunday at 1:00PM"/>
+                tools:text="Tomorrow at 1:00PM"/>
 
             <TextView
                 android:id="@+id/subjectView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/item_spacing_large"
+                android:layout_marginStart="@dimen/item_padding"
+                android:layout_marginEnd="@dimen/item_padding"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
-                android:drawableStart="@drawable/shape_color_holder_chip"
-                android:drawablePadding="16dp"
+                android:drawablePadding="@dimen/item_spacing_large"
+                app:drawableStartCompat="@drawable/shape_color_holder_chip"
                 tools:text="COMSCI 2101"/>
 
         </LinearLayout>

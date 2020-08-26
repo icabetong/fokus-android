@@ -7,18 +7,19 @@
 
     <string name="activity_tasks">Ihre Aufgaben</string>
     <string name="activity_events">Ihre Veranstaltungen</string>
-    <string name="activity_subjects">Ihre Themen</string>
+    <string name="activity_subjects">Ihre Betreff</string>
     <string name="activity_logs">Benachrichtigungsprotokolle</string>
     <string name="activity_settings">Einstellungen</string>
+    <string name="activity_backup">Sichern und Wiederherstellen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_export">Exportieren</string>
+    <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
-    <string name="menu_save">@string/button_save</string>
-    <string name="menu_delete">@string/button_delete</string>
+    <string name="menu_export_to_file">In Datei exportieren</string>
+    <string name="menu_share_directly">Direkt teilen</string>
 
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
@@ -43,6 +44,8 @@
     <string name="button_delete">Löschen</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_discard">Verwerfen</string>
+    <string name="button_dismiss">Entlassen</string>
+    <string name="button_learn_more">Weitere Informationen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
@@ -61,10 +64,11 @@
     <string name="days_of_week_item_friday">Freitag</string>
     <string name="days_of_week_item_saturday">Samstag</string>
 
-    <string name="dialog_select_start_time">Startzeit auswählen</string>
-    <string name="dialog_select_end_time">Endzeit auswählen</string>
-    <string name="dialog_select_color_tag">Farb-Tag auswählen</string>
-    <string name="dialog_select_subject">Betreff auswählen</string>
+    <string name="dialog_assign_subject">Betreff zuweisen</string>
+    <string name="dialog_create_task">Aufgabe erstellen</string>
+    <string name="dialog_pick_start_time">Wählen Sie eine Startzeit</string>
+    <string name="dialog_pick_end_time">Wählen Sie eine Endzeit</string>
+    <string name="dialog_pick_color_tag">Wählen Sie eine Farbmarkierung aus</string>
     <string name="dialog_select_notification_interval">Benachrichtigungsintervall auswählen</string>
     <string name="dialog_choose_theme">Thema wählen</string>
     <string name="dialog_choose_backup">Wählen Sie eine Sicherungsdatei</string>
@@ -72,6 +76,9 @@
     <string name="dialog_confirm_deletion_summary">Wenn dieses Element einmal gelöscht wurde, kann es nicht wiederhergestellt werden.</string>
     <string name="dialog_schedule_details">Einzelheiten zum Zeitplan</string>
     <string name="dialog_discard_changes">Änderungen verwerfen?</string>
+    <string name="dialog_select_file_import">Zu importierende Datei auswählen</string>
+    <string name="dialog_send_to">Senden an</string>
+    <string name="dialog_sharing_options">Optionen zur gemeinsamen Nutzung</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -114,11 +121,14 @@
     <string name="feedback_restore_corrupted">Sicherungsdatei beschädigt oder unlesbar</string>
     <string name="feedback_backup_empty">Es sind keine Artikel zu sichern</string>
     <string name="feedback_backup_failed">Sicherungsprozess stieß auf einen Fehler</string>
-    <string name="feedback_export_success">Export erfolgreich</string>
-    <string name="feedback_export_failed">Export fehlgeschlagen</string>
-    <string name="feedback_import_ongoing">Anlage importieren</string>
+    <string name="feedback_import_ongoing">Import im Gange</string>
     <string name="feedback_import_completed">Import abgeschlossen</string>
     <string name="feedback_import_failed">Import fehlgeschlagen</string>
+    <string name="feedback_export_ongoing">Export im Gange</string>
+    <string name="feedback_export_completed">Export abgeschlossen</string>
+    <string name="feedback_export_failed">Export fehlgeschlagen</string>
+    <string name="feedback_unable_to_share_title">Unfähig zu teilen</string>
+    <string name="feedback_unable_to_share_message">Es gibt keine gültigen Informationen, die weitergegeben werden können.</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>
@@ -131,14 +141,11 @@
     <string name="settings_theme_item_system">Systemvorgabe</string>
     <string name="settings_theme_item_dark">Dunkel</string>
     <string name="settings_theme_item_light">Licht</string>
-
     <string name="settings_confetti_title">Konfetti</string>
     <string name="settings_confetti_summary">Konfetti anzeigen, wenn Aufgaben als erledigt markiert sind</string>
+
     <string name="settings_completion_sounds_title">Vervollständigung klingt</string>
     <string name="settings_completion_sounds_summary">"Spielen Sie einen Ton ab, wenn Sie eine Aufgabe als erledigt markieren "</string>
-    <string name="settings_custom_notification_sound_summary">Systembenachrichtigungston überschreiben; wählen Sie unten einen aus, um Ihren eigenen zu verwenden</string>
-    <string name="settings_custom_notification_sound_title">Benutzerdefinierten Ton verwenden</string>
-    <string name="settings_select_sound">Sounddatei auswählen</string>
 
     <string name="settings_reminder_frequency_title">Häufigkeit von Erinnerungen</string>
     <string name="settings_reminder_frequency_item_everyday">Täglich</string>
@@ -164,14 +171,12 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Weitere Einstellungen</string>
 
-    <string name="settings_backup_and_restore">Sichern und Wiederherstellen</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Sicherung</string>
     <string name="settings_backup_summary_no_previous">Keine früheren Sicherungen</string>
     <string name="settings_restore">Wiederherstellen</string>
-    <string name="settings_no_import_title">Links für Anhänge verwenden</string>
-    <string name="settings_no_import_summary">Anstatt Dateien in den Anwendungsordner zu importieren, verwenden Sie einen Link, um Platz zu sparen. (Wird nur auf neue Anhänge angewendet).</string>
 
-    <string name="settings_not_working_notifications">Weitere Informationen</string>
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>
 
     <string name="settings_translate">Übersetzen</string>

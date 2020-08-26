@@ -16,7 +16,7 @@ import com.isaiahvonrundstedt.fokus.R
 abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     : BottomSheetDialogFragment() {
 
-    protected var callback: ResultCallback<T> = null
+    protected var receiver: Receiver<T>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,8 +36,12 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
             = BottomSheetDialog(requireContext(), theme)
 
-    fun result(callback: ResultCallback<T> = null) {
-        this.callback = callback
+    fun waitForResult(receiver: Receiver<T>) {
+        this.receiver = receiver
+    }
+
+    fun interface Receiver<T> {
+        fun onReceive(t: T)
     }
 
     fun show() {
@@ -50,5 +54,3 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
         this.show()
     }
 }
-
-typealias ResultCallback<T> = ((t: T) -> Unit)?

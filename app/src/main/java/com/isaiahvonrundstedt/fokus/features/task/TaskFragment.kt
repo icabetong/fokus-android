@@ -9,10 +9,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -24,10 +25,14 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_task.*
+import kotlinx.android.synthetic.main.layout_empty_tasks.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
+import java.io.File
 
 class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
+
+    private val adapter = TaskAdapter(this, this)
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
@@ -41,28 +46,28 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = TaskAdapter(this, this)
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer { items ->
-            adapter?.submitList(items)
-            emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        viewModel.fetch()?.observe(viewLifecycleOwner, {
+            adapter.submitList(it)
+            emptyView.isVisible = it.isEmpty()
         })
-
     }
 
-    private var adapter: TaskAdapter? = null
     override fun onResume() {
         super.onResume()
 
         actionButton.setOnClickListener {
             TaskEditorSheet(childFragmentManager).show {
-                result { viewModel.insert(it) }
+                waitForResult {
+                    viewModel.insert(it)
+                    dismiss()
+                }
             }
         }
     }
@@ -71,7 +76,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     // snackbar feedback and also if the sounds if turned on
     // play a fokus sound.
     override fun <T> onTaskCompleted(t: T, isChecked: Boolean) {
-        if (t is TaskResource) {
+        if (t is TaskPackage) {
             viewModel.update(t.task)
             if (isChecked) {
                 createSnackbar(R.string.button_mark_as_finished, recyclerView)
@@ -91,13 +96,9 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                             .burst(100)
                     }
 
-                    if (sounds) {
-                        var soundUri: Uri = PreferenceManager.DEFAULT_SOUND_URI
-                        if (customSound)
-                            soundUri = this.customSoundUri
-
-                        RingtoneManager.getRingtone(requireContext(), soundUri).play()
-                    }
+                    if (sounds)
+                        RingtoneManager.getRingtone(requireContext(),
+                            Uri.parse(PreferenceManager.DEFAULT_SOUND)).play()
                 }
             }
         }
@@ -106,7 +107,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     // Callback from the RecyclerView Adapter
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
-        if (t is TaskResource) {
+        if (t is TaskPackage) {
             when (action) {
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
@@ -125,6 +126,16 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                     viewModel.remove(t.task)
 
                     createSnackbar(R.string.feedback_task_removed, recyclerView).run {
+                        addCallback(object: Snackbar.Callback() {
+                            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                                super.onDismissed(transientBottomBar, event)
+
+                                if (event != DISMISS_EVENT_ACTION)
+                                    t.attachments.forEach { attachment ->
+                                        attachment.target?.also { File(it).delete() }
+                                    }
+                            }
+                        })
                         setAction(R.string.button_undo) {
                             viewModel.insert(t.task, t.attachments)
                         }

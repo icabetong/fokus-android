@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
@@ -33,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/widget_task_title"
-                android:textColor="@color/color_theme_task"
+                android:textColor="@color/color_primary"
                 android:textAppearance="@style/Fokus.TextAppearance.Widget.Title"/>
 
             <ImageView
@@ -41,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_hero_clipboard_list_24"
-                android:tint="@color/color_theme_task"
+                android:src="@drawable/ic_hero_check_24"
+                android:tint="@color/color_primary"
                 tools:ignore="UseAppTint" />
 
         </RelativeLayout>

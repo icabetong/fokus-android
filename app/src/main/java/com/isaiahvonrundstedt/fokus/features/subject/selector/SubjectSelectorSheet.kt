@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +14,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
-import kotlinx.android.synthetic.main.fragment_subject.*
+import kotlinx.android.synthetic.main.fragment_subject.recyclerView
+import kotlinx.android.synthetic.main.layout_sheet_subject.*
 
 class SubjectSelectorSheet(fragmentManager: FragmentManager)
     : BaseBottomSheet<Subject>(fragmentManager), BaseListAdapter.ActionListener {
@@ -36,7 +38,7 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
 
         viewModel.fetch()?.observe(this, Observer {
             adapter.submitList(it)
-            emptyView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            emptyView.isVisible = it.isEmpty()
         })
     }
 
@@ -45,7 +47,7 @@ class SubjectSelectorSheet(fragmentManager: FragmentManager)
         if (t is Subject) {
             when (action) {
                 BaseListAdapter.ActionListener.Action.SELECT -> {
-                    callback?.invoke(t)
+                    receiver?.onReceive(t)
                     this.dismiss()
                 }
                 BaseListAdapter.ActionListener.Action.DELETE -> { }

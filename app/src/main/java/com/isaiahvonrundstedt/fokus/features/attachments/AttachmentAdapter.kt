@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import java.io.File
 
 class AttachmentAdapter(private var actionListener: ActionListener)
     : BaseAdapter<AttachmentAdapter.ViewHolder>() {
@@ -74,7 +74,7 @@ class AttachmentAdapter(private var actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             with(t) {
                 if (this is Attachment) {
-                    titleView.text = uri?.getFileName(itemView.context)
+                    titleView.text = target?.let { File(it).name }
 
                     rootView.setOnClickListener {
                         actionListener.onActionPerformed(this, ActionListener.Action.SELECT)

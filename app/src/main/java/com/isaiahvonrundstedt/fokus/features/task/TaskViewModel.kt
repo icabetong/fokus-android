@@ -15,9 +15,9 @@ import kotlinx.coroutines.launch
 class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
-    private var items: LiveData<List<TaskResource>>? = repository.fetch()
+    private var items: LiveData<List<TaskPackage>>? = repository.fetch()
 
-    fun fetch(): LiveData<List<TaskResource>>? = items
+    fun fetch(): LiveData<List<TaskPackage>>? = items
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)

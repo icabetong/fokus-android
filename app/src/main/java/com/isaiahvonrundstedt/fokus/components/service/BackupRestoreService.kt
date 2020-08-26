@@ -216,7 +216,7 @@ class BackupRestoreService: BaseService() {
     }
 
     companion object {
-        const val FILE_BACKUP_NAME = "backup.ffs"
+        const val FILE_BACKUP_NAME = "backup"
 
         const val ACTION_BACKUP = "action:backup"
         const val ACTION_RESTORE = "action:restore"

@@ -24,6 +24,7 @@ class DataExporterService: BaseService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         onExport(intent)
+        android.util.Log.e("DEBUG", "service")
         sendLocalBroadcast(BROADCAST_EXPORT_ONGOING)
 
         return START_REDELIVER_INTENT

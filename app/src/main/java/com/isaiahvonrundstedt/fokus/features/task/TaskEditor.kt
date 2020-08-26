@@ -13,7 +13,6 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -359,8 +358,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 }
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     if (attachment != null) {
-                        onParseIntent(FileProvider.getUriForFile(this,
-                            CoreApplication.PROVIDER_AUTHORITY, attachment))
+                        onParseIntent(CoreApplication.obtainUriForFile(this, attachment))
                     }
                 }
             }
@@ -413,18 +411,22 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     waitForResult { id ->
                         when (id) {
                             R.id.action_export -> {
-                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                                    putExtra(Intent.EXTRA_TITLE, fileName)
+                                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                                     addCategory(Intent.CATEGORY_OPENABLE)
+                                    putExtra(Intent.EXTRA_TITLE, fileName)
                                     type = Streamable.MIME_TYPE_ZIP
-                                }, REQUEST_CODE_EXPORT)
+                                }
+
+                                this@TaskEditor.startActivityForResult(exportIntent, REQUEST_CODE_EXPORT)
                             }
                             R.id.action_share -> {
-                                startService(Intent(context, DataExporterService::class.java).apply {
+                                val serviceIntent = Intent(this@TaskEditor, DataExporterService::class.java).apply {
                                     action = DataExporterService.ACTION_EXPORT_TASK
                                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, task)
                                     putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
-                                })
+                                }
+
+                                this@TaskEditor.startService(serviceIntent)
                             }
                         }
                     }

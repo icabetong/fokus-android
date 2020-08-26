@@ -191,44 +191,43 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     private var receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
-                DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                    createSnackbar(R.string.feedback_export_ongoing, rootLayout,
-                        Snackbar.LENGTH_INDEFINITE)
-                }
-                DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
-                    createSnackbar(R.string.feedback_export_completed, rootLayout)
-
-                    if (intent.hasExtra(BaseService.EXTRA_BROADCAST_DATA)) {
-                        val path = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)
-
-                        val uri = FileProvider.getUriForFile(this@SubjectEditor,
-                            CoreApplication.PROVIDER_AUTHORITY, File(path!!))
-
-                        startActivity(ShareCompat.IntentBuilder.from(this@SubjectEditor)
-                            .addStream(uri)
-                            .setType(Streamable.MIME_TYPE_ZIP)
-                            .setChooserTitle(R.string.dialog_send_to)
-                            .intent)
+            if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
+                when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
+                    DataExporterService.BROADCAST_EXPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_export_ongoing, rootLayout,
+                            Snackbar.LENGTH_INDEFINITE)
                     }
-                }
-                DataExporterService.BROADCAST_EXPORT_FAILED -> {
-                    createSnackbar(R.string.feedback_export_failed, rootLayout)
-                }
-                DataImporterService.BROADCAST_IMPORT_ONGOING -> {
-                    createSnackbar(R.string.feedback_import_ongoing, rootLayout)
-                }
-                DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
-                    createSnackbar(R.string.feedback_import_completed, rootLayout)
+                    DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_export_completed, rootLayout)
 
-                    intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                        this@SubjectEditor.subject = it.subject
-                        adapter.setItems(it.schedules)
-                        onValueChanged()
+                        intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            val uri = CoreApplication.obtainUriForFile(this@SubjectEditor, File(it))
+
+                            startActivity(ShareCompat.IntentBuilder.from(this@SubjectEditor)
+                                .addStream(uri)
+                                .setType(Streamable.MIME_TYPE_ZIP)
+                                .setChooserTitle(R.string.dialog_send_to)
+                                .intent)
+                        }
                     }
-                }
-                DataImporterService.BROADCAST_IMPORT_FAILED -> {
-                    createSnackbar(R.string.feedback_import_failed, rootLayout)
+                    DataExporterService.BROADCAST_EXPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_export_failed, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_import_completed, rootLayout)
+
+                        intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            this@SubjectEditor.subject = it.subject
+                            adapter.setItems(it.schedules)
+                            onValueChanged()
+                        }
+                    }
+                    DataImporterService.BROADCAST_IMPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_import_failed, rootLayout)
+                    }
                 }
             }
         }
@@ -288,18 +287,23 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                     waitForResult { id ->
                         when (id) {
                             R.id.action_export -> {
-                                startActivityForResult(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                                     addCategory(Intent.CATEGORY_OPENABLE)
                                     putExtra(Intent.EXTRA_TITLE, fileName)
                                     type = Streamable.MIME_TYPE_ZIP
-                                }, REQUEST_CODE_EXPORT)
+                                }
+
+                                this@SubjectEditor.startActivityForResult(exportIntent,
+                                    REQUEST_CODE_EXPORT)
                             }
                             R.id.action_share -> {
-                                startService(Intent(context, DataExporterService::class.java).apply {
+                                val serviceIntent = Intent(this@SubjectEditor, DataExporterService::class.java).apply {
                                     action = DataExporterService.ACTION_EXPORT_SUBJECT
                                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, subject)
                                     putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, adapter.itemList)
-                                })
+                                }
+
+                                this@SubjectEditor.startService(serviceIntent)
                             }
                         }
                     }

@@ -20,6 +20,8 @@ interface Streamable {
         const val FILE_NAME_EVENT = "event.json"
         const val FILE_NAME_LOG = "log.json"
 
+        const val FILE_EXTENSION = ".ffs"
+
         const val MIME_TYPE_ZIP = "application/zip"
     }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
@@ -31,6 +33,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorShe
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
 import org.joda.time.LocalDateTime
+import java.io.File
 import java.util.*
 
 class EventEditor : BaseEditor() {
@@ -182,30 +185,42 @@ class EventEditor : BaseEditor() {
 
     private var receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
-                DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                    createSnackbar(R.string.feedback_export_ongoing, rootLayout,
-                        Snackbar.LENGTH_INDEFINITE)
-                }
-                DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
-                    createSnackbar(R.string.feedback_export_completed, rootLayout)
-                }
-                DataExporterService.BROADCAST_EXPORT_FAILED -> {
-                    createSnackbar(R.string.feedback_export_failed, rootLayout)
-                }
-                DataImporterService.BROADCAST_IMPORT_ONGOING -> {
-                    createSnackbar(R.string.feedback_import_ongoing, rootLayout)
-                }
-                DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
-                    createSnackbar(R.string.feedback_import_completed, rootLayout)
-
-                    intent.getParcelableExtra<EventPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                        this@EventEditor.event = it.event
-                        onValueChanged()
+            if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
+                when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
+                    DataExporterService.BROADCAST_EXPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_export_ongoing, rootLayout,
+                            Snackbar.LENGTH_INDEFINITE)
                     }
-                }
-                DataImporterService.BROADCAST_IMPORT_FAILED -> {
-                    createSnackbar(R.string.feedback_import_failed, rootLayout)
+                    DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_export_completed, rootLayout)
+
+                        intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            val uri = CoreApplication.obtainUriForFile(this@EventEditor, File(it))
+
+                            startActivity(ShareCompat.IntentBuilder.from(this@EventEditor)
+                                .addStream(uri)
+                                .setType(Streamable.MIME_TYPE_ZIP)
+                                .setChooserTitle(R.string.dialog_send_to)
+                                .intent)
+                        }
+                    }
+                    DataExporterService.BROADCAST_EXPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_export_failed, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_ONGOING -> {
+                        createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                    }
+                    DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
+                        createSnackbar(R.string.feedback_import_completed, rootLayout)
+
+                        intent.getParcelableExtra<EventPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            this@EventEditor.event = it.event
+                            onValueChanged()
+                        }
+                    }
+                    DataImporterService.BROADCAST_IMPORT_FAILED -> {
+                        createSnackbar(R.string.feedback_import_failed, rootLayout)
+                    }
                 }
             }
         }
@@ -249,13 +264,16 @@ class EventEditor : BaseEditor() {
                                     putExtra(Intent.EXTRA_TITLE, fileName)
                                     type = Streamable.MIME_TYPE_ZIP
                                 }
-                                startActivityForResult(export, REQUEST_CODE_EXPORT)
+
+                                this@EventEditor.startActivityForResult(export, REQUEST_CODE_EXPORT)
                             }
                             R.id.action_share -> {
-                                startService(Intent(context, DataExporterService::class.java).apply {
+                                val serviceIntent = Intent(this@EventEditor, DataExporterService::class.java).apply {
                                     action = DataExporterService.ACTION_EXPORT_EVENT
                                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, event)
-                                })
+                                }
+
+                                this@EventEditor.startService(serviceIntent)
                             }
                         }
                     }

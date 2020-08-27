@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.SwitchPreferenceCompat
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -18,10 +19,12 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.core.work.subject.ClassNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.android.synthetic.main.layout_appbar.*
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
@@ -47,37 +50,62 @@ class SettingsActivity : BaseActivity() {
             override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 super.onViewCreated(view, savedInstanceState)
 
-                findPreference<ListPreference>(R.string.key_theme)?.apply {
-                    setOnPreferenceChangeListener { _, value ->
+                findPreference<ListPreference>(R.string.key_theme)
+                    ?.setOnPreferenceChangeListener { _, value ->
                         if (value is String) {
                             val theme = value.toString()
-                            notifyAppCompatDelegate(theme)
+                            notifyThemeChanged(PreferenceManager.Theme.parse(theme))
                         }
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_task_reminder_interval)?.apply {
-                    setOnPreferenceChangeListener { _, _ ->
-                        val request = OneTimeWorkRequest.Builder(TaskNotificationScheduler::class.java)
-                            .addTag(TaskNotificationScheduler::class.java.simpleName)
-                            .build()
-
-                        workManager.enqueue(request)
-                        true
+                findPreference<SwitchPreferenceCompat>(R.string.key_task_reminder)
+                    ?.setOnPreferenceChangeListener { _, isChecked ->
+                        if (isChecked is Boolean) {
+                            val workerClass = TaskNotificationScheduler::class.java
+                            if (isChecked)
+                                scheduleWorker(workerClass)
+                            else cancelWorker(workerClass)
+                        } else false
                     }
-                }
+
+                findPreference<SwitchPreferenceCompat>(R.string.key_event_reminder)
+                    ?.setOnPreferenceChangeListener { _, isChecked ->
+                        if (isChecked is Boolean) {
+                            val workerClass = EventNotificationScheduler::class.java
+                            if (isChecked)
+                                scheduleWorker(workerClass)
+                            else cancelWorker(workerClass)
+                        } else false
+                    }
+
+                findPreference<SwitchPreferenceCompat>(R.string.key_subject_reminder)
+                    ?.setOnPreferenceChangeListener { _, isChecked ->
+                        if (isChecked is Boolean) {
+                            val workerClass = ClassNotificationScheduler::class.java
+                            if (isChecked)
+                                scheduleWorker(workerClass)
+                            else cancelWorker(workerClass)
+                        } else false
+                    }
+
+                findPreference<Preference>(R.string.key_task_reminder_interval)
+                    ?.setOnPreferenceChangeListener { _, _ ->
+                        scheduleWorker(TaskNotificationScheduler::class.java)
+                    }
+
 
                 findPreference<Preference>(R.string.key_event_reminder_interval)?.apply {
                     setOnPreferenceChangeListener { _, _ ->
-                        val request = OneTimeWorkRequest.Builder(EventNotificationScheduler::class.java)
-                            .addTag(EventNotificationScheduler::class.java.simpleName)
-                            .build()
-
-                        workManager.enqueue(request)
-                        true
+                        scheduleWorker(EventNotificationScheduler::class.java)
                     }
                 }
+
+                findPreference<Preference>(R.string.key_subject_reminder_interval)
+                    ?.setOnPreferenceChangeListener { _, _ ->
+                        scheduleWorker(ClassNotificationScheduler::class.java)
+                    }
+
 
                 findPreference<Preference>(R.string.key_reminder_time)?.apply {
                     summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(preferences.reminderTime)
@@ -97,8 +125,8 @@ class SettingsActivity : BaseActivity() {
                     }
                 }
 
-                findPreference<Preference>(R.string.key_more_notification_settings)?.apply {
-                    setOnPreferenceClickListener {
+                findPreference<Preference>(R.string.key_more_notification_settings)
+                    ?.setOnPreferenceClickListener {
                         val intent = Intent()
                         with(intent) {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -111,20 +139,19 @@ class SettingsActivity : BaseActivity() {
                             }
                             startActivity(this)
                         }
-
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_backup_restore)?.apply {
-                    setOnPreferenceClickListener {
+
+                findPreference<Preference>(R.string.key_backup_restore)
+                    ?.setOnPreferenceClickListener {
                         startActivity(Intent(context, BackupActivity::class.java))
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_battery_optimization)?.apply {
-                    setOnPreferenceClickListener {
+
+                findPreference<Preference>(R.string.key_battery_optimization)
+                    ?.setOnPreferenceClickListener {
                         val manufacturerArray = resources.getStringArray(R.array.oem_battery_optimization)
 
                         var manufacturer = Build.MANUFACTURER.toLowerCase(Locale.getDefault())
@@ -137,11 +164,10 @@ class SettingsActivity : BaseActivity() {
 
                         true
                     }
-                }
             }
 
-            private fun notifyAppCompatDelegate(newTheme: String) {
-                when (PreferenceManager.Theme.parse(newTheme)) {
+            private fun notifyThemeChanged(theme: PreferenceManager.Theme) {
+                when (theme) {
                     PreferenceManager.Theme.DARK ->
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     PreferenceManager.Theme.LIGHT ->
@@ -154,11 +180,32 @@ class SettingsActivity : BaseActivity() {
                 }
             }
 
+            private fun <T: BaseWorker> cancelWorker(worker: Class<T>): Boolean {
+                try {
+                    WorkManager.getInstance(requireContext())
+                        .cancelAllWorkByTag(worker.simpleName)
+
+                    return true
+                } catch (e: Exception) { e.printStackTrace() }
+                return false
+            }
+
+            private fun <T: BaseWorker> scheduleWorker(worker: Class<T>): Boolean {
+                try {
+                    val request = OneTimeWorkRequest.Builder(worker)
+                        .addTag(worker.simpleName)
+                        .build()
+
+                    WorkManager.getInstance(requireContext())
+                        .enqueue(request)
+
+                    return true
+                } catch (e: Exception) { e.printStackTrace() }
+                return false
+            }
+
             private val preferences by lazy {
                 PreferenceManager(requireContext())
-            }
-            private val workManager by lazy {
-                WorkManager.getInstance(requireContext())
             }
 
             companion object {

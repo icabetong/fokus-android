@@ -17,10 +17,9 @@ class CoreApplication : Application() {
     }
 
     companion object {
-        const val PROVIDER_AUTHORITY = "com.isaiahvonrundstedt.fokus.provider"
-
         fun obtainUriForFile(context: Context, source: File): Uri {
-            return FileProvider.getUriForFile(context, PROVIDER_AUTHORITY, source)
+            return FileProvider.getUriForFile(context,
+                "${BuildConfig.APPLICATION_ID}.provider", source)
         }
     }
 

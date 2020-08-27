@@ -21,7 +21,8 @@ class AboutActivity : BaseActivity() {
     }
 
     companion object {
-        const val ABOUT_REPOSITORY_URL = "https://github.com/reichsadmiral/fokus/issues/new"
+        const val ABOUT_REPOSITORY_URL = "https://github.com/asayah-san/fokus-android/issues/new"
+        const val ABOUT_RELEASE_URL = "https://github.com/asayah-san/fokus-android/releases"
         const val ABOUT_DEVELOPER_EMAIL = "isaiahcollins_02@live.com"
 
         class AboutFragment: BasePreference() {
@@ -61,6 +62,11 @@ class AboutActivity : BaseActivity() {
 
                 findPreference<Preference>(R.string.key_version)?.apply {
                     summary = BuildConfig.VERSION_NAME
+                    setOnPreferenceClickListener {
+                        val browserIntent = CustomTabsIntent.Builder().build()
+                        browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_RELEASE_URL))
+                        true
+                    }
                 }
             }
         }

@@ -113,11 +113,11 @@ class BackupRestoreService: BaseService() {
             JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
                 runBlocking { forEach { database?.logs()?.insert(it) } }
             }
-        } else if (entry.name.contains(FileImporterService.DIRECTORY_ATTACHMENTS)
+        } else if (entry.name.contains(Streamable.DIRECTORY_ATTACHMENTS)
             && !entry.isDirectory) {
 
             val targetDirectory = File(getExternalFilesDir(null),
-                FileImporterService.DIRECTORY_ATTACHMENTS)
+                Streamable.DIRECTORY_ATTACHMENTS)
 
             val destination = File(targetDirectory, File(entry.name).name)
 
@@ -160,7 +160,7 @@ class BackupRestoreService: BaseService() {
                     items.add(createCache(Streamable.FILE_NAME_ATTACHMENT, it))
                 }
                 val attachmentFolder = File(cacheDir,
-                    FileImporterService.DIRECTORY_ATTACHMENTS)
+                    Streamable.DIRECTORY_ATTACHMENTS)
                 if (!attachmentFolder.exists()) attachmentFolder.mkdir()
                 attachments?.forEach {
                     if (it.target != null)

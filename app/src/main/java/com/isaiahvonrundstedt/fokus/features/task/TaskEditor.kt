@@ -316,7 +316,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     action = FileImporterService.ACTION_START
                     setData(data?.data)
                     putExtra(FileImporterService.EXTRA_DIRECTORY,
-                        FileImporterService.DIRECTORY_ATTACHMENTS)
+                        Streamable.DIRECTORY_ATTACHMENTS)
                 }
 
                 startService(service)

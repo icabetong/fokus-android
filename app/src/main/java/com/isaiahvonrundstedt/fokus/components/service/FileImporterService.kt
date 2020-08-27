@@ -9,6 +9,7 @@ import androidx.core.content.FileProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
+import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import org.apache.commons.io.FileUtils
 import java.io.File
@@ -25,7 +26,7 @@ class FileImporterService: BaseService() {
         when (intent?.action) {
             ACTION_START -> {
                 targetDirectory = File(getExternalFilesDir(null),
-                    intent.getStringExtra(EXTRA_DIRECTORY) ?: DIRECTORY_GENERIC)
+                    intent.getStringExtra(EXTRA_DIRECTORY) ?: Streamable.DIRECTORY_GENERIC)
 
                 intent.data?.let { onStartCopy(it, intent.getStringExtra(EXTRA_FILE_NAME)) }
             }
@@ -61,10 +62,6 @@ class FileImporterService: BaseService() {
 
         const val EXTRA_DIRECTORY = "extra:directory"
         const val EXTRA_FILE_NAME = "extra:filename"
-
-        const val DIRECTORY_GENERIC = "unspecified"
-        const val DIRECTORY_ATTACHMENTS = "attachments"
-        const val DIRECTORY_ASSETS = "assets"
 
         const val BROADCAST_IMPORT_ONGOING = "broadcast:attachment:ongoing"
         const val BROADCAST_IMPORT_COMPLETED = "broadcast:attachment:completed"

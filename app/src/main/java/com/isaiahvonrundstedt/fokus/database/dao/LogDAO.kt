@@ -19,10 +19,11 @@ interface LogDAO {
     @Query("SELECT * FROM logs")
     suspend fun fetchCore(): List<Log>
 
-    @Query("SELECT * FROM logs")
-    fun fetch(): LiveData<List<Log>>
-
     @Query("DELETE FROM logs")
     suspend fun clear()
+
+    @Query("SELECT * FROM logs ORDER BY dateTimeTriggered ASC")
+    fun fetch(): LiveData<List<Log>>
+
 
 }

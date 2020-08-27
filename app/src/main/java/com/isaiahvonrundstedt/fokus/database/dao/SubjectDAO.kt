@@ -24,7 +24,7 @@ interface SubjectDAO {
     suspend fun fetchCore(): List<Subject>
 
     @Transaction
-    @Query("SELECT * FROM subjects")
+    @Query("SELECT * FROM subjects ORDER BY code ASC")
     fun fetchLiveData(): LiveData<List<SubjectPackage>>
 
 }

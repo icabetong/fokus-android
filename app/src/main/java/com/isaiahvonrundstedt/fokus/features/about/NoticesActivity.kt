@@ -33,27 +33,27 @@ class NoticesActivity: BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                findPreference<Preference>(R.string.key_credit_libraries)?.apply {
-                    setOnPreferenceClickListener {
+                findPreference<Preference>(R.string.key_credit_libraries)
+                    ?.setOnPreferenceClickListener {
                         OssLicensesMenuActivity.setActivityTitle(getString(R.string.activity_open_source_licenses))
                         startActivity(Intent(context, OssLicensesMenuActivity::class.java))
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_credit_notification_sound)?.apply {
-                    setOnPreferenceClickListener {
+
+                findPreference<Preference>(R.string.key_credit_notification_sound)
+                    ?.setOnPreferenceClickListener {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_NOTIFICATION_SOUND)))
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_credit_launcher_icon)?.apply {
-                    setOnPreferenceClickListener {
+
+                findPreference<Preference>(R.string.key_credit_launcher_icon)
+                    ?.setOnPreferenceClickListener {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_LAUNCHER_ICON_BASE)))
                         true
                     }
-                }
+
             }
         }
     }

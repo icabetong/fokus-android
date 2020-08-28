@@ -7,6 +7,7 @@ import android.os.IBinder
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
+import com.isaiahvonrundstedt.fokus.components.json.Metadata
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.utils.DataArchiver
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
@@ -56,6 +57,18 @@ class BackupRestoreService: BaseService() {
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
             val archive = DataArchiver.parseInputStream(this, archiveStream)
+
+            archive.getInputStream(archive.getEntry(Metadata.FILE_NAME))?.use {
+                val metadata = Metadata.fromInputStream(it)
+
+                if (!metadata.verify(Metadata.DATA_BUNDLE)) {
+                    stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
+                    manager?.notify(NOTIFICATION_RESTORE_FAILED,
+                        createNotification(titleRes = R.string.notification_restore_error))
+                    terminateService()
+                    archive.close()
+                }
+            }
 
             for (entry: ZipEntry in archive.entries()) {
                 archive.getInputStream(entry)?.use {
@@ -178,6 +191,9 @@ class BackupRestoreService: BaseService() {
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Log::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_LOG, it))
                 }
+
+                items.add(Metadata(data = Metadata.DATA_BUNDLE)
+                        .writeToFile(cacheDir, Metadata.FILE_NAME))
 
                 if (items.isEmpty()) {
                     stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)

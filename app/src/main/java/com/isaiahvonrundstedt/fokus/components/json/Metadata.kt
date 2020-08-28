@@ -23,9 +23,8 @@ data class Metadata @JvmOverloads constructor (
     var data: String? = null
 ): Streamable {
 
-    fun validate(dataString: String): Boolean {
-        return appVersion == BuildConfig.VERSION_CODE &&
-                databaseVersion == AppDatabase.DATABASE_VERSION &&
+    fun verify(dataString: String): Boolean {
+        return databaseVersion == AppDatabase.DATABASE_VERSION &&
                 data == dataString
     }
 

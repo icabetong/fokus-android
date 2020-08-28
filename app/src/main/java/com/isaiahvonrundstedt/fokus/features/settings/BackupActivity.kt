@@ -66,28 +66,28 @@ class BackupActivity: BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                findPreference<Preference>(R.string.key_backup)?.apply {
-                    summary = manager.previousBackupDate.parseForSummary()
-                    setOnPreferenceClickListener {
-                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                            putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME)
-                            type = Streamable.MIME_TYPE_ZIP
-                        }
-                        startActivityForResult(intent, REQUEST_CODE_BACKUP_FILE)
-                        true
+                setPreferenceSummary(R.string.key_backup, manager.previousBackupDate.parseForSummary())
+                findPreference<Preference>(R.string.key_backup)
+                    ?.setOnPreferenceClickListener {
+                    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME)
+                        type = Streamable.MIME_TYPE_ZIP
                     }
+                    startActivityForResult(intent, REQUEST_CODE_BACKUP_FILE)
+                    true
                 }
 
-                findPreference<Preference>(R.string.key_restore)?.apply {
-                    setOnPreferenceClickListener {
+
+                findPreference<Preference>(R.string.key_restore)
+                    ?.setOnPreferenceClickListener {
                         val chooserIntent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                             type = Streamable.MIME_TYPE_ZIP
                         }, getString(R.string.dialog_choose_backup))
                         startActivityForResult(chooserIntent, REQUEST_CODE_RESTORE_FILE)
                         true
                     }
-                }
+
             }
 
             override fun onDestroy() {

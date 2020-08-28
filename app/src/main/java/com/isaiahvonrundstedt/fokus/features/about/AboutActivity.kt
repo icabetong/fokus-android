@@ -34,40 +34,36 @@ class AboutActivity : BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                findPreference<Preference>(R.string.key_notices)?.apply {
-                    setOnPreferenceClickListener {
+                findPreference<Preference>(R.string.key_notices)
+                    ?.setOnPreferenceClickListener {
                         startActivity(Intent(context, NoticesActivity::class.java))
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_translate)?.apply {
-                    setOnPreferenceClickListener {
+                findPreference<Preference>(R.string.key_translate)
+                    ?.setOnPreferenceClickListener {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse("mailto:${ABOUT_DEVELOPER_EMAIL}")
                         }
                         startActivity(intent)
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_report_issue)?.apply {
-                    setOnPreferenceClickListener {
+                findPreference<Preference>(R.string.key_report_issue)
+                    ?.setOnPreferenceClickListener {
                         val browserIntent = CustomTabsIntent.Builder().build()
                         browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_REPOSITORY_URL))
 
                         true
                     }
-                }
 
-                findPreference<Preference>(R.string.key_version)?.apply {
-                    summary = BuildConfig.VERSION_NAME
-                    setOnPreferenceClickListener {
+                setPreferenceSummary(R.string.key_version, BuildConfig.VERSION_NAME)
+                findPreference<Preference>(R.string.key_version)
+                    ?.setOnPreferenceClickListener {
                         val browserIntent = CustomTabsIntent.Builder().build()
                         browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_RELEASE_URL))
                         true
                     }
-                }
             }
         }
     }

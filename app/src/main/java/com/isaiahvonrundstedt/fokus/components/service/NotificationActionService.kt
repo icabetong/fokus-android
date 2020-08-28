@@ -17,16 +17,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 // acts like a middle man
 class NotificationActionService : IntentService(SERVICE_NAME) {
 
-    companion object {
-        const val SERVICE_NAME = "notificationActionService"
-        const val EXTRA_TASK_ID = "extra:taskID"
-        const val EXTRA_IS_PERSISTENT = "extra:isPersistent"
-        const val EXTRA_ACTION = "extra:action"
-
-        const val ACTION_FINISHED = "action:finished"
-
-        const val finishID = 28
-    }
 
     private val manager by lazy {
         getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -50,6 +40,17 @@ class NotificationActionService : IntentService(SERVICE_NAME) {
             .addTag(ActionWorker::class.java.simpleName)
             .build()
         WorkManager.getInstance(this).enqueue(workRequest)
+    }
+
+    companion object {
+        const val SERVICE_NAME = "service:notification:actions"
+        const val EXTRA_TASK_ID = "extra:taskID"
+        const val EXTRA_IS_PERSISTENT = "extra:isPersistent"
+        const val EXTRA_ACTION = "extra:action"
+
+        const val ACTION_FINISHED = "action:finished"
+
+        const val NOTIFICATION_ID_FINISH = 28
     }
 
 }

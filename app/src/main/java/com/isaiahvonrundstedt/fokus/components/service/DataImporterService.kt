@@ -43,7 +43,7 @@ class DataImporterService: BaseService() {
             try {
                 archive.getInputStream(archive.getEntry(Metadata.FILE_NAME)).use { it ->
                     val metadata = Metadata.fromInputStream(it)
-                    if (metadata.validate(Metadata.DATA_SUBJECT) &&
+                    if (metadata.verify(Metadata.DATA_SUBJECT) &&
                         intent.action == ACTION_IMPORT_SUBJECT) {
 
                         val subjectPackage = SubjectPackage(Subject())
@@ -63,7 +63,7 @@ class DataImporterService: BaseService() {
                         }
 
                         sendResult(subjectPackage)
-                    } else if (metadata.validate(Metadata.DATA_TASK) &&
+                    } else if (metadata.verify(Metadata.DATA_TASK) &&
                             intent.action == ACTION_IMPORT_TASK) {
 
                         val taskPackage = TaskPackage(Task())
@@ -94,7 +94,7 @@ class DataImporterService: BaseService() {
                         }
 
                         sendResult(taskPackage)
-                    } else if (metadata.validate(Metadata.DATA_EVENT) &&
+                    } else if (metadata.verify(Metadata.DATA_EVENT) &&
                             intent.action == ACTION_IMPORT_EVENT) {
 
                         val eventPackage = EventPackage(Event())

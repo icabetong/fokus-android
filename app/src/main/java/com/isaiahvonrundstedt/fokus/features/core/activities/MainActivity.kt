@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
@@ -124,7 +125,7 @@ class MainActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (CoreApplication.isRunningAtVersion(Build.VERSION_CODES.O)) {
             with(NotificationChannelManager(this)) {
                 register(NotificationChannelManager.CHANNEL_ID_GENERIC,
                     NotificationManager.IMPORTANCE_DEFAULT)

@@ -95,21 +95,21 @@ class SettingsActivity : BaseActivity() {
                     }
 
 
-                findPreference<Preference>(R.string.key_event_reminder_interval)?.apply {
-                    setOnPreferenceChangeListener { _, _ ->
+                findPreference<Preference>(R.string.key_event_reminder_interval)
+                    ?.setOnPreferenceChangeListener { _, _ ->
                         scheduleWorker(EventNotificationScheduler::class.java)
                     }
-                }
 
                 findPreference<Preference>(R.string.key_subject_reminder_interval)
                     ?.setOnPreferenceChangeListener { _, _ ->
                         scheduleWorker(ClassNotificationScheduler::class.java)
                     }
 
-
-                findPreference<Preference>(R.string.key_reminder_time)?.apply {
-                    summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(preferences.reminderTime)
-                    setOnPreferenceClickListener {
+                setPreferenceSummary(R.string.key_reminder_time,
+                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME)
+                        .print(preferences.reminderTime))
+                findPreference<Preference>(R.string.key_reminder_time)
+                    ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
                             timePicker(show24HoursView = false) { _, datetime ->
                                 preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
@@ -123,7 +123,6 @@ class SettingsActivity : BaseActivity() {
                         }
                         true
                     }
-                }
 
                 findPreference<Preference>(R.string.key_more_notification_settings)
                     ?.setOnPreferenceClickListener {

@@ -52,7 +52,8 @@ class BackupRestoreService: BaseService() {
 
     private fun startRestore(uri: Uri) {
         startForegroundCompat(NOTIFICATION_RESTORE_ONGOING,
-            createNotification(true, R.string.notification_restore_ongoing))
+            createNotification(true, R.string.notification_restore_ongoing,
+                iconRes = R.drawable.ic_hero_download_24))
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
@@ -145,7 +146,8 @@ class BackupRestoreService: BaseService() {
             return
 
         startForegroundCompat(NOTIFICATION_BACKUP_ONGOING,
-            createNotification(ongoing = true, titleRes = R.string.notification_backup_ongoing))
+            createNotification(ongoing = true, titleRes = R.string.notification_backup_ongoing,
+                iconRes = R.drawable.ic_hero_upload_24))
 
         try {
             runBlocking {

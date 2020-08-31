@@ -23,7 +23,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
 
-        if (preferenceManager.subjectReminder) {
+        if (preferences.subjectReminder) {
             scheduleList.forEach {
                 it.subject = subject.code
 
@@ -55,7 +55,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.update(subject, scheduleList)
 
-        if (preferenceManager.subjectReminder) {
+        if (preferences.subjectReminder) {
             scheduleList.forEach {
                 workManager.cancelAllWorkByTag(it.scheduleID)
 

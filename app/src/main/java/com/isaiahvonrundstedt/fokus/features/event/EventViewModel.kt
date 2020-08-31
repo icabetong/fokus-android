@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
@@ -27,7 +28,8 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
-            workManager.enqueue(request)
+            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
+                request)
         }
 
         EventWidgetProvider.triggerRefresh(app)
@@ -37,7 +39,7 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
         repository.remove(event)
 
         if (event.isImportant)
-            notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
+            notificationService?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
         workManager.cancelUniqueWork(event.eventID)
 
@@ -48,14 +50,15 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
         repository.update(event)
 
         if (event.schedule?.isBeforeNow == true || !event.isImportant)
-            notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
+            notificationService?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
         if (PreferenceManager(app).eventReminder && event.schedule!!.isAfterNow) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
-            workManager.enqueue(request)
+            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
+                request)
         }
 
         EventWidgetProvider.triggerRefresh(app)

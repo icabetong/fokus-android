@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -24,13 +25,14 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
-        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferences.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
 
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
-            workManager.enqueue(request)
+            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
+                request)
         }
 
         TaskWidgetProvider.triggerRefresh(app)
@@ -40,7 +42,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         repository.remove(task)
 
         if (task.isImportant)
-            notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
+            notificationService?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         workManager.cancelUniqueWork(task.taskID)
 
@@ -54,18 +56,19 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         // we should dismiss it when the user updates
         // the task to finish
         if (task.isFinished || !task.isImportant || task.dueDate?.isBeforeNow == true)
-            notificationManager?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
+            notificationService?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferences.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
                 .build()
-            workManager.enqueue(request)
+            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
+                request)
         }
 
         TaskWidgetProvider.triggerRefresh(app)

@@ -9,7 +9,10 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 
 abstract class BaseViewModel(private val app: Application) : AndroidViewModel(app) {
 
-    protected val notificationManager by lazy {
+    protected val applicationContext: Context
+        get() = app.applicationContext
+
+    protected val notificationService by lazy {
         app.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
     }
 
@@ -17,7 +20,7 @@ abstract class BaseViewModel(private val app: Application) : AndroidViewModel(ap
         WorkManager.getInstance(app)
     }
 
-    protected val preferenceManager by lazy {
+    protected val preferences by lazy {
         PreferenceManager(app)
     }
 }

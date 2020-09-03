@@ -8,12 +8,14 @@
     <string name="activity_events">Vos événements</string>
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_logs">Journaux de notification</string>
+    <string name="activity_completed">Tâches terminées</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_backup">Sauvegarde et Restauration</string>
     <string name="activity_notices">Avis aux tiers</string>
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
 
+    <string name="menu_completed">Terminé</string>
     <string name="menu_share">Partager</string>
     <string name="menu_import">Importer</string>
     <string name="menu_clear_items">Points clairs</string>
@@ -50,6 +52,8 @@
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
     <string name="empty_view_no_tasks_title">Pas de tâches en suspens</string>
     <string name="empty_view_no_tasks_summary">Vous n\'avez actuellement aucune tâche en cours. Si vous en avez une, ajoutez-la en utilisant le bouton ci-dessous.</string>
+    <string name="empty_view_no_completed_title">Pas de tâches terminées</string>
+    <string name="empty_view_no_completed_summary">Vous n\'avez actuellement aucune tâche terminée. Toutes les tâches que vous avez marquées comme étant terminées seront affichées ici.</string>
     <string name="empty_view_no_logs_title">Pas de journaux enregistré</string>
     <string name="empty_view_no_logs_summary">Une fois qu\'une tâche, un événement ou un rappel quelconque apparaîtra à l\'ombre de votre notification, il apparaîtra également ici.</string>
     <string name="empty_view_no_events_title">Aucun événement prévu</string>
@@ -105,6 +109,7 @@
     <string name="feedback_attachment_removed">Pièce jointe retirée</string>
     <string name="feedback_event_removed">Événement supprimé</string>
     <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
+    <string name="feedback_task_marked_as_pending">Tâche marquée comme étant en suspens</string>
     <string name="feedback_subject_empty_name">Vous avez oublié de saisir le code de l\'objet</string>
     <string name="feedback_subject_empty_description">Vous avez oublié de saisir la description</string>
     <string name="feedback_subject_no_schedule">Vous avez oublié d\'ajouter un horaire</string>

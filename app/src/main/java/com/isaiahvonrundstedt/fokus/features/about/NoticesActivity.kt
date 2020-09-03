@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.isaiahvonrundstedt.fokus.R
@@ -43,14 +44,18 @@ class NoticesActivity: BaseActivity() {
 
                 findPreference<Preference>(R.string.key_credit_notification_sound)
                     ?.setOnPreferenceClickListener {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_NOTIFICATION_SOUND)))
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(URL_NOTIFICATION_SOUND))
+
                         true
                     }
 
 
                 findPreference<Preference>(R.string.key_credit_launcher_icon)
                     ?.setOnPreferenceClickListener {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(URL_LAUNCHER_ICON_BASE)))
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(URL_LAUNCHER_ICON_BASE))
+
                         true
                     }
 

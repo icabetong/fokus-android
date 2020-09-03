@@ -9,12 +9,14 @@
     <string name="activity_events">Uw evenementen</string>
     <string name="activity_subjects">Uw onderwerpen</string>
     <string name="activity_logs">Meldingslogboeken</string>
+    <string name="activity_completed">Voltooide taken</string>
     <string name="activity_settings">Instellingen</string>
     <string name="activity_backup">Back-up en Herstel</string>
     <string name="activity_notices">Mededelingen van derden</string>
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
+    <string name="menu_completed">Voltooid</string>
     <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>
     <string name="menu_clear_items">Duidelijke items</string>
@@ -51,6 +53,8 @@
     <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken, om er een toe te voegen tikt u op het add-icoontje</string>
     <string name="empty_view_no_tasks_title">Geen hangende taken</string>
     <string name="empty_view_no_tasks_summary">U hebt momenteel geen lopende taken. Als u er een hebt, voeg deze dan toe met behulp van de onderstaande knop.</string>
+    <string name="empty_view_no_completed_title">Geen afgeronde taken</string>
+    <string name="empty_view_no_completed_summary">Je hebt op dit moment geen afgeronde taken. Elke taak die u hebt gemarkeerd als voltooid zal hier worden weergegeven.</string>
     <string name="empty_view_no_logs_title">Geen Opgenomen Logboeken</string>
     <string name="empty_view_no_logs_summary">Zodra een taak, een gebeurtenis of een herinnering in de schaduw van uw melding verschijnt, zal deze ook hier verschijnen.</string>
     <string name="empty_view_no_events_title">Geen geplande gebeurtenissen</string>
@@ -106,6 +110,7 @@
     <string name="feedback_attachment_removed">Bevestiging verwijderd</string>
     <string name="feedback_event_removed">Evenement verwijderd</string>
     <string name="feedback_task_marked_as_finished">Taak gemarkeerd als voltooid</string>
+    <string name="feedback_task_marked_as_pending">Taak gemarkeerd als In afwachting van</string>
     <string name="feedback_subject_empty_name">U bent vergeten de onderwerpcode in te voeren</string>
     <string name="feedback_subject_empty_description">Je bent vergeten de beschrijving in te voeren</string>
     <string name="feedback_subject_no_schedule">Je bent vergeten een schema toe te voegen</string>

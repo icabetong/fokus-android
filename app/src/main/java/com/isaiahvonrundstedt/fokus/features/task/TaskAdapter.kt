@@ -89,7 +89,7 @@ class TaskAdapter(private var actionListener: ActionListener,
     }
 
     interface TaskCompletionListener {
-        fun <T> onTaskCompleted(t: T, isChecked: Boolean)
+        fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean)
     }
 
     companion object {

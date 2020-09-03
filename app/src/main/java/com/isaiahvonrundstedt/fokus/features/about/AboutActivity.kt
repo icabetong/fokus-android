@@ -51,8 +51,8 @@ class AboutActivity : BaseActivity() {
 
                 findPreference<Preference>(R.string.key_report_issue)
                     ?.setOnPreferenceClickListener {
-                        val browserIntent = CustomTabsIntent.Builder().build()
-                        browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_REPOSITORY_URL))
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(ABOUT_REPOSITORY_URL))
 
                         true
                     }
@@ -60,8 +60,9 @@ class AboutActivity : BaseActivity() {
                 setPreferenceSummary(R.string.key_version, BuildConfig.VERSION_NAME)
                 findPreference<Preference>(R.string.key_version)
                     ?.setOnPreferenceClickListener {
-                        val browserIntent = CustomTabsIntent.Builder().build()
-                        browserIntent.launchUrl(requireContext(), Uri.parse(ABOUT_RELEASE_URL))
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(ABOUT_RELEASE_URL))
+
                         true
                     }
             }

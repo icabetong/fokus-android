@@ -6,9 +6,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,6 +22,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.task.completed.CompletedActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_empty_tasks.*
 import nl.dionsegijn.konfetti.models.Shape
@@ -36,6 +35,11 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
 
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -75,31 +79,29 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     // Update the task in the database then show
     // snackbar feedback and also if the sounds if turned on
     // play a fokus sound.
-    override fun <T> onTaskCompleted(t: T, isChecked: Boolean) {
-        if (t is TaskPackage) {
-            viewModel.update(t.task)
-            if (isChecked) {
-                createSnackbar(R.string.button_mark_as_finished, recyclerView)
+    override fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean) {
+        viewModel.update(taskPackage.task)
+        if (isChecked) {
+            createSnackbar(R.string.button_mark_as_finished, recyclerView)
 
-                with(PreferenceManager(context)) {
-                    if (confetti) {
-                        confettiView.build()
-                            .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
-                            .setDirection(0.0, 359.0)
-                            .setSpeed(1f, 5f)
-                            .setFadeOutEnabled(true)
-                            .setTimeToLive(1000L)
-                            .addShapes(Shape.Square, Shape.Circle)
-                            .addSizes(Size(12, 5f))
-                            .setPosition(confettiView.x + confettiView.width / 2,
-                                confettiView.y + confettiView.height / 3)
-                            .burst(100)
-                    }
-
-                    if (sounds)
-                        RingtoneManager.getRingtone(requireContext(),
-                            Uri.parse(PreferenceManager.DEFAULT_SOUND)).play()
+            with(PreferenceManager(context)) {
+                if (confetti) {
+                    confettiView.build()
+                        .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
+                        .setDirection(0.0, 359.0)
+                        .setSpeed(1f, 5f)
+                        .setFadeOutEnabled(true)
+                        .setTimeToLive(1000L)
+                        .addShapes(Shape.Square, Shape.Circle)
+                        .addSizes(Size(12, 5f))
+                        .setPosition(confettiView.x + confettiView.width / 2,
+                            confettiView.y + confettiView.height / 3)
+                        .burst(100)
                 }
+
+                if (sounds)
+                    RingtoneManager.getRingtone(requireContext(),
+                        Uri.parse(PreferenceManager.DEFAULT_SOUND)).play()
             }
         }
     }
@@ -167,6 +169,20 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                         viewModel.update(it, attachments ?: emptyList())
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_task, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_completed -> {
+                startActivity(Intent(context, CompletedActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

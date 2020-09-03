@@ -157,9 +157,9 @@ class SettingsActivity : BaseActivity() {
                         if (!manufacturerArray.contains(manufacturer))
                             manufacturer = "generic"
 
-                        val browserIntent = CustomTabsIntent.Builder().build()
-                        browserIntent.launchUrl(requireContext(), Uri.parse(SETTINGS_URL_BATTERY_OPTIMIZATION
-                                + manufacturer))
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(),
+                                Uri.parse(SETTINGS_URL_BATTERY_OPTIMIZATION + manufacturer))
 
                         true
                     }

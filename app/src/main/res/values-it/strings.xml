@@ -7,12 +7,14 @@
     <string name="activity_events">I vostri eventi</string>
     <string name="activity_subjects">I vostri soggetti</string>
     <string name="activity_logs">Registri delle notifiche</string>
+    <string name="activity_completed">Compiti completati</string>
     <string name="activity_settings">Impostazioni</string>
     <string name="activity_backup">Backup e Ripristino</string>
     <string name="activity_notices">Avvisi di terzi</string>
     <string name="activity_open_source_licenses">Licenze Open Source</string>
     <string name="activity_about">Informazioni</string>
 
+    <string name="menu_completed">Completato</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_import">Importazione</string>
     <string name="menu_clear_items">Cancella gli articoli</string>
@@ -49,6 +51,8 @@
     <string name="empty_view_no_subjects_summary">I soggetti aiutano a ordinare le attività, per aggiungerne una, toccare l\'icona aggiungi.</string>
     <string name="empty_view_no_tasks_title">Nessun compito in sospeso</string>
     <string name="empty_view_no_tasks_summary">Al momento non avete compiti in sospeso. Se ne avete una, aggiungetela con il pulsante qui sotto.</string>
+    <string name="empty_view_no_completed_title">Nessun compito finito</string>
+    <string name="empty_view_no_completed_summary">Al momento non avete compiti finiti. Ogni compito che avete segnato come finito verrà mostrato qui.</string>
     <string name="empty_view_no_logs_title">Nessun registro registrato</string>
     <string name="empty_view_no_logs_summary">Una volta che un\'attività, un evento o un promemoria appare all\'ombra di notifica, apparirà anche qui.</string>
     <string name="empty_view_no_events_title">Nessun evento programmato</string>
@@ -104,6 +108,7 @@
     <string name="feedback_attachment_removed">Attacco rimosso</string>
     <string name="feedback_event_removed">Evento rimosso</string>
     <string name="feedback_task_marked_as_finished">Compito contrassegnato come Finito</string>
+    <string name="feedback_task_marked_as_pending">Attività contrassegnata come in sospeso</string>
     <string name="feedback_subject_empty_name">Hai dimenticato di inserire il codice dell\'oggetto</string>
     <string name="feedback_subject_empty_description">Hai dimenticato di inserire la descrizione</string>
     <string name="feedback_subject_no_schedule">Hai dimenticato di aggiungere un programma</string>

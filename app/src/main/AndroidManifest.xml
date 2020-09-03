@@ -44,6 +44,7 @@
         <activity android:name=".features.subject.SubjectEditor"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.log.LogActivity" />
+        <activity android:name=".features.task.completed.CompletedActivity"/>
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.settings.BackupActivity"/>
         <activity android:name=".features.about.AboutActivity" />

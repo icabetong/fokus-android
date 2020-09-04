@@ -24,6 +24,8 @@ class NoticesActivity: BaseActivity() {
 
         const val URL_LAUNCHER_ICON_BASE = "https://flaticon.com/authors/freepik"
         const val URL_NOTIFICATION_SOUND = "https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/"
+        const val URL_VECTOR_ILLUSTRATIONS = "https://undraw.co"
+        const val URL_USER_INTERFACE_ICONS = "https://heroicons.dev"
 
         class NoticesFragment: BasePreference() {
 
@@ -55,6 +57,22 @@ class NoticesActivity: BaseActivity() {
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(URL_LAUNCHER_ICON_BASE))
+
+                        true
+                    }
+
+                findPreference<Preference>(R.string.key_credit_vector_illustrations)
+                    ?.setOnPreferenceClickListener {
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(URL_VECTOR_ILLUSTRATIONS))
+
+                        true
+                    }
+
+                findPreference<Preference>(R.string.key_credit_user_interface_icons)
+                    ?.setOnPreferenceClickListener {
+                        CustomTabsIntent.Builder().build()
+                            .launchUrl(requireContext(), Uri.parse(URL_USER_INTERFACE_ICONS))
 
                         true
                     }

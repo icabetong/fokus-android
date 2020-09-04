@@ -7,6 +7,8 @@
     <color name="color_widget_tint">#c1e4f8</color>
     <color name="color_surface">#ffffff</color>
     <color name="color_on_surface">#111111</color>
+    <color name="color_surface_secondary">#eeeeee</color>
+    <color name="color_on_surface_secondary">@color/color_on_surface</color>
     <color name="color_surface_stroke">#e2e6f0</color>
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#ffffff</color>

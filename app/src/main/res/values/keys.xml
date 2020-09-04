@@ -26,6 +26,8 @@
     <string translatable="false" name="key_credit_libraries">librariesKey</string>
     <string translatable="false" name="key_credit_notification_sound">notificationSoundKey</string>
     <string translatable="false" name="key_credit_launcher_icon">launcherIconKey</string>
+    <string translatable="false" name="key_credit_vector_illustrations">vectorIllustrationsKey</string>
+    <string translatable="false" name="key_credit_user_interface_icons">userInterfaceIconsKey</string>
 
     <string translatable="false" name="behavior_expandable_bottom_bar">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</string>
 

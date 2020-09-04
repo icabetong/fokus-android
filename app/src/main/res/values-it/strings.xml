@@ -251,9 +251,9 @@
 
     <string name="open_source_libraries">Biblioteche Open Source</string>
     <string name="credit_other_resources">Altre risorse</string>
-    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
     <string name="credit_notification_sound_summary">Suono di notifica</string>
-    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
     <string name="credit_launcher_icon_summary">Icona Lanciatore</string>
+    <string name="credit_vector_illustrations_summary">Illustrazioni vettoriali</string>
+    <string name="credit_user_interface_icons_summary">Icone dell\'interfaccia utente</string>
 
 </resources>

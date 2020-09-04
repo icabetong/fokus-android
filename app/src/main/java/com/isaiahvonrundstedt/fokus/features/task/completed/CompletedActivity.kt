@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.task.*
 import kotlinx.android.synthetic.main.activity_completed.recyclerView
 import kotlinx.android.synthetic.main.layout_appbar.*
+import kotlinx.android.synthetic.main.layout_empty_completed.*
 import java.io.File
 
 class CompletedActivity: BaseActivity(),
@@ -45,6 +47,7 @@ class CompletedActivity: BaseActivity(),
 
         viewModel.fetchCompleted()?.observe(this, {
             adapter.submitList(it)
+            emptyView.isVisible = it.isEmpty()
         })
     }
 

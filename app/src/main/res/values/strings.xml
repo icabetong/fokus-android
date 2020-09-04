@@ -253,9 +253,13 @@
 
     <string name="open_source_libraries">Open Source Libraries</string>
     <string name="credit_other_resources">Other Resources</string>
-    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
+    <string name="credit_notification_sound_title" translatable="false">Zapsplat</string>
     <string name="credit_notification_sound_summary">Notification Sound</string>
-    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
+    <string name="credit_launcher_icon_title" translatable="false">Freepik</string>
     <string name="credit_launcher_icon_summary">Launcher Icon</string>
+    <string name="credit_vector_illustrations_title" translatable="false">Katerina Limpitsouni</string>
+    <string name="credit_vector_illustrations_summary">Vector Illustrations</string>
+    <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
+    <string name="credit_user_interface_icons_summary">User Interface Icons</string>
 
 </resources>

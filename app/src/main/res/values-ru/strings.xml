@@ -253,9 +253,9 @@
 
     <string name="open_source_libraries">Библиотеки с открытым исходным кодом</string>
     <string name="credit_other_resources">Прочие ресурсы</string>
-    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
     <string name="credit_notification_sound_summary">Звук уведомления</string>
-    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
     <string name="credit_launcher_icon_summary">икона-лаунчер</string>
+    <string name="credit_vector_illustrations_summary">векторные иллюстрации</string>
+    <string name="credit_user_interface_icons_summary">Иконки пользовательского интерфейса</string>
 
 </resources>

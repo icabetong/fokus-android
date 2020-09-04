@@ -2,6 +2,8 @@
 <resources>
     <color name="color_surface">#121212</color>
     <color name="color_on_surface">#ffffff</color>
+    <color name="color_surface_secondary">#1c1c1c</color>
+    <color name="color_on_surface_secondary">@color/color_on_surface</color>
     <color name="color_surface_stroke">#1e1e1e</color>
 
     <color name="color_status_background">@color/color_surface</color>

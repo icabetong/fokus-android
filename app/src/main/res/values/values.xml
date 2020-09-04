@@ -131,8 +131,7 @@
         <item name="boxCornerRadiusTopEnd">@dimen/surface_corner_radius</item>
         <item name="boxCornerRadiusBottomStart">@dimen/surface_corner_radius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/surface_corner_radius</item>
-        <item name="boxStrokeColor">@color/color_text_input_stroke</item>
-        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/color_primary</item>
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>
     </style>
     <style name="Fokus.Widget.Snackbar" parent="Widget.MaterialComponents.Snackbar"/>
@@ -187,7 +186,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance.Body.Medium">
+    <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance">
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/color_secondary_text</item>
         <item name="android:textSize">16sp</item>
     </style>

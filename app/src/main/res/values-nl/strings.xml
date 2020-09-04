@@ -253,9 +253,9 @@
 
     <string name="open_source_libraries">Open Source Bibliotheken</string>
     <string name="credit_other_resources">Andere middelen</string>
-    <string translatable="false" name="credit_notification_sound_title">Zapsplat</string>
     <string name="credit_notification_sound_summary">Notificatie Geluid</string>
-    <string translatable="false" name="credit_launcher_icon_title">Freepik</string>
     <string name="credit_launcher_icon_summary">Lanceerpictogram</string>
+    <string name="credit_vector_illustrations_summary">Vectorafbeeldingen</string>
+    <string name="credit_user_interface_icons_summary">Gebruikersinterface-iconen</string>
 
 </resources>

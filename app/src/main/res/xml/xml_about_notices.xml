@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
@@ -19,7 +18,16 @@
             app:key="@string/key_credit_launcher_icon"
             app:title="@string/credit_launcher_icon_title"
             app:summary="@string/credit_launcher_icon_summary"/>
-        
+
+        <Preference
+            app:key="@string/key_credit_vector_illustrations"
+            app:title="@string/credit_vector_illustrations_title"
+            app:summary="@string/credit_vector_illustrations_summary"/>
+
+        <Preference
+            app:key="@string/key_credit_user_interface_icons"
+            app:title="@string/credit_user_interface_icons_title"
+            app:summary="@string/credit_user_interface_icons_summary"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

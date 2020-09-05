@@ -181,10 +181,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">22sp</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.Body">
-        <item name="android:textColor">?attr/colorPrimary</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
+    <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.List.Overline">
+        <item name="android:textColor">@color/color_secondary_text</item>
     </style>
     <style name="Fokus.TextAppearance.Editor.Value" parent="Fokus.TextAppearance">
         <item name="android:textStyle">bold</item>
@@ -209,8 +207,8 @@
     <style name="Fokus.TextAppearance.Widget.Item.Body" parent="Fokus.TextAppearance.Body">
         <item name="android:textColor">@color/color_secondary_text</item>
     </style>
-    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance">
-        <item name="android:textStyle">bold</item>
+    <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline">
+        <item name="android:textColor">@color/color_primary</item>
     </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->

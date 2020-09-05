@@ -18,6 +18,8 @@
         <item name="android:navigationBarColor">@color/color_surface</item>
     </style>
 
+    <style name="Fokus.Theme.Core.Editor"/>
+
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

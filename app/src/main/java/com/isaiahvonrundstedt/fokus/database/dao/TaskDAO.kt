@@ -30,7 +30,7 @@ interface TaskDAO {
     suspend fun fetchCount(): Int
 
     @Transaction
-    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isFinished = :status ORDER BY dueDate ASC")
-    fun fetchLiveData(status: Int = 0): LiveData<List<TaskPackage>>
+    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isFinished = :isFinished ORDER BY dueDate ASC")
+    fun fetchLiveData(isFinished: Int = 0): LiveData<List<TaskPackage>>
 
 }

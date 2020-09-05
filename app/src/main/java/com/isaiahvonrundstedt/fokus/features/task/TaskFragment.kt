@@ -22,7 +22,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import com.isaiahvonrundstedt.fokus.features.task.completed.CompletedActivity
+import com.isaiahvonrundstedt.fokus.features.task.finished.FinishedTasksActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_empty_tasks.*
 import nl.dionsegijn.konfetti.models.Shape
@@ -57,7 +57,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, {
+        viewModel.fetchPending()?.observe(viewLifecycleOwner, {
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
         })
@@ -179,7 +179,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_completed -> {
-                startActivity(Intent(context, CompletedActivity::class.java))
+                startActivity(Intent(context, FinishedTasksActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

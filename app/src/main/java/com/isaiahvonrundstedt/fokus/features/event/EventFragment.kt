@@ -3,9 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +13,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.features.event.previous.PreviousEventsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import kotlinx.android.synthetic.main.fragment_event.*
@@ -26,6 +25,11 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +47,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer {
+        viewModel.fetchFuture()?.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
         })
@@ -77,10 +81,6 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                     createSnackbar(R.string.feedback_event_removed, recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.event) }
                     }
-
-                    createSnackbar(R.string.feedback_event_removed, recyclerView).run {
-                        setAction(R.string.button_undo) { viewModel.insert(t.event) }
-                    }
                 }
             }
         }
@@ -106,6 +106,20 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                         viewModel.update(it)
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_event, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_previous -> {
+                startActivity(Intent(context, PreviousEventsActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.task.completed
+package com.isaiahvonrundstedt.fokus.features.task.finished
 
 import android.app.Activity
 import android.content.Intent
@@ -18,12 +18,12 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.task.*
-import kotlinx.android.synthetic.main.activity_completed.recyclerView
+import kotlinx.android.synthetic.main.activity_finished.recyclerView
 import kotlinx.android.synthetic.main.layout_appbar.*
-import kotlinx.android.synthetic.main.layout_empty_completed.*
+import kotlinx.android.synthetic.main.layout_empty_finished.*
 import java.io.File
 
-class CompletedActivity: BaseActivity(),
+class FinishedTasksActivity: BaseActivity(),
     BaseListAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
     private val adapter = TaskAdapter(this, this)
@@ -34,9 +34,9 @@ class CompletedActivity: BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+        setContentView(R.layout.activity_finished)
         setPersistentActionBar(toolbar)
-        setToolbarTitle(R.string.activity_completed)
+        setToolbarTitle(R.string.activity_finished)
 
         recyclerView.addItemDecoration(ItemDecoration(this))
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -45,7 +45,7 @@ class CompletedActivity: BaseActivity(),
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetchCompleted()?.observe(this, {
+        viewModel.fetchFinished()?.observe(this, {
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
         })

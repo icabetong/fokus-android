@@ -9,7 +9,8 @@
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Betreff</string>
     <string name="activity_logs">Benachrichtigungsprotokolle</string>
-    <string name="activity_completed">Abgeschlossene Aufgaben</string>
+    <string name="activity_finished">Abgeschlossene Aufgaben</string>
+    <string name="activity_previous">Frühere Veranstaltungen</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_backup">Sichern und Wiederherstellen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
@@ -17,6 +18,7 @@
     <string name="activity_about">Über</string>
 
     <string name="menu_completed">Abgeschlossen</string>
+    <string name="menu_previous">Vorherige</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
     <string name="menu_clear_items">Artikel löschen</string>
@@ -53,8 +55,8 @@
     <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
     <string name="empty_view_no_tasks_title">Keine anhängigen Aufgaben</string>
     <string name="empty_view_no_tasks_summary">Sie haben derzeit keine offenen Aufgaben. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
-    <string name="empty_view_no_completed_title">Keine beendeten Aufgaben</string>
-    <string name="empty_view_no_completed_summary">Sie haben derzeit keine abgeschlossenen Aufgaben. Jede Aufgabe, die Sie als erledigt markiert haben, wird hier angezeigt.</string>
+    <string name="empty_view_no_finished_title">Keine beendeten Aufgaben</string>
+    <string name="empty_view_no_finished_summary">Sie haben derzeit keine abgeschlossenen Aufgaben. Jede Aufgabe, die Sie als erledigt markiert haben, wird hier angezeigt.</string>
     <string name="empty_view_no_logs_title">Keine aufgezeichneten Protokolle</string>
     <string name="empty_view_no_logs_summary">Sobald eine Aufgabe, ein Ereignis oder eine Erinnerung in Ihrem Benachrichtigungsfenster erscheint, wird sie auch hier angezeigt.</string>
     <string name="empty_view_no_events_title">Keine geplanten Ereignisse</string>

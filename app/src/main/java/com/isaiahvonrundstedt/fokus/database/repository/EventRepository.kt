@@ -3,8 +3,10 @@ package com.isaiahvonrundstedt.fokus.database.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import org.joda.time.DateTime
 
 class EventRepository private constructor(app: Application) {
 
@@ -24,7 +26,11 @@ class EventRepository private constructor(app: Application) {
         }
     }
 
-    fun fetch(): LiveData<List<EventPackage>>? = events?.fetchLiveData()
+    fun fetch(isAfterNow: Boolean = true): LiveData<List<EventPackage>>? {
+        return if (isAfterNow)
+         events?.fetchLiveData(DateTimeConverter.fromDateTime(DateTime.now()))
+        else events?.fetchLiveDataPrevious(DateTimeConverter.fromDateTime(DateTime.now()))
+    }
 
     suspend fun insert(event: Event) {
         events?.insert(event)

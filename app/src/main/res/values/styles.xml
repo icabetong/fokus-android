@@ -11,5 +11,6 @@
     </style>
 
     <style name="Fokus.Theme.Core.Navigation"/>
+    <style name="Fokus.Theme.Core.Editor"/>
 
 </resources>

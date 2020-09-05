@@ -8,7 +8,8 @@
     <string name="activity_events">Twoje Wydarzenia</string>
     <string name="activity_subjects">Twoi Poddani</string>
     <string name="activity_logs">Dzienniki Powiadomień</string>
-    <string name="activity_completed">Zadania ukończone</string>
+    <string name="activity_finished">Zadania ukończone</string>
+    <string name="activity_previous">Poprzednie wydarzenia</string>
     <string name="activity_settings">Ustawienia</string>
     <string name="activity_backup">Tworzenie i Przywracanie kopii Zapasowych</string>
     <string name="activity_notices">Powiadomienia osób Trzecich</string>
@@ -16,6 +17,7 @@
     <string name="activity_about">O</string>
 
     <string name="menu_completed">Ukończono</string>
+    <string name="menu_previous">Poprzedni</string>
     <string name="menu_share">Podziel się</string>
     <string name="menu_import">Import</string>
     <string name="menu_clear_items">Pozycje Jasne</string>
@@ -52,8 +54,8 @@
     <string name="empty_view_no_subjects_summary">Tematy pomagają w sortowaniu zadań, aby je dodać, dotknij ikony dodawania.</string>
     <string name="empty_view_no_tasks_title">Brak zadań oczekujących</string>
     <string name="empty_view_no_tasks_summary">Obecnie nie masz żadnych zadań do wykonania. Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
-    <string name="empty_view_no_completed_title">Nie ma zadań zakończonych</string>
-    <string name="empty_view_no_completed_summary">Obecnie nie masz żadnych zakończonych zadań. Każde zadanie, które zaznaczyłeś jako zakończone, zostanie tutaj pokazane.</string>
+    <string name="empty_view_no_finished_title">Nie ma zadań zakończonych</string>
+    <string name="empty_view_no_finished_summary">Obecnie nie masz żadnych zakończonych zadań. Każde zadanie, które zaznaczyłeś jako zakończone, zostanie tutaj pokazane.</string>
     <string name="empty_view_no_logs_title">Brak zapisanych dzienników</string>
     <string name="empty_view_no_logs_summary">Gdy zadanie, zdarzenie lub jakiekolwiek przypomnienie pojawi się w cieniu powiadomienia, pojawi się ono również tutaj.</string>
     <string name="empty_view_no_events_title">Brak zaplanowanych wydarzeń</string>

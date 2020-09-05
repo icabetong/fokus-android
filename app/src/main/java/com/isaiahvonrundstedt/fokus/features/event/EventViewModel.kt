@@ -16,9 +16,12 @@ import kotlinx.coroutines.launch
 class EventViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
-    private var items: LiveData<List<EventPackage>>? = repository.fetch()
+    private var futureItems: LiveData<List<EventPackage>>? = repository.fetch()
+    private var previousItems: LiveData<List<EventPackage>>? = repository.fetch(false)
 
-    fun fetch(): LiveData<List<EventPackage>>? = items
+    fun fetchFuture(): LiveData<List<EventPackage>>? = futureItems
+
+    fun fetchPrevious(): LiveData<List<EventPackage>>? = previousItems
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)

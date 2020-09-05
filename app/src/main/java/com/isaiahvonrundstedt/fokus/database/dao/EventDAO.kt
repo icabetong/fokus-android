@@ -24,7 +24,10 @@ interface EventDAO {
     suspend fun fetchCore(): List<Event>
 
     @Transaction
-    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID ORDER BY schedule ASC")
-    fun fetchLiveData(): LiveData<List<EventPackage>>
+    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE schedule > :value ORDER BY schedule ASC")
+    fun fetchLiveData(value: String?): LiveData<List<EventPackage>>
 
+    @Transaction
+    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE schedule < :value ORDER BY schedule ASC")
+    fun fetchLiveDataPrevious(value: String?): LiveData<List<EventPackage>>
 }

@@ -9,7 +9,8 @@
     <string name="activity_events">Ваши События</string>
     <string name="activity_subjects">Ваши предметы</string>
     <string name="activity_logs">Журналы уведомлений</string>
-    <string name="activity_completed">Выполненные Задачи</string>
+    <string name="activity_finished">Выполненные Задачи</string>
+    <string name="activity_previous">Предыдущие события</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
     <string name="activity_notices">Уведомления третьих лиц</string>
@@ -17,6 +18,7 @@
     <string name="activity_about">О сайте</string>
 
     <string name="menu_completed">Заполнено</string>
+    <string name="menu_previous">Предыдущий</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>
     <string name="menu_clear_items">Чистые предметы</string>
@@ -53,8 +55,8 @@
     <string name="empty_view_no_subjects_summary">Темы помогают сортировать ваши задачи, чтобы добавить одну из них, нажмите значок добавления.</string>
     <string name="empty_view_no_tasks_title">Нет Отложенных Задач</string>
     <string name="empty_view_no_tasks_summary">В настоящее время у вас нет незавершённых дел. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
-    <string name="empty_view_no_completed_title">Нет готовых заданий</string>
-    <string name="empty_view_no_completed_summary">В настоящее время у вас нет законченных заданий. Каждая задача, которую вы отметили как Завершенную, будет показана здесь.</string>
+    <string name="empty_view_no_finished_title">Нет готовых заданий</string>
+    <string name="empty_view_no_finished_summary">В настоящее время у вас нет законченных заданий. Каждая задача, которую вы отметили как Завершенную, будет показана здесь.</string>
     <string name="empty_view_no_logs_title">Нет записанных журналов</string>
     <string name="empty_view_no_logs_summary">Как только задание, событие или любое напоминание появится в тени уведомления, оно также появится здесь.</string>
     <string name="empty_view_no_events_title">Нет Запланированных событий</string>

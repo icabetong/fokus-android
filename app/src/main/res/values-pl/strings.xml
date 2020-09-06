@@ -16,11 +16,11 @@
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
 
-    <string name="menu_completed">Ukończono</string>
+    <string name="menu_finished">Zakończono</string>
     <string name="menu_previous">Poprzedni</string>
     <string name="menu_share">Podziel się</string>
     <string name="menu_import">Import</string>
-    <string name="menu_clear_items">Pozycje Jasne</string>
+    <string name="menu_clear_items">Kłody przezroczyste</string>
     <string name="menu_export_to_file">Eksport do pliku</string>
     <string name="menu_share_directly">Udział bezpośredni</string>
 

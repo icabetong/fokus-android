@@ -9,7 +9,7 @@
     <string name="activity_events">Ваши События</string>
     <string name="activity_subjects">Ваши предметы</string>
     <string name="activity_logs">Журналы уведомлений</string>
-    <string name="activity_finished">Выполненные Задачи</string>
+    <string name="activity_finished">Готовые задачи</string>
     <string name="activity_previous">Предыдущие события</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
@@ -17,11 +17,11 @@
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
 
-    <string name="menu_completed">Заполнено</string>
+    <string name="menu_finished">Готовый</string>
     <string name="menu_previous">Предыдущий</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>
-    <string name="menu_clear_items">Чистые предметы</string>
+    <string name="menu_clear_items">Чистые журналы</string>
     <string name="menu_export_to_file">Экспорт в файл</string>
     <string name="menu_share_directly">Поделиться напрямую</string>
 

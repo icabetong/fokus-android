@@ -16,11 +16,11 @@
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
 
-    <string name="menu_completed">Terminé</string>
+    <string name="menu_finished">Terminé</string>
     <string name="menu_previous">Précédent</string>
     <string name="menu_share">Partager</string>
     <string name="menu_import">Importer</string>
-    <string name="menu_clear_items">Points clairs</string>
+    <string name="menu_clear_items">Effacer les journaux</string>
     <string name="menu_export_to_file">Exporter vers le fichier</string>
     <string name="menu_share_directly">Partager directement</string>
 

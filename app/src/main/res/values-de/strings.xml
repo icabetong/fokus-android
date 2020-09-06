@@ -9,7 +9,7 @@
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Betreff</string>
     <string name="activity_logs">Benachrichtigungsprotokolle</string>
-    <string name="activity_finished">Abgeschlossene Aufgaben</string>
+    <string name="activity_finished">Beendete Aufgaben</string>
     <string name="activity_previous">Frühere Veranstaltungen</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_backup">Sichern und Wiederherstellen</string>
@@ -17,11 +17,11 @@
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
-    <string name="menu_completed">Abgeschlossen</string>
+    <string name="menu_finished">Beendet</string>
     <string name="menu_previous">Vorherige</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
-    <string name="menu_clear_items">Artikel löschen</string>
+    <string name="menu_clear_items">Protokolle löschen</string>
     <string name="menu_export_to_file">In Datei exportieren</string>
     <string name="menu_share_directly">Direkt teilen</string>
 

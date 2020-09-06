@@ -89,17 +89,17 @@ data class Subject @JvmOverloads constructor(
         }
     }
 
-    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Subject::class.java)
+    override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Subject::class.java)
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Subject::class.java)?.also {
             subjectID = it.subjectID
             code = it.code
@@ -112,7 +112,7 @@ data class Subject @JvmOverloads constructor(
 
         fun fromInputStream(inputStream: InputStream): Subject {
             return Subject().apply {
-                this.parseInputStream(inputStream)
+                this.fromInputStream(inputStream)
             }
         }
     }

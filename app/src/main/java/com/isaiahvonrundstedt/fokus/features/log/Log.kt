@@ -93,18 +93,18 @@ data class Log @JvmOverloads constructor(
         }
     }
 
-    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Log::class.java)
+    override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Log::class.java)
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
                 it.flush()
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Log::class.java)?.also {
             logID = it.logID
             title = it.title

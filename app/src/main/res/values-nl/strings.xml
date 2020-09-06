@@ -17,11 +17,11 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
-    <string name="menu_completed">Voltooid</string>
+    <string name="menu_finished">Afgewerkt</string>
     <string name="menu_previous">Vorige</string>
     <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>
-    <string name="menu_clear_items">Duidelijke items</string>
+    <string name="menu_clear_items">Duidelijke logboeken</string>
     <string name="menu_export_to_file">Exporteren naar bestand</string>
     <string name="menu_share_directly">Rechtstreeks delen</string>
 

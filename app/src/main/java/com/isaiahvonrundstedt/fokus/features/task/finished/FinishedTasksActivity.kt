@@ -82,7 +82,7 @@ class FinishedTasksActivity: BaseActivity(),
     override fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean) {
         viewModel.update(taskPackage.task)
         if (!isChecked)
-            createSnackbar(R.string.feedback_task_marked_as_finished, recyclerView)
+            createSnackbar(R.string.feedback_task_marked_as_pending, recyclerView)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

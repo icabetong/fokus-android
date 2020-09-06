@@ -76,17 +76,17 @@ data class Event @JvmOverloads constructor(
 
     }
 
-    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Event::class.java)
+    override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Event::class.java)
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Event::class.java)?.also {
             eventID = it.eventID
             name = it.name
@@ -103,7 +103,7 @@ data class Event @JvmOverloads constructor(
 
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {
-                this.parseInputStream(inputStream)
+                this.fromInputStream(inputStream)
             }
         }
     }

@@ -28,19 +28,19 @@ data class Metadata @JvmOverloads constructor (
                 data == dataString
     }
 
-    override fun toJson(): String? {
+    override fun toJsonString(): String? {
         return JsonDataStreamer.encodeToJson(this, Metadata::class.java)
     }
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Metadata::class.java)?.also {
             appVersion = it.appVersion
             appBuildName = it.appBuildName
@@ -60,7 +60,7 @@ data class Metadata @JvmOverloads constructor (
 
         fun fromInputStream(inputStream: InputStream): Metadata {
             return Metadata().apply {
-                this.parseInputStream(inputStream)
+                this.fromInputStream(inputStream)
             }
         }
     }

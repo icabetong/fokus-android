@@ -178,7 +178,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_completed -> {
+            R.id.action_finished -> {
                 startActivity(Intent(context, FinishedTasksActivity::class.java))
                 true
             }

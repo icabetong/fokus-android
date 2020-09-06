@@ -121,17 +121,17 @@ data class Schedule @JvmOverloads constructor(
         return days
     }
 
-    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Schedule::class.java)
+    override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Schedule::class.java)
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Schedule::class.java)?.also {
             scheduleID = it.scheduleID
             daysOfWeek = it.daysOfWeek

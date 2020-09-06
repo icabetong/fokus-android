@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_completed"
-        android:title="@string/menu_completed"
+        android:id="@+id/action_finished"
+        android:title="@string/menu_finished"
         app:showAsAction="never"/>
 
 </menu>

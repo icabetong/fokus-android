@@ -195,7 +195,7 @@ class BackupRestoreService: BaseService() {
                 }
 
                 items.add(Metadata(data = Metadata.DATA_BUNDLE)
-                        .writeToFile(cacheDir, Metadata.FILE_NAME))
+                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
 
                 if (items.isEmpty()) {
                     stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)

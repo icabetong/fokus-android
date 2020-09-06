@@ -42,14 +42,14 @@ class DataExporterService: BaseService() {
             when (intent?.action) {
                 ACTION_EXPORT_SUBJECT -> {
                     items.add(Metadata(data = Metadata.DATA_SUBJECT)
-                        .writeToFile(cacheDir, Metadata.FILE_NAME))
+                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
 
                     val subject: Subject? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
                     val schedules: List<Schedule>? = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS)
 
                     if (subject != null) {
                         fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
-                        items.add(subject.writeToFile(cacheDir, Streamable.FILE_NAME_SUBJECT))
+                        items.add(subject.toJsonFile(cacheDir, Streamable.FILE_NAME_SUBJECT))
                     }
                     items.add(Schedule.writeToFile(schedules ?: emptyList(), cacheDir,
                         Streamable.FILE_NAME_SCHEDULE))
@@ -57,14 +57,14 @@ class DataExporterService: BaseService() {
                 }
                 ACTION_EXPORT_TASK -> {
                     items.add(Metadata(data = Metadata.DATA_TASK)
-                        .writeToFile(cacheDir, Metadata.FILE_NAME))
+                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
 
                     val task: Task? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
                     val attachments: List<Attachment>? = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS)
 
                     if (task != null) {
                         fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
-                        items.add(task.writeToFile(cacheDir, Streamable.FILE_NAME_TASK))
+                        items.add(task.toJsonFile(cacheDir, Streamable.FILE_NAME_TASK))
                     }
                     items.add(Attachment.writeToFile(attachments ?: emptyList(), cacheDir))
 
@@ -82,13 +82,13 @@ class DataExporterService: BaseService() {
                 ACTION_EXPORT_EVENT -> {
 
                     items.add(Metadata(data = Metadata.DATA_EVENT)
-                        .writeToFile(cacheDir, Metadata.FILE_NAME))
+                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
 
                     val event: Event? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
 
                     if (event != null) {
                         fileName = event.name ?: Streamable.ARCHIVE_NAME_GENERIC
-                        items.add(event.writeToFile(cacheDir, Streamable.FILE_NAME_EVENT))
+                        items.add(event.toJsonFile(cacheDir, Streamable.FILE_NAME_EVENT))
                     }
                 }
             }

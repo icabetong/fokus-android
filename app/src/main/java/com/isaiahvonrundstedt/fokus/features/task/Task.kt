@@ -72,17 +72,17 @@ data class Task @JvmOverloads constructor(
         else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
     }
 
-    override fun toJson(): String? = JsonDataStreamer.encodeToJson(this, Task::class.java)
+    override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Task::class.java)
 
-    override fun writeToFile(destination: File, name: String): File {
+    override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
             Okio.buffer(Okio.sink(this)).use {
-                toJson()?.also { json -> it.write(json.toByteArray()) }
+                toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }
     }
 
-    override fun parseInputStream(inputStream: InputStream) {
+    override fun fromInputStream(inputStream: InputStream) {
         JsonDataStreamer.decodeOnceFromJson(inputStream, Task::class.java)?.also {
             taskID = it.taskID
             name = it.name
@@ -99,7 +99,7 @@ data class Task @JvmOverloads constructor(
 
         fun fromInputStream(inputStream: InputStream): Task {
             return Task().apply {
-                this.parseInputStream(inputStream)
+                this.fromInputStream(inputStream)
             }
         }
     }

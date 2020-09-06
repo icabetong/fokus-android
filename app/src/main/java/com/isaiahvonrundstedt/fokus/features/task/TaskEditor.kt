@@ -79,7 +79,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             adapter.setItems(intent.getParcelableListExtra(EXTRA_ATTACHMENTS) ?: emptyList())
 
             taskNameTextInput.transitionName = TRANSITION_ID_NAME + task.taskID
-        } else if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_TITLE)) {
+        } else if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_IS_EXPANDED)) {
 
             task.name = intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_TITLE)
 

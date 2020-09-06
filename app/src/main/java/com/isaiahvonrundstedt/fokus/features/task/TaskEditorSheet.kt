@@ -54,6 +54,7 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
 
             task.name = taskNameTextInput.text.toString()
             val editor = Intent(context, TaskEditor::class.java)
+            editor.putExtra(EXTRA_TASK_IS_EXPANDED, true)
             editor.putExtra(EXTRA_TASK_TITLE, task.name)
 
             if (task.hasDueDate())
@@ -90,6 +91,7 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
     }
 
     companion object {
+        const val EXTRA_TASK_IS_EXPANDED = "extra:task:expanded"
         const val EXTRA_TASK_TITLE = "extra:task:title"
         const val EXTRA_TASK_DUE = "extra:task:due"
     }

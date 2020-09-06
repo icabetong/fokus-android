@@ -82,7 +82,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     override fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean) {
         viewModel.update(taskPackage.task)
         if (isChecked) {
-            createSnackbar(R.string.button_mark_as_finished, recyclerView)
+            createSnackbar(R.string.feedback_task_marked_as_finished, recyclerView)
 
             with(PreferenceManager(context)) {
                 if (confetti) {

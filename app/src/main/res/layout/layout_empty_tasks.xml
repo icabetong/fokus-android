@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:padding="8dp"
-        app:srcCompat="@drawable/undraw_working_from_anywhere"/>
+        app:srcCompat="@drawable/undraw_cup_of_tea"/>
 
     <TextView
         android:layout_width="match_parent"

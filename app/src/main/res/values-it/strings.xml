@@ -59,6 +59,8 @@
     <string name="empty_view_no_logs_summary">Una volta che un\'attività, un evento o un promemoria appare all\'ombra di notifica, apparirà anche qui.</string>
     <string name="empty_view_no_events_title">Nessun evento programmato</string>
     <string name="empty_view_no_events_summary">Al momento non avete eventi in programma. Se ne avete uno, aggiungetelo usando il pulsante qui sotto.</string>
+    <string name="empty_view_no_previous_title">Nessun evento precedente</string>
+    <string name="empty_view_no_previous_summary">Al momento non avete eventi precedenti. Ogni evento che è passato il suo programma apparirà qui</string>
 
     <string name="days_of_week_item_sunday">Domenica</string>
     <string name="days_of_week_item_monday">Lunedì</string>

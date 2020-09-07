@@ -61,6 +61,8 @@
     <string name="empty_view_no_logs_summary">Sobald eine Aufgabe, ein Ereignis oder eine Erinnerung in Ihrem Benachrichtigungsfenster erscheint, wird sie auch hier angezeigt.</string>
     <string name="empty_view_no_events_title">Keine geplanten Ereignisse</string>
     <string name="empty_view_no_events_summary">Sie haben derzeit keine geplanten Veranstaltungen. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
+    <string name="empty_view_no_previous_title">Keine früheren Ereignisse</string>
+    <string name="empty_view_no_previous_summary">Sie haben derzeit keine früheren Veranstaltungen. Jede Veranstaltung, die nach ihrem Zeitplan liegt, erscheint hier</string>
 
     <string name="days_of_week_item_sunday">Sonntag</string>
     <string name="days_of_week_item_monday">Montag</string>

@@ -60,6 +60,8 @@
     <string name="empty_view_no_logs_summary">Une fois qu\'une tâche, un événement ou un rappel quelconque apparaîtra à l\'ombre de votre notification, il apparaîtra également ici.</string>
     <string name="empty_view_no_events_title">Aucun événement prévu</string>
     <string name="empty_view_no_events_summary">Vous n\'avez actuellement aucun événement prévu. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>
+    <string name="empty_view_no_previous_title">Aucun événement précédent</string>
+    <string name="empty_view_no_previous_summary">Vous n\'avez actuellement aucun événement antérieur. Tout événement ayant dépassé son calendrier apparaîtra ici</string>
 
     <string name="days_of_week_item_sunday">Dimanche</string>
     <string name="days_of_week_item_monday">Lundi</string>

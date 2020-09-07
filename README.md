@@ -8,6 +8,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 <a href="https://galaxy.store/fokus"><img src="https://img.samsungapps.com/seller/images/badges/galaxyStore/png_big/GalaxyStore_English.png" width="30%" alt="Available on Samsung Galaxy Store" style="max-width: 100%; height: auto;"></a>
 
 ## Features
+
 * Get reminded when a task is nearing its due
 * Get reminded about incoming events
 * Add attachments to your tasks
@@ -17,35 +18,42 @@ Fokus is an open source application that combines a todo list and a calendar tha
 * On-Device Database
 
 ## Screenshots
+
 <img src="art/1-tasks.png" width="250"><img src="art/2-events.png" width="250"><img src="art/3-tags.png" width="250">
 
 ## Translations
-* English
-* German
-* French
-* Polish
-* Dutch
-* Italian
-* Russian
+
+* 🇩🇪 German
+* 🇺🇸 English
+* 🇫🇷 French
+* 🇮🇹 Italian
+* 🇳🇱 Dutch
+* 🇵🇱 Polish
+* 🇷🇺 Russian
 
 ## Built with
+
 * Kotlin
 * Room
 * AndroidX
 * Other cool open-source libraries (see Acknowledgements)
 
 ## Versioning
+
 We use [SemVer](http://www.semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/isaiahcollins02/fokus/tags)
 
 ## Licenses
+
 This project is licensed under the AGPL-3.0 - see the license file for more details
 
 ## Contributing
+
 This is an open-source personal project and I am very happy to accept community contributions. Open a PR to get started.
 
 ## Acknowledgements
 
 ### Libraries used
+
 * [Material Dialogs](https://github.com/afollestad/material-dialogs) - Aidan Follestad
 * [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
 * [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
@@ -55,6 +63,7 @@ This is an open-source personal project and I am very happy to accept community 
 * [Okio](https://github.com/square/okio) - Square
 
 ### Other materials used
+
 * [HeroIcons](https://www.heroicons.dev) - Tailwind Labs
 * [Launcher Icon](https://www.flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat

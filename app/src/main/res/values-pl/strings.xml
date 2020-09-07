@@ -60,6 +60,8 @@
     <string name="empty_view_no_logs_summary">Gdy zadanie, zdarzenie lub jakiekolwiek przypomnienie pojawi się w cieniu powiadomienia, pojawi się ono również tutaj.</string>
     <string name="empty_view_no_events_title">Brak zaplanowanych wydarzeń</string>
     <string name="empty_view_no_events_summary">Obecnie nie masz żadnych zaplanowanych wydarzeń. Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
+    <string name="empty_view_no_previous_title">Brak wcześniejszych zdarzeń</string>
+    <string name="empty_view_no_previous_summary">Obecnie nie masz żadnych wcześniejszych zdarzeń. Każde zdarzenie, które przekroczyło swój harmonogram, pojawi się tutaj</string>
 
     <string name="days_of_week_item_sunday">Niedziela</string>
     <string name="days_of_week_item_monday">Poniedziałek</string>

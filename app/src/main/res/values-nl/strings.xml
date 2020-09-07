@@ -61,6 +61,8 @@
     <string name="empty_view_no_logs_summary">Zodra een taak, een gebeurtenis of een herinnering in de schaduw van uw melding verschijnt, zal deze ook hier verschijnen.</string>
     <string name="empty_view_no_events_title">Geen geplande gebeurtenissen</string>
     <string name="empty_view_no_events_summary">U heeft momenteel geen geplande evenementen. Als u er een heeft, voeg deze dan toe met behulp van de onderstaande knop.</string>
+    <string name="empty_view_no_previous_title">Geen eerdere gebeurtenissen</string>
+    <string name="empty_view_no_previous_summary">U heeft op dit moment geen eerdere gebeurtenissen. Elke gebeurtenis die voorbij het schema is, zal hier verschijnen.</string>
 
     <string name="days_of_week_item_sunday">Zondag</string>
     <string name="days_of_week_item_monday">Maandag</string>

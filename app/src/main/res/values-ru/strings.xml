@@ -61,6 +61,8 @@
     <string name="empty_view_no_logs_summary">Как только задание, событие или любое напоминание появится в тени уведомления, оно также появится здесь.</string>
     <string name="empty_view_no_events_title">Нет Запланированных событий</string>
     <string name="empty_view_no_events_summary">В настоящее время у вас нет запланированных мероприятий. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
+    <string name="empty_view_no_previous_title">Предыдущие события отсутствуют</string>
+    <string name="empty_view_no_previous_summary">В настоящее время у вас нет никаких предыдущих событий. Каждое событие, прошедшее по расписанию, будет отображаться здесь.</string>
 
     <string name="days_of_week_item_sunday">воскресенье</string>
     <string name="days_of_week_item_monday">Понедельник</string>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:padding="8dp"
-        app:srcCompat="@drawable/undraw_working"/>
+        app:srcCompat="@drawable/undraw_coding"/>
 
     <TextView
         android:layout_width="match_parent"

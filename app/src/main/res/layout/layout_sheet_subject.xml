@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:srcCompat="@drawable/undraw_researching"/>
+                app:srcCompat="@drawable/undraw_working"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

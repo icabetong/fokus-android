@@ -61,6 +61,8 @@
     <string name="empty_view_no_logs_summary">Once a task, event or any reminder appear at your notification shade, it will also appear here.</string>
     <string name="empty_view_no_events_title">No Scheduled Events</string>
     <string name="empty_view_no_events_summary">You currently have no scheduled events. If you have one, add it using the button below.</string>
+    <string name="empty_view_no_previous_title">No Previous Events</string>
+    <string name="empty_view_no_previous_summary">You currently have no previous events. Every event that is past its schedule will appear here</string>
 
     <string name="days_of_week_item_sunday">Sunday</string>
     <string name="days_of_week_item_monday">Monday</string>

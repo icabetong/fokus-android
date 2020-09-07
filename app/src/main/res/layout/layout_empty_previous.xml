@@ -14,14 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:padding="8dp"
-        app:srcCompat="@drawable/undraw_working"/>
+        app:srcCompat="@drawable/undraw_camping"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="@string/empty_view_no_finished_title"
+        android:text="@string/empty_view_no_previous_title"
         android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
 
     <TextView
@@ -29,6 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="@string/empty_view_no_finished_summary"/>
+        android:text="@string/empty_view_no_previous_summary"/>
 
 </LinearLayout>

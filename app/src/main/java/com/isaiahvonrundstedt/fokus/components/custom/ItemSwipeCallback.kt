@@ -1,9 +1,11 @@
 package com.isaiahvonrundstedt.fokus.components.custom
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -11,11 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 
-class ItemSwipeCallback<T : Swipeable>(context: Context, private var t: T)
+class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
     : ItemTouchHelper.Callback() {
 
+    private var isThemeDark: Boolean = false
     private var icon = ContextCompat.getDrawable(context, R.drawable.ic_hero_trash_24)
-    private var background = ColorDrawable(Color.parseColor("#66ea4335"))
+    private var background: Drawable
+
+    init {
+        isThemeDark = (context.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+
+        val color = if (isThemeDark)
+            COLOR_BACKGROUND_DARK
+        else COLOR_BACKGROUND_LIGHT
+
+        background = ColorDrawable(Color.parseColor(color))
+    }
 
     override fun getMovementFlags(recyclerView: RecyclerView,
                                   viewHolder: RecyclerView.ViewHolder): Int {
@@ -26,7 +40,7 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var t: T)
                         target: RecyclerView.ViewHolder): Boolean = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        t.onSwipe(viewHolder.adapterPosition, direction)
+        adapter.onSwipe(viewHolder.adapterPosition, direction)
     }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
@@ -48,7 +62,11 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var t: T)
         }
 
         icon?.let {
-            it.setTint(Color.parseColor("#ea4335"))
+            val tintColor = if (isThemeDark)
+                Color.parseColor(COLOR_ICON_DARK)
+            else Color.parseColor(COLOR_ICON_LIGHT)
+
+            it.setTint(tintColor)
 
             val iconMargin: Int = (itemView.height - it.intrinsicHeight) / 2
 
@@ -60,5 +78,13 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var t: T)
             it.setBounds(iconLeft, iconTop, iconRight, iconBottom)
             it.draw(c)
         }
+    }
+
+    companion object {
+        const val COLOR_ICON_LIGHT = "#ea4335"
+        const val COLOR_ICON_DARK = "#000000"
+
+        const val COLOR_BACKGROUND_LIGHT = "#66ea4335"
+        const val COLOR_BACKGROUND_DARK = "#ea4335"
     }
 }

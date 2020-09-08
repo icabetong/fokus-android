@@ -71,6 +71,14 @@
     <string name="days_of_week_item_friday">Piątek</string>
     <string name="days_of_week_item_saturday">Sobota</string>
 
+    <string name="days_of_week_item_sunday_short">Niedz</string>
+    <string name="days_of_week_item_monday_short">Pon</string>
+    <string name="days_of_week_item_tuesday_short">Wt</string>
+    <string name="days_of_week_item_wednesday_short">Śr</string>
+    <string name="days_of_week_item_thursday_short">Czw</string>
+    <string name="days_of_week_item_friday_short">Pią</string>
+    <string name="days_of_week_item_saturday_short">Sob</string>
+
     <string name="dialog_assign_subject">Przydzielić Podmiot</string>
     <string name="dialog_create_task">Tworzenie Zadania</string>
     <string name="dialog_pick_start_time">Wybierz czas rozpoczęcia</string>

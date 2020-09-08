@@ -55,7 +55,7 @@ data class Event @JvmOverloads constructor(
             context.getString(R.string.yesterday)
         else if (schedule?.isTomorrow() == true)
             context.getString(R.string.tomorrow)
-        else DateTimeFormat.forPattern("MMMM d").print(schedule)
+        else DateTimeFormat.forPattern("MMM d").print(schedule)
     }
 
     fun formatScheduleTime(): String {

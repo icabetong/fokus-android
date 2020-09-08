@@ -70,6 +70,14 @@
     <string name="days_of_week_item_friday">Venerdì</string>
     <string name="days_of_week_item_saturday">Sabato</string>
 
+    <string name="days_of_week_item_sunday_short">Do</string>
+    <string name="days_of_week_item_monday_short">Lun</string>
+    <string name="days_of_week_item_tuesday_short">Mar</string>
+    <string name="days_of_week_item_wednesday_short">Mer</string>
+    <string name="days_of_week_item_thursday_short">Gio</string>
+    <string name="days_of_week_item_friday_short">Ven</string>
+    <string name="days_of_week_item_saturday_short">Sab</string>
+
     <string name="dialog_assign_subject">Assegnare il Soggetto</string>
     <string name="dialog_create_task">Creare un compito</string>
     <string name="dialog_pick_start_time">Scegliere un orario di inizio</string>

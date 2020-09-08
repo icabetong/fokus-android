@@ -56,7 +56,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
                         scheduleView.removeAllViews()
                     schedules.forEach {
                         val chip = Chip(itemView.context).apply {
-                            text = it.format(context)
+                            text = it.format(context, true)
                         }
                         scheduleView.addView(chip)
                     }

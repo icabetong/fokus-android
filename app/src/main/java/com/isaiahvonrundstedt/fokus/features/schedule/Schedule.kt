@@ -47,10 +47,10 @@ data class Schedule @JvmOverloads constructor(
         return false
     }
 
-    fun format(context: Context): String {
+    fun format(context: Context, isAbbreviated: Boolean = false): String {
         return StringBuilder().apply {
-            append(formatDaysOfWeek(context))
-            append(" ")
+            append(formatDaysOfWeek(context, isAbbreviated))
+            append(", ")
             append(formatBothTime())
         }.toString()
     }
@@ -75,12 +75,16 @@ data class Schedule @JvmOverloads constructor(
      *   @return the formatted days of week
      *           (e.g. "Sunday, Monday and Thursday")
      */
-    fun formatDaysOfWeek(context: Context): String {
+    fun formatDaysOfWeek(context: Context, isAbbreviated: Boolean): String {
         val builder = StringBuilder()
         val list = getDaysAsList()
         list.forEachIndexed { index, i ->
             // Append the appropriate day name string from string resource
-            builder.append(context.getString(getStringResourceForDay(i)))
+            val resID = if (isAbbreviated)
+                getStringResourceForDayAbbreviated(i)
+            else getStringResourceForDay(i)
+
+            builder.append(context.getString(resID))
 
             // Check if the item's index is second to last,
             // if it is, then add an "and" from string resource
@@ -91,6 +95,20 @@ data class Schedule @JvmOverloads constructor(
                 builder.append(", ")
         }
         return builder.toString()
+    }
+
+    @StringRes
+    fun getStringResourceForDayAbbreviated(day: Int): Int {
+        return when (day) {
+            DateTimeConstants.SUNDAY -> R.string.days_of_week_item_sunday_short
+            DateTimeConstants.MONDAY -> R.string.days_of_week_item_monday_short
+            DateTimeConstants.TUESDAY -> R.string.days_of_week_item_tuesday_short
+            DateTimeConstants.WEDNESDAY -> R.string.days_of_week_item_wednesday_short
+            DateTimeConstants.THURSDAY -> R.string.days_of_week_item_thursday_short
+            DateTimeConstants.FRIDAY -> R.string.days_of_week_item_friday_short
+            DateTimeConstants.SATURDAY -> R.string.days_of_week_item_saturday_short
+            else -> 0
+        }
     }
 
     @StringRes

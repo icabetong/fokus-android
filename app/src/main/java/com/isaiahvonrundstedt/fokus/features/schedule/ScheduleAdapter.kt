@@ -75,7 +75,7 @@ class ScheduleAdapter(private val actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             with(t) {
                 if (this is Schedule) {
-                    titleView.text = formatDaysOfWeek(rootView.context)
+                    titleView.text = formatDaysOfWeek(rootView.context, false)
                     summaryView.text = formatBothTime()
                 }
                 removeButton.setOnClickListener {

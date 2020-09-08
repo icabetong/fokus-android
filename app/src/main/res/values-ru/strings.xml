@@ -72,6 +72,14 @@
     <string name="days_of_week_item_friday">пятница</string>
     <string name="days_of_week_item_saturday">суббота</string>
 
+    <string name="days_of_week_item_sunday_short">Вск</string>
+    <string name="days_of_week_item_monday_short">Пнд</string>
+    <string name="days_of_week_item_tuesday_short">Втр</string>
+    <string name="days_of_week_item_wednesday_short">Срд</string>
+    <string name="days_of_week_item_thursday_short">Чтв</string>
+    <string name="days_of_week_item_friday_short">Птн</string>
+    <string name="days_of_week_item_saturday_short">Сбт</string>
+
     <string name="dialog_assign_subject">Назначить Предмет</string>
     <string name="dialog_create_task">Создать задачу</string>
     <string name="dialog_pick_start_time">Выберите время начала</string>

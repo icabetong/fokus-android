@@ -72,6 +72,14 @@
     <string name="days_of_week_item_friday">Vrijdag</string>
     <string name="days_of_week_item_saturday">Zaterdag</string>
 
+    <string name="days_of_week_item_sunday_short">Zo</string>
+    <string name="days_of_week_item_monday_short">Ma</string>
+    <string name="days_of_week_item_tuesday_short">Di</string>
+    <string name="days_of_week_item_wednesday_short">Wo</string>
+    <string name="days_of_week_item_thursday_short">Do</string>
+    <string name="days_of_week_item_friday_short">Vr</string>
+    <string name="days_of_week_item_saturday_short">Za</string>
+
     <string name="dialog_assign_subject">Onderwerp Toewijzen</string>
     <string name="dialog_create_task">Taak Aanmaken</string>
     <string name="dialog_pick_start_time">Kies een starttijd</string>

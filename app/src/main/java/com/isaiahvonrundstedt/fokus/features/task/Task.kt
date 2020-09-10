@@ -96,7 +96,6 @@ data class Task @JvmOverloads constructor(
     }
 
     companion object {
-
         fun fromInputStream(inputStream: InputStream): Task {
             return Task().apply {
                 this.fromInputStream(inputStream)

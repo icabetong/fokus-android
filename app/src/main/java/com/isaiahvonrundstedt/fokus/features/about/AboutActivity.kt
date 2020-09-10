@@ -21,7 +21,7 @@ class AboutActivity : BaseActivity() {
     }
 
     companion object {
-        const val ABOUT_REPOSITORY_URL = "https://github.com/asayah-san/fokus-android/issues/new"
+        const val ABOUT_ISSUE_URL = "https://github.com/asayah-san/fokus-android/issues/new"
         const val ABOUT_RELEASE_URL = "https://github.com/asayah-san/fokus-android/releases"
         const val ABOUT_DEVELOPER_EMAIL = "isaiahcollins_02@live.com"
 
@@ -45,14 +45,16 @@ class AboutActivity : BaseActivity() {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse("mailto:${ABOUT_DEVELOPER_EMAIL}")
                         }
-                        startActivity(intent)
+
+                        if (intent.resolveActivity(requireContext().packageManager) != null)
+                            startActivity(intent)
                         true
                     }
 
                 findPreference<Preference>(R.string.key_report_issue)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
-                            .launchUrl(requireContext(), Uri.parse(ABOUT_REPOSITORY_URL))
+                            .launchUrl(requireContext(), Uri.parse(ABOUT_ISSUE_URL))
 
                         true
                     }

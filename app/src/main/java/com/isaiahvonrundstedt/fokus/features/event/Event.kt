@@ -100,7 +100,6 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
-
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {
                 this.fromInputStream(inputStream)

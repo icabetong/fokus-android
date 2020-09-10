@@ -109,7 +109,6 @@ data class Subject @JvmOverloads constructor(
     }
 
     companion object {
-
         fun fromInputStream(inputStream: InputStream): Subject {
             return Subject().apply {
                 this.fromInputStream(inputStream)

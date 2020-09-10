@@ -51,8 +51,7 @@ class DataExporterService: BaseService() {
                         fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
                         items.add(subject.toJsonFile(cacheDir, Streamable.FILE_NAME_SUBJECT))
                     }
-                    items.add(Schedule.writeToFile(schedules ?: emptyList(), cacheDir,
-                        Streamable.FILE_NAME_SCHEDULE))
+                    items.add(Schedule.toJsonFile(schedules ?: emptyList(), cacheDir))
 
                 }
                 ACTION_EXPORT_TASK -> {
@@ -66,7 +65,7 @@ class DataExporterService: BaseService() {
                         fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
                         items.add(task.toJsonFile(cacheDir, Streamable.FILE_NAME_TASK))
                     }
-                    items.add(Attachment.writeToFile(attachments ?: emptyList(), cacheDir))
+                    items.add(Attachment.toJsonFile(attachments ?: emptyList(), cacheDir))
 
                     val attachmentFolder = File(cacheDir,
                         Streamable.DIRECTORY_ATTACHMENTS)

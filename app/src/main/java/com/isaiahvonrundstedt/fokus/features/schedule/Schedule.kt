@@ -168,7 +168,8 @@ data class Schedule @JvmOverloads constructor(
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
 
-        fun writeToFile(items: List<Schedule>, destination: File, name: String): File {
+        fun toJsonFile(items: List<Schedule>, destination: File,
+                       name: String = Streamable.FILE_NAME_SCHEDULE): File {
             return File(destination, name).apply {
                 Okio.buffer(Okio.sink(this)).use {
                     JsonDataStreamer.encodeToJson(items, Schedule::class.java)?.also { json ->

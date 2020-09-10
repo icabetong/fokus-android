@@ -56,7 +56,7 @@
     <string name="empty_view_no_tasks_title">No Pending Tasks</string>
     <string name="empty_view_no_tasks_summary">You currently have no pending tasks. If you have one, add it using the button below.</string>
     <string name="empty_view_no_finished_title">No Finished Tasks</string>
-    <string name="empty_view_no_finished_summary">You currently have no finished tasks. Every task you marked as Finished will show here.</string>
+    <string name="empty_view_no_finished_summary">You currently have no finished tasks. Every task you marked as finished will show here.</string>
     <string name="empty_view_no_logs_title">No Recorded Logs</string>
     <string name="empty_view_no_logs_summary">Once a task, event or any reminder appear at your notification shade, it will also appear here.</string>
     <string name="empty_view_no_events_title">No Scheduled Events</string>

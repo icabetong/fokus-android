@@ -95,6 +95,7 @@
     <string name="dialog_select_file_import">Select file to import</string>
     <string name="dialog_send_to">Send to</string>
     <string name="dialog_sharing_options">Sharing options</string>
+    <string name="dialog_class_schedules">Class Schedules</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>
@@ -114,6 +115,9 @@
     <string name="field_priority">Priority</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Not Set</string>
+    <string name="field_due_in_the_next_meeting">In the next meeting</string>
+    <string name="field_due_pick_from_schedule">Pick from class schedule</string>
+    <string name="field_due_custom">Custom</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
     <string name="feedback_log_removed">Log removed</string>

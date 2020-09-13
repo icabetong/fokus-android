@@ -31,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_VERSION = 3
+        private const val DATABASE_NAME = "fokus"
 
         private var instance: AppDatabase? = null
 
@@ -38,7 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
             if (instance == null) {
                 synchronized(AppDatabase::class) {
                     instance = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, "fokus")
+                        AppDatabase::class.java, DATABASE_NAME)
                         .addMigrations(migration_1_2, migration_1_3, migration_2_3)
                         .build()
                 }

@@ -94,6 +94,7 @@
     <string name="dialog_select_file_import">Wybierz plik do zaimportowania</string>
     <string name="dialog_send_to">Wyślij do</string>
     <string name="dialog_sharing_options">Opcje dzielenia się</string>
+    <string name="dialog_class_schedules">Harmonogramy zajęć</string>
 
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>
@@ -113,6 +114,9 @@
     <string name="field_priority">Priorytet</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Nie Jest Ustawiony</string>
+    <string name="field_due_in_the_next_meeting">Następne spotkanie</string>
+    <string name="field_due_pick_from_schedule">Wybierz z planu zajęć</string>
+    <string name="field_due_custom">Niestandardowy</string>
 
     <string name="feedback_subject_removed">Temat usunięty</string>
     <string name="feedback_log_removed">Usunięty dziennik</string>

@@ -179,6 +179,18 @@ data class Schedule @JvmOverloads constructor(
             }
         }
 
+        fun getNearestDateTime(day: Int, time: LocalTime?): DateTime {
+            val currentDate = DateTime.now().withTimeAtStartOfDay()
+            val currentDayOfWeek = currentDate.dayOfWeek
+            var targetDay = day
+
+            if (day <= currentDayOfWeek)
+                targetDay += 7
+
+            return currentDate.plusDays(targetDay - currentDayOfWeek)
+                .withTime(time)
+        }
+
         fun getNextWeekDay(day: Int, time: LocalTime?): DateTime {
             var currentDate = DateTime.now().withTimeAtStartOfDay()
                 .plusHours(time?.hourOfDay ?: 0)

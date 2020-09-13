@@ -95,6 +95,7 @@
     <string name="dialog_select_file_import">Selecteer bestand om te importeren</string>
     <string name="dialog_send_to">Stuur naar</string>
     <string name="dialog_sharing_options">Deelmogelijkheden</string>
+    <string name="dialog_class_schedules">Klassenschema\'s</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
@@ -114,6 +115,9 @@
     <string name="field_priority">Prioriteit</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Niet ingesteld</string>
+    <string name="field_due_in_the_next_meeting">Volgende vergadering</string>
+    <string name="field_due_pick_from_schedule">Kies uit het lesrooster</string>
+    <string name="field_due_custom">Aangepaste</string>
 
     <string name="feedback_subject_removed">Onderwerp verwijderd</string>
     <string name="feedback_log_removed">Logboek verwijderd</string>

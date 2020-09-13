@@ -93,6 +93,7 @@
     <string name="dialog_select_file_import">Selezionare il file da importare</string>
     <string name="dialog_send_to">Inviare a</string>
     <string name="dialog_sharing_options">Opzioni di condivisione</string>
+    <string name="dialog_class_schedules">Orari delle classi</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>
@@ -112,6 +113,9 @@
     <string name="field_priority">Priorità</string>
     <string name="field_status">Stato</string>
     <string name="field_not_set">Non impostato</string>
+    <string name="field_due_in_the_next_meeting">Prossimo incontro</string>
+    <string name="field_due_pick_from_schedule">Scegliere dall\'orario delle lezioni</string>
+    <string name="field_due_custom">Personalizzato</string>
 
     <string name="feedback_subject_removed">Soggetto rimosso</string>
     <string name="feedback_log_removed">Registro rimosso</string>

@@ -8,10 +8,12 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setTransitionName
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -22,16 +24,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
+import com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.selector.SubjectSelectorSheet
+import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
+import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import java.io.File
 import java.util.*
@@ -41,6 +48,7 @@ class EventEditor : BaseEditor() {
     private var requestCode = 0
     private var event = Event()
     private var subject: Subject? = null
+    private var schedules: List<Schedule> = emptyList()
     private var hasFieldChange = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,22 +113,32 @@ class EventEditor : BaseEditor() {
         }
 
         subjectTextView.setOnClickListener {
-            SubjectSelectorSheet(supportFragmentManager).show {
+            SubjectPickerSheet(supportFragmentManager).show {
                 waitForResult { result ->
-                    this@EventEditor.removeButton.isVisible = true
-                    event.subject = result.subjectID
-                    subject = result
+                    with(this@EventEditor) {
+                        removeButton.isVisible = true
+                        event.subject = result.subject.subjectID
+                        subject = result.subject
+                        schedules = result.schedules
 
-                    with(this@EventEditor.subjectTextView) {
-                        text = result.code
-                        setTextColorFromResource(R.color.color_primary_text)
-                        ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
-                            this.setCompoundDrawableAtStart(it)
+                        with(subjectTextView) {
+                            text = result.subject.code
+                            setTextColorFromResource(R.color.color_primary_text)
+                            ContextCompat.getDrawable(this.context, R.drawable.shape_color_holder)?.let {
+                                this.setCompoundDrawableAtStart(result.subject.tintDrawable(it))
+                            }
                         }
-                    }
-                    ContextCompat.getDrawable(this@EventEditor, R.drawable.shape_color_holder)?.let {
-                        this@EventEditor.subjectTextView
-                            .setCompoundDrawableAtStart(result.tintDrawable(it))
+
+                        scheduleTextView.visibility = View.GONE
+                        dateTimeRadioGroup.visibility = View.VISIBLE
+                        if (event.schedule != null) {
+                            with(customDateTimeRadio) {
+                                isChecked = true
+                                titleTextColor = ContextCompat.getColor(context,
+                                    R.color.color_primary_text)
+                                subtitle = event.formatSchedule(context)
+                            }
+                        }
                     }
                     hasFieldChange = true
                 }
@@ -137,6 +155,91 @@ class EventEditor : BaseEditor() {
                 removeCompoundDrawableAtStart()
                 setText(R.string.field_not_set)
                 setTextColorFromResource(R.color.color_secondary_text)
+            }
+
+            dateTimeRadioGroup.visibility = View.GONE
+            scheduleTextView.visibility = View.VISIBLE
+            if (event.schedule != null) {
+                scheduleTextView.text = event.formatSchedule(this)
+                scheduleTextView.setTextColorFromResource(R.color.color_primary_text)
+            }
+        }
+
+        dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
+            for (v: View in radioGroup.children) {
+                if (v is TwoLineRadioButton && !v.isChecked) {
+                    v.titleTextColor = ContextCompat.getColor(v.context,
+                        R.color.color_secondary_text)
+                    v.subtitle = ""
+                }
+            }
+        }
+
+        inNextMeetingRadio.setOnClickListener {
+            val currentDate = LocalDate.now()
+            val items = mutableListOf<Schedule>()
+            schedules.forEach {
+                it.getDaysAsList().forEach { day ->
+                    val newSchedule = Schedule(startTime = it.startTime,
+                        endTime = it.endTime)
+                    newSchedule.daysOfWeek = day
+                    items.add(newSchedule)
+                }
+            }
+
+            val dates = items.map { Schedule.getNearestDateTime(it.daysOfWeek, it.startTime) }
+            if (dates.isEmpty())
+                return@setOnClickListener
+
+            var targetDate: DateTime = dates[0]
+            dates.forEach {
+                if (currentDate.isAfter(it.toLocalDate()) && targetDate.isBefore(it))
+                    targetDate = it
+            }
+
+            hasFieldChange = true
+            event.schedule = targetDate
+            with(inNextMeetingRadio) {
+                titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
+                subtitle = event.formatSchedule(context)
+            }
+        }
+
+        pickDateTimeRadio.setOnClickListener {
+            SchedulePickerSheet(schedules, supportFragmentManager).show {
+                waitForResult {
+                    event.schedule = Schedule.getNearestDateTime(it.daysOfWeek,
+                        it.startTime)
+                    with(this@EventEditor.pickDateTimeRadio) {
+                        titleTextColor = ContextCompat.getColor(context,
+                            R.color.color_primary_text)
+                        subtitle = event.formatSchedule(this@EventEditor)
+                    }
+
+                    hasFieldChange = true
+                    this.dismiss()
+                }
+            }
+        }
+
+        customDateTimeRadio.setOnClickListener {
+            MaterialDialog(this).show {
+                lifecycleOwner(this@EventEditor)
+                dateTimePicker(requireFutureDateTime = true,
+                    currentDateTime = event.schedule?.toDateTime()?.toCalendar(
+                        Locale.getDefault())) { _, datetime ->
+                    event.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
+                }
+                positiveButton(R.string.button_done) {
+                    hasFieldChange = true
+
+                    with(this@EventEditor.customDateTimeRadio) {
+                        titleTextColor = ContextCompat.getColor(context,
+                            R.color.color_primary_text)
+                        subtitle = event.formatSchedule(context)
+                    }
+                }
+                negativeButton { this@EventEditor.customDateTimeRadio.isChecked = false }
             }
         }
 
@@ -337,6 +440,13 @@ class EventEditor : BaseEditor() {
                 setCompoundDrawableAtStart(ContextCompat.getDrawable(this@EventEditor,
                     R.drawable.shape_color_holder)?.let { drawable -> it.tintDrawable(drawable) })
             }
+
+            scheduleTextView.visibility = View.GONE
+            dateTimeRadioGroup.visibility = View.VISIBLE
+            customDateTimeRadio.isChecked = true
+            customDateTimeRadio.subtitle = event.formatSchedule(this)
+            customDateTimeRadio.titleTextColor = ContextCompat.getColor(this,
+                R.color.color_primary_text)
             removeButton.isVisible = true
         }
 

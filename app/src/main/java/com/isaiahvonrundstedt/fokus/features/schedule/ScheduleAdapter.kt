@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
@@ -73,6 +74,7 @@ class ScheduleAdapter(private val actionListener: ActionListener)
         private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
+
             with(t) {
                 if (this is Schedule) {
                     titleView.text = formatDaysOfWeek(rootView.context, false)

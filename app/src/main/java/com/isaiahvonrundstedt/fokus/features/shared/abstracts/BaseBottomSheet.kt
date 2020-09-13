@@ -18,12 +18,6 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
 
     protected var receiver: Receiver<T>? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        dialog?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dialog?.setOnShowListener {
             val bottomSheetDialog = dialog as BottomSheetDialog

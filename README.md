@@ -54,13 +54,13 @@ This is an open-source personal project and I am very happy to accept community 
 
 ### Libraries used
 
-* [Material Dialogs](https://github.com/afollestad/material-dialogs) - Aidan Follestad
-* [joda-time-android](https://github.com/dlew/joda-time-android) - Daniel Lew
-* [Konfetti](https://github.com/DanielMartinus/Konfetti) - Daniel Martinus
-* [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar) - Alexander Dadukin
-* [CommonsIO](https://commons.apache.org/proper/commons-io/) - Apache
-* [Moshi](https://github.com/square/moshi) - Square
-* [Okio](https://github.com/square/okio) - Square
+* [Material Dialogs](https://github.com/afollestad/material-dialogs)
+* [joda-time-android](https://github.com/dlew/joda-time-android)
+* [Konfetti](https://github.com/DanielMartinus/Konfetti)
+* [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar)
+* [CommonsIO](https://commons.apache.org/proper/commons-io/)
+* [Moshi](https://github.com/square/moshi)
+* [Okio](https://github.com/square/okio)
 
 ### Other materials used
 

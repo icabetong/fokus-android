@@ -44,4 +44,5 @@ class SubjectRepository private constructor(app: Application) {
         if (scheduleList.isNotEmpty())
             scheduleList.forEach { schedules?.insert(it) }
     }
+
 }

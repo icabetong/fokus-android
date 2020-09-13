@@ -59,18 +59,61 @@
                     android:text="@string/field_schedule"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <TextView
-                    android:id="@+id/scheduleTextView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/editor_item_height"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="@string/field_not_set"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
-                    android:clickable="true"
-                    android:focusable="true"/>
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        android:id="@+id/scheduleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/editor_item_height"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <RadioGroup
+                        android:id="@+id/dateTimeRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/editor_container_padding"
+                        android:visibility="gone">
+
+                        <com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
+                            android:id="@+id/inNextMeetingRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_in_the_next_meeting"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+
+                        <com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
+                            android:id="@+id/pickDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_pick_from_schedule"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                        <com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
+                            android:id="@+id/customDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_custom"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                    </RadioGroup>
+
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"

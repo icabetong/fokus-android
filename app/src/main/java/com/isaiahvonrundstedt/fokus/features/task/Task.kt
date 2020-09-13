@@ -52,9 +52,9 @@ data class Task @JvmOverloads constructor(
         return dueDate?.isToday() == true
     }
 
-    fun formatDueDate(context: Context): String? {
+    fun formatDueDate(context: Context): String {
         if (dueDate == null)
-            return null
+            return ""
 
         // Check if the day on the task's due is today
         return if (dueDate?.isToday() == true)

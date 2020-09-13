@@ -95,6 +95,7 @@
     <string name="dialog_select_file_import">Zu importierende Datei auswählen</string>
     <string name="dialog_send_to">Senden an</string>
     <string name="dialog_sharing_options">Optionen zur gemeinsamen Nutzung</string>
+    <string name="dialog_class_schedules">Stundenpläne der Klassen</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
@@ -114,6 +115,9 @@
     <string name="field_priority">Priorität</string>
     <string name="field_status">Stand</string>
     <string name="field_not_set">Nicht gesetzt</string>
+    <string name="field_due_in_the_next_meeting">Nächstes Treffen</string>
+    <string name="field_due_pick_from_schedule">Aus dem Stundenplan auswählen</string>
+    <string name="field_due_custom">Benutzerdefiniert</string>
 
     <string name="feedback_subject_removed">Betreff entfernt</string>
     <string name="feedback_log_removed">Protokoll entfernt</string>

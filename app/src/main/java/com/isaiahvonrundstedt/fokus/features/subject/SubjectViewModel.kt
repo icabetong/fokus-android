@@ -31,6 +31,8 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                 val data = BaseWorker.convertScheduleToData(it)
                 val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
                     .setInputData(data)
+                    .addTag(subject.subjectID)
+                    .addTag(it.scheduleID)
                     .build()
 
                 workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
@@ -41,13 +43,10 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         SubjectWidgetProvider.triggerRefresh(app)
     }
 
-    fun remove(subject: Subject,
-               scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
+    fun remove(subject: Subject) = viewModelScope.launch {
         repository.remove(subject)
 
-        scheduleList.forEach {
-            workManager.cancelAllWorkByTag(it.scheduleID)
-        }
+        workManager.cancelAllWorkByTag(subject.subjectID)
 
         SubjectWidgetProvider.triggerRefresh(app)
     }
@@ -64,6 +63,8 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                 val data = BaseWorker.convertScheduleToData(it)
                 val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
                     .setInputData(data)
+                    .addTag(subject.subjectID)
+                    .addTag(it.scheduleID)
                     .build()
                 workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
                     request)

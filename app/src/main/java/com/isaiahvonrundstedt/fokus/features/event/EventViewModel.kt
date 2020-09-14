@@ -30,6 +30,7 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
+                .addTag(event.eventID)
                 .build()
             workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
                 request)
@@ -59,6 +60,7 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
+                .addTag(event.eventID)
                 .build()
             workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
                 request)

@@ -33,6 +33,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
+                .addTag(task.taskID)
                 .build()
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request)
@@ -69,6 +70,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
+                .addTag(task.taskID)
                 .build()
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request)

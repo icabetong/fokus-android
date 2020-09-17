@@ -18,6 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.task.*
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import kotlinx.android.synthetic.main.activity_finished.recyclerView
 import kotlinx.android.synthetic.main.layout_appbar.*
 import kotlinx.android.synthetic.main.layout_empty_finished.*
@@ -45,10 +46,8 @@ class FinishedTasksActivity: BaseActivity(),
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetchFinished()?.observe(this, {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.finishedTasks.observe(this) { adapter.submitList(it) }
+        viewModel.noFinishedTasks.observe(this) { emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,

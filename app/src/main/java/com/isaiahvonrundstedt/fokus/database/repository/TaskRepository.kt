@@ -10,8 +10,8 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 class TaskRepository private constructor(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var tasks = database?.tasks()
-    private var attachments = database?.attachments()
+    private var tasks = database.tasks()
+    private var attachments = database.attachments()
 
     companion object {
         private var instance: TaskRepository? = null
@@ -26,24 +26,26 @@ class TaskRepository private constructor(app: Application) {
         }
     }
 
-    fun fetchPending(): LiveData<List<TaskPackage>>? = tasks?.fetchLiveData()
-
-    fun fetchFinished(): LiveData<List<TaskPackage>>? = tasks?.fetchLiveData(1)
+    fun fetch(isFinished: Boolean): LiveData<List<TaskPackage>> {
+        return if (isFinished)
+            tasks.fetchLiveData(1)
+            else tasks.fetchLiveData()
+    }
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
-        tasks?.insert(task)
+        tasks.insert(task)
         if (attachmentList.isNotEmpty())
-            attachmentList.forEach { attachments?.insert(it) }
+            attachmentList.forEach { attachments.insert(it) }
     }
 
     suspend fun remove(task: Task) {
-        tasks?.remove(task)
+        tasks.remove(task)
     }
 
     suspend fun update(task: Task, attachmentList: List<Attachment> = emptyList()) {
-        tasks?.update(task)
-        attachments?.removeUsingTaskID(task.taskID)
+        tasks.update(task)
+        attachments.removeUsingTaskID(task.taskID)
         if (attachmentList.isNotEmpty())
-            attachmentList.forEach { attachments?.insert(it) }
+            attachmentList.forEach { attachments.insert(it) }
     }
 }

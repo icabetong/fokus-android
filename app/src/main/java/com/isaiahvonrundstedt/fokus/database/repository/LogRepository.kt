@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class LogRepository private constructor(app: Application) {
 
     private var database = AppDatabase.getInstance(app)
-    private var histories = database?.logs()
+    private var logs = database.logs()
 
     companion object {
         private var instance: LogRepository? = null
@@ -25,20 +25,20 @@ class LogRepository private constructor(app: Application) {
         }
     }
 
-    fun fetch(): LiveData<List<Log>>? = histories?.fetch()
+    fun fetch(): LiveData<List<Log>>? = logs.fetch()
 
-    fun clear() = GlobalScope.launch { histories?.clear() }
+    fun clear() = GlobalScope.launch { logs.clear() }
 
     suspend fun insert(log: Log) {
-        histories?.insert(log)
+        logs.insert(log)
     }
 
     suspend fun remove(log: Log) {
-        histories?.remove(log)
+        logs.remove(log)
     }
 
     suspend fun update(log: Log) {
-        histories?.update(log)
+        logs.update(log)
     }
 
 }

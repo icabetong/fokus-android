@@ -5,8 +5,6 @@
 
 Fokus is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It's fast and beautiful yet simple design that can help you focus on what matters most.
 
-<a href="https://galaxy.store/fokus"><img src="https://img.samsungapps.com/seller/images/badges/galaxyStore/png_big/GalaxyStore_English.png" width="30%" alt="Available on Samsung Galaxy Store" style="max-width: 100%; height: auto;"></a>
-
 ## Features
 
 * Get reminded when a task is nearing its due

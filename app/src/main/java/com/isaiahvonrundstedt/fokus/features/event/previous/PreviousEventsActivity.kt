@@ -40,10 +40,8 @@ class PreviousEventsActivity: BaseActivity(), BaseListAdapter.ActionListener {
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetchPrevious()?.observe(this, {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.previousEvents.observe(this) { adapter.submitList(it) }
+        viewModel.noPreviousEvents.observe(this) { emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,

@@ -15,6 +15,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThrou
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var taskCompletionListener: TaskCompletionListener)

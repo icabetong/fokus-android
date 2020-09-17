@@ -14,7 +14,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = R.attr.radioButtonStyle
-): AppCompatRadioButton(context, attributeSet, defStyleAttr) {
+): RadioButtonCompat(context, attributeSet, defStyleAttr) {
 
     private val titleSpan: TextAppearanceSpan
     private val subtitleSpan: TextAppearanceSpan
@@ -28,7 +28,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
             renderText()
         }
 
-    var subtitle: String = ""
+    var subtitle: String? = null
         set(value) {
             field = value
             renderText()
@@ -87,7 +87,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
         titleTextColorSpan = ForegroundColorSpan(titleTextColor)
         subtitleTextColorSpan = ForegroundColorSpan(subtitleTextColor)
 
-        val textToRender = if (subtitle.isEmpty()) title
+        val textToRender = if (subtitle.isNullOrEmpty()) title
         else "$title\n$subtitle"
 
         val spannableText = SpannableString(textToRender)
@@ -97,12 +97,12 @@ class TwoLineRadioButton @JvmOverloads constructor(
         spannableText.setSpan(titleTextColorSpan, 0, title.length,
             SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
 
-        if (subtitle.isNotEmpty()) {
+        if (!subtitle.isNullOrEmpty()) {
             spannableText.setSpan(subtitleSpan, title.length,
-                title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                title.length + subtitle!!.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
             )
             spannableText.setSpan(subtitleTextColorSpan, title.length,
-                title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                title.length + subtitle!!.length + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 
         text = spannableText

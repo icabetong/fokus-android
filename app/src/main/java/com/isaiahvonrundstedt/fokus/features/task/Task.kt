@@ -96,6 +96,9 @@ data class Task @JvmOverloads constructor(
     }
 
     companion object {
+        const val FIELD_TASK_NAME = "name"
+        const val FIELD_TASK_DUE = "dueDate"
+
         fun fromInputStream(inputStream: InputStream): Task {
             return Task().apply {
                 this.fromInputStream(inputStream)

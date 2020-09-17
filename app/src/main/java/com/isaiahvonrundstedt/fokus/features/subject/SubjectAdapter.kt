@@ -12,6 +12,7 @@ import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
 class SubjectAdapter(private var actionListener: ActionListener)
     : BaseListAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), Swipeable {

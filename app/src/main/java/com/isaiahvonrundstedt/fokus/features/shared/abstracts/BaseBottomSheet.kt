@@ -22,7 +22,9 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
         dialog?.setOnShowListener {
             val bottomSheetDialog = dialog as BottomSheetDialog
             val bottomSheet = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
-            BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+            with(BottomSheetBehavior.from(bottomSheet)) {
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
         super.onViewCreated(view, savedInstanceState)
     }

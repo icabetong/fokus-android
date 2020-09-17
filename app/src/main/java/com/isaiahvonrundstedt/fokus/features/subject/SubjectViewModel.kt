@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -17,9 +18,9 @@ import kotlinx.coroutines.launch
 class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = SubjectRepository.getInstance(app)
-    private var items: LiveData<List<SubjectPackage>>? = repository.fetch()
 
-    fun fetch(): LiveData<List<SubjectPackage>>? = items
+    val subjects: LiveData<List<SubjectPackage>> = repository.fetch()
+    val noSubjects: LiveData<Boolean> = Transformations.map(subjects) { it.isEmpty() }
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)

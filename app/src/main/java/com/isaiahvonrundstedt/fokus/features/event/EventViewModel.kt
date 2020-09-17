@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -16,12 +17,12 @@ import kotlinx.coroutines.launch
 class EventViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
-    private var futureItems: LiveData<List<EventPackage>>? = repository.fetch()
-    private var previousItems: LiveData<List<EventPackage>>? = repository.fetch(false)
 
-    fun fetchFuture(): LiveData<List<EventPackage>>? = futureItems
+    val futureEvents: LiveData<List<EventPackage>> = repository.fetch()
+    val noFutureEvents: LiveData<Boolean> = Transformations.map(futureEvents) { it.isEmpty() }
 
-    fun fetchPrevious(): LiveData<List<EventPackage>>? = previousItems
+    val previousEvents: LiveData<List<EventPackage>> = repository.fetch(false)
+    val noPreviousEvents: LiveData<Boolean> = Transformations.map(previousEvents) { it.isEmpty() }
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)

@@ -23,26 +23,26 @@ class SubjectRepository private constructor(app: Application) {
     }
 
     private var database = AppDatabase.getInstance(app)
-    private var subjects = database?.subjects()
-    private var schedules = database?.schedules()
+    private var subjects = database.subjects()
+    private var schedules = database.schedules()
 
-    fun fetch(): LiveData<List<SubjectPackage>>? = subjects?.fetchLiveData()
+    fun fetch(): LiveData<List<SubjectPackage>> = subjects.fetchLiveData()
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
-        subjects?.insert(subject)
+        subjects.insert(subject)
         if (scheduleList.isNotEmpty())
-            scheduleList.forEach { schedules?.insert(it) }
+            scheduleList.forEach { schedules.insert(it) }
     }
 
     suspend fun remove(subject: Subject) {
-        subjects?.remove(subject)
+        subjects.remove(subject)
     }
 
     suspend fun update(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
-        subjects?.update(subject)
-        schedules?.removeUsingSubjectID(subject.subjectID)
+        subjects.update(subject)
+        schedules.removeUsingSubjectID(subject.subjectID)
         if (scheduleList.isNotEmpty())
-            scheduleList.forEach { schedules?.insert(it) }
+            scheduleList.forEach { schedules.insert(it) }
     }
 
 }

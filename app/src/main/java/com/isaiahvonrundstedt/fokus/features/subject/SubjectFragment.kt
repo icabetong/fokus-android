@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +19,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_empty_subjects.*
 
@@ -46,10 +46,8 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetch()?.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.noSubjects.observe(viewLifecycleOwner) { emptyView.isVisible = it }
     }
 
     override fun onResume() {

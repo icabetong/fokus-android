@@ -13,6 +13,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 
 class EventAdapter(private var actionListener: ActionListener)

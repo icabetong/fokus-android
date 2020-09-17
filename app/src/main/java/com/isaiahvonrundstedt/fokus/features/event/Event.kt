@@ -100,6 +100,10 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
+        const val FIELD_EVENT_NAME = "event:name"
+        const val FIELD_EVENT_SCHEDULE = "event:schedule"
+        const val FIELD_EVENT_LOCATION = "event:location"
+
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {
                 this.fromInputStream(inputStream)

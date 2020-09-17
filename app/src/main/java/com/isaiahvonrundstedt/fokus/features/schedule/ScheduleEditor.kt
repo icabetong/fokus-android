@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import kotlinx.android.synthetic.main.layout_sheet_schedule.*
+import kotlinx.android.synthetic.main.layout_sheet_schedule_editor.*
 import org.joda.time.DateTimeConstants
 import org.joda.time.LocalTime
 import java.util.*
@@ -27,7 +27,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_schedule, container, false)
+        return inflater.inflate(R.layout.layout_sheet_schedule_editor, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -4,53 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import java.io.File
 
 class AttachmentAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<AttachmentAdapter.ViewHolder>() {
-
-    val itemList = mutableListOf<Attachment>()
-
-    fun setItems(items: List<Attachment>) {
-        itemList.clear()
-        itemList.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    override fun <T> insert(t: T) {
-        if (t is Attachment) {
-            itemList.add(t)
-            val index = itemList.indexOf(t)
-
-            notifyItemInserted(index)
-            notifyItemRangeChanged(index, itemList.size)
-        }
-    }
-
-    override fun <T> remove(t: T) {
-        if (t is Attachment) {
-            val index = itemList.indexOf(t)
-
-            itemList.removeAt(index)
-            notifyItemRemoved(index)
-            notifyItemRangeRemoved(index, itemList.size)
-        }
-    }
-
-    override fun <T> update(t: T) {
-        if (t is Attachment) {
-            val index = itemList.getIndexByID(t.attachmentID)
-            if (index != -1) {
-                itemList[index] = t
-                notifyItemChanged(index)
-                notifyItemRangeChanged(index, itemList.size)
-            }
-        }
-    }
+    : BaseListAdapter<Attachment, AttachmentAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_attachment,
@@ -58,33 +21,43 @@ class AttachmentAdapter(private var actionListener: ActionListener)
         return ViewHolder(rowView, actionListener)
     }
 
-    override fun getItemCount(): Int = itemList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(itemList[holder.adapterPosition])
+        holder.onBind(getItem(holder.adapterPosition))
     }
 
-    class ViewHolder(itemView: View, actionListener: ActionListener)
-        : BaseViewHolder(itemView, actionListener) {
+    class ViewHolder(itemView: View, private val actionListener: ActionListener)
+        : BaseViewHolder(itemView) {
 
-        private val rootView: View = itemView.findViewById(R.id.rootView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is Attachment) {
-                    titleView.text = target?.let { File(it).name }
+            if (t is Attachment) {
+                titleView.text = t.target?.let { File(it).name }
 
-                    rootView.setOnClickListener {
-                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT)
-                    }
+                rootView.setOnClickListener {
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
+                        emptyMap())
+                }
 
-                    removeButton.setOnClickListener {
-                        actionListener.onActionPerformed(this, ActionListener.Action.DELETE)
-                    }
+                removeButton.setOnClickListener {
+                    actionListener.onActionPerformed(t, ActionListener.Action.DELETE,
+                        emptyMap())
                 }
             }
+        }
+    }
+
+    companion object {
+        val callback = object: DiffUtil.ItemCallback<Attachment>() {
+            override fun areContentsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areItemsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
+                return oldItem.attachmentID == newItem.attachmentID
+            }
+
         }
     }
 }

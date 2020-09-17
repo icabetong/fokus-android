@@ -2,6 +2,8 @@ package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -16,12 +18,12 @@ import kotlinx.coroutines.launch
 class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
-    private var pendingItems: LiveData<List<TaskPackage>>? = repository.fetchPending()
-    private var finishedItems: LiveData<List<TaskPackage>>? = repository.fetchFinished()
 
-    fun fetchPending(): LiveData<List<TaskPackage>>? = pendingItems
+    val pendingTasks: LiveData<List<TaskPackage>> = repository.fetch(false)
+    val noPendingTasks: LiveData<Boolean> = Transformations.map(pendingTasks) { it.isEmpty() }
 
-    fun fetchFinished(): LiveData<List<TaskPackage>>? = finishedItems
+    val finishedTasks: LiveData<List<TaskPackage>> = repository.fetch(true)
+    val noFinishedTasks: LiveData<Boolean> = Transformations.map(finishedTasks) { it.isEmpty() }
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)

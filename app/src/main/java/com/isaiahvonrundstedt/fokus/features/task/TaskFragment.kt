@@ -22,6 +22,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import com.isaiahvonrundstedt.fokus.features.task.finished.FinishedTasksActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_empty_tasks.*
@@ -57,10 +58,8 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetchPending()?.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.pendingTasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.noPendingTasks.observe(viewLifecycleOwner) { emptyView.isVisible = it }
     }
 
     override fun onResume() {

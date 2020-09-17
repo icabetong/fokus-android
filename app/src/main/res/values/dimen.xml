@@ -11,6 +11,7 @@
 
     <dimen name="bottom_sheet_margin_horizontal">0dp</dimen>
     <dimen name="bottom_sheet_padding">24dp</dimen>
+    <dimen name="bottom_sheet_min_height">256dp</dimen>
 
     <dimen name="surface_corner_radius">4dp</dimen>
 

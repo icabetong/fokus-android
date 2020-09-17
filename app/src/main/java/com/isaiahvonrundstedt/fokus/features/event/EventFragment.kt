@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +12,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.event.previous.PreviousEventsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -47,10 +47,8 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.fetchFuture()?.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.futureEvents.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.noFutureEvents.observe(viewLifecycleOwner) { emptyView.isVisible = it }
     }
 
     override fun onResume() {

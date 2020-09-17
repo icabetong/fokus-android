@@ -37,10 +37,8 @@ class SubjectPickerSheet(fragmentManager: FragmentManager)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        viewModel.fetch()?.observe(this, {
-            adapter.submitList(it)
-            emptyView.isVisible = it.isEmpty()
-        })
+        viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.noSubjects.observe(viewLifecycleOwner) { emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,

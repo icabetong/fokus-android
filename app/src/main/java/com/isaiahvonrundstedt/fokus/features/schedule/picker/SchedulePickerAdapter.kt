@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -46,12 +44,9 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
 
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
-        private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
             with(t) {
-                removeButton.visibility = View.GONE
-
                 if (this is Schedule) {
                     titleView.text = itemView.context.getString(getStringResourceForDay(daysOfWeek))
                     summaryView.text = formatBothTime()

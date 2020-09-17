@@ -35,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         private var instance: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase? {
+        fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 synchronized(AppDatabase::class) {
                     instance = Room.databaseBuilder(context.applicationContext,
@@ -44,7 +44,7 @@ abstract class AppDatabase : RoomDatabase() {
                         .build()
                 }
             }
-            return instance
+            return instance!!
         }
 
         private var migration_1_2 = object : Migration(1, 2) {

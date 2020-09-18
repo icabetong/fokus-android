@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.task
+package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -17,7 +17,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.synthetic.main.layout_sheet_task.*
 import org.joda.time.LocalDateTime
 import java.util.*

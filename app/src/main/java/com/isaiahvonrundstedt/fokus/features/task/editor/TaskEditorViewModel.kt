@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.isaiahvonrundstedt.fokus.components.extensions.getIndexByID
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -13,6 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
+import org.joda.time.LocalDate
 
 class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
@@ -70,5 +71,39 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
     fun getSchedules(): List<Schedule> { return _schedules.value ?: emptyList() }
     fun setSchedules(schedules: List<Schedule>) { _schedules.value = schedules }
+
+    fun setNextMeetingForDueDate() {
+        getTask()?.dueDate = getDateTimeForNextMeeting()
+    }
+
+    fun setClassScheduleAsDueDate(schedule: Schedule) {
+        getTask()?.dueDate = Schedule.getNearestDateTime(schedule.daysOfWeek, schedule.startTime)
+    }
+
+    private fun getDateTimeForNextMeeting(): DateTime? {
+        val currentDate = LocalDate.now()
+        val individualDates = mutableListOf<Schedule>()
+
+        getSchedules().forEach {
+            it.getDaysAsList().forEach { day ->
+                val newSchedule = Schedule(startTime = it.startTime,
+                    endTime = it.endTime)
+                newSchedule.daysOfWeek = day
+                individualDates.add(newSchedule)
+            }
+        }
+
+        val dates = individualDates.map { Schedule.getNearestDateTime(it.daysOfWeek, it.startTime) }
+        if (dates.isEmpty())
+            return null
+
+        var targetDate: DateTime = dates[0]
+        dates.forEach {
+            if (currentDate.isAfter(it.toLocalDate()) && targetDate.isBefore(it))
+                targetDate = it
+        }
+
+        return targetDate
+    }
 
 }

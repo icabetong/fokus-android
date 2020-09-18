@@ -8,6 +8,8 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
+import org.joda.time.LocalDate
 
 class EventEditorViewModel(app: Application): BaseViewModel(app) {
 
@@ -55,5 +57,36 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
     fun getSchedules(): List<Schedule> { return _schedules.value ?: emptyList() }
     fun setSchedules(schedules: List<Schedule>) { _schedules.value = schedules }
 
+    fun setNextMeetingForDueDate() {
+        getEvent()?.schedule = getNextMeetingForSchedule()
+    }
 
+    fun setClassScheduleAsDueDate(schedule: Schedule) {
+        getEvent()?.schedule = Schedule.getNearestDateTime(schedule.daysOfWeek, schedule.startTime)
+    }
+
+    private fun getNextMeetingForSchedule(): DateTime? {
+        val currentDate = LocalDate.now()
+        val individualDates = mutableListOf<Schedule>()
+
+        getSchedules().forEach {
+            it.getDaysAsList().forEach { day ->
+                val newSchedule = Schedule(startTime = it.startTime,
+                    endTime = it.endTime)
+                newSchedule.daysOfWeek = day
+                individualDates.add(newSchedule)
+            }
+        }
+
+        val dates = individualDates.map { Schedule.getNearestDateTime(it.daysOfWeek, it.startTime) }
+        if (dates.isEmpty())
+            return null
+
+        var targetDate: DateTime = dates[0]
+        dates.forEach {
+            if (currentDate.isAfter(it.toLocalDate()) && targetDate.isBefore(it))
+                targetDate = it
+        }
+        return targetDate
+    }
 }

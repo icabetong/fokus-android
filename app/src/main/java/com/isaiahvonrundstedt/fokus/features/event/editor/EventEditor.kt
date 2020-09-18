@@ -214,30 +214,8 @@ class EventEditor : BaseEditor() {
         }
 
         inNextMeetingRadio.setOnClickListener {
-            val currentDate = LocalDate.now()
-            val items = mutableListOf<Schedule>()
-            viewModel.getSchedules().forEach {
-                it.getDaysAsList().forEach { day ->
-                    val newSchedule = Schedule(startTime = it.startTime,
-                        endTime = it.endTime)
-                    newSchedule.daysOfWeek = day
-                    items.add(newSchedule)
-                }
-            }
-
-            val dates = items.map { Schedule.getNearestDateTime(it.daysOfWeek, it.startTime) }
-            if (dates.isEmpty())
-                return@setOnClickListener
-
-            var targetDate: DateTime = dates[0]
-            dates.forEach {
-                val current: LocalDate = it.toLocalDate()
-                if (current.isBefore(targetDate.toLocalDate()))
-                    targetDate = it
-            }
-
+            viewModel.setNextMeetingForDueDate()
             hasFieldChange = true
-            viewModel.getEvent()?.schedule = targetDate
             with(inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                 subtitle = viewModel.getEvent()?.formatSchedule(context)
@@ -246,9 +224,8 @@ class EventEditor : BaseEditor() {
 
         pickDateTimeRadio.setOnClickListener {
             SchedulePickerSheet(viewModel.getSchedules(), supportFragmentManager).show {
-                waitForResult {
-                    viewModel.getEvent()?.schedule = Schedule.getNearestDateTime(it.daysOfWeek,
-                        it.startTime)
+                waitForResult { schedule ->
+                    viewModel.setClassScheduleAsDueDate(schedule)
                     with(this@EventEditor.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)

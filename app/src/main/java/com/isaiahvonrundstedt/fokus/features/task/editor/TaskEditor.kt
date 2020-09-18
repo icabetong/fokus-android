@@ -34,20 +34,15 @@ import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
-import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
-import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskEditorSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
@@ -63,8 +58,6 @@ import kotlinx.android.synthetic.main.layout_editor_task.removeButton
 import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
 import kotlinx.android.synthetic.main.layout_editor_task.subjectTextView
 import kotlinx.android.synthetic.main.layout_item_add.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime.fromCalendarFields
@@ -265,29 +258,9 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
         }
 
         inNextMeetingRadio.setOnClickListener {
-            val currentDate = LocalDate.now()
-            val items = mutableListOf<Schedule>()
-            viewModel.getSchedules().forEach {
-                it.getDaysAsList().forEach { day ->
-                    val newSchedule = Schedule(startTime = it.startTime,
-                        endTime = it.endTime)
-                    newSchedule.daysOfWeek = day
-                    items.add(newSchedule)
-                }
-            }
-
-            val dates = items.map { Schedule.getNearestDateTime(it.daysOfWeek, it.startTime) }
-            if (dates.isEmpty())
-                return@setOnClickListener
-
-            var targetDate: DateTime = dates[0]
-            dates.forEach {
-                if (currentDate.isAfter(it.toLocalDate()) && targetDate.isBefore(it))
-                    targetDate = it
-            }
-
+            viewModel.setNextMeetingForDueDate()
             hasFieldChange = true
-            viewModel.getTask()?.dueDate = targetDate
+
             with(inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                 subtitle = viewModel.getTask()?.formatDueDate(context)
@@ -297,7 +270,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
         pickDateTimeRadio.setOnClickListener {
             SchedulePickerSheet(viewModel.getSchedules(), supportFragmentManager).show {
                 waitForResult { schedule ->
-                    viewModel.getTask()?.dueDate = Schedule.getNearestDateTime(schedule.daysOfWeek, schedule.startTime)
+                    viewModel.setClassScheduleAsDueDate(schedule)
                     with(this@TaskEditor.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                         subtitle = viewModel.getTask()?.formatDueDate(context)

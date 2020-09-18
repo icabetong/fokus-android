@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_padding">
+        android:paddingVertical="@dimen/editor_container_padding"
+        android:paddingHorizontal="24dp">
 
         <TextView
             android:id="@+id/titleView"

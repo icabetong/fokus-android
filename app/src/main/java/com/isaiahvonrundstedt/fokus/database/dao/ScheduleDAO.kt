@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.database.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 

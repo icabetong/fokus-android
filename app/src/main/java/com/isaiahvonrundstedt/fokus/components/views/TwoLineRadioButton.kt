@@ -1,12 +1,10 @@
-package com.isaiahvonrundstedt.fokus.components.custom
+package com.isaiahvonrundstedt.fokus.components.views
 
 import android.content.Context
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.content.ContextCompat
 import com.isaiahvonrundstedt.fokus.R
 

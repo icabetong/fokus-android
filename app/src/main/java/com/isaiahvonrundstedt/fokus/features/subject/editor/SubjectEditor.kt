@@ -38,9 +38,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_subject.*
-import kotlinx.android.synthetic.main.layout_editor_subject.actionButton
-import kotlinx.android.synthetic.main.layout_editor_subject.contentView
-import kotlinx.android.synthetic.main.layout_editor_subject.rootLayout
 import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
 
@@ -78,13 +75,6 @@ class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
                 TRANSITION_ID_CODE + viewModel.getSubject()?.subjectID)
             setTransitionName(descriptionTextInput,
                 TRANSITION_ID_DESCRIPTION + viewModel.getSubject()?.subjectID)
-        }
-
-        // The extras passed by the parent activity will
-        // be shown to the fields.
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            onValueChanged()
-            window.decorView.rootView.clearFocus()
         }
 
         var currentScrollPosition = 0
@@ -367,8 +357,6 @@ class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
             }
         } else super.onBackPressed()
     }
-
-    override fun onValueChanged() {}
 
     companion object {
         const val REQUEST_CODE_INSERT = 27

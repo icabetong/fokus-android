@@ -19,7 +19,6 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import org.apache.commons.io.FileUtils
 import java.io.File
-import java.lang.Exception
 import java.util.zip.ZipEntry
 
 class DataImporterService: BaseService() {

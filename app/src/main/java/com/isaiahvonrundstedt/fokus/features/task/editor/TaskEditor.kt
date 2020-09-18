@@ -26,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
-import com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
@@ -34,10 +33,10 @@ import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
-import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -46,20 +45,8 @@ import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
-import kotlinx.android.synthetic.main.layout_editor_task.actionButton
-import kotlinx.android.synthetic.main.layout_editor_task.contentView
-import kotlinx.android.synthetic.main.layout_editor_task.customDateTimeRadio
-import kotlinx.android.synthetic.main.layout_editor_task.dateTimeRadioGroup
-import kotlinx.android.synthetic.main.layout_editor_task.inNextMeetingRadio
-import kotlinx.android.synthetic.main.layout_editor_task.notesTextInput
-import kotlinx.android.synthetic.main.layout_editor_task.pickDateTimeRadio
-import kotlinx.android.synthetic.main.layout_editor_task.prioritySwitch
-import kotlinx.android.synthetic.main.layout_editor_task.removeButton
-import kotlinx.android.synthetic.main.layout_editor_task.rootLayout
-import kotlinx.android.synthetic.main.layout_editor_task.subjectTextView
 import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
-import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime.fromCalendarFields
 import java.io.File
 import java.util.*
@@ -98,7 +85,10 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
 
             taskNameTextInput.transitionName = TRANSITION_ID_NAME + viewModel.getTask()?.taskID
-        } else if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_IS_EXPANDED)) {
+        }
+
+        if (requestCode == REQUEST_CODE_INSERT &&
+            intent.hasExtra(TaskEditorSheet.EXTRA_TASK_IS_EXPANDED)) {
 
             viewModel.getTask()?.name = intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_TITLE)
 
@@ -113,16 +103,6 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
                 dueDateTextView.transitionName = TRANSITION_ID_DUE
                 dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
             }
-        }
-
-        statusSwitch.changeTextColorWhenChecked()
-        prioritySwitch.changeTextColorWhenChecked()
-
-        // The passed extras from the parent activity
-        // will be shown in their respective fields.
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            onValueChanged()
-            window.decorView.rootView.clearFocus()
         }
 
         var currentScrollPosition = 0
@@ -465,8 +445,12 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
 
             when (action) {
                 BaseListAdapter.ActionListener.Action.SELECT -> {
-                    if (attachment != null) {
-                        onParseIntent(CoreApplication.obtainUriForFile(this, attachment))
+                    try {
+                        onParseIntent(Uri.parse(t.target))
+                    } catch (e: Exception) {
+                        if (attachment != null) {
+                            onParseIntent(CoreApplication.obtainUriForFile(this, attachment))
+                        }
                     }
                 }
                 BaseListAdapter.ActionListener.Action.DELETE -> {
@@ -593,8 +577,6 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             }
         } else super.onBackPressed()
     }
-
-    override fun onValueChanged() {}
 
     companion object {
         const val REQUEST_CODE_INSERT = 32

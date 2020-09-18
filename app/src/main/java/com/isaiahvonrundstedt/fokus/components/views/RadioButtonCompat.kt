@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.components.custom
+package com.isaiahvonrundstedt.fokus.components.views
 
 import android.content.Context
 import android.util.AttributeSet

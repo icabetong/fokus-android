@@ -24,33 +24,21 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
-import com.isaiahvonrundstedt.fokus.components.custom.TwoLineRadioButton
-import com.isaiahvonrundstedt.fokus.components.extensions.android.*
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
+import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
-import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
-import kotlinx.android.synthetic.main.layout_editor_event.actionButton
-import kotlinx.android.synthetic.main.layout_editor_event.contentView
-import kotlinx.android.synthetic.main.layout_editor_event.customDateTimeRadio
-import kotlinx.android.synthetic.main.layout_editor_event.dateTimeRadioGroup
-import kotlinx.android.synthetic.main.layout_editor_event.inNextMeetingRadio
-import kotlinx.android.synthetic.main.layout_editor_event.notesTextInput
-import kotlinx.android.synthetic.main.layout_editor_event.pickDateTimeRadio
-import kotlinx.android.synthetic.main.layout_editor_event.prioritySwitch
-import kotlinx.android.synthetic.main.layout_editor_event.removeButton
-import kotlinx.android.synthetic.main.layout_editor_event.rootLayout
-import kotlinx.android.synthetic.main.layout_editor_event.subjectTextView
-import kotlinx.android.synthetic.main.layout_editor_task.*
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
 import org.joda.time.LocalDateTime
 import java.io.File
 import java.util.*
@@ -83,14 +71,6 @@ class EventEditor : BaseEditor() {
 
             setTransitionName(eventNameTextInput, TRANSITION_ID_NAME +
                     viewModel.getEvent()?.eventID)
-        }
-
-        prioritySwitch.changeTextColorWhenChecked()
-
-        // The passed extras will be shown in their
-        // corresponding fields
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            window.decorView.rootView.clearFocus()
         }
 
         var currentScrollPosition = 0
@@ -427,8 +407,6 @@ class EventEditor : BaseEditor() {
             }
         } else super.onBackPressed()
     }
-
-    override fun onValueChanged() {}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

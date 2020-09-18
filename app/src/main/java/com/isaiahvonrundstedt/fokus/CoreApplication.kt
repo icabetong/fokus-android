@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import android.os.PowerManager
 import androidx.core.content.FileProvider
 import net.danlew.android.joda.JodaTimeAndroid
 import java.io.File

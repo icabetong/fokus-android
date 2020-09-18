@@ -15,25 +15,14 @@ fun TextView.setTextColorFromResource(@ColorRes id: Int) {
     this.setTextColor(ContextCompat.getColor(this.context, id))
 }
 
+/**
+ *  Extension function used to set an strike through effect on the
+ *  painted text on the view
+ *  @param status determines whether to add or remove the effect on the text
+ */
 fun TextView.setStrikeThroughEffect(status: Boolean) {
     if (status) this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     else this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-}
-
-/**
- *   Extension function used to add a strike through effect on
- *   the AppCompatTextView
- */
-fun TextView.addStrikeThroughEffect() {
-    this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-}
-
-/**
- *   Extension function used to remove a strike through effect on
- *   the AppCompatTextView
- */
-fun TextView.removeStrikeThroughEffect() {
-    this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
 }
 
 /**

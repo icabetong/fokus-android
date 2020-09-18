@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import kotlinx.android.synthetic.main.activity_previous.recyclerView
+import kotlinx.android.synthetic.main.activity_previous.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 import kotlinx.android.synthetic.main.layout_empty_previous.*
 

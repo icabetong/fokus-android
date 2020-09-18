@@ -17,9 +17,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableL
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import com.isaiahvonrundstedt.fokus.features.task.*
+import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
-import kotlinx.android.synthetic.main.activity_finished.recyclerView
+import kotlinx.android.synthetic.main.activity_finished.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 import kotlinx.android.synthetic.main.layout_empty_finished.*
 import java.io.File

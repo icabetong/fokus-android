@@ -3,8 +3,6 @@ package com.isaiahvonrundstedt.fokus.components.utils
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig

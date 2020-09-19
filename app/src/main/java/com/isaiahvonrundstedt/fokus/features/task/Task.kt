@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Parcelable
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.*
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -14,10 +12,9 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import java.io.File
 import java.io.InputStream
+import java.time.ZonedDateTime
 import java.util.*
 
 @Parcelize
@@ -34,9 +31,9 @@ data class Task @JvmOverloads constructor(
     var subject: String? = null,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
-    var dateAdded: DateTime? = DateTime.now(),
+    var dateAdded: ZonedDateTime? = ZonedDateTime.now(),
     @TypeConverters(DateTimeConverter::class)
-    var dueDate: DateTime? = null,
+    var dueDate: ZonedDateTime? = null,
     var isFinished: Boolean = false
 ) : Parcelable, Streamable {
 
@@ -45,31 +42,31 @@ data class Task @JvmOverloads constructor(
     }
 
     fun isDueDateInFuture(): Boolean {
-        return dueDate?.isAfterNow == true
+        return dueDate?.isAfterNow() == true
     }
 
     fun isDueToday(): Boolean {
         return dueDate?.isToday() == true
     }
 
-    fun formatDueDate(context: Context): String {
+    fun formatDueDate(context: Context): String? {
         if (dueDate == null)
             return ""
 
         // Check if the day on the task's due is today
         return if (dueDate?.isToday() == true)
             String.format(context.getString(R.string.today_at),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
+                dueDate?.print(DateTimeConverter.FORMAT_TIME))
         // Now check if the day is yesterday
         else if (dueDate?.isYesterday() == true)
             String.format(context.getString(R.string.yesterday_at),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
+                dueDate?.print(DateTimeConverter.FORMAT_TIME))
         // Now check if its tomorrow
         else if (dueDate?.isTomorrow() == true)
             String.format(context.getString(R.string.tomorrow_at),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dueDate))
+                dueDate?.print(DateTimeConverter.FORMAT_TIME))
         // Just print the date what could go wrong?
-        else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(dueDate)
+        else dueDate?.print(DateTimeConverter.FORMAT_DATE)
     }
 
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Task::class.java)

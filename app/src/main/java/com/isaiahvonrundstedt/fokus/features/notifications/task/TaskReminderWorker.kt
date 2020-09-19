@@ -9,9 +9,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants
-import org.joda.time.Duration
+import java.time.*
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to only show reminders
@@ -21,14 +19,14 @@ class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
     private var database = AppDatabase.getInstance(applicationContext)
-    private var tasks = database?.tasks()
-    private var logs = database?.logs()
+    private var tasks = database.tasks()
+    private var logs = database.logs()
 
     override suspend fun doWork(): Result {
-        val currentTime = DateTime.now()
+        val currentTime = ZonedDateTime.now()
         reschedule(applicationContext)
 
-        val taskSize: Int = tasks?.fetchCount() ?: 0
+        val taskSize: Int = tasks.fetchCount()
         var log: Log? = null
         if (taskSize > 0) {
             log = Log().apply {
@@ -36,17 +34,17 @@ class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
                     taskSize)
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
                 type = Log.TYPE_TASK
-                dateTimeTriggered = DateTime.now()
+                dateTimeTriggered = ZonedDateTime.now()
             }
         }
 
         if (preferenceManager.reminderFrequency == PreferenceManager.DURATION_WEEKENDS
-            && !(currentTime.dayOfWeek == DateTimeConstants.SATURDAY
-                    || currentTime.dayOfWeek == DateTimeConstants.SUNDAY))
+            && !(currentTime.dayOfWeek == DayOfWeek.SUNDAY
+                    || currentTime.dayOfWeek == DayOfWeek.SATURDAY))
             return Result.success()
 
         if (log != null) {
-            logs?.insert(log)
+            logs.insert(log)
             sendNotification(log)
         }
 
@@ -59,22 +57,24 @@ class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
             val manager = WorkManager.getInstance(context)
             val preferences = PreferenceManager(context)
 
-            val reminderTime: DateTime? = preferences.reminderTime?.toDateTimeToday()
-            val executionTime: DateTime? = if (DateTime.now().isBefore(reminderTime))
-                DateTime.now().withTimeAtStartOfDay()
-                    .plusHours(reminderTime?.hourOfDay ?: 8)
-                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
+            val reminderTime: ZonedDateTime? = ZonedDateTime.of(LocalDate.now(),
+                preferences.reminderTime, ZoneId.systemDefault())
+
+            val executionTime: ZonedDateTime? = if (ZonedDateTime.now().isBefore(reminderTime))
+                LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+                    .plusHours((reminderTime?.hour ?: 8).toLong())
+                    .plusMinutes((reminderTime?.minute ?: 30).toLong())
                     .plusMinutes(1)
             else
-                DateTime.now().withTimeAtStartOfDay()
+                LocalDate.now().atStartOfDay(ZoneId.systemDefault())
                     .plusDays(1)
-                    .plusHours(reminderTime?.hourOfDay ?: 8)
-                    .plusMinutes(reminderTime?.minuteOfHour ?: 30)
+                    .plusHours((reminderTime?.hour ?: 8).toLong())
+                    .plusMinutes((reminderTime?.minute ?: 30).toLong())
 
             manager.cancelAllWorkByTag(this::class.java.simpleName)
 
             val request = OneTimeWorkRequest.Builder(TaskReminderWorker::class.java)
-                .setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
+                .setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
                     TimeUnit.MINUTES)
                 .addTag(this::class.java.simpleName)
                 .build()

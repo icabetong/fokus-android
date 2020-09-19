@@ -10,7 +10,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
 import kotlinx.android.synthetic.main.layout_sheet_options.*
-import org.joda.time.LocalTime
+import java.time.LocalTime
 
 class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
     MenuAdapter.MenuItemListener {
@@ -25,7 +25,7 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
 
         val currentTime = LocalTime.now()
         menuTitleView.text =
-            when (currentTime.hourOfDay) {
+            when (currentTime.hour) {
                 in 0..6 -> getString(R.string.greeting_default)
                 in 7..12 -> getString(R.string.greeting_morning)
                 in 13..18 -> getString(R.string.greeting_afternoon)

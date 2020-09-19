@@ -5,32 +5,32 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okio.Okio
-import org.joda.time.DateTime
-import org.joda.time.LocalTime
 import java.io.InputStream
+import java.time.LocalTime
+import java.time.ZonedDateTime
 
 class JsonDataStreamer private constructor () {
 
     class DateTimeAdapter {
 
         @FromJson
-        fun toDateTime(string: String): DateTime?
-            = DateTimeConverter.toDateTime(string)
+        fun toDateTime(string: String): ZonedDateTime?
+            = DateTimeConverter.toZonedDateTime(string)
 
         @ToJson
-        fun fromDateTime(dateTime: DateTime): String?
-            = DateTimeConverter.fromDateTime(dateTime)
+        fun fromDateTime(dateTime: ZonedDateTime): String?
+            = DateTimeConverter.fromZonedDateTime(dateTime)
     }
 
     class LocalTimeAdapter {
 
         @FromJson
         fun toLocalTime(string: String): LocalTime?
-                = DateTimeConverter.toTime(string)
+                = DateTimeConverter.toLocalTime(string)
 
         @ToJson
         fun fromLocalTime(time: LocalTime): String?
-                = DateTimeConverter.fromTime(time)
+                = DateTimeConverter.fromLocalTime(time)
     }
 
     class UriAdapter {

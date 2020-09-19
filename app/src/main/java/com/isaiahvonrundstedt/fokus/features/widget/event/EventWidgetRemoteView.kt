@@ -20,10 +20,10 @@ class EventWidgetRemoteView(private var context: Context)
     private fun fetch() {
         itemList.clear()
 
-        val events = AppDatabase.getInstance(context)?.events()
+        val events = AppDatabase.getInstance(context).events()
         var items = emptyList<EventPackage>()
         runBlocking {
-            val job = async { events?.fetch() }
+            val job = async { events.fetch() }
             items = job.await() ?: emptyList()
             items.forEach { if (it.event.isToday()) itemList.add(it) }
         }

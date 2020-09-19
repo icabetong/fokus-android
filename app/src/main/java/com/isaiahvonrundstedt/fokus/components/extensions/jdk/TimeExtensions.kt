@@ -1,9 +1,27 @@
 package com.isaiahvonrundstedt.fokus.components.extensions.jdk
 
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+
+
+fun LocalTime.print(pattern: String?): String? {
+    return format(DateTimeFormatter.ofPattern(pattern))
+}
+
+fun LocalTime.toZonedDateTimeToday(): ZonedDateTime? {
+    return LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+        .with(this)
+}
+
+fun LocalTime.withCalendarFields(calendar: Calendar): LocalTime {
+    return this.withHour(calendar.get(Calendar.HOUR_OF_DAY))
+        .withMinute(calendar.get(Calendar.MINUTE))
+        .withSecond(calendar.get(Calendar.SECOND))
+}
 
 /**
  *   An extension function used to
@@ -51,10 +69,14 @@ fun ZonedDateTime.isAfterNow(): Boolean {
 }
 
 /**
- *  An extension function used to convert
- *  the current ZonedDateTime object to
- *  a Calendar instance
+ *  An extension function used to convert the
+ *  current instance of ZonedDateTime to
+ *  a legacy Calendar instance
  */
 fun ZonedDateTime.toCalendar(): Calendar {
     return GregorianCalendar.from(this)
+}
+
+fun ZonedDateTime.print(pattern: String?): String? {
+    return this.format(DateTimeFormatter.ofPattern(pattern))
 }

@@ -23,10 +23,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okio.Okio
 import org.apache.commons.io.FileUtils
-import org.joda.time.DateTime
 import java.io.EOFException
 import java.io.File
 import java.io.InputStream
+import java.time.ZonedDateTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
@@ -184,7 +184,7 @@ class BackupRestoreService: BaseService() {
                 }
                 items.add(attachmentFolder)
 
-                fetchJob = async { database?.events()?.fetchCore() }
+                fetchJob = async { database.events().fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Event::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_EVENT, it))
                 }
@@ -207,7 +207,8 @@ class BackupRestoreService: BaseService() {
                     .toDestination(destination)
                     .start()
 
-                PreferenceManager(this@BackupRestoreService).previousBackupDate = DateTime.now()
+                PreferenceManager(this@BackupRestoreService)
+                    .previousBackupDate = ZonedDateTime.now()
 
                 stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
                 manager?.notify(NOTIFICATION_BACKUP_SUCCESS,

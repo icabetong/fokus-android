@@ -6,7 +6,7 @@ import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
 
 class EventRepository private constructor(app: Application) {
 
@@ -28,8 +28,8 @@ class EventRepository private constructor(app: Application) {
 
     fun fetch(isAfterNow: Boolean = true): LiveData<List<EventPackage>> {
         return if (isAfterNow)
-         events.fetchLiveData(DateTimeConverter.fromDateTime(DateTime.now()))
-        else events.fetchLiveDataPrevious(DateTimeConverter.fromDateTime(DateTime.now()))
+         events.fetchLiveData(DateTimeConverter.fromZonedDateTime(ZonedDateTime.now()))
+        else events.fetchLiveDataPrevious(DateTimeConverter.fromZonedDateTime(ZonedDateTime.now()))
     }
 
     suspend fun insert(event: Event) {

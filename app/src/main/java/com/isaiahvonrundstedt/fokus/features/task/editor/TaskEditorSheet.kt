@@ -15,12 +15,13 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import kotlinx.android.synthetic.main.layout_sheet_task.*
-import org.joda.time.LocalDateTime
-import java.util.*
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(fragmentManager) {
 
@@ -38,8 +39,9 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(this@TaskEditorSheet)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = task.dueDate?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    task.dueDate = LocalDateTime.fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = task.dueDate?.toCalendar()) { _, datetime ->
+                    task.dueDate = ZonedDateTime.ofInstant(datetime.toInstant(),
+                        ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
                     if (chip is Chip) {
@@ -59,7 +61,7 @@ class TaskEditorSheet(fragmentManager: FragmentManager): BaseBottomSheet<Task>(f
             editor.putExtra(EXTRA_TASK_TITLE, task.name)
 
             if (task.hasDueDate())
-                editor.putExtra(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate))
+                editor.putExtra(EXTRA_TASK_DUE, DateTimeConverter.fromZonedDateTime(task.dueDate))
 
             val sharedViews = mapOf<String, View>(TaskEditor.TRANSITION_ID_NAME
                     to taskNameTextInput).mapNotNull {

@@ -20,7 +20,7 @@ class ActionWorker(context: Context, workerParameters: WorkerParameters)
             return Result.success()
 
         if (action == NotificationActionService.ACTION_FINISHED)
-            tasks?.setFinished(taskID, 1)
+            tasks.setFinished(taskID, 1)
 
         return Result.success()
     }

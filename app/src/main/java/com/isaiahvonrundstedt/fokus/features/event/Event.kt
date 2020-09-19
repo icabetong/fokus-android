@@ -7,9 +7,10 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isToday
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isTomorrow
-import com.isaiahvonrundstedt.fokus.components.extensions.jodatime.isYesterday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isToday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isTomorrow
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isYesterday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -17,11 +18,9 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import java.io.File
 import java.io.InputStream
+import java.time.ZonedDateTime
 import java.util.*
 
 @Parcelize
@@ -39,40 +38,40 @@ data class Event @JvmOverloads constructor(
     var subject: String? = null,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
-    var schedule: DateTime? = null,
+    var schedule: ZonedDateTime? = null,
     @TypeConverters(DateTimeConverter::class)
-    var dateAdded: DateTime = DateTime.now()
+    var dateAdded: ZonedDateTime = ZonedDateTime.now()
 ) : Parcelable, Streamable {
 
     fun isToday(): Boolean {
-        return schedule?.toLocalDate()?.compareTo(LocalDate.now()) == 0
+        return schedule?.isToday() == true
     }
 
-    fun formatScheduleDate(context: Context): String {
+    fun formatScheduleDate(context: Context): String? {
         return if (schedule?.isToday() == true)
             context.getString(R.string.today)
         else if (schedule?.isYesterday() == true)
             context.getString(R.string.yesterday)
         else if (schedule?.isTomorrow() == true)
             context.getString(R.string.tomorrow)
-        else DateTimeFormat.forPattern("MMM d").print(schedule)
+        else schedule?.print(SCHEDULE_DATE_FORMAT_SHORT)
     }
 
-    fun formatScheduleTime(): String {
-        return DateTimeFormat.forPattern("h:mm a").print(schedule)
+    fun formatScheduleTime(): String? {
+        return schedule?.print(SCHEDULE_DATE_FORMAT_SHORT)
     }
 
-    fun formatSchedule(context: Context): String {
+    fun formatSchedule(context: Context): String? {
         return if (schedule?.isToday() == true)
-                String.format(context.getString(R.string.today_at), DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
+                String.format(context.getString(R.string.today_at),
+                    schedule?.print(DateTimeConverter.FORMAT_TIME))
             else if (schedule?.isYesterday() == true)
                 String.format(context.getString(R.string.yesterday_at),
-                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
+                    schedule?.print(DateTimeConverter.FORMAT_TIME))
             else if (schedule?.isTomorrow() == true)
                 String.format(context.getString(R.string.tomorrow_at),
-                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(schedule))
-            else
-                DateTimeFormat.forPattern("EEE - MMMM d, h:mm a").print(schedule)
+                    schedule?.print(DateTimeConverter.FORMAT_TIME))
+            else schedule?.print(SCHEDULE_DATE_FORMAT_LONG)
 
     }
 
@@ -100,9 +99,8 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
-        const val FIELD_EVENT_NAME = "event:name"
-        const val FIELD_EVENT_SCHEDULE = "event:schedule"
-        const val FIELD_EVENT_LOCATION = "event:location"
+        const val SCHEDULE_DATE_FORMAT_SHORT = "MMM d"
+        const val SCHEDULE_DATE_FORMAT_LONG = "EEE - MMMM d, h:mm a"
 
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {

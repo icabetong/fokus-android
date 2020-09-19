@@ -5,13 +5,14 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.log.Log
+import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import org.joda.time.DateTime
-import org.joda.time.Duration
+import java.time.Duration
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 class ClassNotificationWorker(context: Context, workerParameters: WorkerParameters)
@@ -32,19 +33,19 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
         request.setInputData(convertLogToData(history))
 
         schedule.getDaysAsList().forEach {
-            var triggerTime: DateTime = Schedule.getNextWeekDay(it, schedule.startTime)
+            var triggerTime = schedule.startTime?.let { time -> Schedule.getNextWeekDay(it, time) }
 
             when (preferenceManager.subjectReminderInterval) {
                 PreferenceManager.SUBJECT_REMINDER_INTERVAL_5_MINUTES ->
-                    triggerTime = triggerTime.minusMinutes(5)
+                    triggerTime = triggerTime?.minusMinutes(5)
                 PreferenceManager.SUBJECT_REMINDER_INTERVAL_15_MINUTES ->
-                    triggerTime = triggerTime.minusMinutes(15)
+                    triggerTime = triggerTime?.minusMinutes(15)
                 PreferenceManager.SUBJECT_REMINDER_INTERVAL_30_MINUTES ->
-                    triggerTime = triggerTime.minusMinutes(30)
+                    triggerTime = triggerTime?.minusMinutes(30)
             }
 
-            if (triggerTime.isAfterNow)
-                request.setInitialDelay(Duration(DateTime.now(), triggerTime).standardMinutes,
+            if (triggerTime?.isAfterNow() == true)
+                request.setInitialDelay(Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
                     TimeUnit.MINUTES)
 
             workManager.enqueueUniqueWork(schedule.scheduleID, ExistingWorkPolicy.APPEND,
@@ -54,10 +55,10 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
         return Result.success()
     }
 
-    private fun reschedule(tag: String, data: Data, triggerTime: DateTime) {
+    private fun reschedule(tag: String, data: Data, triggerTime: ZonedDateTime?) {
         val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
             .setInputData(data)
-            .setInitialDelay(Duration(triggerTime, triggerTime.plusWeeks(1)).standardMinutes,
+            .setInitialDelay(Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
                 TimeUnit.MINUTES)
         workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.APPEND,
             request.build())

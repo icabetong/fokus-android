@@ -53,7 +53,6 @@ This is an open-source personal project and I am very happy to accept community 
 ### Libraries used
 
 * [Material Dialogs](https://github.com/afollestad/material-dialogs)
-* [joda-time-android](https://github.com/dlew/joda-time-android)
 * [Konfetti](https://github.com/DanielMartinus/Konfetti)
 * [ExpandableBottomBar](https://github.com/st235/ExpandableBottomBar)
 * [CommonsIO](https://commons.apache.org/proper/commons-io/)

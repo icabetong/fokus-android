@@ -13,9 +13,9 @@ class ClassNotificationScheduler(context: Context, workerParameters: WorkerParam
     private var subjects = AppDatabase.getInstance(applicationContext)?.subjects()
 
     override suspend fun doWork(): Result {
-        val subjectList = subjects?.fetch()
+        val subjectList = subjects.fetch()
 
-        subjectList?.forEach { resource ->
+        subjectList.forEach { resource ->
             resource.schedules.forEach {
                 it.subject = resource.subject.code
 

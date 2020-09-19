@@ -28,6 +28,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
@@ -39,9 +40,9 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_event.*
-import org.joda.time.LocalDateTime
 import java.io.File
-import java.util.*
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class EventEditor : BaseEditor() {
 
@@ -153,9 +154,9 @@ class EventEditor : BaseEditor() {
             MaterialDialog(this).show {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getEvent()?.schedule?.toDateTime()?.toCalendar(
-                        Locale.getDefault())) { _, datetime ->
-                    viewModel.getEvent()?.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = viewModel.getEventSchedule()?.toCalendar()) { _, datetime ->
+                    viewModel.getEvent()?.schedule = ZonedDateTime.ofInstant(datetime.toInstant(),
+                        ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true
@@ -222,9 +223,9 @@ class EventEditor : BaseEditor() {
             MaterialDialog(this).show {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getEvent()?.schedule?.toDateTime()?.toCalendar(
-                        Locale.getDefault())) { _, datetime ->
-                    viewModel.getEvent()?.schedule = LocalDateTime.fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = viewModel.getEventSchedule()?.toCalendar()) { _, datetime ->
+                    viewModel.getEvent()?.schedule = ZonedDateTime.ofInstant(datetime.toInstant(),
+                        ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true

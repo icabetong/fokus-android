@@ -9,17 +9,17 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import java.io.File
 import java.io.InputStream
+import java.time.LocalDate
+import java.time.ZonedDateTime
 import java.util.*
 
 @Parcelize
@@ -34,7 +34,7 @@ data class Log @JvmOverloads constructor(
     var type: Int = TYPE_GENERIC,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
-    var dateTimeTriggered: DateTime? = null
+    var dateTimeTriggered: ZonedDateTime? = null
 ) : Parcelable, Streamable {
 
     fun setIconToView(sourceView: ImageView) {
@@ -49,15 +49,15 @@ data class Log @JvmOverloads constructor(
         }
     }
 
-    fun formatDateTime(): String {
+    fun formatDateTime(): String? {
         val currentDateTime = LocalDate.now()
 
         // Formats the dateTime object for human reading
         return if (dateTimeTriggered!!.toLocalDate().isEqual(currentDateTime))
-            DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(dateTimeTriggered)
+            dateTimeTriggered?.print(DateTimeConverter.FORMAT_TIME)
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
-            DateTimeFormat.forPattern("MMMM d").print(dateTimeTriggered!!)
-        else DateTimeFormat.forPattern("MMMM d yyyy").print(dateTimeTriggered!!)
+            dateTimeTriggered?.print(DATE_TRIGGERED_FORMAT_SAME_YEAR)
+        else dateTimeTriggered?.print(DATE_TRIGGERED_FORMAT_DIFFERENT_YEAR)
     }
 
     @DrawableRes
@@ -117,6 +117,9 @@ data class Log @JvmOverloads constructor(
     }
 
     companion object {
+        const val DATE_TRIGGERED_FORMAT_SAME_YEAR = "MMM d"
+        const val DATE_TRIGGERED_FORMAT_DIFFERENT_YEAR = "MM dd yyyy"
+
         const val TYPE_GENERIC = 0
         const val TYPE_TASK = 1
         const val TYPE_EVENT = 2

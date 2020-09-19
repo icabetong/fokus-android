@@ -6,6 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationWorker
@@ -27,7 +29,7 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
 
-        if (PreferenceManager(app).eventReminder && event.schedule!!.isAfterNow) {
+        if (PreferenceManager(app).eventReminder && event.schedule?.isAfterNow() == true) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)
@@ -54,10 +56,10 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
 
-        if (event.schedule?.isBeforeNow == true || !event.isImportant)
+        if (event.schedule?.isBeforeNow() == true || !event.isImportant)
             notificationService?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
 
-        if (PreferenceManager(app).eventReminder && event.schedule!!.isAfterNow) {
+        if (PreferenceManager(app).eventReminder && event.schedule?.isAfterNow() == true) {
             val data = BaseWorker.convertEventToData(event)
             val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                 .setInputData(data)

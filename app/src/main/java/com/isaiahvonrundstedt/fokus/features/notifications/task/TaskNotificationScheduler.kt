@@ -17,8 +17,8 @@ class TaskNotificationScheduler(context: Context, workerParameters: WorkerParame
     private var tasks = AppDatabase.getInstance(applicationContext)?.tasks()
 
     override suspend fun doWork(): Result {
-        val taskList = tasks?.fetchCore()
-        taskList?.forEach { task ->
+        val taskList = tasks.fetchCore()
+        taskList.forEach { task ->
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(convertTaskToData(task))
                 .build()

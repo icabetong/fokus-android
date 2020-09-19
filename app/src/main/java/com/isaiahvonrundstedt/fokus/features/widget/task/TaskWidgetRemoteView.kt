@@ -21,10 +21,10 @@ class TaskWidgetRemoteView(private var context: Context)
     private fun fetch() {
         itemList.clear()
 
-        val tasks = AppDatabase.getInstance(context)?.tasks()
+        val tasks = AppDatabase.getInstance(context).tasks()
         var items = emptyList<TaskPackage>()
         runBlocking {
-            val job = async { tasks?.fetch()  }
+            val job = async { tasks.fetch()  }
             items = job.await() ?: emptyList()
             items.forEach { if (it.task.isDueToday()) itemList.add(it) }
         }

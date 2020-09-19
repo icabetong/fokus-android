@@ -8,6 +8,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -15,13 +16,9 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants
-import org.joda.time.LocalTime
-import org.joda.time.format.DateTimeFormat
 import java.io.File
 import java.io.InputStream
-import java.time.DayOfWeek
+import java.time.*
 import java.util.*
 
 @Parcelize
@@ -42,7 +39,7 @@ data class Schedule @JvmOverloads constructor(
 
     fun isToday(): Boolean {
         getDaysAsList().forEach {
-            if (it == DateTime.now().dayOfWeek)
+            if (it == ZonedDateTime.now().dayOfWeek.value)
                 return@isToday true
         }
         return false
@@ -60,11 +57,11 @@ data class Schedule @JvmOverloads constructor(
         return "${formatStartTime()} - ${formatEndTime()}"
     }
 
-    fun formatStartTime(): String {
+    fun formatStartTime(): String? {
         return formatTime(startTime)
     }
 
-    fun formatEndTime(): String {
+    fun formatEndTime(): String? {
         return formatTime(endTime)
     }
 
@@ -180,29 +177,31 @@ data class Schedule @JvmOverloads constructor(
             }
         }
 
-        fun getNearestDateTime(day: Int, time: LocalTime?): DateTime {
-            val currentDate = DateTime.now().withTimeAtStartOfDay()
-            val currentDayOfWeek = currentDate.dayOfWeek
-            var targetDay = day
+        fun getNearestDateTime(day: Int, time: LocalTime): ZonedDateTime {
+            val currentDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+            val currentDayOfWeek = currentDate.dayOfWeek.value
+            var targetDay: Long = day.toLong()
 
             if (day <= currentDayOfWeek)
                 targetDay += 7
 
             return currentDate.plusDays(targetDay - currentDayOfWeek)
-                .withTime(time)
+                .withHour(time.hour)
+                .withMinute(time.minute)
+                .withSecond(time.second)
         }
 
-        fun getNextWeekDay(day: Int, time: LocalTime?): DateTime {
-            var currentDate = DateTime.now().withTimeAtStartOfDay()
-                .plusHours(time?.hourOfDay ?: 0)
-                .plusMinutes(time?.minuteOfHour ?: 0)
-            if (currentDate.dayOfWeek >= day)
+        fun getNextWeekDay(day: Int, time: LocalTime): ZonedDateTime? {
+            var currentDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+                .plusHours(time.hour.toLong())
+                .plusMinutes(time.minute.toLong())
+            if (currentDate.dayOfWeek.value >= day)
                 currentDate = currentDate.plusWeeks(1)
-            return currentDate.withDayOfWeek(day)
+            return currentDate.with(DayOfWeek.of(day))
         }
 
-        fun formatTime(time: LocalTime?): String {
-            return DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(time)
+        fun formatTime(time: LocalTime?): String? {
+            return time?.print(DateTimeConverter.FORMAT_TIME)
         }
     }
 }

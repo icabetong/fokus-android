@@ -5,14 +5,15 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.log.Log
+import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import org.joda.time.DateTime
-import org.joda.time.Duration
-import org.joda.time.format.DateTimeFormat
+import java.time.Duration
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
@@ -27,7 +28,7 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
         val log = Log().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
-                DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(task.dueDate))
+                task.dueDate?.print(DateTimeConverter.FORMAT_DATE))
             type = Log.TYPE_TASK
             isImportant = task.isImportant
             data = task.taskID
@@ -55,8 +56,8 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
                 executionTime = task.dueDate?.minusHours(24)
         }
 
-        if (executionTime?.isAfterNow == true)
-            request.setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
+        if (executionTime?.isAfterNow() == true)
+            request.setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
                 TimeUnit.MINUTES)
 
         workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,

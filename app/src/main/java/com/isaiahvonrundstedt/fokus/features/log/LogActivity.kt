@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,10 +41,10 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
     override fun onStart() {
         super.onStart()
 
-        viewModel.fetch()?.observe(this, Observer { items ->
+        viewModel.fetch()?.observe(this) { items ->
             adapter?.submitList(items)
             emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
-        })
+        }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,

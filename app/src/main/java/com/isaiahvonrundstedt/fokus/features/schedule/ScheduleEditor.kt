@@ -14,11 +14,13 @@ import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeToday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import kotlinx.android.synthetic.main.layout_sheet_schedule_editor.*
-import org.joda.time.DateTimeConstants
-import org.joda.time.LocalTime
-import java.util.*
+import java.time.DayOfWeek
+import java.time.LocalTime
 
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 
@@ -48,13 +50,13 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
                 schedule.getDaysAsList().forEach { day ->
                     when (day) {
-                        DateTimeConstants.SUNDAY -> sundayChip.isChecked = true
-                        DateTimeConstants.MONDAY -> mondayChip.isChecked = true
-                        DateTimeConstants.TUESDAY -> tuesdayChip.isChecked = true
-                        DateTimeConstants.WEDNESDAY -> wednesdayChip.isChecked = true
-                        DateTimeConstants.THURSDAY -> thursdayChip.isChecked = true
-                        DateTimeConstants.FRIDAY -> fridayChip.isChecked = true
-                        DateTimeConstants.SATURDAY -> saturdayChip.isChecked = true
+                        DayOfWeek.SUNDAY.value -> sundayChip.isChecked = true
+                        DayOfWeek.MONDAY.value -> mondayChip.isChecked = true
+                        DayOfWeek.TUESDAY.value -> tuesdayChip.isChecked = true
+                        DayOfWeek.WEDNESDAY.value -> wednesdayChip.isChecked = true
+                        DayOfWeek.THURSDAY.value -> thursdayChip.isChecked = true
+                        DayOfWeek.FRIDAY.value -> fridayChip.isChecked = true
+                        DayOfWeek.SATURDAY.value -> saturdayChip.isChecked = true
                     }
                 }
             }
@@ -65,12 +67,12 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_start_time)
                 timePicker(show24HoursView = false,
-                    currentTime = schedule.startTime?.toDateTimeToday()?.toCalendar(Locale.getDefault())) { _, time ->
-                    val startTime = LocalTime.fromCalendarFields(time)
+                    currentTime = schedule.startTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                    val startTime = LocalTime.now().withCalendarFields(time)
 
                     schedule.startTime = startTime
                     if (schedule.endTime == null) schedule.endTime = startTime
-                    if (startTime.isAfter(schedule.endTime) || startTime.isEqual(schedule.endTime)) {
+                    if (startTime.isAfter(schedule.endTime) || startTime.compareTo(schedule.endTime) == 0) {
                         schedule.endTime = schedule.startTime?.plusHours(1)?.plusMinutes(30)
                         this@ScheduleEditor.endTimeTextView.text = schedule.formatEndTime()
                     }
@@ -91,13 +93,12 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_end_time)
                 timePicker(show24HoursView = false,
-                    currentTime = schedule.endTime?.toDateTimeToday()?.toCalendar(
-                        Locale.getDefault())) { _, time ->
-                    val endTime = LocalTime.fromCalendarFields(time)
+                    currentTime = schedule.endTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                    val endTime = LocalTime.now().withCalendarFields(time)
 
                     schedule.endTime = endTime
                     if (schedule.startTime == null) schedule.startTime = endTime
-                    if (endTime.isBefore(schedule.startTime) || endTime.isEqual(schedule.startTime)) {
+                    if (endTime.isBefore(schedule.startTime) || endTime.compareTo(schedule.startTime) == 0) {
                         schedule.startTime = schedule.endTime?.minusHours(1)?.minusMinutes(30)
                         this@ScheduleEditor.startTimeTextView.text = schedule.formatStartTime()
                     }

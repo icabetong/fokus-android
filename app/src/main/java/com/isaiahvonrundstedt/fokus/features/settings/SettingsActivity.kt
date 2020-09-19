@@ -16,6 +16,8 @@ import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationScheduler
@@ -26,8 +28,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.android.synthetic.main.layout_appbar.*
-import org.joda.time.LocalTime
-import org.joda.time.format.DateTimeFormat
+import java.time.LocalTime
 import java.util.*
 
 class SettingsActivity : BaseActivity() {
@@ -106,19 +107,17 @@ class SettingsActivity : BaseActivity() {
                     }
 
                 setPreferenceSummary(R.string.key_reminder_time,
-                    DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME)
-                        .print(preferences.reminderTime))
+                    preferences.reminderTime?.print(DateTimeConverter.FORMAT_TIME))
                 findPreference<Preference>(R.string.key_reminder_time)
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
-                            timePicker(show24HoursView = false) { _, datetime ->
-                                preferences.reminderTime = LocalTime.fromCalendarFields(datetime)
+                            timePicker(show24HoursView = false) { _, time ->
+                                preferences.reminderTime = LocalTime.now().withCalendarFields(time)
 
                                 TaskReminderWorker.reschedule(requireContext())
                             }
                             positiveButton(R.string.button_done) { _ ->
-                                it.summary = DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME)
-                                    .print(preferences.reminderTime)
+                                it.summary = preferences.reminderTime?.print(DateTimeConverter.FORMAT_TIME)
                             }
                         }
                         true

@@ -5,15 +5,9 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.core.content.FileProvider
-import net.danlew.android.joda.JodaTimeAndroid
 import java.io.File
 
 class CoreApplication : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        JodaTimeAndroid.init(this)
-    }
 
     companion object {
         fun obtainUriForFile(context: Context, source: File): Uri {

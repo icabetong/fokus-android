@@ -5,6 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
@@ -18,10 +19,10 @@ class EventNotificationScheduler(context: Context, workerParameters: WorkerParam
     private var events = AppDatabase.getInstance(applicationContext)?.events()
 
     override suspend fun doWork(): Result {
-        val items = events?.fetchCore()
+        val items = events.fetchCore()
 
-        items?.forEach { event ->
-            if (event.schedule!!.isAfterNow) {
+        items.forEach { event ->
+            if (event.schedule?.isAfterNow() == true) {
                 val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                     .setInputData(convertEventToData(event))
                     .build()

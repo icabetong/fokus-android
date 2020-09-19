@@ -12,8 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.joda.time.DateTime
 import java.io.File
+import java.time.ZonedDateTime
 import java.util.*
 
 @Parcelize
@@ -28,7 +28,7 @@ data class Attachment @JvmOverloads constructor(
     var target: String? = null,
     var task: String = "",
     @TypeConverters(DateTimeConverter::class)
-    var dateAttached: DateTime? = DateTime.now()
+    var dateAttached: ZonedDateTime? = ZonedDateTime.now()
 ) : Parcelable {
 
     companion object {

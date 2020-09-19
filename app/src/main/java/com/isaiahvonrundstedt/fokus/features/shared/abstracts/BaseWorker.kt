@@ -81,7 +81,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(EXTRA_TASK_NAME, task.name)
                 putString(EXTRA_TASK_NOTES, task.notes)
                 putString(EXTRA_TASK_SUBJECT, task.subject)
-                putString(EXTRA_TASK_DUE, DateTimeConverter.fromDateTime(task.dueDate))
+                putString(EXTRA_TASK_DUE, DateTimeConverter.fromZonedDateTime(task.dueDate))
                 putBoolean(EXTRA_TASK_IMPORTANCE, task.isImportant)
             }.build()
         }
@@ -92,7 +92,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 putString(EXTRA_EVENT_NAME, event.name)
                 putString(EXTRA_EVENT_NOTES, event.notes)
                 putString(EXTRA_EVENT_LOCATION, event.location)
-                putString(EXTRA_EVENT_SCHEDULE, DateTimeConverter.fromDateTime(event.schedule!!))
+                putString(EXTRA_EVENT_SCHEDULE, DateTimeConverter.fromZonedDateTime(event.schedule))
                 putBoolean(EVENT_EVENT_IMPORTANCE, event.isImportant)
             }.build()
         }
@@ -101,8 +101,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Data.Builder().apply {
                 putString(EXTRA_SCHEDULE_ID, schedule.scheduleID)
                 putString(EXTRA_SCHEDULE_SUBJECT, schedule.subject)
-                putString(EXTRA_SCHEDULE_START_TIME, DateTimeConverter.fromTime(schedule.startTime))
-                putString(EXTRA_SCHEDULE_END_TIME, DateTimeConverter.fromTime(schedule.endTime))
+                putString(EXTRA_SCHEDULE_START_TIME, DateTimeConverter.fromLocalTime(schedule.startTime))
+                putString(EXTRA_SCHEDULE_END_TIME, DateTimeConverter.fromLocalTime(schedule.endTime))
                 putInt(EXTRA_SCHEDULE_DAY_OF_WEEK, schedule.daysOfWeek)
             }.build()
         }
@@ -125,7 +125,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 notes = workerData.getString(EXTRA_TASK_NOTES)
                 subject = workerData.getString(EXTRA_TASK_SUBJECT)
                 isImportant = workerData.getBoolean(EXTRA_TASK_IMPORTANCE, false)
-                dueDate = DateTimeConverter.toDateTime(workerData.getString(EXTRA_TASK_DUE))
+                dueDate = DateTimeConverter.toZonedDateTime(workerData.getString(EXTRA_TASK_DUE))
             }
         }
 
@@ -135,7 +135,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 name = workerData.getString(EXTRA_EVENT_NAME)
                 notes = workerData.getString(EXTRA_EVENT_NOTES)
                 location = workerData.getString(EXTRA_EVENT_LOCATION)
-                schedule = DateTimeConverter.toDateTime(workerData.getString(EXTRA_EVENT_SCHEDULE))
+                schedule = DateTimeConverter.toZonedDateTime(workerData.getString(EXTRA_EVENT_SCHEDULE))
                 isImportant = workerData.getBoolean(EVENT_EVENT_IMPORTANCE, false)
             }
         }
@@ -144,8 +144,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Schedule().apply {
                 workerData.getString(EXTRA_SCHEDULE_ID)?.let { scheduleID = it }
                 subject = workerData.getString(EXTRA_SCHEDULE_SUBJECT)
-                startTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_START_TIME))
-                endTime = DateTimeConverter.toTime(workerData.getString(EXTRA_SCHEDULE_END_TIME))
+                startTime = DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_START_TIME))
+                endTime = DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_END_TIME))
                 daysOfWeek = workerData.getInt(EXTRA_SCHEDULE_DAY_OF_WEEK, 0)
             }
         }

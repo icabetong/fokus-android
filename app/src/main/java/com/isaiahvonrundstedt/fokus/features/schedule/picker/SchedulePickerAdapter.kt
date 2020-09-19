@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
-import org.joda.time.DateTimeConstants
+import java.time.DayOfWeek
 
 class SchedulePickerAdapter(private val actionListener: ActionListener)
     : BaseListAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(callback) {
@@ -19,7 +19,7 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
         itemList.clear()
         items.forEach {
             it.getDaysAsList().forEach { day ->
-                if (day <= DateTimeConstants.SUNDAY) {
+                if (day <= DayOfWeek.SUNDAY.value) {
                     val newSchedule = Schedule(startTime = it.startTime,
                         endTime = it.endTime)
                     newSchedule.daysOfWeek = day

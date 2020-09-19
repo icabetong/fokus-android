@@ -12,6 +12,7 @@ import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.startForegroundServiceCompat
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
@@ -20,9 +21,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import kotlinx.android.synthetic.main.layout_appbar.*
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
+import java.time.LocalDate
+import java.time.ZonedDateTime
 
 class BackupActivity: BaseActivity() {
 
@@ -134,22 +134,22 @@ class BackupActivity: BaseActivity() {
                 PreferenceManager(requireContext())
             }
 
-            private fun DateTime?.parseForSummary(): String {
+            private fun ZonedDateTime?.parseForSummary(): String? {
                 if (this == null)
                     return getString(R.string.settings_backup_summary_no_previous)
 
-                val currentDateTime = DateTime.now()
+                val currentDateTime = ZonedDateTime.now()
 
                 return if (this.toLocalDate().isEqual(LocalDate.now()))
                     String.format(getString(R.string.today_at),
-                        DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
+                        print(DateTimeConverter.FORMAT_TIME))
                 else if (this.minusDays(1)?.compareTo(currentDateTime) == 0)
                     String.format(getString(R.string.yesterday_at),
-                        DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
+                        print(DateTimeConverter.FORMAT_TIME))
                 else if (this.plusDays(1)?.compareTo(currentDateTime) == 0)
                     String.format(getString(R.string.tomorrow_at),
-                        DateTimeFormat.forPattern(DateTimeConverter.FORMAT_TIME).print(this))
-                else DateTimeFormat.forPattern(DateTimeConverter.FORMAT_DATE).print(this)
+                        print(DateTimeConverter.FORMAT_TIME))
+                else print(DateTimeConverter.FORMAT_DATE)
             }
 
             companion object {

@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationWorker
@@ -60,7 +61,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         // If we have a persistent notification,
         // we should dismiss it when the user updates
         // the task to finish
-        if (task.isFinished || !task.isImportant || task.dueDate?.isBeforeNow == true)
+        if (task.isFinished || !task.isImportant || task.dueDate?.isBeforeNow() == true)
             notificationService?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         // Check if notifications for tasks is turned on and if the task

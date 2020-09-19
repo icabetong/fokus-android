@@ -10,7 +10,7 @@ abstract class BasePreference : PreferenceFragmentCompat() {
         return findPreference(requireContext().getString(id)) as? T
     }
 
-    fun setPreferenceSummary(@StringRes id: Int, summary: String) {
+    fun setPreferenceSummary(@StringRes id: Int, summary: String?) {
         findPreference<Preference>(id)?.summary = summary
     }
 

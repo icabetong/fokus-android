@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.log.Log
+import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import org.joda.time.DateTime
-import org.joda.time.Duration
+import java.time.Duration
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
@@ -37,18 +38,18 @@ class EventNotificationWorker(context: Context, workerParameters: WorkerParamete
             return Result.success()
         }
 
-        var executionTime = event.schedule!!
+        var executionTime = event.schedule
         when (preferenceManager.eventReminderInterval) {
             PreferenceManager.EVENT_REMINDER_INTERVAL_15_MINUTES ->
-                executionTime = event.schedule!!.minusMinutes(15)
+                executionTime = event.schedule?.minusMinutes(15)
             PreferenceManager.EVENT_REMINDER_INTERVAL_30_MINUTES ->
-                executionTime = event.schedule!!.minusMinutes(30)
+                executionTime = event.schedule?.minusMinutes(30)
             PreferenceManager.EVENT_REMINDER_INTERVAL_60_MINUTES ->
-                executionTime = event.schedule!!.minusMinutes(60)
+                executionTime = event.schedule?.minusMinutes(60)
         }
 
-        if (executionTime.isAfterNow)
-            request.setInitialDelay(Duration(DateTime.now(), executionTime).standardMinutes,
+        if (executionTime?.isAfterNow() == true)
+            request.setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
                 TimeUnit.MINUTES)
 
         workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,

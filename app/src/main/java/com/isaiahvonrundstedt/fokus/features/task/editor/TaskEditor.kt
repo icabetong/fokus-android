@@ -28,6 +28,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
@@ -46,11 +47,9 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_item_add.*
-import org.joda.time.DateTime
-import org.joda.time.LocalDateTime.fromCalendarFields
 import java.io.File
+import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.util.*
 
 class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
 
@@ -98,7 +97,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             taskNameTextInput.transitionName = TRANSITION_ID_NAME
 
             if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_DUE)) {
-                viewModel.getTask()?.dueDate = DateTimeConverter.toDateTime(
+                viewModel.getTask()?.dueDate = DateTimeConverter.toZonedDateTime(
                     intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_DUE))
                 dueDateTextView.text = viewModel.getTask()?.formatDueDate(this)
                 dueDateTextView.transitionName = TRANSITION_ID_DUE
@@ -194,8 +193,9 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getTask()?.dueDate?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    viewModel.getTask()?.dueDate = fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
+                    viewModel.getTask()?.dueDate = ZonedDateTime.ofInstant(datetime.toInstant(),
+                        ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
@@ -267,8 +267,9 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getTask()?.dueDate?.toCalendar(Locale.getDefault())) { _, datetime ->
-                    viewModel.getTask()?.dueDate = fromCalendarFields(datetime).toDateTime()
+                    currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
+                    viewModel.getTask()?.dueDate = ZonedDateTime.ofInstant(datetime.toInstant(),
+                        ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true
@@ -401,7 +402,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
         return Attachment().apply {
             task = viewModel.getTask()?.taskID!!
             target = targetPath
-            dateAttached = DateTime.now()
+            dateAttached = ZonedDateTime.now()
         }
     }
 

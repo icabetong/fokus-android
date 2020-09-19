@@ -8,8 +8,8 @@ import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import org.joda.time.DateTime
-import org.joda.time.LocalTime
+import java.time.LocalTime
+import java.time.ZonedDateTime
 
 class PreferenceManager(private val context: Context?) {
 
@@ -37,23 +37,23 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
-    var previousBackupDate: DateTime?
-        get() = DateTimeConverter.toDateTime(
+    var previousBackupDate: ZonedDateTime?
+        get() = DateTimeConverter.toZonedDateTime(
             sharedPreference.getString(context?.getString(R.string.key_backup), null))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_backup,
-                    DateTimeConverter.fromDateTime(value))
+                    DateTimeConverter.fromZonedDateTime(value))
                 apply()
             }
         }
 
     var reminderTime: LocalTime?
-        get() = DateTimeConverter.toTime(
+        get() = DateTimeConverter.toLocalTime(
             sharedPreference.getString(R.string.key_reminder_time, "08:30"))
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_reminder_time, DateTimeConverter.fromTime(value))
+                putString(R.string.key_reminder_time, DateTimeConverter.fromLocalTime(value))
                 apply()
             }
         }

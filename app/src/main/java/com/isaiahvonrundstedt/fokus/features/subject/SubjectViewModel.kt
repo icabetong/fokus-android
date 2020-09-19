@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
-import com.isaiahvonrundstedt.fokus.features.core.work.subject.ClassNotificationWorker
+import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker

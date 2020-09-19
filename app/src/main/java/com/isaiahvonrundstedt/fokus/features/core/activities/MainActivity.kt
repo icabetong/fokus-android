@@ -16,7 +16,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
+import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor

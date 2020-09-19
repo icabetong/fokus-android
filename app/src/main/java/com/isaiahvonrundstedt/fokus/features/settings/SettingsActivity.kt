@@ -18,10 +18,10 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationScheduler
-import com.isaiahvonrundstedt.fokus.features.core.work.subject.ClassNotificationScheduler
-import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationScheduler
-import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskReminderWorker
+import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationScheduler
+import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker

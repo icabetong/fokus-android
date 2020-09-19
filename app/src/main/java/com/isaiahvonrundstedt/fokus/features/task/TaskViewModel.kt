@@ -8,7 +8,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.work.task.TaskNotificationWorker
+import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider

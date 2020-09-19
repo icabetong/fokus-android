@@ -21,6 +21,7 @@ import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.io.File
 import java.io.InputStream
+import java.time.DayOfWeek
 import java.util.*
 
 @Parcelize
@@ -100,13 +101,13 @@ data class Schedule @JvmOverloads constructor(
     @StringRes
     fun getStringResourceForDayAbbreviated(day: Int): Int {
         return when (day) {
-            DateTimeConstants.SUNDAY -> R.string.days_of_week_item_sunday_short
-            DateTimeConstants.MONDAY -> R.string.days_of_week_item_monday_short
-            DateTimeConstants.TUESDAY -> R.string.days_of_week_item_tuesday_short
-            DateTimeConstants.WEDNESDAY -> R.string.days_of_week_item_wednesday_short
-            DateTimeConstants.THURSDAY -> R.string.days_of_week_item_thursday_short
-            DateTimeConstants.FRIDAY -> R.string.days_of_week_item_friday_short
-            DateTimeConstants.SATURDAY -> R.string.days_of_week_item_saturday_short
+            DayOfWeek.SUNDAY.value -> R.string.days_of_week_item_sunday_short
+            DayOfWeek.MONDAY.value -> R.string.days_of_week_item_monday_short
+            DayOfWeek.TUESDAY.value -> R.string.days_of_week_item_tuesday_short
+            DayOfWeek.WEDNESDAY.value -> R.string.days_of_week_item_wednesday_short
+            DayOfWeek.THURSDAY.value -> R.string.days_of_week_item_thursday_short
+            DayOfWeek.FRIDAY.value -> R.string.days_of_week_item_friday_short
+            DayOfWeek.SATURDAY.value -> R.string.days_of_week_item_saturday_short
             else -> 0
         }
     }
@@ -114,13 +115,13 @@ data class Schedule @JvmOverloads constructor(
     @StringRes
     fun getStringResourceForDay(day: Int): Int {
         return when (day) {
-            DateTimeConstants.SUNDAY -> R.string.days_of_week_item_sunday
-            DateTimeConstants.MONDAY -> R.string.days_of_week_item_monday
-            DateTimeConstants.TUESDAY -> R.string.days_of_week_item_tuesday
-            DateTimeConstants.WEDNESDAY -> R.string.days_of_week_item_wednesday
-            DateTimeConstants.THURSDAY -> R.string.days_of_week_item_thursday
-            DateTimeConstants.FRIDAY -> R.string.days_of_week_item_friday
-            DateTimeConstants.SATURDAY -> R.string.days_of_week_item_saturday
+            DayOfWeek.SUNDAY.value -> R.string.days_of_week_item_sunday
+            DayOfWeek.MONDAY.value -> R.string.days_of_week_item_monday
+            DayOfWeek.TUESDAY.value -> R.string.days_of_week_item_tuesday
+            DayOfWeek.WEDNESDAY.value -> R.string.days_of_week_item_wednesday
+            DayOfWeek.THURSDAY.value -> R.string.days_of_week_item_thursday
+            DayOfWeek.FRIDAY.value -> R.string.days_of_week_item_friday
+            DayOfWeek.SATURDAY.value -> R.string.days_of_week_item_saturday
             else -> 0
         }
     }
@@ -128,13 +129,13 @@ data class Schedule @JvmOverloads constructor(
     fun getDaysAsList(): List<Int> {
         val days = mutableListOf<Int>()
 
-        if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DateTimeConstants.SUNDAY)
-        if (daysOfWeek and 2 == BIT_VALUE_MONDAY) days.add(DateTimeConstants.MONDAY)
-        if (daysOfWeek and 4 == BIT_VALUE_TUESDAY) days.add(DateTimeConstants.TUESDAY)
-        if (daysOfWeek and 8 == BIT_VALUE_WEDNESDAY) days.add(DateTimeConstants.WEDNESDAY)
-        if (daysOfWeek and 16 == BIT_VALUE_THURSDAY) days.add(DateTimeConstants.THURSDAY)
-        if (daysOfWeek and 32 == BIT_VALUE_FRIDAY) days.add(DateTimeConstants.FRIDAY)
-        if (daysOfWeek and 64 == BIT_VALUE_SATURDAY) days.add(DateTimeConstants.SATURDAY)
+        if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DayOfWeek.SUNDAY.value)
+        if (daysOfWeek and 2 == BIT_VALUE_MONDAY) days.add(DayOfWeek.MONDAY.value)
+        if (daysOfWeek and 4 == BIT_VALUE_TUESDAY) days.add(DayOfWeek.TUESDAY.value)
+        if (daysOfWeek and 8 == BIT_VALUE_WEDNESDAY) days.add(DayOfWeek.WEDNESDAY.value)
+        if (daysOfWeek and 16 == BIT_VALUE_THURSDAY) days.add(DayOfWeek.THURSDAY.value)
+        if (daysOfWeek and 32 == BIT_VALUE_FRIDAY) days.add(DayOfWeek.FRIDAY.value)
+        if (daysOfWeek and 64 == BIT_VALUE_SATURDAY) days.add(DayOfWeek.SATURDAY.value)
 
         return days
     }

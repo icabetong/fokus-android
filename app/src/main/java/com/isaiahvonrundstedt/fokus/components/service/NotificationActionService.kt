@@ -7,7 +7,7 @@ import android.content.Intent
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
-import com.isaiahvonrundstedt.fokus.features.core.work.ActionWorker
+import com.isaiahvonrundstedt.fokus.features.core.worker.ActionWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
 // This service function is to trigger the worker

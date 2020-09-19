@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.core.work.task
+package com.isaiahvonrundstedt.fokus.features.notifications.task
 
 import android.content.Context
 import androidx.work.OneTimeWorkRequest

@@ -8,7 +8,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.isaiahvonrundstedt.fokus.features.core.work.event.EventNotificationWorker
+import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider

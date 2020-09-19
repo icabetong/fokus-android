@@ -27,7 +27,7 @@ import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
-import com.isaiahvonrundstedt.fokus.components.extensions.toArrayList
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
@@ -49,6 +49,7 @@ import kotlinx.android.synthetic.main.layout_item_add.*
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime.fromCalendarFields
 import java.io.File
+import java.time.ZonedDateTime
 import java.util.*
 
 class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {

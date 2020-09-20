@@ -105,27 +105,27 @@ class BackupRestoreService: BaseService() {
     private fun tryParse(archive: ZipFile, entry: ZipEntry, stream: InputStream) {
         if (entry.name == Streamable.FILE_NAME_SUBJECT) {
             JsonDataStreamer.decodeFromJson(stream, Subject::class.java)?.run {
-                runBlocking { forEach { database?.subjects()?.insert(it) } }
+                runBlocking { forEach { database.subjects().insert(it) } }
             }
         } else if (entry.name == Streamable.FILE_NAME_SCHEDULE) {
             JsonDataStreamer.decodeFromJson(stream, Schedule::class.java)?.run {
-                runBlocking { forEach { database?.schedules()?.insert(it) } }
+                runBlocking { forEach { database.schedules().insert(it) } }
             }
         } else if (entry.name == Streamable.FILE_NAME_TASK) {
             JsonDataStreamer.decodeFromJson(stream, Task::class.java)?.run {
-                runBlocking { forEach { database?.tasks()?.insert(it) } }
+                runBlocking { forEach { database.tasks().insert(it) } }
             }
         } else if (entry.name == Streamable.FILE_NAME_ATTACHMENT) {
             JsonDataStreamer.decodeFromJson(stream, Attachment::class.java)?.run {
-                runBlocking { forEach { database?.attachments()?.insert(it) } }
+                runBlocking { forEach { database.attachments().insert(it) } }
             }
         } else if (entry.name == Streamable.FILE_NAME_EVENT) {
             JsonDataStreamer.decodeFromJson(stream, Event::class.java)?.run {
-                runBlocking { forEach { database?.events()?.insert(it) } }
+                runBlocking { forEach { database.events().insert(it) } }
             }
         } else if (entry.name == Streamable.FILE_NAME_LOG) {
             JsonDataStreamer.decodeFromJson(stream, Log::class.java)?.run {
-                runBlocking { forEach { database?.logs()?.insert(it) } }
+                runBlocking { forEach { database.logs().insert(it) } }
             }
         } else if (entry.name.contains(Streamable.DIRECTORY_ATTACHMENTS)
             && !entry.isDirectory) {
@@ -154,22 +154,22 @@ class BackupRestoreService: BaseService() {
                 val items = mutableListOf<File>()
                 var fetchJob: Job
 
-                fetchJob = async { database?.subjects()?.fetchCore() }
+                fetchJob = async { database.subjects().fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Subject::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_SUBJECT, it))
                 }
 
-                fetchJob = async { database?.schedules()?.fetch() }
+                fetchJob = async { database.schedules().fetch() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Schedule::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_SCHEDULE, it))
                 }
 
-                fetchJob = async { database?.tasks()?.fetchCore() }
+                fetchJob = async { database.tasks().fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Task::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_TASK, it))
                 }
 
-                fetchJob = async { database?.attachments()?.fetch() }
+                fetchJob = async { database.attachments().fetch() }
                 val attachments: List<Attachment>? = fetchJob.await()
                 JsonDataStreamer.encodeToJson(attachments, Attachment::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_ATTACHMENT, it))
@@ -189,7 +189,7 @@ class BackupRestoreService: BaseService() {
                     items.add(createCache(Streamable.FILE_NAME_EVENT, it))
                 }
 
-                fetchJob = async { database?.logs()?.fetchCore() }
+                fetchJob = async { database.logs().fetchCore() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Log::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_LOG, it))
                 }

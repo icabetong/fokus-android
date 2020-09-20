@@ -19,7 +19,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
 
-    val pendingTasks: LiveData<List<TaskPackage>> = repository.fetch(false)
+    val pendingTasks: LiveData<List<TaskPackage>> = repository.fetch()
     val noPendingTasks: LiveData<Boolean> = Transformations.map(pendingTasks) { it.isEmpty() }
 
     val finishedTasks: LiveData<List<TaskPackage>> = repository.fetch(true)

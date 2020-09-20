@@ -26,10 +26,9 @@ class TaskRepository private constructor(app: Application) {
         }
     }
 
-    fun fetch(isFinished: Boolean): LiveData<List<TaskPackage>> {
-        return if (isFinished)
-            tasks.fetchLiveData(1)
-            else tasks.fetchLiveData()
+    fun fetch(isFinished: Boolean = false): LiveData<List<TaskPackage>> {
+        return if (isFinished) tasks.fetchLiveData(1)
+            else tasks.fetchLiveData(0)
     }
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {

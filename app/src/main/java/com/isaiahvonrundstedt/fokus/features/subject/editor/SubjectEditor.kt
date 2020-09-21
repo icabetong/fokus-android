@@ -145,19 +145,19 @@ class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
         }
 
         actionButton.setOnClickListener {
-            if (viewModel.hasSubjectCode) {
+            if (!viewModel.hasSubjectCode) {
                 createSnackbar(R.string.feedback_subject_empty_name, rootLayout)
                 codeTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.hasDescription) {
+            if (!viewModel.hasDescription) {
                 createSnackbar(R.string.feedback_subject_empty_description, rootLayout)
                 descriptionTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.hasSchedules) {
+            if (!viewModel.hasSchedules) {
                 createSnackbar(R.string.feedback_subject_no_schedule, rootLayout).show()
                 return@setOnClickListener
             }

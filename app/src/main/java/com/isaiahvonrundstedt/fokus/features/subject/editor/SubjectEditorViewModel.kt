@@ -15,13 +15,6 @@ class SubjectEditorViewModel: ViewModel() {
     private var _subject: MutableLiveData<Subject> = MutableLiveData(Subject())
     private var _schedules: MutableLiveData<ArrayList<Schedule>> = MutableLiveData(ArrayList())
 
-    private val _hasSubjectCode: LiveData<Boolean> =
-        Transformations.map(_subject) { !it.code.isNullOrEmpty() }
-    private val _hasDescription: LiveData<Boolean> =
-        Transformations.map(_subject) { !it.description.isNullOrEmpty() }
-    private val _hasSchedules: LiveData<Boolean> =
-        Transformations.map(_schedules) { it.isNotEmpty() }
-
     val subject: LiveData<Subject> = _subject
     val schedules: LiveData<List<Schedule>> = Transformations.map(_schedules) { it.toList() }
 
@@ -56,9 +49,9 @@ class SubjectEditorViewModel: ViewModel() {
     }
 
     val hasSubjectCode: Boolean
-        get() = _hasSubjectCode.value ?: false
+        get() = getSubject()?.code?.isNotEmpty() == true
     val hasDescription: Boolean
-        get() = _hasDescription.value ?: false
+        get() = getSubject()?.description?.isNotEmpty() == true
     val hasSchedules: Boolean
-        get() = _hasSchedules.value ?: false
+        get() = getSchedules().isNotEmpty()
 }

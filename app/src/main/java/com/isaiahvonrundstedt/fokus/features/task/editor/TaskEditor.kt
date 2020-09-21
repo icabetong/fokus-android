@@ -272,13 +272,13 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             // show a snackbar feedback then direct the user's
             // attention to the field. Then return to stop the execution
             // of the code.
-            if (viewModel.hasTaskName) {
+            if (!viewModel.hasTaskName) {
                 createSnackbar(R.string.feedback_task_empty_name, rootLayout)
                 taskNameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.hasDueDate) {
+            if (!viewModel.hasDueDate) {
                 createSnackbar(R.string.feedback_task_empty_due_date, rootLayout)
                 dueDateTextView.performClick()
                 return@setOnClickListener

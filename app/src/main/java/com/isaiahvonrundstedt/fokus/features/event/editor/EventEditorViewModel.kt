@@ -22,23 +22,16 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
     private var _subject: MutableLiveData<Subject?> = MutableLiveData(null)
     private var _schedules: MutableLiveData<List<Schedule>> = MutableLiveData(emptyList())
 
-    private val _hasEventName: LiveData<Boolean> =
-        Transformations.map(_event) { !it.name.isNullOrEmpty() }
-    private val _hasLocation: LiveData<Boolean> =
-        Transformations.map(_event) { !it.location.isNullOrEmpty() }
-    private val _hasSchedule: LiveData<Boolean> =
-        Transformations.map(_event) { it.schedule != null }
-
     val event: LiveData<Event> = _event
     val subject: LiveData<Subject?> = _subject
     val schedules: LiveData<List<Schedule>> = _schedules
 
     val hasEventName: Boolean
-        get() = _hasEventName.value ?: false
+        get() = getEvent()?.name?.isNotEmpty() == true
     val hasLocation: Boolean
-        get() = _hasLocation.value ?: false
+        get() = getEvent()?.location?.isNotEmpty() == true
     val hasSchedule: Boolean
-        get() = _hasSchedule.value ?: false
+        get() = getEvent()?.schedule != null
 
     fun getEvent(): Event? { return _event.value }
     fun setEvent(event: Event?) { _event.value = event }

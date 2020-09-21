@@ -244,19 +244,19 @@ class EventEditor : BaseEditor() {
             // Conditions to check if the fields are null or blank
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.
-            if (viewModel.hasEventName) {
+            if (!viewModel.hasEventName) {
                 createSnackbar(R.string.feedback_event_empty_name, rootLayout)
                 eventNameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.hasLocation) {
+            if (!viewModel.hasLocation) {
                 createSnackbar(R.string.feedback_event_empty_location, rootLayout)
                 locationTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.hasSchedule) {
+            if (!viewModel.hasSchedule) {
                 createSnackbar(R.string.feedback_event_empty_schedule, rootLayout)
                 scheduleTextView.performClick()
                 return@setOnClickListener

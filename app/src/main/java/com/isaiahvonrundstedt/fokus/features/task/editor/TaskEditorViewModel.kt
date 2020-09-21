@@ -26,20 +26,15 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
     private var _subject: MutableLiveData<Subject?> = MutableLiveData(null)
     private var _schedules: MutableLiveData<List<Schedule>> = MutableLiveData(emptyList())
 
-    private var _hasTaskName: LiveData<Boolean> =
-        Transformations.map(_task) { !it.name.isNullOrEmpty() }
-    private var _hasDueDate: LiveData<Boolean> =
-        Transformations.map(_task) { it.hasDueDate() }
-
     val task: LiveData<Task> = _task
     val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) { it.toList() }
     val subject: LiveData<Subject?> = _subject
     val schedules: LiveData<List<Schedule>> = _schedules
 
     val hasTaskName: Boolean
-        get() = _hasTaskName.value ?: false
+        get() = getTask()?.name?.isNotEmpty() == true
     val hasDueDate: Boolean
-        get() = _hasDueDate.value ?: false
+        get() = getTask()?.hasDueDate() == true
 
     fun getTask(): Task? { return _task.value }
     fun setTask(task: Task?) { _task.value = task }

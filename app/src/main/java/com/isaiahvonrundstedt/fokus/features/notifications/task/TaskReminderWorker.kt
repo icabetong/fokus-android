@@ -7,6 +7,8 @@ import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
+import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import java.time.*
@@ -18,15 +20,14 @@ import java.util.concurrent.TimeUnit
 class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var database = AppDatabase.getInstance(applicationContext)
-    private var tasks = database.tasks()
-    private var logs = database.logs()
+    private val taskRepository by lazy { TaskRepository.getInstance(applicationContext) }
+    private val logRepository by lazy { LogRepository.getInstance(applicationContext) }
 
     override suspend fun doWork(): Result {
         val currentTime = ZonedDateTime.now()
         reschedule(applicationContext)
 
-        val taskSize: Int = tasks.fetchCount()
+        val taskSize: Int = taskRepository.fetchCount()
         var log: Log? = null
         if (taskSize > 0) {
             log = Log().apply {
@@ -44,7 +45,7 @@ class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
             return Result.success()
 
         if (log != null) {
-            logs.insert(log)
+            logRepository.insert(log)
             sendNotification(log)
         }
 

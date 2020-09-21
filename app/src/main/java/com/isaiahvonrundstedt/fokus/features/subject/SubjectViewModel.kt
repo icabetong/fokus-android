@@ -18,7 +18,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = SubjectRepository.getInstance(app)
 
-    val subjects: LiveData<List<SubjectPackage>> = repository.fetch()
+    val subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
     val noSubjects: LiveData<Boolean> = Transformations.map(subjects) { it.isEmpty() }
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {

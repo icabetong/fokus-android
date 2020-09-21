@@ -5,7 +5,9 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import com.isaiahvonrundstedt.fokus.features.task.Task
 
 // This worker's function is to reschedule all pending workers
 // that is supposed to trigger at its due minus the interval
@@ -14,11 +16,12 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 class TaskNotificationScheduler(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var tasks = AppDatabase.getInstance(applicationContext)?.tasks()
+    private val taskRepository by lazy { TaskRepository.getInstance(applicationContext) }
 
     override suspend fun doWork(): Result {
-        val taskList = tasks.fetchCore()
-        taskList.forEach { task ->
+        val tasks: List<Task> = taskRepository.fetchCore()
+
+        tasks.forEach { task ->
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(convertTaskToData(task))
                 .build()

@@ -6,7 +6,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 
 // This worker's function is to reschedule all pending workers
@@ -16,10 +16,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 class EventNotificationScheduler(context: Context, workerParameters: WorkerParameters)
     : BaseWorker(context, workerParameters) {
 
-    private var events = AppDatabase.getInstance(applicationContext)?.events()
+    private val eventRepository by lazy { EventRepository.getInstance(applicationContext) }
 
     override suspend fun doWork(): Result {
-        val items = events.fetchCore()
+        val items = eventRepository.fetchCore()
 
         items.forEach { event ->
             if (event.schedule?.isAfterNow() == true) {

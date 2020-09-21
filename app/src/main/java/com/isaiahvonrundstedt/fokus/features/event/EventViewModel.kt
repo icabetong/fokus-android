@@ -20,10 +20,14 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = EventRepository.getInstance(app)
 
-    val futureEvents: LiveData<List<EventPackage>> = repository.fetch()
+    val futureEvents: LiveData<List<EventPackage>> by lazy {
+        repository.fetchLiveData(true)
+    }
     val noFutureEvents: LiveData<Boolean> = Transformations.map(futureEvents) { it.isEmpty() }
 
-    val previousEvents: LiveData<List<EventPackage>> = repository.fetch(false)
+    val previousEvents: LiveData<List<EventPackage>> by lazy {
+        repository.fetchLiveData()
+    }
     val noPreviousEvents: LiveData<Boolean> = Transformations.map(previousEvents) { it.isEmpty() }
 
     fun insert(event: Event) = viewModelScope.launch {

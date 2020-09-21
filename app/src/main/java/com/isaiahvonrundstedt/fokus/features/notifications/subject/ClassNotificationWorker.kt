@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -21,7 +22,7 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
     override suspend fun doWork(): Result {
 
         val schedule = convertDataToSchedule(inputData)
-        val history = Log().apply {
+        val log = Log().apply {
             title = schedule.subject
             content = schedule.format(applicationContext)
             type = Log.TYPE_CLASS
@@ -30,7 +31,7 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
         }
 
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
-        request.setInputData(convertLogToData(history))
+        request.setInputData(convertLogToData(log))
 
         schedule.getDaysAsList().forEach {
             var triggerTime = schedule.startTime?.let { time -> Schedule.getNextWeekDay(it, time) }
@@ -52,6 +53,7 @@ class ClassNotificationWorker(context: Context, workerParameters: WorkerParamete
                 request.build())
             reschedule(schedule.scheduleID, inputData, triggerTime)
         }
+
         return Result.success()
     }
 

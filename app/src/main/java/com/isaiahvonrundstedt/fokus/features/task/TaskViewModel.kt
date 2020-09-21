@@ -19,10 +19,14 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
     private var repository = TaskRepository.getInstance(app)
 
-    val pendingTasks: LiveData<List<TaskPackage>> = repository.fetch()
+    val pendingTasks: LiveData<List<TaskPackage>> by lazy {
+        repository.fetchLiveData()
+    }
     val noPendingTasks: LiveData<Boolean> = Transformations.map(pendingTasks) { it.isEmpty() }
 
-    val finishedTasks: LiveData<List<TaskPackage>> = repository.fetch(true)
+    val finishedTasks: LiveData<List<TaskPackage>> by lazy {
+        repository.fetchLiveData(true)
+    }
     val noFinishedTasks: LiveData<Boolean> = Transformations.map(finishedTasks) { it.isEmpty() }
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {

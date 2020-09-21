@@ -1,24 +1,25 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LogRepository private constructor(app: Application) {
+class LogRepository private constructor(context: Context) {
 
-    private var database = AppDatabase.getInstance(app)
+    private var database = AppDatabase.getInstance(context)
     private var logs = database.logs()
 
     companion object {
         private var instance: LogRepository? = null
 
-        fun getInstance(app: Application): LogRepository {
+        fun getInstance(context: Context): LogRepository {
             if (instance == null) {
                 synchronized(LogRepository::class) {
-                    instance = LogRepository(app)
+                    instance = LogRepository(context)
                 }
             }
             return instance!!

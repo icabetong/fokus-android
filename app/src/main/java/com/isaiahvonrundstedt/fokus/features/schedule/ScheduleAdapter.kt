@@ -19,7 +19,7 @@ class ScheduleAdapter(private val actionListener: ActionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
     class ViewHolder(itemView: View, private val actionListener: ActionListener)
@@ -30,19 +30,16 @@ class ScheduleAdapter(private val actionListener: ActionListener)
         private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
         override fun <T> onBind(t: T) {
+            if (t is Schedule) {
+                titleView.text = t.formatDaysOfWeek(rootView.context, false)
+                summaryView.text = t.formatBothTime()
+            }
+            removeButton.setOnClickListener {
+                actionListener.onActionPerformed(t, ActionListener.Action.DELETE, emptyMap())
+            }
 
-            with(t) {
-                if (this is Schedule) {
-                    titleView.text = formatDaysOfWeek(rootView.context, false)
-                    summaryView.text = formatBothTime()
-                }
-                removeButton.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.DELETE, emptyMap())
-                }
-
-                rootView.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
-                }
+            rootView.setOnClickListener {
+                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
             }
         }
     }

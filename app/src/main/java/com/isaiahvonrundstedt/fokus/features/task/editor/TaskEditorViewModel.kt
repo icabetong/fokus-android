@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.isaiahvonrundstedt.fokus.components.extensions.android.notifyObservers
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -19,10 +21,8 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
     private var database = AppDatabase.getInstance(applicationContext)
 
-    private var _items: ArrayList<Attachment> = ArrayList()
-
     private var _task: MutableLiveData<Task> = MutableLiveData(Task())
-    private var _attachments: MutableLiveData<List<Attachment>> = MutableLiveData(emptyList())
+    private var _attachments: MutableLiveData<ArrayList<Attachment>> = MutableLiveData(ArrayList())
     private var _subject: MutableLiveData<Subject?> = MutableLiveData(null)
     private var _schedules: MutableLiveData<List<Schedule>> = MutableLiveData(emptyList())
 
@@ -32,7 +32,7 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
         Transformations.map(_task) { it.hasDueDate() }
 
     val task: LiveData<Task> = _task
-    val attachments: LiveData<List<Attachment>> = _attachments
+    val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) { it.toList() }
     val subject: LiveData<Subject?> = _subject
     val schedules: LiveData<List<Schedule>> = _schedules
 
@@ -47,15 +47,15 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
     fun getTaskDueDate(): ZonedDateTime? { return _task.value?.dueDate }
 
     fun getAttachments(): List<Attachment> { return _attachments.value ?: emptyList() }
-    fun setAttachments(attachments: List<Attachment>?) { _attachments.value = attachments }
+    fun setAttachments(attachments: List<Attachment>?) { _attachments.value = attachments?.toArrayList() }
 
     fun addAttachment(attachment: Attachment) {
-        _items.add(attachment)
-        _attachments.value = _items
+        _attachments.value?.add(attachment)
+        _attachments.notifyObservers()
     }
     fun removeAttachment(attachment: Attachment) {
-        _items.remove(attachment)
-        _attachments.value = _items
+        _attachments.value?.remove(attachment)
+        _attachments.notifyObservers()
     }
 
     fun getSubject(): Subject? { return _subject.value }

@@ -42,7 +42,6 @@
     <string name="button_undo">Undo</string>
     <string name="button_remove">Remove</string>
     <string name="button_continue">Continue</string>
-    <string name="button_expand">Expand</string>
     <string name="button_mark_as_finished">Mark as Finished</string>
     <string name="button_mark_as_important">Mark as Important</string>
     <string name="button_delete">Delete</string>
@@ -81,7 +80,6 @@
     <string name="days_of_week_item_saturday_short">Sat</string>
 
     <string name="dialog_assign_subject">Assign Subject</string>
-    <string name="dialog_create_task">Create Task</string>
     <string name="dialog_pick_start_time">Pick a Start Time</string>
     <string name="dialog_pick_end_time">Pick an End Time</string>
     <string name="dialog_pick_color_tag">Pick a color tag</string>

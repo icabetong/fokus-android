@@ -23,7 +23,6 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorSheet
 import com.isaiahvonrundstedt.fokus.features.task.finished.FinishedTasksActivity
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_empty_tasks.*
@@ -67,12 +66,8 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         super.onResume()
 
         actionButton.setOnClickListener {
-            TaskEditorSheet(childFragmentManager).show {
-                waitForResult {
-                    viewModel.insert(it)
-                    dismiss()
-                }
-            }
+            startActivityForResult(Intent(context, TaskEditor::class.java),
+                TaskEditor.REQUEST_CODE_INSERT)
         }
     }
 

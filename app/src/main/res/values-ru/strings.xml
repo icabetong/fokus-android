@@ -42,7 +42,6 @@
     <string name="button_undo">Отменить</string>
     <string name="button_remove">Удалить</string>
     <string name="button_continue">Продолжать</string>
-    <string name="button_expand">Развернуть</string>
     <string name="button_mark_as_finished">Отметить как законченный</string>
     <string name="button_mark_as_important">Отметить как важный</string>
     <string name="button_delete">Удалить</string>
@@ -81,7 +80,6 @@
     <string name="days_of_week_item_saturday_short">Сбт</string>
 
     <string name="dialog_assign_subject">Назначить Предмет</string>
-    <string name="dialog_create_task">Создать задачу</string>
     <string name="dialog_pick_start_time">Выберите время начала</string>
     <string name="dialog_pick_end_time">Выберите время окончания</string>
     <string name="dialog_pick_color_tag">Выберите цветной тег</string>

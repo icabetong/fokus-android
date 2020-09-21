@@ -40,7 +40,6 @@
     <string name="button_undo">Annulla</string>
     <string name="button_remove">Rimuovere</string>
     <string name="button_continue">Continua</string>
-    <string name="button_expand">Espandere</string>
     <string name="button_mark_as_finished">Segna come finito</string>
     <string name="button_mark_as_important">Segna come importante</string>
     <string name="button_delete">Cancellare</string>
@@ -79,7 +78,6 @@
     <string name="days_of_week_item_saturday_short">Sab</string>
 
     <string name="dialog_assign_subject">Assegnare il Soggetto</string>
-    <string name="dialog_create_task">Creare un compito</string>
     <string name="dialog_pick_start_time">Scegliere un orario di inizio</string>
     <string name="dialog_pick_end_time">Scegliere un tempo di fine</string>
     <string name="dialog_pick_color_tag">Scegliere un\'etichetta di colore</string>

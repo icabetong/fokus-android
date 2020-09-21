@@ -41,7 +41,6 @@
     <string name="button_undo">Annuler</string>
     <string name="button_remove">Supprimer</string>
     <string name="button_continue">Continuer</string>
-    <string name="button_expand">Développer</string>
     <string name="button_mark_as_finished">Marquer comme terminé</string>
     <string name="button_mark_as_important">Marquer comme important</string>
     <string name="button_delete">Supprimer</string>
@@ -80,7 +79,6 @@
     <string name="days_of_week_item_saturday_short">Sam</string>
 
     <string name="dialog_assign_subject">Attribuer un sujet</string>
-    <string name="dialog_create_task">Créer une tâche</string>
     <string name="dialog_pick_start_time">Choisissez une heure de début</string>
     <string name="dialog_pick_end_time">Choisissez une heure de fin</string>
     <string name="dialog_pick_color_tag">Choisissez une étiquette de couleur</string>

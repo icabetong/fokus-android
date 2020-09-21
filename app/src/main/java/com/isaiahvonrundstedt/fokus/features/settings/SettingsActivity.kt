@@ -18,7 +18,6 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationScheduler

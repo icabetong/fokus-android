@@ -88,24 +88,6 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
             taskNameTextInput.transitionName = TRANSITION_ID_NAME + viewModel.getTask()?.taskID
         }
 
-        if (requestCode == REQUEST_CODE_INSERT &&
-            intent.hasExtra(TaskEditorSheet.EXTRA_TASK_IS_EXPANDED)) {
-
-            viewModel.getTask()?.name = intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_TITLE)
-
-            taskNameTextInput.setText(viewModel.getTask()?.name)
-            taskNameTextInput.requestFocus()
-            taskNameTextInput.transitionName = TRANSITION_ID_NAME
-
-            if (intent.hasExtra(TaskEditorSheet.EXTRA_TASK_DUE)) {
-                viewModel.getTask()?.dueDate = DateTimeConverter.toZonedDateTime(
-                    intent.getStringExtra(TaskEditorSheet.EXTRA_TASK_DUE))
-                dueDateTextView.text = viewModel.getTask()?.formatDueDate(this)
-                dueDateTextView.transitionName = TRANSITION_ID_DUE
-                dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
-            }
-        }
-
         var currentScrollPosition = 0
         contentView.viewTreeObserver.addOnScrollChangedListener {
             if (contentView.scrollY > currentScrollPosition) actionButton.hide()

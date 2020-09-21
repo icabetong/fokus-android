@@ -17,11 +17,9 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeToday
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import kotlinx.android.synthetic.main.layout_sheet_schedule_editor.*
 import java.time.DayOfWeek
-import java.time.LocalTime
 
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 

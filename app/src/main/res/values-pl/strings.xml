@@ -41,7 +41,6 @@
     <string name="button_undo">Undo</string>
     <string name="button_remove">Usuń</string>
     <string name="button_continue">Kontynuuj</string>
-    <string name="button_expand">Rozwiń</string>
     <string name="button_mark_as_finished">Oznaczyć jako skończone</string>
     <string name="button_mark_as_important">Zaznaczyć jako ważne</string>
     <string name="button_delete">Skreślić</string>
@@ -80,7 +79,6 @@
     <string name="days_of_week_item_saturday_short">Sob</string>
 
     <string name="dialog_assign_subject">Przydzielić Podmiot</string>
-    <string name="dialog_create_task">Tworzenie Zadania</string>
     <string name="dialog_pick_start_time">Wybierz czas rozpoczęcia</string>
     <string name="dialog_pick_end_time">Wybierz czas końcowy</string>
     <string name="dialog_pick_color_tag">Wybierz kolorowy znacznik</string>

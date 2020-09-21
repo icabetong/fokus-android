@@ -231,7 +231,8 @@
                 android:layout_marginVertical="8dp"
                 android:paddingVertical="@dimen/editor_container_padding"
                 android:orientation="vertical"
-                android:background="@drawable/shape_surface_background">
+                android:background="@drawable/shape_surface_background"
+                android:animateLayoutChanges="true">
 
                 <TextView
                     android:layout_width="match_parent"

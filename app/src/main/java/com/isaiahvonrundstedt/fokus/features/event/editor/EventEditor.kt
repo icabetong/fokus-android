@@ -29,6 +29,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompound
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTime
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
@@ -155,8 +156,7 @@ class EventEditor : BaseEditor() {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = viewModel.getEventSchedule()?.toCalendar()) { _, datetime ->
-                    viewModel.getEvent()?.schedule = ZonedDateTime.ofInstant(datetime.toInstant(),
-                        ZoneId.systemDefault())
+                    viewModel.getEvent()?.schedule = datetime.toZonedDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true

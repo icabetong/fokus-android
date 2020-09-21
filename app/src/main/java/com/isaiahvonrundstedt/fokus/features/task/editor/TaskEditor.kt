@@ -29,6 +29,7 @@ import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomShe
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTime
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
@@ -194,8 +195,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
-                    viewModel.getTask()?.dueDate = ZonedDateTime.ofInstant(datetime.toInstant(),
-                        ZoneId.systemDefault())
+                    viewModel.getTask()?.dueDate = datetime.toZonedDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     if (v is AppCompatTextView) {
@@ -268,8 +268,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
-                    viewModel.getTask()?.dueDate = ZonedDateTime.ofInstant(datetime.toInstant(),
-                        ZoneId.systemDefault())
+                    viewModel.getTask()?.dueDate = datetime.toZonedDateTime()
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true

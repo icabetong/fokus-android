@@ -15,6 +15,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeToday
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
@@ -68,7 +69,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 title(R.string.dialog_pick_start_time)
                 timePicker(show24HoursView = false,
                     currentTime = schedule.startTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
-                    val startTime = LocalTime.now().withCalendarFields(time)
+                    val startTime = time.toLocalTime()
 
                     schedule.startTime = startTime
                     if (schedule.endTime == null) schedule.endTime = startTime
@@ -94,7 +95,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 title(R.string.dialog_pick_end_time)
                 timePicker(show24HoursView = false,
                     currentTime = schedule.endTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
-                    val endTime = LocalTime.now().withCalendarFields(time)
+                    val endTime = time.toLocalTime()
 
                     schedule.endTime = endTime
                     if (schedule.startTime == null) schedule.startTime = endTime

@@ -17,6 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.withCalendarFields
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -112,7 +113,7 @@ class SettingsActivity : BaseActivity() {
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
                             timePicker(show24HoursView = false) { _, time ->
-                                preferences.reminderTime = LocalTime.now().withCalendarFields(time)
+                                preferences.reminderTime = time.toLocalTime()
 
                                 TaskReminderWorker.reschedule(requireContext())
                             }

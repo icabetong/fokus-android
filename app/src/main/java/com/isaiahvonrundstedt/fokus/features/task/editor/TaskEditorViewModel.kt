@@ -45,7 +45,6 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
     fun setTask(task: Task?) { _task.value = task }
 
     fun getTaskDueDate(): ZonedDateTime? { return _task.value?.dueDate }
-    fun setTaskDueDate(zonedDateTime: ZonedDateTime?) { _task.value?.dueDate = zonedDateTime }
 
     fun getAttachments(): List<Attachment> { return _attachments.value ?: emptyList() }
     fun setAttachments(attachments: List<Attachment>?) { _attachments.value = attachments }
@@ -89,6 +88,8 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
         val currentDate = LocalDate.now()
         val individualDates = mutableListOf<Schedule>()
 
+        // Create new instance of schedule with
+        // one day of week each
         getSchedules().forEach {
             it.getDaysAsList().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
@@ -98,6 +99,8 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
             }
         }
 
+        // Map the schedules to their respective
+        // dateTime instances
         val dates = individualDates.map {
             it.startTime?.let { time -> Schedule.getNearestDateTime(it.daysOfWeek, time) }
 
@@ -105,6 +108,7 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
         if (dates.isEmpty())
             return null
 
+        // Get the nearest date
         var targetDate = dates[0]
         dates.forEach {
             if (currentDate.isAfter(it?.toLocalDate()) && targetDate?.isBefore(it) == true)

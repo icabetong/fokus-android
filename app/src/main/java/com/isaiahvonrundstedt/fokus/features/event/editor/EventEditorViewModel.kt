@@ -44,7 +44,6 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
     fun setEvent(event: Event?) { _event.value = event }
 
     fun getEventSchedule(): ZonedDateTime? { return _event.value?.schedule }
-    fun setEventSchedule(dateTime: ZonedDateTime?) { _event.value?.schedule = dateTime }
 
     fun getSubject(): Subject? { return _subject.value }
     fun setSubject(subject: Subject?) = viewModelScope.launch {
@@ -75,6 +74,8 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
         val currentDate = LocalDate.now()
         val individualDates = mutableListOf<Schedule>()
 
+        // Create new instances of Schedule
+        // with individual day of week values
         getSchedules().forEach {
             it.getDaysAsList().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
@@ -84,10 +85,13 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
             }
         }
 
+        // Map the schedule instances to
+        // a ZonedDateTime instance
         val dates = individualDates.map { it.startTime?.let { time -> Schedule.getNearestDateTime(it.daysOfWeek, time) } }
         if (dates.isEmpty())
             return null
 
+        // Get the nearest date
         var targetDate = dates[0]
         dates.forEach {
             if (currentDate.isAfter(it?.toLocalDate()) && targetDate?.isBefore(it) == true)

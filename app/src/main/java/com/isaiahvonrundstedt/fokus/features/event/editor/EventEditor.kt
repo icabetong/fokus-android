@@ -436,6 +436,7 @@ class EventEditor : BaseEditor() {
 
         const val EXTRA_EVENT = "extra:event"
         const val EXTRA_SUBJECT = "extra:subject"
+        const val EXTRA_SCHEDULE = "extra:schedule"
 
         const val TRANSITION_ID_NAME = "transition:event:name"
 

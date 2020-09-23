@@ -18,4 +18,5 @@ abstract class BaseFragment : Fragment() {
         startActivityForResult(intent, requestCode, options.toBundle())
     }
 
+
 }

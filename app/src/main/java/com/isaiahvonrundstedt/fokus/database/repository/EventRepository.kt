@@ -27,11 +27,7 @@ class EventRepository private constructor(context: Context) {
         }
     }
 
-    fun fetchLiveData(isAfterNow: Boolean = false): LiveData<List<EventPackage>> {
-        return if (isAfterNow)
-         events.fetchLiveData(DateTimeConverter.fromZonedDateTime(ZonedDateTime.now()))
-        else events.fetchLiveDataPrevious(DateTimeConverter.fromZonedDateTime(ZonedDateTime.now()))
-    }
+    fun fetchLiveData(): LiveData<List<EventPackage>> = events.fetchLiveData()
 
     suspend fun fetch(): List<EventPackage> = events.fetch()
 

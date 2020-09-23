@@ -272,7 +272,6 @@
     <string name="credit_other_resources">Autres ressources</string>
     <string name="credit_notification_sound_summary">Notification sonore</string>
     <string name="credit_launcher_icon_summary">Icône de lancement</string>
-    <string name="credit_vector_illustrations_summary">Illustrations vectorielles</string>
     <string name="credit_user_interface_icons_summary">Icônes de l\'interface utilisateur</string>
 
 </resources>

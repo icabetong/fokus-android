@@ -36,12 +36,6 @@
             android:gravity="center"
             android:padding="@dimen/activity_padding_medium">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:srcCompat="@drawable/undraw_working"/>
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

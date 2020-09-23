@@ -1,80 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/legendLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/legendText1"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_sunday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/legendText2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_monday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_sunday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/legendText3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_tuesday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_monday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/legendText4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_wednesday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_tuesday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/legendText5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_thursday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_wednesday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/legendText6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_friday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_thursday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/legendText7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/days_of_week_item_saturday_short"
-        android:textColor="@color/color_primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_friday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/days_of_week_item_saturday_short"
+            android:textColor="@color/color_secondary_text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_surface_stroke"/>
 
 </LinearLayout>

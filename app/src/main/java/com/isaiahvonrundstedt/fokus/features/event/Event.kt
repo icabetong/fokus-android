@@ -58,7 +58,7 @@ data class Event @JvmOverloads constructor(
     }
 
     fun formatScheduleTime(): String? {
-        return schedule?.print(SCHEDULE_DATE_FORMAT_SHORT)
+        return schedule?.print(SCHEDULE_TIME_FORMAT)
     }
 
     fun formatSchedule(context: Context): String? {
@@ -99,6 +99,7 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
+        const val SCHEDULE_TIME_FORMAT = DateTimeConverter.FORMAT_TIME
         const val SCHEDULE_DATE_FORMAT_SHORT = "MMM d"
         const val SCHEDULE_DATE_FORMAT_LONG = "EEE - MMMM d, h:mm a"
 

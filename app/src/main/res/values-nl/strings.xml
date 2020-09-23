@@ -10,12 +10,16 @@
     <string name="activity_subjects">Uw onderwerpen</string>
     <string name="activity_logs">Meldingslogboeken</string>
     <string name="activity_finished">Voltooide taken</string>
-    <string name="activity_previous">Vorige gebeurtenissen</string>
     <string name="activity_settings">Instellingen</string>
     <string name="activity_backup">Back-up en Herstel</string>
     <string name="activity_notices">Mededelingen van derden</string>
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
+
+    <string name="toolbar_pending_tasks">Hangende taken</string>
+    <string name="toolbar_finished_tasks">Voltooide taken</string>
+    <string name="toolbar_today_classes">De lessen van vandaag</string>
+    <string name="toolbar_all_classes">Alle klassen</string>
 
     <string name="menu_finished">Afgewerkt</string>
     <string name="menu_previous">Vorige</string>

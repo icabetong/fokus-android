@@ -14,17 +14,21 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.YearMonth
 
 class EventViewModel(private var app: Application) : BaseViewModel(app) {
 
     private val repository = EventRepository.getInstance(app)
     private val _events: LiveData<List<EventPackage>> = repository.fetchLiveData()
 
+    val dates: MediatorLiveData<List<LocalDate>> = MediatorLiveData()
     val events: MediatorLiveData<List<EventPackage>> = MediatorLiveData()
     val eventsEmpty: LiveData<Boolean> = Transformations.map(events) { it.isNullOrEmpty() }
 
     val today: LocalDate
         get() = LocalDate.now()
+    val currentMonth: YearMonth
+        get() = YearMonth.now()
 
     var selectedDate: LocalDate = today
         set(value) {
@@ -32,9 +36,15 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
             events.value = _events.value?.filter { it.event.schedule!!.toLocalDate() == selectedDate }
         }
 
+    var startMonth: YearMonth = currentMonth.minusMonths(10)
+    var endMonth: YearMonth = currentMonth.plusMonths(10)
+
     init {
         events.addSource(_events) { items ->
             events.value = items.filter { it.event.schedule!!.toLocalDate() == selectedDate }
+        }
+        dates.addSource(_events) { items ->
+            dates.value = items.map { it.event.schedule!!.toLocalDate() }.distinct()
         }
     }
 
@@ -84,12 +94,5 @@ class EventViewModel(private var app: Application) : BaseViewModel(app) {
         EventWidgetProvider.triggerRefresh(app)
     }
 
-    private fun getDates(): List<LocalDate?> {
-        return events.value?.map { it.event.schedule!!.toLocalDate() }?.distinct() ?: emptyList()
-    }
-
-    fun hasDate(date: LocalDate): Boolean {
-        return getDates().contains(date)
-    }
 
 }

@@ -1,5 +1,4 @@
 <resources>
-    <string translatable="false" name="app_name">Fokus</string>
 
     <string name="shortcut_add_task">@string/button_add_task</string>
     <string name="shortcut_add_event">@string/button_add_event</string>
@@ -10,12 +9,16 @@
     <string name="activity_subjects">Ваши предметы</string>
     <string name="activity_logs">Журналы уведомлений</string>
     <string name="activity_finished">Готовые задачи</string>
-    <string name="activity_previous">Предыдущие события</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
     <string name="activity_notices">Уведомления третьих лиц</string>
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
+
+    <string name="toolbar_pending_tasks">Отложенные задачи</string>
+    <string name="toolbar_finished_tasks">Готовые задачи</string>
+    <string name="toolbar_today_classes">Сегодняшние классы</string>
+    <string name="toolbar_all_classes">Все классы</string>
 
     <string name="menu_finished">Готовый</string>
     <string name="menu_previous">Предыдущий</string>

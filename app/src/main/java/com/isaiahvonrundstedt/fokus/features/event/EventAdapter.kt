@@ -42,7 +42,6 @@ class EventAdapter(private var actionListener: ActionListener)
         private val locationView: TextView = itemView.findViewById(R.id.locationView)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectNameView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
-        private val dayView: TextView = itemView.findViewById(R.id.dayView)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
 
         override fun <T> onBind(t: T) {
@@ -53,14 +52,7 @@ class EventAdapter(private var actionListener: ActionListener)
                     with(event) {
                         locationView.text = location
                         nameView.text = name
-                        dayView.text = formatScheduleDate(itemView.context)
                         timeView.text = formatScheduleTime()
-
-                        schedule?.isBeforeNow()?.let {
-                            nameView.setStrikeThroughEffect(it)
-                            if (it)
-                                nameView.setTextColorFromResource(R.color.color_secondary_text)
-                        }
                     }
 
                     subjectView.isVisible = subject != null
@@ -82,6 +74,9 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
+        const val VIEW_TYPE_TIME = 0
+        const val VIEW_TYPE_DATE_TIME = 1
+
         val callback = object : DiffUtil.ItemCallback<EventPackage>() {
             override fun areItemsTheSame(oldItem: EventPackage, newItem: EventPackage): Boolean {
                 return oldItem.event.eventID == newItem.event.eventID

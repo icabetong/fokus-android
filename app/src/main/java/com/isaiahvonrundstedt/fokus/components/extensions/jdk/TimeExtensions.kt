@@ -5,10 +5,19 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
+ *   An extension function to print the LocalDate
+ *   instance
+ *   @return the formatted value of LocalDate
+ */
+fun LocalDate.print(pattern: String?): String? {
+    return format(DateTimeFormatter.ofPattern(pattern))
+}
+
+/**
  *  An extension function to print the
  *  LocalTime instance
  *
- *  @return the formatted version of the instance in the specified pattern
+ *  @return the formatted value of the instance in the specified pattern
  */
 fun LocalTime.print(pattern: String?): String? {
     return format(DateTimeFormatter.ofPattern(pattern))

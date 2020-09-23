@@ -9,12 +9,16 @@
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_logs">Journaux de notification</string>
     <string name="activity_finished">Tâches terminées</string>
-    <string name="activity_previous">Événements précédents</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_backup">Sauvegarde et Restauration</string>
     <string name="activity_notices">Avis aux tiers</string>
     <string name="activity_open_source_licenses">Licences Open Source</string>
     <string name="activity_about">À propos de</string>
+
+    <string name="toolbar_pending_tasks">Tâches en cours</string>
+    <string name="toolbar_finished_tasks">Tâches terminées</string>
+    <string name="toolbar_today_classes">Les cours d\'aujourd\'hui</string>
+    <string name="toolbar_all_classes">Toutes les classes</string>
 
     <string name="menu_finished">Terminé</string>
     <string name="menu_previous">Précédent</string>

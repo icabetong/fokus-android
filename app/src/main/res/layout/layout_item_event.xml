@@ -25,23 +25,13 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/dayView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:lines="1"
-                android:ellipsize="end"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
-                tools:text="August 10"/>
-
-            <TextView
                 android:id="@+id/timeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:lines="1"
                 android:ellipsize="end"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title"
                 tools:text="10:00AM"/>
 
         </LinearLayout>

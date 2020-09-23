@@ -17,8 +17,6 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
-import com.isaiahvonrundstedt.fokus.features.event.previous.PreviousEventsActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -46,10 +44,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+    private var daysOfWeek: Array<DayOfWeek> = emptyArray()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,72 +58,49 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
-        val daysOfWeek = daysOfWeekFromLocale()
-        val currentMonth = YearMonth.now()
+        daysOfWeek = daysOfWeekFromLocale()
         calendarView.apply {
-            setup(currentMonth.minusMonths(10), currentMonth.plusMonths(10),
+            setup(viewModel.startMonth, viewModel.endMonth,
                 daysOfWeek.first())
-            scrollToMonth(currentMonth)
+            scrollToMonth(viewModel.currentMonth)
         }
 
         if (savedInstanceState == null)
-        calendarView.post { selectDate(viewModel.today) }
+            calendarView.post { setCurrentDate(viewModel.today) }
 
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
         viewModel.events.observe(viewLifecycleOwner) { adapter.submitList(it) }
         viewModel.eventsEmpty.observe(viewLifecycleOwner) { emptyView.isVisible = it }
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         class DayViewContainer(view: View): ViewContainer(view) {
             lateinit var day: CalendarDay
 
-            val calendarDayView: TextView = view.findViewById(R.id.calendarDay)
+            val calendarDayView: TextView = view.findViewById(R.id.calendarDayView)
             val calendarDotView: View = view.findViewById(R.id.calendarDotView)
 
             init {
                 view.setOnClickListener {
                     if (day.owner == DayOwner.THIS_MONTH)
-                        selectDate(day.date)
+                        setCurrentDate(day.date)
                 }
             }
         }
 
         class MonthViewContainer(view: View): ViewContainer(view) {
-            val daysOfWeekLayout: LinearLayout = view.findViewById(R.id.legendLayout)
+            val headerLayout: LinearLayout = view.findViewById(R.id.headerLayout)
         }
 
         calendarView.dayBinder = object: DayBinder<DayViewContainer> {
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
-
-                val textView = container.calendarDayView
-                val dotView = container.calendarDotView
-
-                textView.text = day.date.dayOfMonth.toString()
-                if (day.owner == DayOwner.THIS_MONTH) {
-                    when (day.date) {
-                        viewModel.today -> {
-                            textView.setTextColorFromResource(R.color.color_surface)
-                            textView.setBackgroundResource(R.drawable.shape_calendar_today)
-                            dotView.isVisible = false
-                        }
-                        viewModel.selectedDate -> {
-                            textView.setTextColorFromResource(R.color.color_primary)
-                            textView.setBackgroundResource(R.drawable.shape_calendar_selected_day)
-                            dotView.isVisible = false
-                        }
-                        else -> {
-                            textView.setTextColorFromResource(R.color.color_primary_text)
-                            textView.background = null
-                            dotView.isVisible = viewModel.hasDate(day.date)
-                        }
-                    }
-                } else {
-                    textView.setTextColorFromResource(R.color.color_secondary_text)
-                    dotView.isVisible = false
-                }
+                bindToCalendar(day, container.calendarDayView, container.calendarDotView)
             }
         }
 
@@ -136,19 +108,39 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
             override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                val layout = container.daysOfWeekLayout
-                if (layout.tag == null) {
-                    layout.tag = month.yearMonth
-                    layout.children.map { it as TextView }.forEachIndexed { index, textView ->
+                val headerLayout = container.headerLayout
+                if (container.headerLayout.tag == null) {
+                    headerLayout.tag = month.yearMonth
+                    headerLayout.children.map { it as TextView }.forEachIndexed { index, textView ->
                         textView.text = daysOfWeek[index].name.first().toString()
-                        //textView.setTextColorFromResource()
                     }
                 }
             }
         }
 
         calendarView.monthScrollListener = {
-            selectDate(it.yearMonth.atDay(1))
+            setCurrentDate(it.yearMonth.atDay(1))
+
+            if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
+                viewModel.startMonth = viewModel.startMonth.minusMonths(2)
+                calendarView.updateMonthRangeAsync(startMonth = viewModel.startMonth)
+            } else if (it.yearMonth.plusMonths(2) == viewModel.endMonth) {
+                viewModel.endMonth = viewModel.endMonth.plusMonths(2)
+                calendarView.updateMonthRangeAsync(endMonth = viewModel.endMonth)
+            }
+        }
+
+        viewModel.dates.observe(viewLifecycleOwner) { dates ->
+            calendarView.dayBinder = object: DayBinder<DayViewContainer> {
+                override fun create(view: View): DayViewContainer {
+                    return DayViewContainer(view)
+                }
+
+                override fun bind(container: DayViewContainer, day: CalendarDay) {
+                    container.day = day
+                    bindToCalendar(day, container.calendarDayView, container.calendarDotView, dates)
+                }
+            }
         }
     }
 
@@ -208,21 +200,35 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_event, menu)
-    }
+    private fun bindToCalendar(day: CalendarDay, textView: TextView, view: View,
+                               dates: List<LocalDate> = emptyList()) {
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_previous -> {
-                startActivity(Intent(context, PreviousEventsActivity::class.java))
-                true
+        textView.text = day.date.dayOfMonth.toString()
+        if (day.owner == DayOwner.THIS_MONTH) {
+            when (day.date) {
+                viewModel.today -> {
+                    textView.setTextColorFromResource(R.color.color_on_primary)
+                    textView.setBackgroundResource(R.drawable.shape_calendar_current_day)
+                    view.isVisible = false
+                }
+                viewModel.selectedDate -> {
+                    textView.setTextColorFromResource(R.color.color_primary)
+                    textView.setBackgroundResource(R.drawable.shape_calendar_selected_day)
+                    view.isVisible = false
+                }
+                else -> {
+                    textView.setTextColorFromResource(R.color.color_primary_text)
+                    textView.background = null
+                    view.isVisible = dates.contains(day.date)
+                }
             }
-            else -> super.onOptionsItemSelected(item)
+        } else {
+            textView.setTextColorFromResource(R.color.color_secondary_text)
+            view.isVisible = false
         }
     }
 
-    private fun selectDate(date: LocalDate) {
+    private fun setCurrentDate(date: LocalDate) {
         if (viewModel.selectedDate != date) {
             val oldDate = viewModel.selectedDate
 

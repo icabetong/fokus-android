@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase

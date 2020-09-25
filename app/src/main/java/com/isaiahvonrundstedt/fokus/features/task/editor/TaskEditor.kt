@@ -36,7 +36,6 @@ import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
-import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
@@ -49,7 +48,6 @@ import kotlinx.android.synthetic.main.layout_appbar_editor.*
 import kotlinx.android.synthetic.main.layout_editor_task.*
 import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
-import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {

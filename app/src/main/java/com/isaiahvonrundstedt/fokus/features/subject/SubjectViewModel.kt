@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
@@ -16,10 +17,28 @@ import kotlinx.coroutines.launch
 
 class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
-    private var repository = SubjectRepository.getInstance(app)
+    private val repository = SubjectRepository.getInstance(app)
+    private val _subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
 
-    val subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
-    val noSubjects: LiveData<Boolean> = Transformations.map(subjects) { it.isEmpty() }
+    val subjects: MediatorLiveData<List<SubjectPackage>> = MediatorLiveData()
+    val isEmpty: LiveData<Boolean> = Transformations.map(subjects) { it.isNullOrEmpty() }
+
+    var filterOption = FilterOption.TODAY
+        set(value) {
+            field = value
+            performFilter(value)
+        }
+
+    init {
+        subjects.addSource(_subjects) { items ->
+            when (filterOption) {
+                FilterOption.ALL ->
+                    subjects.value = items
+                FilterOption.TODAY ->
+                    subjects.value = items.filter { it.hasScheduleToday() }
+            }
+        }
+    }
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
@@ -72,6 +91,17 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         }
 
         SubjectWidgetProvider.triggerRefresh(app)
+    }
+
+    private fun performFilter(option: FilterOption) = when(option) {
+        FilterOption.ALL ->
+            _subjects.value?.let { subjects.value = it }
+        FilterOption.TODAY ->
+            _subjects.value?.let { subjects.value = it.filter { subject -> subject.hasScheduleToday() } }
+    }
+
+    enum class FilterOption {
+        ALL, TODAY
     }
 
 }

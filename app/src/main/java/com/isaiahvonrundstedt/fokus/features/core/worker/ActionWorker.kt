@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.core.worker
 import android.content.Context
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 

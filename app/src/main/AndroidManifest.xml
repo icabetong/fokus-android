@@ -47,7 +47,6 @@
             android:theme="@style/Fokus.Theme.Core.Editor"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.log.LogActivity" />
-        <activity android:name=".features.task.finished.FinishedTasksActivity"/>
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.settings.BackupActivity"/>
         <activity android:name=".features.about.AboutActivity" />

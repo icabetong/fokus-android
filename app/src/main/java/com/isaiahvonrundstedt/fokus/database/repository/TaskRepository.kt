@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
@@ -27,10 +26,7 @@ class TaskRepository private constructor(context: Context) {
         }
     }
 
-    fun fetchLiveData(isFinished: Boolean = false): LiveData<List<TaskPackage>> {
-        return if (isFinished) tasks.fetchLiveData(1)
-            else tasks.fetchLiveData(0)
-    }
+    fun fetchLiveData(): LiveData<List<TaskPackage>> = tasks.fetchLiveData()
 
     suspend fun fetchCore(): List<Task> = tasks.fetchCore()
 

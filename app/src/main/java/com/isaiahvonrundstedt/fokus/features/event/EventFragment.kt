@@ -3,7 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.children
@@ -16,6 +18,7 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -26,19 +29,14 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.layout_empty_events.*
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
 
 class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val adapter = EventAdapter(this)
-    private val selectionFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
-    private val toolbarFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
 
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
@@ -236,7 +234,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
             calendarView.notifyDateChanged(oldDate)
             calendarView.notifyDateChanged(date)
         }
-        currentDateTextView.text = selectionFormatter.format(date)
+        currentDateTextView.text = date.print("d MMM yyyy")
     }
 
     private fun daysOfWeekFromLocale(): Array<DayOfWeek> {

@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
-import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
-import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
@@ -74,8 +71,6 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-        const val VIEW_TYPE_TIME = 0
-        const val VIEW_TYPE_DATE_TIME = 1
 
         val callback = object : DiffUtil.ItemCallback<EventPackage>() {
             override fun areItemsTheSame(oldItem: EventPackage, newItem: EventPackage): Boolean {

@@ -3,10 +3,9 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,11 +16,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
-import kotlinx.android.synthetic.main.layout_empty_subjects.*
+import kotlinx.android.synthetic.main.layout_sheet_filter_subject.*
 
 class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
@@ -29,6 +29,11 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +52,18 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
         viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
-        viewModel.noSubjects.observe(viewLifecycleOwner) { emptyView.isVisible = it }
+        viewModel.isEmpty.observe(viewLifecycleOwner) {
+            when(viewModel.filterOption) {
+                SubjectViewModel.FilterOption.ALL -> {
+                    emptyViewSubjectsAll.isVisible = it
+                    emptyViewSubjectsToday.isVisible = false
+                }
+                SubjectViewModel.FilterOption.TODAY -> {
+                    emptyViewSubjectsAll.isVisible = false
+                    emptyViewSubjectsToday.isVisible = it
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -108,6 +124,55 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
                         viewModel.update(it, scheduleList ?: emptyList())
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_filter, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_filter -> {
+                ViewOptionSheet(childFragmentManager, viewModel.filterOption).show {
+                    waitForResult { option ->
+                        viewModel.filterOption = option
+                        this.dismiss()
+                    }
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    class ViewOptionSheet(manager: FragmentManager, private val currentOption: SubjectViewModel.FilterOption)
+        : BaseBottomSheet<SubjectViewModel.FilterOption>(manager) {
+
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                                  savedInstanceState: Bundle?): View? {
+            return inflater.inflate(R.layout.layout_sheet_filter_subject, container, false)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+            when(currentOption) {
+                SubjectViewModel.FilterOption.ALL ->
+                    filterOptionShowAll.isChecked = true
+                SubjectViewModel.FilterOption.TODAY ->
+                    filterOptionShowToday.isChecked = true
+            }
+
+            filterOptionGroup.setOnCheckedChangeListener { _, checkedId ->
+                when(checkedId) {
+                    R.id.filterOptionShowAll ->
+                        receiver?.onReceive(SubjectViewModel.FilterOption.ALL)
+                    R.id.filterOptionShowToday ->
+                        receiver?.onReceive(SubjectViewModel.FilterOption.TODAY)
+                }
+            }
+
         }
     }
 }

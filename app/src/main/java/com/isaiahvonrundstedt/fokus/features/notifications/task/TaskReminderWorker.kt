@@ -6,7 +6,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log

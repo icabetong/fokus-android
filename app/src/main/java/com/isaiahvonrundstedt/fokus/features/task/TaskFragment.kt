@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +21,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableL
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
-import com.isaiahvonrundstedt.fokus.features.task.finished.FinishedTasksActivity
 import kotlinx.android.synthetic.main.fragment_task.*
-import kotlinx.android.synthetic.main.layout_empty_tasks.*
+import kotlinx.android.synthetic.main.layout_sheet_filter_tasks.*
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.io.File
@@ -58,8 +59,23 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        viewModel.pendingTasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
-        viewModel.noPendingTasks.observe(viewLifecycleOwner) { emptyView.isVisible = it }
+        viewModel.tasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.isEmpty.observe(viewLifecycleOwner) {
+            when(viewModel.filterOption) {
+                TaskViewModel.FilterOption.ALL -> {
+                    emptyViewPendingTasks.isVisible = it
+                    emptyViewFinishedTasks.isVisible = false
+                }
+                TaskViewModel.FilterOption.PENDING -> {
+                    emptyViewPendingTasks.isVisible = it
+                    emptyViewFinishedTasks.isVisible = false
+                }
+                TaskViewModel.FilterOption.FINISHED -> {
+                    emptyViewPendingTasks.isVisible = false
+                    emptyViewFinishedTasks.isVisible = it
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -168,16 +184,55 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_task, menu)
+        inflater.inflate(R.menu.menu_filter, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_finished -> {
-                startActivity(Intent(context, FinishedTasksActivity::class.java))
+            R.id.action_filter -> {
+                ViewOptionSheet(childFragmentManager, viewModel.filterOption).show {
+                    waitForResult { option ->
+                        viewModel.filterOption = option
+                        this.dismiss()
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    enum class ViewOption {
+        ALL, PENDING, FINISHED
+    }
+
+    class ViewOptionSheet(manager: FragmentManager, private val currentOption: TaskViewModel.FilterOption)
+        : BaseBottomSheet<TaskViewModel.FilterOption>(manager) {
+
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                                  savedInstanceState: Bundle?): View? {
+            return inflater.inflate(R.layout.layout_sheet_filter_tasks, container, false)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+            when(currentOption) {
+                TaskViewModel.FilterOption.ALL -> filterOptionShowAll.isChecked = true
+                TaskViewModel.FilterOption.PENDING -> filterOptionShowPending.isChecked = true
+                TaskViewModel.FilterOption.FINISHED -> filterOptionShowFinished.isChecked = true
+            }
+
+            filterOptionGroup.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.filterOptionShowAll ->
+                        receiver?.onReceive(TaskViewModel.FilterOption.ALL)
+                    R.id.filterOptionShowPending ->
+                        receiver?.onReceive(TaskViewModel.FilterOption.PENDING)
+                    R.id.filterOptionShowFinished ->
+                        receiver?.onReceive(TaskViewModel.FilterOption.FINISHED)
+                }
+            }
         }
     }
 }

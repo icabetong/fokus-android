@@ -16,7 +16,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <include layout="@layout/layout_empty_tasks"/>
+    <LinearLayout
+        android:id="@+id/emptyViewPendingTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/activity_padding_medium"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="@string/empty_view_no_tasks_title"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="@string/empty_view_no_tasks_summary"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyViewFinishedTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/activity_padding_medium"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="@string/empty_view_no_finished_title"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="@string/empty_view_no_finished_summary"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/actionButton"

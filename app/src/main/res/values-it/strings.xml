@@ -7,7 +7,6 @@
     <string name="activity_events">I vostri eventi</string>
     <string name="activity_subjects">I vostri soggetti</string>
     <string name="activity_logs">Registri delle notifiche</string>
-    <string name="activity_finished">Compiti finiti</string>
     <string name="activity_settings">Impostazioni</string>
     <string name="activity_backup">Backup e Ripristino</string>
     <string name="activity_notices">Avvisi di terzi</string>
@@ -21,6 +20,7 @@
 
     <string name="menu_finished">Finito</string>
     <string name="menu_previous">Precedente</string>
+    <string name="menu_filter">Filtro</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_import">Importazione</string>
     <string name="menu_clear_items">Cancella i registri</string>
@@ -53,7 +53,9 @@
     <string name="button_learn_more">Per saperne di più</string>
 
     <string name="empty_view_no_subjects_title">Nessun soggetto aggiunto</string>
-    <string name="empty_view_no_subjects_summary">I soggetti aiutano a ordinare le attività, per aggiungerne una, toccare l\'icona aggiungi.</string>
+    <string name="empty_view_no_subjects_summary">I soggetti aiutano a ordinare i vostri compiti ed eventi, se ne avete uno, aggiungetelo usando il pulsante qui sotto.</string>
+    <string name="empty_view_no_classes_today_title">Nessuna classe per oggi</string>
+    <string name="empty_view_no_classes_today_summary">Non avete nessuna lezione in programma per oggi.</string>
     <string name="empty_view_no_tasks_title">Nessun compito in sospeso</string>
     <string name="empty_view_no_tasks_summary">Al momento non avete compiti in sospeso. Se ne avete una, aggiungetela con il pulsante qui sotto.</string>
     <string name="empty_view_no_finished_title">Nessun compito finito</string>
@@ -96,6 +98,12 @@
     <string name="dialog_send_to">Inviare a</string>
     <string name="dialog_sharing_options">Opzioni di condivisione</string>
     <string name="dialog_class_schedules">Orari delle classi</string>
+    <string name="dialog_filter_options">Opzioni di filtro</string>
+
+    <string name="filter_options_show_all">Mostra tutti</string>
+    <string name="filter_options_show_pending_tasks">Mostra solo le attività in sospeso</string>
+    <string name="filter_options_show_finished_tasks">Mostra solo i compiti finiti</string>
+    <string name="filter_options_show_today_classes">Mostra le lezioni solo per oggi</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>

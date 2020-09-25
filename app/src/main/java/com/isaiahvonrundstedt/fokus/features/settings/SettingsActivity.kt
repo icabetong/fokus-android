@@ -28,7 +28,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.android.synthetic.main.layout_appbar.*
-import java.time.LocalTime
 import java.util.*
 
 class SettingsActivity : BaseActivity() {

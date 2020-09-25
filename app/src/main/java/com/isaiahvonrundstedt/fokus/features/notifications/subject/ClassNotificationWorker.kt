@@ -7,7 +7,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule

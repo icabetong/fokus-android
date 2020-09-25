@@ -12,4 +12,11 @@ data class SubjectPackage @JvmOverloads constructor(
     var subject: Subject,
     @Relation(entity = Schedule::class, parentColumn = "subjectID", entityColumn = "subject")
     var schedules: List<Schedule> = emptyList()
-): Parcelable
+): Parcelable {
+
+    fun hasScheduleToday(): Boolean {
+        for (s: Schedule in schedules)
+            if (s.isToday()) return true
+        return false
+    }
+}

@@ -8,7 +8,6 @@
     <string name="activity_events">Ваши События</string>
     <string name="activity_subjects">Ваши предметы</string>
     <string name="activity_logs">Журналы уведомлений</string>
-    <string name="activity_finished">Готовые задачи</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
     <string name="activity_notices">Уведомления третьих лиц</string>
@@ -22,6 +21,7 @@
 
     <string name="menu_finished">Готовый</string>
     <string name="menu_previous">Предыдущий</string>
+    <string name="menu_filter">Фильтр</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>
     <string name="menu_clear_items">Чистые журналы</string>
@@ -54,7 +54,9 @@
     <string name="button_learn_more">Узнать больше</string>
 
     <string name="empty_view_no_subjects_title">Не добавлены Субъекты</string>
-    <string name="empty_view_no_subjects_summary">Темы помогают сортировать ваши задачи, чтобы добавить одну из них, нажмите значок добавления.</string>
+    <string name="empty_view_no_subjects_summary">Предметы помогают сортировать ваши задачи и события, Если у вас есть, добавьте его, используя кнопку ниже.</string>
+    <string name="empty_view_no_classes_today_title">Классов на сегодня нет</string>
+    <string name="empty_view_no_classes_today_summary">На сегодня у тебя занятия не запланированы.</string>
     <string name="empty_view_no_tasks_title">Нет Отложенных Задач</string>
     <string name="empty_view_no_tasks_summary">В настоящее время у вас нет незавершённых дел. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
     <string name="empty_view_no_finished_title">Нет готовых заданий</string>
@@ -97,6 +99,12 @@
     <string name="dialog_send_to">Отправить</string>
     <string name="dialog_sharing_options">Совместное использование опционов</string>
     <string name="dialog_class_schedules">Графики занятий</string>
+    <string name="dialog_filter_options">Опции фильтра</string>
+
+    <string name="filter_options_show_all">Показать все</string>
+    <string name="filter_options_show_pending_tasks">Показывать только Отложенные Задачи</string>
+    <string name="filter_options_show_finished_tasks">Показать только готовые задачи</string>
+    <string name="filter_options_show_today_classes">Показывать только классы на сегодня</string>
 
     <string name="field_subject_code">Предметный код</string>
     <string name="field_description">Описание</string>

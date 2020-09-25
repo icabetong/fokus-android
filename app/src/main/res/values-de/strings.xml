@@ -9,7 +9,6 @@
     <string name="activity_events">Ihre Veranstaltungen</string>
     <string name="activity_subjects">Ihre Betreff</string>
     <string name="activity_logs">Benachrichtigungsprotokolle</string>
-    <string name="activity_finished">Beendete Aufgaben</string>
     <string name="activity_settings">Einstellungen</string>
     <string name="activity_backup">Sichern und Wiederherstellen</string>
     <string name="activity_notices">Mitteilungen Dritter</string>
@@ -23,6 +22,7 @@
 
     <string name="menu_finished">Beendet</string>
     <string name="menu_previous">Vorherige</string>
+    <string name="menu_filter">Filter</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
     <string name="menu_clear_items">Protokolle löschen</string>
@@ -55,7 +55,9 @@
     <string name="button_learn_more">Weitere Informationen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
-    <string name="empty_view_no_subjects_summary">Themen helfen beim Sortieren Ihrer Aufgaben. Um eine Aufgabe hinzuzufügen, tippen Sie auf das Symbol \"Hinzufügen\".</string>
+    <string name="empty_view_no_subjects_summary">Themen helfen Ihnen, Ihre Aufgaben und Ereignisse zu sortieren. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
+    <string name="empty_view_no_classes_today_title">Kein Unterricht für heute</string>
+    <string name="empty_view_no_classes_today_summary">Sie haben für heute keinen Unterricht geplant.</string>
     <string name="empty_view_no_tasks_title">Keine anhängigen Aufgaben</string>
     <string name="empty_view_no_tasks_summary">Sie haben derzeit keine offenen Aufgaben. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>
     <string name="empty_view_no_finished_title">Keine beendeten Aufgaben</string>
@@ -98,6 +100,12 @@
     <string name="dialog_send_to">Senden an</string>
     <string name="dialog_sharing_options">Optionen zur gemeinsamen Nutzung</string>
     <string name="dialog_class_schedules">Stundenpläne der Klassen</string>
+    <string name="dialog_filter_options">Filter-Optionen</string>
+
+    <string name="filter_options_show_all">Alle anzeigen</string>
+    <string name="filter_options_show_pending_tasks">Nur ausstehende Aufgaben anzeigen</string>
+    <string name="filter_options_show_finished_tasks">Nur beendete Aufgaben anzeigen</string>
+    <string name="filter_options_show_today_classes">Nur Klassen für heute anzeigen</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>

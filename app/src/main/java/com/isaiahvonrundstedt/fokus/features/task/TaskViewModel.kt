@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.task
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
@@ -17,17 +18,31 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
-    private var repository = TaskRepository.getInstance(app)
+    private val repository = TaskRepository.getInstance(app)
+    private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
 
-    val pendingTasks: LiveData<List<TaskPackage>> by lazy {
-        repository.fetchLiveData()
-    }
-    val noPendingTasks: LiveData<Boolean> = Transformations.map(pendingTasks) { it.isEmpty() }
+    val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
+    val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
-    val finishedTasks: LiveData<List<TaskPackage>> by lazy {
-        repository.fetchLiveData(true)
+    var filterOption = FilterOption.PENDING
+        set(value) {
+            field = value
+            performFilter(value)
+        }
+
+    init {
+        tasks.addSource(_tasks) { items ->
+            when (filterOption) {
+                FilterOption.ALL ->
+                    tasks.value = items
+                FilterOption.PENDING ->
+                    tasks.value = items.filter { !it.task.isFinished }
+                FilterOption.FINISHED ->
+                    tasks.value = items.filter { it.task.isFinished }
+            }
+        }
     }
-    val noFinishedTasks: LiveData<Boolean> = Transformations.map(finishedTasks) { it.isEmpty() }
+
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)
@@ -83,5 +98,27 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         }
 
         TaskWidgetProvider.triggerRefresh(app)
+    }
+
+    private fun performFilter(option: FilterOption) = when(option) {
+        FilterOption.ALL ->
+            _tasks.value?.let { tasks.value = it }
+        FilterOption.PENDING ->
+            _tasks.value?.let { tasks.value = it.filter { task -> !task.task.isFinished } }
+        FilterOption.FINISHED ->
+            _tasks.value?.let { tasks.value = it.filter { task -> task.task.isFinished} }
+    }
+
+    private fun filter(option: TaskFragment.ViewOption) = when(option) {
+        TaskFragment.ViewOption.ALL ->
+            _tasks.value?.let { tasks.value = it }
+        TaskFragment.ViewOption.PENDING ->
+            _tasks.value?.let { tasks.value = it.filter { t -> !t.task.isFinished} }
+        TaskFragment.ViewOption.FINISHED ->
+            _tasks.value?.let { tasks.value = it.filter { t -> t.task.isFinished } }
+    }
+
+    enum class FilterOption {
+        ALL, PENDING, FINISHED
     }
 }

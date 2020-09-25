@@ -1,13 +1,10 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
-import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
-import java.time.ZonedDateTime
 
 class EventRepository private constructor(context: Context) {
 

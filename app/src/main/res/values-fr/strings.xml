@@ -8,7 +8,6 @@
     <string name="activity_events">Vos événements</string>
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_logs">Journaux de notification</string>
-    <string name="activity_finished">Tâches terminées</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_backup">Sauvegarde et Restauration</string>
     <string name="activity_notices">Avis aux tiers</string>
@@ -22,6 +21,7 @@
 
     <string name="menu_finished">Terminé</string>
     <string name="menu_previous">Précédent</string>
+    <string name="menu_filter">Filtrez</string>
     <string name="menu_share">Partager</string>
     <string name="menu_import">Importer</string>
     <string name="menu_clear_items">Effacer les journaux</string>
@@ -54,7 +54,9 @@
     <string name="button_learn_more">En savoir plus</string>
 
     <string name="empty_view_no_subjects_title">Aucun sujet ajouté</string>
-    <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches, pour en ajouter une, touchez l\'icône d\'ajout.</string>
+    <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches et vos événements. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>
+    <string name="empty_view_no_classes_today_title">Pas de cours pour aujourd\'hui</string>
+    <string name="empty_view_no_classes_today_summary">Vous n\'avez pas de cours prévu pour aujourd\'hui.</string>
     <string name="empty_view_no_tasks_title">Pas de tâches en suspens</string>
     <string name="empty_view_no_tasks_summary">Vous n\'avez actuellement aucune tâche en cours. Si vous en avez une, ajoutez-la en utilisant le bouton ci-dessous.</string>
     <string name="empty_view_no_finished_title">Pas de tâches terminées</string>
@@ -97,6 +99,12 @@
     <string name="dialog_send_to">Envoyer à</string>
     <string name="dialog_sharing_options">Options de partage</string>
     <string name="dialog_class_schedules">Horaires des cours</string>
+    <string name="dialog_filter_options">Options de filtrage</string>
+
+    <string name="filter_options_show_all">Tout afficher</string>
+    <string name="filter_options_show_pending_tasks">Afficher uniquement les tâches en attente</string>
+    <string name="filter_options_show_finished_tasks">Afficher uniquement les tâches terminées</string>
+    <string name="filter_options_show_today_classes">Classes d\'exposition pour aujourd\'hui seulement</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>

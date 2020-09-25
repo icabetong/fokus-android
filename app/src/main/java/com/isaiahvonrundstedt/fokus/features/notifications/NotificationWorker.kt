@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.notifications
 
 import android.content.Context
 import androidx.work.WorkerParameters
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker

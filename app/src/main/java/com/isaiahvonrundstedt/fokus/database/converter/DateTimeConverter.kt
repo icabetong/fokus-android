@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import java.time.LocalTime
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class DateTimeConverter private constructor() {
 
@@ -21,7 +22,7 @@ class DateTimeConverter private constructor() {
         @JvmStatic
         @TypeConverter
         fun fromZonedDateTime(zonedDateTime: ZonedDateTime?): String? {
-            return zonedDateTime.toString()
+            return DateTimeFormatter.ISO_ZONED_DATE_TIME.format(zonedDateTime)
         }
 
         @JvmStatic
@@ -34,7 +35,7 @@ class DateTimeConverter private constructor() {
         @JvmStatic
         @TypeConverter
         fun fromLocalTime(time: LocalTime?): String? {
-            return time?.print("HH:mm:ss")
+            return DateTimeFormatter.ISO_LOCAL_TIME.format(time)
         }
     }
 

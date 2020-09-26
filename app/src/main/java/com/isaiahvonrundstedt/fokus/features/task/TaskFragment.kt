@@ -190,7 +190,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_filter -> {
-                ViewOptionSheet(childFragmentManager, viewModel.filterOption).show {
+                FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
                     waitForResult { option ->
                         viewModel.filterOption = option
                         this.dismiss()
@@ -202,11 +202,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         }
     }
 
-    enum class ViewOption {
-        ALL, PENDING, FINISHED
-    }
-
-    class ViewOptionSheet(manager: FragmentManager, private val currentOption: TaskViewModel.FilterOption)
+    class FilterOptionSheet(manager: FragmentManager, private val option: TaskViewModel.FilterOption)
         : BaseBottomSheet<TaskViewModel.FilterOption>(manager) {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -217,7 +213,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            when(currentOption) {
+            when(option) {
                 TaskViewModel.FilterOption.ALL -> filterOptionShowAll.isChecked = true
                 TaskViewModel.FilterOption.PENDING -> filterOptionShowPending.isChecked = true
                 TaskViewModel.FilterOption.FINISHED -> filterOptionShowFinished.isChecked = true

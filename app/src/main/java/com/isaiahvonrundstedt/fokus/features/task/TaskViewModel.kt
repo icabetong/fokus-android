@@ -109,15 +109,6 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
             _tasks.value?.let { tasks.value = it.filter { task -> task.task.isFinished} }
     }
 
-    private fun filter(option: TaskFragment.ViewOption) = when(option) {
-        TaskFragment.ViewOption.ALL ->
-            _tasks.value?.let { tasks.value = it }
-        TaskFragment.ViewOption.PENDING ->
-            _tasks.value?.let { tasks.value = it.filter { t -> !t.task.isFinished} }
-        TaskFragment.ViewOption.FINISHED ->
-            _tasks.value?.let { tasks.value = it.filter { t -> t.task.isFinished } }
-    }
-
     enum class FilterOption {
         ALL, PENDING, FINISHED
     }

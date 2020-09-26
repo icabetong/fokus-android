@@ -25,7 +25,7 @@
             android:paddingStart="@dimen/editor_container_padding"
             android:paddingEnd="@dimen/editor_container_padding"
             android:text="@string/filter_options_show_all"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
         <com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
             android:id="@+id/filterOptionShowToday"
@@ -34,7 +34,7 @@
             android:paddingStart="@dimen/editor_container_padding"
             android:paddingEnd="@dimen/editor_container_padding"
             android:text="@string/filter_options_show_today_classes"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </RadioGroup>
 

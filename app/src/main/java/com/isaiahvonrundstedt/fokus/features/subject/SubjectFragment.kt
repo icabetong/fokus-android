@@ -134,7 +134,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_filter -> {
-                ViewOptionSheet(childFragmentManager, viewModel.filterOption).show {
+                FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
                     waitForResult { option ->
                         viewModel.filterOption = option
                         this.dismiss()
@@ -146,7 +146,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         }
     }
 
-    class ViewOptionSheet(manager: FragmentManager, private val currentOption: SubjectViewModel.FilterOption)
+    class FilterOptionSheet(manager: FragmentManager, private val option: SubjectViewModel.FilterOption)
         : BaseBottomSheet<SubjectViewModel.FilterOption>(manager) {
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -157,7 +157,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            when(currentOption) {
+            when(option) {
                 SubjectViewModel.FilterOption.ALL ->
                     filterOptionShowAll.isChecked = true
                 SubjectViewModel.FilterOption.TODAY ->

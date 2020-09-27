@@ -15,6 +15,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/monthYearTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/editor_container_padding"
+                android:gravity="center"
+                android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"/>
+
             <com.kizitonwose.calendarview.CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"

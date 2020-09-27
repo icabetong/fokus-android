@@ -31,6 +31,7 @@ import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.synthetic.main.fragment_event.*
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
 
@@ -118,6 +119,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
 
         calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
+            monthYearTextView.text = it.yearMonth.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)

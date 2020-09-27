@@ -64,4 +64,3 @@ This is an open-source personal project and I am very happy to accept community 
 * [HeroIcons](https://www.heroicons.dev) - Tailwind Labs
 * [Launcher Icon](https://www.flaticon.com/authors/freepik) - Freepik via Flaticon
 * [Notification Sound](https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/) - Zapsplat
-* [Vector Illustrations](https://www.undraw.co) - UnDraw.co

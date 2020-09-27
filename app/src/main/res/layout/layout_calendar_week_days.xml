@@ -9,7 +9,7 @@
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:paddingVertical="8dp"
         android:orientation="horizontal"
         android:gravity="center">
 

@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="2dp">
+    android:layout_margin="4dp"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/calendarDayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="4dp"
+        android:layout_margin="2dp"
         android:gravity="center"
         android:textColor="@color/color_primary_text"
-        android:textSize="16sp"
+        android:textSize="14sp"
         tools:text="22" />
 
     <View

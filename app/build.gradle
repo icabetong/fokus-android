@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
 android {
     compileSdkVersion 30
@@ -37,7 +37,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:color:3.3.0'
     implementation 'com.afollestad.material-dialogs:datetime:3.3.0'
@@ -46,6 +45,8 @@ dependencies {
     implementation 'com.github.st235:expandablebottombar:1.1.8'
     implementation 'nl.dionsegijn:konfetti:1.2.0'
     implementation 'commons-io:commons-io:2.7'
+    implementation 'com.mikepenz:aboutlibraries-core:8.3.1'
+    implementation 'com.mikepenz:aboutlibraries:8.3.1'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.2.0'

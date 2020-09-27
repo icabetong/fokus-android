@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class LogAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<Log, LogAdapter.ViewHolder>(callback), Swipeable {
+    : BaseAdapter<Log, LogAdapter.ViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
@@ -21,7 +21,7 @@ class LogAdapter(private var actionListener: ActionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
     override fun onSwipe(position: Int, direction: Int) {

@@ -18,12 +18,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_sheet_filter_subject.*
 
-class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
+class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val adapter = SubjectAdapter(this)
 
@@ -75,13 +75,13 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is SubjectPackage) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, SubjectEditor::class.java).apply {
                         putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
                         putExtra(SubjectEditor.EXTRA_SCHEDULE, t.schedules)
@@ -91,7 +91,7 @@ class SubjectFragment : BaseFragment(), BaseListAdapter.ActionListener {
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database
                 // then show a SnackBar feedback
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
                     createSnackbar(R.string.feedback_subject_removed, recyclerView).run {

@@ -11,11 +11,11 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
 class SubjectAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), Swipeable {
+    : BaseAdapter<SubjectPackage, SubjectAdapter.SubjectViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject,
@@ -24,7 +24,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
     override fun onSwipe(position: Int, direction: Int) {

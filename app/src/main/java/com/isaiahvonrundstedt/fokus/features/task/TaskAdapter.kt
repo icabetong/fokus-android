@@ -14,12 +14,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var taskCompletionListener: TaskCompletionListener)
-    : BaseListAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(callback), Swipeable {
+    : BaseAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
@@ -28,7 +28,7 @@ class TaskAdapter(private var actionListener: ActionListener,
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
     override fun onSwipe(position: Int, direction: Int) {

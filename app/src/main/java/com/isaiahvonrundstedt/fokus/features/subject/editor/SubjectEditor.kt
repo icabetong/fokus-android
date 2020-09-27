@@ -32,7 +32,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.layout_editor_subject.*
 import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
 
-class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
+class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectEditorViewModel::class.java)
@@ -174,11 +174,11 @@ class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Schedule) {
             when (action) {
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     ScheduleEditor(supportFragmentManager).show {
                         arguments = bundleOf(
                             Pair(ScheduleEditor.EXTRA_SUBJECT_ID, viewModel.getSubject()?.subjectID),
@@ -190,7 +190,7 @@ class SubjectEditor : BaseEditor(), BaseListAdapter.ActionListener {
                         }
                     }
                 }
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.removeSchedule(t)
                     hasFieldChange = true
                     createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {

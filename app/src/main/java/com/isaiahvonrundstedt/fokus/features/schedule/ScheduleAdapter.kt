@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class ScheduleAdapter(private val actionListener: ActionListener)
-    : BaseListAdapter<Schedule, ScheduleAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Schedule, ScheduleAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
@@ -23,7 +23,7 @@ class ScheduleAdapter(private val actionListener: ActionListener)
     }
 
     class ViewHolder(itemView: View, private val actionListener: ActionListener)
-        : BaseListAdapter.BaseViewHolder(itemView) {
+        : BaseAdapter.BaseViewHolder(itemView) {
 
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val summaryView: TextView = itemView.findViewById(R.id.summaryView)

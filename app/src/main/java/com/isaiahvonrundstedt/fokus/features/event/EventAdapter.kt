@@ -12,10 +12,10 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class EventAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<EventPackage, EventAdapter.EventViewHolder>(callback), Swipeable {
+    : BaseAdapter<EventPackage, EventAdapter.EventViewHolder>(callback), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_event,
@@ -71,7 +71,6 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     companion object {
-
         val callback = object : DiffUtil.ItemCallback<EventPackage>() {
             override fun areItemsTheSame(oldItem: EventPackage, newItem: EventPackage): Boolean {
                 return oldItem.event.eventID == newItem.event.eventID

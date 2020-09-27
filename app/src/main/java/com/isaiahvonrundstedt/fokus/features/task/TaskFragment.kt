@@ -23,7 +23,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.layout_sheet_filter_tasks.*
@@ -31,7 +31,7 @@ import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.io.File
 
-class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
+class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
     private val adapter = TaskAdapter(this, this)
 
@@ -118,13 +118,13 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
     }
 
     // Callback from the RecyclerView Adapter
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is TaskPackage) {
             when (action) {
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, TaskEditor::class.java).apply {
                         putExtra(TaskEditor.EXTRA_TASK, t.task)
                         putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
@@ -135,7 +135,7 @@ class TaskFragment : BaseFragment(), BaseListAdapter.ActionListener, TaskAdapter
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar
                 // feedback
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
                     createSnackbar(R.string.feedback_task_removed, recyclerView).run {

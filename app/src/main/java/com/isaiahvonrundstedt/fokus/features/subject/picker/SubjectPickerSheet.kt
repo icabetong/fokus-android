@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import kotlinx.android.synthetic.main.fragment_subject.recyclerView
 import kotlinx.android.synthetic.main.layout_sheet_subject.*
 
 class SubjectPickerSheet(fragmentManager: FragmentManager)
-    : BaseBottomSheet<SubjectPackage>(fragmentManager), BaseListAdapter.ActionListener {
+    : BaseBottomSheet<SubjectPackage>(fragmentManager), BaseAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
@@ -39,15 +39,15 @@ class SubjectPickerSheet(fragmentManager: FragmentManager)
         viewModel.isEmpty.observe(viewLifecycleOwner) { emptyView.isVisible = it }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is SubjectPackage) {
             when (action) {
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     receiver?.onReceive(t)
                     this.dismiss()
                 }
-                BaseListAdapter.ActionListener.Action.DELETE -> { }
+                BaseAdapter.ActionListener.Action.DELETE -> { }
             }
         }
     }

@@ -40,7 +40,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
@@ -50,7 +50,7 @@ import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
 import java.time.ZonedDateTime
 
-class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
+class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(TaskEditorViewModel::class.java)
@@ -419,13 +419,13 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Attachment) {
             val attachment = t.target?.let { File(it) }
 
             when (action) {
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     try {
                         onParseIntent(Uri.parse(t.target))
                     } catch (e: Exception) {
@@ -434,7 +434,7 @@ class TaskEditor : BaseEditor(), BaseListAdapter.ActionListener {
                         }
                     }
                 }
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     MaterialDialog(this).show {
                         title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
                             attachment?.name))

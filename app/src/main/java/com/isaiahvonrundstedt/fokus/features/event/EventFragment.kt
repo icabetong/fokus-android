@@ -21,7 +21,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -35,7 +35,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
 
-class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
+class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val adapter = EventAdapter(this)
 
@@ -153,12 +153,12 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is EventPackage) {
             when (action) {
                 // Show up the editorUI and pass the extra
-                BaseListAdapter.ActionListener.Action.SELECT -> {
+                BaseAdapter.ActionListener.Action.SELECT -> {
                     val intent = Intent(context, EventEditor::class.java).apply {
                         putExtra(EventEditor.EXTRA_EVENT, t.event)
                         putExtra(EventEditor.EXTRA_SUBJECT, t.subject)
@@ -166,7 +166,7 @@ class EventFragment : BaseFragment(), BaseListAdapter.ActionListener {
                     startActivityWithTransition(views, intent, EventEditor.REQUEST_CODE_UPDATE)
                 }
                 // Item has been swiped, notify database for deletion
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.event)
 
                     createSnackbar(R.string.feedback_event_removed, recyclerView).run {

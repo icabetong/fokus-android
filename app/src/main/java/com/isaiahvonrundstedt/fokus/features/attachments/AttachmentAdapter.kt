@@ -7,11 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.io.File
 
 class AttachmentAdapter(private var actionListener: ActionListener)
-    : BaseListAdapter<Attachment, AttachmentAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Attachment, AttachmentAdapter.ViewHolder>(callback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_attachment,

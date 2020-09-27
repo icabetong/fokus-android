@@ -7,11 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.time.DayOfWeek
 
 class SchedulePickerAdapter(private val actionListener: ActionListener)
-    : BaseListAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(callback) {
 
     private val itemList = mutableListOf<Schedule>()
 

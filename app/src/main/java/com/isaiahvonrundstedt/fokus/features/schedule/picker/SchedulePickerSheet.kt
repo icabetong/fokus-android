@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import kotlinx.android.synthetic.main.layout_sheet_schedule.*
 
 class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager)
-    : BaseBottomSheet<Schedule>(manager), BaseListAdapter.ActionListener {
+    : BaseBottomSheet<Schedule>(manager), BaseAdapter.ActionListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,12 +29,12 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
         recyclerView.adapter = adapter
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Schedule) {
             when (action) {
-                BaseListAdapter.ActionListener.Action.SELECT -> receiver?.onReceive(t)
-                BaseListAdapter.ActionListener.Action.DELETE -> {}
+                BaseAdapter.ActionListener.Action.SELECT -> receiver?.onReceive(t)
+                BaseAdapter.ActionListener.Action.DELETE -> {}
             }
         }
     }

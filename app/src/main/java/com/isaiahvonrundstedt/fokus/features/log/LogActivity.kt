@@ -12,11 +12,11 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseListAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import kotlinx.android.synthetic.main.activity_logs.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
+class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
 
     private val viewModel: LogViewModel by lazy {
         ViewModelProvider(this).get(LogViewModel::class.java)
@@ -47,11 +47,11 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseListAdapter.ActionListener.Action,
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Log) {
             when (action) {
-                BaseListAdapter.ActionListener.Action.DELETE -> {
+                BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
                     val snackbar = Snackbar.make(recyclerView, R.string.feedback_log_removed,
                         Snackbar.LENGTH_SHORT)
@@ -60,7 +60,7 @@ class LogActivity : BaseActivity(), BaseListAdapter.ActionListener {
                     }
                     snackbar.show()
                 }
-                BaseListAdapter.ActionListener.Action.SELECT -> { }
+                BaseAdapter.ActionListener.Action.SELECT -> { }
             }
         }
     }

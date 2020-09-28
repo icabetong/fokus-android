@@ -24,7 +24,7 @@ class TaskAdapter(private var actionListener: ActionListener,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task,
             parent, false)
-        return TaskViewHolder(rowView)
+        return TaskViewHolder(rowView, actionListener, taskCompletionListener)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
@@ -37,7 +37,9 @@ class TaskAdapter(private var actionListener: ActionListener,
                 emptyMap())
     }
 
-    inner class TaskViewHolder(itemView: View) : BaseViewHolder(itemView) {
+    class TaskViewHolder(itemView: View,
+                         private val actionListener: ActionListener,
+                         private val taskCompletionListener: TaskCompletionListener) : BaseViewHolder(itemView) {
 
         private val checkBox: AppCompatCheckBox = itemView.findViewById(R.id.checkBox)
         private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
@@ -45,45 +47,41 @@ class TaskAdapter(private var actionListener: ActionListener,
         private val dueDateView: TextView = itemView.findViewById(R.id.dueDateView)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is TaskPackage) {
-                    taskNameView.transitionName = TaskEditor.TRANSITION_ID_NAME + task.taskID
+            if (t is TaskPackage) {
+                with(t.task) {
+                    taskNameView.transitionName = TaskEditor.TRANSITION_ID_NAME + taskID
 
-                    with(task) {
-                        checkBox.isChecked = isFinished
-                        taskNameView.text = name
-                        taskNameView.setStrikeThroughEffect(isFinished)
+                    val textColorRes = if (isFinished)
+                        R.color.color_secondary_text
+                    else R.color.color_primary_text
 
-                        if (hasDueDate())
-                            dueDateView.text = formatDueDate(rootView.context)
-                        else dueDateView.isVisible = false
+                    checkBox.isChecked = isFinished
+                    taskNameView.text = name
+                    taskNameView.setTextColorFromResource(textColorRes)
+                    taskNameView.setStrikeThroughEffect(isFinished)
+                    dueDateView.text = formatDueDate(rootView.context)
+                }
 
-                        if (isFinished)
+                if (t.subject != null) {
+                    with(subjectView) {
+                        text = t.subject?.code
+                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                    }
+                } else subjectView.isVisible = false
+
+                checkBox.setOnClickListener { view ->
+                    with(view as AppCompatCheckBox) {
+                        t.task.isFinished = isChecked
+                        taskNameView.setStrikeThroughEffect(isChecked)
+                        if (isChecked)
                             taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                     }
+                    taskCompletionListener.onTaskCompleted(t, view.isChecked)
+                }
 
-                    subjectView.isVisible = subject != null
-                    subject?.let {
-                        with(subjectView) {
-                            text = it.code
-                            setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
-                        }
-                    }
-
-                    checkBox.setOnClickListener { view ->
-                        with(view as AppCompatCheckBox) {
-                            task.isFinished = isChecked
-                            taskNameView.setStrikeThroughEffect(isChecked)
-                            if (isChecked)
-                                taskNameView.setTextColorFromResource(R.color.color_secondary_text)
-                        }
-                        taskCompletionListener.onTaskCompleted(this, view.isChecked)
-                    }
-
-                    rootView.setOnClickListener {
-                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(TaskEditor.TRANSITION_ID_NAME + task.taskID to taskNameView))
-                    }
+                rootView.setOnClickListener {
+                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                        mapOf(TaskEditor.TRANSITION_ID_NAME + t.task.taskID to taskNameView))
                 }
             }
         }

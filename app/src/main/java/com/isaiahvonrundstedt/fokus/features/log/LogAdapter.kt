@@ -37,13 +37,11 @@ class LogAdapter(private var actionListener: ActionListener)
         private val dateTimeView: TextView = itemView.findViewById(R.id.dateTimeView)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is Log) {
-                    titleView.text = title
-                    summaryView.text = content
-                    dateTimeView.text = formatDateTime()
-                    setIconToView(iconView)
-                }
+            if (t is Log) {
+                titleView.text = t.title
+                summaryView.text = t.content
+                dateTimeView.text = t.formatDateTime()
+                t.setIconToView(iconView)
             }
         }
     }

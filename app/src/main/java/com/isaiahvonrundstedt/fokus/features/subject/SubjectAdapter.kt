@@ -42,31 +42,29 @@ class SubjectAdapter(private var actionListener: ActionListener)
         private val scheduleView: ChipGroup = itemView.findViewById(R.id.scheduleView)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is SubjectPackage) {
-                    with(this.subject) {
-                        nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
-                        descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
+            if (t is SubjectPackage) {
+                with(t.subject) {
+                    nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
+                    descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
 
-                        tagView.setImageDrawable(tintDrawable(tagView.drawable))
-                        nameView.text = code
-                        descriptionView.text = description
-                    }
+                    tagView.setImageDrawable(tintDrawable(tagView.drawable))
+                    nameView.text = code
+                    descriptionView.text = description
+                }
 
-                    if (scheduleView.childCount > 0)
-                        scheduleView.removeAllViews()
-                    schedules.forEach {
-                        val chip = Chip(itemView.context).apply {
-                            text = it.format(context, true)
-                        }
-                        scheduleView.addView(chip)
+                if (scheduleView.childCount > 0)
+                    scheduleView.removeAllViews()
+                t.schedules.forEach {
+                    val chip = Chip(itemView.context).apply {
+                        text = it.format(context, true)
                     }
+                    scheduleView.addView(chip)
+                }
 
-                    rootView.setOnClickListener {
-                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(SubjectEditor.TRANSITION_ID_CODE + subject.subjectID to nameView,
-                                SubjectEditor.TRANSITION_ID_DESCRIPTION + subject.subjectID to descriptionView))
-                    }
+                rootView.setOnClickListener {
+                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                        mapOf(SubjectEditor.TRANSITION_ID_CODE + t.subject.subjectID to nameView,
+                            SubjectEditor.TRANSITION_ID_DESCRIPTION + t.subject.subjectID to descriptionView))
                 }
             }
         }

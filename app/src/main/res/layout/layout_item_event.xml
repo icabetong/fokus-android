@@ -71,7 +71,7 @@
                 tools:text="CLSU Auditorium"/>
 
             <TextView
-                android:id="@+id/subjectNameView"
+                android:id="@+id/subjectView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_spacing_large"

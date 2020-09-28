@@ -36,35 +36,32 @@ class EventAdapter(private var actionListener: ActionListener)
     class EventViewHolder(itemView: View, private val actionListener: ActionListener)
         : BaseViewHolder(itemView) {
 
-        private val locationView: TextView = itemView.findViewById(R.id.locationView)
-        private val subjectView: TextView = itemView.findViewById(R.id.subjectNameView)
-        private val nameView: TextView = itemView.findViewById(R.id.nameView)
         private val timeView: TextView = itemView.findViewById(R.id.timeView)
+        private val nameView: TextView = itemView.findViewById(R.id.nameView)
+        private val locationView: TextView = itemView.findViewById(R.id.locationView)
+        private val subjectView: TextView = itemView.findViewById(R.id.subjectView)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is EventPackage) {
-                    nameView.transitionName = EventEditor.TRANSITION_ID_NAME + event.eventID
+            if (t is EventPackage) {
+                with(t.event) {
+                    nameView.transitionName = EventEditor.TRANSITION_ID_NAME + eventID
 
-                    with(event) {
-                        locationView.text = location
-                        nameView.text = name
-                        timeView.text = formatScheduleTime()
-                    }
+                    locationView.text = location
+                    nameView.text = name
+                    timeView.text = formatScheduleTime()
+                }
 
-                    subjectView.isVisible = subject != null
-                    subject?.let {
-                        with(subjectView) {
-                            text = it.code
-                            setCompoundDrawableAtStart(it.tintDrawable(getCompoundDrawableAtStart()))
-                        }
+                if (t.subject != null) {
+                    with(subjectView) {
+                        text = t.subject?.code
+                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
+                }
 
-                    rootView.setOnClickListener {
-                        actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
-                            mapOf(EventEditor.TRANSITION_ID_NAME + event.eventID to nameView)
-                        )
-                    }
+                rootView.setOnClickListener {
+                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                        mapOf(EventEditor.TRANSITION_ID_NAME + t.event.eventID to nameView)
+                    )
                 }
             }
         }

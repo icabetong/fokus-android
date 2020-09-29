@@ -12,8 +12,8 @@ android {
         applicationId "com.isaiahvonrundstedt.fokus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
-        versionName "2.0.0-beta03"
+        versionCode 5
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -46,7 +46,6 @@ dependencies {
     implementation 'nl.dionsegijn:konfetti:1.2.0'
     implementation 'commons-io:commons-io:2.7'
     implementation 'com.mikepenz:aboutlibraries-core:8.3.1'
-    implementation 'com.mikepenz:aboutlibraries:8.3.1'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.2.0'

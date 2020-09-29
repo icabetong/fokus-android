@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.about
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
@@ -7,8 +8,6 @@ import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
 import kotlinx.android.synthetic.main.layout_appbar.*
 
 class NoticesActivity: BaseActivity() {
@@ -37,8 +36,7 @@ class NoticesActivity: BaseActivity() {
 
                 findPreference<Preference>(R.string.key_credit_libraries)
                     ?.setOnPreferenceClickListener {
-                        LibsBuilder()
-                            .start(requireContext())
+                        startActivity(Intent(requireContext(), LibrariesActivity::class.java))
                         true
                     }
 

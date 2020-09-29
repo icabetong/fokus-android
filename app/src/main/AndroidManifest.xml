@@ -51,6 +51,7 @@
         <activity android:name=".features.settings.BackupActivity"/>
         <activity android:name=".features.about.AboutActivity" />
         <activity android:name=".features.about.NoticesActivity" />
+        <activity android:name=".features.about.LibrariesActivity" />
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>
@@ -109,15 +110,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/xml_widget_subjects"/>
         </receiver>
-
-        <!-- OSSLicenses -->
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/Fokus.Theme.Base"/>
-        <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-            android:theme="@style/Fokus.Theme.Base"/>
-
 
     </application>
 </manifest>

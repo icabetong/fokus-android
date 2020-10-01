@@ -62,7 +62,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
                 }
 
                 rootView.setOnClickListener {
-                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
                         mapOf(SubjectEditor.TRANSITION_ID_CODE + t.subject.subjectID to nameView,
                             SubjectEditor.TRANSITION_ID_DESCRIPTION + t.subject.subjectID to descriptionView))
                 }

@@ -99,6 +99,12 @@
     <string name="dialog_sharing_options">Opzioni di condivisione</string>
     <string name="dialog_class_schedules">Orari delle classi</string>
     <string name="dialog_filter_options">Opzioni di filtro</string>
+    <string name="dialog_new_attachment">Nuovo allegato</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Inserisci l\'URL del sito web</string>
+
+    <string name="attachment_type_import_file">Importazione del file</string>
+    <string name="attachment_type_website_url">URL del sito web</string>
 
     <string name="filter_options_show_all">Mostra tutti</string>
     <string name="filter_options_show_pending_tasks">Mostra solo le attività in sospeso</string>
@@ -126,6 +132,7 @@
     <string name="field_due_in_the_next_meeting">Prossimo incontro</string>
     <string name="field_due_pick_from_schedule">Scegliere dall\'orario delle lezioni</string>
     <string name="field_due_custom">Personalizzato</string>
+    <string name="field_attachment_name">Nome dell\'allegato</string>
 
     <string name="feedback_subject_removed">Soggetto rimosso</string>
     <string name="feedback_log_removed">Registro rimosso</string>

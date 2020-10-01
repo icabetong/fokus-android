@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -21,6 +22,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
+import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
@@ -38,6 +40,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
+import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -160,14 +163,43 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             hasFieldChange = true
         }
 
-        addItemButton.setOnClickListener {
-            // Check if we have read storage permissions then request the permission
-            // if we have the permission, open up file picker
-            if (PermissionManager(this).readStorageGranted) {
-                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .setType("*/*"), REQUEST_CODE_ATTACHMENT)
-            } else
-                PermissionManager.requestReadStoragePermission(this)
+        addItemButton.setOnClickListener { _ ->
+            AttachmentOptionSheet(supportFragmentManager).show {
+                waitForResult { id ->
+                    when (id) {
+                        R.id.action_import_file -> {
+                            // Check if we have read storage permissions then request the permission
+                            // if we have the permission, open up file picker
+                            if (PermissionManager(this@TaskEditor).readStorageGranted) {
+                                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                    .setType("*/*"), REQUEST_CODE_ATTACHMENT)
+                            } else
+                                PermissionManager.requestReadStoragePermission(this@TaskEditor)
+                        }
+                        R.id.action_website_url -> {
+                            MaterialDialog(this@TaskEditor).show {
+                                title(res = R.string.dialog_enter_website_url)
+                                input { _, charSequence ->
+                                    val attachment = createAttachment(charSequence.toString(),
+                                        Attachment.TYPE_WEBSITE_LINK)
+
+                                    MaterialDialog(this@TaskEditor).show {
+                                        title(res = R.string.dialog_attachment_name)
+                                        input { _, attachmentName ->
+                                            attachment.name = attachmentName.toString()
+                                        }
+                                        positiveButton(R.string.button_done) {
+                                            viewModel.addAttachment(attachment)
+                                        }
+                                    }
+                                }
+                                positiveButton(R.string.button_done)
+                                negativeButton(R.string.button_cancel)
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         dueDateTextView.setOnClickListener { v ->
@@ -318,11 +350,13 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         createSnackbar(R.string.feedback_import_completed, rootLayout)
 
                         val attachment = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.let {
-                            createAttachment(it)
+                            createAttachment(it, Attachment.TYPE_IMPORTED_FILE)
                         }
-                        if (attachment != null)
+                        if (attachment != null) {
+                            val file = attachment.target?.let { File(it) }
+                            attachment.name = file?.name
                             viewModel.addAttachment(attachment)
-
+                        }
                     }
                     FileImporterService.BROADCAST_IMPORT_FAILED -> {
                         createSnackbar(R.string.feedback_import_failed, rootLayout)
@@ -376,12 +410,13 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun createAttachment(targetPath: String): Attachment {
+    private fun createAttachment(targetPath: String, attachmentType: Int): Attachment {
         hasFieldChange = true
         return Attachment().apply {
             task = viewModel.getTask()?.taskID!!
             target = targetPath
             dateAttached = ZonedDateTime.now()
+            type = attachmentType
         }
     }
 
@@ -422,27 +457,43 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
                                        views: Map<String, View>) {
         if (t is Attachment) {
-            val attachment = t.target?.let { File(it) }
-
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    try {
-                        onParseIntent(Uri.parse(t.target))
-                    } catch (e: Exception) {
-                        if (attachment != null) {
-                            onParseIntent(CoreApplication.obtainUriForFile(this, attachment))
+                    when (t.type) {
+                        Attachment.TYPE_CONTENT_URI -> {
+                            onParseIntent(Uri.parse(t.target))
+                        }
+                        Attachment.TYPE_IMPORTED_FILE -> {
+                            if (t.target != null)
+                                onParseIntent(CoreApplication.obtainUriForFile(this,
+                                    File(t.target!!)))
+                        }
+                        Attachment.TYPE_WEBSITE_LINK -> {
+                            if (t.target != null)
+                                CustomTabsIntent.Builder().build()
+                                    .launchUrl(this, Uri.parse(t.target))
                         }
                     }
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
+                    val uri = Uri.parse(t.target)
+                    val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
+                        t.name ?: uri.getFileName(this)
+                        else t.target!!
+
                     MaterialDialog(this).show {
                         title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                            attachment?.name))
+                            name))
                         message(R.string.dialog_confirm_deletion_summary)
                         positiveButton(R.string.button_delete) {
 
                             viewModel.removeAttachment(t)
-                            attachment?.delete()
+                            when (t.type) {
+                                Attachment.TYPE_CONTENT_URI ->
+                                    contentResolver.delete(uri, null, null)
+                                Attachment.TYPE_IMPORTED_FILE ->
+                                    t.target?.let { File(it) }?.delete()
+                            }
                             hasFieldChange = true
                         }
                         negativeButton(R.string.button_cancel)
@@ -550,7 +601,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) {
                     viewModel.getAttachments().forEach { attachment ->
-                        attachment.target?.also { File(it).delete() }
+                        if (attachment.type == Attachment.TYPE_IMPORTED_FILE)
+                            attachment.target?.also { File(it).delete() }
                     }
                     super.onBackPressed()
                 }
@@ -568,7 +620,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         const val EXTRA_ATTACHMENTS = "extra:attachments"
 
         const val TRANSITION_ID_NAME = "transition:task:name:"
-        const val TRANSITION_ID_DUE = "transition:task:due:"
 
         private const val REQUEST_CODE_ATTACHMENT = 20
         private const val REQUEST_CODE_EXPORT = 49

@@ -24,10 +24,8 @@ class ShareOptionsBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(ma
 
         menuTitleView.text = getString(R.string.dialog_sharing_options)
 
-        val adapter = MenuAdapter(activity, this)
-        adapter.setItems(R.menu.menu_share)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = MenuAdapter(activity, R.menu.menu_share, this)
     }
 
     override fun onItemSelected(id: Int) {

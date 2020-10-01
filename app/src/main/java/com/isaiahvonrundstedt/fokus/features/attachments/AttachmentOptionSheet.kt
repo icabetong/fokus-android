@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.components.bottomsheet
+package com.isaiahvonrundstedt.fokus.features.attachments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,8 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
 import kotlinx.android.synthetic.main.layout_sheet_options.*
-import java.time.LocalTime
 
-class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
+class AttachmentOptionSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
     MenuAdapter.MenuItemListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -23,22 +22,13 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentTime = LocalTime.now()
-        menuTitleView.text =
-            when (currentTime.hour) {
-                in 0..6 -> getString(R.string.greeting_default)
-                in 7..12 -> getString(R.string.greeting_morning)
-                in 13..18 -> getString(R.string.greeting_afternoon)
-                in 19..23 -> getString(R.string.greeting_evening)
-                else -> getString(R.string.greeting_default)
-            }
+        menuTitleView.text = getString(R.string.dialog_new_attachment)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = MenuAdapter(activity, R.menu.menu_main, this)
+        recyclerView.adapter = MenuAdapter(activity, R.menu.menu_attachment, this)
     }
 
     override fun onItemSelected(id: Int) {
         receiver?.onReceive(id)
-        this.dismiss()
     }
 }

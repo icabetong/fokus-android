@@ -80,7 +80,7 @@ class TaskAdapter(private var actionListener: ActionListener,
                 }
 
                 rootView.setOnClickListener {
-                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
                         mapOf(TaskEditor.TRANSITION_ID_NAME + t.task.taskID to taskNameView))
                 }
             }

@@ -101,6 +101,12 @@
     <string name="dialog_sharing_options">Deelmogelijkheden</string>
     <string name="dialog_class_schedules">Klassenschema\'s</string>
     <string name="dialog_filter_options">Filteropties</string>
+    <string name="dialog_new_attachment">Nieuwe bijlage</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Voer de URL van de website in</string>
+
+    <string name="attachment_type_import_file">Importeren</string>
+    <string name="attachment_type_website_url">Website URL</string>
 
     <string name="filter_options_show_all">Toon alle</string>
     <string name="filter_options_show_pending_tasks">Toon alleen hangende taken</string>
@@ -128,6 +134,7 @@
     <string name="field_due_in_the_next_meeting">Volgende vergadering</string>
     <string name="field_due_pick_from_schedule">Kies uit het lesrooster</string>
     <string name="field_due_custom">Aangepaste</string>
+    <string name="field_attachment_name">Bijlage Naam</string>
 
     <string name="feedback_subject_removed">Onderwerp verwijderd</string>
     <string name="feedback_log_removed">Logboek verwijderd</string>

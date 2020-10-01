@@ -145,7 +145,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
                                 if (event != DISMISS_EVENT_ACTION)
                                     t.attachments.forEach { attachment ->
-                                        attachment.target?.also { File(it).delete() }
+                                        if (attachment.type == Attachment.TYPE_IMPORTED_FILE)
+                                            attachment.target?.also { File(it).delete() }
                                     }
                             }
                         })

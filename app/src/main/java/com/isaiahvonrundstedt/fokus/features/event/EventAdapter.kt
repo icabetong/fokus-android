@@ -59,7 +59,7 @@ class EventAdapter(private var actionListener: ActionListener)
                 }
 
                 rootView.setOnClickListener {
-                    actionListener.onActionPerformed(this, ActionListener.Action.SELECT,
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
                         mapOf(EventEditor.TRANSITION_ID_NAME + t.event.eventID to nameView)
                     )
                 }

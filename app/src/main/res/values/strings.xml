@@ -101,6 +101,12 @@
     <string name="dialog_sharing_options">Sharing options</string>
     <string name="dialog_class_schedules">Class Schedules</string>
     <string name="dialog_filter_options">Filter Options</string>
+    <string name="dialog_new_attachment">New Attachment</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Enter Website URL</string>
+
+    <string name="attachment_type_import_file">Import file</string>
+    <string name="attachment_type_website_url">Website URL</string>
 
     <string name="filter_options_show_all">Show all</string>
     <string name="filter_options_show_pending_tasks">Show Pending Tasks only</string>
@@ -128,6 +134,7 @@
     <string name="field_due_in_the_next_meeting">In the next meeting</string>
     <string name="field_due_pick_from_schedule">Pick from class schedule</string>
     <string name="field_due_custom">Custom</string>
+    <string name="field_attachment_name">Attachment name</string>
 
     <string name="feedback_subject_removed">Subject removed</string>
     <string name="feedback_log_removed">Log removed</string>

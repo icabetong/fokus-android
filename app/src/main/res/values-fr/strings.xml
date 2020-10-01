@@ -100,6 +100,12 @@
     <string name="dialog_sharing_options">Options de partage</string>
     <string name="dialog_class_schedules">Horaires des cours</string>
     <string name="dialog_filter_options">Options de filtrage</string>
+    <string name="dialog_new_attachment">Nouvelle pièce jointe</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Entrez l\'URL du site web</string>
+
+    <string name="attachment_type_import_file">Fichier d\'importation</string>
+    <string name="attachment_type_website_url">URL du site web</string>
 
     <string name="filter_options_show_all">Tout afficher</string>
     <string name="filter_options_show_pending_tasks">Afficher uniquement les tâches en attente</string>
@@ -127,6 +133,7 @@
     <string name="field_due_in_the_next_meeting">Prochaine réunion</string>
     <string name="field_due_pick_from_schedule">Choisissez dans l\'horaire des cours</string>
     <string name="field_due_custom">Personnalisation</string>
+    <string name="field_attachment_name">Nom de la pièce jointe</string>
 
     <string name="feedback_subject_removed">Sujet supprimé</string>
     <string name="feedback_log_removed">Journal supprimé</string>

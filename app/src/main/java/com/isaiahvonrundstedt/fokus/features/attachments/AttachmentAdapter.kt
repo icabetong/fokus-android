@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.attachments
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.io.File
 
@@ -31,7 +33,16 @@ class AttachmentAdapter(private var actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             if (t is Attachment) {
-                titleView.text = t.target?.let { File(it).name }
+                titleView.text = when (t.type) {
+                    Attachment.TYPE_IMPORTED_FILE ->
+                        t.target?.let { File(it) }?.name
+                    Attachment.TYPE_WEBSITE_LINK ->
+                        t.name ?: t.target
+                    Attachment.TYPE_CONTENT_URI ->
+                        t.name ?: Uri.parse(t.target).getFileName(itemView.context)
+                    else ->
+                        t.target
+                }
 
                 rootView.setOnClickListener {
                     actionListener.onActionPerformed(t, ActionListener.Action.SELECT,

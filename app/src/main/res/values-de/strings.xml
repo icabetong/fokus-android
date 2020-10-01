@@ -101,6 +101,12 @@
     <string name="dialog_sharing_options">Optionen zur gemeinsamen Nutzung</string>
     <string name="dialog_class_schedules">Stundenpläne der Klassen</string>
     <string name="dialog_filter_options">Filter-Optionen</string>
+    <string name="dialog_new_attachment">Neue Anlage</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Website-URL eingeben</string>
+
+    <string name="attachment_type_import_file">Datei importieren</string>
+    <string name="attachment_type_website_url">URL der Website</string>
 
     <string name="filter_options_show_all">Alle anzeigen</string>
     <string name="filter_options_show_pending_tasks">Nur ausstehende Aufgaben anzeigen</string>
@@ -160,6 +166,7 @@
     <string name="feedback_export_failed">Export fehlgeschlagen</string>
     <string name="feedback_unable_to_share_title">Unfähig zu teilen</string>
     <string name="feedback_unable_to_share_message">Es gibt keine gültigen Informationen, die weitergegeben werden können.</string>
+    <string name="field_attachment_name">Name der Anlage</string>
 
     <string name="settings_group_interface">Schnittstelle</string>
     <string name="settings_group_sound">Tone</string>

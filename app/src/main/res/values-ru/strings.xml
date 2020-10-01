@@ -100,6 +100,12 @@
     <string name="dialog_sharing_options">Совместное использование опционов</string>
     <string name="dialog_class_schedules">Графики занятий</string>
     <string name="dialog_filter_options">Опции фильтра</string>
+    <string name="dialog_new_attachment">Новое приложение</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Введите URL-адрес сайта</string>
+
+    <string name="attachment_type_import_file">Файл импорта</string>
+    <string name="attachment_type_website_url">URL-адрес веб-сайта</string>
 
     <string name="filter_options_show_all">Показать все</string>
     <string name="filter_options_show_pending_tasks">Показывать только Отложенные Задачи</string>
@@ -127,6 +133,7 @@
     <string name="field_due_in_the_next_meeting">Следующая встреча</string>
     <string name="field_due_pick_from_schedule">Выберите из расписания занятий</string>
     <string name="field_due_custom">Пользовательский</string>
+    <string name="field_attachment_name">Имя приложения</string>
 
     <string name="feedback_subject_removed">Предмет удален</string>
     <string name="feedback_log_removed">Журнал удален</string>

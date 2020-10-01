@@ -25,13 +25,20 @@ import java.util.*
 data class Attachment @JvmOverloads constructor(
     @PrimaryKey
     var attachmentID: String = UUID.randomUUID().toString(),
+    var name: String? = null,
     var target: String? = null,
     var task: String = "",
+    var type: Int = 0,
     @TypeConverters(DateTimeConverter::class)
     var dateAttached: ZonedDateTime? = ZonedDateTime.now()
 ) : Parcelable {
 
     companion object {
+        const val TYPE_UNKNOWN = 0
+        const val TYPE_CONTENT_URI = 1
+        const val TYPE_IMPORTED_FILE = 2
+        const val TYPE_WEBSITE_LINK = 3
+
         fun toJsonFile(items: List<Attachment>, directory: File,
                        name: String = Streamable.FILE_NAME_ATTACHMENT): File {
             return File(directory, name).apply {

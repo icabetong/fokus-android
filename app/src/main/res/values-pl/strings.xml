@@ -100,6 +100,12 @@
     <string name="dialog_sharing_options">Opcje dzielenia się</string>
     <string name="dialog_class_schedules">Harmonogramy zajęć</string>
     <string name="dialog_filter_options">Opcje filtrowania</string>
+    <string name="dialog_new_attachment">Nowy Załącznik</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Wprowadź adres URL strony internetowej</string>
+
+    <string name="attachment_type_import_file">Akta importowe</string>
+    <string name="attachment_type_website_url">URL strony internetowej</string>
 
     <string name="filter_options_show_all">Pokaż wszystko</string>
     <string name="filter_options_show_pending_tasks">Pokaż tylko zadania oczekujące</string>
@@ -127,6 +133,7 @@
     <string name="field_due_in_the_next_meeting">Następne spotkanie</string>
     <string name="field_due_pick_from_schedule">Wybierz z planu zajęć</string>
     <string name="field_due_custom">Niestandardowy</string>
+    <string name="field_attachment_name">Załącznik Nazwa</string>
 
     <string name="feedback_subject_removed">Temat usunięty</string>
     <string name="feedback_log_removed">Usunięty dziennik</string>

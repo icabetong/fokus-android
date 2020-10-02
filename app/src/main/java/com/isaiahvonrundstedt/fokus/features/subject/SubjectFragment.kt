@@ -137,6 +137,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
                 FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
                     waitForResult { option ->
                         viewModel.filterOption = option
+                        adapter.currentOption = option
                         this.dismiss()
                     }
                 }

@@ -19,4 +19,10 @@ data class SubjectPackage @JvmOverloads constructor(
             if (s.isToday()) return true
         return false
     }
+
+    fun getScheduleToday(): Schedule? {
+        for (s: Schedule in schedules)
+            if (s.isToday()) return s
+        return null
+    }
 }

@@ -6,8 +6,10 @@
     <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">Uw taken</string>
-    <string name="activity_events">Uw evenementen</string>
+    <string name="activity_tasks_pending">Uw hangende taken</string>
+    <string name="activity_tasks_finished">Uw voltooide taken</string>
     <string name="activity_subjects">Uw onderwerpen</string>
+    <string name="activity_subjects_today">Uw onderwerpen vandaag</string>
     <string name="activity_logs">Meldingslogboeken</string>
     <string name="activity_settings">Instellingen</string>
     <string name="activity_backup">Back-up en Herstel</string>
@@ -15,13 +17,6 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
-    <string name="toolbar_pending_tasks">Hangende taken</string>
-    <string name="toolbar_finished_tasks">Voltooide taken</string>
-    <string name="toolbar_today_classes">De lessen van vandaag</string>
-    <string name="toolbar_all_classes">Alle klassen</string>
-
-    <string name="menu_finished">Afgewerkt</string>
-    <string name="menu_previous">Vorige</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>

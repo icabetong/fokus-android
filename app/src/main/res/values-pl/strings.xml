@@ -5,8 +5,10 @@
     <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">Twoje Zadania</string>
-    <string name="activity_events">Twoje Wydarzenia</string>
+    <string name="activity_tasks_pending">Twoje zadania oczekujące</string>
+    <string name="activity_tasks_finished">Twoje zakończone zadania</string>
     <string name="activity_subjects">Twoi Poddani</string>
+    <string name="activity_subjects_today">Twoje Tematy dzisiaj</string>
     <string name="activity_logs">Dzienniki Powiadomień</string>
     <string name="activity_settings">Ustawienia</string>
     <string name="activity_backup">Tworzenie i Przywracanie kopii Zapasowych</string>
@@ -14,13 +16,6 @@
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
 
-    <string name="toolbar_pending_tasks">Zadania oczekujące</string>
-    <string name="toolbar_finished_tasks">Zadania ukończone</string>
-    <string name="toolbar_today_classes">Dzisiejsze klasy</string>
-    <string name="toolbar_all_classes">Wszystkie klasy</string>
-
-    <string name="menu_finished">Zakończono</string>
-    <string name="menu_previous">Poprzedni</string>
     <string name="menu_filter">Filtr</string>
     <string name="menu_share">Podziel się</string>
     <string name="menu_import">Import</string>

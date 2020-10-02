@@ -29,6 +29,7 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.layout_appbar.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,7 +39,7 @@ import java.util.*
 class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val adapter = EventAdapter(this)
-
+    private val toolbarDateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }
@@ -52,6 +53,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityToolbar?.title = viewModel.currentMonth.format(toolbarDateFormatter)
 
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -119,7 +121,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
         calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
-            monthYearTextView.text = it.yearMonth.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            activityToolbar?.title = it.yearMonth.format(toolbarDateFormatter)
 
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)

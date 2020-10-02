@@ -42,7 +42,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPersistentActionBar(toolbar)
-        setToolbarTitle(R.string.activity_tasks)
+        setToolbarTitle(R.string.activity_tasks_pending)
 
         TaskReminderWorker.reschedule(this.applicationContext)
 
@@ -136,27 +136,6 @@ class MainActivity : BaseActivity() {
                 register(NotificationChannelManager.CHANNEL_ID_CLASS,
                     groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        controller?.addOnDestinationChangedListener(navigationListener)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        controller?.removeOnDestinationChangedListener(navigationListener)
-    }
-
-    private val navigationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
-        when (destination.id) {
-            R.id.navigation_tasks ->
-                setToolbarTitle(R.string.activity_tasks)
-            R.id.navigation_events ->
-                setToolbarTitle(R.string.activity_events)
-            R.id.navigation_subjects ->
-                setToolbarTitle(R.string.activity_subjects)
         }
     }
 

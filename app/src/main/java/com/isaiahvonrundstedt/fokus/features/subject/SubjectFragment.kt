@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +27,6 @@ import kotlinx.android.synthetic.main.layout_sheet_filter_subject.*
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val adapter = SubjectAdapter(this)
-
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
@@ -43,6 +43,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityToolbar?.setTitle(getToolbarTitle())
 
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -138,12 +139,21 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
                     waitForResult { option ->
                         viewModel.filterOption = option
                         adapter.currentOption = option
+                        activityToolbar?.setTitle(getToolbarTitle())
                         this.dismiss()
                     }
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    @StringRes
+    private fun getToolbarTitle(): Int {
+        return when(viewModel.filterOption) {
+            SubjectViewModel.FilterOption.ALL -> R.string.activity_subjects
+            SubjectViewModel.FilterOption.TODAY -> R.string.activity_subjects_today
         }
     }
 

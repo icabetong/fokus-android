@@ -5,8 +5,10 @@
     <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">Твои Задачи</string>
-    <string name="activity_events">Ваши События</string>
-    <string name="activity_subjects">Ваши предметы</string>
+    <string name="activity_tasks_pending">Твои Отложенные Задачи</string>
+    <string name="activity_tasks_finished">Ваши Готовые Задачи</string>
+    <string name="activity_subjects">Ваши субъекты</string>
+    <string name="activity_subjects_today">Ваши темы сегодня</string>
     <string name="activity_logs">Журналы уведомлений</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
@@ -14,13 +16,6 @@
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
 
-    <string name="toolbar_pending_tasks">Отложенные задачи</string>
-    <string name="toolbar_finished_tasks">Готовые задачи</string>
-    <string name="toolbar_today_classes">Сегодняшние классы</string>
-    <string name="toolbar_all_classes">Все классы</string>
-
-    <string name="menu_finished">Готовый</string>
-    <string name="menu_previous">Предыдущий</string>
     <string name="menu_filter">Фильтр</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>

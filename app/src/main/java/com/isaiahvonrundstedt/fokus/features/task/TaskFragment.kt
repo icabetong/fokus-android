@@ -7,6 +7,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,6 @@ import java.io.File
 class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
     private val adapter = TaskAdapter(this, this)
-
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
     }
@@ -51,6 +51,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityToolbar?.setTitle(getToolbarTitle())
 
         recyclerView.addItemDecoration(ItemDecoration(requireContext()))
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -194,12 +195,22 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
                     waitForResult { option ->
                         viewModel.filterOption = option
+                        activityToolbar?.setTitle(getToolbarTitle())
                         this.dismiss()
                     }
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    @StringRes
+    private fun getToolbarTitle(): Int {
+        return when (viewModel.filterOption) {
+            TaskViewModel.FilterOption.ALL -> R.string.activity_tasks
+            TaskViewModel.FilterOption.PENDING -> R.string.activity_tasks_pending
+            TaskViewModel.FilterOption.FINISHED -> R.string.activity_tasks_finished
         }
     }
 

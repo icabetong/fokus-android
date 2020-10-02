@@ -4,8 +4,10 @@
     <string name="shortcut_add_subject">@string/button_add_subject</string>
 
     <string name="activity_tasks">I vostri compiti</string>
-    <string name="activity_events">I vostri eventi</string>
+    <string name="activity_tasks_pending">I vostri compiti in sospeso</string>
+    <string name="activity_tasks_finished">I vostri compiti finiti</string>
     <string name="activity_subjects">I vostri soggetti</string>
+    <string name="activity_subjects_today">I vostri soggetti oggi</string>
     <string name="activity_logs">Registri delle notifiche</string>
     <string name="activity_settings">Impostazioni</string>
     <string name="activity_backup">Backup e Ripristino</string>
@@ -13,13 +15,6 @@
     <string name="activity_open_source_licenses">Licenze Open Source</string>
     <string name="activity_about">Informazioni</string>
 
-    <string name="toolbar_pending_tasks">Compiti in sospeso</string>
-    <string name="toolbar_finished_tasks">Compiti finiti</string>
-    <string name="toolbar_today_classes">Le classi di oggi</string>
-    <string name="toolbar_all_classes">Tutte le classi</string>
-
-    <string name="menu_finished">Finito</string>
-    <string name="menu_previous">Precedente</string>
     <string name="menu_filter">Filtro</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_import">Importazione</string>

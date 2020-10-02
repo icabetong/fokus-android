@@ -5,6 +5,8 @@ import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.MaterialToolbar
+import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseFragment : Fragment() {
 
@@ -18,5 +20,7 @@ abstract class BaseFragment : Fragment() {
         startActivityForResult(intent, requestCode, options.toBundle())
     }
 
+    val activityToolbar: MaterialToolbar?
+        get() = activity?.findViewById(R.id.toolbar) as? MaterialToolbar
 
 }

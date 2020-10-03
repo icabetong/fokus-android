@@ -24,9 +24,10 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
     val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
-    var filterOption = FilterOption.PENDING
+    var filterOption = preferences.taskFilterOption
         set(value) {
             field = value
+            preferences.taskFilterOption = value
             performFilter(value)
         }
 
@@ -110,6 +111,17 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
     }
 
     enum class FilterOption {
-        ALL, PENDING, FINISHED
+        ALL, PENDING, FINISHED;
+
+        companion object {
+            fun parse(value: String): FilterOption {
+                return when(value) {
+                    ALL.toString() -> ALL
+                    PENDING.toString() -> PENDING
+                    FINISHED.toString() -> FINISHED
+                    else -> PENDING
+                }
+            }
+        }
     }
 }

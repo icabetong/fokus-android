@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -23,9 +24,10 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     val subjects: MediatorLiveData<List<SubjectPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(subjects) { it.isNullOrEmpty() }
 
-    var filterOption = FilterOption.TODAY
+    var filterOption = preferences.subjectFilterOption
         set(value) {
             field = value
+            preferences.subjectFilterOption = value
             performFilter(value)
         }
 
@@ -101,7 +103,17 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     }
 
     enum class FilterOption {
-        ALL, TODAY
+        ALL, TODAY;
+
+        companion object {
+            fun parse(value: String): FilterOption {
+                return when(value) {
+                    ALL.toString() -> ALL
+                    TODAY.toString() -> TODAY
+                    else -> TODAY
+                }
+            }
+        }
     }
 
 }

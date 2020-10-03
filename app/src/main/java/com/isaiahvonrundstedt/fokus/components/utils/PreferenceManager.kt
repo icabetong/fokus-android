@@ -8,6 +8,8 @@ import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
+import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import java.time.LocalTime
 import java.time.ZonedDateTime
 
@@ -54,6 +56,28 @@ class PreferenceManager(private val context: Context?) {
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_reminder_time, DateTimeConverter.fromLocalTime(value))
+                apply()
+            }
+        }
+
+    var taskFilterOption: TaskViewModel.FilterOption
+        get() = TaskViewModel.FilterOption.parse(
+            sharedPreference.getString(R.string.key_behaviour_tasks_filter,
+                TaskViewModel.FilterOption.PENDING.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_tasks_filter, value.toString())
+                apply()
+            }
+        }
+
+    var subjectFilterOption: SubjectViewModel.FilterOption
+        get() = SubjectViewModel.FilterOption.parse(
+            sharedPreference.getString(R.string.key_behaviour_subjects_filter,
+                SubjectViewModel.FilterOption.TODAY.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_subjects_filter, value.toString())
                 apply()
             }
         }

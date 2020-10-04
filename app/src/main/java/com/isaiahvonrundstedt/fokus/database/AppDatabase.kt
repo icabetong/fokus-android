@@ -150,7 +150,7 @@ abstract class AppDatabase : RoomDatabase() {
                 with(database) {
                     // attachments
                     execSQL("CREATE TABLE IF NOT EXISTS `attachments_new` (`attachmentID` TEXT NOT NULL, `name` TEXT, `target` TEXT, `task` TEXT NOT NULL, `type` INT NOT NULL DEFAULT 1,`dateAttached` TEXT, PRIMARY KEY(`attachmentID`), FOREIGN KEY(`task`) REFERENCES `tasks`(`taskID`) ON UPDATE NO ACTION ON DELETE CASCADE )")
-                    execSQL("INSERT INTO attachments_new SELECT * FROM attachments")
+                    execSQL("INSERT INTO attachments_new (`attachmentID`, `target`, `task`, `dateAttached`) SELECT * FROM attachments")
                     execSQL("DROP TABLE attachments")
                     execSQL("ALTER TABLE attachments_new RENAME TO attachments")
 
@@ -193,7 +193,7 @@ abstract class AppDatabase : RoomDatabase() {
                 with(database) {
                     // attachments
                     execSQL("CREATE TABLE IF NOT EXISTS `attachments_new` (`attachmentID` TEXT NOT NULL, `name` TEXT, `target` TEXT, `task` TEXT NOT NULL, `type` INT NOT NULL DEFAULT 1,`dateAttached` TEXT, PRIMARY KEY(`attachmentID`), FOREIGN KEY(`task`) REFERENCES `tasks`(`taskID`) ON UPDATE NO ACTION ON DELETE CASCADE )")
-                    execSQL("INSERT INTO attachments_new SELECT * FROM attachments")
+                    execSQL("INSERT INTO attachments_new (`attachmentID`, `target`, `task`, `dateAttached`) SELECT * FROM attachments")
                     execSQL("DROP TABLE attachments")
                     execSQL("ALTER TABLE attachments_new RENAME TO attachments")
                 }
@@ -205,7 +205,7 @@ abstract class AppDatabase : RoomDatabase() {
                 with(database) {
                     // attachments
                     execSQL("CREATE TABLE IF NOT EXISTS `attachments_new` (`attachmentID` TEXT NOT NULL, `name` TEXT, `target` TEXT, `task` TEXT NOT NULL, `type` INT NOT NULL DEFAULT 2,`dateAttached` TEXT, PRIMARY KEY(`attachmentID`), FOREIGN KEY(`task`) REFERENCES `tasks`(`taskID`) ON UPDATE NO ACTION ON DELETE CASCADE )")
-                    execSQL("INSERT INTO attachments_new SELECT * FROM attachments")
+                    execSQL("INSERT INTO attachments_new (`attachmentID`, `target`, `task`, `dateAttached`) SELECT * FROM attachments")
                     execSQL("DROP TABLE attachments")
                     execSQL("ALTER TABLE attachments_new RENAME TO attachments")
                 }

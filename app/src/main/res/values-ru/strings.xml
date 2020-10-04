@@ -207,6 +207,8 @@
     <string name="settings_backup">Резервное копирование</string>
     <string name="settings_backup_summary_no_previous">Нет предыдущих резервных копий</string>
     <string name="settings_restore">Восстановление</string>
+    <string name="settings_use_external_browser_title">Открытые ссылки во внешнем браузере</string>
+    <string name="settings_use_external_browser_summary">Используйте системный браузер по умолчанию для работы с гиперссылками.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Иногда ваше уведомление может не сработать из-за агрессивной оптимизации батареи производителем вашего телефона.</string>

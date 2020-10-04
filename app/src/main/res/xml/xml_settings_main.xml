@@ -110,6 +110,12 @@
             app:key="@string/key_backup_restore"
             app:title="@string/settings_backup_and_restore" />
 
+        <SwitchPreference
+            app:key="@string/key_external_browser"
+            app:title="@string/settings_use_external_browser_title"
+            app:summary="@string/settings_use_external_browser_summary"
+            app:defaultValue="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

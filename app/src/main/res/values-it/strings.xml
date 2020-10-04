@@ -206,6 +206,8 @@
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">Nessun backup precedente</string>
     <string name="settings_restore">Ripristina</string>
+    <string name="settings_use_external_browser_title">Aprire i link nel browser esterno</string>
+    <string name="settings_use_external_browser_summary">Utilizzare il browser predefinito del sistema per gestire i collegamenti ipertestuali</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">A volte, la notifica potrebbe non scattare a causa dell\'aggressiva ottimizzazione della batteria da parte del produttore del telefono.</string>

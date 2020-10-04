@@ -207,6 +207,8 @@
     <string name="settings_backup">Kopia Zapasowa</string>
     <string name="settings_backup_summary_no_previous">Brak wcześniejszych kopii zapasowych</string>
     <string name="settings_restore">Przywrócenie</string>
+    <string name="settings_use_external_browser_title">Otwieranie linków w zewnętrznej przeglądarce</string>
+    <string name="settings_use_external_browser_summary">Do obsługi hiperłączy należy używać domyślnej przeglądarki systemowej.</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Czasami Twoje powiadomienie może nie zadziałać z powodu agresywnej optymalizacji baterii przez producenta telefonu.</string>

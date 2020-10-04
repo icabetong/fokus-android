@@ -208,6 +208,8 @@
     <string name="settings_backup">Back-up</string>
     <string name="settings_backup_summary_no_previous">Geen eerdere back-ups</string>
     <string name="settings_restore">Herstel</string>
+    <string name="settings_use_external_browser_title">Koppelingen openen in externe browser</string>
+    <string name="settings_use_external_browser_summary">Gebruik de standaardbrowser van het systeem om hyperlinks te verwerken</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Soms is het mogelijk dat uw melding niet wordt geactiveerd vanwege de agressieve batterijoptimalisatie door de fabrikant van uw telefoon.</string>

@@ -207,6 +207,8 @@
     <string name="settings_backup">Sauvegarde</string>
     <string name="settings_backup_summary_no_previous">Pas de sauvegardes antérieures</string>
     <string name="settings_restore">Restaurer</string>
+    <string name="settings_use_external_browser_title">Ouvrir les liens dans un navigateur externe</string>
+    <string name="settings_use_external_browser_summary">Utiliser le navigateur par défaut du système pour gérer les hyperliens</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Parfois, votre notification peut ne pas se déclencher en raison de l\'optimisation agressive de la batterie par le fabricant de votre téléphone.</string>

@@ -37,6 +37,7 @@ import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
@@ -177,27 +178,23 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                                 PermissionManager.requestReadStoragePermission(this@TaskEditor)
                         }
                         R.id.action_website_url -> {
+                            var attachment: Attachment? = null
+
                             MaterialDialog(this@TaskEditor).show {
                                 title(res = R.string.dialog_enter_website_url)
                                 input { _, charSequence ->
-                                    val attachment = createAttachment(charSequence.toString(),
+                                    attachment = createAttachment(charSequence.toString(),
                                         Attachment.TYPE_WEBSITE_LINK)
-
-                                    MaterialDialog(this@TaskEditor).show {
-                                        title(res = R.string.dialog_attachment_name)
-                                        input { _, attachmentName ->
-                                            attachment.name = attachmentName.toString()
-                                        }
-                                        positiveButton(R.string.button_done) {
-                                            viewModel.addAttachment(attachment)
-                                        }
-                                    }
+                                    attachment?.name = charSequence.toString()
                                 }
-                                positiveButton(R.string.button_done)
+                                positiveButton(R.string.button_done) {
+                                    attachment?.let { item -> viewModel.addAttachment(item) }
+                                }
                                 negativeButton(R.string.button_cancel)
                             }
                         }
                     }
+                    this.dismiss()
                 }
             }
         }
@@ -459,21 +456,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         if (t is Attachment) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    when (t.type) {
-                        Attachment.TYPE_CONTENT_URI -> {
-                            onParseIntent(Uri.parse(t.target))
-                        }
-                        Attachment.TYPE_IMPORTED_FILE -> {
-                            if (t.target != null)
-                                onParseIntent(CoreApplication.obtainUriForFile(this,
-                                    File(t.target!!)))
-                        }
-                        Attachment.TYPE_WEBSITE_LINK -> {
-                            if (t.target != null)
-                                CustomTabsIntent.Builder().build()
-                                    .launchUrl(this, Uri.parse(t.target))
-                        }
-                    }
+                    if (t.target != null)
+                        onParseForIntent(t.target!!, t.type)
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     val uri = Uri.parse(t.target)
@@ -506,13 +490,45 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     // This function invokes the corresponding application that
     // will open the uri of the attachment if the user clicks
     // on the attachment item
-    private fun onParseIntent(uri: Uri?) {
-        val intent = Intent(Intent.ACTION_VIEW)
-            .setDataAndType(uri, contentResolver?.getType(uri!!))
-            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    private fun onParseForIntent(target: String, type: Int) {
+        when(type) {
+            Attachment.TYPE_CONTENT_URI -> {
+                val targetUri: Uri = Uri.parse(target)
 
-        if (intent.resolveActivity(packageManager!!) != null)
-            startActivity(intent)
+                val intent = Intent(Intent.ACTION_VIEW)
+                    .setDataAndType(targetUri, contentResolver?.getType(targetUri))
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                if (intent.resolveActivity(packageManager!!) != null)
+                    startActivity(intent)
+            }
+            Attachment.TYPE_IMPORTED_FILE -> {
+                val targetUri: Uri = CoreApplication.obtainUriForFile(this, File(target))
+
+                val intent = Intent(Intent.ACTION_VIEW)
+                    .setDataAndType(targetUri, contentResolver?.getType(targetUri))
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                if (intent.resolveActivity(packageManager!!) != null)
+                    startActivity(intent)
+            }
+            Attachment.TYPE_WEBSITE_LINK -> {
+                var targetPath: String = target
+                if (!target.startsWith("http://") && !target.startsWith("https://"))
+                    targetPath = "http://$targetPath"
+
+                val targetUri: Uri = Uri.parse(targetPath)
+
+                if (PreferenceManager(this).useExternalBrowser) {
+                    val intent = Intent(Intent.ACTION_VIEW, targetUri)
+
+                    if (intent.resolveActivity(packageManager!!) != null)
+                        startActivity(intent)
+                } else
+                    CustomTabsIntent.Builder().build()
+                        .launchUrl(this, targetUri)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

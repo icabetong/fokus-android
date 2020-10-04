@@ -208,6 +208,8 @@
     <string name="settings_backup">Sicherung</string>
     <string name="settings_backup_summary_no_previous">Keine früheren Sicherungen</string>
     <string name="settings_restore">Wiederherstellen</string>
+    <string name="settings_use_external_browser_title">Links im externen Browser öffnen</string>
+    <string name="settings_use_external_browser_summary">Verwenden Sie den Standardbrowser des Systems zur Handhabung von Hyperlinks</string>
 
     <string name="settings_not_working_notifications">@string/button_learn_more</string>
     <string name="settings_not_working_notifications_info">Manchmal löst Ihre Benachrichtigung aufgrund der aggressiven Akku-Optimierung durch Ihren Telefonhersteller möglicherweise nicht aus.</string>

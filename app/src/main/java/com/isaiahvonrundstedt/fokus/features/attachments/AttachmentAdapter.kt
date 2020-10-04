@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
@@ -22,12 +23,13 @@ class AttachmentAdapter(private var actionListener: ActionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
     class ViewHolder(itemView: View, private val actionListener: ActionListener)
         : BaseViewHolder(itemView) {
 
+        private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
         private val titleView: TextView = itemView.findViewById(R.id.titleView)
         private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
 
@@ -43,6 +45,8 @@ class AttachmentAdapter(private var actionListener: ActionListener)
                     else ->
                         t.target
                 }
+
+                iconView.setImageResource(t.getIconResource())
 
                 rootView.setOnClickListener {
                     actionListener.onActionPerformed(t, ActionListener.Action.SELECT,

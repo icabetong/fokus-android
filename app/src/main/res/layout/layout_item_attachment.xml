@@ -14,13 +14,27 @@
         android:paddingVertical="@dimen/item_padding_small"
         android:paddingHorizontal="@dimen/item_padding">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/item_padding"
+            app:tint="@color/color_on_surface"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/titleView"
+            tools:src="@drawable/ic_hero_link_24"/>
+
         <TextView
             android:id="@+id/titleView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_padding"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconView"
             tools:text="Fokus.pdf"/>
 
         <com.google.android.material.chip.Chip

@@ -1,10 +1,12 @@
 package com.isaiahvonrundstedt.fokus.features.attachments
 
 import android.os.Parcelable
+import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -32,6 +34,14 @@ data class Attachment @JvmOverloads constructor(
     @TypeConverters(DateTimeConverter::class)
     var dateAttached: ZonedDateTime? = ZonedDateTime.now()
 ) : Parcelable {
+
+    @DrawableRes
+    fun getIconResource(): Int {
+        return when(type) {
+            TYPE_WEBSITE_LINK -> R.drawable.ic_hero_link_24
+            else -> R.drawable.ic_hero_document_24
+        }
+    }
 
     companion object {
         const val TYPE_UNKNOWN = 0

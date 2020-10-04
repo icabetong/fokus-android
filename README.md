@@ -58,6 +58,8 @@ This is an open-source personal project and I am very happy to accept community 
 * [CommonsIO](https://commons.apache.org/proper/commons-io/)
 * [Moshi](https://github.com/square/moshi)
 * [Okio](https://github.com/square/okio)
+* [CalendarView](https://github.com/kizitonwose/CalendarView)
+* [AboutLibraries](https://github.com/mikepenz/AboutLibraries)
 
 ### Other materials used
 

@@ -10,6 +10,7 @@
     <string name="activity_tasks_finished">Uw voltooide taken</string>
     <string name="activity_subjects">Uw onderwerpen</string>
     <string name="activity_subjects_today">Uw onderwerpen vandaag</string>
+    <string name="activity_subjects_tomorrow">Uw onderwerpen morgen</string>
     <string name="activity_logs">Meldingslogboeken</string>
     <string name="activity_settings">Instellingen</string>
     <string name="activity_backup">Back-up en Herstel</string>
@@ -53,6 +54,8 @@
     <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken en gebeurtenissen. Als u er een heeft, kunt u deze toevoegen met behulp van de onderstaande knop.</string>
     <string name="empty_view_no_classes_today_title">Geen lessen voor vandaag</string>
     <string name="empty_view_no_classes_today_summary">Je hebt geen les gepland voor vandaag.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Geen lessen voor morgen</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Je hebt geen lesrooster voor morgen.</string>
     <string name="empty_view_no_tasks_title">Geen hangende taken</string>
     <string name="empty_view_no_tasks_summary">U hebt momenteel geen lopende taken. Als u er een hebt, voeg deze dan toe met behulp van de onderstaande knop.</string>
     <string name="empty_view_no_finished_title">Geen afgeronde taken</string>
@@ -107,6 +110,7 @@
     <string name="filter_options_show_pending_tasks">Toon alleen hangende taken</string>
     <string name="filter_options_show_finished_tasks">Toon alleen voltooide taken</string>
     <string name="filter_options_show_today_classes">Toon alleen de klassen voor vandaag</string>
+    <string name="filter_options_show_tomorrow_classes">Toon klassen voor alleen morgen</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>

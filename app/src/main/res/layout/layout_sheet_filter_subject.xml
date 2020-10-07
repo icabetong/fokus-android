@@ -36,6 +36,15 @@
             android:text="@string/filter_options_show_today_classes"
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
+        <com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
+            android:id="@+id/filterOptionShowTomorrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/editor_container_padding"
+            android:paddingEnd="@dimen/editor_container_padding"
+            android:text="@string/filter_options_show_tomorrow_classes"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
+
     </RadioGroup>
 
 </LinearLayout>

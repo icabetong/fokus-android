@@ -9,6 +9,7 @@
     <string name="activity_tasks_finished">Vos tâches terminées</string>
     <string name="activity_subjects">Vos sujets</string>
     <string name="activity_subjects_today">Vos sujets aujourd\'hui</string>
+    <string name="activity_subjects_tomorrow">Vos sujets de demain</string>
     <string name="activity_logs">Journaux de notification</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_backup">Sauvegarde et Restauration</string>
@@ -52,6 +53,8 @@
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches et vos événements. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>
     <string name="empty_view_no_classes_today_title">Pas de cours pour aujourd\'hui</string>
     <string name="empty_view_no_classes_today_summary">Vous n\'avez pas de cours prévu pour aujourd\'hui.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Pas de cours pour demain</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Vous n\'avez pas d\'horaires de cours pour demain.</string>
     <string name="empty_view_no_tasks_title">Pas de tâches en suspens</string>
     <string name="empty_view_no_tasks_summary">Vous n\'avez actuellement aucune tâche en cours. Si vous en avez une, ajoutez-la en utilisant le bouton ci-dessous.</string>
     <string name="empty_view_no_finished_title">Pas de tâches terminées</string>
@@ -106,6 +109,7 @@
     <string name="filter_options_show_pending_tasks">Afficher uniquement les tâches en attente</string>
     <string name="filter_options_show_finished_tasks">Afficher uniquement les tâches terminées</string>
     <string name="filter_options_show_today_classes">Classes d\'exposition pour aujourd\'hui seulement</string>
+    <string name="filter_options_show_tomorrow_classes">Classes d\'exposition pour demain seulement</string>
 
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>

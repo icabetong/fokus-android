@@ -58,10 +58,17 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
                 SubjectViewModel.FilterOption.ALL -> {
                     emptyViewSubjectsAll.isVisible = it
                     emptyViewSubjectsToday.isVisible = false
+                    emptyViewSubjectsTomorrow.isVisible = false
                 }
                 SubjectViewModel.FilterOption.TODAY -> {
                     emptyViewSubjectsAll.isVisible = false
                     emptyViewSubjectsToday.isVisible = it
+                    emptyViewSubjectsTomorrow.isVisible = false
+                }
+                SubjectViewModel.FilterOption.TOMORROW -> {
+                    emptyViewSubjectsAll.isVisible = false
+                    emptyViewSubjectsToday.isVisible = false
+                    emptyViewSubjectsTomorrow.isVisible = it
                 }
             }
         }
@@ -154,6 +161,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
         return when(viewModel.filterOption) {
             SubjectViewModel.FilterOption.ALL -> R.string.activity_subjects
             SubjectViewModel.FilterOption.TODAY -> R.string.activity_subjects_today
+            SubjectViewModel.FilterOption.TOMORROW -> R.string.activity_subjects_tomorrow
         }
     }
 
@@ -173,6 +181,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
                     filterOptionShowAll.isChecked = true
                 SubjectViewModel.FilterOption.TODAY ->
                     filterOptionShowToday.isChecked = true
+                SubjectViewModel.FilterOption.TOMORROW ->
+                    filterOptionShowTomorrow.isChecked = true
             }
 
             filterOptionGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -181,6 +191,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
                         receiver?.onReceive(SubjectViewModel.FilterOption.ALL)
                     R.id.filterOptionShowToday ->
                         receiver?.onReceive(SubjectViewModel.FilterOption.TODAY)
+                    R.id.filterOptionShowTomorrow ->
+                        receiver?.onReceive(SubjectViewModel.FilterOption.TOMORROW)
                 }
             }
 

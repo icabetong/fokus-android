@@ -9,6 +9,7 @@
     <string name="activity_tasks_finished">Twoje zakończone zadania</string>
     <string name="activity_subjects">Twoi Poddani</string>
     <string name="activity_subjects_today">Twoje Tematy dzisiaj</string>
+    <string name="activity_subjects_tomorrow">Jutro twoi poddani</string>
     <string name="activity_logs">Dzienniki Powiadomień</string>
     <string name="activity_settings">Ustawienia</string>
     <string name="activity_backup">Tworzenie i Przywracanie kopii Zapasowych</string>
@@ -52,6 +53,8 @@
     <string name="empty_view_no_subjects_summary">Tematy pomagają w sortowaniu zadań i zdarzeń, Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
     <string name="empty_view_no_classes_today_title">Nie ma zajęć na dzisiaj</string>
     <string name="empty_view_no_classes_today_summary">Nie masz zaplanowanych zajęć na dzisiaj.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Nie ma zajęć na jutro</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Nie masz planów zajęć na jutro.</string>
     <string name="empty_view_no_tasks_title">Brak zadań oczekujących</string>
     <string name="empty_view_no_tasks_summary">Obecnie nie masz żadnych zadań do wykonania. Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>
     <string name="empty_view_no_finished_title">Nie ma zadań zakończonych</string>
@@ -106,6 +109,7 @@
     <string name="filter_options_show_pending_tasks">Pokaż tylko zadania oczekujące</string>
     <string name="filter_options_show_finished_tasks">Pokaż tylko zadania zakończone</string>
     <string name="filter_options_show_today_classes">Pokaż klasy tylko na dzisiaj</string>
+    <string name="filter_options_show_tomorrow_classes">Pokaż klasy tylko na jutro</string>
 
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>

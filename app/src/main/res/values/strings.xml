@@ -10,6 +10,7 @@
     <string name="activity_tasks_finished">Your Finished Tasks</string>
     <string name="activity_subjects">Your Subjects</string>
     <string name="activity_subjects_today">Your Subjects Today</string>
+    <string name="activity_subjects_tomorrow">Your Subjects Tomorrow</string>
     <string name="activity_logs">Notification Logs</string>
     <string name="activity_settings">Settings</string>
     <string name="activity_backup">Backup and Restore</string>
@@ -53,6 +54,8 @@
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks and events, If you have one, add it using the button below.</string>
     <string name="empty_view_no_classes_today_title">No Classes for Today</string>
     <string name="empty_view_no_classes_today_summary">You have no class scheduled for today.</string>
+    <string name="empty_view_no_classes_tomorrow_title">No Classes for Tomorrow</string>
+    <string name="empty_view_no_classes_tomorrow_summary">You have no class schedules for tomorrow.</string>
     <string name="empty_view_no_tasks_title">No Pending Tasks</string>
     <string name="empty_view_no_tasks_summary">You currently have no pending tasks. If you have one, add it using the button below.</string>
     <string name="empty_view_no_finished_title">No Finished Tasks</string>
@@ -107,6 +110,7 @@
     <string name="filter_options_show_pending_tasks">Show Pending Tasks only</string>
     <string name="filter_options_show_finished_tasks">Show Finished Tasks only</string>
     <string name="filter_options_show_today_classes">Show Classes for Today only</string>
+    <string name="filter_options_show_tomorrow_classes">Show Classes for Tomorrow only</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>

@@ -38,9 +38,21 @@ data class Schedule @JvmOverloads constructor(
 ) : Parcelable, Streamable {
 
     fun isToday(): Boolean {
+        val currentDate = LocalDate.now()
+
         getDaysAsList().forEach {
-            if (it == ZonedDateTime.now().dayOfWeek.value)
+            if (it == currentDate.dayOfWeek.value)
                 return@isToday true
+        }
+        return false
+    }
+
+    fun isTomorrow(): Boolean {
+        val currentDate = LocalDate.now()
+
+        getDaysAsList().forEach {
+            if (it == currentDate.plusDays(1).dayOfWeek.value)
+                return@isTomorrow true
         }
         return false
     }

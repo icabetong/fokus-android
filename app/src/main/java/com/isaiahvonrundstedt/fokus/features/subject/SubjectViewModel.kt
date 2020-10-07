@@ -38,6 +38,8 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                     subjects.value = items
                 FilterOption.TODAY ->
                     subjects.value = items.filter { it.hasScheduleToday() }
+                FilterOption.TOMORROW ->
+                    subjects.value = items.filter { it.hasScheduleTomorrow() }
             }
         }
     }
@@ -100,16 +102,19 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
             _subjects.value?.let { subjects.value = it }
         FilterOption.TODAY ->
             _subjects.value?.let { subjects.value = it.filter { subject -> subject.hasScheduleToday() } }
+        FilterOption.TOMORROW ->
+            _subjects.value?.let { subjects.value = it.filter { subject -> subject.hasScheduleTomorrow() } }
     }
 
     enum class FilterOption {
-        ALL, TODAY;
+        ALL, TODAY, TOMORROW;
 
         companion object {
             fun parse(value: String): FilterOption {
                 return when(value) {
                     ALL.toString() -> ALL
                     TODAY.toString() -> TODAY
+                    TOMORROW.toString() -> TOMORROW
                     else -> TODAY
                 }
             }

@@ -8,6 +8,7 @@
     <string name="activity_tasks_finished">I vostri compiti finiti</string>
     <string name="activity_subjects">I vostri soggetti</string>
     <string name="activity_subjects_today">I vostri soggetti oggi</string>
+    <string name="activity_subjects_tomorrow">I tuoi soggetti domani</string>
     <string name="activity_logs">Registri delle notifiche</string>
     <string name="activity_settings">Impostazioni</string>
     <string name="activity_backup">Backup e Ripristino</string>
@@ -51,6 +52,8 @@
     <string name="empty_view_no_subjects_summary">I soggetti aiutano a ordinare i vostri compiti ed eventi, se ne avete uno, aggiungetelo usando il pulsante qui sotto.</string>
     <string name="empty_view_no_classes_today_title">Nessuna classe per oggi</string>
     <string name="empty_view_no_classes_today_summary">Non avete nessuna lezione in programma per oggi.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Niente lezioni per domani</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Non avete orari di lezione per domani.</string>
     <string name="empty_view_no_tasks_title">Nessun compito in sospeso</string>
     <string name="empty_view_no_tasks_summary">Al momento non avete compiti in sospeso. Se ne avete una, aggiungetela con il pulsante qui sotto.</string>
     <string name="empty_view_no_finished_title">Nessun compito finito</string>
@@ -105,6 +108,7 @@
     <string name="filter_options_show_pending_tasks">Mostra solo le attività in sospeso</string>
     <string name="filter_options_show_finished_tasks">Mostra solo i compiti finiti</string>
     <string name="filter_options_show_today_classes">Mostra le lezioni solo per oggi</string>
+    <string name="filter_options_show_tomorrow_classes">Mostra le lezioni solo per domani</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>

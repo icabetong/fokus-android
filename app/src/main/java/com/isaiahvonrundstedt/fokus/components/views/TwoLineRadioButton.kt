@@ -1,11 +1,13 @@
 package com.isaiahvonrundstedt.fokus.components.views
 
 import android.content.Context
+import android.os.Build
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 
 class TwoLineRadioButton @JvmOverloads constructor(
@@ -26,7 +28,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
             renderText()
         }
 
-    var subtitle: String? = null
+    var subtitle: String = ""
         set(value) {
             field = value
             renderText()
@@ -71,9 +73,9 @@ class TwoLineRadioButton @JvmOverloads constructor(
                 R.styleable.TwoLineRadioButton_subtitleTextAppearance,
                 R.style.TextAppearance_AppCompat_Caption
             )
-
             subtitleSpan = TextAppearanceSpan(context, subtitleTextAppearance)
             subtitleTextColorSpan = ForegroundColorSpan(subtitleTextColor)
+
         } finally {
             typedArray.recycle()
         }
@@ -85,24 +87,25 @@ class TwoLineRadioButton @JvmOverloads constructor(
         titleTextColorSpan = ForegroundColorSpan(titleTextColor)
         subtitleTextColorSpan = ForegroundColorSpan(subtitleTextColor)
 
-        val textToRender = if (subtitle.isNullOrEmpty()) title
-        else "$title\n$subtitle"
+        val textToRender = if (subtitle.isNotBlank()) "$title\n$subtitle"
+            else title
 
-        val spannableText = SpannableString(textToRender)
-
-        spannableText.setSpan(titleSpan, 0, title.length,
-            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
-        spannableText.setSpan(titleTextColorSpan, 0, title.length,
-            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
-
-        if (!subtitle.isNullOrEmpty()) {
-            spannableText.setSpan(subtitleSpan, title.length,
-                title.length + subtitle!!.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
-            )
-            spannableText.setSpan(subtitleTextColorSpan, title.length,
-                title.length + subtitle!!.length + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val spannable = SpannableString(textToRender).apply {
+            setSpan(titleSpan, 0, title.length,
+                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+            setSpan(titleTextColorSpan, 0, title.length,
+                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+            if (subtitle.isNotBlank()) {
+                setSpan(subtitleSpan, title.length,
+                    title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                setSpan(subtitleTextColorSpan, title.length,
+                    title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+            }
         }
 
-        text = spannableText
+        // Band-aid fix
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
+            text = spannable.toString()
+        else text = spannable
     }
 }

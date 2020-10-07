@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -33,10 +34,6 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
         this.receiver = receiver
     }
 
-    fun interface Receiver<T> {
-        fun onReceive(t: T)
-    }
-
     fun show() {
         if (!this.isAdded || !this.isVisible)
             show(manager, this::class.java.name)
@@ -45,5 +42,13 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     inline fun show(sheet: BaseBottomSheet<T>.() -> Unit) {
         this.sheet()
         this.show()
+    }
+
+    fun interface CancelListener {
+        fun onCancel()
+    }
+
+    fun interface Receiver<T> {
+        fun onReceive(t: T)
     }
 }

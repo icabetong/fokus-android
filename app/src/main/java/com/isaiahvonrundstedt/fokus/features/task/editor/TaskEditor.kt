@@ -136,7 +136,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         isChecked = true
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context)
+                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
                     }
                 }
             } else {
@@ -242,7 +242,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 if (v is TwoLineRadioButton && !v.isChecked) {
                     v.titleTextColor = ContextCompat.getColor(v.context,
                         R.color.color_secondary_text)
-                    v.subtitle = null
+                    v.subtitle = ""
                 }
             }
         }
@@ -253,7 +253,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
             with(inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                subtitle = viewModel.getTask()?.formatDueDate(context)
+                subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
             }
         }
 
@@ -263,12 +263,13 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     viewModel.setClassScheduleAsDueDate(schedule)
                     with(this@TaskEditor.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context)
+                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
                     }
 
                     hasFieldChange = true
                     this.dismiss()
                 }
+
             }
         }
 
@@ -285,7 +286,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     with(this@TaskEditor.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context)
+                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
                     }
                 }
                 negativeButton { this@TaskEditor.customDateTimeRadio.isChecked = false }

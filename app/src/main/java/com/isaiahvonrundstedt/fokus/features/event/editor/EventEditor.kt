@@ -117,7 +117,7 @@ class EventEditor : BaseEditor() {
                         isChecked = true
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getEvent()?.formatSchedule(context)
+                        subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
                     }
                 }
             } else {
@@ -189,7 +189,7 @@ class EventEditor : BaseEditor() {
                 if (v is TwoLineRadioButton && !v.isChecked) {
                     v.titleTextColor = ContextCompat.getColor(v.context,
                         R.color.color_secondary_text)
-                    v.subtitle = null
+                    v.subtitle = ""
                 }
             }
         }
@@ -199,7 +199,7 @@ class EventEditor : BaseEditor() {
             hasFieldChange = true
             with(inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                subtitle = viewModel.getEvent()?.formatSchedule(context)
+                subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
             }
         }
 
@@ -210,7 +210,7 @@ class EventEditor : BaseEditor() {
                     with(this@EventEditor.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getEvent()?.formatSchedule(context)
+                        subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
                     }
 
                     hasFieldChange = true
@@ -233,7 +233,7 @@ class EventEditor : BaseEditor() {
                     with(this@EventEditor.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getEvent()?.formatSchedule(context)
+                        subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
                     }
                 }
                 negativeButton { this@EventEditor.customDateTimeRadio.isChecked = false }

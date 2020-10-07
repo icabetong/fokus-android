@@ -2,6 +2,8 @@ package com.isaiahvonrundstedt.fokus.features.log
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
@@ -10,9 +12,16 @@ import kotlinx.coroutines.launch
 class LogViewModel(app: Application) : BaseViewModel(app) {
 
     private var repository = LogRepository.getInstance(app)
-    private var items: LiveData<List<Log>>? = repository.fetch()
+    private var _logs: LiveData<List<Log>> = repository.fetch()
 
-    fun fetch(): LiveData<List<Log>>? = items
+    val logs: MediatorLiveData<List<Log>> = MediatorLiveData()
+    val isEmpty: LiveData<Boolean> = Transformations.map(logs) { it.isNullOrEmpty() }
+
+    init {
+        logs.addSource(_logs) {
+            logs.value = it
+        }
+    }
 
     fun insert(log: Log) = viewModelScope.launch {
         repository.insert(log)
@@ -22,8 +31,8 @@ class LogViewModel(app: Application) : BaseViewModel(app) {
         repository.remove(log)
     }
 
-    fun clear() {
-        repository.clear()
+    fun removeLogs() = viewModelScope.launch {
+        repository.removeLogs()
     }
 
 }

@@ -7,7 +7,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 
 class TwoLineRadioButton @JvmOverloads constructor(
@@ -104,8 +103,8 @@ class TwoLineRadioButton @JvmOverloads constructor(
         }
 
         // Band-aid fix
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
-            text = spannable.toString()
-        else text = spannable
+        text = if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
+            spannable.toString()
+        else spannable
     }
 }

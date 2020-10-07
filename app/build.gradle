@@ -12,13 +12,13 @@ android {
         applicationId "com.isaiahvonrundstedt.fokus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 6
-        versionName "2.0.1"
+        versionCode 7
+        versionName "2.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

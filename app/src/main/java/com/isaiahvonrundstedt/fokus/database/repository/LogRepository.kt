@@ -25,9 +25,7 @@ class LogRepository private constructor(context: Context) {
         }
     }
 
-    fun fetch(): LiveData<List<Log>>? = logs.fetch()
-
-    fun clear() = GlobalScope.launch { logs.clear() }
+    fun fetch(): LiveData<List<Log>> = logs.fetch()
 
     suspend fun insert(log: Log) {
         logs.insert(log)
@@ -39,6 +37,10 @@ class LogRepository private constructor(context: Context) {
 
     suspend fun update(log: Log) {
         logs.update(log)
+    }
+
+    suspend fun removeLogs() {
+        logs.removeLogs()
     }
 
 }

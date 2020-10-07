@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.layout_appbar.*
 
 class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
 
+    private val adapter = LogAdapter(this)
     private val viewModel: LogViewModel by lazy {
         ViewModelProvider(this).get(LogViewModel::class.java)
     }
@@ -28,23 +30,19 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_logs)
 
-        adapter = LogAdapter(this)
         recyclerView.addItemDecoration(ItemDecoration(this))
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter!!))
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    private var adapter: LogAdapter? = null
     override fun onStart() {
         super.onStart()
 
-        viewModel.fetch()?.observe(this) { items ->
-            adapter?.submitList(items)
-            emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
-        }
+        viewModel.logs.observe(this) { adapter.submitList(it) }
+        viewModel.isEmpty.observe(this) { emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
@@ -73,7 +71,7 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear_items -> {
-                viewModel.clear()
+                viewModel.removeLogs()
                 true
             }
             else -> super.onOptionsItemSelected(item)

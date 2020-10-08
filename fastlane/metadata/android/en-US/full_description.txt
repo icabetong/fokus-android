@@ -1,0 +1,9 @@
+<p><i>Fokus</i> is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It’s fast and beautiful yet simple design that can help you focus on what matters most.</p>
+<p><br><b>Features:</b></p><ul>
+<li>Get reminded when a task is nearing its due</li>
+<li>Get reminded about incoming events</li>
+<li>Add attachments to your tasks</li>
+<li>Persistent notifications for important tasks or events</li>
+<li>No ads or any tracking</li>
+<li>Open Source Code</li>
+<li>On-Device Database</li></ul>

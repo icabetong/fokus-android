@@ -32,7 +32,12 @@ import java.util.zip.ZipFile
 
 class BackupRestoreService: BaseService() {
 
-    private val database = AppDatabase.getInstance(this)
+    private lateinit var database: AppDatabase
+
+    override fun onCreate() {
+        super.onCreate()
+        database = AppDatabase.getInstance(this)
+    }
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -178,7 +183,7 @@ class BackupRestoreService: BaseService() {
                     Streamable.DIRECTORY_ATTACHMENTS)
                 if (!attachmentFolder.exists()) attachmentFolder.mkdir()
                 attachments?.forEach {
-                    if (it.target != null)
+                    if (it.type == Attachment.TYPE_IMPORTED_FILE && it.target != null)
                         FileUtils.copyFileToDirectory(File(it.target!!),
                             attachmentFolder)
                 }

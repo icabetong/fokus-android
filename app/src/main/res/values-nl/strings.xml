@@ -140,6 +140,7 @@
     <string name="feedback_task_removed">Taak verwijderd</string>
     <string name="feedback_schedule_removed">Schema verwijderd</string>
     <string name="feedback_attachment_removed">Bevestiging verwijderd</string>
+    <string name="feedback_attachment_added">Bijlage toegevoegd</string>
     <string name="feedback_event_removed">Evenement verwijderd</string>
     <string name="feedback_task_marked_as_finished">Taak gemarkeerd als voltooid</string>
     <string name="feedback_task_marked_as_pending">Taak gemarkeerd als In afwachting van</string>
@@ -267,6 +268,9 @@
     <string name="notification_restore_ongoing">Back-up herstellen</string>
     <string name="notification_restore_error">Herstel Mislukt</string>
     <string name="notification_restore_success">Herstel Voltooid</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Toevoegen als bijlage</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Goedendag!</string>

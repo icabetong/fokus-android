@@ -139,6 +139,7 @@
     <string name="feedback_task_removed">Tâche supprimée</string>
     <string name="feedback_schedule_removed">Programme supprimée</string>
     <string name="feedback_attachment_removed">Pièce jointe retirée</string>
+    <string name="feedback_attachment_added">Pièce jointe ajoutée</string>
     <string name="feedback_event_removed">Événement supprimé</string>
     <string name="feedback_task_marked_as_finished">Tâche marquée comme terminée</string>
     <string name="feedback_task_marked_as_pending">Tâche marquée comme étant en suspens</string>
@@ -266,6 +267,9 @@
     <string name="notification_restore_ongoing">Restauration de la sauvegarde</string>
     <string name="notification_restore_error">Echec de la restauration</string>
     <string name="notification_restore_success">Restauration terminée</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Ajouter en pièce jointe</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Bonne journée !</string>

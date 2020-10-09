@@ -53,6 +53,14 @@
         <activity android:name=".features.about.NoticesActivity" />
         <activity android:name=".features.about.LibrariesActivity" />
 
+        <activity android:name="com.isaiahvonrundstedt.fokus.features.attachments.send.SendAsAttachmentActivity">
+            <intent-filter android:label="@string/intent_add_as_attachment">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>
         <service android:name=".components.service.BackupRestoreService"

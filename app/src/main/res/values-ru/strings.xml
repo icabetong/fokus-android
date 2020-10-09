@@ -139,6 +139,7 @@
     <string name="feedback_task_removed">Задача снята</string>
     <string name="feedback_schedule_removed">Расписание удалено</string>
     <string name="feedback_attachment_removed">Крепление удалено</string>
+    <string name="feedback_attachment_added">Добавлено приложение</string>
     <string name="feedback_event_removed">Событие удалено</string>
     <string name="feedback_task_marked_as_finished">Задача обозначена как Готово</string>
     <string name="feedback_task_marked_as_pending">Задача помечена как Ожидающая решения</string>
@@ -266,6 +267,9 @@
     <string name="notification_restore_ongoing">Восстановление резервного копирования</string>
     <string name="notification_restore_error">Восстановить Не удалось</string>
     <string name="notification_restore_success">Восстановлено Завершено</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Добавить как Приложение</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Добрый день!</string>

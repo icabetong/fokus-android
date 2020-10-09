@@ -139,6 +139,7 @@
     <string name="feedback_log_removed">Log removed</string>
     <string name="feedback_task_removed">Task removed</string>
     <string name="feedback_schedule_removed">Schedule removed</string>
+    <string name="feedback_attachment_added">Attachment added</string>
     <string name="feedback_attachment_removed">Attachment removed</string>
     <string name="feedback_event_removed">Event removed</string>
     <string name="feedback_task_marked_as_finished">Task marked as finished</string>
@@ -267,6 +268,9 @@
     <string name="notification_restore_ongoing">Restoring Backup</string>
     <string name="notification_restore_error">Restore Failed</string>
     <string name="notification_restore_success">Restore Completed</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Add as Attachment</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Good day!</string>

@@ -54,4 +54,13 @@ class TaskRepository private constructor(context: Context) {
             tasks.setFinished(taskID, 1)
         else tasks.setFinished(taskID, 0)
     }
+
+    suspend fun addAttachment(attachment: Attachment) {
+        attachments.insert(attachment)
+    }
+
+    suspend fun removeAttachment(attachment: Attachment) {
+        attachments.remove(attachment)
+    }
+
 }

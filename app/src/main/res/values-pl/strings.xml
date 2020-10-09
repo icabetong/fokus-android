@@ -139,6 +139,7 @@
     <string name="feedback_task_removed">Zadanie usunięte</string>
     <string name="feedback_schedule_removed">Usunięty harmonogram</string>
     <string name="feedback_attachment_removed">Usunięty załącznik</string>
+    <string name="feedback_attachment_added">Dodano załącznik</string>
     <string name="feedback_event_removed">Zdarzenie usunięte</string>
     <string name="feedback_task_marked_as_finished">Zadanie oznaczone jako zakończone</string>
     <string name="feedback_task_marked_as_pending">Zadanie oznaczone jako Oczekujące</string>
@@ -266,6 +267,9 @@
     <string name="notification_restore_ongoing">Przywracanie kopii zapasowych</string>
     <string name="notification_restore_error">Przywrócenie nie powiodło się</string>
     <string name="notification_restore_success">Przywrócony Ukończony</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Dodaj jako załącznik</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Dobry dzień!</string>

@@ -138,6 +138,7 @@
     <string name="feedback_task_removed">Compito rimosso</string>
     <string name="feedback_schedule_removed">Programma eliminato</string>
     <string name="feedback_attachment_removed">Attacco rimosso</string>
+    <string name="feedback_attachment_added">Allegato aggiunto</string>
     <string name="feedback_event_removed">Evento rimosso</string>
     <string name="feedback_task_marked_as_finished">Compito contrassegnato come Finito</string>
     <string name="feedback_task_marked_as_pending">Attività contrassegnata come in sospeso</string>
@@ -265,6 +266,9 @@
     <string name="notification_restore_ongoing">Ripristino del backup</string>
     <string name="notification_restore_error">Ripristino non riuscito</string>
     <string name="notification_restore_success">Ripristino completato</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Aggiungi come allegato</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Buona giornata!</string>

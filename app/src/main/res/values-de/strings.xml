@@ -139,6 +139,7 @@
     <string name="feedback_task_removed">Aufgabe entfernt</string>
     <string name="feedback_schedule_removed">Zeitplan entfernt</string>
     <string name="feedback_attachment_removed">Anhang entfernt</string>
+    <string name="feedback_attachment_added">Anhang hinzugefügt</string>
     <string name="feedback_event_removed">Ereignis entfernt</string>
     <string name="feedback_task_marked_as_finished">Als abgeschlossen markierte Aufgabe</string>
     <string name="feedback_task_marked_as_pending">Als Ausstehend markierte Aufgabe</string>
@@ -265,6 +266,9 @@
     <string name="notification_restore_ongoing">Sicherung wiederherstellen</string>
     <string name="notification_restore_error">Wiederherstellung fehlgeschlagen</string>
     <string name="notification_restore_success">Wiederherstellung abgeschlossen</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Als Anlage hinzufügen</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Guten tag!</string>

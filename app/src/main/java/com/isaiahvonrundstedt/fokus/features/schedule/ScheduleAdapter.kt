@@ -10,7 +10,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class ScheduleAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Schedule, ScheduleAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Schedule, ScheduleAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
@@ -40,18 +40,6 @@ class ScheduleAdapter(private val actionListener: ActionListener)
 
             rootView.setOnClickListener {
                 actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
-            }
-        }
-    }
-
-    companion object {
-        val callback = object: DiffUtil.ItemCallback<Schedule>() {
-            override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
-                return oldItem.scheduleID == newItem.scheduleID
             }
         }
     }

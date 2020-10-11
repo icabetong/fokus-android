@@ -49,6 +49,7 @@
     <string name="button_discard">Discard</string>
     <string name="button_dismiss">Dismiss</string>
     <string name="button_learn_more">Learn More</string>
+    <string name="button_view_schedules">View Schedules</string>
 
     <string name="empty_view_no_subjects_title">No Added Subjects</string>
     <string name="empty_view_no_subjects_summary">Subjects help sort your tasks and events, If you have one, add it using the button below.</string>

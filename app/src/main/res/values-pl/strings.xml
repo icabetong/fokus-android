@@ -48,6 +48,7 @@
     <string name="button_discard">Odrzuć</string>
     <string name="button_dismiss">Oddalić</string>
     <string name="button_learn_more">Dowiedz się więcej</string>
+    <string name="button_view_schedules">Harmonogramy widoków</string>
 
     <string name="empty_view_no_subjects_title">Brak tematów Dodano</string>
     <string name="empty_view_no_subjects_summary">Tematy pomagają w sortowaniu zadań i zdarzeń, Jeśli je masz, dodaj je za pomocą przycisku poniżej.</string>

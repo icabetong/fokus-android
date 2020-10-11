@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.schedule
 import android.content.Context
 import android.os.Parcelable
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -177,6 +178,16 @@ data class Schedule @JvmOverloads constructor(
         const val BIT_VALUE_THURSDAY = 16
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
+
+        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Schedule>() {
+            override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
+                return oldItem.scheduleID == newItem.scheduleID
+            }
+
+            override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
+                return oldItem == newItem
+            }
+        }
 
         fun toJsonFile(items: List<Schedule>, destination: File,
                        name: String = Streamable.FILE_NAME_SCHEDULE): File {

@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.time.DayOfWeek
 
 class SchedulePickerAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
 
     private val itemList = mutableListOf<Schedule>()
 
@@ -46,27 +46,13 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
         private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
 
         override fun <T> onBind(t: T) {
-            with(t) {
-                if (this is Schedule) {
-                    titleView.text = itemView.context.getString(getStringResourceForDay(daysOfWeek))
-                    summaryView.text = formatBothTime()
-                }
-
-                rootView.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
-                }
-            }
-        }
-    }
-
-    companion object {
-        val callback = object: DiffUtil.ItemCallback<Schedule>() {
-            override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
-                return oldItem.scheduleID == newItem.scheduleID
+            if (t is Schedule) {
+                titleView.text = itemView.context.getString(t.getStringResourceForDay(t.daysOfWeek))
+                summaryView.text = t.formatBothTime()
             }
 
-            override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
-                return oldItem == newItem
+            rootView.setOnClickListener {
+                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
             }
         }
     }

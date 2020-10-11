@@ -11,10 +11,12 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
-class SubjectAdapter(private var actionListener: ActionListener)
+class SubjectAdapter(private var actionListener: ActionListener,
+                     private val scheduleListener: ScheduleListener)
     : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(callback), Swipeable {
 
     var currentOption = SubjectViewModel.FilterOption.TODAY
@@ -25,7 +27,7 @@ class SubjectAdapter(private var actionListener: ActionListener)
 
         val rowView: View = LayoutInflater.from(parent.context).inflate(resID, parent, false)
         return when(viewType) {
-            ITEM_TYPE_ALL_SCHEDULE -> CoreViewHolder(rowView, actionListener)
+            ITEM_TYPE_ALL_SCHEDULE -> CoreViewHolder(rowView, actionListener, scheduleListener)
             ITEM_TYPE_SINGLE_SCHEDULE_TODAY -> TodayViewHolder(rowView, actionListener)
             ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW -> TomorrowViewHolder(rowView, actionListener)
             else -> throw IllegalStateException("Unknown Item type")
@@ -50,13 +52,14 @@ class SubjectAdapter(private var actionListener: ActionListener)
                 emptyMap())
     }
 
-    private class CoreViewHolder(itemView: View, private val actionListener: ActionListener)
+    private class CoreViewHolder(itemView: View, private val actionListener: ActionListener,
+        private val scheduleListener: ScheduleListener)
         : BaseViewHolder(itemView) {
 
         private val tagView: AppCompatImageView = itemView.findViewById(R.id.tagView)
         private val nameView: TextView = itemView.findViewById(R.id.nameView)
         private val descriptionView: TextView = itemView.findViewById(R.id.descriptionView)
-        private val scheduleView: ChipGroup = itemView.findViewById(R.id.scheduleView)
+        private val scheduleView: Chip = itemView.findViewById(R.id.scheduleView)
 
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
@@ -69,13 +72,8 @@ class SubjectAdapter(private var actionListener: ActionListener)
                     descriptionView.text = description
                 }
 
-                if (scheduleView.childCount > 0)
-                    scheduleView.removeAllViews()
-                t.schedules.forEach {
-                    val chip = Chip(itemView.context).apply {
-                        text = it.format(context, true)
-                    }
-                    scheduleView.addView(chip)
+                scheduleView.setOnClickListener {
+                    scheduleListener.onScheduleListener(t.schedules)
                 }
 
                 rootView.setOnClickListener {
@@ -146,6 +144,10 @@ class SubjectAdapter(private var actionListener: ActionListener)
         protected val nameView: TextView = itemView.findViewById(R.id.nameView)
         protected val descriptionView: TextView = itemView.findViewById(R.id.descriptionView)
         protected val scheduleView: TextView = itemView.findViewById(R.id.scheduleView)
+    }
+
+    interface ScheduleListener {
+        fun onScheduleListener(items: List<Schedule>)
     }
 
     companion object {

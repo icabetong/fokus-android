@@ -48,6 +48,7 @@
     <string name="button_discard">Бросить</string>
     <string name="button_dismiss">Свободен</string>
     <string name="button_learn_more">Узнать больше</string>
+    <string name="button_view_schedules">Посмотреть Графики</string>
 
     <string name="empty_view_no_subjects_title">Не добавлены Субъекты</string>
     <string name="empty_view_no_subjects_summary">Предметы помогают сортировать ваши задачи и события, Если у вас есть, добавьте его, используя кнопку ниже.</string>

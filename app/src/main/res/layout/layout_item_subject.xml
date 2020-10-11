@@ -47,12 +47,12 @@
             app:layout_constraintStart_toEndOf="@id/tagView"
             tools:text="Introduction to Web Design"/>
 
-        <com.google.android.material.chip.ChipGroup
+        <com.google.android.material.chip.Chip
             android:id="@+id/scheduleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:orientation="vertical"
+            android:text="@string/button_view_schedules"
             app:layout_constraintTop_toBottomOf="@id/descriptionView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/tagView" />

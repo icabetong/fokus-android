@@ -49,6 +49,7 @@
     <string name="button_discard">Verwerfen</string>
     <string name="button_dismiss">Entlassen</string>
     <string name="button_learn_more">Weitere Informationen</string>
+    <string name="button_view_schedules">Zeitpläne anzeigen</string>
 
     <string name="empty_view_no_subjects_title">Keine Betreffen hinzugefügt</string>
     <string name="empty_view_no_subjects_summary">Themen helfen Ihnen, Ihre Aufgaben und Ereignisse zu sortieren. Wenn Sie eine haben, fügen Sie sie mit der Schaltfläche unten hinzu.</string>

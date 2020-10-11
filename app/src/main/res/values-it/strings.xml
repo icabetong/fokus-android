@@ -47,6 +47,7 @@
     <string name="button_discard">Scartare</string>
     <string name="button_dismiss">Licenziare</string>
     <string name="button_learn_more">Per saperne di più</string>
+    <string name="button_view_schedules">Visualizza gli orari</string>
 
     <string name="empty_view_no_subjects_title">Nessun soggetto aggiunto</string>
     <string name="empty_view_no_subjects_summary">I soggetti aiutano a ordinare i vostri compiti ed eventi, se ne avete uno, aggiungetelo usando il pulsante qui sotto.</string>

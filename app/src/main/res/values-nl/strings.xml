@@ -49,6 +49,7 @@
     <string name="button_discard">Gooi  weg</string>
     <string name="button_dismiss">Ontslag</string>
     <string name="button_learn_more">Meer informatie</string>
+    <string name="button_view_schedules">Bekijk schema\'s</string>
 
     <string name="empty_view_no_subjects_title">Geen toegevoegde onderwerpen</string>
     <string name="empty_view_no_subjects_summary">Onderwerpen helpen bij het sorteren van uw taken en gebeurtenissen. Als u er een heeft, kunt u deze toevoegen met behulp van de onderstaande knop.</string>

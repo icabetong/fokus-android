@@ -48,6 +48,7 @@
     <string name="button_discard">Jeter</string>
     <string name="button_dismiss">Renvoi</string>
     <string name="button_learn_more">En savoir plus</string>
+    <string name="button_view_schedules">Voir les horaires</string>
 
     <string name="empty_view_no_subjects_title">Aucun sujet ajouté</string>
     <string name="empty_view_no_subjects_summary">Les sujets aident à trier vos tâches et vos événements. Si vous en avez un, ajoutez-le en utilisant le bouton ci-dessous.</string>

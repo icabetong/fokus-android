@@ -17,6 +17,8 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
+import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -24,9 +26,9 @@ import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
 import kotlinx.android.synthetic.main.layout_sheet_filter_subject.*
 
-class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
+class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener {
 
-    private val adapter = SubjectAdapter(this)
+    private val adapter = SubjectAdapter(this, this)
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
@@ -154,6 +156,11 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onScheduleListener(items: List<Schedule>) {
+        ScheduleViewerSheet(items, childFragmentManager)
+            .show()
     }
 
     @StringRes

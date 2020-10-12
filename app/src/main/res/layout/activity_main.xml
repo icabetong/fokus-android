@@ -28,7 +28,7 @@
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:exb_items="@menu/navigation_menu"
+            app:exb_items="@menu/navigation_main"
             style="@style/Fokus.Widget.Navigation"/>
 
     </LinearLayout>

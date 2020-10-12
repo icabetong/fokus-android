@@ -47,6 +47,7 @@ dependencies {
     implementation 'nl.dionsegijn:konfetti:1.2.0'
     implementation 'commons-io:commons-io:2.7'
     implementation 'com.mikepenz:aboutlibraries-core:8.3.1'
+    implementation "me.saket.cascade:cascade:1.0.0"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.2.0'

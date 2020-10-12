@@ -34,7 +34,7 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
             }
 
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = MenuAdapter(activity, R.menu.menu_main, this)
+        recyclerView.adapter = MenuAdapter(activity, R.menu.navigation_others, this)
     }
 
     override fun onItemSelected(id: Int) {

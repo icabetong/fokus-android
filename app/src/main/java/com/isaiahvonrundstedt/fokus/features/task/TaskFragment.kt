@@ -6,13 +6,9 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,17 +16,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import kotlinx.android.synthetic.main.fragment_task.*
-import kotlinx.android.synthetic.main.layout_sheet_filter_tasks.*
+import me.saket.cascade.CascadePopupMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.io.File
@@ -66,15 +62,15 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         viewModel.tasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when(viewModel.filterOption) {
-                TaskViewModel.FilterOption.ALL -> {
+                TaskViewModel.Constraint.ALL -> {
                     emptyViewPendingTasks.isVisible = it
                     emptyViewFinishedTasks.isVisible = false
                 }
-                TaskViewModel.FilterOption.PENDING -> {
+                TaskViewModel.Constraint.PENDING -> {
                     emptyViewPendingTasks.isVisible = it
                     emptyViewFinishedTasks.isVisible = false
                 }
-                TaskViewModel.FilterOption.FINISHED -> {
+                TaskViewModel.Constraint.FINISHED -> {
                     emptyViewPendingTasks.isVisible = false
                     emptyViewFinishedTasks.isVisible = it
                 }
@@ -189,61 +185,111 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_filter, menu)
+        inflater.inflate(R.menu.menu_main, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_filter -> {
-                FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
-                    waitForResult { option ->
-                        viewModel.filterOption = option
-                        activityToolbar?.setTitle(getToolbarTitle())
-                        this.dismiss()
+            R.id.action_more -> {
+                activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
+                    val overflowMenu = CascadePopupMenu(requireContext(), view)
+                    overflowMenu.menu.addSubMenu(R.string.menu_sort)?.also {
+                        it.setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                        it.addSubMenu(R.string.field_task_name)?.apply {
+                            setIcon(R.drawable.ic_hero_pencil_24)
+
+                            add(R.string.sorting_directions_ascending).apply {
+                                setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = TaskViewModel.Sort.NAME
+                                    viewModel.sortDirection = SortDirection.ASCENDING
+
+                                    true
+                                }
+                            }
+                            add(R.string.sorting_directions_descending).apply {
+                                setIcon(R.drawable.ic_hero_sort_descending_24)
+
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = TaskViewModel.Sort.NAME
+                                    viewModel.sortDirection = SortDirection.DESCENDING
+
+                                    true
+                                }
+                            }
+                        }
+                        it.addSubMenu(R.string.field_due_date)?.apply {
+                            setIcon(R.drawable.ic_hero_clock_24)
+
+                            add(R.string.sorting_directions_ascending).apply {
+                                setIcon(R.drawable.ic_hero_sort_ascending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = TaskViewModel.Sort.DUE
+                                    viewModel.sortDirection = SortDirection.ASCENDING
+
+                                    true
+                                }
+                            }
+                            add(R.string.sorting_directions_descending).apply {
+                                setIcon(R.drawable.ic_hero_sort_descending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = TaskViewModel.Sort.DUE
+                                    viewModel.sortDirection = SortDirection.DESCENDING
+
+                                    true
+                                }
+                            }
+                        }
                     }
+                    overflowMenu.menu.addSubMenu(R.string.menu_filter)?.also {
+                        it.setIcon(R.drawable.ic_hero_filter_24)
+
+                        it.add(R.string.filter_options_all).apply {
+                            setIcon(R.drawable.ic_hero_clipboard_list_24)
+
+                            setOnMenuItemClickListener {
+                                viewModel.filterOption = TaskViewModel.Constraint.ALL
+                                activityToolbar?.setTitle(getToolbarTitle())
+
+                                true
+                            }
+                        }
+                        it.add(R.string.filter_options_pending_tasks).apply {
+                            setIcon(R.drawable.ic_hero_exclamation_circle_24)
+
+                            setOnMenuItemClickListener {
+                                viewModel.filterOption = TaskViewModel.Constraint.PENDING
+                                activityToolbar?.setTitle(getToolbarTitle())
+
+                                true
+                            }
+                        }
+                        it.add(R.string.filter_options_finished_tasks).apply {
+                            setIcon(R.drawable.ic_hero_check_24)
+
+                            setOnMenuItemClickListener {
+                                viewModel.filterOption = TaskViewModel.Constraint.FINISHED
+                                activityToolbar?.setTitle(getToolbarTitle())
+
+                                true
+                            }
+                        }
+                    }
+                    overflowMenu.show()
                 }
                 true
-            }
-            else -> super.onOptionsItemSelected(item)
+            } else -> super.onOptionsItemSelected(item)
         }
     }
 
     @StringRes
     private fun getToolbarTitle(): Int {
         return when (viewModel.filterOption) {
-            TaskViewModel.FilterOption.ALL -> R.string.activity_tasks
-            TaskViewModel.FilterOption.PENDING -> R.string.activity_tasks_pending
-            TaskViewModel.FilterOption.FINISHED -> R.string.activity_tasks_finished
-        }
-    }
-
-    class FilterOptionSheet(manager: FragmentManager, private val option: TaskViewModel.FilterOption)
-        : BaseBottomSheet<TaskViewModel.FilterOption>(manager) {
-
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                                  savedInstanceState: Bundle?): View? {
-            return inflater.inflate(R.layout.layout_sheet_filter_tasks, container, false)
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-
-            when(option) {
-                TaskViewModel.FilterOption.ALL -> filterOptionShowAll.isChecked = true
-                TaskViewModel.FilterOption.PENDING -> filterOptionShowPending.isChecked = true
-                TaskViewModel.FilterOption.FINISHED -> filterOptionShowFinished.isChecked = true
-            }
-
-            filterOptionGroup.setOnCheckedChangeListener { _, checkedId ->
-                when (checkedId) {
-                    R.id.filterOptionShowAll ->
-                        receiver?.onReceive(TaskViewModel.FilterOption.ALL)
-                    R.id.filterOptionShowPending ->
-                        receiver?.onReceive(TaskViewModel.FilterOption.PENDING)
-                    R.id.filterOptionShowFinished ->
-                        receiver?.onReceive(TaskViewModel.FilterOption.FINISHED)
-                }
-            }
+            TaskViewModel.Constraint.ALL -> R.string.activity_tasks
+            TaskViewModel.Constraint.PENDING -> R.string.activity_tasks_pending
+            TaskViewModel.Constraint.FINISHED -> R.string.activity_tasks_finished
         }
     }
 }

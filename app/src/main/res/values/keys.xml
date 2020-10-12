@@ -30,7 +30,11 @@
     <string translatable="false" name="key_credit_user_interface_icons">userInterfaceIconsKey</string>
 
     <string translatable="false" name="key_behaviour_tasks_filter">tasksFilterOptionKey</string>
+    <string translatable="false" name="key_behaviour_tasks_sort">tasksSortOptionKey</string>
+    <string translatable="false" name="key_behaviour_tasks_direction">taskDirectionOptionKey</string>
     <string translatable="false" name="key_behaviour_subjects_filter">subjectFilterOptionKey</string>
+    <string translatable="false" name="key_behaviour_subjects_sort">subjectSortOptionKey</string>
+    <string translatable="false" name="key_behaviour_subjects_direction">subjectDirectionKey</string>
 
     <string translatable="false" name="behavior_expandable_bottom_bar">github.com.st235.lib_expandablebottombar.behavior.ExpandableBottomBarScrollableBehavior</string>
 

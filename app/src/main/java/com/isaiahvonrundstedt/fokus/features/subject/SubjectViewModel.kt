@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
-import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -24,21 +24,33 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     val subjects: MediatorLiveData<List<SubjectPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(subjects) { it.isNullOrEmpty() }
 
-    var filterOption = preferences.subjectFilterOption
+    var constraint: Constraint = preferences.subjectConstraint
         set(value) {
             field = value
-            preferences.subjectFilterOption = value
-            performFilter(value)
+            preferences.subjectConstraint = value
+            rearrange(value, sort, direction)
+        }
+
+    var sort: Sort = preferences.subjectSort
+        set(value) {
+            field = value
+            rearrange(constraint, value, direction)
+        }
+
+    var direction: SortDirection = preferences.subjectSortDirection
+        set(value) {
+            field = value
+            rearrange(constraint, sort, value)
         }
 
     init {
         subjects.addSource(_subjects) { items ->
-            when (filterOption) {
-                FilterOption.ALL ->
+            when (constraint) {
+                Constraint.ALL ->
                     subjects.value = items
-                FilterOption.TODAY ->
+                Constraint.TODAY ->
                     subjects.value = items.filter { it.hasScheduleToday() }
-                FilterOption.TOMORROW ->
+                Constraint.TOMORROW ->
                     subjects.value = items.filter { it.hasScheduleTomorrow() }
             }
         }
@@ -97,20 +109,107 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         SubjectWidgetProvider.triggerRefresh(app)
     }
 
-    private fun performFilter(option: FilterOption) = when(option) {
-        FilterOption.ALL ->
-            _subjects.value?.let { subjects.value = it }
-        FilterOption.TODAY ->
-            _subjects.value?.let { subjects.value = it.filter { subject -> subject.hasScheduleToday() } }
-        FilterOption.TOMORROW ->
-            _subjects.value?.let { subjects.value = it.filter { subject -> subject.hasScheduleTomorrow() } }
+    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)
+            = when (filter) {
+        Constraint.ALL -> {
+            _subjects.value?.let { items ->
+                subjects.value = when(sort) {
+                    Sort.CODE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.sortedBy { it.subject.code }
+                            SortDirection.DESCENDING ->
+                                items.sortedByDescending { it.subject.code }
+                        }
+                    }
+                    Sort.DESCRIPTION -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.sortedBy { it.subject.description }
+                            SortDirection.DESCENDING ->
+                                items.sortedByDescending { it.subject.description }
+                        }
+                    }
+                    Sort.SCHEDULE -> items.sortedBy { it.subject.code }
+                }
+            }
+        }
+        Constraint.TODAY -> {
+            _subjects.value?.let { items ->
+                subjects.value = when(sort) {
+                    Sort.CODE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedBy { it.subject.code }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedByDescending { it.subject.code }
+                        }
+                    }
+                    Sort.DESCRIPTION -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedBy { it.subject.description }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedByDescending { it.subject.description }
+                        }
+                    }
+                    Sort.SCHEDULE -> { items }
+                }
+            }
+        }
+        Constraint.TOMORROW -> {
+            _subjects.value?.let { items ->
+                subjects.value = when(sort) {
+                    Sort.CODE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedBy { it.subject.code }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedByDescending { it.subject.code }
+                        }
+                    }
+                    Sort.DESCRIPTION -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedBy { it.subject.description }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedByDescending { it.subject.description }
+                        }
+                    }
+                    Sort.SCHEDULE -> { items }
+                }
+            }
+        }
     }
 
-    enum class FilterOption {
+    enum class Sort {
+        CODE, DESCRIPTION, SCHEDULE;
+
+        companion object {
+            fun parse(value: String): Sort {
+                return when(value) {
+                    CODE.toString() -> CODE
+                    DESCRIPTION.toString() -> DESCRIPTION
+                    SCHEDULE.toString() -> SCHEDULE
+                    else -> CODE
+                }
+            }
+        }
+    }
+
+    enum class Constraint {
         ALL, TODAY, TOMORROW;
 
         companion object {
-            fun parse(value: String): FilterOption {
+            fun parse(value: String): Constraint {
                 return when(value) {
                     ALL.toString() -> ALL
                     TODAY.toString() -> TODAY

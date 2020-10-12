@@ -6,25 +6,23 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import kotlinx.android.synthetic.main.fragment_subject.*
-import kotlinx.android.synthetic.main.layout_sheet_filter_subject.*
+import me.saket.cascade.CascadePopupMenu
 
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener {
 
@@ -56,18 +54,18 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
-            when(viewModel.filterOption) {
-                SubjectViewModel.FilterOption.ALL -> {
+            when(viewModel.constraint) {
+                SubjectViewModel.Constraint.ALL -> {
                     emptyViewSubjectsAll.isVisible = it
                     emptyViewSubjectsToday.isVisible = false
                     emptyViewSubjectsTomorrow.isVisible = false
                 }
-                SubjectViewModel.FilterOption.TODAY -> {
+                SubjectViewModel.Constraint.TODAY -> {
                     emptyViewSubjectsAll.isVisible = false
                     emptyViewSubjectsToday.isVisible = it
                     emptyViewSubjectsTomorrow.isVisible = false
                 }
-                SubjectViewModel.FilterOption.TOMORROW -> {
+                SubjectViewModel.Constraint.TOMORROW -> {
                     emptyViewSubjectsAll.isVisible = false
                     emptyViewSubjectsToday.isVisible = false
                     emptyViewSubjectsTomorrow.isVisible = it
@@ -138,23 +136,111 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_filter, menu)
+        inflater.inflate(R.menu.menu_main, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_filter -> {
-                FilterOptionSheet(childFragmentManager, viewModel.filterOption).show {
-                    waitForResult { option ->
-                        viewModel.filterOption = option
-                        adapter.currentOption = option
-                        activityToolbar?.setTitle(getToolbarTitle())
-                        this.dismiss()
+            R.id.action_more -> {
+                activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
+                    val overflowMenu = CascadePopupMenu(requireContext(), view)
+                    overflowMenu.menu.addSubMenu(R.string.menu_sort).also {
+                        it.setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                        it.addSubMenu(R.string.field_subject_code).apply {
+                            setIcon(R.drawable.ic_hero_hashtag_24)
+
+                            add(R.string.sorting_directions_ascending).apply {
+                                setIcon(R.drawable.ic_hero_sort_ascending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.CODE
+                                    viewModel.direction = SortDirection.ASCENDING
+                                    true
+                                }
+                            }
+                            add(R.string.sorting_directions_descending).apply {
+                                setIcon(R.drawable.ic_hero_sort_descending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.CODE
+                                    viewModel.direction = SortDirection.DESCENDING
+                                    true
+                                }
+                            }
+                        }
+
+                        it.addSubMenu(R.string.field_description).apply {
+                            setIcon(R.drawable.ic_hero_pencil_24)
+
+                            add(R.string.sorting_directions_ascending).apply {
+                                setIcon(R.drawable.ic_hero_sort_ascending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                                    viewModel.direction = SortDirection.ASCENDING
+                                    true
+                                }
+                            }
+                            add(R.string.sorting_directions_descending).apply {
+                                setIcon(R.drawable.ic_hero_sort_descending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                                    viewModel.direction = SortDirection.DESCENDING
+                                    true
+                                }
+                            }
+                        }
+
+                        it.addSubMenu(R.string.field_schedule).apply {
+                            setIcon(R.drawable.ic_hero_clock_24)
+
+                            add(R.string.sorting_directions_ascending).apply {
+                                setIcon(R.drawable.ic_hero_sort_ascending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                                    viewModel.direction = SortDirection.ASCENDING
+                                    true
+                                }
+                            }
+                            add(R.string.sorting_directions_descending).apply {
+                                setIcon(R.drawable.ic_hero_sort_descending_24)
+                                setOnMenuItemClickListener {
+                                    viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                                    viewModel.direction = SortDirection.DESCENDING
+                                    true
+                                }
+                            }
+                        }
                     }
+                    overflowMenu.menu.addSubMenu(R.string.menu_filter).also {
+                        it.setIcon(R.drawable.ic_hero_filter_24)
+                        it.add(R.string.filter_options_all).apply {
+                            setIcon(R.drawable.ic_hero_beaker_24)
+                            setOnMenuItemClickListener {
+                                viewModel.constraint = SubjectViewModel.Constraint.ALL
+                                activityToolbar?.setTitle(getToolbarTitle())
+                                true
+                            }
+                        }
+                        it.add(R.string.filter_options_today_classes).apply {
+                            setIcon(R.drawable.ic_hero_exclamation_circle_24)
+                            setOnMenuItemClickListener {
+                                viewModel.constraint = SubjectViewModel.Constraint.TODAY
+                                activityToolbar?.setTitle(getToolbarTitle())
+                                true
+                            }
+                        }
+                        it.add(R.string.filter_options_tomorrow_classes).apply {
+                            setIcon(R.drawable.ic_hero_calendar_24)
+                            setOnMenuItemClickListener {
+                                viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
+                                activityToolbar?.setTitle(getToolbarTitle())
+                                true
+                            }
+                        }
+                    }
+                    overflowMenu.show()
                 }
                 true
-            }
-            else -> super.onOptionsItemSelected(item)
+            } else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -165,44 +251,10 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     @StringRes
     private fun getToolbarTitle(): Int {
-        return when(viewModel.filterOption) {
-            SubjectViewModel.FilterOption.ALL -> R.string.activity_subjects
-            SubjectViewModel.FilterOption.TODAY -> R.string.activity_subjects_today
-            SubjectViewModel.FilterOption.TOMORROW -> R.string.activity_subjects_tomorrow
-        }
-    }
-
-    class FilterOptionSheet(manager: FragmentManager, private val option: SubjectViewModel.FilterOption)
-        : BaseBottomSheet<SubjectViewModel.FilterOption>(manager) {
-
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                                  savedInstanceState: Bundle?): View? {
-            return inflater.inflate(R.layout.layout_sheet_filter_subject, container, false)
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-
-            when(option) {
-                SubjectViewModel.FilterOption.ALL ->
-                    filterOptionShowAll.isChecked = true
-                SubjectViewModel.FilterOption.TODAY ->
-                    filterOptionShowToday.isChecked = true
-                SubjectViewModel.FilterOption.TOMORROW ->
-                    filterOptionShowTomorrow.isChecked = true
-            }
-
-            filterOptionGroup.setOnCheckedChangeListener { _, checkedId ->
-                when(checkedId) {
-                    R.id.filterOptionShowAll ->
-                        receiver?.onReceive(SubjectViewModel.FilterOption.ALL)
-                    R.id.filterOptionShowToday ->
-                        receiver?.onReceive(SubjectViewModel.FilterOption.TODAY)
-                    R.id.filterOptionShowTomorrow ->
-                        receiver?.onReceive(SubjectViewModel.FilterOption.TOMORROW)
-                }
-            }
-
+        return when(viewModel.constraint) {
+            SubjectViewModel.Constraint.ALL -> R.string.activity_subjects
+            SubjectViewModel.Constraint.TODAY -> R.string.activity_subjects_today
+            SubjectViewModel.Constraint.TOMORROW -> R.string.activity_subjects_tomorrow
         }
     }
 }

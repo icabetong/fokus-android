@@ -18,6 +18,8 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
+    <string name="menu_more">Meer</string>
+    <string name="menu_sort">Sorteer</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_share">Deel</string>
     <string name="menu_import">Importeer</string>
@@ -103,15 +105,19 @@
     <string name="dialog_new_attachment">Nieuwe bijlage</string>
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Voer de URL van de website in</string>
+    <string name="dialog_sorting">Sorteren</string>
 
     <string name="attachment_type_import_file">Importeren</string>
     <string name="attachment_type_website_url">Website URL</string>
 
-    <string name="filter_options_show_all">Toon alle</string>
-    <string name="filter_options_show_pending_tasks">Toon alleen hangende taken</string>
-    <string name="filter_options_show_finished_tasks">Toon alleen voltooide taken</string>
-    <string name="filter_options_show_today_classes">Toon alleen de klassen voor vandaag</string>
-    <string name="filter_options_show_tomorrow_classes">Toon klassen voor alleen morgen</string>
+    <string name="sorting_directions_ascending">Oplopende</string>
+    <string name="sorting_directions_descending">Aflopend</string>
+
+    <string name="filter_options_all">Allemaal</string>
+    <string name="filter_options_pending_tasks">Alleen in afwachting van</string>
+    <string name="filter_options_finished_tasks">Alleen afgewerkt</string>
+    <string name="filter_options_today_classes">Alleen vandaag</string>
+    <string name="filter_options_tomorrow_classes">Alleen morgen</string>
 
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>

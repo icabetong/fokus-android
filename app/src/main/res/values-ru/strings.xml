@@ -17,6 +17,8 @@
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
 
+    <string name="menu_more">Подробнее</string>
+    <string name="menu_sort">Сортировать</string>
     <string name="menu_filter">Фильтр</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_import">Импорт</string>
@@ -102,15 +104,19 @@
     <string name="dialog_new_attachment">Новое приложение</string>
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Введите URL-адрес сайта</string>
+    <string name="dialog_sorting">Сортировка</string>
 
     <string name="attachment_type_import_file">Файл импорта</string>
     <string name="attachment_type_website_url">URL-адрес веб-сайта</string>
 
-    <string name="filter_options_show_all">Показать все</string>
-    <string name="filter_options_show_pending_tasks">Показывать только Отложенные Задачи</string>
-    <string name="filter_options_show_finished_tasks">Показать только готовые задачи</string>
-    <string name="filter_options_show_today_classes">Показывать только классы на сегодня</string>
-    <string name="filter_options_show_tomorrow_classes">Показывать уроки только для завтрашнего дня</string>
+    <string name="sorting_directions_ascending">Восходящий</string>
+    <string name="sorting_directions_descending">Поступающий</string>
+
+    <string name="filter_options_all">Все</string>
+    <string name="filter_options_pending_tasks">Только в ожидании</string>
+    <string name="filter_options_finished_tasks">Готовый только</string>
+    <string name="filter_options_today_classes">Сегодня только</string>
+    <string name="filter_options_tomorrow_classes">Только завтра</string>
 
     <string name="field_subject_code">Предметный код</string>
     <string name="field_description">Описание</string>

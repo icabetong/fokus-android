@@ -16,6 +16,8 @@
     <string name="activity_open_source_licenses">Licenze Open Source</string>
     <string name="activity_about">Informazioni</string>
 
+    <string name="menu_more">Altro</string>
+    <string name="menu_sort">Ordina</string>
     <string name="menu_filter">Filtro</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_import">Importazione</string>
@@ -101,15 +103,19 @@
     <string name="dialog_new_attachment">Nuovo allegato</string>
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Inserisci l\'URL del sito web</string>
+    <string name="dialog_sorting">Ordinamento</string>
 
     <string name="attachment_type_import_file">Importazione del file</string>
     <string name="attachment_type_website_url">URL del sito web</string>
 
-    <string name="filter_options_show_all">Mostra tutti</string>
-    <string name="filter_options_show_pending_tasks">Mostra solo le attività in sospeso</string>
-    <string name="filter_options_show_finished_tasks">Mostra solo i compiti finiti</string>
-    <string name="filter_options_show_today_classes">Mostra le lezioni solo per oggi</string>
-    <string name="filter_options_show_tomorrow_classes">Mostra le lezioni solo per domani</string>
+    <string name="sorting_directions_ascending">Salendo</string>
+    <string name="sorting_directions_descending">Scendente</string>
+
+    <string name="filter_options_all">Tutti</string>
+    <string name="filter_options_pending_tasks">Solo in attesa</string>
+    <string name="filter_options_finished_tasks">Finito solo</string>
+    <string name="filter_options_today_classes">Solo oggi</string>
+    <string name="filter_options_tomorrow_classes">Solo domani</string>
 
     <string name="field_subject_code">Oggetto Codice</string>
     <string name="field_description">Descrizione</string>

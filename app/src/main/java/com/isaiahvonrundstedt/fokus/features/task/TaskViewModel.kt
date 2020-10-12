@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -24,21 +25,33 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
     val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
-    var filterOption = preferences.taskFilterOption
+    var filterOption = preferences.taskConstraint
         set(value) {
             field = value
-            preferences.taskFilterOption = value
-            performFilter(value)
+            preferences.taskConstraint = value
+            rearrange(value, sort, sortDirection)
+        }
+
+    var sort: Sort = preferences.tasksSort
+        set(value) {
+            field = value
+            rearrange(filterOption, value, sortDirection)
+        }
+
+    var sortDirection: SortDirection = preferences.tasksSortDirection
+        set(value) {
+            field = value
+            rearrange(filterOption, sort, value)
         }
 
     init {
         tasks.addSource(_tasks) { items ->
             when (filterOption) {
-                FilterOption.ALL ->
+                Constraint.ALL ->
                     tasks.value = items
-                FilterOption.PENDING ->
+                Constraint.PENDING ->
                     tasks.value = items.filter { !it.task.isFinished }
-                FilterOption.FINISHED ->
+                Constraint.FINISHED ->
                     tasks.value = items.filter { it.task.isFinished }
             }
         }
@@ -101,20 +114,103 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         TaskWidgetProvider.triggerRefresh(app)
     }
 
-    private fun performFilter(option: FilterOption) = when(option) {
-        FilterOption.ALL ->
-            _tasks.value?.let { tasks.value = it }
-        FilterOption.PENDING ->
-            _tasks.value?.let { tasks.value = it.filter { task -> !task.task.isFinished } }
-        FilterOption.FINISHED ->
-            _tasks.value?.let { tasks.value = it.filter { task -> task.task.isFinished} }
+    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)
+        = when(filter) {
+        Constraint.ALL -> {
+            _tasks.value?.let { items ->
+                tasks.value = when (sort) {
+                    Sort.NAME -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.sortedBy { it.task.name }
+                            SortDirection.DESCENDING ->
+                                items.sortedByDescending { it.task.name }
+                        }
+                    }
+                    Sort.DUE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.sortedBy { it.task.dueDate }
+                            SortDirection.DESCENDING ->
+                                items.sortedByDescending { it.task.dueDate }
+                        }
+                    }
+                }
+            }
+        }
+        Constraint.PENDING -> {
+            _tasks.value?.let { items ->
+                tasks.value = when (sort) {
+                    Sort.NAME -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { !it.task.isFinished }
+                                    .sortedBy { it.task.name }
+                            SortDirection.DESCENDING ->
+                                items.filter { !it.task.isFinished }
+                                    .sortedByDescending { it.task.name }
+                        }
+                    }
+                    Sort.DUE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { !it.task.isFinished }
+                                    .sortedBy { it.task.dueDate }
+                            SortDirection.DESCENDING ->
+                                items.filter { !it.task.isFinished }
+                                    .sortedByDescending { it.task.dueDate }
+                        }
+                    }
+                }
+            }
+        }
+        Constraint.FINISHED -> {
+            _tasks.value?.let { items ->
+                tasks.value = when (sort) {
+                    Sort.NAME -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.task.isFinished }
+                                    .sortedBy { it.task.name }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.task.isFinished }
+                                    .sortedByDescending { it.task.name }
+                        }
+                    }
+                    Sort.DUE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.task.isFinished }
+                                    .sortedBy { it.task.dueDate }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.task.isFinished }
+                                    .sortedByDescending { it.task.dueDate }
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    enum class FilterOption {
+    enum class Sort {
+        NAME, DUE;
+
+        companion object {
+            fun parse(value: String): Sort {
+                return when(value) {
+                    NAME.toString() -> NAME
+                    DUE.toString() -> DUE
+                    else -> NAME
+                }
+            }
+        }
+    }
+
+    enum class Constraint {
         ALL, PENDING, FINISHED;
 
         companion object {
-            fun parse(value: String): FilterOption {
+            fun parse(value: String): Constraint {
                 return when(value) {
                     ALL.toString() -> ALL
                     PENDING.toString() -> PENDING

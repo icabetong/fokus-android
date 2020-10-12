@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -19,7 +18,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
                      private val scheduleListener: ScheduleListener)
     : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(callback), Swipeable {
 
-    var currentOption = SubjectViewModel.FilterOption.TODAY
+    var currentOption = SubjectViewModel.Constraint.TODAY
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val resID: Int = if (viewType == ITEM_TYPE_ALL_SCHEDULE) R.layout.layout_item_subject
@@ -40,9 +39,9 @@ class SubjectAdapter(private var actionListener: ActionListener,
 
     override fun getItemViewType(position: Int): Int {
         return when (currentOption) {
-            SubjectViewModel.FilterOption.ALL -> ITEM_TYPE_ALL_SCHEDULE
-            SubjectViewModel.FilterOption.TODAY -> ITEM_TYPE_SINGLE_SCHEDULE_TODAY
-            SubjectViewModel.FilterOption.TOMORROW -> ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW
+            SubjectViewModel.Constraint.ALL -> ITEM_TYPE_ALL_SCHEDULE
+            SubjectViewModel.Constraint.TODAY -> ITEM_TYPE_SINGLE_SCHEDULE_TODAY
+            SubjectViewModel.Constraint.TOMORROW -> ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW
         }
     }
 

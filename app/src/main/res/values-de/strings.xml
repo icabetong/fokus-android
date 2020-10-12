@@ -18,6 +18,8 @@
     <string name="activity_open_source_licenses">Open-Source-Lizenzen</string>
     <string name="activity_about">Über</string>
 
+    <string name="menu_more">Mehr</string>
+    <string name="menu_sort">Sortieren</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_import">Importieren</string>
@@ -103,15 +105,19 @@
     <string name="dialog_new_attachment">Neue Anlage</string>
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Website-URL eingeben</string>
+    <string name="dialog_sorting">Sortierung</string>
 
     <string name="attachment_type_import_file">Datei importieren</string>
     <string name="attachment_type_website_url">URL der Website</string>
 
-    <string name="filter_options_show_all">Alle anzeigen</string>
-    <string name="filter_options_show_pending_tasks">Nur ausstehende Aufgaben anzeigen</string>
-    <string name="filter_options_show_finished_tasks">Nur beendete Aufgaben anzeigen</string>
-    <string name="filter_options_show_today_classes">Nur Klassen für heute anzeigen</string>
-    <string name="filter_options_show_tomorrow_classes">Nur Klassen für morgen anzeigen</string>
+    <string name="sorting_directions_ascending">Aufsteigend</string>
+    <string name="sorting_directions_descending">Absteigend</string>
+
+    <string name="filter_options_all">Alle</string>
+    <string name="filter_options_pending_tasks">Nur ausstehende</string>
+    <string name="filter_options_finished_tasks">Nur beendete</string>
+    <string name="filter_options_today_classes">Nur heute</string>
+    <string name="filter_options_tomorrow_classes">Nur morgen</string>
 
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>

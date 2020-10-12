@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
@@ -60,10 +61,10 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
-    var taskFilterOption: TaskViewModel.FilterOption
-        get() = TaskViewModel.FilterOption.parse(
+    var taskConstraint: TaskViewModel.Constraint
+        get() = TaskViewModel.Constraint.parse(
             sharedPreference.getString(R.string.key_behaviour_tasks_filter,
-                TaskViewModel.FilterOption.PENDING.toString()))
+                TaskViewModel.Constraint.PENDING.toString()))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_behaviour_tasks_filter, value.toString())
@@ -71,13 +72,56 @@ class PreferenceManager(private val context: Context?) {
             }
         }
 
-    var subjectFilterOption: SubjectViewModel.FilterOption
-        get() = SubjectViewModel.FilterOption.parse(
+    var tasksSort: TaskViewModel.Sort
+        get() = TaskViewModel.Sort.parse(
+            sharedPreference.getString(R.string.key_behaviour_tasks_sort,
+                TaskViewModel.Sort.NAME.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_tasks_sort, value.toString())
+                apply()
+            }
+        }
+
+    var tasksSortDirection: SortDirection
+        get() = SortDirection.parse(
+            sharedPreference.getString(R.string.key_behaviour_tasks_direction,
+                SortDirection.ASCENDING.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_tasks_direction, value.toString())
+                apply()
+            }
+        }
+
+    var subjectConstraint: SubjectViewModel.Constraint
+        get() = SubjectViewModel.Constraint.parse(
             sharedPreference.getString(R.string.key_behaviour_subjects_filter,
-                SubjectViewModel.FilterOption.TODAY.toString()))
+                SubjectViewModel.Constraint.TODAY.toString()))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_behaviour_subjects_filter, value.toString())
+                apply()
+            }
+        }
+
+    var subjectSort: SubjectViewModel.Sort
+        get() = SubjectViewModel.Sort.parse(
+            sharedPreference.getString(R.string.key_behaviour_tasks_sort,
+                SubjectViewModel.Sort.CODE.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_subjects_sort, value.toString())
+                apply()
+            }
+        }
+
+    var subjectSortDirection: SortDirection
+        get() = SortDirection.parse(sharedPreference.getString(R.string.key_behaviour_subjects_direction,
+            SortDirection.ASCENDING.toString()))
+        set(value) {
+            sharedPreference.edit().run {
+                putString(R.string.key_behaviour_subjects_direction, value.toString())
                 apply()
             }
         }

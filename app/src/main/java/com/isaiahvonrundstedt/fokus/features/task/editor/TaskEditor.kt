@@ -43,8 +43,8 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage

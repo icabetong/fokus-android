@@ -16,6 +16,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import kotlinx.android.synthetic.main.activity_logs.*
 import kotlinx.android.synthetic.main.layout_appbar.*
+import me.saket.cascade.CascadePopupMenu
 
 class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
 
@@ -64,14 +65,23 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_logs, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_clear_items -> {
-                viewModel.removeLogs()
+            R.id.action_more -> {
+                toolbar.findViewById<View?>(R.id.action_more)?.also { view ->
+                    val optionsMenu = CascadePopupMenu(this, view)
+                    optionsMenu.menu.add(R.string.menu_clear_items)?.apply {
+                        setIcon(R.drawable.ic_hero_trash_24)
+                        setOnMenuItemClickListener {
+                            viewModel.removeLogs()
+                            true
+                        }
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

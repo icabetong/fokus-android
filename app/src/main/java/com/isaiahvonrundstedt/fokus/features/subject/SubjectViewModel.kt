@@ -159,7 +159,16 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                                     .sortedByDescending { it.subject.description }
                         }
                     }
-                    Sort.SCHEDULE -> { items }
+                    Sort.SCHEDULE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedBy { it.getScheduleToday()?.startTime }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleToday() }
+                                    .sortedByDescending { it.getScheduleToday()?.startTime }
+                        }
+                    }
                 }
             }
         }
@@ -186,7 +195,16 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
                                     .sortedByDescending { it.subject.description }
                         }
                     }
-                    Sort.SCHEDULE -> { items }
+                    Sort.SCHEDULE -> {
+                        when (direction) {
+                            SortDirection.ASCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedBy { it.getScheduleTomorrow()?.startTime }
+                            SortDirection.DESCENDING ->
+                                items.filter { it.hasScheduleTomorrow() }
+                                    .sortedByDescending { it.getScheduleTomorrow()?.startTime }
+                        }
+                    }
                 }
             }
         }

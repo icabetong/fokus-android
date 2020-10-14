@@ -12,7 +12,7 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class LogAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Log, LogAdapter.ViewHolder>(callback), Swipeable {
+    : BaseAdapter<Log, LogAdapter.ViewHolder>(Log.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context)
@@ -42,18 +42,6 @@ class LogAdapter(private var actionListener: ActionListener)
                 summaryView.text = t.content
                 dateTimeView.text = t.formatDateTime()
                 t.setIconToView(iconView)
-            }
-        }
-    }
-
-    companion object {
-        val callback = object : DiffUtil.ItemCallback<Log>() {
-            override fun areItemsTheSame(oldItem: Log, newItem: Log): Boolean {
-                return oldItem.logID == newItem.logID
-            }
-
-            override fun areContentsTheSame(oldItem: Log, newItem: Log): Boolean {
-                return oldItem == newItem
             }
         }
     }

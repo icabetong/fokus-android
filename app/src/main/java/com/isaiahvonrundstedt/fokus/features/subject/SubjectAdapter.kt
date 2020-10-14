@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.chip.Chip
 import com.isaiahvonrundstedt.fokus.R
@@ -16,9 +15,9 @@ import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
 class SubjectAdapter(private var actionListener: ActionListener,
                      private val scheduleListener: ScheduleListener)
-    : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(callback), Swipeable {
+    : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(SubjectPackage.DIFF_CALLBACK), Swipeable {
 
-    var currentOption = SubjectViewModel.Constraint.TODAY
+    var constraint = SubjectViewModel.Constraint.TODAY
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val resID: Int = if (viewType == ITEM_TYPE_ALL_SCHEDULE) R.layout.layout_item_subject
@@ -38,7 +37,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (currentOption) {
+        return when (constraint) {
             SubjectViewModel.Constraint.ALL -> ITEM_TYPE_ALL_SCHEDULE
             SubjectViewModel.Constraint.TODAY -> ITEM_TYPE_SINGLE_SCHEDULE_TODAY
             SubjectViewModel.Constraint.TOMORROW -> ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW
@@ -153,17 +152,5 @@ class SubjectAdapter(private var actionListener: ActionListener,
         const val ITEM_TYPE_ALL_SCHEDULE = 0
         const val ITEM_TYPE_SINGLE_SCHEDULE_TODAY = 1
         const val ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW = 2
-
-        val callback = object : DiffUtil.ItemCallback<SubjectPackage>() {
-            override fun areItemsTheSame(oldItem: SubjectPackage,
-                                         newItem: SubjectPackage): Boolean {
-                return oldItem.subject.subjectID == newItem.subject.subjectID
-            }
-
-            override fun areContentsTheSame(oldItem: SubjectPackage,
-                                            newItem: SubjectPackage): Boolean {
-                return oldItem == newItem
-            }
-        }
     }
 }

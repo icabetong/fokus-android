@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -124,5 +125,15 @@ data class Log @JvmOverloads constructor(
         const val TYPE_TASK = 1
         const val TYPE_EVENT = 2
         const val TYPE_CLASS = 3
+
+        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Log>() {
+            override fun areItemsTheSame(oldItem: Log, newItem: Log): Boolean {
+                return oldItem.logID == newItem.logID
+            }
+
+            override fun areContentsTheSame(oldItem: Log, newItem: Log): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

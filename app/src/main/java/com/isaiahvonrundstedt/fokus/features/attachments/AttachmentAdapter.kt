@@ -14,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.io.File
 
 class AttachmentAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Attachment, AttachmentAdapter.ViewHolder>(callback) {
+    : BaseAdapter<Attachment, AttachmentAdapter.ViewHolder>(Attachment.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_attachment,
@@ -58,19 +58,6 @@ class AttachmentAdapter(private var actionListener: ActionListener)
                         emptyMap())
                 }
             }
-        }
-    }
-
-    companion object {
-        val callback = object: DiffUtil.ItemCallback<Attachment>() {
-            override fun areContentsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areItemsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
-                return oldItem.attachmentID == newItem.attachmentID
-            }
-
         }
     }
 }

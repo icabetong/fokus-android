@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import kotlinx.android.synthetic.main.activity_send_attachment.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
-class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ActionListener {
+class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareListener {
 
     private val sendAdapter = SendAsAttachmentAdapter(this)
     private val viewModel by lazy {
@@ -44,17 +45,9 @@ class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ActionLi
         viewModel.tasks.observe(this) { sendAdapter.submitList(it) }
     }
 
-    override fun onAction(action: SendAsAttachmentAdapter.ActionListener.Action, taskID: String) {
-        when (action) {
-            SendAsAttachmentAdapter.ActionListener.Action.ADD -> {
-                viewModel.addAttachment(taskID)
-                createSnackbar(R.string.feedback_attachment_added)
-            }
-            SendAsAttachmentAdapter.ActionListener.Action.REMOVE -> {
-                viewModel.removeAttachment()
-                createSnackbar(R.string.feedback_attachment_removed)
-            }
-        }
+    override fun onShareToTask(taskID: String) {
+        viewModel.addAttachment(taskID)
+        createToast(R.string.feedback_attachment_added)
+        finish()
     }
-
 }

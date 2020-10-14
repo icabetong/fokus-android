@@ -216,6 +216,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_beaker_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.ALL
+                                adapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }
@@ -224,6 +225,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_exclamation_circle_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.TODAY
+                                adapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }
@@ -232,6 +234,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_calendar_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
+                                adapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }

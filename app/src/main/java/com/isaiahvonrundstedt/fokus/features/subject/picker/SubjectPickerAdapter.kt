@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
 class SubjectPickerAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(callback) {
+    : BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(SubjectPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_selector,
@@ -43,19 +43,4 @@ class SubjectPickerAdapter(private val actionListener: ActionListener)
             }
         }
     }
-
-    companion object {
-        val callback = object : DiffUtil.ItemCallback<SubjectPackage>() {
-            override fun areItemsTheSame(oldItem: SubjectPackage,
-                                         newItem: SubjectPackage): Boolean {
-                return oldItem.subject.subjectID == newItem.subject.subjectID
-            }
-
-            override fun areContentsTheSame(oldItem: SubjectPackage,
-                                            newItem: SubjectPackage): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
-
 }

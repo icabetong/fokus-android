@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -37,5 +38,19 @@ data class SubjectPackage @JvmOverloads constructor(
         for (s: Schedule in schedules)
             if (s.isTomorrow()) return s
         return null
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<SubjectPackage>() {
+            override fun areItemsTheSame(oldItem: SubjectPackage,
+                                         newItem: SubjectPackage): Boolean {
+                return oldItem.subject.subjectID == newItem.subject.subjectID
+            }
+
+            override fun areContentsTheSame(oldItem: SubjectPackage,
+                                            newItem: SubjectPackage): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

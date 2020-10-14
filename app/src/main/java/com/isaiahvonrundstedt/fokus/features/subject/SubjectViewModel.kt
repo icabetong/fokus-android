@@ -34,12 +34,14 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     var sort: Sort = preferences.subjectSort
         set(value) {
             field = value
+            preferences.subjectSort = value
             rearrange(constraint, value, direction)
         }
 
     var direction: SortDirection = preferences.subjectSortDirection
         set(value) {
             field = value
+            preferences.subjectSortDirection = value
             rearrange(constraint, sort, value)
         }
 

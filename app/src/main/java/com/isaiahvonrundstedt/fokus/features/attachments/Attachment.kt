@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.attachments
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -48,6 +49,16 @@ data class Attachment @JvmOverloads constructor(
         const val TYPE_CONTENT_URI = 1
         const val TYPE_IMPORTED_FILE = 2
         const val TYPE_WEBSITE_LINK = 3
+
+        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Attachment>() {
+            override fun areItemsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
+                return oldItem.attachmentID == newItem.attachmentID
+            }
+
+            override fun areContentsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
+                return oldItem == newItem
+            }
+        }
 
         fun toJsonFile(items: List<Attachment>, directory: File,
                        name: String = Streamable.FILE_NAME_ATTACHMENT): File {

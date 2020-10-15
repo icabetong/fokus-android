@@ -192,8 +192,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         return when (item.itemId) {
             R.id.action_more -> {
                 activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
-                    val overflowMenu = CascadePopupMenu(requireContext(), view)
-                    overflowMenu.menu.addSubMenu(R.string.menu_sort)?.also {
+                    val optionsMenu = CascadePopupMenu(requireContext(), view)
+                    optionsMenu.menu.addSubMenu(R.string.menu_sort).also {
                         it.setIcon(R.drawable.ic_hero_sort_ascending_24)
 
                         it.addSubMenu(R.string.field_task_name)?.apply {
@@ -220,7 +220,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                                 }
                             }
                         }
-                        it.addSubMenu(R.string.field_due_date)?.apply {
+                        it.addSubMenu(R.string.field_due_date).apply {
                             setIcon(R.drawable.ic_hero_clock_24)
 
                             add(R.string.sorting_directions_ascending).apply {
@@ -243,7 +243,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                             }
                         }
                     }
-                    overflowMenu.menu.addSubMenu(R.string.menu_filter)?.also {
+                    optionsMenu.menu.addSubMenu(R.string.menu_filter).also {
                         it.setIcon(R.drawable.ic_hero_filter_24)
 
                         it.add(R.string.filter_options_all).apply {
@@ -277,7 +277,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                             }
                         }
                     }
-                    overflowMenu.show()
+                    optionsMenu.show()
                 }
                 true
             } else -> super.onOptionsItemSelected(item)

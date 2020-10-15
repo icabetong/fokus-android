@@ -65,23 +65,14 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_logs, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_more -> {
-                toolbar.findViewById<View?>(R.id.action_more)?.also { view ->
-                    val optionsMenu = CascadePopupMenu(this, view)
-                    optionsMenu.menu.add(R.string.menu_clear_items)?.apply {
-                        setIcon(R.drawable.ic_hero_trash_24)
-                        setOnMenuItemClickListener {
-                            viewModel.removeLogs()
-                            true
-                        }
-                    }
-                }
+            R.id.action_clear_items -> {
+                viewModel.removeLogs()
                 true
             }
             else -> super.onOptionsItemSelected(item)

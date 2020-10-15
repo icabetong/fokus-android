@@ -143,8 +143,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         return when (item.itemId) {
             R.id.action_more -> {
                 activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
-                    val overflowMenu = CascadePopupMenu(requireContext(), view)
-                    overflowMenu.menu.addSubMenu(R.string.menu_sort).also {
+                    val optionsMenu = CascadePopupMenu(requireContext(), view)
+                    optionsMenu.menu.addSubMenu(R.string.menu_sort).also {
                         it.setIcon(R.drawable.ic_hero_sort_ascending_24)
 
                         it.addSubMenu(R.string.field_subject_code).apply {
@@ -210,7 +210,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             }
                         }
                     }
-                    overflowMenu.menu.addSubMenu(R.string.menu_filter).also {
+                    optionsMenu.menu.addSubMenu(R.string.menu_filter).also {
                         it.setIcon(R.drawable.ic_hero_filter_24)
                         it.add(R.string.filter_options_all).apply {
                             setIcon(R.drawable.ic_hero_clipboard_list_24)
@@ -240,7 +240,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             }
                         }
                     }
-                    overflowMenu.show()
+                    optionsMenu.show()
                 }
                 true
             } else -> super.onOptionsItemSelected(item)

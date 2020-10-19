@@ -1,10 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
@@ -46,6 +43,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         }
 
     init {
+
         subjects.addSource(_subjects) { items ->
             when (constraint) {
                 Constraint.ALL ->

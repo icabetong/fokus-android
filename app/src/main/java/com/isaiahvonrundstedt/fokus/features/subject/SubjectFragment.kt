@@ -52,6 +52,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
+        adapter.constraint = viewModel.constraint
         viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when(viewModel.constraint) {

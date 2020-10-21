@@ -21,6 +21,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import com.isaiahvonrundstedt.fokus.databinding.FragmentTaskBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
@@ -33,7 +34,10 @@ import java.io.File
 
 class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
-    private val adapter = TaskAdapter(this, this)
+    private var _binding: FragmentTaskBinding? = null
+
+    private val binding get() = _binding!!
+    private val taskAdapter = TaskAdapter(this, this)
     private val viewModel: TaskViewModel by lazy {
         ViewModelProvider(this).get(TaskViewModel::class.java)
     }
@@ -45,34 +49,37 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_task, container, false)
+        _binding = FragmentTaskBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityToolbar?.setTitle(getToolbarTitle())
 
-        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            addItemDecoration(ItemDecoration(context))
+            layoutManager = LinearLayoutManager(context)
+            adapter = taskAdapter
+        }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), taskAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
-        viewModel.tasks.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewModel.tasks.observe(viewLifecycleOwner) { taskAdapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when(viewModel.filterOption) {
                 TaskViewModel.Constraint.ALL -> {
-                    emptyViewPendingTasks.isVisible = it
-                    emptyViewFinishedTasks.isVisible = false
+                    binding.emptyViewPendingTasks.isVisible = it
+                    binding.emptyViewFinishedTasks.isVisible = false
                 }
                 TaskViewModel.Constraint.PENDING -> {
-                    emptyViewPendingTasks.isVisible = it
-                    emptyViewFinishedTasks.isVisible = false
+                    binding.emptyViewPendingTasks.isVisible = it
+                    binding.emptyViewFinishedTasks.isVisible = false
                 }
                 TaskViewModel.Constraint.FINISHED -> {
-                    emptyViewPendingTasks.isVisible = false
-                    emptyViewFinishedTasks.isVisible = it
+                    binding.emptyViewPendingTasks.isVisible = false
+                    binding.emptyViewFinishedTasks.isVisible = it
                 }
             }
         }
@@ -81,7 +88,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     override fun onResume() {
         super.onResume()
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, TaskEditor::class.java),
                 TaskEditor.REQUEST_CODE_INSERT)
         }
@@ -97,7 +104,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
             with(PreferenceManager(context)) {
                 if (confetti) {
-                    confettiView.build()
+                    binding.confettiView.build()
                         .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
                         .setDirection(0.0, 359.0)
                         .setSpeed(1f, 5f)
@@ -282,6 +289,11 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 true
             } else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     @StringRes

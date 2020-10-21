@@ -19,6 +19,8 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
+import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
+import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -29,7 +31,6 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.layout_appbar.*
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,42 +39,47 @@ import java.util.*
 
 class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
-    private val adapter = EventAdapter(this)
+    private var daysOfWeek: Array<DayOfWeek> = emptyArray()
+    private var _binding: FragmentEventBinding? = null
+
+    private val binding get() = _binding!!
+    private val eventAdapter = EventAdapter(this)
     private val toolbarDateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }
 
-    private var daysOfWeek: Array<DayOfWeek> = emptyArray()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_event, container, false)
+        _binding = FragmentEventBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityToolbar?.title = viewModel.currentMonth.format(toolbarDateFormatter)
 
-        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            addItemDecoration(ItemDecoration(context))
+            layoutManager = LinearLayoutManager(context)
+            adapter = eventAdapter
+        }
 
         daysOfWeek = daysOfWeekFromLocale()
-        calendarView.apply {
+        binding.calendarView.apply {
             setup(viewModel.startMonth, viewModel.endMonth,
                 daysOfWeek.first())
             scrollToMonth(viewModel.currentMonth)
         }
 
         if (savedInstanceState == null)
-            calendarView.post { setCurrentDate(viewModel.today) }
+            binding.calendarView.post { setCurrentDate(viewModel.today) }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), eventAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
-        viewModel.events.observe(viewLifecycleOwner) { adapter.submitList(it) }
-        viewModel.eventsEmpty.observe(viewLifecycleOwner) { emptyView.isVisible = it }
+        viewModel.events.observe(viewLifecycleOwner) { eventAdapter.submitList(it) }
+        viewModel.eventsEmpty.observe(viewLifecycleOwner) { binding.emptyView.isVisible = it }
     }
 
     override fun onStart() {
@@ -82,8 +88,8 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
         class DayViewContainer(view: View): ViewContainer(view) {
             lateinit var day: CalendarDay
 
-            val calendarDayView: TextView = view.findViewById(R.id.calendarDayView)
-            val calendarDotView: View = view.findViewById(R.id.calendarDotView)
+            val textView: TextView = LayoutCalendarDayBinding.bind(view).calendarDayView
+            val dotView: View = LayoutCalendarDayBinding.bind(view).calendarDotView
 
             init {
                 view.setOnClickListener {
@@ -101,7 +107,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
-                bindToCalendar(day, container.calendarDayView, container.calendarDotView)
+                bindToCalendar(day, container.textView, container.dotView)
             }
         }
 
@@ -119,28 +125,30 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
             }
         }
 
-        calendarView.monthScrollListener = {
+        binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
             activityToolbar?.title = it.yearMonth.format(toolbarDateFormatter)
 
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
-                calendarView.updateMonthRangeAsync(startMonth = viewModel.startMonth)
+                binding.calendarView.updateMonthRangeAsync(startMonth = viewModel.startMonth)
+
             } else if (it.yearMonth.plusMonths(2) == viewModel.endMonth) {
+
                 viewModel.endMonth = viewModel.endMonth.plusMonths(2)
-                calendarView.updateMonthRangeAsync(endMonth = viewModel.endMonth)
+                binding.calendarView.updateMonthRangeAsync(endMonth = viewModel.endMonth)
             }
         }
 
         viewModel.dates.observe(viewLifecycleOwner) { dates ->
-            calendarView.dayBinder = object: DayBinder<DayViewContainer> {
+            binding.calendarView.dayBinder = object: DayBinder<DayViewContainer> {
                 override fun create(view: View): DayViewContainer {
                     return DayViewContainer(view)
                 }
 
                 override fun bind(container: DayViewContainer, day: CalendarDay) {
                     container.day = day
-                    bindToCalendar(day, container.calendarDayView, container.calendarDotView, dates)
+                    bindToCalendar(day, container.textView, container.dotView, dates)
                 }
             }
         }
@@ -149,7 +157,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
     override fun onResume() {
         super.onResume()
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, EventEditor::class.java),
                 EventEditor.REQUEST_CODE_INSERT)
         }
@@ -171,7 +179,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.event)
 
-                    createSnackbar(R.string.feedback_event_removed, recyclerView).run {
+                    createSnackbar(R.string.feedback_event_removed, binding.recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.event) }
                     }
                 }
@@ -235,10 +243,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
             val oldDate = viewModel.selectedDate
 
             viewModel.selectedDate = date
-            calendarView.notifyDateChanged(oldDate)
-            calendarView.notifyDateChanged(date)
+            binding.calendarView.notifyDateChanged(oldDate)
+            binding.calendarView.notifyDateChanged(date)
         }
-        currentDateTextView.text = date.print("d MMM yyyy")
+        binding.currentDateTextView.text = date.print("d MMM yyyy")
     }
 
     private fun daysOfWeekFromLocale(): Array<DayOfWeek> {
@@ -252,5 +260,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
             daysOfWeek = rhs + lhs
         }
         return daysOfWeek
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

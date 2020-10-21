@@ -6,27 +6,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import kotlinx.android.synthetic.main.layout_sheet_schedule.*
 
 class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager)
     : BaseBottomSheet<Schedule>(manager), BaseAdapter.ActionListener {
 
+    private var _binding: LayoutSheetScheduleBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_schedule, container, false)
+        _binding = LayoutSheetScheduleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = SchedulePickerAdapter(this)
-        adapter.setItems(items)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = SchedulePickerAdapter(this@SchedulePickerSheet).apply {
+                setItems(items)
+            }
+        }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
@@ -37,5 +42,10 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
                 BaseAdapter.ActionListener.Action.DELETE -> {}
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

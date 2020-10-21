@@ -12,38 +12,41 @@ import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
+import com.isaiahvonrundstedt.fokus.databinding.ActivityLogsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import kotlinx.android.synthetic.main.activity_logs.*
-import kotlinx.android.synthetic.main.layout_appbar.*
-import me.saket.cascade.CascadePopupMenu
 
 class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
 
-    private val adapter = LogAdapter(this)
+    private val logAdapter = LogAdapter(this)
     private val viewModel: LogViewModel by lazy {
         ViewModelProvider(this).get(LogViewModel::class.java)
     }
 
+    private lateinit var binding: ActivityLogsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_logs)
-        setPersistentActionBar(toolbar)
+        binding = ActivityLogsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.activity_logs)
 
-        recyclerView.addItemDecoration(ItemDecoration(this))
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            addItemDecoration(ItemDecoration(context))
+            layoutManager = LinearLayoutManager(context)
+            adapter = logAdapter
+        }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, logAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
     override fun onStart() {
         super.onStart()
 
-        viewModel.logs.observe(this) { adapter.submitList(it) }
-        viewModel.isEmpty.observe(this) { emptyView.isVisible = it }
+        viewModel.logs.observe(this) { logAdapter.submitList(it) }
+        viewModel.isEmpty.observe(this) { binding.emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
@@ -52,7 +55,7 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
-                    val snackbar = Snackbar.make(recyclerView, R.string.feedback_log_removed,
+                    val snackbar = Snackbar.make(binding.recyclerView, R.string.feedback_log_removed,
                         Snackbar.LENGTH_SHORT)
                     snackbar.setAction(R.string.button_undo) {
                         viewModel.insert(t)

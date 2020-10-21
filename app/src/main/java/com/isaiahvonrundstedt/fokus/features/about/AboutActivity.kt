@@ -7,16 +7,19 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.ActivityAboutBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import kotlinx.android.synthetic.main.layout_appbar.*
 
 class AboutActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityAboutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
-        setPersistentActionBar(toolbar)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.activity_about)
     }
 

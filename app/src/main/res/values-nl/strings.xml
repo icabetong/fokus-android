@@ -142,6 +142,11 @@
     <string name="field_due_custom">Aangepaste</string>
     <string name="field_attachment_name">Bijlage Naam</string>
 
+    <string name="hint_subject_description">De naam van het onderwerp</string>
+    <string name="hint_task_notes">Enkele ideeën of kleine details over de taak</string>
+    <string name="hint_event_location">Ga een kamer, een gebouw of een andere plaats binnen</string>
+    <string name="hint_event_notes">Enkele ideeën of kleine details over het evenement</string>
+
     <string name="feedback_subject_removed">Onderwerp verwijderd</string>
     <string name="feedback_log_removed">Logboek verwijderd</string>
     <string name="feedback_task_removed">Taak verwijderd</string>

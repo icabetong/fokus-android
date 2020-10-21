@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.time.DayOfWeek
@@ -31,27 +32,26 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_schedule,
+        val binding = LayoutItemScheduleBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(rowView, actionListener)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
-    class ViewHolder(itemView: View, private val actionListener: ActionListener) : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
 
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
+        private val binding = LayoutItemScheduleBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                titleView.text = itemView.context.getString(t.getStringResourceForDay(t.daysOfWeek))
-                summaryView.text = t.formatBothTime()
+                binding.titleView.text = itemView.context.getString(t.getStringResourceForDay(t.daysOfWeek))
+                binding.summaryView.text = t.formatBothTime()
             }
 
-            rootView.setOnClickListener {
+            binding.root.setOnClickListener {
                 actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
             }
         }

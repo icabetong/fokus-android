@@ -142,6 +142,11 @@
     <string name="field_due_custom">Custom</string>
     <string name="field_attachment_name">Attachment name</string>
 
+    <string name="hint_subject_description">The name of the subject</string>
+    <string name="hint_task_notes">Some ideas or minor details about the task</string>
+    <string name="hint_event_location">Enter a room, a building or any place</string>
+    <string name="hint_event_notes">Some ideas or minor details about the event</string>
+
     <string name="feedback_subject_removed">Subject removed</string>
     <string name="feedback_log_removed">Log removed</string>
     <string name="feedback_task_removed">Task removed</string>

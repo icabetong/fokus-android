@@ -14,6 +14,7 @@ import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
+import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
 import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
@@ -31,24 +32,18 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_appbar.*
 
 class MainActivity : BaseActivity() {
 
     private var controller: NavController? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setPersistentActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.activity_tasks_pending)
-
-        TaskReminderWorker.reschedule(this.applicationContext)
-
-        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
-        controller = navigationHost?.findNavController()
-        ExpandableBottomBarNavigationUI.setupWithNavController(navigationView, controller!!)
 
         intent?.also {
             when (it.action) {
@@ -105,8 +100,14 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        toolbar?.setNavigationIcon(R.drawable.ic_hero_menu_24)
-        toolbar?.setNavigationOnClickListener {
+        TaskReminderWorker.reschedule(this.applicationContext)
+
+        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
+        controller = navigationHost?.findNavController()
+        ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, controller!!)
+
+        binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
+        binding.appBarLayout.toolbar.setNavigationOnClickListener {
             NavigationBottomSheet(supportFragmentManager).show {
                 waitForResult { id ->
                     when (id) {

@@ -3,42 +3,33 @@ package com.isaiahvonrundstedt.fokus.features.attachments.send
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.view.isVisible
-import com.google.android.material.chip.Chip
-import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskSendBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
 class SendAsAttachmentAdapter(private val shareListener: ShareListener)
     : BaseAdapter<TaskPackage, SendAsAttachmentAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
 
-    var attachmentID: String? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_task_send,
+        val binding = LayoutItemTaskSendBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return TaskViewHolder(rowView, shareListener)
+        return TaskViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
-    inner class TaskViewHolder(itemView: View, private val shareListener: ShareListener)
-        : BaseAdapter.BaseViewHolder(itemView) {
+    inner class TaskViewHolder(itemView: View): BaseAdapter.BaseViewHolder(itemView) {
 
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
-        private val addButton: Chip = itemView.findViewById(R.id.addButton)
+        private val binding = LayoutItemTaskSendBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
-                titleView.text = t.task.name
-                summaryView.text = t.task.formatDueDate(itemView.context)
+                binding.titleView.text = t.task.name
+                binding.summaryView.text = t.task.formatDueDate(itemView.context)
 
-                addButton.setOnClickListener {
+                binding.addButton.setOnClickListener {
                     shareListener.onShareToTask(t.task.taskID)
                 }
             }

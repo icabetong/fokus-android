@@ -140,6 +140,11 @@
     <string name="field_due_custom">Personalizzato</string>
     <string name="field_attachment_name">Nome dell\'allegato</string>
 
+    <string name="hint_subject_description">Il nome del soggetto</string>
+    <string name="hint_task_notes">Alcune idee o piccoli dettagli sul compito</string>
+    <string name="hint_event_location">Entrare in una stanza, in un edificio o in qualsiasi altro luogo</string>
+    <string name="hint_event_notes">Alcune idee o piccoli dettagli sull\'evento</string>
+
     <string name="feedback_subject_removed">Soggetto rimosso</string>
     <string name="feedback_log_removed">Registro rimosso</string>
     <string name="feedback_task_removed">Compito rimosso</string>

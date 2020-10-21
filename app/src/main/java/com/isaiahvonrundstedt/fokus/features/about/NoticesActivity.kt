@@ -6,16 +6,21 @@ import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.ActivityNoticesBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
+import kotlinx.android.synthetic.main.activity_about.view.*
 import kotlinx.android.synthetic.main.layout_appbar.*
 
 class NoticesActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityNoticesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notices)
-        setPersistentActionBar(toolbar)
+        binding = ActivityNoticesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.activity_notices)
     }
 

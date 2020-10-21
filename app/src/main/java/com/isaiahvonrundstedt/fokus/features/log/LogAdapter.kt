@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemLogBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class LogAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Log, LogAdapter.ViewHolder>(Log.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_item_log, parent, false)
-        return ViewHolder(rowView)
+        val binding = LayoutItemLogBinding.inflate(LayoutInflater.from(parent.context), parent,
+            false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,17 +32,15 @@ class LogAdapter(private var actionListener: ActionListener)
     }
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
-        private val iconView: AppCompatImageView = itemView.findViewById(R.id.iconView)
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
-        private val dateTimeView: TextView = itemView.findViewById(R.id.dateTimeView)
+
+        private val binding = LayoutItemLogBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is Log) {
-                titleView.text = t.title
-                summaryView.text = t.content
-                dateTimeView.text = t.formatDateTime()
-                t.setIconToView(iconView)
+                binding.titleView.text = t.title
+                binding.summaryView.text = t.content
+                binding.dateTimeView.text = t.formatDateTime()
+                t.setIconToView(binding.iconView)
             }
         }
     }

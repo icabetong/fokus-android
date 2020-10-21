@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSelectorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
@@ -14,30 +15,28 @@ class SubjectPickerAdapter(private val actionListener: ActionListener)
     : BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(SubjectPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_subject_selector,
+        val binding = LayoutItemSubjectSelectorBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(rowView, actionListener)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(holder.adapterPosition))
+        holder.onBind(getItem(position))
     }
 
-    class ViewHolder(itemView: View, private val actionListener: ActionListener)
-        : BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
 
-        private val tagView: ImageView = itemView.findViewById(R.id.tagView)
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
+        private val binding = LayoutItemSubjectSelectorBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    tagView.setImageDrawable(tintDrawable(tagView.drawable))
-                    titleView.text = code
-                    summaryView.text = description
+                    binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
+                    binding.titleView.text = code
+                    binding.summaryView.text = description
                 }
-                rootView.setOnClickListener {
+
+                binding.root.setOnClickListener {
                     actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
                 }
             }

@@ -16,17 +16,20 @@ import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
+import com.isaiahvonrundstedt.fokus.databinding.FragmentSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
-import kotlinx.android.synthetic.main.fragment_subject.*
 import me.saket.cascade.CascadePopupMenu
 
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener {
 
-    private val adapter = SubjectAdapter(this, this)
+    private var _binding: FragmentSubjectBinding? = null
+
+    private val binding get() = _binding!!
+    private val subjectAdapter = SubjectAdapter(this, this)
     private val viewModel: SubjectViewModel by lazy {
         ViewModelProvider(this).get(SubjectViewModel::class.java)
     }
@@ -38,38 +41,41 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_subject, container, false)
+        _binding = FragmentSubjectBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activityToolbar?.setTitle(getToolbarTitle())
 
-        recyclerView.addItemDecoration(ItemDecoration(requireContext()))
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            addItemDecoration(ItemDecoration(context))
+            layoutManager = LinearLayoutManager(context)
+            adapter = subjectAdapter
+        }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), adapter))
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), subjectAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
-        adapter.constraint = viewModel.constraint
-        viewModel.subjects.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        subjectAdapter.constraint = viewModel.constraint
+        viewModel.subjects.observe(viewLifecycleOwner) { subjectAdapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when(viewModel.constraint) {
                 SubjectViewModel.Constraint.ALL -> {
-                    emptyViewSubjectsAll.isVisible = it
-                    emptyViewSubjectsToday.isVisible = false
-                    emptyViewSubjectsTomorrow.isVisible = false
+                    binding.emptyViewSubjectsAll.isVisible = it
+                    binding.emptyViewSubjectsToday.isVisible = false
+                    binding.emptyViewSubjectsTomorrow.isVisible = false
                 }
                 SubjectViewModel.Constraint.TODAY -> {
-                    emptyViewSubjectsAll.isVisible = false
-                    emptyViewSubjectsToday.isVisible = it
-                    emptyViewSubjectsTomorrow.isVisible = false
+                    binding.emptyViewSubjectsAll.isVisible = false
+                    binding.emptyViewSubjectsToday.isVisible = it
+                    binding.emptyViewSubjectsTomorrow.isVisible = false
                 }
                 SubjectViewModel.Constraint.TOMORROW -> {
-                    emptyViewSubjectsAll.isVisible = false
-                    emptyViewSubjectsToday.isVisible = false
-                    emptyViewSubjectsTomorrow.isVisible = it
+                    binding.emptyViewSubjectsAll.isVisible = false
+                    binding.emptyViewSubjectsToday.isVisible = false
+                    binding.emptyViewSubjectsTomorrow.isVisible = it
                 }
             }
         }
@@ -78,7 +84,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     override fun onResume() {
         super.onResume()
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, SubjectEditor::class.java),
                 SubjectEditor.REQUEST_CODE_INSERT)
         }
@@ -103,7 +109,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
-                    createSnackbar(R.string.feedback_subject_removed, recyclerView).run {
+                    createSnackbar(R.string.feedback_subject_removed, binding.recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.subject, t.schedules) }
                     }
                 }
@@ -217,7 +223,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_clipboard_list_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.ALL
-                                adapter.constraint = viewModel.constraint
+                                subjectAdapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }
@@ -226,7 +232,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_exclamation_circle_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.TODAY
-                                adapter.constraint = viewModel.constraint
+                                subjectAdapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }
@@ -235,7 +241,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             setIcon(R.drawable.ic_hero_calendar_24)
                             setOnMenuItemClickListener {
                                 viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
-                                adapter.constraint = viewModel.constraint
+                                subjectAdapter.constraint = viewModel.constraint
                                 activityToolbar?.setTitle(getToolbarTitle())
                                 true
                             }
@@ -260,5 +266,10 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
             SubjectViewModel.Constraint.TODAY -> R.string.activity_subjects_today
             SubjectViewModel.Constraint.TOMORROW -> R.string.activity_subjects_tomorrow
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
-import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
+import com.isaiahvonrundstedt.fokus.databinding.ActivitySendAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
-import kotlinx.android.synthetic.main.activity_send_attachment.*
-import kotlinx.android.synthetic.main.layout_appbar.*
 
 class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareListener {
 
@@ -19,10 +17,13 @@ class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareLis
         ViewModelProvider(this).get(SendAsAttachmentViewModel::class.java)
     }
 
+    private lateinit var binding: ActivitySendAttachmentBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_send_attachment)
-        setPersistentActionBar(toolbar)
+        binding = ActivitySendAttachmentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.intent_add_as_attachment)
 
         intent?.also {
@@ -30,7 +31,7 @@ class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareLis
             viewModel.url = it.getStringExtra(Intent.EXTRA_TEXT)
         }
 
-        with(recyclerView) {
+        with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = sendAdapter
@@ -40,8 +41,8 @@ class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareLis
     override fun onStart() {
         super.onStart()
 
-        titleView.text = viewModel.subject
-        summaryView.text = viewModel.url
+        binding.titleView.text = viewModel.subject
+        binding.summaryView.text = viewModel.url
         viewModel.tasks.observe(this) { sendAdapter.submitList(it) }
     }
 

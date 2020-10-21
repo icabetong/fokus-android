@@ -16,8 +16,6 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.
     }
 
     abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        protected val rootView: View = itemView.findViewById(R.id.rootView)
-
         abstract fun <T> onBind(t: T)
     }
 }

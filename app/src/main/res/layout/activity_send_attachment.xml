@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_appbar"/>
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/layout_appbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -141,6 +141,11 @@
     <string name="field_due_custom">Niestandardowy</string>
     <string name="field_attachment_name">Załącznik Nazwa</string>
 
+    <string name="hint_subject_description">Nazwa podmiotu</string>
+    <string name="hint_task_notes">Niektóre pomysły lub drobne szczegóły dotyczące zadania</string>
+    <string name="hint_event_location">Wejdź do pokoju, budynku lub dowolnego miejsca</string>
+    <string name="hint_event_notes">Niektóre pomysły lub drobne szczegóły dotyczące wydarzenia</string>
+
     <string name="feedback_subject_removed">Temat usunięty</string>
     <string name="feedback_log_removed">Usunięty dziennik</string>
     <string name="feedback_task_removed">Zadanie usunięte</string>

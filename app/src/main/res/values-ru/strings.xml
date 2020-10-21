@@ -141,6 +141,11 @@
     <string name="field_due_custom">Пользовательский</string>
     <string name="field_attachment_name">Имя приложения</string>
 
+    <string name="hint_subject_description">Имя субъекта</string>
+    <string name="hint_task_notes">Некоторые идеи или мелкие детали задачи</string>
+    <string name="hint_event_location">Войти в комнату, здание или любое другое место.</string>
+    <string name="hint_event_notes">Некоторые идеи или мелкие детали мероприятия</string>
+
     <string name="feedback_subject_removed">Предмет удален</string>
     <string name="feedback_log_removed">Журнал удален</string>
     <string name="feedback_task_removed">Задача снята</string>

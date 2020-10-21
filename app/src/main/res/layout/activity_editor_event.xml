@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/layout_appbar_editor"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_padding">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_padding"
+                android:hint="@string/field_event_name"
+                style="@style/Fokus.Widget.TextInput.Layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eventNameTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
+
+                    <requestFocus/>
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_card_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_schedule"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        android:id="@+id/scheduleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/editor_item_height"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <RadioGroup
+                        android:id="@+id/dateTimeRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/editor_container_padding"
+                        android:visibility="gone">
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/inNextMeetingRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_in_the_next_meeting"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/pickDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_pick_from_schedule"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/customDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            app:titleText="@string/field_due_custom"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_padding"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_location"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/locationTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:layout_marginHorizontal="@dimen/activity_padding"
+                    android:hint="@string/hint_event_location"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_card_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/editor_item_height"
+                    android:background="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:id="@+id/subjectTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/field_not_set"
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:drawablePadding="16dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/removeButton"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/removeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_padding"
+                        android:text="@string/button_remove"
+                        android:visibility="invisible"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:visibility="visible"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_priority"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <com.isaiahvonrundstedt.fokus.components.views.ReactiveTextColorSwitch
+                    android:id="@+id/prioritySwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/button_mark_as_important"
+                    android:textColor="@color/color_secondary_text"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/helper_this_is_important"
+                    android:textColor="@color/color_secondary_text"
+                    android:drawableStart="@drawable/ic_hero_information_circle_24"
+                    android:drawablePadding="16dp"
+                    app:drawableTint="?attr/colorControlNormal"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:layout_marginVertical="8dp"
+                android:paddingVertical="@dimen/editor_container_padding"
+                android:orientation="vertical"
+                android:background="@drawable/shape_card_background">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_notes"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/notesTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/editor_item_height"
+                    android:paddingHorizontal="@dimen/item_padding"
+                    android:hint="@string/hint_event_notes"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="6"
+                    android:minLines="2"
+                    android:scrollbars="vertical"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_padding"
+        android:src="@drawable/ic_hero_check_24" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

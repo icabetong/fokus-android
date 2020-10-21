@@ -11,7 +11,6 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -34,30 +33,32 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorEventBinding
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
-import kotlinx.android.synthetic.main.layout_appbar_editor.*
-import kotlinx.android.synthetic.main.layout_editor_event.*
 import java.io.File
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class EventEditor : BaseEditor() {
 
+    private var requestCode = 0
+    private var hasFieldChange = false
+
+    private lateinit var binding: ActivityEditorEventBinding
+
     private val viewModel by lazy {
         ViewModelProvider(this).get(EventEditorViewModel::class.java)
     }
 
-    private var requestCode = 0
-    private var hasFieldChange = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_editor_event)
-        setPersistentActionBar(toolbar)
+        binding = ActivityEditorEventBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
@@ -71,15 +72,16 @@ class EventEditor : BaseEditor() {
             viewModel.setEvent(intent.getParcelableExtra(EXTRA_EVENT))
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
 
-            setTransitionName(eventNameTextInput, TRANSITION_ID_NAME +
-                    viewModel.getEvent()?.eventID)
+            binding.eventNameTextInput.transitionName = TRANSITION_ID_NAME +
+                    viewModel.getEvent()?.eventID
         }
 
         var currentScrollPosition = 0
-        contentView.viewTreeObserver.addOnScrollChangedListener {
-            if (contentView.scrollY > currentScrollPosition) actionButton.hide()
-            else actionButton.show()
-            currentScrollPosition = contentView.scrollY
+        binding.contentView.viewTreeObserver.addOnScrollChangedListener {
+            if (binding.contentView.scrollY > currentScrollPosition)
+                binding.actionButton.hide()
+            else binding.actionButton.show()
+            currentScrollPosition = binding.contentView.scrollY
         }
     }
 
@@ -89,22 +91,22 @@ class EventEditor : BaseEditor() {
         viewModel.event.observe(this) {
             if (requestCode == REQUEST_CODE_UPDATE && it != null) {
                 with(it) {
-                    eventNameTextInput.setText(name)
-                    notesTextInput.setText(notes)
-                    locationTextInput.setText(location)
-                    scheduleTextView.text = formatSchedule(this@EventEditor)
-                    prioritySwitch.isChecked = isImportant
+                    binding.eventNameTextInput.setText(name)
+                    binding.notesTextInput.setText(notes)
+                    binding.locationTextInput.setText(location)
+                    binding.scheduleTextView.text = formatSchedule(this@EventEditor)
+                    binding.prioritySwitch.isChecked = isImportant
                 }
             }
         }
 
         viewModel.subject.observe(this) {
-            removeButton.isVisible = it != null
-            scheduleTextView.isVisible = it == null
-            dateTimeRadioGroup.isVisible = it != null
+            binding.removeButton.isVisible = it != null
+            binding.scheduleTextView.isVisible = it == null
+            binding.dateTimeRadioGroup.isVisible = it != null
 
             if (it != null) {
-                with(subjectTextView) {
+                with(binding.subjectTextView) {
                     text = it.code
                     setTextColorFromResource(R.color.color_primary_text)
                     ContextCompat.getDrawable(context, R.drawable.shape_color_holder)?.also { shape ->
@@ -113,7 +115,7 @@ class EventEditor : BaseEditor() {
                 }
 
                 if (viewModel.getEvent()?.schedule != null) {
-                    with(customDateTimeRadio) {
+                    with(binding.customDateTimeRadio) {
                         isChecked = true
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
@@ -121,14 +123,14 @@ class EventEditor : BaseEditor() {
                     }
                 }
             } else {
-                with(subjectTextView) {
+                with(binding.subjectTextView) {
                     removeCompoundDrawableAtStart()
                     setText(R.string.field_not_set)
                     setTextColorFromResource(R.color.color_secondary_text)
                 }
 
                 if (viewModel.getEvent()?.schedule != null) {
-                    with(this@EventEditor.scheduleTextView) {
+                    with(binding.scheduleTextView) {
                         text = viewModel.getEvent()?.formatSchedule(context)
                         setTextColorFromResource(R.color.color_primary_text)
                     }
@@ -136,22 +138,22 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        eventNameTextInput.addTextChangedListener {
+        binding.eventNameTextInput.addTextChangedListener {
             viewModel.getEvent()?.name = it.toString()
             hasFieldChange = true
         }
 
-        locationTextInput.addTextChangedListener {
+        binding.locationTextInput.addTextChangedListener {
             viewModel.getEvent()?.location = it.toString()
             hasFieldChange = true
         }
 
-        notesTextInput.addTextChangedListener {
+        binding.notesTextInput.addTextChangedListener {
             viewModel.getEvent()?.notes = it.toString()
             hasFieldChange = true
         }
 
-        scheduleTextView.setOnClickListener { v ->
+        binding.scheduleTextView.setOnClickListener { v ->
             MaterialDialog(this).show {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
@@ -168,7 +170,7 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        subjectTextView.setOnClickListener {
+        binding.subjectTextView.setOnClickListener {
             SubjectPickerSheet(supportFragmentManager).show {
                 waitForResult { result ->
                     viewModel.setSubject(result.subject)
@@ -178,13 +180,13 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        removeButton.setOnClickListener {
+        binding.removeButton.setOnClickListener {
             hasFieldChange = true
-            subjectTextView.startAnimation(animation)
+            binding.subjectTextView.startAnimation(animation)
             viewModel.setSubject(null)
         }
 
-        dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
+        binding.dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             for (v: View in radioGroup.children) {
                 if (v is TwoLineRadioButton && !v.isChecked) {
                     v.titleTextColor = ContextCompat.getColor(v.context,
@@ -194,20 +196,21 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        inNextMeetingRadio.setOnClickListener {
+        binding.inNextMeetingRadio.setOnClickListener {
             viewModel.setNextMeetingForDueDate()
             hasFieldChange = true
-            with(inNextMeetingRadio) {
+
+            with(binding.inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                 subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
             }
         }
 
-        pickDateTimeRadio.setOnClickListener {
+        binding.pickDateTimeRadio.setOnClickListener {
             SchedulePickerSheet(viewModel.getSchedules(), supportFragmentManager).show {
                 waitForResult { schedule ->
                     viewModel.setClassScheduleAsDueDate(schedule)
-                    with(this@EventEditor.pickDateTimeRadio) {
+                    with(binding.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
                         subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
@@ -219,7 +222,7 @@ class EventEditor : BaseEditor() {
             }
         }
 
-        customDateTimeRadio.setOnClickListener {
+        binding.customDateTimeRadio.setOnClickListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@EventEditor)
                 dateTimePicker(requireFutureDateTime = true,
@@ -230,39 +233,39 @@ class EventEditor : BaseEditor() {
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true
 
-                    with(this@EventEditor.customDateTimeRadio) {
+                    with(binding.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
                         subtitle = viewModel.getEvent()?.formatSchedule(context) ?: ""
                     }
                 }
-                negativeButton { this@EventEditor.customDateTimeRadio.isChecked = false }
+                negativeButton { binding.customDateTimeRadio.isChecked = false }
             }
         }
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             // Conditions to check if the fields are null or blank
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.
             if (!viewModel.hasEventName) {
-                createSnackbar(R.string.feedback_event_empty_name, rootLayout)
-                eventNameTextInput.requestFocus()
+                createSnackbar(R.string.feedback_event_empty_name, binding.root)
+                binding.eventNameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!viewModel.hasLocation) {
-                createSnackbar(R.string.feedback_event_empty_location, rootLayout)
-                locationTextInput.requestFocus()
+                createSnackbar(R.string.feedback_event_empty_location, binding.root)
+                binding.locationTextInput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!viewModel.hasSchedule) {
-                createSnackbar(R.string.feedback_event_empty_schedule, rootLayout)
-                scheduleTextView.performClick()
+                createSnackbar(R.string.feedback_event_empty_schedule, binding.root)
+                binding.scheduleTextView.performClick()
                 return@setOnClickListener
             }
 
-            viewModel.getEvent()?.isImportant = prioritySwitch.isChecked
+            viewModel.getEvent()?.isImportant = binding.prioritySwitch.isChecked
 
             // Send the data back to the parent activity
             setResult(RESULT_OK, Intent().apply {
@@ -286,11 +289,11 @@ class EventEditor : BaseEditor() {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_export_ongoing, rootLayout,
+                        createSnackbar(R.string.feedback_export_ongoing, binding.root,
                             Snackbar.LENGTH_INDEFINITE)
                     }
                     DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
-                        createSnackbar(R.string.feedback_export_completed, rootLayout)
+                        createSnackbar(R.string.feedback_export_completed, binding.root)
 
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
                             val uri = CoreApplication.obtainUriForFile(this@EventEditor, File(it))
@@ -303,19 +306,19 @@ class EventEditor : BaseEditor() {
                         }
                     }
                     DataExporterService.BROADCAST_EXPORT_FAILED -> {
-                        createSnackbar(R.string.feedback_export_failed, rootLayout)
+                        createSnackbar(R.string.feedback_export_failed, binding.root)
                     }
                     DataImporterService.BROADCAST_IMPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                        createSnackbar(R.string.feedback_import_ongoing, binding.root)
                     }
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
-                        createSnackbar(R.string.feedback_import_completed, rootLayout)
+                        createSnackbar(R.string.feedback_import_completed, binding.root)
 
                         val data: EventPackage? = intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)
                         viewModel.setEvent(data?.event)
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
-                        createSnackbar(R.string.feedback_import_failed, rootLayout)
+                        createSnackbar(R.string.feedback_import_failed, binding.root)
                     }
                 }
             }

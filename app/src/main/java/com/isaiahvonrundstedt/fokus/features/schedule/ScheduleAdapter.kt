@@ -3,42 +3,37 @@ package com.isaiahvonrundstedt.fokus.features.schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.chip.Chip
-import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
 class ScheduleAdapter(private val actionListener: ActionListener)
     : BaseAdapter<Schedule, ScheduleAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_item_schedule_editor, parent, false)
-        return ViewHolder(rowView, actionListener)
+        val binding = LayoutItemScheduleEditorBinding.inflate(LayoutInflater.from(parent.context),
+            parent, false)
+        return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
-    class ViewHolder(itemView: View, private val actionListener: ActionListener)
-        : BaseAdapter.BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View): BaseAdapter.BaseViewHolder(itemView) {
 
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
-        private val removeButton: Chip = itemView.findViewById(R.id.removeButton)
+        private val binding = LayoutItemScheduleEditorBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                titleView.text = t.formatDaysOfWeek(rootView.context, false)
-                summaryView.text = t.formatBothTime()
+                binding.titleView.text = t.formatDaysOfWeek(binding.root.context, false)
+                binding.summaryView.text = t.formatBothTime()
             }
-            removeButton.setOnClickListener {
+
+            binding.removeButton.setOnClickListener {
                 actionListener.onActionPerformed(t, ActionListener.Action.DELETE, emptyMap())
             }
 
-            rootView.setOnClickListener {
+            binding.root.setOnClickListener {
                 actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
             }
         }

@@ -12,8 +12,8 @@ android {
         applicationId "com.isaiahvonrundstedt.fokus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 9
-        versionName "2.0.4"
+        versionCode 10
+        versionName "2.1.0-beta01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,6 +21,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        viewBinding true
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -47,7 +50,7 @@ dependencies {
     implementation 'nl.dionsegijn:konfetti:1.2.0'
     implementation 'commons-io:commons-io:2.7'
     implementation 'com.mikepenz:aboutlibraries-core:8.3.1'
-    implementation 'me.saket.cascade:cascade:1.0.0'
+    implementation 'me.saket.cascade:cascade:1.1.0'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.browser:browser:1.2.0'

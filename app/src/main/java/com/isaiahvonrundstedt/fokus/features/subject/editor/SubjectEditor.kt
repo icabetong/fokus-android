@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat.setTransitionName
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -28,6 +27,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
+import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
@@ -36,32 +36,33 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
-import kotlinx.android.synthetic.main.layout_appbar_editor.*
-import kotlinx.android.synthetic.main.layout_editor_subject.*
-import kotlinx.android.synthetic.main.layout_item_add.*
 import java.io.File
 
 class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
+    private var requestCode = 0
+    private var hasFieldChange = false
+
+    private lateinit var binding: ActivityEditorSubjectBinding
+
+    private val scheduleAdapter = ScheduleAdapter(this)
     private val viewModel by lazy {
         ViewModelProvider(this).get(SubjectEditorViewModel::class.java)
     }
 
-    private var requestCode = 0
-    private var hasFieldChange = false
-
-    private val adapter = ScheduleAdapter(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_editor_subject)
-        setPersistentActionBar(toolbar)
+        binding = ActivityEditorSubjectBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        with(binding.recyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = scheduleAdapter
+        }
 
         // Check if the parent activity have passed some extras
         requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE
@@ -71,17 +72,18 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
             viewModel.setSchedules(intent.getParcelableListExtra(EXTRA_SCHEDULE))
 
-            setTransitionName(codeTextInput,
-                TRANSITION_ID_CODE + viewModel.getSubject()?.subjectID)
-            setTransitionName(descriptionTextInput,
-                TRANSITION_ID_DESCRIPTION + viewModel.getSubject()?.subjectID)
+            binding.codeTextInput.transitionName =
+                TRANSITION_ID_CODE + viewModel.getSubject()?.subjectID
+            binding.descriptionTextInput.transitionName =
+                TRANSITION_ID_DESCRIPTION + viewModel.getSubject()?.description
         }
 
         var currentScrollPosition = 0
-        contentView.viewTreeObserver.addOnScrollChangedListener {
-            if (contentView.scrollY > currentScrollPosition) actionButton.hide()
-            else actionButton.show()
-            currentScrollPosition = contentView.scrollY
+        binding.contentView.viewTreeObserver.addOnScrollChangedListener {
+            if (binding.contentView.scrollY > currentScrollPosition)
+                binding.actionButton.hide()
+            else binding.actionButton.show()
+            currentScrollPosition = binding.contentView.scrollY
         }
     }
 
@@ -91,31 +93,31 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         viewModel.subject.observe(this) {
             if (requestCode == REQUEST_CODE_UPDATE && it != null) {
                 with(it) {
-                    codeTextInput.setText(code)
-                    descriptionTextInput.setText(description)
-                    tagView.setCompoundDrawableAtStart(tagView.getCompoundDrawableAtStart()
+                    binding.codeTextInput.setText(code)
+                    binding.descriptionTextInput.setText(description)
+                    binding.tagView.setCompoundDrawableAtStart(binding.tagView.getCompoundDrawableAtStart()
                         ?.let { drawable -> tintDrawable(drawable) })
-                    tagView.setText(tag.getNameResource())
+                    binding.tagView.setText(tag.getNameResource())
                 }
 
-                tagView.setTextColorFromResource(R.color.color_primary_text)
+                binding.tagView.setTextColorFromResource(R.color.color_primary_text)
             }
         }
 
         viewModel.schedules.observe(this) {
-            adapter.submitList(it)
+            scheduleAdapter.submitList(it)
         }
 
-        codeTextInput.addTextChangedListener {
+        binding.codeTextInput.addTextChangedListener {
             viewModel.getSubject()?.code = it.toString()
             hasFieldChange = true
         }
-        descriptionTextInput.addTextChangedListener {
+        binding.descriptionTextInput.addTextChangedListener {
             viewModel.getSubject()?.description = it.toString()
             hasFieldChange = true
         }
 
-        addItemButton.setOnClickListener {
+        binding.addActionLayout.addItemButton.setOnClickListener {
             ScheduleEditor(supportFragmentManager).show {
                 arguments = bundleOf(
                     Pair(ScheduleEditor.EXTRA_SUBJECT_ID, viewModel.getSubject()?.subjectID)
@@ -124,7 +126,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        tagView.setOnClickListener {
+        binding.tagView.setOnClickListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_pick_color_tag)
@@ -144,21 +146,21 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             if (!viewModel.hasSubjectCode) {
-                createSnackbar(R.string.feedback_subject_empty_name, rootLayout)
-                codeTextInput.requestFocus()
+                createSnackbar(R.string.feedback_subject_empty_name, binding.root)
+                binding.codeTextInput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!viewModel.hasDescription) {
-                createSnackbar(R.string.feedback_subject_empty_description, rootLayout)
-                descriptionTextInput.requestFocus()
+                createSnackbar(R.string.feedback_subject_empty_description, binding.root)
+                binding.descriptionTextInput.requestFocus()
                 return@setOnClickListener
             }
 
             if (!viewModel.hasSchedules) {
-                createSnackbar(R.string.feedback_subject_no_schedule, rootLayout).show()
+                createSnackbar(R.string.feedback_subject_no_schedule, binding.root).show()
                 return@setOnClickListener
             }
 
@@ -193,7 +195,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.removeSchedule(t)
                     hasFieldChange = true
-                    createSnackbar(R.string.feedback_schedule_removed, rootLayout).run {
+                    createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
                         setAction(R.string.button_undo) { viewModel.addSchedule(t) }
                     }
                 }
@@ -212,11 +214,11 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_export_ongoing, rootLayout,
+                        createSnackbar(R.string.feedback_export_ongoing, binding.root,
                             Snackbar.LENGTH_INDEFINITE)
                     }
                     DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
-                        createSnackbar(R.string.feedback_export_completed, rootLayout)
+                        createSnackbar(R.string.feedback_export_completed, binding.root)
 
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
                             val uri = CoreApplication.obtainUriForFile(this@SubjectEditor, File(it))
@@ -229,20 +231,20 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                         }
                     }
                     DataExporterService.BROADCAST_EXPORT_FAILED -> {
-                        createSnackbar(R.string.feedback_export_failed, rootLayout)
+                        createSnackbar(R.string.feedback_export_failed, binding.root)
                     }
                     DataImporterService.BROADCAST_IMPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_import_ongoing, rootLayout)
+                        createSnackbar(R.string.feedback_import_ongoing, binding.root)
                     }
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
-                        createSnackbar(R.string.feedback_import_completed, rootLayout)
+                        createSnackbar(R.string.feedback_import_completed, binding.root)
 
                         val data: SubjectPackage? = intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)
                         viewModel.setSubject(data?.subject)
                         viewModel.setSchedules(data?.schedules)
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
-                        createSnackbar(R.string.feedback_import_failed, rootLayout)
+                        createSnackbar(R.string.feedback_import_failed, binding.root)
                     }
                 }
             }
@@ -278,8 +280,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                 var fileName = viewModel.getSubject()?.code ?: Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
                     REQUEST_CODE_INSERT -> {
-                        if (codeTextInput.text.isNullOrEmpty() || descriptionTextInput.text.isNullOrEmpty()
-                            || adapter.itemCount < 1) {
+                        if (binding.codeTextInput.text.isNullOrEmpty() ||
+                                binding.descriptionTextInput.text.isNullOrEmpty()
+                            || scheduleAdapter.itemCount < 1) {
                             MaterialDialog(this).show {
                                 title(R.string.feedback_unable_to_share_title)
                                 message(R.string.feedback_unable_to_share_message)
@@ -287,7 +290,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                             }
                             return false
                         }
-                        fileName = codeTextInput.text.toString()
+                        fileName = binding.codeTextInput.text.toString()
                     }
                     REQUEST_CODE_UPDATE -> {
                         fileName = viewModel.getSubject()?.code ?: Streamable.ARCHIVE_NAME_GENERIC

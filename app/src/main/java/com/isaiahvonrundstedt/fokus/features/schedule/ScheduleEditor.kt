@@ -17,18 +17,22 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeToday
+import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import kotlinx.android.synthetic.main.layout_sheet_schedule_editor.*
 import java.time.DayOfWeek
 
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 
     private var schedule: Schedule = Schedule()
     private var requestCode: Int = REQUEST_CODE_INSERT
+    private var _binding: LayoutSheetScheduleEditorBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.layout_sheet_schedule_editor, container, false)
+        _binding = LayoutSheetScheduleEditorBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,27 +45,27 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 this.schedule = schedule
                 requestCode = REQUEST_CODE_UPDATE
 
-                startTimeTextView.text = schedule.formatStartTime()
-                endTimeTextView.text = schedule.formatEndTime()
+                binding.startTimeTextView.text = schedule.formatStartTime()
+                binding.endTimeTextView.text = schedule.formatEndTime()
 
-                startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
-                endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
+                binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
+                binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
 
                 schedule.getDaysAsList().forEach { day ->
                     when (day) {
-                        DayOfWeek.SUNDAY.value -> sundayChip.isChecked = true
-                        DayOfWeek.MONDAY.value -> mondayChip.isChecked = true
-                        DayOfWeek.TUESDAY.value -> tuesdayChip.isChecked = true
-                        DayOfWeek.WEDNESDAY.value -> wednesdayChip.isChecked = true
-                        DayOfWeek.THURSDAY.value -> thursdayChip.isChecked = true
-                        DayOfWeek.FRIDAY.value -> fridayChip.isChecked = true
-                        DayOfWeek.SATURDAY.value -> saturdayChip.isChecked = true
+                        DayOfWeek.SUNDAY.value -> binding.sundayChip.isChecked = true
+                        DayOfWeek.MONDAY.value -> binding.mondayChip.isChecked = true
+                        DayOfWeek.TUESDAY.value -> binding.tuesdayChip.isChecked = true
+                        DayOfWeek.WEDNESDAY.value -> binding.wednesdayChip.isChecked = true
+                        DayOfWeek.THURSDAY.value -> binding.thursdayChip.isChecked = true
+                        DayOfWeek.FRIDAY.value -> binding.fridayChip.isChecked = true
+                        DayOfWeek.SATURDAY.value -> binding.saturdayChip.isChecked = true
                     }
                 }
             }
         }
 
-        startTimeTextView.setOnClickListener {
+        binding.startTimeTextView.setOnClickListener {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_start_time)
@@ -73,21 +77,21 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                     if (schedule.endTime == null) schedule.endTime = startTime
                     if (startTime.isAfter(schedule.endTime) || startTime.compareTo(schedule.endTime) == 0) {
                         schedule.endTime = schedule.startTime?.plusHours(1)?.plusMinutes(30)
-                        this@ScheduleEditor.endTimeTextView.text = schedule.formatEndTime()
+                        binding.endTimeTextView.text = schedule.formatEndTime()
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
                         it.text = schedule.formatStartTime()
                         it.setTextColorFromResource(R.color.color_primary_text)
-                        this@ScheduleEditor.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
+                        binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
         }
 
 
-        endTimeTextView.setOnClickListener {
+        binding.endTimeTextView.setOnClickListener {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_end_time)
@@ -99,22 +103,22 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                     if (schedule.startTime == null) schedule.startTime = endTime
                     if (endTime.isBefore(schedule.startTime) || endTime.compareTo(schedule.startTime) == 0) {
                         schedule.startTime = schedule.endTime?.minusHours(1)?.minusMinutes(30)
-                        this@ScheduleEditor.startTimeTextView.text = schedule.formatStartTime()
+                        binding.startTimeTextView.text = schedule.formatStartTime()
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
                         it.text = schedule.formatEndTime()
                         it.setTextColorFromResource(R.color.color_primary_text)
-                        this@ScheduleEditor.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
+                        binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
             }
         }
 
-        actionButton.setOnClickListener {
+        binding.actionButton.setOnClickListener {
             schedule.daysOfWeek = 0
-            daysOfWeekGroup.forEach {
+            binding.daysOfWeekGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
                     schedule.daysOfWeek += when (it.id) {
                         R.id.sundayChip -> Schedule.BIT_VALUE_SUNDAY
@@ -141,19 +145,24 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
             if (schedule.startTime == null) {
                 createToast(R.string.feedback_schedule_empty_start_time)
-                startTimeTextView.performClick()
+                binding.startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             if (schedule.endTime == null) {
                 createToast(R.string.feedback_schedule_empty_end_time)
-                endTimeTextView.performClick()
+                binding.endTimeTextView.performClick()
                 return@setOnClickListener
             }
 
             receiver?.onReceive(schedule)
             this.dismiss()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

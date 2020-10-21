@@ -53,7 +53,7 @@
         <activity android:name=".features.about.NoticesActivity" />
         <activity android:name=".features.about.LibrariesActivity" />
 
-        <activity android:name="com.isaiahvonrundstedt.fokus.features.attachments.send.SendAsAttachmentActivity">
+        <activity android:name=".features.attachments.send.SendAsAttachmentActivity">
             <intent-filter android:label="@string/intent_add_as_attachment">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>

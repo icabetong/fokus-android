@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
@@ -16,9 +17,9 @@ class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_schedule,
+        val binding = LayoutItemScheduleBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ScheduleViewHolder(rowView)
+        return ScheduleViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
@@ -27,13 +28,12 @@ class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
 
     class ScheduleViewHolder(itemView: View): BaseAdapter.BaseViewHolder(itemView) {
 
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
-        private val summaryView: TextView = itemView.findViewById(R.id.summaryView)
+        private val binding = LayoutItemScheduleBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                titleView.text = t.formatDaysOfWeek(itemView.context, false)
-                summaryView.text = t.formatBothTime()
+                binding.titleView.text = t.formatDaysOfWeek(itemView.context, false)
+                binding.summaryView.text = t.formatBothTime()
             }
         }
     }

@@ -141,6 +141,11 @@
     <string name="field_due_custom">Personnalisation</string>
     <string name="field_attachment_name">Nom de la pièce jointe</string>
 
+    <string name="hint_subject_description">Le nom du sujet</string>
+    <string name="hint_task_notes">Quelques idées ou détails mineurs sur la tâche</string>
+    <string name="hint_event_location">Entrez dans une pièce, un bâtiment ou tout autre endroit</string>
+    <string name="hint_event_notes">Quelques idées ou petits détails sur l\'événement</string>
+
     <string name="feedback_subject_removed">Sujet supprimé</string>
     <string name="feedback_log_removed">Journal supprimé</string>
     <string name="feedback_task_removed">Tâche supprimée</string>

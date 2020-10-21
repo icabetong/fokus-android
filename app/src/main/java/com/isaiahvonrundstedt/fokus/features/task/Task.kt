@@ -4,7 +4,10 @@ import android.content.Context
 import android.os.Parcelable
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.*
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isToday
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isTomorrow
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isYesterday
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -56,17 +59,17 @@ data class Task @JvmOverloads constructor(
         // Check if the day on the task's due is today
         return if (dueDate?.isToday() == true)
             String.format(context.getString(R.string.today_at),
-                dueDate?.print(DateTimeConverter.FORMAT_TIME))
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
         // Now check if the day is yesterday
         else if (dueDate?.isYesterday() == true)
             String.format(context.getString(R.string.yesterday_at),
-                dueDate?.print(DateTimeConverter.FORMAT_TIME))
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
         // Now check if its tomorrow
         else if (dueDate?.isTomorrow() == true)
             String.format(context.getString(R.string.tomorrow_at),
-                dueDate?.print(DateTimeConverter.FORMAT_TIME))
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
         // Just print the date what could go wrong?
-        else dueDate?.print(DateTimeConverter.FORMAT_DATE)
+        else dueDate?.format(DateTimeConverter.getDateTimeFormatter(context))
     }
 
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Task::class.java)
@@ -93,9 +96,6 @@ data class Task @JvmOverloads constructor(
     }
 
     companion object {
-        const val FIELD_TASK_NAME = "name"
-        const val FIELD_TASK_DUE = "dueDate"
-
         fun fromInputStream(inputStream: InputStream): Task {
             return Task().apply {
                 this.fromInputStream(inputStream)

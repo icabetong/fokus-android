@@ -9,7 +9,6 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -62,20 +61,20 @@ data class Schedule @JvmOverloads constructor(
         return StringBuilder().apply {
             append(formatDaysOfWeek(context, isAbbreviated))
             append(", ")
-            append(formatBothTime())
+            append(formatBothTime(context))
         }.toString()
     }
 
-    fun formatBothTime(): String {
-        return "${formatStartTime()} - ${formatEndTime()}"
+    fun formatBothTime(context: Context): String {
+        return "${formatStartTime(context)} - ${formatEndTime(context)}"
     }
 
-    fun formatStartTime(): String? {
-        return formatTime(startTime)
+    fun formatStartTime(context: Context): String? {
+        return formatTime(context, startTime)
     }
 
-    fun formatEndTime(): String? {
-        return formatTime(endTime)
+    fun formatEndTime(context: Context): String? {
+        return formatTime(context, endTime)
     }
 
     /**
@@ -223,8 +222,8 @@ data class Schedule @JvmOverloads constructor(
             return currentDate.with(DayOfWeek.of(day))
         }
 
-        fun formatTime(time: LocalTime?): String? {
-            return time?.print(DateTimeConverter.FORMAT_TIME)
+        fun formatTime(context: Context, time: LocalTime?): String? {
+            return time?.format(DateTimeConverter.getTimeFormatter(context))
         }
     }
 }

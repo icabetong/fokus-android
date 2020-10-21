@@ -3,9 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.schedule.picker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -47,8 +44,8 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                binding.titleView.text = itemView.context.getString(t.getStringResourceForDay(t.daysOfWeek))
-                binding.summaryView.text = t.formatBothTime()
+                binding.titleView.text = binding.root.context.getString(t.getStringResourceForDay(t.daysOfWeek))
+                binding.summaryView.text = t.formatBothTime(binding.root.context)
             }
 
             binding.root.setOnClickListener {

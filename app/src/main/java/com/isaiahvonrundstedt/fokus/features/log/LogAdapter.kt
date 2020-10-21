@@ -3,11 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemLogBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -39,7 +35,7 @@ class LogAdapter(private var actionListener: ActionListener)
             if (t is Log) {
                 binding.titleView.text = t.title
                 binding.summaryView.text = t.content
-                binding.dateTimeView.text = t.formatDateTime()
+                binding.dateTimeView.text = t.formatDateTime(binding.root.context)
                 t.setIconToView(binding.iconView)
             }
         }

@@ -10,7 +10,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetOptionsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
-import kotlinx.android.synthetic.main.layout_sheet_options.*
 
 class ShareOptionsBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
     MenuAdapter.MenuItemListener {

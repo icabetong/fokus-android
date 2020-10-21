@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.log
 
+import android.content.Context
 import android.os.Parcelable
 import android.widget.ImageView
 import androidx.annotation.ColorRes
@@ -10,7 +11,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -50,15 +50,15 @@ data class Log @JvmOverloads constructor(
         }
     }
 
-    fun formatDateTime(): String? {
+    fun formatDateTime(context: Context): String? {
         val currentDateTime = LocalDate.now()
 
         // Formats the dateTime object for human reading
         return if (dateTimeTriggered!!.toLocalDate().isEqual(currentDateTime))
-            dateTimeTriggered?.print(DateTimeConverter.FORMAT_TIME)
+            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context))
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
-            dateTimeTriggered?.print(DATE_TRIGGERED_FORMAT_SAME_YEAR)
-        else dateTimeTriggered?.print(DATE_TRIGGERED_FORMAT_DIFFERENT_YEAR)
+            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context))
+        else dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
     }
 
     @DrawableRes
@@ -118,9 +118,6 @@ data class Log @JvmOverloads constructor(
     }
 
     companion object {
-        const val DATE_TRIGGERED_FORMAT_SAME_YEAR = "MMM d"
-        const val DATE_TRIGGERED_FORMAT_DIFFERENT_YEAR = "MM dd yyyy"
-
         const val TYPE_GENERIC = 0
         const val TYPE_TASK = 1
         const val TYPE_EVENT = 2

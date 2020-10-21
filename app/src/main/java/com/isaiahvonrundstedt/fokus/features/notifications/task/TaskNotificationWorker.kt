@@ -6,7 +6,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.log.Log
@@ -28,7 +27,7 @@ class TaskNotificationWorker(context: Context, workerParameters: WorkerParameter
         val log = Log().apply {
             title = task.name
             content = String.format(applicationContext.getString(resID),
-                task.dueDate?.print(DateTimeConverter.FORMAT_DATE))
+                task.dueDate?.format(DateTimeConverter.getDateTimeFormatter(applicationContext)))
             type = Log.TYPE_TASK
             isImportant = task.isImportant
             data = task.taskID

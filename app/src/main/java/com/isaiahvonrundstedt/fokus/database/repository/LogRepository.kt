@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.log.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class LogRepository private constructor(context: Context) {
 

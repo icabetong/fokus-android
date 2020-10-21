@@ -3,11 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.google.android.material.chip.Chip
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSingleBinding
@@ -105,7 +101,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
                 }
 
                 val todaySchedule = t.getScheduleToday()
-                binding.scheduleView.text = todaySchedule?.formatBothTime()
+                binding.scheduleView.text = todaySchedule?.formatBothTime(binding.root.context)
 
                 binding.root.setOnClickListener {
                     actionListener.onActionPerformed(t, ActionListener.Action.SELECT,

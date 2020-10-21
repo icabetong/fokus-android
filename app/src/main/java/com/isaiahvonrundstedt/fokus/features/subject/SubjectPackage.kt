@@ -6,7 +6,6 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import kotlinx.android.parcel.Parcelize
-import java.time.LocalDate
 
 @Parcelize
 data class SubjectPackage @JvmOverloads constructor(

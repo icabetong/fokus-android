@@ -60,7 +60,7 @@ class SubjectWidgetRemoteView(private var context: Context)
         val views = RemoteViews(context.packageName, R.layout.layout_item_widget)
         with(views) {
             setTextViewText(R.id.titleView, subject.code)
-            setTextViewText(R.id.summaryView, schedule?.formatBothTime())
+            setTextViewText(R.id.summaryView, schedule?.formatBothTime(context))
             setOnClickFillInIntent(R.id.listView, itemIntent)
             setInt(R.id.imageView, "setColorFilter", subject.tag.color)
         }

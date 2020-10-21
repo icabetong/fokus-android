@@ -3,10 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.subject.picker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSelectorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage

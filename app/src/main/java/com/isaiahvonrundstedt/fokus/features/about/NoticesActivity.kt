@@ -9,8 +9,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.ActivityNoticesBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
-import kotlinx.android.synthetic.main.activity_about.view.*
-import kotlinx.android.synthetic.main.layout_appbar.*
 
 class NoticesActivity: BaseActivity() {
 

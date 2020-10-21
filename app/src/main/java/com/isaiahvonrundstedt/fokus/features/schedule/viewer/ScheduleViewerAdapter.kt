@@ -3,8 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.schedule.viewer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
@@ -32,8 +30,8 @@ class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                binding.titleView.text = t.formatDaysOfWeek(itemView.context, false)
-                binding.summaryView.text = t.formatBothTime()
+                binding.titleView.text = t.formatDaysOfWeek(binding.root.context, false)
+                binding.summaryView.text = t.formatBothTime(binding.root.context)
             }
         }
     }

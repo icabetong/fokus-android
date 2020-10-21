@@ -18,12 +18,11 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -44,7 +43,8 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private val binding get() = _binding!!
     private val eventAdapter = EventAdapter(this)
-    private val toolbarDateFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
+    private val monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
+    private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private val viewModel: EventViewModel by lazy {
         ViewModelProvider(this).get(EventViewModel::class.java)
     }
@@ -57,7 +57,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.title = viewModel.currentMonth.format(toolbarDateFormatter)
+        activityToolbar?.title = viewModel.currentMonth.format(monthYearFormatter)
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -127,7 +127,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
         binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
-            activityToolbar?.title = it.yearMonth.format(toolbarDateFormatter)
+            activityToolbar?.title = it.yearMonth.format(monthYearFormatter)
 
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
@@ -246,7 +246,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
             binding.calendarView.notifyDateChanged(oldDate)
             binding.calendarView.notifyDateChanged(date)
         }
-        binding.currentDateTextView.text = date.print("d MMM yyyy")
+        binding.currentDateTextView.text = date.format(dateFormatter)
     }
 
     private fun daysOfWeekFromLocale(): Array<DayOfWeek> {

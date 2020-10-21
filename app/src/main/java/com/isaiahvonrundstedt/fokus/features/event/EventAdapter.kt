@@ -41,7 +41,7 @@ class EventAdapter(private var actionListener: ActionListener)
 
                     binding.locationView.text = location
                     binding.nameView.text = name
-                    binding.timeView.text = formatScheduleTime()
+                    binding.timeView.text = formatScheduleTime(binding.root.context)
                 }
 
                 if (t.subject != null) {

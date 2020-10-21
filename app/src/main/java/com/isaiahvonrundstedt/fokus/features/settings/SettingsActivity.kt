@@ -16,7 +16,6 @@ import androidx.work.WorkManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -38,7 +37,6 @@ class SettingsActivity : BaseActivity() {
         setPersistentActionBar(toolbar)
         setToolbarTitle(R.string.activity_settings)
     }
-
 
     companion object {
         class SettingsFragment: BasePreference() {
@@ -106,7 +104,7 @@ class SettingsActivity : BaseActivity() {
                     }
 
                 setPreferenceSummary(R.string.key_reminder_time,
-                    preferences.reminderTime?.print(DateTimeConverter.FORMAT_TIME))
+                    preferences.reminderTime?.format(DateTimeConverter.getTimeFormatter(requireContext())))
                 findPreference<Preference>(R.string.key_reminder_time)
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
@@ -116,7 +114,8 @@ class SettingsActivity : BaseActivity() {
                                 TaskReminderWorker.reschedule(requireContext())
                             }
                             positiveButton(R.string.button_done) { _ ->
-                                it.summary = preferences.reminderTime?.print(DateTimeConverter.FORMAT_TIME)
+                                it.summary = preferences.reminderTime
+                                    ?.format(DateTimeConverter.getTimeFormatter(requireContext()))
                             }
                         }
                         true

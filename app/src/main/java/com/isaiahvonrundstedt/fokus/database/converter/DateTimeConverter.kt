@@ -1,7 +1,8 @@
 package com.isaiahvonrundstedt.fokus.database.converter
 
+import android.content.Context
+import android.text.format.DateFormat
 import androidx.room.TypeConverter
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import java.time.LocalTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -9,8 +10,34 @@ import java.time.format.DateTimeFormatter
 class DateTimeConverter private constructor() {
 
     companion object {
-        const val FORMAT_TIME = "h:mm a"
-        const val FORMAT_DATE = "MMMM d, h:mm a"
+        private const val FORMAT_TIME_12_HOUR = "h:mm a"
+        private const val FORMAT_TIME_24_HOUR = "H:mm"
+        private const val FORMAT_DATE_TIME_12_HOUR = "MMMM d, h:mm a"
+        private const val FORMAT_DATE_TIME_24_HOUR = "MMMM d, H:mm"
+        private const val FORMAT_DATE_TIME_WITH_YEAR_12_HOUR = "MM d yyyy, h:mm a"
+        private const val FORMAT_DATE_TIME_WITH_YEAR_24_HOUR = "Mm d yyyy, H:mm"
+
+        fun getTimeFormatter(context: Context): DateTimeFormatter {
+            val pattern = if (DateFormat.is24HourFormat(context))
+                FORMAT_TIME_24_HOUR
+            else FORMAT_TIME_12_HOUR
+
+            return DateTimeFormatter.ofPattern(pattern)
+        }
+
+        fun getDateTimeFormatter(context: Context, withYear: Boolean = false): DateTimeFormatter {
+            val pattern = if (DateFormat.is24HourFormat(context)) {
+                if (withYear)
+                    FORMAT_DATE_TIME_WITH_YEAR_24_HOUR
+                else FORMAT_DATE_TIME_24_HOUR
+            } else {
+                if (withYear)
+                    FORMAT_DATE_TIME_WITH_YEAR_12_HOUR
+                else FORMAT_DATE_TIME_12_HOUR
+            }
+
+            return DateTimeFormatter.ofPattern(pattern)
+        }
 
         @JvmStatic
         @TypeConverter

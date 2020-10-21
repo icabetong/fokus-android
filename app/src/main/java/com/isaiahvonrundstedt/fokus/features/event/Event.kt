@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 
 import android.content.Context
 import android.os.Parcelable
+import android.text.format.DateFormat
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -10,7 +11,6 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isToday
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isTomorrow
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isYesterday
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
@@ -21,6 +21,7 @@ import okio.Okio
 import java.io.File
 import java.io.InputStream
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Parcelize
@@ -47,32 +48,25 @@ data class Event @JvmOverloads constructor(
         return schedule?.isToday() == true
     }
 
-    fun formatScheduleDate(context: Context): String? {
-        return if (schedule?.isToday() == true)
-            context.getString(R.string.today)
-        else if (schedule?.isYesterday() == true)
-            context.getString(R.string.yesterday)
-        else if (schedule?.isTomorrow() == true)
-            context.getString(R.string.tomorrow)
-        else schedule?.print(SCHEDULE_DATE_FORMAT_SHORT)
-    }
-
-    fun formatScheduleTime(): String? {
-        return schedule?.print(SCHEDULE_TIME_FORMAT)
+    fun formatScheduleTime(context: Context): String? {
+        return schedule?.format(DateTimeConverter.getTimeFormatter(context))
     }
 
     fun formatSchedule(context: Context): String? {
+        val datePattern = if (DateFormat.is24HourFormat(context))
+            FORMAT_DATE_WITH_WEEKDAY_24_HOUR
+        else FORMAT_DATE_WITH_WEEKDAY_12_HOUR
+
         return if (schedule?.isToday() == true)
                 String.format(context.getString(R.string.today_at),
-                    schedule?.print(DateTimeConverter.FORMAT_TIME))
+                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
             else if (schedule?.isYesterday() == true)
                 String.format(context.getString(R.string.yesterday_at),
-                    schedule?.print(DateTimeConverter.FORMAT_TIME))
+                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
             else if (schedule?.isTomorrow() == true)
                 String.format(context.getString(R.string.tomorrow_at),
-                    schedule?.print(DateTimeConverter.FORMAT_TIME))
-            else schedule?.print(SCHEDULE_DATE_FORMAT_LONG)
-
+                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
+            else schedule?.format(DateTimeFormatter.ofPattern(datePattern))
     }
 
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Event::class.java)
@@ -99,9 +93,8 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
-        const val SCHEDULE_TIME_FORMAT = DateTimeConverter.FORMAT_TIME
-        const val SCHEDULE_DATE_FORMAT_SHORT = "MMM d"
-        const val SCHEDULE_DATE_FORMAT_LONG = "EEE - MMMM d, h:mm a"
+        const val FORMAT_DATE_WITH_WEEKDAY_12_HOUR = "EEE - MMMM d, h:mm a"
+        const val FORMAT_DATE_WITH_WEEKDAY_24_HOUR = "EEE - MMMM d, H:mm"
 
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {

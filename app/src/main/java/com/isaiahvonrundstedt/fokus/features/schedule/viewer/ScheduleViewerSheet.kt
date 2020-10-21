@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
-import kotlinx.android.synthetic.main.layout_sheet_schedule.*
 
 class ScheduleViewerSheet(private val items: List<Schedule>, manager: FragmentManager)
     : BaseBottomSheet<Unit>(manager) {

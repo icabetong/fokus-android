@@ -4,14 +4,8 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.chip.Chip
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemAttachmentBinding
-import com.isaiahvonrundstedt.fokus.databinding.LayoutItemEventBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.io.File
 

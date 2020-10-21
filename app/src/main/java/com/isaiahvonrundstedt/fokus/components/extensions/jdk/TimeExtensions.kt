@@ -1,30 +1,11 @@
+
 package com.isaiahvonrundstedt.fokus.components.extensions.jdk
 
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
-
-/**
- *   An extension function to print the LocalDate
- *   instance
- *   @return the formatted value of LocalDate
- */
-fun LocalDate.print(pattern: String?): String? {
-    return format(DateTimeFormatter.ofPattern(pattern))
-}
-
-/**
- *  An extension function to print the
- *  LocalTime instance
- *
- *  @return the formatted value of the instance in the specified pattern
- */
-fun LocalTime.print(pattern: String?): String? {
-    return format(DateTimeFormatter.ofPattern(pattern))
-}
 
 /**
  *   An extension function to convert the
@@ -103,25 +84,4 @@ fun ZonedDateTime.isAfterNow(): Boolean {
  */
 fun ZonedDateTime.toCalendar(): Calendar {
     return GregorianCalendar.from(this)
-}
-
-/**
- *  An extension function used to print the
- *  ZonedDateTime instance as String with the
- *  specified pattern
- *  @param pattern the pattern that will be used to
- *                  convert the ZonedDateTime instance to a String
- *  @return the formatted string
- */
-fun ZonedDateTime.print(pattern: String?): String? {
-    return this.format(DateTimeFormatter.ofPattern(pattern))
-}
-
-/**
- *   An extension function used to reset the ZonedDateTime
- *   instance time values to 00:00 or midnight
- *   @return the same ZonedDateTime instance with a different time
- */
-fun ZonedDateTime.atWithStartOfDay(): ZonedDateTime? {
-    return this.toLocalDate().atStartOfDay(ZoneId.systemDefault())
 }

@@ -45,8 +45,8 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 this.schedule = schedule
                 requestCode = REQUEST_CODE_UPDATE
 
-                binding.startTimeTextView.text = schedule.formatStartTime()
-                binding.endTimeTextView.text = schedule.formatEndTime()
+                binding.startTimeTextView.text = schedule.formatStartTime(binding.root.context)
+                binding.endTimeTextView.text = schedule.formatEndTime(binding.root.context)
 
                 binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                 binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
@@ -75,14 +75,16 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
                     schedule.startTime = startTime
                     if (schedule.endTime == null) schedule.endTime = startTime
+
                     if (startTime.isAfter(schedule.endTime) || startTime.compareTo(schedule.endTime) == 0) {
-                        schedule.endTime = schedule.startTime?.plusHours(1)?.plusMinutes(30)
-                        binding.endTimeTextView.text = schedule.formatEndTime()
+                        schedule.endTime = schedule.startTime?.plusHours(1)
+                            ?.plusMinutes(30)
+                        binding.endTimeTextView.text = schedule.formatEndTime(it.context)
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
-                        it.text = schedule.formatStartTime()
+                        it.text = schedule.formatStartTime(it.context)
                         it.setTextColorFromResource(R.color.color_primary_text)
                         binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
@@ -101,14 +103,16 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
                     schedule.endTime = endTime
                     if (schedule.startTime == null) schedule.startTime = endTime
+
                     if (endTime.isBefore(schedule.startTime) || endTime.compareTo(schedule.startTime) == 0) {
-                        schedule.startTime = schedule.endTime?.minusHours(1)?.minusMinutes(30)
-                        binding.startTimeTextView.text = schedule.formatStartTime()
+                        schedule.startTime = schedule.endTime?.minusHours(1)
+                            ?.minusMinutes(30)
+                        binding.startTimeTextView.text = schedule.formatStartTime(it.context)
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
-                        it.text = schedule.formatEndTime()
+                        it.text = schedule.formatEndTime(it.context)
                         it.setTextColorFromResource(R.color.color_primary_text)
                         binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }

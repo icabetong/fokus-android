@@ -12,7 +12,6 @@ import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.startForegroundServiceCompat
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.print
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
@@ -142,14 +141,14 @@ class BackupActivity: BaseActivity() {
 
                 return if (this.toLocalDate().isEqual(LocalDate.now()))
                     String.format(getString(R.string.today_at),
-                        print(DateTimeConverter.FORMAT_TIME))
+                        format(DateTimeConverter.getTimeFormatter(requireContext())))
                 else if (this.minusDays(1)?.compareTo(currentDateTime) == 0)
                     String.format(getString(R.string.yesterday_at),
-                        print(DateTimeConverter.FORMAT_TIME))
+                        format(DateTimeConverter.getTimeFormatter(requireContext())))
                 else if (this.plusDays(1)?.compareTo(currentDateTime) == 0)
                     String.format(getString(R.string.tomorrow_at),
-                        print(DateTimeConverter.FORMAT_TIME))
-                else print(DateTimeConverter.FORMAT_DATE)
+                        format(DateTimeConverter.getTimeFormatter(requireContext())))
+                else format(DateTimeConverter.getDateTimeFormatter(requireContext()))
             }
 
             companion object {

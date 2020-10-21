@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 
 class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager)
     : BaseBottomSheet<Schedule>(manager), BaseAdapter.ActionListener {

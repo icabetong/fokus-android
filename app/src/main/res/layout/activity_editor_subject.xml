@@ -62,7 +62,7 @@
                     android:id="@+id/descriptionTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/editor_item_height"
-                    android:paddingHorizontal="@dimen/item_padding"
+                    android:layout_marginHorizontal="@dimen/editor_container_padding"
                     android:hint="@string/hint_subject_description"
                     android:inputType="textCapWords"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>

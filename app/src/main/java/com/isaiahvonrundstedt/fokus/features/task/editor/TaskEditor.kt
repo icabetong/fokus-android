@@ -309,11 +309,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-            if (!viewModel.hasDueDate) {
+/*            if (!viewModel.hasDueDate) {
                 createSnackbar(R.string.feedback_task_empty_due_date, binding.root)
                 binding.dueDateTextView.performClick()
                 return@setOnClickListener
-            }
+            }*/
 
             viewModel.getTask()?.isImportant = binding.prioritySwitch.isChecked
             viewModel.getTask()?.isFinished = binding.statusSwitch.isChecked

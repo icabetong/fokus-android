@@ -56,6 +56,10 @@ class EventEditor : BaseEditor() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityEditorEventBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
 
         // Check if the parent activity has passed some
@@ -67,26 +71,22 @@ class EventEditor : BaseEditor() {
             viewModel.setEvent(intent.getParcelableExtra(EXTRA_EVENT))
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
 
-            findViewById<View>(android.R.id.content).transitionName =
-                TRANSITION_ELEMENT_ROOT + viewModel.getEvent()?.eventID
+            binding.root.transitionName = TRANSITION_ELEMENT_ROOT + viewModel.getEvent()?.eventID
 
-            window.sharedElementEnterTransition = buildContainerTransform()
-            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION)
+            window.sharedElementEnterTransition = buildContainerTransform(binding.root)
+            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
+                TRANSITION_SHORT_DURATION)
         } else {
-            findViewById<View>(android.R.id.content).transitionName = TRANSITION_ELEMENT_ROOT
+            binding.root.transitionName = TRANSITION_ELEMENT_ROOT
 
-            window.sharedElementEnterTransition = buildContainerTransform(withMotion = true)
-            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION, true)
+            window.sharedElementEnterTransition = buildContainerTransform(binding.root,
+                withMotion = true)
+            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
+                TRANSITION_SHORT_DURATION, true)
         }
-
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditorEventBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
-
 
         var currentScrollPosition = 0
         binding.contentView.viewTreeObserver.addOnScrollChangedListener {

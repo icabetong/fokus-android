@@ -30,7 +30,8 @@ class AttachmentOptionSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MenuAdapter(activity, R.menu.menu_attachment, this@AttachmentOptionSheet)
+            adapter = MenuAdapter(activity, R.menu.menu_attachment,
+                this@AttachmentOptionSheet)
         }
     }
 

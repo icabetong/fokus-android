@@ -67,6 +67,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityEditorTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
+
         setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
 
         // Check if the parent activity has extras sent then
@@ -80,22 +85,19 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             viewModel.setAttachments(intent.getParcelableListExtra(EXTRA_ATTACHMENTS))
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
 
-            findViewById<View>(android.R.id.content).transitionName =
-                TRANSITION_ELEMENT_ROOT + viewModel.getTask()?.taskID
+            binding.root.transitionName = TRANSITION_ELEMENT_ROOT + viewModel.getTask()?.taskID
 
-            window.sharedElementEnterTransition = buildContainerTransform()
-            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION)
+            window.sharedElementEnterTransition = buildContainerTransform(binding.root)
+            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
+                TRANSITION_SHORT_DURATION)
         } else {
-            findViewById<View>(android.R.id.content).transitionName = TRANSITION_ELEMENT_ROOT
+            binding.root.transitionName = TRANSITION_ELEMENT_ROOT
 
-            window.sharedElementEnterTransition = buildContainerTransform(withMotion = true)
-            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION, true)
+            window.sharedElementEnterTransition = buildContainerTransform(binding.root,
+                withMotion = true)
+            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
+                TRANSITION_SHORT_DURATION, true)
         }
-
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditorTaskBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))

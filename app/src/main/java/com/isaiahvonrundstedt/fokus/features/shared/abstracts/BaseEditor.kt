@@ -44,10 +44,10 @@ abstract class BaseEditor : BaseActivity() {
 
     // Inspired from:
     // https://github.com/serbelga/Material-Motion-Samples
-    protected fun buildContainerTransform(transitionDuration: Long = TRANSITION_DEFAULT_DURATION,
+    protected fun buildContainerTransform(container: View, transitionDuration: Long = TRANSITION_DEFAULT_DURATION,
                                           withMotion: Boolean = false) =
         MaterialContainerTransform().apply {
-            addTarget(android.R.id.content)
+            addTarget(container)
             setAllContainerColors(MaterialColors.getColor(findViewById(android.R.id.content),
                 R.attr.colorSurface))
             duration = transitionDuration

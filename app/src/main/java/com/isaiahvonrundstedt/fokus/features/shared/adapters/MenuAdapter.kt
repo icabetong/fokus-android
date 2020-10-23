@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.databinding.LayoutItemMenuBinding
 
 class MenuAdapter(activity: Activity?,
                   @MenuRes
@@ -32,9 +33,9 @@ class MenuAdapter(activity: Activity?,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_navigation,
+        val binding = LayoutItemMenuBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(rowView, menuItemListener)
+        return ViewHolder(binding.root)
     }
 
     override fun getItemCount(): Int = itemList.size
@@ -43,8 +44,7 @@ class MenuAdapter(activity: Activity?,
         holder.onBind(itemList[position])
     }
 
-    class ViewHolder(itemView: View, private val menuItemListener: MenuItemListener)
-        : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         private val rootView: View = itemView.findViewById(R.id.rootView)
         private val iconView: ImageView = itemView.findViewById(R.id.iconView)

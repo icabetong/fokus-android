@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
@@ -51,18 +54,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditorSubjectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
-
-        with(binding.recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = scheduleAdapter
-        }
+        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
 
         // Check if the parent activity have passed some extras
         requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE
@@ -72,10 +64,29 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
             viewModel.setSchedules(intent.getParcelableListExtra(EXTRA_SCHEDULE))
 
-            binding.codeTextInput.transitionName =
-                TRANSITION_ID_CODE + viewModel.getSubject()?.subjectID
-            binding.descriptionTextInput.transitionName =
-                TRANSITION_ID_DESCRIPTION + viewModel.getSubject()?.description
+            findViewById<View>(android.R.id.content).transitionName =
+                TRANSITION_ELEMENT_ROOT + viewModel.getSubject()?.subjectID
+
+            window.sharedElementEnterTransition = buildContainerTransform()
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION)
+        } else {
+            findViewById<View>(android.R.id.content).transitionName = TRANSITION_ELEMENT_ROOT
+
+            window.sharedElementEnterTransition = buildContainerTransform(withMotion = true)
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION, true)
+        }
+
+        binding = ActivityEditorSubjectBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
+
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
+
+        with(binding.recyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = scheduleAdapter
         }
 
         var currentScrollPosition = 0
@@ -177,7 +188,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
@@ -367,9 +378,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_SCHEDULE = "extra:schedule"
-
-        const val TRANSITION_ID_CODE = "transition:subject:code:"
-        const val TRANSITION_ID_DESCRIPTION = "transition:subject:description:"
 
         private const val REQUEST_CODE_EXPORT = 32
         private const val REQUEST_CODE_IMPORT = 95

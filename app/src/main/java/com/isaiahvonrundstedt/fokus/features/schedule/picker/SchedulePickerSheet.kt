@@ -35,7 +35,7 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> receiver?.onReceive(t)

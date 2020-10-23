@@ -33,7 +33,7 @@ class SubjectPickerAdapter(private val actionListener: ActionListener)
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, null)
                 }
             }
         }

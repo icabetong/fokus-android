@@ -10,6 +10,7 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemEventBinding
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class EventAdapter(private var actionListener: ActionListener)
     : BaseAdapter<EventPackage, EventAdapter.EventViewHolder>(EventPackage.DIFF_CALLBACK), Swipeable {
@@ -27,7 +28,7 @@ class EventAdapter(private var actionListener: ActionListener)
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                emptyMap())
+                null)
     }
 
     inner class EventViewHolder(itemView: View): BaseViewHolder(itemView) {
@@ -37,7 +38,7 @@ class EventAdapter(private var actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             if (t is EventPackage) {
                 with(t.event) {
-                    binding.nameView.transitionName = EventEditor.TRANSITION_ID_NAME + eventID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.event.eventID
 
                     binding.locationView.text = location
                     binding.nameView.text = name
@@ -52,9 +53,7 @@ class EventAdapter(private var actionListener: ActionListener)
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
-                        mapOf(EventEditor.TRANSITION_ID_NAME + t.event.eventID to binding.nameView)
-                    )
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
                 }
             }
         }

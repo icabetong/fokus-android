@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,6 +21,7 @@ import com.isaiahvonrundstedt.fokus.databinding.FragmentSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import me.saket.cascade.CascadePopupMenu
@@ -86,12 +88,12 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, SubjectEditor::class.java),
-                SubjectEditor.REQUEST_CODE_INSERT)
+                SubjectEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
         }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is SubjectPackage) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
@@ -101,7 +103,14 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                         putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
                         putExtra(SubjectEditor.EXTRA_SCHEDULE, t.schedules)
                     }
-                    startActivityWithTransition(views, intent, SubjectEditor.REQUEST_CODE_UPDATE)
+
+                    container?.also {
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
+                            it, it.transitionName)
+
+                        startActivityForResult(intent, SubjectEditor.REQUEST_CODE_UPDATE,
+                            options.toBundle())
+                    }
                 }
                 // Item has been swiped from the RecyclerView, notify user action
                 // in the ViewModel to delete it from the database

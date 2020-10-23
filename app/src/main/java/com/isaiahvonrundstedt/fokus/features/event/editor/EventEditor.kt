@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
@@ -55,6 +56,29 @@ class EventEditor : BaseEditor() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+
+        // Check if the parent activity has passed some
+        // extras so that we'll show it to the user
+        requestCode = if (intent.hasExtra(EXTRA_EVENT)) REQUEST_CODE_UPDATE
+        else REQUEST_CODE_INSERT
+
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            viewModel.setEvent(intent.getParcelableExtra(EXTRA_EVENT))
+            viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
+
+            findViewById<View>(android.R.id.content).transitionName =
+                TRANSITION_ELEMENT_ROOT + viewModel.getEvent()?.eventID
+
+            window.sharedElementEnterTransition = buildContainerTransform()
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION)
+        } else {
+            findViewById<View>(android.R.id.content).transitionName = TRANSITION_ELEMENT_ROOT
+
+            window.sharedElementEnterTransition = buildContainerTransform(withMotion = true)
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION, true)
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityEditorEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -63,18 +87,6 @@ class EventEditor : BaseEditor() {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
-        // Check if the parent activity has passed some
-        // extras so that we'll show it to the user
-        requestCode = if (intent.hasExtra(EXTRA_EVENT)) REQUEST_CODE_UPDATE
-            else REQUEST_CODE_INSERT
-
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            viewModel.setEvent(intent.getParcelableExtra(EXTRA_EVENT))
-            viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
-
-            binding.eventNameTextInput.transitionName = TRANSITION_ID_NAME +
-                    viewModel.getEvent()?.eventID
-        }
 
         var currentScrollPosition = 0
         binding.contentView.viewTreeObserver.addOnScrollChangedListener {
@@ -440,8 +452,6 @@ class EventEditor : BaseEditor() {
         const val EXTRA_EVENT = "extra:event"
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_SCHEDULE = "extra:schedule"
-
-        const val TRANSITION_ID_NAME = "transition:event:name"
 
         private const val REQUEST_CODE_EXPORT = 58
         private const val REQUEST_CODE_IMPORT = 57

@@ -25,6 +25,8 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialContainerTransform
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
@@ -65,6 +67,31 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+
+        // Check if the parent activity has extras sent then
+        // determine if the editor will be in insert or
+        // update mode
+        requestCode = if (intent.hasExtra(EXTRA_TASK) && intent.hasExtra(EXTRA_SUBJECT)
+            && intent.hasExtra(EXTRA_ATTACHMENTS)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
+
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            viewModel.setTask(intent.getParcelableExtra(EXTRA_TASK))
+            viewModel.setAttachments(intent.getParcelableListExtra(EXTRA_ATTACHMENTS))
+            viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
+
+            findViewById<View>(android.R.id.content).transitionName =
+                TRANSITION_ELEMENT_ROOT + viewModel.getTask()?.taskID
+
+            window.sharedElementEnterTransition = buildContainerTransform()
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION)
+        } else {
+            findViewById<View>(android.R.id.content).transitionName = TRANSITION_ELEMENT_ROOT
+
+            window.sharedElementEnterTransition = buildContainerTransform(withMotion = true)
+            window.sharedElementReturnTransition = buildContainerTransform(TRANSITION_SHORT_DURATION, true)
+        }
+
         super.onCreate(savedInstanceState)
         binding = ActivityEditorTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -78,19 +105,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             adapter = attachmentAdapter
         }
 
-        // Check if the parent activity has extras sent then
-        // determine if the editor will be in insert or
-        // update mode
-        requestCode = if (intent.hasExtra(EXTRA_TASK) && intent.hasExtra(EXTRA_SUBJECT)
-            && intent.hasExtra(EXTRA_ATTACHMENTS)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
-
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            viewModel.setTask(intent.getParcelableExtra(EXTRA_TASK))
-            viewModel.setAttachments(intent.getParcelableListExtra(EXTRA_ATTACHMENTS))
-            viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
-
-            binding.taskNameTextInput.transitionName = TRANSITION_ID_NAME + viewModel.getTask()?.taskID
-        }
 
         var currentScrollPosition = 0
         binding.contentView.viewTreeObserver.addOnScrollChangedListener {
@@ -309,11 +323,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 return@setOnClickListener
             }
 
-/*            if (!viewModel.hasDueDate) {
+            if (!viewModel.hasDueDate) {
                 createSnackbar(R.string.feedback_task_empty_due_date, binding.root)
                 binding.dueDateTextView.performClick()
                 return@setOnClickListener
-            }*/
+            }
 
             viewModel.getTask()?.isImportant = binding.prioritySwitch.isChecked
             viewModel.getTask()?.isFinished = binding.statusSwitch.isChecked
@@ -456,7 +470,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is Attachment) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
@@ -638,8 +652,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         const val EXTRA_TASK = "extra:task"
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_ATTACHMENTS = "extra:attachments"
-
-        const val TRANSITION_ID_NAME = "transition:task:name:"
 
         private const val REQUEST_CODE_ATTACHMENT = 20
         private const val REQUEST_CODE_EXPORT = 49

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -159,12 +161,12 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
         binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, EventEditor::class.java),
-                EventEditor.REQUEST_CODE_INSERT)
+                EventEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
         }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is EventPackage) {
             when (action) {
                 // Show up the editorUI and pass the extra
@@ -173,7 +175,14 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
                         putExtra(EventEditor.EXTRA_EVENT, t.event)
                         putExtra(EventEditor.EXTRA_SUBJECT, t.subject)
                     }
-                    startActivityWithTransition(views, intent, EventEditor.REQUEST_CODE_UPDATE)
+
+                    container?.also {
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
+                            it, it.transitionName)
+
+                        startActivityForResult(intent, EventEditor.REQUEST_CODE_UPDATE,
+                            options.toBundle())
+                    }
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {

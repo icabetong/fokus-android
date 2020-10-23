@@ -44,7 +44,7 @@ class SubjectPickerSheet(fragmentManager: FragmentManager)
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is SubjectPackage) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {

@@ -16,7 +16,7 @@
         <item name="colorError">@color/color_error</item>
         <item name="colorOnError">@color/color_on_error</item>
         <item name="android:windowBackground">@color/color_window_background</item>
-        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
         <item name="android:textColorPrimary">@color/color_on_surface</item>
         <item name="android:textColorSecondary">@color/color_secondary_text</item>
 

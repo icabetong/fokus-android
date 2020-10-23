@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,6 +26,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.databinding.FragmentTaskBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import kotlinx.android.synthetic.main.fragment_task.*
@@ -90,7 +93,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
         binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, TaskEditor::class.java),
-                TaskEditor.REQUEST_CODE_INSERT)
+                TaskEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
         }
     }
 
@@ -100,7 +103,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     override fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean) {
         viewModel.update(taskPackage.task)
         if (isChecked) {
-            createSnackbar(R.string.feedback_task_marked_as_finished, recyclerView)
+            createSnackbar(R.string.feedback_task_marked_as_finished, binding.recyclerView)
 
             with(PreferenceManager(context)) {
                 if (confetti) {
@@ -112,8 +115,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                         .setTimeToLive(1000L)
                         .addShapes(Shape.Square, Shape.Circle)
                         .addSizes(Size(12, 5f))
-                        .setPosition(confettiView.x + confettiView.width / 2,
-                            confettiView.y + confettiView.height / 3)
+                        .setPosition(binding.confettiView.x + binding.confettiView.width / 2,
+                            binding.confettiView.y + binding.confettiView.height / 3)
                         .burst(100)
                 }
 
@@ -126,7 +129,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     // Callback from the RecyclerView Adapter
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is TaskPackage) {
             when (action) {
                 // Create the intent to the editorUI and pass the extras
@@ -137,7 +140,13 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                         putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
                         putExtra(TaskEditor.EXTRA_ATTACHMENTS, t.attachments.toArrayList())
                     }
-                    startActivityWithTransition(views, intent, TaskEditor.REQUEST_CODE_UPDATE)
+
+                    container?.also {
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
+                            it, it.transitionName)
+                        startActivityForResult(intent, TaskEditor.REQUEST_CODE_UPDATE,
+                            options.toBundle())
+                    }
                 }
                 // The item has been swiped down from the recyclerView
                 // remove the item from the database and show a snackbar

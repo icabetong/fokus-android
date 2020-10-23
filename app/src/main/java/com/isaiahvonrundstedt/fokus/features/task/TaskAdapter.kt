@@ -14,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class TaskAdapter(private var actionListener: ActionListener,
                   private var taskCompletionListener: TaskCompletionListener)
@@ -33,7 +33,7 @@ class TaskAdapter(private var actionListener: ActionListener,
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                emptyMap())
+                null)
     }
 
     inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -43,7 +43,7 @@ class TaskAdapter(private var actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
                 with(t.task) {
-                    binding.taskNameView.transitionName = TaskEditor.TRANSITION_ID_NAME + taskID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
                         R.color.color_secondary_text
@@ -74,8 +74,7 @@ class TaskAdapter(private var actionListener: ActionListener,
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
-                        mapOf(TaskEditor.TRANSITION_ID_NAME + t.task.taskID to binding.taskNameView))
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
                 }
             }
         }

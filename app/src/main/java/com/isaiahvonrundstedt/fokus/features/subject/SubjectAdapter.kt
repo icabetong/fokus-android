@@ -9,6 +9,7 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSingleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
 class SubjectAdapter(private var actionListener: ActionListener,
@@ -53,7 +54,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                emptyMap())
+                null)
     }
 
     inner class CoreViewHolder(itemView: View) : BaseViewHolder(itemView) {
@@ -62,8 +63,8 @@ class SubjectAdapter(private var actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
-                    binding.descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT +
+                            t.subject.subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code
@@ -75,11 +76,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
-                        mapOf(SubjectEditor.TRANSITION_ID_CODE + t.subject.subjectID
-                                to binding.nameView,
-                            SubjectEditor.TRANSITION_ID_DESCRIPTION + t.subject.subjectID
-                                    to binding.descriptionView))
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
                 }
             }
         }
@@ -92,8 +89,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
-                    binding.descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.subject.subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code
@@ -104,11 +100,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
                 binding.scheduleView.text = todaySchedule?.formatBothTime(binding.root.context)
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
-                        mapOf(SubjectEditor.TRANSITION_ID_CODE + t.subject.subjectID
-                                to binding.nameView,
-                            SubjectEditor.TRANSITION_ID_DESCRIPTION + t.subject.subjectID
-                                    to binding.descriptionView))
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
                 }
             }
         }
@@ -121,8 +113,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.nameView.transitionName = SubjectEditor.TRANSITION_ID_CODE + subjectID
-                    binding.descriptionView.transitionName = SubjectEditor.TRANSITION_ID_DESCRIPTION + subjectID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.subject.subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code
@@ -133,11 +124,7 @@ class SubjectAdapter(private var actionListener: ActionListener,
                 binding.scheduleView.text = tomorrowSchedule?.format(itemView.context)
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT,
-                        mapOf(SubjectEditor.TRANSITION_ID_CODE + t.subject.subjectID
-                                to binding.nameView,
-                            SubjectEditor.TRANSITION_ID_DESCRIPTION + t.subject.subjectID
-                                    to binding.descriptionView))
+                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
                 }
             }
         }

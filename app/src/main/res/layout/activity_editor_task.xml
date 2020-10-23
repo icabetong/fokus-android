@@ -35,11 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
-
-                    <requestFocus/>
-
-                </com.google.android.material.textfield.TextInputEditText>
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

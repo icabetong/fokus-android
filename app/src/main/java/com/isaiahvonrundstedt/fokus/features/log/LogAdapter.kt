@@ -24,7 +24,7 @@ class LogAdapter(private var actionListener: ActionListener)
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                emptyMap())
+                null)
     }
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {

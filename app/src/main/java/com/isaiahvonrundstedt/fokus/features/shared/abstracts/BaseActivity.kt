@@ -1,13 +1,21 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.os.Build
+import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onResume() {
         super.onResume()

@@ -9,7 +9,7 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.
     : ListAdapter<T, VH>(callback){
 
     interface ActionListener {
-        fun <T> onActionPerformed(t: T, action: Action, views: Map<String, View>)
+        fun <T> onActionPerformed(t: T, action: Action, container: View?)
 
         enum class Action { SELECT, DELETE }
     }

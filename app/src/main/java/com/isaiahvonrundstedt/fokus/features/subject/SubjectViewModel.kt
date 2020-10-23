@@ -46,7 +46,6 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         }
 
     init {
-
         subjects.addSource(_subjects) { items ->
             when (constraint) {
                 Constraint.ALL ->

@@ -50,7 +50,7 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       views: Map<String, View>) {
+                                       container: View?) {
         if (t is Log) {
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {

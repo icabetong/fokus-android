@@ -30,11 +30,11 @@ class ScheduleAdapter(private val actionListener: ActionListener)
             }
 
             binding.removeButton.setOnClickListener {
-                actionListener.onActionPerformed(t, ActionListener.Action.DELETE, emptyMap())
+                actionListener.onActionPerformed(t, ActionListener.Action.DELETE, null)
             }
 
             binding.root.setOnClickListener {
-                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, emptyMap())
+                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
             }
         }
     }

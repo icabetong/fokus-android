@@ -43,7 +43,7 @@ class TaskAdapter(private var actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
                 with(t.task) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + taskID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.task.taskID
 
                     val textColorRes = if (isFinished)
                         R.color.color_secondary_text

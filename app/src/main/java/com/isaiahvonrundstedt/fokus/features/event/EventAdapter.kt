@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
@@ -38,7 +39,7 @@ class EventAdapter(private var actionListener: ActionListener)
         override fun <T> onBind(t: T) {
             if (t is EventPackage) {
                 with(t.event) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.event.eventID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + eventID
 
                     binding.locationView.text = location
                     binding.nameView.text = name
@@ -50,7 +51,7 @@ class EventAdapter(private var actionListener: ActionListener)
                         text = t.subject?.code
                         setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
-                }
+                } else binding.subjectView.isVisible = false
 
                 binding.root.setOnClickListener {
                     actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)

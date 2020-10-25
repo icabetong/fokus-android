@@ -8,9 +8,10 @@ import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseFragment : Fragment() {
 
-    protected fun buildTransitionOptions(container: View) =
+    protected fun buildTransitionOptions(container: View,
+                                         name: String = BaseEditor.TRANSITION_ELEMENT_ROOT) =
         ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), container,
-            BaseEditor.TRANSITION_ELEMENT_ROOT).toBundle()
+            name).toBundle()
 
     val activityToolbar: MaterialToolbar?
         get() = activity?.findViewById(R.id.toolbar) as? MaterialToolbar

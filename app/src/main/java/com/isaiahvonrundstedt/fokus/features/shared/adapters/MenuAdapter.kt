@@ -46,14 +46,12 @@ class MenuAdapter(activity: Activity?,
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        private val rootView: View = itemView.findViewById(R.id.rootView)
-        private val iconView: ImageView = itemView.findViewById(R.id.iconView)
-        private val titleView: TextView = itemView.findViewById(R.id.titleView)
+        private val binding = LayoutItemMenuBinding.bind(itemView)
 
         fun onBind(item: MenuItem) {
-            iconView.setImageDrawable(item.icon)
-            titleView.text = item.title
-            rootView.setOnClickListener { menuItemListener.onItemSelected(item.id) }
+            binding.iconView.setImageDrawable(item.icon)
+            binding.titleView.text = item.title
+            binding.root.setOnClickListener { menuItemListener.onItemSelected(item.id) }
         }
     }
 

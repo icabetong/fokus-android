@@ -73,7 +73,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
             window.sharedElementEnterTransition = buildContainerTransform(binding.root)
             window.sharedElementReturnTransition = buildContainerTransform(binding.root,
-                TRANSITION_SHORT_DURATION)
+                transitionDuration = TRANSITION_SHORT_DURATION)
         } else {
             binding.root.transitionName = TRANSITION_ELEMENT_ROOT
 

@@ -105,11 +105,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                     }
 
                     container?.also {
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
-                            it, it.transitionName)
-
                         startActivityForResult(intent, SubjectEditor.REQUEST_CODE_UPDATE,
-                            options.toBundle())
+                            buildTransitionOptions(it, it.transitionName))
                     }
                 }
                 // Item has been swiped from the RecyclerView, notify user action

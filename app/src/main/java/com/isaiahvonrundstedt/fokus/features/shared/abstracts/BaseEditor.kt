@@ -1,20 +1,18 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.app.Activity
-import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.IdRes
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseEditor : BaseActivity() {
@@ -44,15 +42,15 @@ abstract class BaseEditor : BaseActivity() {
 
     // Inspired from:
     // https://github.com/serbelga/Material-Motion-Samples
-    protected fun buildContainerTransform(container: View, transitionDuration: Long = TRANSITION_DEFAULT_DURATION,
+    protected fun buildContainerTransform(targetView: View,
+                                          transitionDuration: Long = TRANSITION_DEFAULT_DURATION,
                                           withMotion: Boolean = false) =
         MaterialContainerTransform().apply {
-            addTarget(container)
-            setAllContainerColors(MaterialColors.getColor(findViewById(android.R.id.content),
-                R.attr.colorSurface))
+            addTarget(targetView)
+            setAllContainerColors(MaterialColors.getColor(targetView, R.attr.colorSurface))
             duration = transitionDuration
             fadeMode = MaterialContainerTransform.FADE_MODE_IN
-            interpolator = FastOutSlowInInterpolator()
+            interpolator = DecelerateInterpolator()
             if (withMotion)
                 pathMotion = MaterialArcMotion()
         }
@@ -65,7 +63,7 @@ abstract class BaseEditor : BaseActivity() {
     companion object {
         const val TRANSITION_ELEMENT_ROOT = "transition:root:"
         const val TRANSITION_SHORT_DURATION = 250L
-        const val TRANSITION_DEFAULT_DURATION = 350L
+        const val TRANSITION_DEFAULT_DURATION = 300L
     }
 
 }

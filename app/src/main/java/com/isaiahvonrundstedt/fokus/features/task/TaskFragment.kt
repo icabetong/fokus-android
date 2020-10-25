@@ -142,10 +142,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                     }
 
                     container?.also {
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
-                            it, it.transitionName)
                         startActivityForResult(intent, TaskEditor.REQUEST_CODE_UPDATE,
-                            options.toBundle())
+                            buildTransitionOptions(it, it.transitionName))
                     }
                 }
                 // The item has been swiped down from the recyclerView

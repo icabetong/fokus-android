@@ -107,7 +107,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             adapter = attachmentAdapter
         }
 
-
         var currentScrollPosition = 0
         binding.contentView.viewTreeObserver.addOnScrollChangedListener {
             if (binding.contentView.scrollY > currentScrollPosition)

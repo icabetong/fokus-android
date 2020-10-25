@@ -177,11 +177,8 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
                     }
 
                     container?.also {
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
-                            it, it.transitionName)
-
                         startActivityForResult(intent, EventEditor.REQUEST_CODE_UPDATE,
-                            options.toBundle())
+                            buildTransitionOptions(it, it.transitionName))
                     }
                 }
                 // Item has been swiped, notify database for deletion

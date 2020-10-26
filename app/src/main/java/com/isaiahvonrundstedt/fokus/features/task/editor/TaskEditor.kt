@@ -21,6 +21,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onPreShow
+import com.afollestad.materialdialogs.callbacks.onShow
+import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -42,6 +45,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorTaskBinding
+import com.isaiahvonrundstedt.fokus.databinding.LayoutDialogInputAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
@@ -114,6 +118,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             else binding.actionButton.show()
             currentScrollPosition = binding.contentView.scrollY
         }
+    }
+
+    val dialogView: View by lazy {
+        LayoutDialogInputAttachmentBinding.inflate(layoutInflater).root
     }
 
     override fun onStart() {
@@ -196,17 +204,30 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                                 PermissionManager.requestReadStoragePermission(this@TaskEditor)
                         }
                         R.id.action_website_url -> {
-                            var attachment: Attachment? = null
+                            var attachment: Attachment?
 
                             MaterialDialog(this@TaskEditor).show {
                                 title(res = R.string.dialog_enter_website_url)
-                                input { _, charSequence ->
-                                    attachment = createAttachment(charSequence.toString(),
-                                        Attachment.TYPE_WEBSITE_LINK)
-                                    attachment?.name = charSequence.toString()
-                                }
+                                customView(view = dialogView)
                                 positiveButton(R.string.button_done) {
+                                    val binding = LayoutDialogInputAttachmentBinding.bind(it.view)
+
+                                    attachment = createAttachment(binding.editText.text.toString(),
+                                        Attachment.TYPE_WEBSITE_LINK)
+                                    attachment?.name = binding.editText.text.toString()
+
                                     attachment?.let { item -> viewModel.addAttachment(item) }
+                                }
+                                onShow {
+                                    val webLink = viewModel.clipBoardItem
+
+                                    if (webLink != null && (webLink.startsWith("https://") ||
+                                            webLink.startsWith("http://") ||
+                                                webLink.startsWith("www"))) {
+
+                                        val binding = LayoutDialogInputAttachmentBinding.bind(it.view)
+                                        binding.editText.setText(webLink)
+                                    }
                                 }
                                 negativeButton(R.string.button_cancel)
                             }

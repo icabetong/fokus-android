@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.app.Application
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -19,6 +21,10 @@ import java.time.ZonedDateTime
 
 class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
+    private val clipboardManager by lazy {
+        app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
     private var database = AppDatabase.getInstance(applicationContext)
 
     private var _task: MutableLiveData<Task> = MutableLiveData(Task())
@@ -35,6 +41,9 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
         get() = getTask()?.name?.isNotEmpty() == true
     val hasDueDate: Boolean
         get() = getTask()?.hasDueDate() == true
+
+    val clipBoardItem: String?
+        get() = clipboardManager.primaryClip?.getItemAt(0)?.text?.toString()
 
     fun getTask(): Task? { return _task.value }
     fun setTask(task: Task?) { _task.value = task }

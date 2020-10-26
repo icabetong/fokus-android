@@ -8,6 +8,6 @@
         android:title="@string/app_name"
         android:icon="@drawable/ic_hero_dots_vertical_24"
         app:iconTint="@color/color_on_surface"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
 </menu>

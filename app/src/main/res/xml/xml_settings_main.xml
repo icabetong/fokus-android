@@ -9,6 +9,7 @@
         <ListPreference
             app:key="@string/key_theme"
             app:title="@string/settings_theme"
+            app:icon="@drawable/ic_hero_color_swatch_24"
             app:dialogTitle="@string/dialog_choose_theme"
             app:entries="@array/settings_dark_theme_items"
             app:entryValues="@array/settings_dark_theme_values"
@@ -19,6 +20,7 @@
             app:key="@string/key_confetti"
             app:title="@string/settings_confetti_title"
             app:summary="@string/settings_confetti_summary"
+            app:icon="@drawable/ic_hero_sparkles_24"
             app:defaultValue="true"/>
 
     </PreferenceCategory>
@@ -30,7 +32,8 @@
             app:key="@string/key_sound"
             app:title="@string/settings_completion_sounds_title"
             app:summary="@string/settings_completion_sounds_summary"
-            app:defaultValue="true"/>
+            app:defaultValue="true"
+            app:icon="@drawable/ic_hero_volume_up_24"/>
 
     </PreferenceCategory>
 
@@ -43,6 +46,7 @@
             app:entries="@array/settings_task_reminder_frequency_items"
             app:entryValues="@array/settings_task_reminder_frequency_values"
             app:defaultValue="EVERYDAY"
+            app:icon="@drawable/ic_hero_exclamation_circle_24"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
@@ -108,12 +112,14 @@
 
         <Preference
             app:key="@string/key_backup_restore"
-            app:title="@string/settings_backup_and_restore" />
+            app:title="@string/settings_backup_and_restore"
+            app:icon="@drawable/ic_hero_database_24"/>
 
         <SwitchPreference
             app:key="@string/key_external_browser"
             app:title="@string/settings_use_external_browser_title"
             app:summary="@string/settings_use_external_browser_summary"
+            app:icon="@drawable/ic_hero_external_link_24"
             app:defaultValue="false"/>
 
     </PreferenceCategory>

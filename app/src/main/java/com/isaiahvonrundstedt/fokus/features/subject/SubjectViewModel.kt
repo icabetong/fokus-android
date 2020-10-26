@@ -28,6 +28,8 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
         set(value) {
             field = value
             preferences.subjectConstraint = value
+            if (constraint == Constraint.ALL)
+                sort = Sort.CODE
             rearrange(value, sort, direction)
         }
 

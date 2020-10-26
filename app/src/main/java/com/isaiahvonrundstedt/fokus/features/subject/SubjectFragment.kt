@@ -202,23 +202,25 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                             }
                         }
 
-                        it.addSubMenu(R.string.field_schedule).apply {
-                            setIcon(R.drawable.ic_hero_clock_24)
+                        if (viewModel.constraint != SubjectViewModel.Constraint.ALL) {
+                            it.addSubMenu(R.string.field_schedule).apply {
+                                setIcon(R.drawable.ic_hero_clock_24)
 
-                            add(R.string.sorting_directions_ascending).apply {
-                                setIcon(R.drawable.ic_hero_sort_ascending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                                    viewModel.direction = SortDirection.ASCENDING
-                                    true
+                                add(R.string.sorting_directions_ascending).apply {
+                                    setIcon(R.drawable.ic_hero_sort_ascending_24)
+                                    setOnMenuItemClickListener {
+                                        viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                                        viewModel.direction = SortDirection.ASCENDING
+                                        true
+                                    }
                                 }
-                            }
-                            add(R.string.sorting_directions_descending).apply {
-                                setIcon(R.drawable.ic_hero_sort_descending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                                    viewModel.direction = SortDirection.DESCENDING
-                                    true
+                                add(R.string.sorting_directions_descending).apply {
+                                    setIcon(R.drawable.ic_hero_sort_descending_24)
+                                    setOnMenuItemClickListener {
+                                        viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                                        viewModel.direction = SortDirection.DESCENDING
+                                        true
+                                    }
                                 }
                             }
                         }

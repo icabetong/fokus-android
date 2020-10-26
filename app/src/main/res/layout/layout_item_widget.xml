@@ -24,7 +24,7 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
+            android:maxLines="1"
             android:ellipsize="end"
             android:textAppearance="@style/Fokus.TextAppearance.Widget.Item.Title"
             tools:text="Make Dinner"/>

@@ -46,7 +46,7 @@
             app:entries="@array/settings_task_reminder_frequency_items"
             app:entryValues="@array/settings_task_reminder_frequency_values"
             app:defaultValue="EVERYDAY"
-            app:icon="@drawable/ic_hero_exclamation_circle_24"
+            app:icon="@drawable/ic_hero_speakerphone_24"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
@@ -57,6 +57,7 @@
             app:key="@string/key_task_reminder"
             app:title="@string/settings_when_nearing_due_title"
             app:summary="@string/settings_when_nearing_due_summary"
+            app:icon="@drawable/ic_hero_clock_24"
             app:defaultValue="true"/>
 
         <ListPreference
@@ -73,6 +74,7 @@
             app:key="@string/key_event_reminder"
             app:title="@string/settings_incoming_events_title"
             app:summary="@string/settings_incoming_events_summary"
+            app:icon="@drawable/ic_hero_ticket_24"
             app:defaultValue="true"/>
 
         <ListPreference
@@ -89,6 +91,7 @@
             app:key="@string/key_subject_reminder"
             app:title="@string/settings_classes_for_this_day_title"
             app:summary="@string/settings_classes_for_this_day_summary"
+            app:icon="@drawable/ic_hero_sun_24"
             app:defaultValue="true"/>
 
         <ListPreference

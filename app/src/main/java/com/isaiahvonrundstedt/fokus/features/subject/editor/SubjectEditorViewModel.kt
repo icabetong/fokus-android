@@ -2,56 +2,57 @@ package com.isaiahvonrundstedt.fokus.features.subject.editor
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.isaiahvonrundstedt.fokus.components.extensions.android.notifyObservers
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.getIndexByID
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 
 class SubjectEditorViewModel: ViewModel() {
 
-    private var _subject: MutableLiveData<Subject> = MutableLiveData(Subject())
-    private var _schedules: MutableLiveData<ArrayList<Schedule>> = MutableLiveData(ArrayList())
+    var subject: Subject? = Subject()
+        set(value) {
+            field = value
+            _subjectObservable.value = value
+        }
+    var schedules = arrayListOf<Schedule>()
+        set(value) {
+            field = value
+            _schedulesObservable.value = value
+        }
 
-    val subject: LiveData<Subject> = _subject
-    val schedules: LiveData<List<Schedule>> = Transformations.map(_schedules) { it.toList() }
+    private val _subjectObservable = MutableLiveData<Subject?>(subject)
+    private val _schedulesObservable = MutableLiveData<List<Schedule>>(schedules)
 
-    fun getSubject(): Subject? {
-        return _subject.value
-    }
-    fun setSubject(subject: Subject?) {
-        _subject.value = subject
-    }
+    val subjectObservable: LiveData<Subject?> = _subjectObservable
+    val schedulesObservable: LiveData<List<Schedule>> = _schedulesObservable
 
-    fun getSchedules(): List<Schedule> {
-        return _schedules.value ?: emptyList()
+    fun hasSubjectCode(): Boolean = subject?.code?.isNotEmpty() == true
+    fun setSubjectCode(code: String?) { subject?.code = code }
+    fun getSubjectCode(): String? = subject?.code
+
+    fun hasDescription(): Boolean = subject?.description?.isNotEmpty() == true
+    fun setDescription(description: String?) { subject?.description = description }
+    fun getDescription(): String? = subject?.description
+
+    fun hasSchedules(): Boolean = !schedules.isEmpty()
+
+    fun setTag(tag: Subject.Tag) { subject?.tag = tag }
+    fun getTag(): Subject.Tag? = subject?.tag
+
+    fun addSchedule(item: Schedule) {
+        schedules.add(item)
+        _schedulesObservable.value = schedules
     }
-    fun setSchedules(schedules: List<Schedule>?) {
-        _schedules.value = schedules?.toArrayList()
+    fun removeSchedule(item: Schedule) {
+        schedules.remove(item)
+        _schedulesObservable.value = schedules
     }
-    fun addSchedule(schedule: Schedule) {
-        _schedules.value?.add(schedule)
-        _schedules.notifyObservers()
-    }
-    fun removeSchedule(schedule: Schedule) {
-        _schedules.value?.remove(schedule)
-        _schedules.notifyObservers()
-    }
-    fun updateSchedule(schedule: Schedule) {
-        val index: Int = _schedules.value?.getIndexByID(schedule.scheduleID) ?: -1
+    fun updateSchedule(item: Schedule) {
+        val index: Int = schedules.getIndexByID(item.scheduleID)
 
         if (index != -1) {
-            _schedules.value?.set(index, schedule)
-            _schedules.notifyObservers()
+            schedules[index] = item
+            _schedulesObservable.value = schedules
         }
     }
-
-    val hasSubjectCode: Boolean
-        get() = getSubject()?.code?.isNotEmpty() == true
-    val hasDescription: Boolean
-        get() = getSubject()?.description?.isNotEmpty() == true
-    val hasSchedules: Boolean
-        get() = getSchedules().isNotEmpty()
 }

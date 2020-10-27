@@ -15,51 +15,54 @@ import java.time.ZonedDateTime
 
 class EventEditorViewModel(app: Application): BaseViewModel(app) {
 
-    private var database = AppDatabase.getInstance(applicationContext)
+    private val database = AppDatabase.getInstance(applicationContext)
 
-    private var _event: MutableLiveData<Event> = MutableLiveData(Event())
-    private var _subject: MutableLiveData<Subject?> = MutableLiveData(null)
-    private var _schedules: MutableLiveData<List<Schedule>> = MutableLiveData(emptyList())
-
-    val event: LiveData<Event> = _event
-    val subject: LiveData<Subject?> = _subject
-    val schedules: LiveData<List<Schedule>> = _schedules
-
-    val hasEventName: Boolean
-        get() = getEvent()?.name?.isNotEmpty() == true
-    val hasLocation: Boolean
-        get() = getEvent()?.location?.isNotEmpty() == true
-    val hasSchedule: Boolean
-        get() = getEvent()?.schedule != null
-
-    fun getEvent(): Event? { return _event.value }
-    fun setEvent(event: Event?) { _event.value = event }
-
-    fun getEventSchedule(): ZonedDateTime? { return _event.value?.schedule }
-
-    fun getSubject(): Subject? { return _subject.value }
-    fun setSubject(subject: Subject?) = viewModelScope.launch {
-        _subject.value = subject
-        if (subject != null) {
-            _event.value?.subject = subject.subjectID
-            _subject.value = subject
-            _schedules.value = database.schedules().fetchUsingID(subject.subjectID)
-        } else {
-            _event.value?.subject = null
-            _subject.value = null
-            _schedules.value = emptyList()
+    var event: Event? = Event()
+        set(value) {
+            field = value
+            _eventObservable.value = value
         }
-    }
+    var subject: Subject? = null
+        set(value) {
+            field = value
+            _subjectObservable.value = value
+            if (value != null) {
+                event?.subject = value.subjectID
+                fetchSchedulesFromDatabase(value.subjectID)
+            } else {
+                event?.subject = null
+                schedules = emptyList()
+            }
+        }
+    var schedules: List<Schedule> = emptyList()
 
-    fun getSchedules(): List<Schedule> { return _schedules.value ?: emptyList() }
-    fun setSchedules(schedules: List<Schedule>) { _schedules.value = schedules }
+    private val _eventObservable = MutableLiveData<Event?>(event)
+    private val _subjectObservable = MutableLiveData<Subject?>(subject)
+
+    val eventObservable: LiveData<Event?> = _eventObservable
+    val subjectObservable: LiveData<Subject?> = _subjectObservable
+
+    fun setEventName(name: String?) { event?.name = name }
+    fun getEventName(): String? = event?.name
+    fun hasEventName(): Boolean = event?.name?.isNotEmpty() == true
+
+    fun setSchedule(schedule: ZonedDateTime?) { event?.schedule = schedule }
+    fun getSchedule(): ZonedDateTime? = event?.schedule
+    fun hasSchedule(): Boolean = event?.schedule != null
+    fun getFormattedSchedule(): String = event?.formatSchedule(applicationContext) ?: ""
+
+    fun setLocation(location: String?) { event?.location = location }
+    fun hasLocation(): Boolean = event?.location?.isNotEmpty() == true
+
+    fun setIsImportant(isImportant: Boolean) { event?.isImportant = isImportant }
+    fun setNotes(notes: String?) { event?.notes = notes }
 
     fun setNextMeetingForDueDate() {
-        getEvent()?.schedule = getNextMeetingForSchedule()
+        event?.schedule = getNextMeetingForSchedule()
     }
 
     fun setClassScheduleAsDueDate(schedule: Schedule) {
-        getEvent()?.schedule = schedule.startTime?.let { Schedule.getNearestDateTime(schedule.daysOfWeek, it) }
+        event?.schedule = schedule.startTime?.let { Schedule.getNearestDateTime(schedule.daysOfWeek, it) }
     }
 
     private fun getNextMeetingForSchedule(): ZonedDateTime? {
@@ -68,7 +71,7 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
 
         // Create new instances of Schedule
         // with individual day of week values
-        getSchedules().forEach {
+        schedules.forEach {
             it.getDaysAsList().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
                     endTime = it.endTime)
@@ -90,5 +93,9 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
                 targetDate = it
         }
         return targetDate
+    }
+
+    private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
+        schedules = database.schedules().fetchUsingID(id)
     }
 }

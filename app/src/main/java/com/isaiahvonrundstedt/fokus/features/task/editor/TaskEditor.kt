@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
@@ -82,11 +81,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             && intent.hasExtra(EXTRA_ATTACHMENTS)) REQUEST_CODE_UPDATE else REQUEST_CODE_INSERT
 
         if (requestCode == REQUEST_CODE_UPDATE) {
-            viewModel.setTask(intent.getParcelableExtra(EXTRA_TASK))
-            viewModel.setAttachments(intent.getParcelableListExtra(EXTRA_ATTACHMENTS))
-            viewModel.setSubject(intent.getParcelableExtra(EXTRA_SUBJECT))
+            viewModel.task = intent.getParcelableExtra(EXTRA_TASK)
+            viewModel.attachments = intent.getParcelableArrayListExtra(EXTRA_ATTACHMENTS) ?: arrayListOf()
+            viewModel.subject = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-            binding.root.transitionName = TRANSITION_ELEMENT_ROOT + viewModel.getTask()?.taskID
+            binding.root.transitionName = TRANSITION_ELEMENT_ROOT + viewModel.task?.taskID
 
             window.sharedElementEnterTransition = buildContainerTransform(binding.root)
             window.sharedElementReturnTransition = buildContainerTransform(binding.root,
@@ -117,14 +116,14 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
-    val dialogView: View by lazy {
+    private val dialogView: View by lazy {
         LayoutDialogInputAttachmentBinding.inflate(layoutInflater).root
     }
 
     override fun onStart() {
         super.onStart()
 
-        viewModel.task.observe(this) {
+        viewModel.taskObservable.observe(this) {
             if (requestCode == REQUEST_CODE_UPDATE && it != null) {
                 with(it) {
                     binding.taskNameTextInput.setText(name)
@@ -137,11 +136,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        viewModel.attachments.observe(this) {
+        viewModel.attachmentObservable.observe(this) {
             attachmentAdapter.submitList(it)
         }
 
-        viewModel.subject.observe(this) {
+        viewModel.subjectObservable.observe(this) {
             binding.removeButton.isVisible = it != null
             binding.dueDateTextView.isVisible = it == null
             binding.dateTimeRadioGroup.isVisible = it != null
@@ -150,28 +149,27 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 with(binding.subjectTextView) {
                     text = it.code
                     setTextColorFromResource(R.color.color_primary_text)
-                    setCompoundDrawableAtStart(ContextCompat.getDrawable(this@TaskEditor,
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(context,
                         R.drawable.shape_color_holder)?.let { shape -> it.tintDrawable(shape) })
                 }
 
-                if (viewModel.getTask()?.dueDate != null) {
+                if (viewModel.hasDueDate()) {
                     with(binding.customDateTimeRadio) {
                         isChecked = true
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
+                        titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
+                        subtitle = viewModel.getFormattedDueDate()
                     }
                 }
             } else {
                 with(binding.subjectTextView) {
-                    removeCompoundDrawableAtStart()
                     setText(R.string.field_not_set)
                     setTextColorFromResource(R.color.color_secondary_text)
+                    removeCompoundDrawableAtStart()
                 }
 
-                if (viewModel.getTask()?.dueDate != null) {
+                if (viewModel.hasDueDate()) {
                     with(binding.dueDateTextView) {
-                        text = viewModel.getTask()?.formatDueDate(context)
+                        text = viewModel.getFormattedDueDate()
                         setTextColorFromResource(R.color.color_primary_text)
                     }
                 }
@@ -179,11 +177,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
 
         binding.taskNameTextInput.addTextChangedListener {
-            viewModel.getTask()?.name = it.toString()
+            viewModel.setTaskName(it.toString())
             hasFieldChange = true
         }
         binding.notesTextInput.addTextChangedListener {
-            viewModel.getTask()?.notes = it.toString()
+            viewModel.setNotes(it.toString())
             hasFieldChange = true
         }
 
@@ -216,7 +214,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                                     attachment?.let { item -> viewModel.addAttachment(item) }
                                 }
                                 onShow {
-                                    val webLink = viewModel.clipBoardItem
+                                    val webLink = viewModel.fetchRecentItemFromClipboard()
 
                                     if (webLink != null && (webLink.startsWith("https://") ||
                                             webLink.startsWith("http://") ||
@@ -235,17 +233,17 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        binding.dueDateTextView.setOnClickListener { v ->
+        binding.dueDateTextView.setOnClickListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
-                    viewModel.getTask()?.dueDate = datetime.toZonedDateTime()
+                    currentDateTime = viewModel.getDueDate()?.toCalendar()) { _, datetime ->
+                    viewModel.setDueDate(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
-                    if (v is AppCompatTextView) {
-                        v.text = viewModel.getTask()?.formatDueDate(this@TaskEditor)
-                        v.setTextColorFromResource(R.color.color_primary_text)
+                    with(binding.dueDateTextView) {
+                        text = viewModel.getFormattedDueDate()
+                        setTextColorFromResource(R.color.color_primary_text)
                     }
                     hasFieldChange = true
                 }
@@ -257,8 +255,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 waitForResult { result ->
                     with(this@TaskEditor) {
                         binding.removeButton.isVisible = true
-                        viewModel.setSubject(result.subject)
-                        viewModel.setSchedules(result.schedules)
+                        viewModel.subject = result.subject
+                        viewModel.schedules = result.schedules
                     }
                     hasFieldChange = true
                 }
@@ -269,8 +267,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             hasFieldChange = true
             binding.subjectTextView.startAnimation(animation)
 
-            it.visibility = View.INVISIBLE
-            this.viewModel.getTask()?.subject = null
+            it.isVisible = false
+            viewModel.subject = null
         }
 
         binding.dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
@@ -289,23 +287,21 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
             with(binding.inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
+                subtitle = viewModel.getFormattedDueDate()
             }
         }
 
         binding.pickDateTimeRadio.setOnClickListener {
-            SchedulePickerSheet(viewModel.getSchedules(), supportFragmentManager).show {
+            SchedulePickerSheet(viewModel.schedules, supportFragmentManager).show {
                 waitForResult { schedule ->
                     viewModel.setClassScheduleAsDueDate(schedule)
                     with(binding.pickDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
+                        subtitle = viewModel.getFormattedDueDate()
                     }
-
                     hasFieldChange = true
                     this.dismiss()
                 }
-
             }
         }
 
@@ -313,8 +309,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             MaterialDialog(this).show {
                 lifecycleOwner(this@TaskEditor)
                 dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getTaskDueDate()?.toCalendar()) { _, datetime ->
-                    viewModel.getTask()?.dueDate = datetime.toZonedDateTime()
+                    currentDateTime = viewModel.getDueDate()?.toCalendar()) { _, datetime ->
+                    viewModel.setDueDate(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
                     hasFieldChange = true
@@ -322,7 +318,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     with(binding.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
-                        subtitle = viewModel.getTask()?.formatDueDate(context) ?: ""
+                        subtitle = viewModel.getFormattedDueDate()
                     }
                 }
                 negativeButton { binding.customDateTimeRadio.isChecked = false }
@@ -336,25 +332,25 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             // show a snackbar feedback then direct the user's
             // attention to the field. Then return to stop the execution
             // of the code.
-            if (!viewModel.hasTaskName) {
+            if (!viewModel.hasTaskName()) {
                 createSnackbar(R.string.feedback_task_empty_name, binding.root)
                 binding.taskNameTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (!viewModel.hasDueDate) {
+            if (!viewModel.hasDueDate()) {
                 createSnackbar(R.string.feedback_task_empty_due_date, binding.root)
                 binding.dueDateTextView.performClick()
                 return@setOnClickListener
             }
 
-            viewModel.getTask()?.isImportant = binding.prioritySwitch.isChecked
-            viewModel.getTask()?.isFinished = binding.statusSwitch.isChecked
+            viewModel.setIsImportant(binding.prioritySwitch.isChecked)
+            viewModel.setIsFinished(binding.statusSwitch.isChecked)
 
             // Send the data back to the parent activity
             setResult(RESULT_OK, Intent().apply {
-                putExtra(EXTRA_TASK, viewModel.getTask())
-                putExtra(EXTRA_ATTACHMENTS, viewModel.getAttachments())
+                putExtra(EXTRA_TASK, viewModel.task)
+                putExtra(EXTRA_ATTACHMENTS, viewModel.attachments)
             })
 
             if (requestCode == REQUEST_CODE_UPDATE)
@@ -422,8 +418,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
                         val data: TaskPackage? = intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)
 
-                        viewModel.setTask(data?.task)
-                        viewModel.setAttachments(data?.attachments)
+                        viewModel.task = data?.task
+                        viewModel.attachments = data?.attachments?.toArrayList() ?: arrayListOf()
 
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
@@ -447,7 +443,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
     private fun createAttachment(targetPath: String, attachmentType: Int): Attachment {
         hasFieldChange = true
         return Attachment().apply {
-            task = viewModel.getTask()?.taskID!!
+            task = viewModel.task?.taskID!!
             target = targetPath
             dateAttached = ZonedDateTime.now()
             type = attachmentType
@@ -475,8 +471,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 startService(Intent(this, DataExporterService::class.java).apply {
                     this.data = data?.data
                     action = DataExporterService.ACTION_EXPORT_TASK
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getTask())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.getAttachments())
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.task)
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.attachments)
                 })
             }
             REQUEST_CODE_IMPORT -> {
@@ -575,7 +571,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                 var fileName: String = Streamable.ARCHIVE_NAME_GENERIC
                 when (requestCode) {
                     REQUEST_CODE_INSERT -> {
-                        if (viewModel.hasTaskName || viewModel.hasDueDate) {
+                        if (viewModel.hasTaskName() || viewModel.hasDueDate()) {
                             MaterialDialog(this@TaskEditor).show {
                                 title(R.string.feedback_unable_to_share_title)
                                 message(R.string.feedback_unable_to_share_message)
@@ -588,7 +584,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                         fileName = binding.taskNameTextInput.text.toString()
                     }
                     REQUEST_CODE_UPDATE -> {
-                        fileName = viewModel.getTask()?.name ?: Streamable.ARCHIVE_NAME_GENERIC
+                        fileName = viewModel.getTaskName() ?: Streamable.ARCHIVE_NAME_GENERIC
                     }
                 }
 
@@ -607,8 +603,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                             R.id.action_share -> {
                                 val serviceIntent = Intent(this@TaskEditor, DataExporterService::class.java).apply {
                                     action = DataExporterService.ACTION_EXPORT_TASK
-                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getTask())
-                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.getAttachments())
+                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                                        viewModel.task)
+                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                                        viewModel.attachments)
                                 }
 
                                 this@TaskEditor.startService(serviceIntent)
@@ -631,9 +629,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         with(outState) {
-            putParcelable(EXTRA_TASK, viewModel.getTask())
-            putParcelable(EXTRA_SUBJECT, viewModel.getSubject())
-            putParcelableArrayList(EXTRA_ATTACHMENTS, viewModel.getAttachments().toArrayList())
+            putParcelable(EXTRA_TASK, viewModel.task)
+            putParcelable(EXTRA_SUBJECT, viewModel.subject)
+            putParcelableArrayList(EXTRA_ATTACHMENTS, viewModel.attachments)
         }
         super.onSaveInstanceState(outState)
     }
@@ -642,9 +640,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         super.onRestoreInstanceState(savedInstanceState)
 
         with(savedInstanceState) {
-            viewModel.setTask(getParcelable(EXTRA_TASK))
-            viewModel.setSubject(getParcelable(EXTRA_SUBJECT))
-            viewModel.setAttachments(getParcelableArrayList(EXTRA_ATTACHMENTS))
+            viewModel.task = getParcelable(EXTRA_TASK)
+            viewModel.attachments = getParcelableArrayList(EXTRA_ATTACHMENTS) ?: arrayListOf()
+            viewModel.subject = getParcelable(EXTRA_SUBJECT)
         }
     }
 
@@ -653,7 +651,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
             MaterialDialog(this).show {
                 title(R.string.dialog_discard_changes)
                 positiveButton(R.string.button_discard) {
-                    viewModel.getAttachments().forEach { attachment ->
+                    viewModel.attachments.forEach { attachment ->
                         if (attachment.type == Attachment.TYPE_IMPORTED_FILE)
                             attachment.target?.also { File(it).delete() }
                     }

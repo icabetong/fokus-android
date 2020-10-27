@@ -5,10 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.isaiahvonrundstedt.fokus.components.extensions.android.notifyObservers
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -21,69 +18,74 @@ import java.time.ZonedDateTime
 
 class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
+    private val database = AppDatabase.getInstance(applicationContext)
     private val clipboardManager by lazy {
         app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
-    private var database = AppDatabase.getInstance(applicationContext)
-
-    private var _task: MutableLiveData<Task> = MutableLiveData(Task())
-    private var _attachments: MutableLiveData<ArrayList<Attachment>> = MutableLiveData(ArrayList())
-    private var _subject: MutableLiveData<Subject?> = MutableLiveData(null)
-    private var _schedules: MutableLiveData<List<Schedule>> = MutableLiveData(emptyList())
-
-    val task: LiveData<Task> = _task
-    val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) { it.toList() }
-    val subject: LiveData<Subject?> = _subject
-    val schedules: LiveData<List<Schedule>> = _schedules
-
-    val hasTaskName: Boolean
-        get() = getTask()?.name?.isNotEmpty() == true
-    val hasDueDate: Boolean
-        get() = getTask()?.hasDueDate() == true
-
-    val clipBoardItem: String?
-        get() = clipboardManager.primaryClip?.getItemAt(0)?.text?.toString()
-
-    fun getTask(): Task? { return _task.value }
-    fun setTask(task: Task?) { _task.value = task }
-
-    fun getTaskDueDate(): ZonedDateTime? { return _task.value?.dueDate }
-
-    fun getAttachments(): List<Attachment> { return _attachments.value ?: emptyList() }
-    fun setAttachments(attachments: List<Attachment>?) { _attachments.value = attachments?.toArrayList() }
-
-    fun addAttachment(attachment: Attachment) {
-        _attachments.value?.add(attachment)
-        _attachments.notifyObservers()
-    }
-    fun removeAttachment(attachment: Attachment) {
-        _attachments.value?.remove(attachment)
-        _attachments.notifyObservers()
-    }
-
-    fun getSubject(): Subject? { return _subject.value }
-    fun setSubject(subject: Subject?) = viewModelScope.launch {
-        if (subject != null) {
-            _task.value?.subject = subject.subjectID
-            _subject.value = subject
-            _schedules.value = database.schedules().fetchUsingID(subject.subjectID)
-        } else {
-            _task.value?.subject = null
-            _subject.value = null
-            _schedules.value = emptyList()
+    var task: Task? = Task()
+        set(value) {
+            field = value
+            _taskObservable.value = value
         }
+    var attachments = arrayListOf<Attachment>()
+        set(value) {
+            field = value
+            _attachmentObservable.value = value
+        }
+    var subject: Subject? = null
+        set(value) {
+            field = value
+            _subjectObservable.value = value
+            if (value != null) {
+                task?.subject = value.subjectID
+                fetchSchedulesFromDatabase(value.subjectID)
+            } else {
+                task?.subject = null
+                schedules = emptyList()
+            }
+        }
+    var schedules = listOf<Schedule>()
+
+    private val _taskObservable = MutableLiveData<Task?>(task)
+    private val _attachmentObservable = MutableLiveData<List<Attachment>>(emptyList())
+    private val _subjectObservable = MutableLiveData<Subject?>(subject)
+
+    val taskObservable: LiveData<Task?> = _taskObservable
+    val attachmentObservable: LiveData<List<Attachment>> = _attachmentObservable
+    val subjectObservable: LiveData<Subject?> = _subjectObservable
+
+    fun setTaskName(name: String?) { task?.name = name }
+    fun getTaskName(): String? = task?.name
+    fun hasTaskName(): Boolean = task?.name?.isNotEmpty() == true
+
+    fun setDueDate(dueDate: ZonedDateTime?) { task?.dueDate = dueDate }
+    fun getDueDate(): ZonedDateTime? = task?.dueDate
+    fun hasDueDate(): Boolean = task?.hasDueDate() == true
+    fun getFormattedDueDate(): String = task?.formatDueDate(applicationContext) ?: ""
+
+    fun setIsImportant(isImportant: Boolean) { task?.isImportant = isImportant }
+    fun setIsFinished(isFinished: Boolean) { task?.isFinished = isFinished }
+    fun setNotes(notes: String?) { task?.notes = notes }
+
+    fun addAttachment(item: Attachment) {
+        attachments.add(item)
+        _attachmentObservable.value = attachments
+    }
+    fun removeAttachment(item: Attachment) {
+        attachments.remove(item)
+        _attachmentObservable.value = attachments
     }
 
-    fun getSchedules(): List<Schedule> { return _schedules.value ?: emptyList() }
-    fun setSchedules(schedules: List<Schedule>) { _schedules.value = schedules }
+    fun fetchRecentItemFromClipboard(): String?
+            = clipboardManager.primaryClip?.getItemAt(0)?.text.toString()
 
     fun setNextMeetingForDueDate() {
-        getTask()?.dueDate = getDateTimeForNextMeeting()
+        task?.dueDate = getDateTimeForNextMeeting()
     }
 
     fun setClassScheduleAsDueDate(schedule: Schedule) {
-        getTask()?.dueDate = schedule.startTime?.let {
+        task?.dueDate = schedule.startTime?.let {
             Schedule.getNearestDateTime(schedule.daysOfWeek, it)
         }
     }
@@ -94,7 +96,7 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
 
         // Create new instance of schedule with
         // one day of week each
-        getSchedules().forEach {
+        schedules.forEach {
             it.getDaysAsList().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
                     endTime = it.endTime)
@@ -120,6 +122,10 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
         }
 
         return targetDate
+    }
+
+    private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
+        schedules = database.schedules().fetchUsingID(id)
     }
 
 }

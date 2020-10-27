@@ -4,18 +4,21 @@
 
     <Preference
         app:key="@string/key_notices"
-        app:title="@string/settings_third_party_notices" />
+        app:title="@string/settings_third_party_notices"
+        app:icon="@drawable/ic_hero_scale_24"/>
 
     <Preference
         app:key="@string/key_version"
-        app:title="@string/settings_build_version" />
+        app:title="@string/settings_build_version"
+        app:icon="@drawable/ic_hero_code_24"/>
 
     <PreferenceCategory
         app:title="@string/settings_group_contribute">
 
         <Preference
             app:key="@string/key_translate"
-            app:title="@string/settings_translate"/>
+            app:title="@string/settings_translate"
+            app:icon="@drawable/ic_hero_translate_24"/>
 
         <Preference
             app:key="@string/key_report_issue"

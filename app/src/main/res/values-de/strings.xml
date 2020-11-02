@@ -86,6 +86,11 @@
     <string name="days_of_week_item_friday_short">Fr</string>
     <string name="days_of_week_item_saturday_short">Sa</string>
 
+    <string name="weeks_of_month_item_week_1">Woche 1</string>
+    <string name="weeks_of_month_item_week_2">Woche 2</string>
+    <string name="weeks_of_month_item_week_3">Woche 3</string>
+    <string name="weeks_of_month_item_week_4">Woche 4</string>
+
     <string name="dialog_assign_subject">Betreff zuweisen</string>
     <string name="dialog_pick_start_time">Wählen Sie eine Startzeit</string>
     <string name="dialog_pick_end_time">Wählen Sie eine Endzeit</string>
@@ -122,6 +127,7 @@
     <string name="field_subject_code">Betreff Code</string>
     <string name="field_description">Beschreibung</string>
     <string name="field_days_of_week">Wochentage</string>
+    <string name="field_weeks_of_month">Wochen des Monats</string>
     <string name="field_start_time">Startzeit</string>
     <string name="field_end_time">Endzeit</string>
     <string name="field_task_name">Name der Aufgabe</string>

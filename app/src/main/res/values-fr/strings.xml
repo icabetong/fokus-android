@@ -85,6 +85,11 @@
     <string name="days_of_week_item_friday_short">Ven</string>
     <string name="days_of_week_item_saturday_short">Sam</string>
 
+    <string name="weeks_of_month_item_week_1">Semaine 1</string>
+    <string name="weeks_of_month_item_week_2">Semaine 2</string>
+    <string name="weeks_of_month_item_week_3">Semaine 3</string>
+    <string name="weeks_of_month_item_week_4">Semaine 4</string>
+
     <string name="dialog_assign_subject">Attribuer un sujet</string>
     <string name="dialog_pick_start_time">Choisissez une heure de début</string>
     <string name="dialog_pick_end_time">Choisissez une heure de fin</string>
@@ -121,6 +126,7 @@
     <string name="field_subject_code">Code matière</string>
     <string name="field_description">Description</string>
     <string name="field_days_of_week">Jours de la semaine</string>
+    <string name="field_weeks_of_month">Semaines du mois</string>
     <string name="field_start_time">Heure de début</string>
     <string name="field_end_time">Heure de fin</string>
     <string name="field_task_name">Nom de la tâche</string>

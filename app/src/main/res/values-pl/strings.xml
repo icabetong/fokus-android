@@ -85,6 +85,11 @@
     <string name="days_of_week_item_friday_short">Pią</string>
     <string name="days_of_week_item_saturday_short">Sob</string>
 
+    <string name="weeks_of_month_item_week_1">Tydzień 1</string>
+    <string name="weeks_of_month_item_week_2">Tydzień 2</string>
+    <string name="weeks_of_month_item_week_3">Tydzień 3</string>
+    <string name="weeks_of_month_item_week_4">Tydzień 4</string>
+
     <string name="dialog_assign_subject">Przydzielić Podmiot</string>
     <string name="dialog_pick_start_time">Wybierz czas rozpoczęcia</string>
     <string name="dialog_pick_end_time">Wybierz czas końcowy</string>
@@ -121,6 +126,7 @@
     <string name="field_subject_code">Kod Przedmiotu</string>
     <string name="field_description">Opis</string>
     <string name="field_days_of_week">Dni Tygodnia</string>
+    <string name="field_weeks_of_month">Tygodnie miesiąca</string>
     <string name="field_start_time">Czas Rozpoczęcia</string>
     <string name="field_end_time">Czas Końcowy</string>
     <string name="field_task_name">Nazwa Zadania</string>

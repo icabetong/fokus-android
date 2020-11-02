@@ -51,6 +51,11 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                 binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
 
+                binding.weekOneChip.isChecked = schedule.atWeekOne()
+                binding.weekTwoChip.isChecked = schedule.atWeekTwo()
+                binding.weekThreeChip.isChecked = schedule.atWeekThree()
+                binding.weekFourChip.isChecked = schedule.atWeekFour()
+
                 schedule.getDaysAsList().forEach { day ->
                     when (day) {
                         DayOfWeek.SUNDAY.value -> binding.sundayChip.isChecked = true
@@ -121,7 +126,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
         }
 
         binding.actionButton.setOnClickListener {
-            schedule.daysOfWeek = 0
+
             binding.daysOfWeekGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
                     schedule.daysOfWeek += when (it.id) {
@@ -132,6 +137,18 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                         R.id.thursdayChip -> Schedule.BIT_VALUE_THURSDAY
                         R.id.fridayChip -> Schedule.BIT_VALUE_FRIDAY
                         R.id.saturdayChip -> Schedule.BIT_VALUE_SATURDAY
+                        else -> 0
+                    }
+                }
+            }
+
+            binding.weekOfMonthGroup.forEach {
+                if ((it as? Chip)?.isChecked == true) {
+                    schedule.weeksOfMonth += when (it.id) {
+                        R.id.weekOneChip -> Schedule.BIT_VALUE_WEEK_ONE
+                        R.id.weekTwoChip -> Schedule.BIT_VALUE_WEEK_TWO
+                        R.id.weekThreeChip -> Schedule.BIT_VALUE_WEEK_THREE
+                        R.id.weekFourChip -> Schedule.BIT_VALUE_WEEK_FOUR
                         else -> 0
                     }
                 }

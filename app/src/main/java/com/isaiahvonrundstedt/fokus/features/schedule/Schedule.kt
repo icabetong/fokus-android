@@ -30,6 +30,7 @@ data class Schedule @JvmOverloads constructor(
     @PrimaryKey
     var scheduleID: String = UUID.randomUUID().toString(),
     var daysOfWeek: Int = 0,
+    var weeksOfMonth: Int = 0,
     @TypeConverters(DateTimeConverter::class)
     var startTime: LocalTime? = null,
     @TypeConverters(DateTimeConverter::class)
@@ -149,6 +150,14 @@ data class Schedule @JvmOverloads constructor(
         return days
     }
 
+    fun atWeekOne(): Boolean = weeksOfMonth and 1 == BIT_VALUE_WEEK_ONE
+
+    fun atWeekTwo(): Boolean = weeksOfMonth and 2 == BIT_VALUE_WEEK_TWO
+
+    fun atWeekThree(): Boolean = weeksOfMonth and 4 == BIT_VALUE_WEEK_THREE
+
+    fun atWeekFour(): Boolean = weeksOfMonth and 8 == BIT_VALUE_WEEK_FOUR
+
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Schedule::class.java)
 
     override fun toJsonFile(destination: File, name: String): File {
@@ -177,6 +186,11 @@ data class Schedule @JvmOverloads constructor(
         const val BIT_VALUE_THURSDAY = 16
         const val BIT_VALUE_FRIDAY = 32
         const val BIT_VALUE_SATURDAY = 64
+
+        const val BIT_VALUE_WEEK_ONE = 1
+        const val BIT_VALUE_WEEK_TWO = 2
+        const val BIT_VALUE_WEEK_THREE = 4
+        const val BIT_VALUE_WEEK_FOUR = 8
 
         val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Schedule>() {
             override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {

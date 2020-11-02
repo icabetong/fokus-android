@@ -86,6 +86,11 @@
     <string name="days_of_week_item_friday_short">Vr</string>
     <string name="days_of_week_item_saturday_short">Za</string>
 
+    <string name="weeks_of_month_item_week_1">Week 1</string>
+    <string name="weeks_of_month_item_week_2">Week 2</string>
+    <string name="weeks_of_month_item_week_3">Week 3</string>
+    <string name="weeks_of_month_item_week_4">Week 4</string>
+
     <string name="dialog_assign_subject">Onderwerp Toewijzen</string>
     <string name="dialog_pick_start_time">Kies een starttijd</string>
     <string name="dialog_pick_end_time">Kies een eindtijd</string>
@@ -122,6 +127,7 @@
     <string name="field_subject_code">Onderwerp Code</string>
     <string name="field_description">Beschrijving</string>
     <string name="field_days_of_week">Dagen van de week</string>
+    <string name="field_weeks_of_month">Weken van de maand</string>
     <string name="field_start_time">Starttijd</string>
     <string name="field_end_time">Enddtijd</string>
     <string name="field_task_name">Taaknaam</string>

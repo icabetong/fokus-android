@@ -34,6 +34,7 @@ data class Subject @JvmOverloads constructor(
 ) : Parcelable, Streamable {
 
     // Used for the color tag of the subject
+    @JsonClass(generateAdapter = false)
     enum class Tag(val color: Int) {
         SKY(Color.parseColor("#2196f3")),
         GRASS(Color.parseColor("#71a234")),

@@ -85,6 +85,11 @@
     <string name="days_of_week_item_friday_short">Птн</string>
     <string name="days_of_week_item_saturday_short">Сбт</string>
 
+    <string name="weeks_of_month_item_week_1">1 неделя</string>
+    <string name="weeks_of_month_item_week_2">2 неделя</string>
+    <string name="weeks_of_month_item_week_3">3 неделя</string>
+    <string name="weeks_of_month_item_week_4">4 неделя</string>
+
     <string name="dialog_assign_subject">Назначить Предмет</string>
     <string name="dialog_pick_start_time">Выберите время начала</string>
     <string name="dialog_pick_end_time">Выберите время окончания</string>
@@ -121,6 +126,7 @@
     <string name="field_subject_code">Предметный код</string>
     <string name="field_description">Описание</string>
     <string name="field_days_of_week">Дни недели</string>
+    <string name="field_weeks_of_month">Недели месяца</string>
     <string name="field_start_time">Время начала</string>
     <string name="field_end_time">Время окончания</string>
     <string name="field_task_name">Имя задачи</string>

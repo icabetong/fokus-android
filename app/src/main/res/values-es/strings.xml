@@ -1,0 +1,319 @@
+<resources>
+    <string translatable="false" name="app_name">Fokus</string>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Tus Tareas</string>
+    <string name="activity_tasks_pending">Tus tareas pendientes</string>
+    <string name="activity_tasks_finished">Tus tareas finalizadas</string>
+    <string name="activity_subjects">Tus Asignaturas</string>
+    <string name="activity_subjects_today">Tus asignaturas de hoy</string>
+    <string name="activity_subjects_tomorrow">Tus asignaturas de mañana</string>
+    <string name="activity_logs">Registro de notificaciones</string>
+    <string name="activity_settings">Configuracion</string>
+    <string name="activity_backup">Backup y Restauración</string>
+    <string name="activity_notices">Avisos de terceros</string>
+    <string name="activity_open_source_licenses">Licencias Open Source</string>
+    <string name="activity_about">Acerca de</string>
+
+    <string name="menu_more">Más</string>
+    <string name="menu_sort">Ordenar</string>
+    <string name="menu_filter">Filtro</string>
+    <string name="menu_share">Compartir</string>
+    <string name="menu_import">Importar</string>
+    <string name="menu_clear_items">Eliminar registros</string>
+    <string name="menu_export_to_file">Exportar a archivo</string>
+    <string name="menu_share_directly">Compartir directamente</string>
+
+    <string name="navigation_tasks">Tareas</string>
+    <string name="navigation_events">Eventos</string>
+    <string name="navigation_subjects">Asignaturas</string>
+    <string name="navigation_logs">Registro</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
+
+    <string name="button_add_task">Añadir tarea</string>
+    <string name="button_add_event">Añadir Evento</string>
+    <string name="button_add_subject">Añadir Asignatura</string>
+    <string name="button_add">Agregar</string>
+    <string name="button_new">Nuevo</string>
+    <string name="button_save">Guardar</string>
+    <string name="button_done">Listo</string>
+    <string name="button_undo">Deshacer</string>
+    <string name="button_remove">Remover</string>
+    <string name="button_continue">Continuar</string>
+    <string name="button_mark_as_finished">Marcar como Terminado</string>
+    <string name="button_mark_as_important">Marcar como Importante</string>
+    <string name="button_delete">Eliminar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_discard">Descartar</string>
+    <string name="button_dismiss">Descartar</string>
+    <string name="button_learn_more">Más información</string>
+    <string name="button_view_schedules">Ver Programas</string>
+
+    <string name="empty_view_no_subjects_title">Sin asignaturas añadidas</string>
+    <string name="empty_view_no_subjects_summary">Las asignaturas te ayudan a ordenar tus tareas y eventos, Si tienes una, añadela con el boton de abajo.</string>
+    <string name="empty_view_no_classes_today_title">No hay clases hoy</string>
+    <string name="empty_view_no_classes_today_summary">No tienes clases programadas para hoy.</string>
+    <string name="empty_view_no_classes_tomorrow_title">No hay clases mañana</string>
+    <string name="empty_view_no_classes_tomorrow_summary">No tiene clases programadas para mañana.</string>
+    <string name="empty_view_no_tasks_title">No hay tareas pendientes</string>
+    <string name="empty_view_no_tasks_summary">Por el momento no tienes tareas pendientes. Si tienes una, añadela con el boton de abajo.</string>
+    <string name="empty_view_no_finished_title">Sin tareas finalizadas</string>
+    <string name="empty_view_no_finished_summary">Por el momento no tienes tareas finalizadas. Cada tarea marcada como finalizada se mostrará aquí.</string>
+    <string name="empty_view_no_logs_title">No hay registros</string>
+    <string name="empty_view_no_logs_summary">Una vez que una tarea, evento o cualquier recordatorio aparezca en tus notificaciones, también aparecerá aquí.</string>
+    <string name="empty_view_no_events_title">No hay eventos programados</string>
+    <string name="empty_view_no_events_summary">Por el momento no tienes eventos programados. Si tienes uno, añadela con el boton de abajo.</string>
+    <string name="empty_view_no_previous_title">No hay eventos previos</string>
+    <string name="empty_view_no_previous_summary">Por el momento no tienes eventos previos. Cada evento que haya pasado su fecha de programación, aparecerá aquí.</string>
+
+    <string name="days_of_week_item_sunday">Domingo</string>
+    <string name="days_of_week_item_monday">Lunes</string>
+    <string name="days_of_week_item_tuesday">Martes</string>
+    <string name="days_of_week_item_wednesday">Miercoles</string>
+    <string name="days_of_week_item_thursday">Jueves</string>
+    <string name="days_of_week_item_friday">Viernes</string>
+    <string name="days_of_week_item_saturday">Sabado</string>
+
+    <string name="days_of_week_item_sunday_short">Dom</string>
+    <string name="days_of_week_item_monday_short">Lun</string>
+    <string name="days_of_week_item_tuesday_short">Mar</string>
+    <string name="days_of_week_item_wednesday_short">Mie</string>
+    <string name="days_of_week_item_thursday_short">Jue</string>
+    <string name="days_of_week_item_friday_short">Vie</string>
+    <string name="days_of_week_item_saturday_short">Sab</string>
+
+    <string name="weeks_of_month_item_week_1">Semana 1</string>
+    <string name="weeks_of_month_item_week_2">Semana 2</string>
+    <string name="weeks_of_month_item_week_3">Semana 3</string>
+    <string name="weeks_of_month_item_week_4">Semana 4</string>
+
+    <string name="dialog_assign_subject">Asignar Asignatura</string>
+    <string name="dialog_pick_start_time">Escoge una Hora de inicio</string>
+    <string name="dialog_pick_end_time">Escoge una Hora de finalización</string>
+    <string name="dialog_pick_color_tag">Escoge un color para la etiqueta</string>
+    <string name="dialog_select_notification_interval">Seleccionar intervalo de notificacion</string>
+    <string name="dialog_choose_theme">Seleccionar tema</string>
+    <string name="dialog_choose_backup">Seleccionar archivo de backup</string>
+    <string name="dialog_confirm_deletion_title">Quieres remover \"%1$s\"?</string>
+    <string name="dialog_confirm_deletion_summary">Una vez que este item sea borrado, no se puede recuperar.</string>
+    <string name="dialog_schedule_details">Detalles del programa</string>
+    <string name="dialog_discard_changes">Descartar cambios?</string>
+    <string name="dialog_select_file_import">Seleccionar archivo para importar</string>
+    <string name="dialog_send_to">Enviar a</string>
+    <string name="dialog_sharing_options">Opciones para compartir</string>
+    <string name="dialog_class_schedules">Programas de clase</string>
+    <string name="dialog_filter_options">Opciones de filtro</string>
+    <string name="dialog_new_attachment">Nuevo Adjunto</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Ingresa la URL del sitio web</string>
+    <string name="dialog_sorting">Ordenar</string>
+
+    <string name="attachment_type_import_file">Importar archivo</string>
+    <string name="attachment_type_website_url">URL del sitio web</string>
+
+    <string name="sorting_directions_ascending">Ascendente</string>
+    <string name="sorting_directions_descending">Descendente</string>
+
+    <string name="filter_options_all">Todos</string>
+    <string name="filter_options_pending_tasks">Solo pendientes</string>
+    <string name="filter_options_finished_tasks">Solo finalizados</string>
+    <string name="filter_options_today_classes">Solo de hoy</string>
+    <string name="filter_options_tomorrow_classes">Solo de mañana</string>
+
+    <string name="field_subject_code">Codigo de asignacion</string>
+    <string name="field_description">Descripcion</string>
+    <string name="field_days_of_week">Dias de la semana</string>
+    <string name="field_weeks_of_month">Semanas del mes</string>
+    <string name="field_start_time">Hora de inicio</string>
+    <string name="field_end_time">Hora de finalización</string>
+    <string name="field_task_name">Nombre de la tarea</string>
+    <string name="field_notes">Notas</string>
+    <string name="field_subject">Asignatura</string>
+    <string name="field_due_date">Fecha limite</string>
+    <string name="field_event_name">Nombre del evento</string>
+    <string name="field_schedule">Programa</string>
+    <string name="field_location">Lugar</string>
+    <string name="field_attachments">Archivos adjuntos</string>
+    <string name="field_class_time">Hora de clase</string>
+    <string name="field_color_tag">Color de etiqueta</string>
+    <string name="field_priority">Prioridad</string>
+    <string name="field_status">Estado</string>
+    <string name="field_not_set">No establecido</string>
+    <string name="field_due_in_the_next_meeting">En la proxima reunion</string>
+    <string name="field_due_pick_from_schedule">Elegir del programa de clases</string>
+    <string name="field_due_custom">Personalizado</string>
+    <string name="field_attachment_name">Nombre del archivo adjunto</string>
+
+    <string name="hint_subject_description">El nombre de la asignatura</string>
+    <string name="hint_task_notes">Algunas ideas o detalles menores sobre la tarea</string>
+    <string name="hint_event_location">Entrar a una habitación, edificio o cualquier lugar</string>
+    <string name="hint_event_notes">Algunas ideas o detalles menores sobre el evento</string>
+
+    <string name="feedback_subject_removed">Asignatura removida</string>
+    <string name="feedback_log_removed">Registro removido</string>
+    <string name="feedback_task_removed">Tarea removida</string>
+    <string name="feedback_schedule_removed">Programa removido</string>
+    <string name="feedback_attachment_added">Adjunto añadido</string>
+    <string name="feedback_attachment_removed">Adjunto removido</string>
+    <string name="feedback_event_removed">Evento removido</string>
+    <string name="feedback_task_marked_as_finished">Tarea marcada como finalizada</string>
+    <string name="feedback_task_marked_as_pending">Tarea marcada como pendiente</string>
+    <string name="feedback_subject_empty_name">Olvidaste agregar el codigo de la asignacion</string>
+    <string name="feedback_subject_empty_description">Olvidaste agregar una descripcion</string>
+    <string name="feedback_subject_no_schedule">Olvidaste agregar un programa</string>
+    <string name="feedback_schedule_empty_days">Olvidaste especificar los dias</string>
+    <string name="feedback_schedule_empty_start_time">Olvidaste agregar el horario de inicio</string>
+    <string name="feedback_schedule_empty_end_time">Olvidaste agregar el horario de finalización</string>
+    <string name="feedback_task_empty_name">Olvidaste agregar el nombre de la tarea</string>
+    <string name="feedback_task_empty_due_date">Olvidaste especificar la fecha limite</string>
+    <string name="feedback_event_empty_name">Olvidaste agregar el nombre del evento</string>
+    <string name="feedback_event_empty_location">Olvidaste agregar el lugar</string>
+    <string name="feedback_event_empty_schedule">Olvidaste agregar el programa</string>
+    <string name="feedback_restore_invalid">El archivo de backup es invalido</string>
+    <string name="feedback_restore_corrupted">El archivo de backup esta corrupto</string>
+    <string name="feedback_backup_empty">No hay items para el backup</string>
+    <string name="feedback_backup_failed">El proceso de backup tuvo un error</string>
+    <string name="feedback_import_ongoing">Importacion en progreso</string>
+    <string name="feedback_import_completed">Importacion completada</string>
+    <string name="feedback_import_failed">Importacion fallida</string>
+    <string name="feedback_export_ongoing">Exportacion en progreso</string>
+    <string name="feedback_export_completed">Exportacion completada</string>
+    <string name="feedback_export_failed">Exportacion fallida</string>
+    <string name="feedback_unable_to_share_title">No es posible compartir</string>
+    <string name="feedback_unable_to_share_message">No hay inforamción valida para ser compartida</string>
+
+    <string name="settings_group_interface">Interface</string>
+    <string name="settings_group_sound">Sonido</string>
+    <string name="settings_group_notification">Notificaciones</string>
+    <string name="settings_group_advanced">Avanzado</string>
+    <string name="settings_group_debugging">Debugging</string>
+    <string name="settings_group_contribute">Contribuir</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_item_system">Default del sistema</string>
+    <string name="settings_theme_item_dark">Oscuro</string>
+    <string name="settings_theme_item_light">Claro</string>
+    <string name="settings_confetti_title">Confetti</string>
+    <string name="settings_confetti_summary">Mostrar confetti cuando las tareas se marquen como finalizadas</string>
+
+    <string name="settings_completion_sounds_title">Sonidos de finalizacion</string>
+    <string name="settings_completion_sounds_summary">Reproducir un sonido cuando las tareas se marquen como finalizadas</string>
+
+    <string name="settings_reminder_frequency_title">Frecuencia de recordatorio</string>
+    <string name="settings_reminder_frequency_item_everyday">Todos los dias</string>
+    <string name="settings_reminder_frequency_item_weekends">Fines de semana</string>
+    <string name="settings_remind_me_in_time_of_day">Recordame a esta hora</string>
+    <string name="settings_when_nearing_due_title">Cuando la tarea este cerca de la fecha limite</string>
+    <string name="settings_when_nearing_due_summary">Mostrar notificaciones para tareas que esten cerca de su fecha limite</string>
+    <string name="settings_task_reminders">Intervalo de recordatorio para las tareas</string>
+    <string name="settings_task_reminders_item_hour">1 hora antes</string>
+    <string name="settings_task_reminders_item_three_hours">3 horas antes</string>
+    <string name="settings_task_reminders_item_day">1 dia antes</string>
+    <string name="settings_incoming_events_title">Eventos entrantes</string>
+    <string name="settings_incoming_events_summary">Mostrar notificaciones acerca de eventos entrantes para este dia</string>
+    <string name="settings_event_reminders">Intervalo de recordatorio para los eventos</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 minutos antes</string>
+    <string name="settings_event_reminders_item_half_hour">30 minutos antes</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Clases para este dia</string>
+    <string name="settings_classes_for_this_day_summary">Mostrar notificaciones de clases para este dia</string>
+    <string name="settings_class_reminders">Intervalo de recordatorio para las clases</string>
+    <string name="settings_class_reminders_item_5_minutes">5 minutos antes</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">Mas opciones</string>
+
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_backup_summary_no_previous">No hay Backups previos</string>
+    <string name="settings_restore">Restaurar</string>
+    <string name="settings_use_external_browser_title">Abrir links en navegador externo</string>
+    <string name="settings_use_external_browser_summary">Usar el navegador default del sistema para abrir hyperlinks</string>
+
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
+    <string name="settings_not_working_notifications_info">A veces no te llegarán notificaciones debido a la agresiva optimizacion de bateria del fabricante.</string>
+
+    <string name="settings_translate">Traducir</string>
+    <string name="settings_report_an_issue">Reportar un problema</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Build Version</string>
+
+    <string name="tag_color_sky">Cielo</string>
+    <string name="tag_color_grass">Cesped</string>
+    <string name="tag_color_sunset">Ocaso</string>
+    <string name="tag_color_lemon">Limon</string>
+    <string name="tag_color_sea">Mar</string>
+    <string name="tag_color_grape">Uva</string>
+    <string name="tag_color_cherry">Cereza</string>
+    <string name="tag_color_coral">Coral</string>
+    <string name="tag_color_midnight">Medianoche</string>
+    <string name="tag_color_mint">Menta</string>
+    <string name="tag_color_lavender">Lavanda</string>
+    <string name="tag_color_graphite">Grafito</string>
+
+    <string name="widget_task_name">Widget de tareas</string>
+    <string name="widget_task_title">Tareas</string>
+    <string name="widget_task_empty">No tienes tareas por hoy</string>
+    <string name="widget_event_name">Widget de eventos</string>
+    <string name="widget_event_title">Eventoss</string>
+    <string name="widget_event_empty">No tienes eventos por hoy</string>
+    <string name="widget_class_name">Widget de clases</string>
+    <string name="widget_class_title">Clases</string>
+    <string name="widget_class_empty">No tienes clases por hoy</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Marcar esto como importante significa que mostrará una notificacion permanente en tu barra de notificaciones.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Recordatorios</string>
+
+    <string name="notification_channel_general">General</string>
+    <string name="notification_channel_task_reminders">Recordatorios de tareas</string>
+    <string name="notification_channel_event_reminders">Recordatorios de eventos</string>
+    <string name="notification_channel_class_reminders">Recordatorios de clases</string>
+
+    <string name="notification_pending_tasks_title">Tienes %1$d tareas pendientes</string>
+    <string name="notification_pending_tasks_summary">Quizás quieras echarle un vistazo</string>
+
+    <string name="notification_backup_ongoing">Realizando backup</string>
+    <string name="notification_backup_error">Backup Fallido</string>
+    <string name="notification_backup_success">Backup Completado</string>
+
+    <string name="notification_restore_ongoing">Restaurando backup</string>
+    <string name="notification_restore_error">Restauracion fallida</string>
+    <string name="notification_restore_success">Restauracion completada</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Agregar como adjunto</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">Buen dia!</string>
+    <string name="greeting_morning">Buenos días!</string>
+    <string name="greeting_afternoon">Buenas tardes!</string>
+    <string name="greeting_evening">Buenas noches!</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and">&#160;and&#160;</string>
+    <string name="yesterday_at">Ayer a las %1$s</string>
+    <string name="yesterday">Ayer</string>
+    <string name="tomorrow_at">Mañana a las %1$s</string>
+    <string name="tomorrow">Mañana</string>
+    <string name="today_at">Hoy a las %1$s</string>
+    <string name="today">Hoy</string>
+    <string name="due_today_at">Fecha limite hoy a las %1$s</string>
+    <string name="due_tomorrow_at">Fecha limite hoy a las %1$s</string>
+
+    <string name="open_source_libraries">Open Source Libraries</string>
+    <string name="credit_other_resources">Otros recursos</string>
+    <string name="credit_notification_sound_title" translatable="false">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Sonido de notificacion</string>
+    <string name="credit_launcher_icon_title" translatable="false">Freepik</string>
+    <string name="credit_launcher_icon_summary">Icono del launcher</string>
+    <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
+    <string name="credit_user_interface_icons_summary">Iconos de la interfaz del usuario</string>
+
+</resources>

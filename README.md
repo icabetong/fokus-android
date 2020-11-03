@@ -24,6 +24,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 * 🇩🇪 German
 * 🇺🇸 English
 * 🇫🇷 French
+* 🇪🇸  Spanish [Thanks! Emmanuel Kunst]
 * 🇮🇹 Italian
 * 🇳🇱 Dutch
 * 🇵🇱 Polish

@@ -21,7 +21,7 @@ class SubjectPickerSheet(fragmentManager: FragmentManager)
 
     private val binding get() = _binding!!
     private val viewModel by lazy {
-        ViewModelProvider(this).get(SubjectViewModel::class.java)
+        ViewModelProvider(this).get(SubjectPickerViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

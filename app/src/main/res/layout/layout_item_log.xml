@@ -16,19 +16,21 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iconView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
             android:padding="4dp"
+            android:background="@drawable/shape_icon_background"
+            app:tint="@color/fokus_blue_900"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_hero_beaker_24"/>
 
         <TextView
             android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="@dimen/icon_to_text_padding"
             android:ellipsize="end"
             android:lines="1"
             android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
@@ -43,7 +45,7 @@
             android:id="@+id/summaryView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="@dimen/icon_to_text_padding"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"

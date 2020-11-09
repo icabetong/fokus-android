@@ -3,13 +3,7 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="@android:color/white"/>
-        </shape>
-    </item>
-
-    <item>
-        <shape android:shape="oval">
-            <solid android:color="@color/color_theme_blue_variant"/>
+            <solid android:color="@color/fokus_blue_50"/>
         </shape>
     </item>
 

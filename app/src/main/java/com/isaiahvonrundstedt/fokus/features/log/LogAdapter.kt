@@ -36,7 +36,7 @@ class LogAdapter(private var actionListener: ActionListener)
                 binding.titleView.text = t.title
                 binding.summaryView.text = t.content
                 binding.dateTimeView.text = t.formatDateTime(binding.root.context)
-                t.setIconToView(binding.iconView)
+                binding.iconView.setImageResource(t.getIconResource())
             }
         }
     }

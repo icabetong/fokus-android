@@ -26,6 +26,10 @@
     <dimen name="item_spacing_large">16dp</dimen>
     <dimen name="item_spacing_huge">32dp</dimen>
 
+    <dimen name="icon_width">40dp</dimen>
+    <dimen name="icon_height">40dp</dimen>
+    <dimen name="icon_to_text_padding">@dimen/item_padding</dimen>
+
     <!-- Widget -->
     <dimen name="widget_title">16sp</dimen>
     <dimen name="widget_title_padding">12sp</dimen>

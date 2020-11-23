@@ -34,7 +34,7 @@ class SubjectEditorViewModel: ViewModel() {
     fun setDescription(description: String?) { subject?.description = description }
     fun getDescription(): String? = subject?.description
 
-    fun hasSchedules(): Boolean = !schedules.isEmpty()
+    fun hasSchedules(): Boolean = schedules.isNotEmpty()
 
     fun setTag(tag: Subject.Tag) { subject?.tag = tag }
     fun getTag(): Subject.Tag? = subject?.tag

@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_checked="true"
-        android:color="@color/color_primary"/>
+        android:color="@color/color_chip_background_alpha"/>
     <item android:state_selected="true"
-        android:color="@color/color_primary"/>
-    <item android:color="@android:color/transparent"/>
+        android:color="@color/color_chip_background_alpha"/>
+    <item android:color="@color/color_surface"/>
 
 </selector>

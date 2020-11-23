@@ -4,37 +4,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleEditorBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 
-class ScheduleAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Schedule, ScheduleAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
+class ScheduleAdapter(private val actionListener: ActionListener<Schedule>)
+    : BaseBasicAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         val binding = LayoutItemScheduleEditorBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(binding.root)
+        return ScheduleViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+    override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
+        holder.onBind(items[position], position)
     }
 
-    inner class ViewHolder(itemView: View): BaseAdapter.BaseViewHolder(itemView) {
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    inner class ScheduleViewHolder(itemView: View)
+        : BaseBasicAdapter.BaseBasicViewHolder<Schedule>(itemView) {
 
         private val binding = LayoutItemScheduleEditorBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is Schedule) {
-                binding.titleView.text = t.formatDaysOfWeek(binding.root.context, false)
-                binding.summaryView.text = t.formatBothTime(binding.root.context)
-            }
+        override fun onBind(t: Schedule, position: Int) {
+            with(binding) {
+                titleView.text = t.formatDaysOfWeek(root.context, false)
+                summaryView.text = t.formatBothTime(root.context)
 
-            binding.removeButton.setOnClickListener {
-                actionListener.onActionPerformed(t, ActionListener.Action.DELETE, null)
-            }
+                removeButton.setOnClickListener {
+                    actionListener.onActionPerformed(t, position, ActionListener.Action.DELETE)
+                }
 
-            binding.root.setOnClickListener {
-                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                root.setOnClickListener {
+                    actionListener.onActionPerformed(t, position, ActionListener.Action.SELECT)
+                }
             }
         }
     }

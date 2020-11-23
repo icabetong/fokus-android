@@ -19,9 +19,11 @@
     <color name="color_primary_text">@color/color_on_surface</color>
     <color name="color_secondary_text">#808080</color>
 
-    <color name="fokus_blue_50">#e1f5fe</color>
-    <color name="fokus_blue_100">#b3e5fc</color>
-    <color name="fokus_blue_500">#04aaf4</color>
-    <color name="fokus_blue_700">#0289d1</color>
-    <color name="fokus_blue_900">#01589b</color>
+    <color name="color_chip_background_alpha">#590090ea</color>
+
+    <color name="fokus_blue_50">#e2f1fc</color>
+    <color name="fokus_blue_100">#b9dcf8</color>
+    <color name="fokus_blue_500">#0090ea</color>
+    <color name="fokus_blue_700">#0071ca</color>
+    <color name="fokus_blue_900">#004399</color>
 </resources>

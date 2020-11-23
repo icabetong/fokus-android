@@ -39,7 +39,8 @@ import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
-import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import kotlinx.android.synthetic.main.activity_editor_event.*
 import java.io.File
 import java.time.ZoneId
@@ -184,13 +185,8 @@ class EventEditor : BaseEditor() {
         }
 
         binding.subjectTextView.setOnClickListener {
-            SubjectPickerSheet(supportFragmentManager).show {
-                waitForResult { result ->
-                    viewModel.subject = result.subject
-                    viewModel.schedules = result.schedules
-                    hasFieldChange = true
-                }
-            }
+            startActivityForResult(Intent(this, SubjectPickerActivity::class.java),
+                SubjectPickerActivity.REQUEST_CODE_PICK)
         }
 
         binding.removeButton.setOnClickListener {
@@ -443,6 +439,13 @@ class EventEditor : BaseEditor() {
                     action = DataExporterService.ACTION_EXPORT_EVENT
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.event)
                 })
+            SubjectPickerActivity.REQUEST_CODE_PICK -> {
+                data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
+                    ?.also {
+                        viewModel.subject = it.subject
+                        viewModel.schedules = it.schedules
+                    }
+            }
         }
     }
 

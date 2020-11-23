@@ -17,6 +17,7 @@
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
     <string name="activity_about">О сайте</string>
 
+    <string name="menu_add">@string/button_add</string>
     <string name="menu_more">Подробнее</string>
     <string name="menu_sort">Сортировать</string>
     <string name="menu_filter">Фильтр</string>

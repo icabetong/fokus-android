@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemAttachmentBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import java.io.File
 
-class AttachmentAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Attachment, AttachmentAdapter.ViewHolder>(Attachment.DIFF_CALLBACK) {
+class AttachmentAdapter(private var actionListener: ActionListener<Attachment>)
+    : BaseBasicAdapter<Attachment, AttachmentAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutItemAttachmentBinding.inflate(LayoutInflater.from(parent.context),
@@ -19,16 +19,20 @@ class AttachmentAdapter(private var actionListener: ActionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(items[position], position)
     }
 
-    inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    inner class ViewHolder(itemView: View): BaseBasicViewHolder<Attachment>(itemView) {
 
         private val binding = LayoutItemAttachmentBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is Attachment) {
-                binding.titleView.text = when (t.type) {
+        override fun onBind(t: Attachment, position: Int) {
+            with (binding) {
+                titleView.text = when (t.type) {
                     Attachment.TYPE_IMPORTED_FILE ->
                         t.target?.let { File(it) }?.name
                     Attachment.TYPE_WEBSITE_LINK ->
@@ -39,14 +43,14 @@ class AttachmentAdapter(private var actionListener: ActionListener)
                         t.target
                 }
 
-                binding.iconView.setImageResource(t.getIconResource())
+                iconView.setImageResource(t.getIconResource())
 
-                binding.removeButton.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.DELETE, null)
+                removeButton.setOnClickListener {
+                    actionListener.onActionPerformed(t, position, ActionListener.Action.DELETE)
                 }
 
-                binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                root.setOnClickListener {
+                    actionListener.onActionPerformed(t, position, ActionListener.Action.SELECT)
                 }
             }
         }

@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
@@ -18,9 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
@@ -34,14 +31,14 @@ import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import java.io.File
 
-class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
+class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
 
     private var requestCode = 0
     private var hasFieldChange = false
@@ -133,9 +130,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         binding.addActionLayout.addItemButton.setOnClickListener {
             ScheduleEditor(supportFragmentManager).show {
                 arguments = bundleOf(
-                    Pair(ScheduleEditor.EXTRA_SUBJECT_ID, viewModel.subject?.subjectID)
+                    ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID
                 )
-                waitForResult { viewModel.addSchedule(it) }
+                waitForResult { schedule ->
+                    viewModel.addSchedule(schedule)
+                    this.dismiss()
+                }
             }
         }
 
@@ -188,28 +188,25 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
-        if (t is Schedule) {
-            when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    ScheduleEditor(supportFragmentManager).show {
-                        arguments = bundleOf(
-                            Pair(ScheduleEditor.EXTRA_SUBJECT_ID, viewModel.subject?.subjectID),
-                            Pair(ScheduleEditor.EXTRA_SCHEDULE, t)
-                        )
-                        waitForResult {
-                            viewModel.updateSchedule(it)
-                            hasFieldChange = true
-                        }
+    override fun onActionPerformed(t: Schedule, position: Int, action: BaseBasicAdapter.ActionListener.Action) {
+        when (action) {
+            BaseBasicAdapter.ActionListener.Action.SELECT -> {
+                ScheduleEditor(supportFragmentManager).show {
+                    arguments = bundleOf(
+                        ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID,
+                        ScheduleEditor.EXTRA_SCHEDULE to t)
+                    waitForResult {
+                        viewModel.updateSchedule(it)
+                        hasFieldChange = true
+                        this.dismiss()
                     }
                 }
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    viewModel.removeSchedule(t)
-                    hasFieldChange = true
-                    createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
-                        setAction(R.string.button_undo) { viewModel.addSchedule(t) }
-                    }
+            }
+            BaseBasicAdapter.ActionListener.Action.DELETE -> {
+                viewModel.removeSchedule(t)
+                hasFieldChange = true
+                createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
+                    setAction(R.string.button_undo) { viewModel.addSchedule(t) }
                 }
             }
         }

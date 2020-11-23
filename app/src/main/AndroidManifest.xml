@@ -79,6 +79,7 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
+        <activity android:name=".features.subject.picker.SubjectPickerActivity" />
 
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>

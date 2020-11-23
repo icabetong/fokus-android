@@ -17,6 +17,7 @@
     <string name="activity_open_source_licenses">Ogłoszenia typu Open Source</string>
     <string name="activity_about">O</string>
 
+    <string name="menu_add">@string/button_add</string>
     <string name="menu_more">Więcej</string>
     <string name="menu_sort">Sortować</string>
     <string name="menu_filter">Filtr</string>

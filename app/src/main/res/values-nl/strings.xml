@@ -18,6 +18,7 @@
     <string name="activity_open_source_licenses">Open Source Licenties</string>
     <string name="activity_about">Over</string>
 
+    <string name="menu_add">@string/button_add</string>
     <string name="menu_more">Meer</string>
     <string name="menu_sort">Sorteer</string>
     <string name="menu_filter">Filter</string>

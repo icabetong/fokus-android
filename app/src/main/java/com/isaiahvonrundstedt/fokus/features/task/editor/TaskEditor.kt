@@ -49,7 +49,8 @@ import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
-import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerSheet
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import java.io.File
 import java.time.ZonedDateTime
@@ -251,16 +252,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
 
         binding.subjectTextView.setOnClickListener {
-            SubjectPickerSheet(supportFragmentManager).show {
-                waitForResult { result ->
-                    with(this@TaskEditor) {
-                        binding.removeButton.isVisible = true
-                        viewModel.subject = result.subject
-                        viewModel.schedules = result.schedules
-                    }
-                    hasFieldChange = true
-                }
-            }
+            startActivityForResult(Intent(this, SubjectPickerActivity::class.java),
+                SubjectPickerActivity.REQUEST_CODE_PICK)
         }
 
         binding.removeButton.setOnClickListener {
@@ -481,6 +474,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
                     action = DataImporterService.ACTION_IMPORT_TASK
                 })
             }
+            SubjectPickerActivity.REQUEST_CODE_PICK ->
+                data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
+                    ?.also {
+                        viewModel.subject = it.subject
+                        viewModel.schedules = it.schedules
+                    }
         }
     }
 

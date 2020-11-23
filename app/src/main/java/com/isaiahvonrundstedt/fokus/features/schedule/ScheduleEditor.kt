@@ -24,7 +24,7 @@ import java.time.DayOfWeek
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 
     private var schedule: Schedule = Schedule()
-    private var requestCode: Int = REQUEST_CODE_INSERT
+    private var requestKey: String = REQUEST_CODE_INSERT
     private var _binding: LayoutSheetScheduleEditorBinding? = null
 
     private val binding get() = _binding!!
@@ -43,7 +43,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
             it.getParcelable<Schedule>(EXTRA_SCHEDULE)?.also { schedule ->
                 this.schedule = schedule
-                requestCode = REQUEST_CODE_UPDATE
+                requestKey = REQUEST_CODE_UPDATE
 
                 binding.startTimeTextView.text = schedule.formatStartTime(binding.root.context)
                 binding.endTimeTextView.text = schedule.formatEndTime(binding.root.context)
@@ -187,8 +187,8 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
     }
 
     companion object {
-        const val REQUEST_CODE_INSERT = 43
-        const val REQUEST_CODE_UPDATE = 89
+        const val REQUEST_CODE_INSERT = "request:insert"
+        const val REQUEST_CODE_UPDATE = "request:update"
         const val EXTRA_SCHEDULE = "extra:schedule"
         const val EXTRA_SUBJECT_ID = "extra:subject:id"
     }

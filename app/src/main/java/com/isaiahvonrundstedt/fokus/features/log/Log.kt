@@ -2,10 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.log
 
 import android.content.Context
 import android.os.Parcelable
-import android.widget.ImageView
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey

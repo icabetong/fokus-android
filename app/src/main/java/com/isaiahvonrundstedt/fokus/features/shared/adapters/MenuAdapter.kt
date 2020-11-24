@@ -5,12 +5,9 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.RecyclerView
-import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemMenuBinding
 
 class MenuAdapter(activity: Activity?,

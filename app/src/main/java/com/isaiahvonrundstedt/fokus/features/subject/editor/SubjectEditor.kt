@@ -22,7 +22,10 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
-import com.isaiahvonrundstedt.fokus.components.extensions.android.*
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
+import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService

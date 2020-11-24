@@ -46,7 +46,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -55,7 +55,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import java.io.File
 import java.time.ZonedDateTime
 
-class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
+class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
     private var requestCode = 0
     private var hasFieldChange = false
@@ -483,37 +483,34 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
-        if (t is Attachment) {
-            when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    if (t.target != null)
-                        onParseForIntent(t.target!!, t.type)
-                }
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    val uri = Uri.parse(t.target)
-                    val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
-                        t.name ?: uri.getFileName(this)
-                        else t.target!!
+    override fun onActionPerformed(t: Attachment, position: Int,action: BaseBasicAdapter.ActionListener.Action) {
+        when (action) {
+            BaseBasicAdapter.ActionListener.Action.SELECT -> {
+                if (t.target != null)
+                    onParseForIntent(t.target!!, t.type)
+            }
+            BaseBasicAdapter.ActionListener.Action.DELETE -> {
+                val uri = Uri.parse(t.target)
+                val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
+                    t.name ?: uri.getFileName(this)
+                    else t.target!!
 
-                    MaterialDialog(this).show {
-                        title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                            name))
-                        message(R.string.dialog_confirm_deletion_summary)
-                        positiveButton(R.string.button_delete) {
+                MaterialDialog(this).show {
+                    title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
+                        name))
+                    message(R.string.dialog_confirm_deletion_summary)
+                    positiveButton(R.string.button_delete) {
 
-                            viewModel.removeAttachment(t)
-                            when (t.type) {
-                                Attachment.TYPE_CONTENT_URI ->
-                                    contentResolver.delete(uri, null, null)
-                                Attachment.TYPE_IMPORTED_FILE ->
-                                    t.target?.let { File(it) }?.delete()
-                            }
-                            hasFieldChange = true
+                        viewModel.removeAttachment(t)
+                        when (t.type) {
+                            Attachment.TYPE_CONTENT_URI ->
+                                contentResolver.delete(uri, null, null)
+                            Attachment.TYPE_IMPORTED_FILE ->
+                                t.target?.let { File(it) }?.delete()
                         }
-                        negativeButton(R.string.button_cancel)
+                        hasFieldChange = true
                     }
+                    negativeButton(R.string.button_cancel)
                 }
             }
         }

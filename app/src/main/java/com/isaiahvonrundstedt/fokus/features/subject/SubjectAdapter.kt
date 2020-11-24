@@ -10,7 +10,6 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSingleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 
 class SubjectAdapter(private var actionListener: ActionListener,
                      private val scheduleListener: ScheduleListener)

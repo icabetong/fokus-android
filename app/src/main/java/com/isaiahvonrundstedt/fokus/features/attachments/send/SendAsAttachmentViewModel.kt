@@ -1,19 +1,16 @@
 package com.isaiahvonrundstedt.fokus.features.attachments.send
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.coroutines.launch
 
-class SendAsAttachmentViewModel(app: Application): BaseViewModel(app) {
+class SendAsAttachmentViewModel @ViewModelInject constructor(
+    private val repository: TaskRepository
+): ViewModel() {
 
-    private val repository = TaskRepository.getInstance(applicationContext)
     private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
 
     val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()

@@ -3,28 +3,17 @@ package com.isaiahvonrundstedt.fokus.database.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
+import com.isaiahvonrundstedt.fokus.database.dao.SubjectDAO
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import javax.inject.Inject
 
-class SubjectRepository private constructor(context: Context) {
-
-    private var database = AppDatabase.getInstance(context)
-    private var subjects = database.subjects()
-    private var schedules = database.schedules()
-
-    companion object {
-        private var instance: SubjectRepository? = null
-
-        fun getInstance(context: Context): SubjectRepository {
-            if (instance == null) {
-                synchronized(SubjectRepository::class) {
-                    instance = SubjectRepository(context)
-                }
-            }
-            return instance!!
-        }
-    }
+class SubjectRepository @Inject constructor(
+    private val subjects: SubjectDAO,
+    private val schedules: ScheduleDAO
+) {
 
     fun fetchLiveData(): LiveData<List<SubjectPackage>> = subjects.fetchLiveData()
 

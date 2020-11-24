@@ -39,8 +39,10 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
+@AndroidEntryPoint
 class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
 
     private var requestCode = 0

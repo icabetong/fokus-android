@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.event
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -13,13 +15,14 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 // that is supposed to trigger at its due minus the interval
 // This only triggers when the user has changed the fokus interval
 // for tasks in the Settings
-class EventNotificationScheduler(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
-
-    private val eventRepository by lazy { EventRepository.getInstance(applicationContext) }
+class EventNotificationScheduler @WorkerInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val repository: EventRepository
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        val items = eventRepository.fetchCore()
+        val items = repository.fetchCore()
 
         items.forEach { event ->
             if (event.schedule?.isAfterNow() == true) {

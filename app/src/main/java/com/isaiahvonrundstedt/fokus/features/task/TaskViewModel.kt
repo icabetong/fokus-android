@@ -1,44 +1,49 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import android.app.NotificationManager
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationWorker
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider
 import kotlinx.coroutines.launch
 
-class TaskViewModel(private var app: Application) : BaseViewModel(app) {
+class TaskViewModel @ViewModelInject constructor (
+    private val repository: TaskRepository,
+    private val preferenceManager: PreferenceManager,
+    private val workManager: WorkManager,
+    private val notificationManager: NotificationManager,
+    @Assisted
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val repository = TaskRepository.getInstance(app)
     private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
 
     val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
-    var filterOption = preferences.taskConstraint
+    var filterOption = preferenceManager.taskConstraint
         set(value) {
             field = value
-            preferences.taskConstraint = value
+            preferenceManager.taskConstraint = value
             rearrange(value, sort, sortDirection)
         }
 
-    var sort: Sort = preferences.tasksSort
+    var sort: Sort = preferenceManager.tasksSort
         set(value) {
             field = value
             rearrange(filterOption, value, sortDirection)
         }
 
-    var sortDirection: SortDirection = preferences.tasksSortDirection
+    var sortDirection: SortDirection = preferenceManager.tasksSortDirection
         set(value) {
             field = value
             rearrange(filterOption, sort, value)
@@ -63,7 +68,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
 
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
-        if (preferences.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
 
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -74,18 +79,18 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
                 request)
         }
 
-        TaskWidgetProvider.triggerRefresh(app)
+        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(task: Task) = viewModelScope.launch {
         repository.remove(task)
 
         if (task.isImportant)
-            notificationService?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
+            notificationManager.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         workManager.cancelUniqueWork(task.taskID)
 
-        TaskWidgetProvider.triggerRefresh(app)
+        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
@@ -95,12 +100,12 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
         // we should dismiss it when the user updates
         // the task to finish
         if (task.isFinished || !task.isImportant || task.dueDate?.isBeforeNow() == true)
-            notificationService?.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
+            notificationManager.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (preferences.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -111,7 +116,7 @@ class TaskViewModel(private var app: Application) : BaseViewModel(app) {
                 request)
         }
 
-        TaskWidgetProvider.triggerRefresh(app)
+        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

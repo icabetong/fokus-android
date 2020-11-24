@@ -11,7 +11,9 @@ import com.isaiahvonrundstedt.fokus.databinding.ActivitySubjectPickerBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SubjectPickerActivity: BaseActivity(), BaseAdapter.ActionListener {
 
     private lateinit var binding: ActivitySubjectPickerBinding

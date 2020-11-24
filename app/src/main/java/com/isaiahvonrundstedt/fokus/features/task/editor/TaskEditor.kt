@@ -52,9 +52,11 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.time.ZonedDateTime
 
+@AndroidEntryPoint
 class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
     private var requestCode = 0

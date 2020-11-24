@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.task
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -16,11 +18,12 @@ import java.util.concurrent.TimeUnit
 // This worker's function is to only show reminders
 // based on the frequency the user has selected; daily or every weekends
 // This will show a reminders for pending tasks.
-class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
-
-    private val taskRepository by lazy { TaskRepository.getInstance(applicationContext) }
-    private val logRepository by lazy { LogRepository.getInstance(applicationContext) }
+class TaskReminderWorker @WorkerInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val taskRepository: TaskRepository,
+    private val logRepository: LogRepository
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         val currentTime = ZonedDateTime.now()
@@ -52,7 +55,6 @@ class TaskReminderWorker(context: Context, workerParameters: WorkerParameters)
     }
 
     companion object {
-
         fun reschedule(context: Context) {
             val manager = WorkManager.getInstance(context)
             val preferences = PreferenceManager(context)

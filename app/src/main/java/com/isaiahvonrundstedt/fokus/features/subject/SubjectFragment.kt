@@ -22,8 +22,10 @@ import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
+import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.CascadePopupMenu
 
+@AndroidEntryPoint
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener {
 
     private var _binding: FragmentSubjectBinding? = null

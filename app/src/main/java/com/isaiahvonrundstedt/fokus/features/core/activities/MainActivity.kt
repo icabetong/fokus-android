@@ -31,8 +31,10 @@ import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import dagger.hilt.android.AndroidEntryPoint
 import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private var controller: NavController? = null

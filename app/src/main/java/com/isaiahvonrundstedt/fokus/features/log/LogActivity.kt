@@ -15,7 +15,9 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.databinding.ActivityLogsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
 
     private val logAdapter = LogAdapter(this)

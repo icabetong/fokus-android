@@ -29,6 +29,7 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -36,6 +37,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
 
+@AndroidEntryPoint
 class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     private var daysOfWeek: Array<DayOfWeek> = emptyArray()

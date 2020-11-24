@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.task
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkerParameters
@@ -12,13 +14,14 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 // that is supposed to trigger at its due minus the interval
 // This only triggers when the user has changed the fokus interval
 // for tasks in the Settings
-class TaskNotificationScheduler(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
-
-    private val taskRepository by lazy { TaskRepository.getInstance(applicationContext) }
+class TaskNotificationScheduler @WorkerInject constructor (
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val repository: TaskRepository
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        val tasks: List<Task> = taskRepository.fetchCore()
+        val tasks: List<Task> = repository.fetchCore()
 
         tasks.forEach { task ->
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -29,5 +32,4 @@ class TaskNotificationScheduler(context: Context, workerParameters: WorkerParame
 
         return Result.success()
     }
-
 }

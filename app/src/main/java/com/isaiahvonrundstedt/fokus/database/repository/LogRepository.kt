@@ -1,27 +1,11 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.dao.LogDAO
 import com.isaiahvonrundstedt.fokus.features.log.Log
+import javax.inject.Inject
 
-class LogRepository private constructor(context: Context) {
-
-    private var database = AppDatabase.getInstance(context)
-    private var logs = database.logs()
-
-    companion object {
-        private var instance: LogRepository? = null
-
-        fun getInstance(context: Context): LogRepository {
-            if (instance == null) {
-                synchronized(LogRepository::class) {
-                    instance = LogRepository(context)
-                }
-            }
-            return instance!!
-        }
-    }
+class LogRepository @Inject constructor(private val logs: LogDAO) {
 
     fun fetch(): LiveData<List<Log>> = logs.fetch()
 

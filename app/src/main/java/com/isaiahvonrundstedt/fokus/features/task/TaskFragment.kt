@@ -26,12 +26,14 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_task.*
 import me.saket.cascade.CascadePopupMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.io.File
 
+@AndroidEntryPoint
 class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
 
     private var _binding: FragmentTaskBinding? = null

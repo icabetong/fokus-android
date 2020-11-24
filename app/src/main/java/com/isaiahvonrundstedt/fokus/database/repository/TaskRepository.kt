@@ -1,30 +1,17 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.dao.AttachmentDAO
+import com.isaiahvonrundstedt.fokus.database.dao.TaskDAO
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import javax.inject.Inject
 
-class TaskRepository private constructor(context: Context) {
-
-    private var database = AppDatabase.getInstance(context)
-    private var tasks = database.tasks()
-    private var attachments = database.attachments()
-
-    companion object {
-        private var instance: TaskRepository? = null
-
-        fun getInstance(context: Context): TaskRepository {
-            if (instance == null) {
-                synchronized(TaskRepository::class) {
-                    instance = TaskRepository(context)
-                }
-            }
-            return instance!!
-        }
-    }
+class TaskRepository @Inject constructor(
+    private val tasks: TaskDAO,
+    private val attachments: AttachmentDAO
+) {
 
     fun fetchLiveData(): LiveData<List<TaskPackage>> = tasks.fetchLiveData()
 

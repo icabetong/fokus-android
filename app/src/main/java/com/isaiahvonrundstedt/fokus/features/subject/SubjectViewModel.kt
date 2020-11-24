@@ -1,49 +1,53 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import android.app.NotificationManager
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetProvider
 import kotlinx.coroutines.launch
 
-class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
+class SubjectViewModel @ViewModelInject constructor(
+    private val repository: SubjectRepository,
+    private val preferenceManager: PreferenceManager,
+    private val workManager: WorkManager,
+    @Assisted
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val repository = SubjectRepository.getInstance(app)
     private val _subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
 
     val subjects: MediatorLiveData<List<SubjectPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(subjects) { it.isNullOrEmpty() }
 
-    var constraint: Constraint = preferences.subjectConstraint
+    var constraint: Constraint = preferenceManager.subjectConstraint
         set(value) {
             field = value
-            preferences.subjectConstraint = value
+            preferenceManager.subjectConstraint = value
             if (constraint == Constraint.ALL)
                 sort = Sort.CODE
             rearrange(value, sort, direction)
         }
 
-    var sort: Sort = preferences.subjectSort
+    var sort: Sort = preferenceManager.subjectSort
         set(value) {
             field = value
-            preferences.subjectSort = value
+            preferenceManager.subjectSort = value
             rearrange(constraint, value, direction)
         }
 
-    var direction: SortDirection = preferences.subjectSortDirection
+    var direction: SortDirection = preferenceManager.subjectSortDirection
         set(value) {
             field = value
-            preferences.subjectSortDirection = value
+            preferenceManager.subjectSortDirection = value
             rearrange(constraint, sort, value)
         }
 
@@ -63,7 +67,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
 
-        if (preferences.subjectReminder) {
+        if (preferenceManager.subjectReminder) {
             scheduleList.forEach {
                 it.subject = subject.code
 
@@ -79,7 +83,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
             }
         }
 
-        SubjectWidgetProvider.triggerRefresh(app)
+        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(subject: Subject) = viewModelScope.launch {
@@ -87,14 +91,14 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
 
         workManager.cancelAllWorkByTag(subject.subjectID)
 
-        SubjectWidgetProvider.triggerRefresh(app)
+        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun update(subject: Subject,
                scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.update(subject, scheduleList)
 
-        if (preferences.subjectReminder) {
+        if (preferenceManager.subjectReminder) {
             scheduleList.forEach {
                 workManager.cancelAllWorkByTag(it.scheduleID)
 
@@ -110,7 +114,7 @@ class SubjectViewModel(private var app: Application) : BaseViewModel(app) {
             }
         }
 
-        SubjectWidgetProvider.triggerRefresh(app)
+        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

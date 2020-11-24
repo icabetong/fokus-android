@@ -1,6 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.notifications
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
@@ -11,16 +13,17 @@ import java.time.ZonedDateTime
 // worker classes. It's primary purpose is to only trigger
 // and to show the fokus. Also to insert the fokus
 // object to the database.
-class NotificationWorker(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
-
-    private val logRepository by lazy { LogRepository.getInstance(applicationContext) }
+class NotificationWorker @WorkerInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val repository: LogRepository
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
         val log: Log = convertDataToLog(inputData)
         log.dateTimeTriggered = ZonedDateTime.now()
 
-        logRepository.insert(log)
+        repository.insert(log)
         if (log.isImportant)
             sendNotification(log, log.data)
         else sendNotification(log)

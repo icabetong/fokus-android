@@ -9,7 +9,9 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.databinding.ActivitySendAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareListener {
 
     private val sendAdapter = SendAsAttachmentAdapter(this)

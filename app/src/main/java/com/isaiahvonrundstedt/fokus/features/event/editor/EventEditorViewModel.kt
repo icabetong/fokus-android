@@ -1,21 +1,23 @@
 package com.isaiahvonrundstedt.fokus.features.event.editor
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
-class EventEditorViewModel(app: Application): BaseViewModel(app) {
-
-    private val database = AppDatabase.getInstance(applicationContext)
+class EventEditorViewModel @ViewModelInject constructor(
+    private val scheduleDao: ScheduleDAO,
+    @ApplicationContext private val context: Context,
+    @Assisted val savedStateHandle: SavedStateHandle
+): ViewModel() {
 
     var event: Event? = Event()
         set(value) {
@@ -49,7 +51,7 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
     fun setSchedule(schedule: ZonedDateTime?) { event?.schedule = schedule }
     fun getSchedule(): ZonedDateTime? = event?.schedule
     fun hasSchedule(): Boolean = event?.schedule != null
-    fun getFormattedSchedule(): String = event?.formatSchedule(applicationContext) ?: ""
+    fun getFormattedSchedule(): String = event?.formatSchedule(context) ?: ""
 
     fun setLocation(location: String?) { event?.location = location }
     fun hasLocation(): Boolean = event?.location?.isNotEmpty() == true
@@ -96,6 +98,6 @@ class EventEditorViewModel(app: Application): BaseViewModel(app) {
     }
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
-        schedules = database.schedules().fetchUsingID(id)
+        schedules = scheduleDao.fetchUsingID(id)
     }
 }

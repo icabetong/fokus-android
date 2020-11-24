@@ -1,27 +1,27 @@
 package com.isaiahvonrundstedt.fokus.features.task.editor
 
-import android.app.Application
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewModel
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
-class TaskEditorViewModel(app: Application): BaseViewModel(app) {
-
-    private val database = AppDatabase.getInstance(applicationContext)
-    private val clipboardManager by lazy {
-        app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    }
+class TaskEditorViewModel @ViewModelInject constructor(
+    private val clipboardManager: ClipboardManager,
+    private val scheduleDao: ScheduleDAO,
+    @ApplicationContext
+    private val context: Context,
+    @Assisted savedStateHandle: SavedStateHandle
+): ViewModel() {
 
     var task: Task? = Task()
         set(value) {
@@ -62,7 +62,7 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
     fun setDueDate(dueDate: ZonedDateTime?) { task?.dueDate = dueDate }
     fun getDueDate(): ZonedDateTime? = task?.dueDate
     fun hasDueDate(): Boolean = task?.hasDueDate() == true
-    fun getFormattedDueDate(): String = task?.formatDueDate(applicationContext) ?: ""
+    fun getFormattedDueDate(): String = task?.formatDueDate(context) ?: ""
 
     fun setIsImportant(isImportant: Boolean) { task?.isImportant = isImportant }
     fun setIsFinished(isFinished: Boolean) { task?.isFinished = isFinished }
@@ -125,7 +125,7 @@ class TaskEditorViewModel(app: Application): BaseViewModel(app) {
     }
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
-        schedules = database.schedules().fetchUsingID(id)
+        schedules = scheduleDao.fetchUsingID(id)
     }
 
 }

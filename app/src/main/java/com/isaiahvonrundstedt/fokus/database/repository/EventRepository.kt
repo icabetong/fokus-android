@@ -1,28 +1,12 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import com.isaiahvonrundstedt.fokus.database.AppDatabase
+import com.isaiahvonrundstedt.fokus.database.dao.EventDAO
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import javax.inject.Inject
 
-class EventRepository private constructor(context: Context) {
-
-    private var database = AppDatabase.getInstance(context)
-    private var events = database.events()
-
-    companion object {
-        private var instance: EventRepository? = null
-
-        fun getInstance(context: Context): EventRepository {
-            if (instance == null) {
-                synchronized(EventRepository::class) {
-                    instance = EventRepository(context)
-                }
-            }
-            return instance!!
-        }
-    }
+class EventRepository @Inject constructor(private val events: EventDAO) {
 
     fun fetchLiveData(): LiveData<List<EventPackage>> = events.fetchLiveData()
 

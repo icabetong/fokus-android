@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.notifications
 
+import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
@@ -16,7 +17,8 @@ import java.time.ZonedDateTime
 class NotificationWorker @WorkerInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val repository: LogRepository
+    private val repository: LogRepository,
+    private val notificationManager: NotificationManager
 ) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -25,8 +27,8 @@ class NotificationWorker @WorkerInject constructor(
 
         repository.insert(log)
         if (log.isImportant)
-            sendNotification(log, log.data)
-        else sendNotification(log)
+            sendNotification(log, notificationManager, log.data)
+        else sendNotification(log, notificationManager)
 
         return Result.success()
     }

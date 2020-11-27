@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.task
 
+import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
@@ -22,7 +23,9 @@ class TaskReminderWorker @WorkerInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val taskRepository: TaskRepository,
-    private val logRepository: LogRepository
+    private val logRepository: LogRepository,
+    private val preferenceManager: PreferenceManager,
+    private val notificationManager: NotificationManager
 ) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
@@ -48,7 +51,7 @@ class TaskReminderWorker @WorkerInject constructor(
 
         if (log != null) {
             logRepository.insert(log)
-            sendNotification(log)
+            sendNotification(log, notificationManager)
         }
 
         return Result.success()

@@ -16,13 +16,11 @@ import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotification
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 
-class TaskViewModel @ViewModelInject constructor (
+class TaskViewModel @ViewModelInject constructor(
     private val repository: TaskRepository,
     private val preferenceManager: PreferenceManager,
     private val workManager: WorkManager,
     private val notificationManager: NotificationManager,
-    @Assisted
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
@@ -78,8 +76,6 @@ class TaskViewModel @ViewModelInject constructor (
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request)
         }
-
-        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(task: Task) = viewModelScope.launch {
@@ -89,8 +85,6 @@ class TaskViewModel @ViewModelInject constructor (
             notificationManager.cancel(task.taskID, BaseWorker.NOTIFICATION_ID_TASK)
 
         workManager.cancelUniqueWork(task.taskID)
-
-        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
@@ -115,8 +109,6 @@ class TaskViewModel @ViewModelInject constructor (
             workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
                 request)
         }
-
-        //TaskWidgetProvider.triggerRefresh(app)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

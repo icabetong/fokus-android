@@ -1,16 +1,21 @@
 package com.isaiahvonrundstedt.fokus.database.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.isaiahvonrundstedt.fokus.database.dao.AttachmentDAO
 import com.isaiahvonrundstedt.fokus.database.dao.TaskDAO
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class TaskRepository @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val tasks: TaskDAO,
-    private val attachments: AttachmentDAO
+    private val attachments: AttachmentDAO,
 ) {
 
     fun fetchLiveData(): LiveData<List<TaskPackage>> = tasks.fetchLiveData()
@@ -23,10 +28,14 @@ class TaskRepository @Inject constructor(
         tasks.insert(task)
         if (attachmentList.isNotEmpty())
             attachmentList.forEach { attachments.insert(it) }
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     suspend fun remove(task: Task) {
         tasks.remove(task)
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     suspend fun update(task: Task, attachmentList: List<Attachment> = emptyList()) {
@@ -34,6 +43,8 @@ class TaskRepository @Inject constructor(
         attachments.removeUsingTaskID(task.taskID)
         if (attachmentList.isNotEmpty())
             attachmentList.forEach { attachments.insert(it) }
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     suspend fun setFinished(taskID: String, status: Boolean) {

@@ -5,6 +5,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
@@ -17,7 +18,8 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 class TaskNotificationScheduler @WorkerInject constructor (
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val repository: TaskRepository
+    private val repository: TaskRepository,
+    private val workManager: WorkManager
 ) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {

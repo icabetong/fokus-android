@@ -1,8 +1,11 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.task
 
 import android.content.Context
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
@@ -17,8 +20,12 @@ import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
 // for the task minus the interval.
-class TaskNotificationWorker(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
+class TaskNotificationWorker @WorkerInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val preferenceManager: PreferenceManager,
+    private val workManager: WorkManager
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
 

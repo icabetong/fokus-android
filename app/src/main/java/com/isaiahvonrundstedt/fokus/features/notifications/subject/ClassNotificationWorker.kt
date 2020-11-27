@@ -1,10 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.subject
 
 import android.content.Context
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkerParameters
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
+import androidx.work.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.log.Log
@@ -15,8 +14,12 @@ import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
-class ClassNotificationWorker(context: Context, workerParameters: WorkerParameters)
-    : BaseWorker(context, workerParameters) {
+class ClassNotificationWorker @WorkerInject constructor(
+    @Assisted context: Context,
+    @Assisted workerParameters: WorkerParameters,
+    private val preferenceManager: PreferenceManager,
+    private val workManager: WorkManager
+) : BaseWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
 

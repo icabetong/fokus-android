@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
@@ -149,10 +148,9 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 daysOfWeek = workerData.getInt(EXTRA_SCHEDULE_DAY_OF_WEEK, 0)
             }
         }
-
     }
 
-    protected fun sendNotification(log: Log, @Nullable tag: String? = null) {
+    protected fun sendNotification(log: Log, manager: NotificationManager, tag: String? = null) {
         if (log.type == Log.TYPE_TASK && log.data != null) {
             val intent = PendingIntent.getService(applicationContext, NotificationActionService.NOTIFICATION_ID_FINISH,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
@@ -161,41 +159,31 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                     action = NotificationActionService.ACTION_FINISHED
                 }, PendingIntent.FLAG_UPDATE_CURRENT)
 
-            notificationManager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
+            manager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
                 createNotification(log, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(R.drawable.ic_hero_check_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent)))
         } else if (log.type == Log.TYPE_EVENT)
-            notificationManager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
+            manager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
                 createNotification(log, NOTIFICATION_CHANNEL_ID_EVENT))
-        else notificationManager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
+        else manager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
             createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC))
     }
 
-    private fun createNotification(log: Log?, id: String,
-                                   @Nullable action: NotificationCompat.Action? = null): Notification {
-        return NotificationCompat.Builder(applicationContext, id).apply {
+    private fun createNotification(log: Log?,
+                                   channelID: String,
+                                   action: NotificationCompat.Action? = null): Notification {
+        return NotificationCompat.Builder(applicationContext, channelID).apply {
             setSound(notificationSoundUri)
             setSmallIcon(log?.getIconResource() ?: R.drawable.ic_hero_check_24)
             setContentIntent(contentIntent)
             setContentTitle(log?.title)
             setContentText(log?.content)
             setOngoing(log?.isImportant == true)
-            if (action != null) addAction(action)
+            if (action != null)
+                addAction(action)
             color = ContextCompat.getColor(applicationContext, R.color.color_primary)
         }.build()
-    }
-
-    private val notificationManager by lazy {
-        applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    }
-
-    protected val preferenceManager by lazy {
-        PreferenceManager(applicationContext)
-    }
-
-    protected val workManager by lazy {
-        WorkManager.getInstance(applicationContext)
     }
 
     private val contentIntent: PendingIntent

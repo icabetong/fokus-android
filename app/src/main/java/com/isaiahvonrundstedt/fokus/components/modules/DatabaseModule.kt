@@ -1,6 +1,9 @@
 package com.isaiahvonrundstedt.fokus.components.modules
 
+import android.app.NotificationManager
 import android.content.Context
+import androidx.work.WorkManager
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.dao.*
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
@@ -38,17 +41,26 @@ class DatabaseModule {
     fun provideLogDao(database: AppDatabase): LogDAO = database.logs()
 
     @Provides
-    fun provideTaskRepository(taskDao: TaskDAO, attachmentDao: AttachmentDAO): TaskRepository {
-        return TaskRepository(taskDao, attachmentDao)
+    fun provideTaskRepository(@ApplicationContext
+                              context: Context,
+                              taskDao: TaskDAO,
+                              attachmentDao: AttachmentDAO): TaskRepository {
+        return TaskRepository(context, taskDao, attachmentDao)
     }
 
     @Provides
-    fun provideSubjectRepository(subjectDAO: SubjectDAO, scheduleDAO: ScheduleDAO): SubjectRepository {
-        return SubjectRepository(subjectDAO, scheduleDAO)
+    fun provideSubjectRepository(@ApplicationContext
+                                 context: Context,
+                                 subjectDAO: SubjectDAO,
+                                 scheduleDAO: ScheduleDAO): SubjectRepository {
+        return SubjectRepository(context,subjectDAO, scheduleDAO)
     }
 
     @Provides
-    fun provideEventRepository(dao: EventDAO): EventRepository = EventRepository(dao)
+    fun provideEventRepository(@ApplicationContext context: Context, dao: EventDAO): EventRepository {
+        return EventRepository(context, dao)
+    }
+
     @Provides
     fun provideLogRepository(dao: LogDAO): LogRepository = LogRepository(dao)
 }

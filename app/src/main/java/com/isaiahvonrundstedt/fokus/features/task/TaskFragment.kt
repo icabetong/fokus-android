@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,9 +41,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     private val binding get() = _binding!!
     private val taskAdapter = TaskAdapter(this, this)
-    private val viewModel: TaskViewModel by lazy {
-        ViewModelProvider(this).get(TaskViewModel::class.java)
-    }
+    private val viewModel: TaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

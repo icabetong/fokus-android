@@ -44,21 +44,31 @@ class DatabaseModule {
     fun provideTaskRepository(@ApplicationContext
                               context: Context,
                               taskDao: TaskDAO,
-                              attachmentDao: AttachmentDAO): TaskRepository {
-        return TaskRepository(context, taskDao, attachmentDao)
+                              attachmentDao: AttachmentDAO,
+                              preferenceManager: PreferenceManager,
+                              workManager: WorkManager,
+                              notificationManager: NotificationManager): TaskRepository {
+        return TaskRepository(context, taskDao, attachmentDao, preferenceManager, workManager, notificationManager)
     }
 
     @Provides
     fun provideSubjectRepository(@ApplicationContext
                                  context: Context,
                                  subjectDAO: SubjectDAO,
-                                 scheduleDAO: ScheduleDAO): SubjectRepository {
-        return SubjectRepository(context,subjectDAO, scheduleDAO)
+                                 scheduleDAO: ScheduleDAO,
+                                 preferenceManager: PreferenceManager,
+                                 workManager: WorkManager): SubjectRepository {
+        return SubjectRepository(context,subjectDAO, scheduleDAO, preferenceManager, workManager)
     }
 
     @Provides
-    fun provideEventRepository(@ApplicationContext context: Context, dao: EventDAO): EventRepository {
-        return EventRepository(context, dao)
+    fun provideEventRepository(@ApplicationContext
+                               context: Context,
+                               eventDAO: EventDAO,
+                               preferenceManager: PreferenceManager,
+                               workManager: WorkManager,
+                               notificationManager: NotificationManager): EventRepository {
+        return EventRepository(context, eventDAO, preferenceManager, workManager, notificationManager)
     }
 
     @Provides

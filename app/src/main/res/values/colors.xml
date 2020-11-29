@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">@color/fokus_blue_500</color>
-    <color name="color_primary_dark">@color/fokus_blue_700</color>
+    <color name="color_primary">@color/color_fokus_blue_500</color>
+    <color name="color_primary_dark">@color/color_fokus_blue_700</color>
     <color name="color_on_primary">#ffffff</color>
     <color name="color_widget_tint">#c1e4f8</color>
     <color name="color_surface">#ffffff</color>
@@ -19,11 +19,11 @@
     <color name="color_primary_text">@color/color_on_surface</color>
     <color name="color_secondary_text">#808080</color>
 
-    <color name="color_chip_background_alpha">#590090ea</color>
+    <color name="color_chip_background_transparent">#392197fe</color>
 
-    <color name="fokus_blue_50">#e2f1fc</color>
-    <color name="fokus_blue_100">#b9dcf8</color>
-    <color name="fokus_blue_500">#0090ea</color>
-    <color name="fokus_blue_700">#0071ca</color>
-    <color name="fokus_blue_900">#004399</color>
+    <color name="color_fokus_blue_50">#e3f2ff</color>
+    <color name="color_fokus_blue_100">#bcdeff</color>
+    <color name="color_fokus_blue_500">#2197fe</color>
+    <color name="color_fokus_blue_700">#2076dc</color>
+    <color name="color_fokus_blue_900">#1a46aa</color>
 </resources>

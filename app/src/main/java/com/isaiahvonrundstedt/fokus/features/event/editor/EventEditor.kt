@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
@@ -41,21 +42,20 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_editor_event.*
 import java.io.File
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
+@AndroidEntryPoint
 class EventEditor : BaseEditor() {
+    private lateinit var binding: ActivityEditorEventBinding
 
     private var requestCode = 0
     private var hasFieldChange = false
 
-    private lateinit var binding: ActivityEditorEventBinding
-
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(EventEditorViewModel::class.java)
-    }
+    private val viewModel: EventEditorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

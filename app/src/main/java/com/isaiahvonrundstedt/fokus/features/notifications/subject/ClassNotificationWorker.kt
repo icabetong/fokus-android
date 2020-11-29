@@ -12,6 +12,10 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import java.time.Duration
 import java.time.ZonedDateTime
+import java.time.temporal.IsoFields
+import java.time.temporal.Temporal
+import java.time.temporal.TemporalAccessor
+import java.time.temporal.TemporalField
 import java.util.concurrent.TimeUnit
 
 class ClassNotificationWorker @WorkerInject constructor(
@@ -35,7 +39,7 @@ class ClassNotificationWorker @WorkerInject constructor(
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         request.setInputData(convertLogToData(log))
 
-        schedule.getDaysAsList().forEach {
+        schedule.getDays().forEach {
             var triggerTime = schedule.startTime?.let { time -> Schedule.getNextWeekDay(it, time) }
 
             when (preferenceManager.subjectReminderInterval) {

@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
@@ -44,16 +45,13 @@ import java.io.File
 
 @AndroidEntryPoint
 class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
+    private lateinit var binding: ActivityEditorSubjectBinding
 
     private var requestCode = 0
     private var hasFieldChange = false
 
-    private lateinit var binding: ActivityEditorSubjectBinding
-
     private val scheduleAdapter = ScheduleAdapter(this)
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(SubjectEditorViewModel::class.java)
-    }
+    private val viewModel: SubjectEditorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

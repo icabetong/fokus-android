@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
@@ -58,16 +59,13 @@ import java.time.ZonedDateTime
 
 @AndroidEntryPoint
 class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
+    private lateinit var binding: ActivityEditorTaskBinding
 
     private var requestCode = 0
     private var hasFieldChange = false
 
-    private lateinit var binding: ActivityEditorTaskBinding
-
     private val attachmentAdapter = AttachmentAdapter(this)
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(TaskEditorViewModel::class.java)
-    }
+    private val viewModel: TaskEditorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

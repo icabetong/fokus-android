@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,13 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
+    private lateinit var binding: ActivityLogsBinding
 
     private val logAdapter = LogAdapter(this)
-    private val viewModel: LogViewModel by lazy {
-        ViewModelProvider(this).get(LogViewModel::class.java)
-    }
-
-    private lateinit var binding: ActivityLogsBinding
+    private val viewModel: LogViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

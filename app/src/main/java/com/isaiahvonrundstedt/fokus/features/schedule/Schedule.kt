@@ -41,7 +41,7 @@ data class Schedule @JvmOverloads constructor(
     fun isToday(): Boolean {
         val currentDate = LocalDate.now()
 
-        getDaysAsList().forEach {
+        getDays().forEach {
             if (it == currentDate.dayOfWeek.value)
                 return@isToday true
         }
@@ -51,7 +51,7 @@ data class Schedule @JvmOverloads constructor(
     fun isTomorrow(): Boolean {
         val currentDate = LocalDate.now()
 
-        getDaysAsList().forEach {
+        getDays().forEach {
             if (it == currentDate.plusDays(1).dayOfWeek.value)
                 return@isTomorrow true
         }
@@ -88,7 +88,7 @@ data class Schedule @JvmOverloads constructor(
      */
     fun formatDaysOfWeek(context: Context, isAbbreviated: Boolean): String {
         val builder = StringBuilder()
-        val list = getDaysAsList()
+        val list = getDays()
         list.forEachIndexed { index, i ->
             // Append the appropriate day name string from string resource
             val resID = if (isAbbreviated)
@@ -136,7 +136,7 @@ data class Schedule @JvmOverloads constructor(
         }
     }
 
-    fun getDaysAsList(): List<Int> {
+    fun getDays(): List<Int> {
         val days = mutableListOf<Int>()
 
         if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DayOfWeek.SUNDAY.value)
@@ -150,13 +150,9 @@ data class Schedule @JvmOverloads constructor(
         return days
     }
 
-    fun atWeekOne(): Boolean = weeksOfMonth and 1 == BIT_VALUE_WEEK_ONE
-
-    fun atWeekTwo(): Boolean = weeksOfMonth and 2 == BIT_VALUE_WEEK_TWO
-
-    fun atWeekThree(): Boolean = weeksOfMonth and 4 == BIT_VALUE_WEEK_THREE
-
-    fun atWeekFour(): Boolean = weeksOfMonth and 8 == BIT_VALUE_WEEK_FOUR
+    fun hasWeek(week: Int): Boolean {
+        return weeksOfMonth and week == week
+    }
 
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Schedule::class.java)
 

@@ -1,29 +1,14 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.app.NotificationManager
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
-import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationWorker
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 
 class EventViewModel @ViewModelInject constructor(
-    private val repository: EventRepository,
-    private val preferenceManager: PreferenceManager,
-    private val workManager: WorkManager,
-    private val notificationManager: NotificationManager,
-    @Assisted
-    private val savedStateHandle: SavedStateHandle
+    private val repository: EventRepository
 ) : ViewModel() {
 
     private val _events: LiveData<List<EventPackage>> = repository.fetchLiveData()
@@ -57,48 +42,14 @@ class EventViewModel @ViewModelInject constructor(
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
-
-        if (preferenceManager.eventReminder && event.schedule?.isAfterNow() == true) {
-            val data = BaseWorker.convertEventToData(event)
-            val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
-                .setInputData(data)
-                .addTag(event.eventID)
-                .build()
-            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-                request)
-        }
-
-        //EventWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(event: Event) = viewModelScope.launch {
         repository.remove(event)
-
-        if (event.isImportant)
-            notificationManager?.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
-
-        workManager.cancelUniqueWork(event.eventID)
-
-        //EventWidgetProvider.triggerRefresh(app)
     }
 
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
-
-        if (event.schedule?.isBeforeNow() == true || !event.isImportant)
-            notificationManager.cancel(event.eventID, BaseWorker.NOTIFICATION_ID_EVENT)
-
-        if (preferenceManager.eventReminder && event.schedule?.isAfterNow() == true) {
-            val data = BaseWorker.convertEventToData(event)
-            val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
-                .setInputData(data)
-                .addTag(event.eventID)
-                .build()
-            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-                request)
-        }
-
-        //EventWidgetProvider.triggerRefresh(app)
     }
 
 }

@@ -1,26 +1,16 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
-import android.app.NotificationManager
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
-import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import kotlinx.coroutines.launch
 
 class SubjectViewModel @ViewModelInject constructor(
     private val repository: SubjectRepository,
-    private val preferenceManager: PreferenceManager,
-    private val workManager: WorkManager,
-    @Assisted
-    private val savedStateHandle: SavedStateHandle
+    private val preferenceManager: PreferenceManager
 ) : ViewModel() {
 
     private val _subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
@@ -66,55 +56,15 @@ class SubjectViewModel @ViewModelInject constructor(
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
-
-        if (preferenceManager.subjectReminder) {
-            scheduleList.forEach {
-                it.subject = subject.code
-
-                val data = BaseWorker.convertScheduleToData(it)
-                val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
-                    .setInputData(data)
-                    .addTag(subject.subjectID)
-                    .addTag(it.scheduleID)
-                    .build()
-
-                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
-                    request)
-            }
-        }
-
-        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun remove(subject: Subject) = viewModelScope.launch {
         repository.remove(subject)
-
-        workManager.cancelAllWorkByTag(subject.subjectID)
-
-        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     fun update(subject: Subject,
                scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.update(subject, scheduleList)
-
-        if (preferenceManager.subjectReminder) {
-            scheduleList.forEach {
-                workManager.cancelAllWorkByTag(it.scheduleID)
-
-                it.subject = subject.code
-                val data = BaseWorker.convertScheduleToData(it)
-                val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
-                    .setInputData(data)
-                    .addTag(subject.subjectID)
-                    .addTag(it.scheduleID)
-                    .build()
-                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
-                    request)
-            }
-        }
-
-        //SubjectWidgetProvider.triggerRefresh(app)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

@@ -1,7 +1,9 @@
-package com.isaiahvonrundstedt.fokus.features.attachments.send
+package com.isaiahvonrundstedt.fokus.features.attachments.attach
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
@@ -12,14 +14,11 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareListener {
-
-    private val sendAdapter = SendAsAttachmentAdapter(this)
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(SendAsAttachmentViewModel::class.java)
-    }
-
+class AttachToTaskActivity: BaseActivity(), AttachToTaskAdapter.AttachmentListener {
     private lateinit var binding: ActivitySendAttachmentBinding
+
+    private val sendAdapter = AttachToTaskAdapter(this)
+    private val viewModel: AttachToTaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +47,10 @@ class SendAsAttachmentActivity: BaseActivity(), SendAsAttachmentAdapter.ShareLis
         viewModel.tasks.observe(this) { sendAdapter.submitList(it) }
     }
 
-    override fun onShareToTask(taskID: String) {
+    override fun onAttachedToTask(taskID: String) {
         viewModel.addAttachment(taskID)
         createToast(R.string.feedback_attachment_added)
         finish()
     }
+
 }

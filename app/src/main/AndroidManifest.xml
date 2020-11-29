@@ -78,7 +78,7 @@
         <activity android:name=".features.about.NoticesActivity" />
         <activity android:name=".features.about.LibrariesActivity" />
 
-        <activity android:name=".features.attachments.send.SendAsAttachmentActivity">
+        <activity android:name=".features.attachments.attach.AttachToTaskActivity">
             <intent-filter android:label="@string/intent_add_as_attachment">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -97,13 +97,13 @@
             android:exported="false"/>
         <service android:name=".components.service.DataImporterService"
             android:exported="false"/>
-        <service android:name=".features.widget.task.TaskWidgetRemoteService"
+        <service android:name=".features.task.widget.TaskWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name=".features.widget.event.EventWidgetRemoteService"
+        <service android:name="com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <service android:name=".features.widget.subject.SubjectWidgetRemoteService"
+        <service android:name="com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
@@ -115,7 +115,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.isaiahvonrundstedt.fokus.features.widget.task.TaskWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider"
             android:label="@string/widget_task_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -125,7 +125,7 @@
                 android:resource="@xml/xml_widget_tasks"/>
         </receiver>
         <receiver
-            android:name="com.isaiahvonrundstedt.fokus.features.widget.event.EventWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider"
             android:label="@string/widget_event_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -135,7 +135,7 @@
                 android:resource="@xml/xml_widget_events"/>
         </receiver>
         <receiver
-            android:name="com.isaiahvonrundstedt.fokus.features.widget.subject.SubjectWidgetProvider"
+            android:name="com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider"
             android:label="@string/widget_class_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

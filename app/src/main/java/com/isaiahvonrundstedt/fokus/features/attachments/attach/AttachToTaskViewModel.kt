@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.attachments.send
+package com.isaiahvonrundstedt.fokus.features.attachments.attach
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -7,13 +7,11 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.coroutines.launch
 
-class SendAsAttachmentViewModel @ViewModelInject constructor(
+class AttachToTaskViewModel @ViewModelInject constructor(
     private val repository: TaskRepository
 ): ViewModel() {
 
-    private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
-
-    val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
+    val tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
     var attachment = Attachment()
@@ -29,9 +27,6 @@ class SendAsAttachmentViewModel @ViewModelInject constructor(
         }
 
     init {
-        tasks.addSource(_tasks) {
-            tasks.value = it
-        }
         attachment.type = Attachment.TYPE_WEBSITE_LINK
     }
 
@@ -40,7 +35,4 @@ class SendAsAttachmentViewModel @ViewModelInject constructor(
         repository.addAttachment(attachment)
     }
 
-    fun removeAttachment() = viewModelScope.launch {
-        repository.removeAttachment(attachment)
-    }
 }

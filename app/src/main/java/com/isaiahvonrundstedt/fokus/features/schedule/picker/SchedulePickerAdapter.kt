@@ -16,7 +16,7 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
     fun setItems(items: List<Schedule>) {
         itemList.clear()
         items.forEach {
-            it.getDaysAsList().forEach { day ->
+            it.getDays().forEach { day ->
                 if (day <= DayOfWeek.SUNDAY.value) {
                     val newSchedule = Schedule(startTime = it.startTime,
                         endTime = it.endTime)

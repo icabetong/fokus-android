@@ -2,11 +2,18 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityOptionsCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.color.MaterialColors
+import com.google.android.material.transition.platform.MaterialArcMotion
+import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
+import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -34,6 +41,11 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
+
+    protected fun buildTransitionOptions(container: View,
+                                          name: String = BaseEditor.TRANSITION_ELEMENT_ROOT) =
+        ActivityOptionsCompat.makeSceneTransitionAnimation(this, container,
+            name).toBundle()
 
     private var toolbar: MaterialToolbar? = null
 

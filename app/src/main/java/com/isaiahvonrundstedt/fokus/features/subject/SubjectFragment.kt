@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +33,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     private val binding get() = _binding!!
     private val subjectAdapter = SubjectAdapter(this, this)
-    private val viewModel: SubjectViewModel by lazy {
-        ViewModelProvider(this).get(SubjectViewModel::class.java)
-    }
+    private val viewModel: SubjectViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

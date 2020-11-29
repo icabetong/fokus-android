@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,9 +48,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
     private val eventAdapter = EventAdapter(this)
     private val monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
     private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-    private val viewModel: EventViewModel by lazy {
-        ViewModelProvider(this).get(EventViewModel::class.java)
-    }
+    private val viewModel: EventViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

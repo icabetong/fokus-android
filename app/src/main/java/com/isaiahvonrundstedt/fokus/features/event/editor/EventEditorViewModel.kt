@@ -14,9 +14,9 @@ import java.time.LocalDate
 import java.time.ZonedDateTime
 
 class EventEditorViewModel @ViewModelInject constructor(
-    private val scheduleDao: ScheduleDAO,
-    @ApplicationContext private val context: Context,
-    @Assisted val savedStateHandle: SavedStateHandle
+    @ApplicationContext
+    private val context: Context,
+    private val scheduleDao: ScheduleDAO
 ): ViewModel() {
 
     var event: Event? = Event()
@@ -74,7 +74,7 @@ class EventEditorViewModel @ViewModelInject constructor(
         // Create new instances of Schedule
         // with individual day of week values
         schedules.forEach {
-            it.getDaysAsList().forEach { day ->
+            it.getDays().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
                     endTime = it.endTime)
                 newSchedule.daysOfWeek = day

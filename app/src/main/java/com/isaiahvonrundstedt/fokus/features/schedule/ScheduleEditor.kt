@@ -51,12 +51,12 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                 binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
 
-                binding.weekOneChip.isChecked = schedule.atWeekOne()
-                binding.weekTwoChip.isChecked = schedule.atWeekTwo()
-                binding.weekThreeChip.isChecked = schedule.atWeekThree()
-                binding.weekFourChip.isChecked = schedule.atWeekFour()
+                binding.weekOneChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_ONE)
+                binding.weekTwoChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_TWO)
+                binding.weekThreeChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_THREE)
+                binding.weekFourChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_FOUR)
 
-                schedule.getDaysAsList().forEach { day ->
+                schedule.getDays().forEach { day ->
                     when (day) {
                         DayOfWeek.SUNDAY.value -> binding.sundayChip.isChecked = true
                         DayOfWeek.MONDAY.value -> binding.mondayChip.isChecked = true

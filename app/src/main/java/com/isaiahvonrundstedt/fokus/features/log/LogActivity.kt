@@ -38,8 +38,8 @@ class LogActivity : BaseActivity(), BaseAdapter.ActionListener {
             adapter = logAdapter
         }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(this, logAdapter))
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        ItemTouchHelper(ItemSwipeCallback(this, logAdapter))
+            .attachToRecyclerView(binding.recyclerView)
     }
 
     override fun onStart() {

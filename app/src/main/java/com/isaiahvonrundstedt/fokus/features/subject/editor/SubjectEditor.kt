@@ -48,7 +48,6 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
     private lateinit var binding: ActivityEditorSubjectBinding
 
     private var requestCode = 0
-    private var hasFieldChange = false
 
     private val scheduleAdapter = ScheduleAdapter(this)
     private val viewModel: SubjectEditorViewModel by viewModels()
@@ -123,11 +122,9 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
 
         binding.codeTextInput.addTextChangedListener {
             viewModel.setSubjectCode(it.toString())
-            hasFieldChange = true
         }
         binding.descriptionTextInput.addTextChangedListener {
             viewModel.setDescription(it.toString())
-            hasFieldChange = true
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {
@@ -148,7 +145,6 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
                 title(R.string.dialog_pick_color_tag)
                 colorChooser(Subject.Tag.getColors(), waitForPositiveButton = false) { _, color ->
                     viewModel.setTag(Subject.Tag.convertColorToTag(color) ?: Subject.Tag.SKY)
-                    hasFieldChange = true
 
                     with(it as TextView) {
                         text = getString(viewModel.getTag()!!.getNameResource())
@@ -200,14 +196,12 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
                         ScheduleEditor.EXTRA_SCHEDULE to t)
                     waitForResult {
                         viewModel.updateSchedule(it)
-                        hasFieldChange = true
                         this.dismiss()
                     }
                 }
             }
             BaseBasicAdapter.ActionListener.Action.DELETE -> {
                 viewModel.removeSchedule(t)
-                hasFieldChange = true
                 createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
                     setAction(R.string.button_undo) { viewModel.addSchedule(t) }
                 }
@@ -363,16 +357,6 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
             viewModel.subject = getParcelable(EXTRA_SUBJECT)
             viewModel.schedules = getParcelableArrayList(EXTRA_SCHEDULE) ?: arrayListOf()
         }
-    }
-
-    override fun onBackPressed() {
-        if (hasFieldChange) {
-            MaterialDialog(this).show {
-                title(R.string.dialog_discard_changes)
-                positiveButton(R.string.button_discard) { super.onBackPressed() }
-                negativeButton(R.string.button_cancel)
-            }
-        } else super.onBackPressed()
     }
 
     companion object {

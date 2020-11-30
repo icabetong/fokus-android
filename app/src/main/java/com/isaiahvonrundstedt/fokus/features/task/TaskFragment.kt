@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialElevationScale
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -64,8 +65,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             adapter = taskAdapter
         }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), taskAdapter))
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        ItemTouchHelper(ItemSwipeCallback(requireContext(), taskAdapter))
+            .attachToRecyclerView(binding.recyclerView)
 
         viewModel.tasks.observe(viewLifecycleOwner) { taskAdapter.submitList(it) }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

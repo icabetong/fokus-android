@@ -53,7 +53,6 @@ class EventEditor : BaseEditor() {
     private lateinit var binding: ActivityEditorEventBinding
 
     private var requestCode = 0
-    private var hasFieldChange = false
 
     private val viewModel: EventEditorViewModel by viewModels()
 
@@ -154,17 +153,14 @@ class EventEditor : BaseEditor() {
 
         binding.eventNameTextInput.addTextChangedListener {
             viewModel.setEventName(it.toString())
-            hasFieldChange = true
         }
 
         binding.locationTextInput.addTextChangedListener {
             viewModel.setLocation(it.toString())
-            hasFieldChange = true
         }
 
         binding.notesTextInput.addTextChangedListener {
             viewModel.setNotes(it.toString())
-            hasFieldChange = true
         }
 
         binding.scheduleTextView.setOnClickListener { v ->
@@ -175,7 +171,6 @@ class EventEditor : BaseEditor() {
                     viewModel.setSchedule(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
-                    hasFieldChange = true
                     if (v is AppCompatTextView) {
                         v.text = viewModel.getFormattedSchedule()
                         v.setTextColorFromResource(R.color.color_primary_text)
@@ -190,7 +185,6 @@ class EventEditor : BaseEditor() {
         }
 
         binding.removeButton.setOnClickListener {
-            hasFieldChange = true
             binding.subjectTextView.startAnimation(animation)
             viewModel.subject = null
         }
@@ -207,7 +201,6 @@ class EventEditor : BaseEditor() {
 
         binding.inNextMeetingRadio.setOnClickListener {
             viewModel.setNextMeetingForDueDate()
-            hasFieldChange = true
 
             with(binding.inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
@@ -225,7 +218,6 @@ class EventEditor : BaseEditor() {
                         subtitle = viewModel.getFormattedSchedule()
                     }
 
-                    hasFieldChange = true
                     this.dismiss()
                 }
             }
@@ -240,7 +232,6 @@ class EventEditor : BaseEditor() {
                         ZoneId.systemDefault())
                 }
                 positiveButton(R.string.button_done) {
-                    hasFieldChange = true
 
                     with(binding.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
@@ -409,16 +400,6 @@ class EventEditor : BaseEditor() {
             viewModel.event = getParcelable(EXTRA_EVENT)
             viewModel.subject = getParcelable(EXTRA_SUBJECT)
         }
-    }
-
-    override fun onBackPressed() {
-        if (hasFieldChange) {
-            MaterialDialog(this).show {
-                title(R.string.dialog_discard_changes)
-                positiveButton(R.string.button_discard) { super.onBackPressed() }
-                negativeButton(R.string.button_cancel)
-            }
-        } else super.onBackPressed()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

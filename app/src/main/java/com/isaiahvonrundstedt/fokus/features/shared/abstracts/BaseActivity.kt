@@ -19,11 +19,10 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
         window.sharedElementsUseOverlay = false
 
+        super.onCreate(savedInstanceState)
     }
 
     override fun onResume() {

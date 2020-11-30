@@ -62,7 +62,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
     private lateinit var binding: ActivityEditorTaskBinding
 
     private var requestCode = 0
-    private var hasFieldChange = false
 
     private val attachmentAdapter = AttachmentAdapter(this)
     private val viewModel: TaskEditorViewModel by viewModels()
@@ -179,11 +178,9 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
         binding.taskNameTextInput.addTextChangedListener {
             viewModel.setTaskName(it.toString())
-            hasFieldChange = true
         }
         binding.notesTextInput.addTextChangedListener {
             viewModel.setNotes(it.toString())
-            hasFieldChange = true
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener { _ ->
@@ -246,7 +243,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                         text = viewModel.getFormattedDueDate()
                         setTextColorFromResource(R.color.color_primary_text)
                     }
-                    hasFieldChange = true
                 }
             }
         }
@@ -257,7 +253,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
         }
 
         binding.removeButton.setOnClickListener {
-            hasFieldChange = true
             binding.subjectTextView.startAnimation(animation)
 
             it.isVisible = false
@@ -276,8 +271,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
         binding.inNextMeetingRadio.setOnClickListener {
             viewModel.setNextMeetingForDueDate()
-            hasFieldChange = true
-
             with(binding.inNextMeetingRadio) {
                 titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                 subtitle = viewModel.getFormattedDueDate()
@@ -292,7 +285,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                         titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
                         subtitle = viewModel.getFormattedDueDate()
                     }
-                    hasFieldChange = true
                     this.dismiss()
                 }
             }
@@ -306,8 +298,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                     viewModel.setDueDate(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
-                    hasFieldChange = true
-
                     with(binding.customDateTimeRadio) {
                         titleTextColor = ContextCompat.getColor(context,
                             R.color.color_primary_text)
@@ -434,7 +424,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
     }
 
     private fun createAttachment(targetPath: String, attachmentType: Int): Attachment {
-        hasFieldChange = true
         return Attachment().apply {
             task = viewModel.task?.taskID!!
             target = targetPath
@@ -508,7 +497,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                             Attachment.TYPE_IMPORTED_FILE ->
                                 t.target?.let { File(it) }?.delete()
                         }
-                        hasFieldChange = true
                     }
                     negativeButton(R.string.button_cancel)
                 }
@@ -640,22 +628,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
             viewModel.attachments = getParcelableArrayList(EXTRA_ATTACHMENTS) ?: arrayListOf()
             viewModel.subject = getParcelable(EXTRA_SUBJECT)
         }
-    }
-
-    override fun onBackPressed() {
-        if (hasFieldChange) {
-            MaterialDialog(this).show {
-                title(R.string.dialog_discard_changes)
-                positiveButton(R.string.button_discard) {
-                    viewModel.attachments.forEach { attachment ->
-                        if (attachment.type == Attachment.TYPE_IMPORTED_FILE)
-                            attachment.target?.also { File(it).delete() }
-                    }
-                    super.onBackPressed()
-                }
-                negativeButton(R.string.button_cancel)
-            }
-        } else super.onBackPressed()
     }
 
     companion object {

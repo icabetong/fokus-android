@@ -76,8 +76,8 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
         if (savedInstanceState == null)
             binding.calendarView.post { setCurrentDate(viewModel.today) }
 
-        val itemTouchHelper = ItemTouchHelper(ItemSwipeCallback(requireContext(), eventAdapter))
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        ItemTouchHelper(ItemSwipeCallback(requireContext(), eventAdapter))
+            .attachToRecyclerView(binding.recyclerView)
 
         viewModel.events.observe(viewLifecycleOwner) { eventAdapter.submitList(it) }
         viewModel.eventsEmpty.observe(viewLifecycleOwner) { binding.emptyView.isVisible = it }

@@ -12,10 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import java.time.Duration
 import java.time.ZonedDateTime
-import java.time.temporal.IsoFields
-import java.time.temporal.Temporal
-import java.time.temporal.TemporalAccessor
-import java.time.temporal.TemporalField
+import java.time.temporal.*
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ClassNotificationWorker @WorkerInject constructor(
@@ -54,6 +52,11 @@ class ClassNotificationWorker @WorkerInject constructor(
             if (triggerTime?.isAfterNow() == true)
                 request.setInitialDelay(Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
                     TimeUnit.MINUTES)
+
+            val weekFields = WeekFields.of(Locale.getDefault())
+            val weekNumber = triggerTime?.get(weekFields.weekOfMonth())
+            if (!schedule.hasWeek(weekNumber!!))
+                return@forEach
 
             workManager.enqueueUniqueWork(schedule.scheduleID, ExistingWorkPolicy.APPEND,
                 request.build())

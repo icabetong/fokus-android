@@ -18,9 +18,7 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel @ViewModelInject constructor(
     private val repository: TaskRepository,
-    private val preferenceManager: PreferenceManager,
-    private val workManager: WorkManager,
-    private val notificationManager: NotificationManager,
+    private val preferenceManager: PreferenceManager
 ) : ViewModel() {
 
     private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()

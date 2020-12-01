@@ -44,7 +44,8 @@ class TaskRepository @Inject constructor(
 
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
-        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture() &&
+                task.hasDueDate()) {
 
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -86,7 +87,9 @@ class TaskRepository @Inject constructor(
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture()) {
+        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture() &&
+                task.hasDueDate()) {
+
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
@@ -107,9 +110,4 @@ class TaskRepository @Inject constructor(
     suspend fun addAttachment(attachment: Attachment) {
         attachments.insert(attachment)
     }
-
-    suspend fun removeAttachment(attachment: Attachment) {
-        attachments.remove(attachment)
-    }
-
 }

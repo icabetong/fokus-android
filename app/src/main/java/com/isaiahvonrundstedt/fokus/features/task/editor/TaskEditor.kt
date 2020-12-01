@@ -40,6 +40,7 @@ import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.service.FileImporterService
 import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorTaskBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutDialogInputAttachmentBinding
@@ -130,8 +131,14 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                     binding.notesTextInput.setText(notes)
                     binding.prioritySwitch.isChecked = isImportant
                     binding.statusSwitch.isChecked = isFinished
-                    binding.dueDateTextView.text = formatDueDate(this@TaskEditor)
-                    binding.dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
+
+                    if (it.hasDueDate()) {
+                        binding.dueDateTextView.text = formatDueDate(this@TaskEditor)
+                        binding.dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
+                    } else {
+                        binding.dueDateTextView.setText(R.string.field_not_set)
+                        binding.dueDateTextView.setTextColorFromResource(R.color.color_secondary_text)
+                    }
                 }
             }
         }
@@ -142,8 +149,9 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
         viewModel.subjectObservable.observe(this) {
             binding.removeButton.isVisible = it != null
-            binding.dueDateTextView.isVisible = it == null
             binding.dateTimeRadioGroup.isVisible = it != null
+            binding.dueDateTextView.isVisible = it == null
+            binding.removeDueDateButton.isVisible = it == null && viewModel.hasDueDate()
 
             if (it != null) {
                 with(binding.subjectTextView) {
@@ -237,6 +245,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                 dateTimePicker(requireFutureDateTime = true,
                     currentDateTime = viewModel.getDueDate()?.toCalendar()) { _, datetime ->
                     viewModel.setDueDate(datetime.toZonedDateTime())
+                    binding.removeDueDateButton.isVisible = true
                 }
                 positiveButton(R.string.button_done) {
                     with(binding.dueDateTextView) {
@@ -247,26 +256,50 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
             }
         }
 
+        binding.removeDueDateButton.setOnClickListener {
+            viewModel.setDueDate(null)
+
+            binding.removeDueDateButton.isVisible = false
+            binding.dueDateTextView.setText(R.string.field_not_set)
+            binding.dueDateTextView.setTextColor(ContextCompat.getColor(it.context,
+                R.color.color_secondary_text))
+        }
+
         binding.subjectTextView.setOnClickListener {
             startActivityForResult(Intent(this, SubjectPickerActivity::class.java),
                 SubjectPickerActivity.REQUEST_CODE_PICK)
         }
 
         binding.removeButton.setOnClickListener {
+            binding.dueDateTextView.setText(R.string.field_not_set)
+            binding.dueDateTextView.setTextColor(ContextCompat.getColor(it.context,
+                R.color.color_secondary_text))
             binding.subjectTextView.startAnimation(animation)
 
             it.isVisible = false
             viewModel.subject = null
         }
 
+        // When a radio button has been checked, set the other
+        // radio buttons text color to colorSecondaryText
         binding.dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             for (v: View in radioGroup.children) {
                 if (v is TwoLineRadioButton && !v.isChecked) {
                     v.titleTextColor = ContextCompat.getColor(v.context,
                         R.color.color_secondary_text)
                     v.subtitle = ""
+                } else if (v is RadioButtonCompat && !v.isChecked) {
+                    v.setTextColor(ContextCompat.getColor(v.context,
+                        R.color.color_secondary_text))
                 }
             }
+        }
+
+        binding.noDueRadioButton.setOnClickListener {
+            viewModel.setDueDate(null)
+            binding.dueDateTextView.setText(R.string.field_not_set)
+            (it as RadioButtonCompat).setTextColor(ContextCompat.getColor(it.context,
+                R.color.color_primary_text))
         }
 
         binding.inNextMeetingRadio.setOnClickListener {
@@ -318,12 +351,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
             if (!viewModel.hasTaskName()) {
                 createSnackbar(R.string.feedback_task_empty_name, binding.root)
                 binding.taskNameTextInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (!viewModel.hasDueDate()) {
-                createSnackbar(R.string.feedback_task_empty_due_date, binding.root)
-                binding.dueDateTextView.performClick()
                 return@setOnClickListener
             }
 

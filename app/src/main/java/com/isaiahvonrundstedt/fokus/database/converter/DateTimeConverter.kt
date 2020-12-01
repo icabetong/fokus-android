@@ -49,7 +49,9 @@ class DateTimeConverter private constructor() {
         @JvmStatic
         @TypeConverter
         fun fromZonedDateTime(zonedDateTime: ZonedDateTime?): String? {
-            return DateTimeFormatter.ISO_ZONED_DATE_TIME.format(zonedDateTime)
+            return if (zonedDateTime != null)
+                DateTimeFormatter.ISO_ZONED_DATE_TIME.format(zonedDateTime)
+            else null
         }
 
         @JvmStatic

@@ -102,5 +102,4 @@ data class Task @JvmOverloads constructor(
             }
         }
     }
-
 }

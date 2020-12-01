@@ -53,7 +53,10 @@ class TaskAdapter(private var actionListener: ActionListener,
                     binding.taskNameView.text = name
                     binding.taskNameView.setTextColorFromResource(textColorRes)
                     binding.taskNameView.setStrikeThroughEffect(isFinished)
-                    binding.dueDateView.text = formatDueDate(binding.root.context)
+
+                    if (t.task.hasDueDate())
+                        binding.dueDateView.text = formatDueDate(binding.root.context)
+                    else binding.dueDateView.isVisible = false
                 }
 
                 if (t.subject != null) {

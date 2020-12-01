@@ -78,14 +78,14 @@
                     android:text="@string/field_due_date"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true">
 
                     <TextView
                         android:id="@+id/dueDateTextView"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/editor_item_height"
                         android:clickable="true"
                         android:focusable="true"
@@ -94,14 +94,41 @@
                         android:paddingEnd="16dp"
                         android:background="?attr/selectableItemBackground"
                         android:text="@string/field_not_set"
-                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/removeDueDateButton"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/removeDueDateButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_padding"
+                        android:text="@string/button_remove"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                     <RadioGroup
                         android:id="@+id/dateTimeRadioGroup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/editor_container_padding"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
+                            android:id="@+id/noDueRadioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/editor_container_padding"
+                            android:paddingEnd="@dimen/editor_container_padding"
+                            android:checked="true"
+                            android:text="@string/field_not_set"
+                            app:textAppearanceCompat="@style/Fokus.TextAppearance.Editor.Value"/>
 
                         <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
                             android:id="@+id/inNextMeetingRadio"
@@ -132,8 +159,7 @@
 
                     </RadioGroup>
 
-                </RelativeLayout>
-
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 

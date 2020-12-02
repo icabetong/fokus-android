@@ -122,7 +122,12 @@
     <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
-    <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice"/>
+    <style name="Fokus.Widget.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipStrokeColor">@color/selector_chip_stroke_color</item>
+        <item name="chipBackgroundColor">@color/selector_chip_background</item>
+        <item name="android:textColor">@color/selector_chip_text_color</item>
+    </style>
     <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch"/>
     <style name="Fokus.Widget.FAB" parent="Widget.MaterialComponents.FloatingActionButton"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.MaterialComponents.ExtendedFloatingActionButton"/>

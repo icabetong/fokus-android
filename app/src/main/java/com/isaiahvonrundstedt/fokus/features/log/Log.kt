@@ -40,10 +40,11 @@ data class Log @JvmOverloads constructor(
 
         // Formats the dateTime object for human reading
         return if (dateTimeTriggered!!.toLocalDate().isEqual(currentDateTime))
-            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context))
+            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
-            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context))
-        else dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
+            dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
+        else dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, isShort = true,
+            withYear = true))
     }
 
     @DrawableRes

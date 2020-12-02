@@ -194,7 +194,7 @@ class EventEditor : BaseEditor() {
                 if (v is TwoLineRadioButton && !v.isChecked) {
                     v.titleTextColor = ContextCompat.getColor(v.context,
                         R.color.color_secondary_text)
-                    v.subtitle = ""
+                    v.subtitle = null
                 }
             }
         }

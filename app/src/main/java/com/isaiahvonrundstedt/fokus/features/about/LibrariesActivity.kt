@@ -67,7 +67,7 @@ class LibrariesActivity: BaseActivity() {
                 if (license != null) {
                     binding.licenseNameTextView.text = license.licenseName
                     binding.licenseDescriptionTextView.text =
-                        if (CoreApplication.isRunningAtVersion(Build.VERSION_CODES.N))
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                             Html.fromHtml(license.licenseShortDescription, Html.FROM_HTML_MODE_COMPACT)
                         else Html.fromHtml(license.licenseShortDescription)
                 } else {

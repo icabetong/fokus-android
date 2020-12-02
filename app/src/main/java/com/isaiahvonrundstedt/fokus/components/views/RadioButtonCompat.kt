@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.components.views
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatRadioButton
@@ -33,7 +34,7 @@ open class RadioButtonCompat @JvmOverloads constructor(
 
     @Suppress("DEPRECATION")
     fun setTextAppearanceCompat(@StyleRes resId: Int) {
-        if (CoreApplication.isRunningAtVersion(23))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             this.setTextAppearance(resId)
         else this.setTextAppearance(context, resId)
     }

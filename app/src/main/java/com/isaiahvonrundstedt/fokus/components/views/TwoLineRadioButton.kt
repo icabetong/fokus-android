@@ -3,10 +3,12 @@ package com.isaiahvonrundstedt.fokus.components.views
 import android.content.Context
 import android.os.Build
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
+import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 
 class TwoLineRadioButton @JvmOverloads constructor(
@@ -27,7 +29,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
             renderText()
         }
 
-    var subtitle: String = ""
+    var subtitle: String? = null
         set(value) {
             field = value
             renderText()
@@ -54,7 +56,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
 
         try {
             title = typedArray.getString(R.styleable.TwoLineRadioButton_titleText) ?: ""
-            subtitle = typedArray.getString(R.styleable.TwoLineRadioButton_subtitleText) ?: ""
+            subtitle = typedArray.getString(R.styleable.TwoLineRadioButton_subtitleText)
 
             titleTextColor = typedArray.getColor(R.styleable.TwoLineRadioButton_titleTextColor,
                 titleTextColor)
@@ -86,25 +88,27 @@ class TwoLineRadioButton @JvmOverloads constructor(
         titleTextColorSpan = ForegroundColorSpan(titleTextColor)
         subtitleTextColorSpan = ForegroundColorSpan(subtitleTextColor)
 
-        val textToRender = if (subtitle.isNotBlank()) "$title\n$subtitle"
-            else title
+        val textToRender = if (subtitle.isNullOrEmpty()) title
+            else "$title\n$subtitle"
 
-        val spannable = SpannableString(textToRender).apply {
+        val builder = SpannableStringBuilder(textToRender).apply {
             setSpan(titleSpan, 0, title.length,
                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
             setSpan(titleTextColorSpan, 0, title.length,
                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
-            if (subtitle.isNotBlank()) {
-                setSpan(subtitleSpan, title.length,
-                    title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
-                setSpan(subtitleTextColorSpan, title.length,
-                    title.length + subtitle.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+
+            subtitle?.also {
+                if (it.isNotEmpty()) {
+                    setSpan(subtitleSpan, title.length,
+                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                    setSpan(subtitleTextColorSpan, title.length,
+                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                }
             }
         }
 
-        // Band-aid fix
         text = if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P)
-            spannable.toString()
-        else spannable
+            builder.toString()
+        else builder
     }
 }

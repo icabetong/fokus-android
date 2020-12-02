@@ -105,8 +105,9 @@ class MainActivity : BaseActivity() {
         TaskReminderWorker.reschedule(this.applicationContext)
 
         val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
-        controller = navigationHost?.findNavController()
-        ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, controller!!)
+        navigationHost?.findNavController()?.also {
+            ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, it)
+        }
 
         binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
         binding.appBarLayout.toolbar.setNavigationOnClickListener {
@@ -128,7 +129,7 @@ class MainActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (CoreApplication.isRunningAtVersion(Build.VERSION_CODES.O)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             with(NotificationChannelManager(this)) {
                 register(NotificationChannelManager.CHANNEL_ID_GENERIC,
                     NotificationManager.IMPORTANCE_DEFAULT)

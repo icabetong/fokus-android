@@ -27,10 +27,6 @@ class CoreApplication : Application(), Configuration.Provider {
             return FileProvider.getUriForFile(context,
                 "${BuildConfig.APPLICATION_ID}.provider", source)
         }
-
-        fun isRunningAtVersion(version: Int): Boolean {
-            return Build.VERSION.SDK_INT >= version
-        }
     }
 
 }

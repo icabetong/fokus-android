@@ -64,7 +64,7 @@ class PreferenceManager(private val context: Context?) {
     var taskConstraint: TaskViewModel.Constraint
         get() = TaskViewModel.Constraint.parse(
             sharedPreference.getString(R.string.key_behaviour_tasks_filter,
-                TaskViewModel.Constraint.PENDING.toString()))
+                TaskViewModel.Constraint.ALL.toString()))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_behaviour_tasks_filter, value.toString())
@@ -97,7 +97,7 @@ class PreferenceManager(private val context: Context?) {
     var subjectConstraint: SubjectViewModel.Constraint
         get() = SubjectViewModel.Constraint.parse(
             sharedPreference.getString(R.string.key_behaviour_subjects_filter,
-                SubjectViewModel.Constraint.TODAY.toString()))
+                SubjectViewModel.Constraint.ALL.toString()))
         set(value) {
             sharedPreference.edit().run {
                 putString(R.string.key_behaviour_subjects_filter, value.toString())

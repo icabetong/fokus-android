@@ -372,6 +372,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(receiver)
+
+        // Cancel all current import processes
         startService(Intent(this, FileImporterService::class.java).apply {
             action = FileImporterService.ACTION_CANCEL
         })

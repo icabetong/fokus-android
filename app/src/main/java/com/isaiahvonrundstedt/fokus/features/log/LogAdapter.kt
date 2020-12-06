@@ -33,10 +33,12 @@ class LogAdapter(private var actionListener: ActionListener)
 
         override fun <T> onBind(t: T) {
             if (t is Log) {
-                binding.titleView.text = t.title
-                binding.summaryView.text = t.content
-                binding.dateTimeView.text = t.formatDateTime(binding.root.context)
-                binding.iconView.setImageResource(t.getIconResource())
+                with(t) {
+                    binding.titleView.text = title
+                    binding.summaryView.text = content
+                    binding.dateTimeView.text = t.formatDateTime(binding.root.context)
+                    binding.iconView.setImageResource(getIconResource())
+                }
             }
         }
     }

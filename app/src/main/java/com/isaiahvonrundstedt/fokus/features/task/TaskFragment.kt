@@ -36,7 +36,7 @@ import nl.dionsegijn.konfetti.models.Size
 import java.io.File
 
 @AndroidEntryPoint
-class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskCompletionListener {
+class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener {
 
     private var _binding: FragmentTaskBinding? = null
 
@@ -99,9 +99,9 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     // Update the task in the database then show
     // snackbar feedback and also if the sounds if turned on
     // play a fokus sound.
-    override fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean) {
+    override fun onStatusChanged(taskPackage: TaskPackage, isFinished: Boolean) {
         viewModel.update(taskPackage.task)
-        if (isChecked) {
+        if (isFinished) {
             createSnackbar(R.string.feedback_task_marked_as_finished, binding.recyclerView)
 
             with(PreferenceManager(context)) {

@@ -17,16 +17,16 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
 class TaskAdapter(private var actionListener: ActionListener,
-                  private var taskCompletionListener: TaskCompletionListener)
-    : BaseAdapter<TaskPackage, TaskAdapter.ViewHolder>(TaskPackage.DIFF_CALLBACK), Swipeable {
+                  private var statusListener: TaskStatusListener)
+    : BaseAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK), Swipeable {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = LayoutItemTaskBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(binding.root)
+        return TaskViewHolder(binding.root, actionListener, statusListener)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
@@ -36,14 +36,15 @@ class TaskAdapter(private var actionListener: ActionListener,
                 null)
     }
 
-    inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
-
+    class TaskViewHolder(itemView: View,
+                         private val actionListener: ActionListener,
+                         private val statusListener: TaskStatusListener): BaseViewHolder(itemView) {
         private val binding = LayoutItemTaskBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
                 with(t.task) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.task.taskID
+                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
                         R.color.color_secondary_text
@@ -54,7 +55,7 @@ class TaskAdapter(private var actionListener: ActionListener,
                     binding.taskNameView.setTextColorFromResource(textColorRes)
                     binding.taskNameView.setStrikeThroughEffect(isFinished)
 
-                    if (t.task.hasDueDate())
+                    if (hasDueDate())
                         binding.dueDateView.text = formatDueDate(binding.root.context)
                     else binding.dueDateView.isVisible = false
                 }
@@ -73,7 +74,7 @@ class TaskAdapter(private var actionListener: ActionListener,
                         if (isChecked)
                             binding.taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                     }
-                    taskCompletionListener.onTaskCompleted(t, view.isChecked)
+                    statusListener.onStatusChanged(t, view.isChecked)
                 }
 
                 binding.root.setOnClickListener {
@@ -83,8 +84,7 @@ class TaskAdapter(private var actionListener: ActionListener,
         }
     }
 
-    interface TaskCompletionListener {
-        fun onTaskCompleted(taskPackage: TaskPackage, isChecked: Boolean)
+    interface TaskStatusListener {
+        fun onStatusChanged(taskPackage: TaskPackage, isFinished: Boolean)
     }
-
 }

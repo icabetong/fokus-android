@@ -5,14 +5,11 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
-import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
@@ -29,7 +26,7 @@ class TaskWidgetRemoteViewFactory(private var context: Context)
         runBlocking {
             val job = async { tasks.fetch()  }
             items = job.await() ?: emptyList()
-            items.forEach { if (it.task.isDueToday()) itemList.add(it) }
+            items.forEach { if (it.task.isDueToday() || !it.task.hasDueDate()) itemList.add(it) }
         }
     }
 
@@ -55,7 +52,9 @@ class TaskWidgetRemoteViewFactory(private var context: Context)
         val views = RemoteViews(context.packageName, R.layout.layout_item_widget)
         with(views) {
             setTextViewText(R.id.titleView, task.name)
-            setTextViewText(R.id.summaryView, task.formatDueDate(context))
+            if (task.hasDueDate())
+                setTextViewText(R.id.summaryView, task.formatDueDate(context))
+            else setViewVisibility(R.id.summaryView, View.GONE)
             setOnClickFillInIntent(R.id.rootView, itemIntent)
             if (subject != null)
                 setInt(R.id.imageView, "setColorFilter", subject.tag.color)

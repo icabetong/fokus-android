@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus
 import android.app.Application
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import androidx.core.content.FileProvider
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration

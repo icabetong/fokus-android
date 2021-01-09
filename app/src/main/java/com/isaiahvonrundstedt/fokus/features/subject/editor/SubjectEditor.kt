@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog

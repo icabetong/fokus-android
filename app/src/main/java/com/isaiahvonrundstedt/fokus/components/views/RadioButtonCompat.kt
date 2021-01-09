@@ -5,7 +5,6 @@ import android.os.Build
 import android.util.AttributeSet
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatRadioButton
-import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 
 open class RadioButtonCompat @JvmOverloads constructor(

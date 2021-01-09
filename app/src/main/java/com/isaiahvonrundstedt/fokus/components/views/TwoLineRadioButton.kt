@@ -8,7 +8,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 
 class TwoLineRadioButton @JvmOverloads constructor(

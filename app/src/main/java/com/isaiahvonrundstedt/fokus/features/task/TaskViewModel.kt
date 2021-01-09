@@ -1,22 +1,19 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.app.NotificationManager
-import androidx.hilt.Assisted
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isBeforeNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationWorker
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 
 class TaskViewModel @ViewModelInject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val repository: TaskRepository,
     private val preferenceManager: PreferenceManager
 ) : ViewModel() {
@@ -61,14 +58,20 @@ class TaskViewModel @ViewModelInject constructor(
 
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     fun remove(task: Task) = viewModelScope.launch {
         repository.remove(task)
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.update(task, attachmentList)
+
+        TaskWidgetProvider.triggerRefresh(context)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

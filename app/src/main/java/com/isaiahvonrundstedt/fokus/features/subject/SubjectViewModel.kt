@@ -1,14 +1,19 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
+import com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 
 class SubjectViewModel @ViewModelInject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val repository: SubjectRepository,
     private val preferenceManager: PreferenceManager
 ) : ViewModel() {
@@ -56,15 +61,21 @@ class SubjectViewModel @ViewModelInject constructor(
 
     fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
         repository.insert(subject, scheduleList)
+
+        SubjectWidgetProvider.triggerRefresh(context)
     }
 
     fun remove(subject: Subject) = viewModelScope.launch {
         repository.remove(subject)
+
+        SubjectWidgetProvider.triggerRefresh(context)
     }
 
     fun update(subject: Subject,
                scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
         repository.update(subject, scheduleList)
+
+        SubjectWidgetProvider.triggerRefresh(context)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

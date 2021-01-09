@@ -1,13 +1,18 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
+import android.content.Context
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
+import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 
 class EventViewModel @ViewModelInject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val repository: EventRepository
 ) : ViewModel() {
 
@@ -42,14 +47,20 @@ class EventViewModel @ViewModelInject constructor(
 
     fun insert(event: Event) = viewModelScope.launch {
         repository.insert(event)
+
+        EventWidgetProvider.triggerRefresh(context)
     }
 
     fun remove(event: Event) = viewModelScope.launch {
         repository.remove(event)
+
+        EventWidgetProvider.triggerRefresh(context)
     }
 
     fun update(event: Event) = viewModelScope.launch {
         repository.update(event)
+
+        EventWidgetProvider.triggerRefresh(context)
     }
 
 }

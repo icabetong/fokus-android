@@ -15,8 +15,8 @@ android {
         applicationId "com.isaiahvonrundstedt.fokus"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 12
-        versionName "2.2.0-beta01"
+        versionCode 13
+        versionName "2.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

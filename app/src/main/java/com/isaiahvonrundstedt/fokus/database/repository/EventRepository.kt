@@ -12,9 +12,9 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.dao.EventDAO
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

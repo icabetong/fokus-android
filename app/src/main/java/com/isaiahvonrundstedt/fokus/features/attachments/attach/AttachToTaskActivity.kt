@@ -2,9 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.attachments.attach
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration

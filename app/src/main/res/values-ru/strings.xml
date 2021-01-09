@@ -15,7 +15,7 @@
     <string name="activity_backup">Резервное копирование и восстановление</string>
     <string name="activity_notices">Уведомления третьих лиц</string>
     <string name="activity_open_source_licenses">Лицензии с открытым исходным кодом</string>
-    <string name="activity_about">О сайте</string>
+    <string name="activity_about">о приложении</string>
 
     <string name="menu_add">@string/button_add</string>
     <string name="menu_more">Подробнее</string>
@@ -115,12 +115,12 @@
     <string name="attachment_type_import_file">Файл импорта</string>
     <string name="attachment_type_website_url">URL-адрес веб-сайта</string>
 
-    <string name="sorting_directions_ascending">Восходящий</string>
-    <string name="sorting_directions_descending">Поступающий</string>
+    <string name="sorting_directions_ascending">По возрастанию</string>
+    <string name="sorting_directions_descending">По убыванию</string>
 
     <string name="filter_options_all">Все</string>
     <string name="filter_options_pending_tasks">Только в ожидании</string>
-    <string name="filter_options_finished_tasks">Готовый только</string>
+    <string name="filter_options_finished_tasks">Выполненные</string>
     <string name="filter_options_today_classes">Сегодня только</string>
     <string name="filter_options_tomorrow_classes">Только завтра</string>
 
@@ -193,7 +193,7 @@
     <string name="settings_group_debugging">Отладка</string>
     <string name="settings_group_contribute">Делать вклад</string>
 
-    <string name="settings_theme">Tema</string>
+    <string name="settings_theme">Тема</string>
     <string name="settings_theme_item_system">Стандартная система</string>
     <string name="settings_theme_item_dark">Темный</string>
     <string name="settings_theme_item_light">Свет</string>

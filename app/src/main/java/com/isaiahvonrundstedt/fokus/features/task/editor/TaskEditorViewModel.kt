@@ -64,6 +64,7 @@ class TaskEditorViewModel @ViewModelInject constructor(
     fun hasDueDate(): Boolean = task?.hasDueDate() == true
     fun getFormattedDueDate(): String = task?.formatDueDate(context) ?: ""
 
+    fun hasAttachmentWithFile(): Boolean = attachments.any { it.type != Attachment.TYPE_WEBSITE_LINK }
     fun setIsImportant(isImportant: Boolean) { task?.isImportant = isImportant }
     fun setIsFinished(isFinished: Boolean) { task?.isFinished = isFinished }
     fun setNotes(notes: String?) { task?.notes = notes }

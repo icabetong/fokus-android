@@ -1,0 +1,320 @@
+<resources>
+    <string translatable="false" name="app_name">Fokus</string>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">مهامك</string>
+    <string name="activity_tasks_pending">المهام المؤجلة</string>
+    <string name="activity_tasks_finished">المهام المنتهية</string>
+    <string name="activity_subjects">الموضوع</string>
+    <string name="activity_subjects_today">مواضيعك لهذا اليوم</string>
+    <string name="activity_subjects_tomorrow">مواضيعك ليوم غد</string>
+    <string name="activity_logs">سجل الأشعارات</string>
+    <string name="activity_settings">الأعدادات</string>
+    <string name="activity_backup">النسخ الأحتياطي والأستعادة</string>
+    <string name="activity_notices">أشعرات الطرف الثالث</string>
+    <string name="activity_open_source_licenses">تراخيص مفتوحة المصدر</string>
+    <string name="activity_about">عن</string>
+
+    <string name="menu_add">@string/button_add</string>
+    <string name="menu_more">المزيد</string>
+    <string name="menu_sort">فرز</string>
+    <string name="menu_filter">فلتره</string>
+    <string name="menu_share">مشاركة</string>
+    <string name="menu_import">أستيراد</string>
+    <string name="menu_clear_items">تنظيف السجل</string>
+    <string name="menu_export_to_file">تصدير الى ملف</string>
+    <string name="menu_share_directly">مشاركة مباشرة</string>
+
+    <string name="navigation_tasks">المهام</string>
+    <string name="navigation_events">الأحداث</string>
+    <string name="navigation_subjects">المواضيع</string>
+    <string name="navigation_logs">السجلات</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
+
+    <string name="button_add_task">أضافة مهام</string>
+    <string name="button_add_event">أضافة حدث</string>
+    <string name="button_add_subject">أضافة موضوع</string>
+    <string name="button_add">أضف</string>
+    <string name="button_new">جديد</string>
+    <string name="button_save">حفظ</string>
+    <string name="button_done">تم</string>
+    <string name="button_undo">تراجع</string>
+    <string name="button_remove">مسح</string>
+    <string name="button_continue">أستمرار</string>
+    <string name="button_mark_as_finished">علم كمنتهية</string>
+    <string name="button_mark_as_important">علم كمهمة</string>
+    <string name="button_delete">مسح</string>
+    <string name="button_cancel">ألغاء</string>
+    <string name="button_discard">تجاهل</string>
+    <string name="button_dismiss">صرف النظر</string>
+    <string name="button_learn_more">أعرف أكثر</string>
+    <string name="button_view_schedules">عرض جدول االمواضيع</string>
+
+    <string name="empty_view_no_subjects_title">لاتوجد مواضيع مضافة</string>
+    <string name="empty_view_no_subjects_summary">تساعد المواضيع في فرز المهام والأحداث الخاصة بك ، إذا كان لديك واحد ، قم بإضافته باستخدام الزر أدناه.</string>
+    <string name="empty_view_no_classes_today_title">لاتوجد حصص لهذا اليوم</string>
+    <string name="empty_view_no_classes_today_summary">ليس لديك فصل دراسي لهذا اليوم</string>
+    <string name="empty_view_no_classes_tomorrow_title">ليس لديك فصل دراسي ليوم غد</string>
+    <string name="empty_view_no_classes_tomorrow_summary">ليس لديك مواعيد حصص ليوم غد</string>
+    <string name="empty_view_no_tasks_title">لاتوجد مهام معلقة</string>
+    <string name="empty_view_no_tasks_summary">ليس لديك حاليا أي مهام معلقة.إذا كان لديك واحد ، قم بإضافته باستخدام الزر أدناه</string>
+    <string name="empty_view_no_finished_title">لاتوجد مهام منتهية</string>
+    <string name="empty_view_no_finished_summary">ليس لديك حاليا أي مهام منتهية. ستظهر هنا كل مهمة حددتها على أنها منتهية.</string>
+    <string name="empty_view_no_logs_title">لايوجد قيد للسجلات</string>
+    <string name="empty_view_no_logs_summary">بمجرد ظهور مهمة أو حدث أو أي تذكير في مركز الإشعارات ، سيظهر هنا أيضًا</string>
+    <string name="empty_view_no_events_title">لاتوجد احداث مجدولة</string>
+    <string name="empty_view_no_events_summary">ليس لديك حاليا أي أحداث مجدولة. إذا كان لديك واحد ، قم بإضافته باستخدام الزر أدناه</string>
+    <string name="empty_view_no_previous_title">لاتوجد أحداث سابقة</string>
+    <string name="empty_view_no_previous_summary">ليس لديك حاليا أي أحداث سابقة. سيظهر هنا كل حدث تجاوز جدوله الزمني</string>
+
+    <string name="days_of_week_item_sunday">الأحد</string>
+    <string name="days_of_week_item_monday">الأثنين</string>
+    <string name="days_of_week_item_tuesday">الثلاثاء</string>
+    <string name="days_of_week_item_wednesday">الأربعاء</string>
+    <string name="days_of_week_item_thursday">الخميس</string>
+    <string name="days_of_week_item_friday">الجمعة</string>
+    <string name="days_of_week_item_saturday">السبت</string>
+
+    <string name="days_of_week_item_sunday_short">أحد</string>
+    <string name="days_of_week_item_monday_short">أثن</string>
+    <string name="days_of_week_item_tuesday_short">ثلا</string>
+    <string name="days_of_week_item_wednesday_short">أرب</string>
+    <string name="days_of_week_item_thursday_short">خمي</string>
+    <string name="days_of_week_item_friday_short">جمع</string>
+    <string name="days_of_week_item_saturday_short">سبت</string>
+
+    <string name="weeks_of_month_item_week_1">الأسبوع 1</string>
+    <string name="weeks_of_month_item_week_2">الأسبوع 2</string>
+    <string name="weeks_of_month_item_week_3">الأسبوع 3</string>
+    <string name="weeks_of_month_item_week_4">الأسبوع 4</string>
+
+    <string name="dialog_assign_subject">أختر الموضوع</string>
+    <string name="dialog_pick_start_time">أختر وقت البدأ</string>
+    <string name="dialog_pick_end_time">أختر وقت الأنتهاء</string>
+    <string name="dialog_pick_color_tag">أختر لون</string>
+    <string name="dialog_select_notification_interval">أختر فترة الأخطار</string>
+    <string name="dialog_choose_theme">أختر ثيم</string>
+    <string name="dialog_choose_backup">اختر ملف النسخ الاحتياطي</string>
+    <string name="dialog_confirm_deletion_title">هل تريد الأزالة \"%1$s\"?</string>
+    <string name="dialog_confirm_deletion_summary">بمجرد حذف هذا العنصر ، لا يمكن استعادته</string>
+    <string name="dialog_schedule_details">تفاصيل الجدول</string>
+    <string name="dialog_discard_changes">تجاهل التغييرات؟</string>
+    <string name="dialog_select_file_import">حدد ملفًا للاستيراد</string>
+    <string name="dialog_send_to">أرسال الى</string>
+    <string name="dialog_sharing_options">خيارات المشاركة</string>
+    <string name="dialog_class_schedules">جداول الحصص</string>
+    <string name="dialog_filter_options">خيارات الفلترة</string>
+    <string name="dialog_new_attachment">مرفق جديد</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">أدخل عنوان لموقع الويب</string>
+    <string name="dialog_sorting">ترتيب</string>
+
+    <string name="attachment_type_import_file">استيراد ملف</string>
+    <string name="attachment_type_website_url">رابط الموقع</string>
+
+    <string name="sorting_directions_ascending">تصاعدي</string>
+    <string name="sorting_directions_descending">تنازلي</string>
+
+    <string name="filter_options_all">الكل</string>
+    <string name="filter_options_pending_tasks">المعلقة فقط</string>
+    <string name="filter_options_finished_tasks">المنتهية فقط</string>
+    <string name="filter_options_today_classes">اليوم فقط</string>
+    <string name="filter_options_tomorrow_classes">غدا فقط</string>
+
+    <string name="field_subject_code">كود الموضوع</string>
+    <string name="field_description">وصف</string>
+    <string name="field_days_of_week">ايام الاسبوع</string>
+    <string name="field_weeks_of_month">أسابيع من الشهر</string>
+    <string name="field_start_time">وقت البدء</string>
+    <string name="field_end_time">وقت النهاية</string>
+    <string name="field_task_name">اسم المهمة</string>
+    <string name="field_notes">ملاحظات</string>
+    <string name="field_subject">موضوع</string>
+    <string name="field_due_date">تاريخ الاستحقاق</string>
+    <string name="field_event_name">اسم الحدث</string>
+    <string name="field_schedule">جدول</string>
+    <string name="field_location">موقعك</string>
+    <string name="field_attachments">المرفقات</string>
+    <string name="field_class_time">وقت الفصل</string>
+    <string name="field_color_tag">علامة اللون</string>
+    <string name="field_priority">أولولية</string>
+    <string name="field_status">الحالة</string>
+    <string name="field_not_set">غير مضبوط</string>
+    <string name="field_due_in_the_next_meeting">في الاجتماع القادم</string>
+    <string name="field_due_pick_from_schedule">اختر من جدول الحصص</string>
+    <string name="field_due_custom">مخصص</string>
+    <string name="field_attachment_name">أسم المرفق</string>
+
+    <string name="hint_subject_description">اسم الموضوع</string>
+    <string name="hint_task_notes">بعض الأفكار أو التفاصيل الصغيرة حول المهمة</string>
+    <string name="hint_event_location">أدخل غرفة أو مبنى أو أي مكان</string>
+    <string name="hint_event_notes">بعض الأفكار أو التفاصيل البسيطة حول الحدث</string>
+
+    <string name="feedback_subject_removed">تمت إزالة الموضوع</string>
+    <string name="feedback_log_removed">تمت إزالة السجل</string>
+    <string name="feedback_task_removed">تمت إزالة المهمة</string>
+    <string name="feedback_schedule_removed">تمت إزالة الجدول </string>
+    <string name="feedback_attachment_added">تمت إضافة المرفق</string>
+    <string name="feedback_attachment_removed">تمت إزالة المرفق</string>
+    <string name="feedback_event_removed">تمت إزالة الحدث</string>
+    <string name="feedback_task_marked_as_finished">تم وضع علامة على المهمة على أنها منتهية</string>
+    <string name="feedback_task_marked_as_pending">تم وضع علامة على المهمة على أنها معلقة</string>
+    <string name="feedback_subject_empty_name">لقد نسيت إدخال رمز الموضوع</string>
+    <string name="feedback_subject_empty_description">لقد نسيت إدخال الوصف</string>
+    <string name="feedback_subject_no_schedule">لقد نسيت إضافة جدول</string>
+    <string name="feedback_schedule_empty_days">لقد نسيت تحديد الأيام</string>
+    <string name="feedback_schedule_empty_start_time">لقد نسيت إدخال وقت البدء</string>
+    <string name="feedback_schedule_empty_end_time">لقد نسيت إدخال وقت الانتهاء</string>
+    <string name="feedback_task_empty_name">لقد نسيت إدخال اسم المهمة</string>
+    <string name="feedback_task_empty_due_date">لقد نسيت تحديد تاريخ استحقاقه</string>
+    <string name="feedback_event_empty_name">لقد نسيت إدخال اسم الحدث</string>
+    <string name="feedback_event_empty_location">لقد نسيت أدخال الموقع</string>
+    <string name="feedback_event_empty_schedule">لقد نسيت إدخال الجدول</string>
+    <string name="feedback_restore_invalid">ملف النسخ الاحتياطي غير صالح</string>
+    <string name="feedback_restore_corrupted">ملف النسخ الاحتياطي تالف أو غير قابل للقراءة</string>
+    <string name="feedback_backup_empty">لا توجد عناصر للنسخ الاحتياطي</string>
+    <string name="feedback_backup_failed">واجهت عملية النسخ الاحتياطي خطأ</string>
+    <string name="feedback_import_ongoing">الاستيراد قيد التقدم</string>
+    <string name="feedback_import_completed">اكتمل الاستيراد</string>
+    <string name="feedback_import_failed">فشل الاستيراد</string>
+    <string name="feedback_export_ongoing">التصدير قيد التقدم</string>
+    <string name="feedback_export_completed">اكتمل التصدير</string>
+    <string name="feedback_export_failed">فشل التصدير</string>
+    <string name="feedback_unable_to_share_title">غير قادر على المشاركة</string>
+    <string name="feedback_unable_to_share_message">لا توجد معلومات صالحة يمكن مشاركتها</string>
+
+    <string name="settings_group_interface">واجهه المستخدم</string>
+    <string name="settings_group_sound">صوت</string>
+    <string name="settings_group_notification">إشعارات</string>
+    <string name="settings_group_advanced">المتقدمة</string>
+    <string name="settings_group_debugging">تصحيح</string>
+    <string name="settings_group_contribute">مساهمة</string>
+
+    <string name="settings_theme">ثيم</string>
+    <string name="settings_theme_item_system">النظام الافتراضي</string>
+    <string name="settings_theme_item_dark">داكن</string>
+    <string name="settings_theme_item_light">فاتح</string>
+    <string name="settings_confetti_title">قصاصات ورق ملون</string>
+    <string name="settings_confetti_summary">إظهار القصاصات عند وضع علامة على المهام كمنتهية</string>
+
+    <string name="settings_completion_sounds_title">أصوات الإنجاز</string>
+    <string name="settings_completion_sounds_summary">قم بتشغيل صوت عند وضع علامة على مهمة كمكتملة</string>
+
+    <string name="settings_reminder_frequency_title">معدل التذكير</string>
+    <string name="settings_reminder_frequency_item_everyday">كل يوم</string>
+    <string name="settings_reminder_frequency_item_weekends">أيام العطل</string>
+    <string name="settings_remind_me_in_time_of_day">ذكرني في هذا الوقت</string>
+    <string name="settings_when_nearing_due_title">عندما تكون المهمة على وشك الاستحقاق</string>
+    <string name="settings_when_nearing_due_summary">إظهار إعلامات للمهام التي اقتربت من موعدها النهائي</string>
+    <string name="settings_task_reminders">الفاصل الزمني لتذكير المهام</string>
+    <string name="settings_task_reminders_item_hour">قبل ساعة</string>
+    <string name="settings_task_reminders_item_three_hours">قبل 3 ساعات</string>
+    <string name="settings_task_reminders_item_day">قبل يوم واحد</string>
+    <string name="settings_incoming_events_title">الأحداث القادمة</string>
+    <string name="settings_incoming_events_summary">إظهار الإخطارات حول الأحداث الواردة هذا اليوم</string>
+    <string name="settings_event_reminders">الفاصل الزمني لتذكير الحدث</string>
+    <string name="settings_event_reminders_item_quarter_hour">قبل 15 دقيقة</string>
+    <string name="settings_event_reminders_item_half_hour">قبل 30 دقيقة</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">فصول لهذا اليوم</string>
+    <string name="settings_classes_for_this_day_summary">إظهار الإخطارات حول الفصول الدراسية لموضوعاتي هذا اليوم</string>
+    <string name="settings_class_reminders">الفاصل الزمني لتذكير الفصل</string>
+    <string name="settings_class_reminders_item_5_minutes">قبل 5 دقائق</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">المزيد من الإعدادات</string>
+
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
+    <string name="settings_backup">نسخ أحتياطي</string>
+    <string name="settings_backup_summary_no_previous">لا توجد نسخ احتياطية سابقة</string>
+    <string name="settings_restore">استعادة</string>
+    <string name="settings_use_external_browser_title">افتح الروابط في متصفح خارجي</string>
+    <string name="settings_use_external_browser_summary">استخدم متصفح النظام الافتراضي للتعامل مع الارتباطات التشعبية</string>
+
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
+    <string name="settings_not_working_notifications_info">في بعض الأحيان ، قد لا يتم تشغيل إخطارك بسبب التحسين القوي للبطارية من قبل الشركة المصنعة للهاتف.</string>
+
+    <string name="settings_translate">ترجمة</string>
+    <string name="settings_report_an_issue">بلغ عن خطأ</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">نسخة الإصدار</string>
+
+    <string name="tag_color_sky">سماء</string>
+    <string name="tag_color_grass">عشب</string>
+    <string name="tag_color_sunset">غروب</string>
+    <string name="tag_color_lemon">ليمون</string>
+    <string name="tag_color_sea">بحر</string>
+    <string name="tag_color_grape">عنب</string>
+    <string name="tag_color_cherry">كرز</string>
+    <string name="tag_color_coral">المرجان</string>
+    <string name="tag_color_midnight">منتصف الليل</string>
+    <string name="tag_color_mint">نعناع</string>
+    <string name="tag_color_lavender">لافندر</string>
+    <string name="tag_color_graphite">الجرافيت</string>
+
+    <string name="widget_task_name">وجت المهمة</string>
+    <string name="widget_task_title">مهام</string>
+    <string name="widget_task_empty">ليس لديك مهام لهذا اليوم</string>
+    <string name="widget_event_name">وجت الحدث</string>
+    <string name="widget_event_title">الأحداث</string>
+    <string name="widget_event_empty">ليس لديك أحداث لهذا اليوم</string>
+    <string name="widget_class_name">وجت الحصة</string>
+    <string name="widget_class_title">الحصص</string>
+    <string name="widget_class_empty">ليس لديك دروس لهذا اليوم</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">يعني وضع علامة على هذا باعتباره مهمًا بأنه سيعرض إشعارًا دائمًا في مركز الإشعارات.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_group_reminders">تذكير</string>
+
+    <string name="notification_channel_general">عام</string>
+    <string name="notification_channel_task_reminders">تذكير المهام</string>
+    <string name="notification_channel_event_reminders">تذكير الحدث</string>
+    <string name="notification_channel_class_reminders">تذكير الفصل</string>
+
+    <string name="notification_pending_tasks_title"> لديك %1$d مهمة معلقة</string>
+    <string name="notification_pending_tasks_summary">قد يكون من المفيد إلقاء نظرة</string>
+
+    <string name="notification_backup_ongoing">أداء النسخ الاحتياطي</string>
+    <string name="notification_backup_error">فشل النسخ الاحتياطي</string>
+    <string name="notification_backup_success">اكتمل النسخ الاحتياطي</string>
+
+    <string name="notification_restore_ongoing">استعادة النسخة الاحتياطية</string>
+    <string name="notification_restore_error">فشلت الاستعادة</string>
+    <string name="notification_restore_success">اكتملت الاستعادة</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">أضف كمرفق</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">يوم جيد</string>
+    <string name="greeting_morning">صباح الخير</string>
+    <string name="greeting_afternoon">طاب مسائك</string>
+    <string name="greeting_evening">مساء الخير</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and">&#160;and&#160;</string>
+    <string name="yesterday_at"> %1$s البارحة في</string>
+    <string name="yesterday">البارحة</string>
+    <string name="tomorrow_at"> %1$s البارحة في</string>
+    <string name="tomorrow">غدا</string>
+    <string name="today_at">%1$s غدا في</string>
+    <string name="today">اليوم</string>
+    <string name="due_today_at"> %1$s اليوم في</string>
+    <string name="due_tomorrow_at"> %1$s موعد التسليم غدًا في</string>
+
+    <string name="open_source_libraries">مكتبات مفتوحة المصدر</string>
+    <string name="credit_other_resources">مصادر أخرى</string>
+    <string name="credit_notification_sound_title" translatable="false">Zapsplat</string>
+    <string name="credit_notification_sound_summary">صوت الإشعار</string>
+    <string name="credit_launcher_icon_title" translatable="false">Freepik</string>
+    <string name="credit_launcher_icon_summary">Launcher Icon</string>
+    <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
+    <string name="credit_user_interface_icons_summary">أيكونه واجهة المستخدم</string>
+
+</resources>

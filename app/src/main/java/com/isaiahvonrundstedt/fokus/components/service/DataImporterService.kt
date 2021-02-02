@@ -78,18 +78,19 @@ class DataImporterService: BaseService() {
                                         taskPackage.attachments = items
                                     }
                                 }
-                            } else if (entry.name.contains(Streamable.DIRECTORY_ATTACHMENTS)
-                                && !entry.isDirectory) {
-
-                                val targetDirectory = File(getExternalFilesDir(null),
-                                    Streamable.DIRECTORY_ATTACHMENTS)
-
-                                val destination = File(targetDirectory, File(entry.name).name)
-
-                                archive.getInputStream(entry)?.use { inputStream ->
-                                    FileUtils.copyToFile(inputStream, destination)
-                                }
                             }
+//                            } else if (entry.name.contains(Streamable.DIRECTORY_ATTACHMENTS)
+//                                && !entry.isDirectory) {
+//
+//                                val targetDirectory = File(getExternalFilesDir(null),
+//                                    Streamable.DIRECTORY_ATTACHMENTS)
+//
+//                                val destination = File(targetDirectory, File(entry.name).name)
+//
+//                                archive.getInputStream(entry)?.use { inputStream ->
+//                                    FileUtils.copyToFile(inputStream, destination)
+//                                }
+//                            }
                         }
 
                         sendResult(taskPackage)

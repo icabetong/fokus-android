@@ -59,24 +59,14 @@ class DataExporterService: BaseService() {
                         .toJsonFile(cacheDir, Metadata.FILE_NAME))
 
                     val task: Task? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
-                    val attachments: List<Attachment>? = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS)
-
                     if (task != null) {
                         fileName = task.name ?: Streamable.ARCHIVE_NAME_GENERIC
                         items.add(task.toJsonFile(cacheDir, Streamable.FILE_NAME_TASK))
                     }
-                    items.add(Attachment.toJsonFile(attachments ?: emptyList(), cacheDir))
 
-                    val attachmentFolder = File(cacheDir,
-                        Streamable.DIRECTORY_ATTACHMENTS)
-                    if (!attachmentFolder.exists()) attachmentFolder.mkdir()
-                    attachments?.forEach { attachment ->
-                        if (attachment.target != null)
-                            FileUtils.copyFileToDirectory(File(attachment.target!!),
-                                attachmentFolder)
-                    }
-                    items.add(attachmentFolder)
-
+                    var attachments: List<Attachment> = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS) ?: emptyList()
+                    attachments = attachments.filter { it.type == Attachment.TYPE_WEBSITE_LINK }
+                    items.add(Attachment.toJsonFile(attachments, cacheDir))
                 }
                 ACTION_EXPORT_EVENT -> {
 

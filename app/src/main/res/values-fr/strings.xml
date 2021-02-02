@@ -55,7 +55,7 @@
     <string name="empty_view_no_subjects_title">Aucune matière ajoutée</string>
     <string name="empty_view_no_subjects_summary">Les matières vous aident à classer vos tâches et événements. Ajoutez-en un en utilisant le bouton ci-dessous.</string>
     <string name="empty_view_no_classes_today_title">Pas de classes aujourd’hui</string>
-    <string name="empty_view_no_classes_today_summary">Vous n’avez pas de classe planifiée aujourd&apos;hui.</string>
+    <string name="empty_view_no_classes_today_summary">Vous n’avez pas de classe planifiée aujourd\'hui.</string>
     <string name="empty_view_no_classes_tomorrow_title">Pas de classes demain</string>
     <string name="empty_view_no_classes_tomorrow_summary">Vous n’avez pas de classe planifiée demain.</string>
     <string name="empty_view_no_tasks_title">Aucune tâche en cours</string>
@@ -97,7 +97,7 @@
     <string name="dialog_select_notification_interval">Sélectionner un intervalle de notification</string>
     <string name="dialog_choose_theme">Choisir un thème</string>
     <string name="dialog_choose_backup">Choisir un fichier de sauvegarde</string>
-    <string name="dialog_confirm_deletion_title">Voulez-vous supprimer \&quot;%1$s\&quot; ?</string>
+    <string name="dialog_confirm_deletion_title">Voulez-vous supprimer \"%1$s\" ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois supprimé, il ne pourra plus être récupéré.</string>
     <string name="dialog_schedule_details">Détails des horaires</string>
     <string name="dialog_discard_changes">Annuler les modifications ?</string>
@@ -120,7 +120,8 @@
     <string name="filter_options_all">Tous</string>
     <string name="filter_options_pending_tasks">En cours uniquement</string>
     <string name="filter_options_finished_tasks">Terminé uniquement</string>
-    <string name="filter_options_today_classes">Aujourd&apos;hui uniquement</string>
+    m
+    <string name="filter_options_today_classes">Aujourd\'hui uniquement</string>
     <string name="filter_options_tomorrow_classes">Hier uniquement</string>
 
     <string name="field_subject_code">Code de la matière</string>
@@ -132,7 +133,7 @@
     <string name="field_task_name">Nom de la tâche</string>
     <string name="field_notes">Notes</string>
     <string name="field_subject">Matière</string>
-    <string name="field_due_date">Date d&apos;échéance</string>
+    <string name="field_due_date">Date d\'échéance</string>
     <string name="field_event_name">Nom de l’événement</string>
     <string name="field_schedule">Planning</string>
     <string name="field_location">Lieu</string>
@@ -197,10 +198,10 @@
     <string name="settings_theme_item_dark">Sombre</string>
     <string name="settings_theme_item_light">Clair</string>
     <string name="settings_confetti_title">Confetti</string>
-    <string name="settings_confetti_summary">Afficher des confettis lorsque des tâches passent à l&apos;état terminé.</string>
+    <string name="settings_confetti_summary">Afficher des confettis lorsque des tâches passent à l\'état terminé.</string>
 
     <string name="settings_completion_sounds_title">Effets sonores de félicitations</string>
-    <string name="settings_completion_sounds_summary">Jouer un son lorsqu’une tâche passe à l&apos;état terminé.</string>
+    <string name="settings_completion_sounds_summary">Jouer un son lorsqu’une tâche passe à l\'état terminé.</string>
 
     <string name="settings_reminder_frequency_title">Fréquence des rappels</string>
     <string name="settings_reminder_frequency_item_everyday">Quotidienne</string>
@@ -218,7 +219,7 @@
     <string name="settings_event_reminders_item_quarter_hour">15 minutes avant</string>
     <string name="settings_event_reminders_item_half_hour">30 minutes avant</string>
     <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
-    <string name="settings_classes_for_this_day_title">Classes aujourd&apos;hui</string>
+    <string name="settings_classes_for_this_day_title">Classes aujourd\'hui</string>
     <string name="settings_classes_for_this_day_summary">Afficher les notifications pour mes matières du jour</string>
     <string name="settings_class_reminders">Intervalle de rappel pour les classes</string>
     <string name="settings_class_reminders_item_5_minutes">5 minutes avant</string>
@@ -256,13 +257,16 @@
 
     <string name="widget_task_name">Widget des tâches</string>
     <string name="widget_task_title">Tâches</string>
-    <string name="widget_task_empty">Vous n’avez aucune tâche aujourd&apos;hui</string>
+    <string name="widget_task_empty">Vous n’avez aucune tâche aujourd\'hui</string>
     <string name="widget_event_name">Widget des événements</string>
     <string name="widget_event_title">Événements</string>
-    <string name="widget_event_empty">Vous n’avez aucun événement aujourd&apos;hui</string>
+    <string name="widget_event_empty">Vous n’avez aucun événement aujourd\'hui</string>
     <string name="widget_class_name">Widget des classes</string>
     <string name="widget_class_title">Classes</string>
-    <string name="widget_class_empty">Vous n’avez aucune classe aujourd&apos;hui</string><!-- Helper Text --><string name="helper_this_is_important">Marquer ceci comme important permettra d’afficher une notification persistante dans votre volet de notifications.</string><!-- Notifications --><string name="notification_channel_group_reminders">Rappels</string>
+    <string name="widget_class_empty">Vous n’avez aucune classe aujourd\'hui</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Marquer ceci comme important permettra d’afficher une notification persistante dans votre volet de notifications.</string><!-- Notifications --><string name="notification_channel_group_reminders">Rappels</string>
 
     <string name="notification_channel_general">Général</string>
     <string name="notification_channel_task_reminders">Rappels pour les tâches</string>
@@ -278,10 +282,19 @@
 
     <string name="notification_restore_ongoing">Restauration de la sauvegarde</string>
     <string name="notification_restore_error">Échec de la restauration</string>
-    <string name="notification_restore_success">Restauration terminée</string><!-- System --><string name="intent_add_as_attachment">Ajouter comme pièce jointe</string><!-- Greetings --><string name="greeting_default">Bonne journée !</string>
+    <string name="notification_restore_success">Restauration terminée</string>
+
+    <!-- System -->
+    <string name="intent_add_as_attachment">Ajouter comme pièce jointe</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">Bonne journée !</string>
     <string name="greeting_morning">Bonjour !</string>
     <string name="greeting_afternoon">Bonjour !</string>
-    <string name="greeting_evening">Bonsoir !</string><!-- used for concat and formatting --><string name="and"> et </string>
+    <string name="greeting_evening">Bonsoir !</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and"> et </string>
     <string name="yesterday_at">Hier à %1$s</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow_at">Demain à %1$s</string>

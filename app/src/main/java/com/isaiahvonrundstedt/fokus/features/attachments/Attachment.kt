@@ -60,9 +60,8 @@ data class Attachment @JvmOverloads constructor(
             }
         }
 
-        fun toJsonFile(items: List<Attachment>, directory: File,
-                       name: String = Streamable.FILE_NAME_ATTACHMENT): File {
-            return File(directory, name).apply {
+        fun toJsonFile(items: List<Attachment>, destination: File, name: String = Streamable.FILE_NAME_ATTACHMENT): File {
+            return File(destination, name).apply {
                 Okio.buffer(Okio.sink(this)).use {
                     JsonDataStreamer.encodeToJson(items, Attachment::class.java)?.also { json ->
                         it.write(json.toByteArray())

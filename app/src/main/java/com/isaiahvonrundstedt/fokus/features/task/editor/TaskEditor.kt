@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -574,6 +575,14 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                         .launchUrl(this, targetUri)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        // disable exporting if has file
+        menu?.getItem(R.id.action_share_options)?.isVisible = !viewModel.hasAttachmentWithFile()
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

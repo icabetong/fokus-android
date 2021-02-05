@@ -1,8 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.event
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -12,13 +11,17 @@ import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to schedule the fokus worker
 // for the event schedule minus the interval.
-class EventNotificationWorker @WorkerInject constructor(
+
+@HiltWorker
+class EventNotificationWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val preferenceManager: PreferenceManager,

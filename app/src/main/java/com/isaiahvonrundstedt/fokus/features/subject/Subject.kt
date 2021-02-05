@@ -51,18 +51,18 @@ data class Subject @JvmOverloads constructor(
 
         fun getNameResource(): Int {
             return when (this) {
-                SKY -> R.string.tag_color_sky
-                GRASS -> R.string.tag_color_grass
-                SUNSET -> R.string.tag_color_sunset
-                LEMON -> R.string.tag_color_lemon
-                SEA -> R.string.tag_color_sea
-                GRAPE -> R.string.tag_color_grape
-                CHERRY -> R.string.tag_color_cherry
-                CORAL -> R.string.tag_color_coral
-                MIDNIGHT -> R.string.tag_color_midnight
-                MINT -> R.string.tag_color_mint
-                LAVENDER -> R.string.tag_color_lavender
-                GRAPHITE -> R.string.tag_color_graphite
+                SKY -> R.string.color_sky
+                GRASS -> R.string.color_grass
+                SUNSET -> R.string.color_sunset
+                LEMON -> R.string.color_lemon
+                SEA -> R.string.color_sea
+                GRAPE -> R.string.color_grape
+                CHERRY -> R.string.color_cherry
+                CORAL -> R.string.color_coral
+                MIDNIGHT -> R.string.color_midnight
+                MINT -> R.string.color_mint
+                LAVENDER -> R.string.color_lavender
+                GRAPHITE -> R.string.color_graphite
             }
         }
 

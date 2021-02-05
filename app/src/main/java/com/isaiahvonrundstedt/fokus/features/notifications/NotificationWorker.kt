@@ -2,19 +2,21 @@ package com.isaiahvonrundstedt.fokus.features.notifications
 
 import android.app.NotificationManager
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.time.ZonedDateTime
 
 // This worker fetches the fokus passed by various
 // worker classes. It's primary purpose is to only trigger
 // and to show the fokus. Also to insert the fokus
 // object to the database.
-class NotificationWorker @WorkerInject constructor(
+@HiltWorker
+class NotificationWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val repository: LogRepository,

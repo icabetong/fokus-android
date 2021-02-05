@@ -1,15 +1,17 @@
 package com.isaiahvonrundstedt.fokus.features.log
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LogViewModel @ViewModelInject constructor(
-    private val repository: LogRepository,
-    @Assisted
-    private val savedStateHandle: SavedStateHandle
+@HiltViewModel
+class LogViewModel @Inject constructor(
+    private val repository: LogRepository
 ) : ViewModel() {
 
     val logs: LiveData<List<Log>> = repository.fetch()

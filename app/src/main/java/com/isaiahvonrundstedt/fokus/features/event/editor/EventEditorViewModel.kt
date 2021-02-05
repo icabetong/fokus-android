@@ -1,7 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.event.editor
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,12 +9,15 @@ import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
+import javax.inject.Inject
 
-class EventEditorViewModel @ViewModelInject constructor(
+@HiltViewModel
+class EventEditorViewModel @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val scheduleDao: ScheduleDAO

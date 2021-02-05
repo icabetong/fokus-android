@@ -57,6 +57,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.time.ZonedDateTime
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
@@ -66,6 +67,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
 
     private val attachmentAdapter = AttachmentAdapter(this)
     private val viewModel: TaskEditorViewModel by viewModels()
+
+    @Inject lateinit var permissionManager: PermissionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -198,8 +201,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                         R.id.action_import_file -> {
                             // Check if we have read storage permissions then request the permission
                             // if we have the permission, open up file picker
-                            if (PermissionManager(this@TaskEditor).readStorageGranted) {
-                                startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
+                            if (permissionManager.readStorageGranted) {
+                                activity?.startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT)
                                     .setType("*/*"), REQUEST_CODE_ATTACHMENT)
                             } else
                                 PermissionManager.requestReadStoragePermission(this@TaskEditor)
@@ -398,6 +401,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                             val file = attachment.target?.let { File(it) }
                             attachment.name = file?.name
                             viewModel.addAttachment(attachment)
+
+                            binding.appBarLayout.toolbar.menu?.findItem(R.id.action_share_options)?.isVisible = !viewModel.hasAttachmentWithFile()
                         }
                     }
                     FileImporterService.BROADCAST_IMPORT_FAILED -> {
@@ -475,7 +480,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
                     putExtra(FileImporterService.EXTRA_DIRECTORY,
                         Streamable.DIRECTORY_ATTACHMENTS)
                 }
-
                 startService(service)
             }
             REQUEST_CODE_EXPORT -> {
@@ -581,7 +585,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
         super.onCreateOptionsMenu(menu)
 
         // disable exporting if has file
-        menu?.getItem(R.id.action_share_options)?.isVisible = !viewModel.hasAttachmentWithFile()
+        menu?.findItem(R.id.action_share_options)?.isVisible = !viewModel.hasAttachmentWithFile()
         return true
     }
 
@@ -675,7 +679,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment> {
         const val EXTRA_SUBJECT = "extra:subject"
         const val EXTRA_ATTACHMENTS = "extra:attachments"
 
-        private const val REQUEST_CODE_ATTACHMENT = 20
+        private const val REQUEST_CODE_ATTACHMENT = 29
         private const val REQUEST_CODE_EXPORT = 49
         private const val REQUEST_CODE_IMPORT = 68
     }

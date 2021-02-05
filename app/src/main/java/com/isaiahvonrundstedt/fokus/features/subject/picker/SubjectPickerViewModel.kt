@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.subject.picker
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -9,9 +8,12 @@ import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SubjectPickerViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SubjectPickerViewModel @Inject constructor(
     private val repository: SubjectRepository,
 ): ViewModel() {
 

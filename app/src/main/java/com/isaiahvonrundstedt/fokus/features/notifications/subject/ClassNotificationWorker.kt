@@ -1,8 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.subject
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
@@ -10,13 +9,16 @@ import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.notifications.NotificationWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.time.temporal.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ClassNotificationWorker @WorkerInject constructor(
+@HiltWorker
+class ClassNotificationWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val preferenceManager: PreferenceManager,

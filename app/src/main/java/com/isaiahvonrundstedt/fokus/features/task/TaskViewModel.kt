@@ -1,17 +1,19 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TaskViewModel @ViewModelInject constructor(
+@HiltViewModel
+class TaskViewModel @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val repository: TaskRepository,

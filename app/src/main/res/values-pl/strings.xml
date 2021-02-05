@@ -139,7 +139,7 @@
     <string name="field_location">Lokalizacja</string>
     <string name="field_attachments">Załączniki</string>
     <string name="field_class_time">Czas zajęć</string>
-    <string name="field_color_tag">Kolorowy znacznik</string>
+    <string name="field_color">Kolorowy znacznik</string>
     <string name="field_priority">Priorytet</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Nie Jest Ustawiony</string>
@@ -242,18 +242,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Wersja budowlana</string>
 
-    <string name="tag_color_sky">Sky</string>
-    <string name="tag_color_grass">Trawa</string>
-    <string name="tag_color_sunset">Zachód słońca</string>
-    <string name="tag_color_lemon">Lemon</string>
-    <string name="tag_color_sea">Morze</string>
-    <string name="tag_color_grape">Grono</string>
-    <string name="tag_color_cherry">Cherry</string>
-    <string name="tag_color_coral">Coral</string>
-    <string name="tag_color_midnight">Północ</string>
-    <string name="tag_color_mint">Mennica</string>
-    <string name="tag_color_lavender">Lawenda</string>
-    <string name="tag_color_graphite">Grafit</string>
+    <string name="color_sky">Sky</string>
+    <string name="color_grass">Trawa</string>
+    <string name="color_sunset">Zachód słońca</string>
+    <string name="color_lemon">Lemon</string>
+    <string name="color_sea">Morze</string>
+    <string name="color_grape">Grono</string>
+    <string name="color_cherry">Cherry</string>
+    <string name="color_coral">Coral</string>
+    <string name="color_midnight">Północ</string>
+    <string name="color_mint">Mennica</string>
+    <string name="color_lavender">Lawenda</string>
+    <string name="color_graphite">Grafit</string>
 
     <string name="widget_task_name">Widżet zadaniowy</string>
     <string name="widget_task_title">Zadania</string>

@@ -140,7 +140,7 @@
     <string name="field_location">Location</string>
     <string name="field_attachments">Attachments</string>
     <string name="field_class_time">Class Time</string>
-    <string name="field_color_tag">Color Tag</string>
+    <string name="field_color">Color</string>
     <string name="field_priority">Priority</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Not Set</string>
@@ -243,18 +243,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build Version</string>
 
-    <string name="tag_color_sky">Sky</string>
-    <string name="tag_color_grass">Grass</string>
-    <string name="tag_color_sunset">Sunset</string>
-    <string name="tag_color_lemon">Lemon</string>
-    <string name="tag_color_sea">Sea</string>
-    <string name="tag_color_grape">Grape</string>
-    <string name="tag_color_cherry">Cherry</string>
-    <string name="tag_color_coral">Coral</string>
-    <string name="tag_color_midnight">Midnight</string>
-    <string name="tag_color_mint">Mint</string>
-    <string name="tag_color_lavender">Lavender</string>
-    <string name="tag_color_graphite">Graphite</string>
+    <string name="color_sky">Sky</string>
+    <string name="color_grass">Grass</string>
+    <string name="color_sunset">Sunset</string>
+    <string name="color_lemon">Lemon</string>
+    <string name="color_sea">Sea</string>
+    <string name="color_grape">Grape</string>
+    <string name="color_cherry">Cherry</string>
+    <string name="color_coral">Coral</string>
+    <string name="color_midnight">Midnight</string>
+    <string name="color_mint">Mint</string>
+    <string name="color_lavender">Lavender</string>
+    <string name="color_graphite">Graphite</string>
 
     <string name="widget_task_name">Task Widget</string>
     <string name="widget_task_title">Tasks</string>

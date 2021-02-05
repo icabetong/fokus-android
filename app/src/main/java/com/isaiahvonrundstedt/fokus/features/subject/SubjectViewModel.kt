@@ -1,17 +1,19 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SubjectViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SubjectViewModel @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val repository: SubjectRepository,

@@ -140,7 +140,7 @@
     <string name="field_location">Locatie</string>
     <string name="field_attachments">Bijlagen</string>
     <string name="field_class_time">Klassentijd</string>
-    <string name="field_color_tag">Kleurmarkering</string>
+    <string name="field_color">Kleurmarkering</string>
     <string name="field_priority">Prioriteit</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Niet ingesteld</string>
@@ -243,18 +243,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build-versie</string>
 
-    <string name="tag_color_sky">Sky</string>
-    <string name="tag_color_grass">Gras</string>
-    <string name="tag_color_sunset">Zonsondergang</string>
-    <string name="tag_color_lemon">Citroen</string>
-    <string name="tag_color_sea">Zee</string>
-    <string name="tag_color_grape">Druif</string>
-    <string name="tag_color_cherry">Karsen</string>
-    <string name="tag_color_coral">Koraal</string>
-    <string name="tag_color_midnight">Middernacht</string>
-    <string name="tag_color_mint">Munt</string>
-    <string name="tag_color_lavender">Lavendel</string>
-    <string name="tag_color_graphite">Grafiet</string>
+    <string name="color_sky">Sky</string>
+    <string name="color_grass">Gras</string>
+    <string name="color_sunset">Zonsondergang</string>
+    <string name="color_lemon">Citroen</string>
+    <string name="color_sea">Zee</string>
+    <string name="color_grape">Druif</string>
+    <string name="color_cherry">Karsen</string>
+    <string name="color_coral">Koraal</string>
+    <string name="color_midnight">Middernacht</string>
+    <string name="color_mint">Munt</string>
+    <string name="color_lavender">Lavendel</string>
+    <string name="color_graphite">Grafiet</string>
 
     <string name="widget_task_name">Taak Widget</string>
     <string name="widget_task_title">Taken</string>

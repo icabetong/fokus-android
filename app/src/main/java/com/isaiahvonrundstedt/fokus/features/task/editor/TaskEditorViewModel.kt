@@ -2,25 +2,26 @@ package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
+import dagger.assisted.Assisted
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
+import javax.inject.Inject
 
-class TaskEditorViewModel @ViewModelInject constructor(
-    private val clipboardManager: ClipboardManager,
-    private val scheduleDao: ScheduleDAO,
+@HiltViewModel
+class TaskEditorViewModel @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    @Assisted savedStateHandle: SavedStateHandle
+    private val clipboardManager: ClipboardManager,
+    private val scheduleDao: ScheduleDAO
 ): ViewModel() {
 
     var task: Task? = Task()
@@ -78,7 +79,7 @@ class TaskEditorViewModel @ViewModelInject constructor(
         _attachmentObservable.value = attachments
     }
 
-    fun fetchRecentItemFromClipboard(): String?
+    fun fetchRecentItemFromClipboard(): String
             = clipboardManager.primaryClip?.getItemAt(0)?.text.toString()
 
     fun setNextMeetingForDueDate() {

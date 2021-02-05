@@ -139,7 +139,7 @@
     <string name="field_location">Местоположение</string>
     <string name="field_attachments">Приложения</string>
     <string name="field_class_time">Классное время</string>
-    <string name="field_color_tag">Цветная метка</string>
+    <string name="field_color">Цветная метка</string>
     <string name="field_priority">Приоритет</string>
     <string name="field_status">Статус</string>
     <string name="field_not_set">Не установлен</string>
@@ -242,18 +242,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Версия для строительства</string>
 
-    <string name="tag_color_sky">Sky</string>
-    <string name="tag_color_grass">Трава</string>
-    <string name="tag_color_sunset">Закат</string>
-    <string name="tag_color_lemon">Lemon</string>
-    <string name="tag_color_sea">Море</string>
-    <string name="tag_color_grape">Виноград</string>
-    <string name="tag_color_cherry">Вишня</string>
-    <string name="tag_color_coral">Коралл</string>
-    <string name="tag_color_midnight">Midnight</string>
-    <string name="tag_color_mint">Мятный двор</string>
-    <string name="tag_color_lavender">Лаванда</string>
-    <string name="tag_color_graphite">Графит</string>
+    <string name="color_sky">Sky</string>
+    <string name="color_grass">Трава</string>
+    <string name="color_sunset">Закат</string>
+    <string name="color_lemon">Lemon</string>
+    <string name="color_sea">Море</string>
+    <string name="color_grape">Виноград</string>
+    <string name="color_cherry">Вишня</string>
+    <string name="color_coral">Коралл</string>
+    <string name="color_midnight">Midnight</string>
+    <string name="color_mint">Мятный двор</string>
+    <string name="color_lavender">Лаванда</string>
+    <string name="color_graphite">Графит</string>
 
     <string name="widget_task_name">Виджет задач</string>
     <string name="widget_task_title">Задачи</string>

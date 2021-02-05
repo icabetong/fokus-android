@@ -138,7 +138,7 @@
     <string name="field_location">Posizione</string>
     <string name="field_attachments">Allegati</string>
     <string name="field_class_time">Ora della classe</string>
-    <string name="field_color_tag">Colore Tag</string>
+    <string name="field_color">Colore Tag</string>
     <string name="field_priority">Priorità</string>
     <string name="field_status">Stato</string>
     <string name="field_not_set">Non impostato</string>
@@ -241,18 +241,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Versione Build</string>
 
-    <string name="tag_color_sky">Cielo</string>
-    <string name="tag_color_grass">Erba</string>
-    <string name="tag_color_sunset">Tramonto</string>
-    <string name="tag_color_lemon">Limone</string>
-    <string name="tag_color_sea">Mare</string>
-    <string name="tag_color_grape">Uva</string>
-    <string name="tag_color_cherry">Ciliegia</string>
-    <string name="tag_color_coral">Corallo</string>
-    <string name="tag_color_midnight">Mezznotte</string>
-    <string name="tag_color_mint">Menta</string>
-    <string name="tag_color_lavender">Lavanda</string>
-    <string name="tag_color_graphite">Grafite</string>
+    <string name="color_sky">Cielo</string>
+    <string name="color_grass">Erba</string>
+    <string name="color_sunset">Tramonto</string>
+    <string name="color_lemon">Limone</string>
+    <string name="color_sea">Mare</string>
+    <string name="color_grape">Uva</string>
+    <string name="color_cherry">Ciliegia</string>
+    <string name="color_coral">Corallo</string>
+    <string name="color_midnight">Mezznotte</string>
+    <string name="color_mint">Menta</string>
+    <string name="color_lavender">Lavanda</string>
+    <string name="color_graphite">Grafite</string>
 
     <string name="widget_task_name">Widget di Compiti</string>
     <string name="widget_task_title">Compiti</string>

@@ -1,16 +1,18 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import android.content.Context
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
+import javax.inject.Inject
 
-class EventViewModel @ViewModelInject constructor(
+@HiltViewModel
+class EventViewModel @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val repository: EventRepository

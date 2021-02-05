@@ -1,16 +1,18 @@
 package com.isaiahvonrundstedt.fokus.features.notifications.subject
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 
-class ClassNotificationScheduler @WorkerInject constructor(
+@HiltWorker
+class ClassNotificationScheduler @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val repository: SubjectRepository,

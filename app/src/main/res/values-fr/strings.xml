@@ -139,7 +139,7 @@
     <string name="field_location">Lieu</string>
     <string name="field_attachments">Pièces jointes</string>
     <string name="field_class_time">Horaire de la classe</string>
-    <string name="field_color_tag">Couleur de l’indicateur</string>
+    <string name="field_color">Couleur de l’indicateur</string>
     <string name="field_priority">Priorité</string>
     <string name="field_status">Statut</string>
     <string name="field_not_set">Non configuré</string>
@@ -242,18 +242,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Construire une version</string>
 
-    <string name="tag_color_sky">Ciel</string>
-    <string name="tag_color_grass">Gazon</string>
-    <string name="tag_color_sunset">Coucher de soleil</string>
-    <string name="tag_color_lemon">Citron</string>
-    <string name="tag_color_sea">Mer</string>
-    <string name="tag_color_grape">Raisin</string>
-    <string name="tag_color_cherry">Cerise</string>
-    <string name="tag_color_coral">Corail</string>
-    <string name="tag_color_midnight">Minuit</string>
-    <string name="tag_color_mint">Menthe</string>
-    <string name="tag_color_lavender">Lavande</string>
-    <string name="tag_color_graphite">Graphite</string>
+    <string name="color_sky">Ciel</string>
+    <string name="color_grass">Gazon</string>
+    <string name="color_sunset">Coucher de soleil</string>
+    <string name="color_lemon">Citron</string>
+    <string name="color_sea">Mer</string>
+    <string name="color_grape">Raisin</string>
+    <string name="color_cherry">Cerise</string>
+    <string name="color_coral">Corail</string>
+    <string name="color_midnight">Minuit</string>
+    <string name="color_mint">Menthe</string>
+    <string name="color_lavender">Lavande</string>
+    <string name="color_graphite">Graphite</string>
 
     <string name="widget_task_name">Widget des tâches</string>
     <string name="widget_task_title">Tâches</string>

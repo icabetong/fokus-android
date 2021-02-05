@@ -13,7 +13,6 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import org.apache.commons.io.FileUtils
 import java.io.File
 
 class DataExporterService: BaseService() {

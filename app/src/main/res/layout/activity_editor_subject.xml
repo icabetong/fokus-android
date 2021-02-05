@@ -110,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
-                    android:text="@string/field_color_tag"
+                    android:text="@string/field_color"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
 
                 <TextView
@@ -121,7 +121,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:background="?attr/selectableItemBackground"
-                    android:text="@string/tag_color_sky"
+                    android:text="@string/color_sky"
                     android:textColor="@color/color_primary_text"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:clickable="true"

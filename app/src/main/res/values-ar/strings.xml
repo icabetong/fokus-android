@@ -140,7 +140,7 @@
     <string name="field_location">موقعك</string>
     <string name="field_attachments">المرفقات</string>
     <string name="field_class_time">وقت الفصل</string>
-    <string name="field_color_tag">علامة اللون</string>
+    <string name="field_color">علامة اللون</string>
     <string name="field_priority">أولولية</string>
     <string name="field_status">الحالة</string>
     <string name="field_not_set">غير مضبوط</string>
@@ -243,18 +243,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">نسخة الإصدار</string>
 
-    <string name="tag_color_sky">سماء</string>
-    <string name="tag_color_grass">عشب</string>
-    <string name="tag_color_sunset">غروب</string>
-    <string name="tag_color_lemon">ليمون</string>
-    <string name="tag_color_sea">بحر</string>
-    <string name="tag_color_grape">عنب</string>
-    <string name="tag_color_cherry">كرز</string>
-    <string name="tag_color_coral">المرجان</string>
-    <string name="tag_color_midnight">منتصف الليل</string>
-    <string name="tag_color_mint">نعناع</string>
-    <string name="tag_color_lavender">لافندر</string>
-    <string name="tag_color_graphite">الجرافيت</string>
+    <string name="color_sky">سماء</string>
+    <string name="color_grass">عشب</string>
+    <string name="color_sunset">غروب</string>
+    <string name="color_lemon">ليمون</string>
+    <string name="color_sea">بحر</string>
+    <string name="color_grape">عنب</string>
+    <string name="color_cherry">كرز</string>
+    <string name="color_coral">المرجان</string>
+    <string name="color_midnight">منتصف الليل</string>
+    <string name="color_mint">نعناع</string>
+    <string name="color_lavender">لافندر</string>
+    <string name="color_graphite">الجرافيت</string>
 
     <string name="widget_task_name">وجت المهمة</string>
     <string name="widget_task_title">مهام</string>

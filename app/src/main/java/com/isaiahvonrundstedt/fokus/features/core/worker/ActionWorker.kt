@@ -1,16 +1,19 @@
 package com.isaiahvonrundstedt.fokus.features.core.worker
 
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.isaiahvonrundstedt.fokus.components.service.NotificationActionService
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 
 // This worker's primary function perform the action
 // at is triggered in the fokus such as 'Mark as Finished'
-class ActionWorker @WorkerInject constructor(
+
+@HiltWorker
+class ActionWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val repository: TaskRepository

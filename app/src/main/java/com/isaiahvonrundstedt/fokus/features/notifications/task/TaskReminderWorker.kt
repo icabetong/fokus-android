@@ -2,8 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.notifications.task
 
 import android.app.NotificationManager
 import android.content.Context
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -13,13 +12,16 @@ import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.time.*
 import java.util.concurrent.TimeUnit
 
 // This worker's function is to only show reminders
 // based on the frequency the user has selected; daily or every weekends
 // This will show a reminders for pending tasks.
-class TaskReminderWorker @WorkerInject constructor(
+@HiltWorker
+class TaskReminderWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val taskRepository: TaskRepository,

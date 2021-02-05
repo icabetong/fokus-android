@@ -140,7 +140,7 @@
     <string name="field_location">Standort</string>
     <string name="field_attachments">Anhänge</string>
     <string name="field_class_time">Unterrichtszeit</string>
-    <string name="field_color_tag">Farb-Tag</string>
+    <string name="field_color">Farb-Tag</string>
     <string name="field_priority">Priorität</string>
     <string name="field_status">Stand</string>
     <string name="field_not_set">Nicht gesetzt</string>
@@ -243,18 +243,18 @@
     <string name="settings_third_party_notices">@string/activity_notices</string>
     <string name="settings_build_version">Build-Version</string>
 
-    <string name="tag_color_sky">Himmel</string>
-    <string name="tag_color_grass">Gras</string>
-    <string name="tag_color_sunset">Sonnenuntergang</string>
-    <string name="tag_color_lemon">Zitrone</string>
-    <string name="tag_color_sea">Meer</string>
-    <string name="tag_color_grape">Traube</string>
-    <string name="tag_color_cherry">Kirsche</string>
-    <string name="tag_color_coral">Koralle</string>
-    <string name="tag_color_midnight">Mitternacht</string>
-    <string name="tag_color_mint">Münzprägeanstalt</string>
-    <string name="tag_color_lavender">Lavendel</string>
-    <string name="tag_color_graphite">Graphit</string>
+    <string name="color_sky">Himmel</string>
+    <string name="color_grass">Gras</string>
+    <string name="color_sunset">Sonnenuntergang</string>
+    <string name="color_lemon">Zitrone</string>
+    <string name="color_sea">Meer</string>
+    <string name="color_grape">Traube</string>
+    <string name="color_cherry">Kirsche</string>
+    <string name="color_coral">Koralle</string>
+    <string name="color_midnight">Mitternacht</string>
+    <string name="color_mint">Münzprägeanstalt</string>
+    <string name="color_lavender">Lavendel</string>
+    <string name="color_graphite">Graphit</string>
 
     <string name="widget_task_name">Aufgaben-Widget</string>
     <string name="widget_task_title">Aufgaben</string>

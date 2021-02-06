@@ -31,6 +31,8 @@
     <string name="navigation_tasks">Tareas</string>
     <string name="navigation_events">Eventos</string>
     <string name="navigation_subjects">Asignaturas</string>
+    <string name="navigation_home">Inicio</string>
+    <string name="navigation_archived">Archivado</string>
     <string name="navigation_logs">Registro</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

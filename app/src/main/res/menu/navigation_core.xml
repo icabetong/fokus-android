@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_tasks"
+        android:title="@string/navigation_tasks"
+        android:icon="@drawable/ic_hero_check_24"
+        app:exb_color="?attr/colorPrimary"/>
+
+    <item
+        android:id="@+id/navigation_events"
+        android:title="@string/navigation_events"
+        android:icon="@drawable/ic_hero_calendar_24"
+        app:exb_color="?attr/colorPrimary"/>
+
+    <item
+        android:id="@+id/navigation_subjects"
+        android:title="@string/navigation_subjects"
+        android:icon="@drawable/ic_hero_beaker_24"
+        app:exb_color="?attr/colorPrimary"/>
+
+</menu>

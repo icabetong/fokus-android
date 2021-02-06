@@ -24,7 +24,7 @@ class TaskWidgetRemoteViewFactory(private var context: Context)
         val tasks = AppDatabase.getInstance(context).tasks()
         var items = emptyList<TaskPackage>()
         runBlocking {
-            val job = async { tasks.fetch()  }
+            val job = async { tasks.fetchAsPackage()  }
             items = job.await() ?: emptyList()
             items.forEach { if (it.task.isDueToday() || !it.task.hasDueDate()) itemList.add(it) }
         }

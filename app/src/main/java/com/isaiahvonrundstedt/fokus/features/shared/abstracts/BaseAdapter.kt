@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.ItemCallback<T>)
     : ListAdapter<T, VH>(callback){
 
+    interface ArchiveListener {
+        fun <T> onItemArchive(t: T)
+    }
+
     interface ActionListener {
         fun <T> onActionPerformed(t: T, action: Action, container: View?)
 

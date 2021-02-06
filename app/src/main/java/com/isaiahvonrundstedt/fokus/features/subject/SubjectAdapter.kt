@@ -11,8 +11,9 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
-class SubjectAdapter(private var actionListener: ActionListener,
-                     private val scheduleListener: ScheduleListener)
+class SubjectAdapter(private val actionListener: ActionListener,
+                     private val scheduleListener: ScheduleListener,
+                     private val archiveListener: ArchiveListener)
     : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(SubjectPackage.DIFF_CALLBACK), Swipeable {
 
     var constraint = SubjectViewModel.Constraint.TODAY

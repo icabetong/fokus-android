@@ -16,6 +16,7 @@ import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
+import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.io.InputStream
 import java.util.*
@@ -30,7 +31,8 @@ data class Subject @JvmOverloads constructor(
     var code: String? = null,
     var description: String? = null,
     @TypeConverters(ColorConverter::class)
-    var tag: Tag = Tag.SKY
+    var tag: Tag = Tag.SKY,
+    var isSubjectArchived: Boolean = false,
 ) : Parcelable, Streamable {
 
     // Used for the color tag of the subject

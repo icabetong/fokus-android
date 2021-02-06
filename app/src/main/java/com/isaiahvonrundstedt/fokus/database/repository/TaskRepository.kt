@@ -31,7 +31,9 @@ class TaskRepository @Inject constructor(
 
     fun fetchLiveData(): LiveData<List<TaskPackage>> = tasks.fetchLiveData()
 
-    suspend fun fetchCore(): List<Task> = tasks.fetchCore()
+    fun fetchArchived(): LiveData<List<TaskPackage>> = tasks.fetchArchivedLiveData()
+
+    suspend fun fetchCore(): List<Task> = tasks.fetch()
 
     suspend fun fetchCount(): Int = tasks.fetchCount()
 

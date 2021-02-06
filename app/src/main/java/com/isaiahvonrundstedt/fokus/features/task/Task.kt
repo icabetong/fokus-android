@@ -12,6 +12,7 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.json.JsonDataStreamer
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.tag.Tag
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
@@ -37,7 +38,8 @@ data class Task @JvmOverloads constructor(
     var dateAdded: ZonedDateTime? = ZonedDateTime.now(),
     @TypeConverters(DateTimeConverter::class)
     var dueDate: ZonedDateTime? = null,
-    var isFinished: Boolean = false
+    var isFinished: Boolean = false,
+    var isTaskArchived: Boolean = false,
 ) : Parcelable, Streamable {
 
     fun hasDueDate(): Boolean {

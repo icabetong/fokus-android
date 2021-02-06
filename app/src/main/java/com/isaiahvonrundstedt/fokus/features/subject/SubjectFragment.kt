@@ -26,12 +26,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.CascadePopupMenu
 
 @AndroidEntryPoint
-class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener {
+class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener,
+    BaseAdapter.ArchiveListener {
 
     private var _binding: FragmentSubjectBinding? = null
 
     private val binding get() = _binding!!
-    private val subjectAdapter = SubjectAdapter(this, this)
+    private val subjectAdapter = SubjectAdapter(this, this, this)
     private val viewModel: SubjectViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentSubjectBinding.inflate(inflater)
         return binding.root
     }
@@ -118,6 +119,13 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                     }
                 }
             }
+        }
+    }
+
+    override fun <T> onItemArchive(t: T) {
+        if (t is SubjectPackage) {
+            t.subject.isSubjectArchived = true
+            viewModel.update(t.subject)
         }
     }
 

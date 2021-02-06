@@ -3,7 +3,11 @@ package com.isaiahvonrundstedt.fokus.features.event
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
+import androidx.room.Junction
+import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.tag.Tag
+import com.isaiahvonrundstedt.fokus.features.tag.TagEventCrossRef
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -15,7 +19,9 @@ data class EventPackage @JvmOverloads constructor(
     @Embedded
     var event: Event,
     @Embedded
-    var subject: Subject? = null
+    var subject: Subject? = null,
+    @Relation(parentColumn = "eventID", entityColumn = "tagID", associateBy = Junction(TagEventCrossRef::class))
+    var tags: List<Tag> = emptyList()
 ): Parcelable {
 
     companion object {

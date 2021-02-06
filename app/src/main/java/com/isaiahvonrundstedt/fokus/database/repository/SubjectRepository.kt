@@ -28,7 +28,9 @@ class SubjectRepository @Inject constructor(
 
     fun fetchLiveData(): LiveData<List<SubjectPackage>> = subjects.fetchLiveData()
 
-    suspend fun fetch(): List<SubjectPackage> = subjects.fetch()
+    fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>> = subjects.fetchArchivedLiveData()
+
+    suspend fun fetch(): List<SubjectPackage> = subjects.fetchAsPackage()
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
         subjects.insert(subject)

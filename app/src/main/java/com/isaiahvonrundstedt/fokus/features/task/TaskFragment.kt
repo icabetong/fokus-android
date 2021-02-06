@@ -34,12 +34,13 @@ import nl.dionsegijn.konfetti.models.Size
 import java.io.File
 
 @AndroidEntryPoint
-class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener {
+class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener,
+    BaseAdapter.ArchiveListener {
 
     private var _binding: FragmentTaskBinding? = null
 
     private val binding get() = _binding!!
-    private val taskAdapter = TaskAdapter(this, this)
+    private val taskAdapter = TaskAdapter(this, this, this)
     private val viewModel: TaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentTaskBinding.inflate(inflater)
         return binding.root
     }
@@ -192,6 +193,13 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                         viewModel.update(it, attachments ?: emptyList())
                 }
             }
+        }
+    }
+
+    override fun <T> onItemArchive(t: T) {
+        if (t is TaskPackage) {
+            t.task.isTaskArchived = true
+            viewModel.update(t.task)
         }
     }
 

@@ -18,12 +18,17 @@ interface EventDAO {
     suspend fun update(event: Event)
 
     @Query("SELECT * FROM events")
-    suspend fun fetch(): List<EventPackage>
+    suspend fun fetch(): List<Event>
 
     @Query("SELECT * FROM events")
-    suspend fun fetchCore(): List<Event>
+    suspend fun fetchPackage(): List<EventPackage>
 
     @Transaction
-    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID ORDER BY schedule ASC")
+    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE isEventArchived = 1 ORDER BY schedule ASC")
     fun fetchLiveData(): LiveData<List<EventPackage>>
+
+    @Transaction
+    @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE isEventArchived = 1 ORDER BY schedule ASC")
+    fun fetchArchivedLiveData(): LiveData<List<EventPackage>>
+
 }

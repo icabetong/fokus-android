@@ -31,6 +31,8 @@
     <string name="navigation_tasks">المهام</string>
     <string name="navigation_events">الأحداث</string>
     <string name="navigation_subjects">المواضيع</string>
+    <string name="navigation_home">منزل</string>
+    <string name="navigation_archived">مؤرشف</string>
     <string name="navigation_logs">السجلات</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_window_background"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:id="@+id/detailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="@dimen/item_padding">
+
+        <TextView
+            android:id="@+id/taskNameView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/item_spacing_small"
+            android:layout_marginStart="@dimen/item_padding"
+            android:layout_marginEnd="@dimen/item_padding"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
+            tools:text="Draw the Flowchart"/>
+
+        <TextView
+            android:id="@+id/dueDateView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_padding"
+            android:layout_marginEnd="@dimen/item_padding"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            tools:text="Tomorrow at 1:00PM"/>
+
+        <TextView
+            android:id="@+id/subjectView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_spacing_large"
+            android:layout_marginStart="@dimen/item_padding"
+            android:layout_marginEnd="@dimen/item_padding"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+            android:drawablePadding="@dimen/item_spacing_large"
+            app:drawableStartCompat="@drawable/shape_color_holder_chip"
+            tools:text="COMSCI 2101"/>
+
+    </LinearLayout>
+
+</FrameLayout>

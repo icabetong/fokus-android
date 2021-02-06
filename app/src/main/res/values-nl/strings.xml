@@ -31,6 +31,8 @@
     <string name="navigation_tasks">Taken</string>
     <string name="navigation_events">Evenementen</string>
     <string name="navigation_subjects">Onderwerpen</string>
+    <string name="navigation_home">Home</string>
+    <string name="navigation_archived">Gearchiveerd</string>
     <string name="navigation_logs">Logboeken</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

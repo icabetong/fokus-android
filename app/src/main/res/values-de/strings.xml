@@ -31,6 +31,8 @@
     <string name="navigation_tasks">Aufgaben</string>
     <string name="navigation_events">Veranstaltungen</string>
     <string name="navigation_subjects">Betreff</string>
+    <string name="navigation_home">Startseite</string>
+    <string name="navigation_archived">Archiviert</string>
     <string name="navigation_logs">Protokolle</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

@@ -21,16 +21,20 @@ interface TaskDAO {
     suspend fun setFinished(taskID: String, status: Int)
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    suspend fun fetch(): List<TaskPackage>
-
-    @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    suspend fun fetchCore(): List<Task>
+    suspend fun fetch(): List<Task>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0")
     suspend fun fetchCount(): Int
 
+    @Query("SELECT * FROM tasks WHERE isFinished = 0")
+    suspend fun fetchAsPackage(): List<TaskPackage>
+
     @Transaction
-    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID ORDER BY dueDate ASC")
+    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isTaskArchived = 0 ORDER BY dueDate ASC")
     fun fetchLiveData(): LiveData<List<TaskPackage>>
+
+    @Transaction
+    @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isTaskArchived = 1 ORDER BY dueDate ASC")
+    fun fetchArchivedLiveData(): LiveData<List<TaskPackage>>
 
 }

@@ -38,6 +38,7 @@ data class Event @JvmOverloads constructor(
     var location: String? = null,
     var subject: String? = null,
     var isImportant: Boolean = false,
+    var isEventArchived: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
     var schedule: ZonedDateTime? = null,
     @TypeConverters(DateTimeConverter::class)

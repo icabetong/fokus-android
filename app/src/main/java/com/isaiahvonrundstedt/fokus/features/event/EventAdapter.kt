@@ -12,7 +12,8 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemEventBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
-class EventAdapter(private var actionListener: ActionListener)
+class EventAdapter(private val actionListener: ActionListener,
+                   private val archiveListener: ArchiveListener)
     : BaseAdapter<EventPackage, EventAdapter.EventViewHolder>(EventPackage.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -26,9 +27,13 @@ class EventAdapter(private var actionListener: ActionListener)
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                null)
+        when(direction) {
+            ItemTouchHelper.START ->
+                actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                    null)
+            ItemTouchHelper.END ->
+                archiveListener.onItemArchive(getItem(position))
+        }
     }
 
     inner class EventViewHolder(itemView: View): BaseViewHolder(itemView) {

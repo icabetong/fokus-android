@@ -29,9 +29,11 @@ class EventRepository @Inject constructor(
 
     fun fetchLiveData(): LiveData<List<EventPackage>> = events.fetchLiveData()
 
-    suspend fun fetch(): List<EventPackage> = events.fetch()
+    fun fetchArchivedLiveData(): LiveData<List<EventPackage>> = events.fetchArchivedLiveData()
 
-    suspend fun fetchCore(): List<Event> = events.fetchCore()
+    suspend fun fetch(): List<EventPackage> = events.fetchPackage()
+
+    suspend fun fetchCore(): List<Event> = events.fetch()
 
     suspend fun insert(event: Event) {
         events.insert(event)

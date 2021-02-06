@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.isaiahvonrundstedt.fokus.features.core.fragments.MainFragment"
+        tools:layout="@layout/fragment_main"/>
+
+    <fragment
+        android:id="@+id/navigation_archived"
+        android:name="com.isaiahvonrundstedt.fokus.features.archived.ArchivedFragment"
+        android:label="@string/navigation_archived"
+        tools:layout="@layout/fragment_archived"/>
+
+    <fragment
+        android:id="@+id/navigation_logs"
+        android:name="com.isaiahvonrundstedt.fokus.features.log.LogFragment"
+        android:label="@string/activity_logs"
+        tools:layout="@layout/fragment_logs"/>
+
+    <activity
+        android:id="@+id/navigation_settings"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity"
+        tools:layout="@layout/activity_settings"/>
+
+    <activity
+        android:id="@+id/navigation_about"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.AboutActivity"
+        tools:layout="@layout/activity_about"/>
+
+    <action
+        android:id="@+id/action_to_navigation_archived"
+        app:destination="@id/navigation_archived"/>
+
+    <action
+        android:id="@+id/action_to_navigation_main"
+        app:destination="@id/navigation_home"/>
+
+    <action
+        android:id="@+id/action_to_navigation_logs"
+        app:destination="@id/navigation_logs"/>
+
+    <action
+        android:id="@+id/action_to_navigation_settings"
+        app:destination="@id/navigation_settings"/>
+
+    <action
+        android:id="@+id/action_to_navigation_about"
+        app:destination="@id/navigation_about"/>
+
+</navigation>

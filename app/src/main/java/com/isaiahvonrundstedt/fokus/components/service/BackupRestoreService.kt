@@ -159,7 +159,7 @@ class BackupRestoreService: BaseService() {
                 val items = mutableListOf<File>()
                 var fetchJob: Job
 
-                fetchJob = async { database.subjects().fetchCore() }
+                fetchJob = async { database.subjects().fetch() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Subject::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_SUBJECT, it))
                 }
@@ -169,7 +169,7 @@ class BackupRestoreService: BaseService() {
                     items.add(createCache(Streamable.FILE_NAME_SCHEDULE, it))
                 }
 
-                fetchJob = async { database.tasks().fetchCore() }
+                fetchJob = async { database.tasks().fetch() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Task::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_TASK, it))
                 }
@@ -189,7 +189,7 @@ class BackupRestoreService: BaseService() {
                 }
                 items.add(attachmentFolder)
 
-                fetchJob = async { database.events().fetchCore() }
+                fetchJob = async { database.events().fetch() }
                 JsonDataStreamer.encodeToJson(fetchJob.await(), Event::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_EVENT, it))
                 }

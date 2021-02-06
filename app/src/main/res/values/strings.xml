@@ -31,6 +31,8 @@
     <string name="navigation_tasks">Tasks</string>
     <string name="navigation_events">Events</string>
     <string name="navigation_subjects">Subjects</string>
+    <string name="navigation_home">Home</string>
+    <string name="navigation_archived">Archived</string>
     <string name="navigation_logs">Logs</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

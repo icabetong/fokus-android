@@ -30,6 +30,8 @@
     <string name="navigation_tasks">Zadania</string>
     <string name="navigation_events">Wydarzenia</string>
     <string name="navigation_subjects">Tematy</string>
+    <string name="navigation_home">Strona główna</string>
+    <string name="navigation_archived">Zarchiwizowane</string>
     <string name="navigation_logs">Dzienniki</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

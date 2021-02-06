@@ -38,19 +38,19 @@ import java.time.temporal.WeekFields
 import java.util.*
 
 @AndroidEntryPoint
-class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
+class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.ArchiveListener {
 
     private var daysOfWeek: Array<DayOfWeek> = emptyArray()
     private var _binding: FragmentEventBinding? = null
 
     private val binding get() = _binding!!
-    private val eventAdapter = EventAdapter(this)
+    private val eventAdapter = EventAdapter(this, this)
     private val monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
     private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private val viewModel: EventViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentEventBinding.inflate(inflater)
         return binding.root
     }
@@ -160,6 +160,13 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener {
         binding.actionButton.setOnClickListener {
             startActivityForResult(Intent(context, EventEditor::class.java),
                 EventEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
+        }
+    }
+
+    override fun <T> onItemArchive(t: T) {
+        if (t is EventPackage) {
+            t.event.isEventArchived = true
+            viewModel.update(t.event)
         }
     }
 

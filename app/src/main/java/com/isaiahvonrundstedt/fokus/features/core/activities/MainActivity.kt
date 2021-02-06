@@ -5,24 +5,25 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
-import com.isaiahvonrundstedt.fokus.features.about.AboutActivity
+import com.isaiahvonrundstedt.fokus.databinding.LayoutNavigationHeaderBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
-import com.isaiahvonrundstedt.fokus.features.log.LogActivity
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
@@ -31,7 +32,8 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
-import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
+import kotlinx.android.synthetic.main.layout_calendar_week_days.view.*
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -103,26 +105,27 @@ class MainActivity : BaseActivity() {
 
         TaskReminderWorker.reschedule(this.applicationContext)
 
-        val navigationHost = supportFragmentManager.findFragmentById(R.id.navigationHostFragment)
-        navigationHost?.findNavController()?.also {
-            ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, it)
-        }
-
         binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
-        binding.appBarLayout.toolbar.setNavigationOnClickListener {
-            NavigationBottomSheet(supportFragmentManager).show {
-                waitForResult { id ->
-                    when (id) {
-                        R.id.action_history ->
-                            startActivity(Intent(context, LogActivity::class.java))
-                        R.id.action_settings ->
-                            startActivity(Intent(context, SettingsActivity::class.java))
-                        R.id.action_about ->
-                            startActivity(Intent(context, AboutActivity::class.java))
-                    }
-                }
+
+        controller = Navigation.findNavController(this, R.id.navigationHostFragment)
+        binding.navigationView.setupWithNavController(controller!!)
+        binding.appBarLayout.toolbar.setupWithNavController(controller!!, binding.drawerLayout)
+
+        with(LayoutNavigationHeaderBinding.bind(binding.navigationView.getHeaderView(0))) {
+            menuTitleView.text = when(LocalTime.now().hour) {
+                in 0..6 -> getString(R.string.greeting_default)
+                in 7..12 -> getString(R.string.greeting_morning)
+                in 13..18 -> getString(R.string.greeting_afternoon)
+                in 19..23 -> getString(R.string.greeting_evening)
+                else -> getString(R.string.greeting_default)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        else super.onBackPressed()
     }
 
     override fun onStart() {

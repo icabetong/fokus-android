@@ -30,6 +30,8 @@
     <string name="navigation_tasks">Задачи</string>
     <string name="navigation_events">События</string>
     <string name="navigation_subjects">Предметы</string>
+    <string name="navigation_home">Главная страница</string>
+    <string name="navigation_archived">Архивный</string>
     <string name="navigation_logs">Журналы</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

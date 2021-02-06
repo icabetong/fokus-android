@@ -18,13 +18,17 @@ interface SubjectDAO {
     suspend fun update(subject: Subject)
 
     @Query("SELECT * FROM subjects")
-    suspend fun fetch(): List<SubjectPackage>
+    suspend fun fetch(): List<Subject>
 
     @Query("SELECT * FROM subjects")
-    suspend fun fetchCore(): List<Subject>
+    suspend fun fetchAsPackage(): List<SubjectPackage>
 
     @Transaction
-    @Query("SELECT * FROM subjects ORDER BY code ASC")
+    @Query("SELECT * FROM subjects WHERE isSubjectArchived = 1 ORDER BY code ASC")
     fun fetchLiveData(): LiveData<List<SubjectPackage>>
+
+    @Transaction
+    @Query("SELECT * FROM subjects WHERE isSubjectArchived = 1 ORDER BY code ASC")
+    fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>>
 
 }

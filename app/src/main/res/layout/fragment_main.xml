@@ -2,11 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <include android:id="@+id/appBarLayout"
-        layout="@layout/layout_appbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,15 +12,22 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <fragment
+            android:id="@+id/navigationHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph="@navigation/navigation_core"
+            app:defaultNavHost="true"
+            tools:ignore="FragmentTagUsage" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+        <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+            android:id="@+id/navigationView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            app:exb_items="@menu/navigation_core"
+            style="@style/Fokus.Widget.Navigation"/>
 
     </LinearLayout>
 

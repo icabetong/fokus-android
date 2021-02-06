@@ -16,8 +16,9 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
-class TaskAdapter(private var actionListener: ActionListener,
-                  private var statusListener: TaskStatusListener)
+class TaskAdapter(private val actionListener: ActionListener,
+                  private val statusListener: TaskStatusListener,
+                  private val archiveListener: ArchiveListener)
     : BaseAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -31,9 +32,15 @@ class TaskAdapter(private var actionListener: ActionListener,
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                null)
+        when(direction) {
+            ItemTouchHelper.START -> {
+                actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
+                    null)
+            }
+            ItemTouchHelper.END -> {
+                archiveListener.onItemArchive(getItem(position))
+            }
+        }
     }
 
     class TaskViewHolder(itemView: View,

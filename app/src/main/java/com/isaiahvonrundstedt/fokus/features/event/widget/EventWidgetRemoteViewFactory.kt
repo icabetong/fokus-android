@@ -23,7 +23,7 @@ class EventWidgetRemoteViewFactory(private var context: Context)
         val events = AppDatabase.getInstance(context).events()
         var items = emptyList<EventPackage>()
         runBlocking {
-            val job = async { events.fetch() }
+            val job = async { events.fetchPackage() }
             items = job.await() ?: emptyList()
             items.forEach { if (it.event.isToday()) itemList.add(it) }
         }

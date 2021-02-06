@@ -23,7 +23,7 @@ class SubjectWidgetRemoteViewFactory(private var context: Context)
         val subjects = AppDatabase.getInstance(context)?.subjects()
         var items = emptyList<SubjectPackage>()
         runBlocking {
-            val job = async { subjects?.fetch() }
+            val job = async { subjects?.fetchAsPackage() }
             items = job.await() ?: emptyList()
             items.forEach { resource ->
                 resource.schedules.forEach {

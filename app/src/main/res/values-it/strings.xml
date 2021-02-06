@@ -29,6 +29,8 @@
     <string name="navigation_tasks">Compiti</string>
     <string name="navigation_events">Eventi</string>
     <string name="navigation_subjects">Soggetti</string>
+    <string name="navigation_home">Casa</string>
+    <string name="navigation_archived">Archiviato</string>
     <string name="navigation_logs">Diari</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

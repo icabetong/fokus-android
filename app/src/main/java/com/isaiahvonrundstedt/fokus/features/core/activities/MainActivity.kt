@@ -9,10 +9,12 @@ import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
@@ -105,27 +107,15 @@ class MainActivity : BaseActivity() {
 
         TaskReminderWorker.reschedule(this.applicationContext)
 
-        binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
-
         controller = Navigation.findNavController(this, R.id.navigationHostFragment)
-        binding.navigationView.setupWithNavController(controller!!)
-        binding.appBarLayout.toolbar.setupWithNavController(controller!!, binding.drawerLayout)
-
-        with(LayoutNavigationHeaderBinding.bind(binding.navigationView.getHeaderView(0))) {
-            menuTitleView.text = when(LocalTime.now().hour) {
-                in 0..6 -> getString(R.string.greeting_default)
-                in 7..12 -> getString(R.string.greeting_morning)
-                in 13..18 -> getString(R.string.greeting_afternoon)
-                in 19..23 -> getString(R.string.greeting_evening)
-                else -> getString(R.string.greeting_default)
+        binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
+        binding.appBarLayout.toolbar.setNavigationOnClickListener {
+            NavigationBottomSheet(supportFragmentManager).show {
+                waitForResult { id ->
+                    controller?.navigate(id)
+                }
             }
         }
-    }
-
-    override fun onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        else super.onBackPressed()
     }
 
     override fun onStart() {
@@ -163,7 +153,6 @@ class MainActivity : BaseActivity() {
                         else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
                             tasksViewModel.update(it, attachments ?: emptyList())
                     }
-                    controller?.navigate(R.id.action_to_navigation_tasks)
                 }
                 EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
                     val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
@@ -173,7 +162,6 @@ class MainActivity : BaseActivity() {
                             eventsViewModel.insert(it)
                         else eventsViewModel.update(it)
                     }
-                    controller?.navigate(R.id.action_to_navigation_events)
                 }
                 SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
                     val subject: Subject?
@@ -187,7 +175,6 @@ class MainActivity : BaseActivity() {
                         else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
                             subjectsViewModel.update(it, schedules ?: emptyList())
                     }
-                    controller?.navigate(R.id.action_to_navigation_subjects)
                 }
             }
         }

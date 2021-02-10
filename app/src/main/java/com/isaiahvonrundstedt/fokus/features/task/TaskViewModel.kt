@@ -57,7 +57,6 @@ class TaskViewModel @Inject constructor(
         }
     }
 
-
     fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
         repository.insert(task, attachmentList)
 

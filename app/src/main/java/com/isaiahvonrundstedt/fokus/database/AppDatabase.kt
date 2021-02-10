@@ -15,13 +15,10 @@ import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.tag.Tag
-import com.isaiahvonrundstedt.fokus.features.tag.TagEventCrossRef
-import com.isaiahvonrundstedt.fokus.features.tag.TagTaskCrossRef
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
 @Database(entities = [Subject::class, Task::class, Attachment::class, Log::class,
-    Event::class, Schedule::class, Tag::class, TagTaskCrossRef::class, TagEventCrossRef::class],
+    Event::class, Schedule::class],
     version = AppDatabase.DATABASE_VERSION, exportSchema = false)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -350,11 +347,6 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("INSERT INTO logs  (`logID`, `title`, `content`, `data`, `type`, `isImportant`, `dateTimeTriggered`) SELECT `id`, `title`, `content`, `data`, `type`, `isPersistent`, `dateTimeTriggered` FROM histories")
                     execSQL("DROP TABLE histories")
 
-                    // tags
-                    execSQL("CREATE TABLE IF NOT EXISTS `tags` (`tagID` TEXT NOT NULL, `name` TEXT, PRIMARY KEY(`tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `taskTags` (`taskID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`taskID`, `tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `eventTags` (`eventID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`eventID`, `tagID`))")
-
                     execSQL("DROP TABLE subjects_old")
                 }
             }
@@ -379,11 +371,6 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("ALTER TABLE schedules_new RENAME TO schedules")
                     execSQL("INSERT INTO schedules (`scheduleID`, `daysOfWeek`, `startTime`, `endTime`, `subject`) SELECT * FROM schedules_old")
                     execSQL("DROP TABLE schedules_old")
-
-                    // tags
-                    execSQL("CREATE TABLE IF NOT EXISTS `tags` (`tagID` TEXT NOT NULL, `name` TEXT, PRIMARY KEY(`tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `taskTags` (`taskID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`taskID`, `tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `eventTags` (`eventID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`eventID`, `tagID`))")
                 }
             }
         }
@@ -408,11 +395,6 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("ALTER TABLE events ADD COLUMN `isEventArchived` INTEGER NOT NULL DEFAULT 0")
                     execSQL("ALTER TABLE subjects ADD COLUMN `isSubjectArchived` INTEGER NOT NULL DEFAULT 0")
 
-                    // tags
-                    execSQL("CREATE TABLE IF NOT EXISTS `tags` (`tagID` TEXT NOT NULL, `name` TEXT, PRIMARY KEY(`tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `taskTags` (`taskID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`taskID`, `tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `eventTags` (`eventID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`eventID`, `tagID`))")
-
                     execSQL("DROP TABLE subjects_old")
 
                 }
@@ -432,11 +414,6 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("ALTER TABLE tasks ADD COLUMN `isTaskArchived` INTEGER NOT NULL DEFAULT 0")
                     execSQL("ALTER TABLE events ADD COLUMN `isEventArchived` INTEGER NOT NULL DEFAULT 0")
                     execSQL("ALTER TABLE subjects ADD COLUMN `isSubjectArchived` INTEGER NOT NULL DEFAULT 0")
-
-                    // tags
-                    execSQL("CREATE TABLE IF NOT EXISTS `tags` (`tagID` TEXT NOT NULL, `name` TEXT, PRIMARY KEY(`tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `taskTags` (`taskID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`taskID`, `tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `eventTags` (`eventID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`eventID`, `tagID`))")
                 }
             }
         }
@@ -447,10 +424,6 @@ abstract class AppDatabase : RoomDatabase() {
                     execSQL("ALTER TABLE tasks ADD COLUMN `isTaskArchived` INTEGER NOT NULL DEFAULT 0")
                     execSQL("ALTER TABLE events ADD COLUMN `isEventArchived` INTEGER NOT NULL DEFAULT 0")
                     execSQL("ALTER TABLE subjects ADD COLUMN `isSubjectArchived` INTEGER NOT NULL DEFAULT 0")
-
-                    execSQL("CREATE TABLE IF NOT EXISTS `tags` (`tagID` TEXT NOT NULL, `name` TEXT, PRIMARY KEY(`tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `taskTags` (`taskID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`taskID`, `tagID`))")
-                    execSQL("CREATE TABLE IF NOT EXISTS `eventTags` (`eventID` TEXT NOT NULL, `tagID` TEXT NOT NULL, PRIMARY KEY(`eventID`, `tagID`))")
                 }
             }
         }

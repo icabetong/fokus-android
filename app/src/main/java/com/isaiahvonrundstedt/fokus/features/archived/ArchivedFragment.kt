@@ -35,6 +35,7 @@ class ArchivedFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityToolbar?.setTitle(R.string.activity_archives)
 
         binding.viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -61,7 +62,7 @@ class ArchivedFragment: BaseFragment() {
         override fun getItemCount(): Int = fragments.size
 
         override fun createFragment(position: Int): Fragment {
-            return fragments[position].createInstance()
+            return fragments[position].createInstance() as Fragment
         }
     }
 }

@@ -6,10 +6,7 @@ import androidx.work.WorkManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.isaiahvonrundstedt.fokus.database.dao.*
-import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.isaiahvonrundstedt.fokus.database.repository.LogRepository
-import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
-import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
+import com.isaiahvonrundstedt.fokus.database.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

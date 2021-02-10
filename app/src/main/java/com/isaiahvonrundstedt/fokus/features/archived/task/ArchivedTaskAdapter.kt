@@ -10,25 +10,27 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedTaskBinding
+import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
-class ArchivedTaskAdapter
-    : BaseAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
+class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
+    : ArchivedAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedTaskAdapter.ArchivedTaskViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedTaskViewHolder {
         val binding = LayoutItemArchivedTaskBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ArchivedTaskViewHolder(binding.root)
+        return ArchivedTaskViewHolder(binding.root, listener)
     }
 
-    override fun onBindViewHolder(holder: ArchivedTaskAdapter.ArchivedTaskViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArchivedTaskViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
-    class ArchivedTaskViewHolder(itemView: View): BaseViewHolder(itemView) {
+    class ArchivedTaskViewHolder(itemView: View, private val listener: ArchivedItemClickListener)
+        : BaseViewHolder(itemView) {
     private val binding = LayoutItemArchivedTaskBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
@@ -47,6 +49,10 @@ class ArchivedTaskAdapter
                     if (hasDueDate())
                         binding.dueDateView.text = formatDueDate(binding.root.context)
                     else binding.dueDateView.isVisible = false
+                }
+
+                binding.root.setOnClickListener {
+                    listener.onArchivedItemClicked(t)
                 }
 
                 if (t.subject != null) {

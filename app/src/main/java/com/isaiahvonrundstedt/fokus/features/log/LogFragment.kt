@@ -36,6 +36,7 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityToolbar?.setTitle(R.string.activity_logs)
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))

@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/navigation_archived"
         android:name="com.isaiahvonrundstedt.fokus.features.archived.ArchivedFragment"
-        android:label="@string/navigation_archived"
+        android:label="@string/activity_archives"
         tools:layout="@layout/fragment_archived"/>
 
     <fragment

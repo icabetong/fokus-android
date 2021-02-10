@@ -7,24 +7,26 @@ import androidx.core.view.isVisible
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedEventBinding
+import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 
-class ArchivedEventAdapter:
-    BaseAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
+class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
+    ArchivedAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedEventViewHolder {
         val binding = LayoutItemArchivedEventBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ArchivedEventViewHolder(binding.root)
+        return ArchivedEventViewHolder(binding.root, listener)
     }
 
     override fun onBindViewHolder(holder: ArchivedEventViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
-    class ArchivedEventViewHolder(itemView: View): BaseViewHolder(itemView) {
+    class ArchivedEventViewHolder(itemView: View, private val listener: ArchivedItemClickListener)
+        : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedEventBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
@@ -35,6 +37,10 @@ class ArchivedEventAdapter:
                     binding.locationView.text = location
                     binding.nameView.text = name
                     binding.timeView.text = formatScheduleTime(binding.root.context)
+                }
+
+                binding.root.setOnClickListener {
+                    listener.onArchivedItemClicked(t)
                 }
 
                 if (t.subject != null) {

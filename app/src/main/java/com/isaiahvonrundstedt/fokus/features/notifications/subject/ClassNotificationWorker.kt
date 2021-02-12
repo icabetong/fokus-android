@@ -39,7 +39,7 @@ class ClassNotificationWorker @AssistedInject constructor(
         val request = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
         request.setInputData(convertLogToData(log))
 
-        schedule.getDays().forEach {
+        schedule.parseDaysOfWeek().forEach {
             var triggerTime = schedule.startTime?.let { time -> Schedule.getNextWeekDay(it, time) }
 
             when (preferenceManager.subjectReminderInterval) {

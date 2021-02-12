@@ -98,7 +98,7 @@ class TaskEditorViewModel @Inject constructor(
         // Create new instance of schedule with
         // one day of week each
         schedules.forEach {
-            it.getDays().forEach { day ->
+            it.parseDaysOfWeek().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
                     endTime = it.endTime)
                 newSchedule.daysOfWeek = day

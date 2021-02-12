@@ -1,8 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -41,7 +43,7 @@ data class Schedule @JvmOverloads constructor(
     fun isToday(): Boolean {
         val currentDate = LocalDate.now()
 
-        getDays().forEach {
+        parseDaysOfWeek().forEach {
             if (it == currentDate.dayOfWeek.value)
                 return@isToday true
         }
@@ -51,7 +53,7 @@ data class Schedule @JvmOverloads constructor(
     fun isTomorrow(): Boolean {
         val currentDate = LocalDate.now()
 
-        getDays().forEach {
+        parseDaysOfWeek().forEach {
             if (it == currentDate.plusDays(1).dayOfWeek.value)
                 return@isTomorrow true
         }
@@ -88,7 +90,7 @@ data class Schedule @JvmOverloads constructor(
      */
     fun formatDaysOfWeek(context: Context, isAbbreviated: Boolean): String {
         val builder = StringBuilder()
-        val list = getDays()
+        val list = parseDaysOfWeek()
         list.forEachIndexed { index, i ->
             // Append the appropriate day name string from string resource
             val resID = if (isAbbreviated)
@@ -136,18 +138,8 @@ data class Schedule @JvmOverloads constructor(
         }
     }
 
-    fun getDays(): List<Int> {
-        val days = mutableListOf<Int>()
-
-        if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DayOfWeek.SUNDAY.value)
-        if (daysOfWeek and 2 == BIT_VALUE_MONDAY) days.add(DayOfWeek.MONDAY.value)
-        if (daysOfWeek and 4 == BIT_VALUE_TUESDAY) days.add(DayOfWeek.TUESDAY.value)
-        if (daysOfWeek and 8 == BIT_VALUE_WEDNESDAY) days.add(DayOfWeek.WEDNESDAY.value)
-        if (daysOfWeek and 16 == BIT_VALUE_THURSDAY) days.add(DayOfWeek.THURSDAY.value)
-        if (daysOfWeek and 32 == BIT_VALUE_FRIDAY) days.add(DayOfWeek.FRIDAY.value)
-        if (daysOfWeek and 64 == BIT_VALUE_SATURDAY) days.add(DayOfWeek.SATURDAY.value)
-
-        return days
+    fun parseDaysOfWeek(): List<Int> {
+        return Companion.parseDaysOfWeek(daysOfWeek)
     }
 
     fun hasWeek(week: Int): Boolean {
@@ -175,6 +167,13 @@ data class Schedule @JvmOverloads constructor(
     }
 
     companion object {
+        const val EXTRA_ID = "extra:id"
+        const val EXTRA_START_TIME = "extra:start"
+        const val EXTRA_END_TIME = "extra:end"
+        const val EXTRA_DAYS_OF_WEEK = "extra:days"
+        const val EXTRA_WEEKS_OF_MONTH = "extra:weeks"
+        const val EXTRA_SUBJECT_ID = "extra:subject"
+
         const val BIT_VALUE_SUNDAY = 1
         const val BIT_VALUE_MONDAY = 2
         const val BIT_VALUE_TUESDAY = 4
@@ -194,19 +193,32 @@ data class Schedule @JvmOverloads constructor(
             }
 
             override fun areContentsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
-                return oldItem == newItem
+                return oldItem.scheduleID == newItem.scheduleID
+                        && oldItem.startTime == newItem.startTime
+                        && oldItem.endTime == newItem.endTime
+                        && oldItem.daysOfWeek == newItem.daysOfWeek
+                        && oldItem.weeksOfMonth == newItem.weeksOfMonth
+                        && oldItem.subject == newItem.subject
             }
         }
 
-        fun toJsonFile(items: List<Schedule>, destination: File,
-                       name: String = Streamable.FILE_NAME_SCHEDULE): File {
-            return File(destination, name).apply {
-                Okio.buffer(Okio.sink(this)).use {
-                    JsonDataStreamer.encodeToJson(items, Schedule::class.java)?.also { json ->
-                        it.write(json.toByteArray())
-                    }
-                }
-            }
+
+        fun formatTime(context: Context, time: LocalTime?): String? {
+            return time?.format(DateTimeConverter.getTimeFormatter(context))
+        }
+
+        fun parseDaysOfWeek(daysOfWeek: Int): List<Int> {
+            val days = mutableListOf<Int>()
+
+            if (daysOfWeek and 1 == BIT_VALUE_SUNDAY) days.add(DayOfWeek.SUNDAY.value)
+            if (daysOfWeek and 2 == BIT_VALUE_MONDAY) days.add(DayOfWeek.MONDAY.value)
+            if (daysOfWeek and 4 == BIT_VALUE_TUESDAY) days.add(DayOfWeek.TUESDAY.value)
+            if (daysOfWeek and 8 == BIT_VALUE_WEDNESDAY) days.add(DayOfWeek.WEDNESDAY.value)
+            if (daysOfWeek and 16 == BIT_VALUE_THURSDAY) days.add(DayOfWeek.THURSDAY.value)
+            if (daysOfWeek and 32 == BIT_VALUE_FRIDAY) days.add(DayOfWeek.FRIDAY.value)
+            if (daysOfWeek and 64 == BIT_VALUE_SATURDAY) days.add(DayOfWeek.SATURDAY.value)
+
+            return days
         }
 
         fun getNearestDateTime(day: Int, time: LocalTime): ZonedDateTime {
@@ -232,8 +244,39 @@ data class Schedule @JvmOverloads constructor(
             return currentDate.with(DayOfWeek.of(day))
         }
 
-        fun formatTime(context: Context, time: LocalTime?): String? {
-            return time?.format(DateTimeConverter.getTimeFormatter(context))
+        fun toBundle(schedule: Schedule): Bundle {
+            return bundleOf(
+                EXTRA_ID to schedule.scheduleID,
+                EXTRA_START_TIME to schedule.startTime,
+                EXTRA_END_TIME to schedule.endTime,
+                EXTRA_DAYS_OF_WEEK to schedule.daysOfWeek,
+                EXTRA_WEEKS_OF_MONTH to schedule.weeksOfMonth
+            )
+        }
+
+        fun fromBundle(bundle: Bundle): Schedule? {
+            if (!bundle.containsKey(EXTRA_ID) || !bundle.containsKey(EXTRA_SUBJECT_ID))
+                return null
+
+            return Schedule(
+                scheduleID = bundle.getString(EXTRA_ID)!!,
+                startTime = bundle.getSerializable(EXTRA_START_TIME) as? LocalTime,
+                endTime = bundle.getSerializable(EXTRA_END_TIME) as? LocalTime,
+                daysOfWeek = bundle.getInt(EXTRA_DAYS_OF_WEEK),
+                weeksOfMonth = bundle.getInt(EXTRA_WEEKS_OF_MONTH),
+                subject = bundle.getString(EXTRA_SUBJECT_ID)!!
+            )
+        }
+
+        fun toJsonFile(items: List<Schedule>, destination: File,
+                       name: String = Streamable.FILE_NAME_SCHEDULE): File {
+            return File(destination, name).apply {
+                Okio.buffer(Okio.sink(this)).use {
+                    JsonDataStreamer.encodeToJson(items, Schedule::class.java)?.also { json ->
+                        it.write(json.toByteArray())
+                    }
+                }
+            }
         }
     }
 }

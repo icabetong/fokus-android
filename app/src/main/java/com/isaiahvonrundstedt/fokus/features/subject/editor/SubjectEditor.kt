@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.app.ShareCompat
@@ -34,6 +35,7 @@ import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
@@ -43,7 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 @AndroidEntryPoint
-class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
+class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     private lateinit var binding: ActivityEditorSubjectBinding
 
     private var requestCode = 0
@@ -96,6 +98,20 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
             else binding.actionButton.show()
             currentScrollPosition = binding.contentView.scrollY
         }
+
+        with(supportFragmentManager) {
+            setFragmentResultListener(ScheduleEditor.REQUEST_KEY_INSERT, this@SubjectEditor) { _, args ->
+                args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
+                    android.util.Log.e("DEBUG", "has parcelable")
+                    viewModel.addSchedule(it)
+                }
+            }
+            setFragmentResultListener(ScheduleEditor.REQUEST_KEY_UPDATE, this@SubjectEditor) { _, args ->
+                args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
+                    viewModel.updateSchedule(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -116,7 +132,7 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
         }
 
         viewModel.schedulesObservable.observe(this) {
-            scheduleAdapter.submitList(it)
+            scheduleAdapter.submitList(ArrayList(it))
         }
 
         binding.codeTextInput.addTextChangedListener {
@@ -131,10 +147,6 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
                 arguments = bundleOf(
                     ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID
                 )
-                waitForResult { schedule ->
-                    viewModel.addSchedule(schedule)
-                    this.dismiss()
-                }
             }
         }
 
@@ -186,23 +198,22 @@ class SubjectEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Schedule> {
         }
     }
 
-    override fun onActionPerformed(t: Schedule, position: Int, action: BaseBasicAdapter.ActionListener.Action) {
-        when (action) {
-            BaseBasicAdapter.ActionListener.Action.SELECT -> {
-                ScheduleEditor(supportFragmentManager).show {
-                    arguments = bundleOf(
-                        ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID,
-                        ScheduleEditor.EXTRA_SCHEDULE to t)
-                    waitForResult {
-                        viewModel.updateSchedule(it)
-                        this.dismiss()
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+                                       container: View?) {
+        if (t is Schedule) {
+            when (action) {
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    ScheduleEditor(supportFragmentManager).show {
+                        arguments = bundleOf(
+                            ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID,
+                            ScheduleEditor.EXTRA_SCHEDULE to t)
                     }
                 }
-            }
-            BaseBasicAdapter.ActionListener.Action.DELETE -> {
-                viewModel.removeSchedule(t)
-                createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
-                    setAction(R.string.button_undo) { viewModel.addSchedule(t) }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    viewModel.removeSchedule(t)
+                    createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
+                        setAction(R.string.button_undo) { viewModel.addSchedule(t) }
+                    }
                 }
             }
         }

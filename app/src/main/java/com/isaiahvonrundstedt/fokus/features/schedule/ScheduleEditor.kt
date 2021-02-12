@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -20,11 +22,19 @@ import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeTod
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import java.time.DayOfWeek
+import java.time.LocalTime
+import java.util.*
 
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
 
-    private var schedule: Schedule = Schedule()
-    private var requestKey: String = REQUEST_CODE_INSERT
+    private var id: String? = null
+    private var startTime: LocalTime? = null
+    private var endTime: LocalTime? = null
+    private var daysOfWeek: Int = 0
+    private var weeksOfMonth: Int = 0
+    private var subjectID: String? = null
+
+    private var requestKey: String = REQUEST_KEY_INSERT
     private var _binding: LayoutSheetScheduleEditorBinding? = null
 
     private val binding get() = _binding!!
@@ -39,14 +49,19 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.also {
-            schedule.subject = it.getString(EXTRA_SUBJECT_ID)
+            subjectID = it.getString(EXTRA_SUBJECT_ID)
 
             it.getParcelable<Schedule>(EXTRA_SCHEDULE)?.also { schedule ->
-                this.schedule = schedule
-                requestKey = REQUEST_CODE_UPDATE
+                id = schedule.scheduleID
+                startTime = schedule.startTime
+                endTime = schedule.endTime
+                daysOfWeek = schedule.daysOfWeek
+                weeksOfMonth = schedule.weeksOfMonth
+                subjectID = schedule.subject
+                requestKey = REQUEST_KEY_UPDATE
 
-                binding.startTimeTextView.text = schedule.formatStartTime(binding.root.context)
-                binding.endTimeTextView.text = schedule.formatEndTime(binding.root.context)
+                binding.startTimeTextView.text = Schedule.formatTime(view.context, startTime)
+                binding.endTimeTextView.text = Schedule.formatTime(view.context, endTime)
 
                 binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                 binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
@@ -56,7 +71,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 binding.weekThreeChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_THREE)
                 binding.weekFourChip.isChecked = schedule.hasWeek(Schedule.BIT_VALUE_WEEK_FOUR)
 
-                schedule.getDays().forEach { day ->
+                Schedule.parseDaysOfWeek(daysOfWeek).forEach { day ->
                     when (day) {
                         DayOfWeek.SUNDAY.value -> binding.sundayChip.isChecked = true
                         DayOfWeek.MONDAY.value -> binding.mondayChip.isChecked = true
@@ -75,21 +90,23 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_start_time)
                 timePicker(show24HoursView = false,
-                    currentTime = schedule.startTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
-                    val startTime = time.toLocalTime()
+                    currentTime = startTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                    startTime = time.toLocalTime()
+                    if (endTime == null)
+                        endTime = startTime
 
-                    schedule.startTime = startTime
-                    if (schedule.endTime == null) schedule.endTime = startTime
+                    if (startTime!!.isAfter(endTime)
+                        || startTime!!.compareTo(endTime) == 0) {
 
-                    if (startTime.isAfter(schedule.endTime) || startTime.compareTo(schedule.endTime) == 0) {
-                        schedule.endTime = schedule.startTime?.plusHours(1)
+                        endTime = startTime
+                            ?.plusHours(1)
                             ?.plusMinutes(30)
-                        binding.endTimeTextView.text = schedule.formatEndTime(it.context)
+                        binding.endTimeTextView.text = Schedule.formatTime(it.context, endTime)
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
-                        it.text = schedule.formatStartTime(it.context)
+                        it.text = Schedule.formatTime(it.context, startTime)
                         it.setTextColorFromResource(R.color.color_primary_text)
                         binding.endTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
@@ -103,21 +120,24 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_end_time)
                 timePicker(show24HoursView = false,
-                    currentTime = schedule.endTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
-                    val endTime = time.toLocalTime()
+                    currentTime = endTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                    endTime = time.toLocalTime()
 
-                    schedule.endTime = endTime
-                    if (schedule.startTime == null) schedule.startTime = endTime
+                    if (startTime == null)
+                        startTime = endTime
 
-                    if (endTime.isBefore(schedule.startTime) || endTime.compareTo(schedule.startTime) == 0) {
-                        schedule.startTime = schedule.endTime?.minusHours(1)
+                    if (endTime!!.isBefore(startTime)
+                        || endTime!!.compareTo(startTime) == 0) {
+
+                        startTime = endTime
+                            ?.minusHours(1)
                             ?.minusMinutes(30)
-                        binding.startTimeTextView.text = schedule.formatStartTime(it.context)
+                        binding.startTimeTextView.text = Schedule.formatTime(it.context, startTime)
                     }
                 }
                 positiveButton(R.string.button_done) { _ ->
                     if (it is AppCompatTextView) {
-                        it.text = schedule.formatEndTime(it.context)
+                        it.text = Schedule.formatTime(it.context, endTime)
                         it.setTextColorFromResource(R.color.color_primary_text)
                         binding.startTimeTextView.setTextColorFromResource(R.color.color_primary_text)
                     }
@@ -126,10 +146,15 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
         }
 
         binding.actionButton.setOnClickListener {
+            // reset the variables
+            if (requestKey == REQUEST_KEY_UPDATE) {
+                daysOfWeek = 0
+                weeksOfMonth = 0
+            }
 
             binding.daysOfWeekGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
-                    schedule.daysOfWeek += when (it.id) {
+                    daysOfWeek += when (it.id) {
                         R.id.sundayChip -> Schedule.BIT_VALUE_SUNDAY
                         R.id.mondayChip -> Schedule.BIT_VALUE_MONDAY
                         R.id.tuesdayChip -> Schedule.BIT_VALUE_TUESDAY
@@ -144,7 +169,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
 
             binding.weekOfMonthGroup.forEach {
                 if ((it as? Chip)?.isChecked == true) {
-                    schedule.weeksOfMonth += when (it.id) {
+                    weeksOfMonth += when (it.id) {
                         R.id.weekOneChip -> Schedule.BIT_VALUE_WEEK_ONE
                         R.id.weekTwoChip -> Schedule.BIT_VALUE_WEEK_TWO
                         R.id.weekThreeChip -> Schedule.BIT_VALUE_WEEK_THREE
@@ -154,29 +179,44 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 }
             }
 
-            // This ifs is used to check if some fields are
+            // This conditions is used to check if some fields are
             // blank or null, if these returned true,
-            // we'll show a Snackbar then direct the focus to
+            // we'll show a Toast then direct the focus to
             // the corresponding field then return to stop
             // the execution of the code
-            if (schedule.daysOfWeek == 0) {
-                createToast(R.string.feedback_schedule_empty_days)
-                return@setOnClickListener
-            }
 
-            if (schedule.startTime == null) {
+            if (startTime == null) {
                 createToast(R.string.feedback_schedule_empty_start_time)
                 binding.startTimeTextView.performClick()
                 return@setOnClickListener
             }
 
-            if (schedule.endTime == null) {
+            if (endTime == null) {
                 createToast(R.string.feedback_schedule_empty_end_time)
                 binding.endTimeTextView.performClick()
                 return@setOnClickListener
             }
 
-            receiver?.onReceive(schedule)
+            if (daysOfWeek == 0) {
+                createToast(R.string.feedback_schedule_empty_days)
+                return@setOnClickListener
+            }
+
+            if (weeksOfMonth == 0) {
+                createToast(R.string.feedback_schedule_empty_days)
+                return@setOnClickListener
+            }
+
+            val schedule = Schedule(
+                scheduleID = id ?: UUID.randomUUID().toString(),
+                daysOfWeek = daysOfWeek,
+                weeksOfMonth = weeksOfMonth,
+                startTime = startTime,
+                endTime = endTime,
+                subject = subjectID)
+
+            android.util.Log.e("DEBUG", "finished")
+            setFragmentResult(requestKey, bundleOf(EXTRA_SCHEDULE to schedule))
             this.dismiss()
         }
     }
@@ -187,8 +227,8 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
     }
 
     companion object {
-        const val REQUEST_CODE_INSERT = "request:insert"
-        const val REQUEST_CODE_UPDATE = "request:update"
+        const val REQUEST_KEY_INSERT = "request:insert"
+        const val REQUEST_KEY_UPDATE = "request:update"
         const val EXTRA_SCHEDULE = "extra:schedule"
         const val EXTRA_SUBJECT_ID = "extra:subject:id"
     }

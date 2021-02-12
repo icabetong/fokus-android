@@ -3,11 +3,13 @@ package com.isaiahvonrundstedt.fokus.features.schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleEditorBinding
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 
-class ScheduleAdapter(private val actionListener: ActionListener<Schedule>)
-    : BaseBasicAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>() {
+class ScheduleAdapter(private val actionListener: ActionListener)
+    : BaseAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>(Schedule.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         val binding = LayoutItemScheduleEditorBinding.inflate(LayoutInflater.from(parent.context),
@@ -16,31 +18,24 @@ class ScheduleAdapter(private val actionListener: ActionListener<Schedule>)
     }
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
-        holder.onBind(items[position], position)
-    }
+        val schedule: Schedule = getItem(position)
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+        with(holder.binding) {
+            titleView.text = schedule.formatDaysOfWeek(root.context, false)
+            summaryView.text = schedule.formatBothTime(root.context)
 
-    inner class ScheduleViewHolder(itemView: View)
-        : BaseBasicAdapter.BaseBasicViewHolder<Schedule>(itemView) {
+            removeButton.setOnClickListener {
+                actionListener.onActionPerformed(schedule, ActionListener.Action.DELETE, null)
+            }
 
-        private val binding = LayoutItemScheduleEditorBinding.bind(itemView)
-
-        override fun onBind(t: Schedule, position: Int) {
-            with(binding) {
-                titleView.text = t.formatDaysOfWeek(root.context, false)
-                summaryView.text = t.formatBothTime(root.context)
-
-                removeButton.setOnClickListener {
-                    actionListener.onActionPerformed(t, position, ActionListener.Action.DELETE)
-                }
-
-                root.setOnClickListener {
-                    actionListener.onActionPerformed(t, position, ActionListener.Action.SELECT)
-                }
+            root.setOnClickListener {
+                actionListener.onActionPerformed(schedule, ActionListener.Action.SELECT, null)
             }
         }
     }
+
+    class ScheduleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val binding = LayoutItemScheduleEditorBinding.bind(itemView)
+    }
+
 }

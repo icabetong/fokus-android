@@ -78,7 +78,7 @@ class EventEditorViewModel @Inject constructor(
         // Create new instances of Schedule
         // with individual day of week values
         schedules.forEach {
-            it.getDays().forEach { day ->
+            it.parseDaysOfWeek().forEach { day ->
                 val newSchedule = Schedule(startTime = it.startTime,
                     endTime = it.endTime)
                 newSchedule.daysOfWeek = day

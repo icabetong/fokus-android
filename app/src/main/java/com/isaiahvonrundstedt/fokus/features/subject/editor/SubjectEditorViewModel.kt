@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.getIndexByID
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 class SubjectEditorViewModel: ViewModel() {
 

@@ -24,7 +24,7 @@ interface SubjectDAO {
     suspend fun fetchAsPackage(): List<SubjectPackage>
 
     @Transaction
-    @Query("SELECT * FROM subjects WHERE isSubjectArchived = 1 ORDER BY code ASC")
+    @Query("SELECT * FROM subjects WHERE isSubjectArchived = 0 ORDER BY code ASC")
     fun fetchLiveData(): LiveData<List<SubjectPackage>>
 
     @Transaction

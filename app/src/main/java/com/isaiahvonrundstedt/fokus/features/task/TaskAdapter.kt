@@ -14,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
 class TaskAdapter(private val actionListener: ActionListener,
                   private val statusListener: TaskStatusListener,
@@ -51,7 +51,7 @@ class TaskAdapter(private val actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
                 with(t.task) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + taskID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
                         R.color.color_secondary_text

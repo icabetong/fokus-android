@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 
 class ScheduleAdapter(private val actionListener: ActionListener)
     : BaseAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>(Schedule.DIFF_CALLBACK) {

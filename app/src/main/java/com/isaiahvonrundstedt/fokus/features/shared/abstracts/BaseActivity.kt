@@ -2,19 +2,15 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityOptionsCompat
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 
 abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
         window.sharedElementsUseOverlay = false
 
         super.onCreate(savedInstanceState)
@@ -35,11 +31,6 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
-    protected fun buildTransitionOptions(container: View,
-                                          name: String = BaseEditor.TRANSITION_ELEMENT_ROOT) =
-        ActivityOptionsCompat.makeSceneTransitionAnimation(this, container,
-            name).toBundle()
 
     private var toolbar: MaterialToolbar? = null
 

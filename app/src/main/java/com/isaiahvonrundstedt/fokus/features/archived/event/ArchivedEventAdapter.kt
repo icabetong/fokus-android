@@ -9,8 +9,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedEventBinding
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
 class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
     ArchivedAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
@@ -32,7 +31,7 @@ class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
         override fun <T> onBind(t: T) {
             if (t is EventPackage) {
                 with(t.event) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + eventID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + eventID
 
                     binding.locationView.text = location
                     binding.nameView.text = name

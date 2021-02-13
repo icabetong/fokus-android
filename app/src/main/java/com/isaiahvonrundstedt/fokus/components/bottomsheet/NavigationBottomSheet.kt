@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetOptionsBinding
@@ -41,12 +43,21 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
     }
 
     override fun onItemSelected(id: Int) {
-        receiver?.onReceive(id)
+        setFragmentResult(REQUEST_KEY, bundleOf(EXTRA_DESTINATION to id))
         this.dismiss()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val REQUEST_KEY = "request:navigation"
+        const val EXTRA_DESTINATION = "extra:destination"
+
+        fun show(manager: FragmentManager) {
+            NavigationBottomSheet(manager).show()
+        }
     }
 }

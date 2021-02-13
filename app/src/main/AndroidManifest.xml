@@ -62,15 +62,6 @@
                 android:resource="@xml/xml_launcher_shortcuts"/>
         </activity>
 
-        <activity android:name=".features.task.editor.TaskEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.event.editor.EventEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".features.subject.editor.SubjectEditor"
-            android:theme="@style/Fokus.Theme.Core.Editor"
-            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".features.settings.SettingsActivity" />
         <activity android:name=".features.settings.BackupActivity"/>
         <activity android:name=".features.about.AboutActivity" />

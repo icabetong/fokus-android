@@ -1,16 +1,20 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.children
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
@@ -23,6 +27,7 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -31,6 +36,8 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
+import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -42,6 +49,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
     private var daysOfWeek: Array<DayOfWeek> = emptyArray()
     private var _binding: FragmentEventBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
     private val eventAdapter = EventAdapter(this, this)
@@ -57,7 +65,17 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.title = viewModel.currentMonth.format(monthYearFormatter)
+
+        binding.appBarLayout.toolbar.title = viewModel.currentMonth.format(monthYearFormatter)
+        binding.appBarLayout.toolbar.overrideOverflowMenu { context, anchor ->
+            CascadePopupMenu(context, anchor).apply {
+                menu.add("test")
+                show()
+            }
+        }
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -78,12 +96,30 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         ItemTouchHelper(ItemSwipeCallback(requireContext(), eventAdapter))
             .attachToRecyclerView(binding.recyclerView)
 
-        viewModel.events.observe(viewLifecycleOwner) { eventAdapter.submitList(it) }
-        viewModel.eventsEmpty.observe(viewLifecycleOwner) { binding.emptyView.isVisible = it }
+        viewModel.events.observe(viewLifecycleOwner) {
+            eventAdapter.submitList(it)
+        }
+        viewModel.eventsEmpty.observe(viewLifecycleOwner) {
+            binding.emptyView.isVisible = it
+        }
+
+        setFragmentResultListener(EventEditor.REQUEST_KEY_INSERT) { _, args ->
+            Event.fromBundle(args)?.let {
+                viewModel.insert(it)
+            }
+        }
+        setFragmentResultListener(EventEditor.REQUEST_KEY_UPDATE) { _, args ->
+            Event.fromBundle(args)?.let {
+                viewModel.update(it)
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
+
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         class DayViewContainer(view: View): ViewContainer(view) {
             lateinit var day: CalendarDay
@@ -127,7 +163,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
-            activityToolbar?.title = it.yearMonth.format(monthYearFormatter)
+            binding.appBarLayout.toolbar.title = it.yearMonth.format(monthYearFormatter)
 
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
@@ -158,8 +194,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            startActivityForResult(Intent(context, EventEditor::class.java),
-                EventEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
+            it.transitionName = TRANSITION_ELEMENT_ROOT
+
+            controller?.navigate(R.id.action_to_navigation_editor_event, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
         }
     }
 
@@ -176,15 +214,15 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             when (action) {
                 // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(context, EventEditor::class.java).apply {
-                        putExtra(EventEditor.EXTRA_EVENT, t.event)
-                        putExtra(EventEditor.EXTRA_SUBJECT, t.subject)
-                    }
+                    val transitionName = TRANSITION_ELEMENT_ROOT + t.event.eventID
 
-                    container?.also {
-                        startActivityForResult(intent, EventEditor.REQUEST_CODE_UPDATE,
-                            buildTransitionOptions(it, it.transitionName))
-                    }
+                    val args = bundleOf(
+                        EventEditor.EXTRA_EVENT to Event.toBundle(t.event),
+                        EventEditor.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
+                    )
+
+                    controller?.navigate(R.id.action_to_navigation_editor_event, args, null,
+                        FragmentNavigatorExtras(container!! to transitionName))
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
@@ -193,29 +231,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                     createSnackbar(R.string.feedback_event_removed, binding.recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.event) }
                     }
-                }
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_OK)
-            return
-
-        // Check the request code first if the data was from TaskEditor
-        // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == EventEditor.REQUEST_CODE_INSERT ||
-            requestCode == EventEditor.REQUEST_CODE_UPDATE) {
-            val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
-
-            event?.also {
-                when (requestCode) {
-                    EventEditor.REQUEST_CODE_INSERT ->
-                        viewModel.insert(it)
-                    EventEditor.REQUEST_CODE_UPDATE ->
-                        viewModel.update(it)
                 }
             }
         }

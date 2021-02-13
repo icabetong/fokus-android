@@ -2,9 +2,11 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.os.Parcelable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.core.os.bundleOf
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,7 +18,6 @@ import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
-import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.io.InputStream
 import java.util.*
@@ -112,6 +113,35 @@ data class Subject @JvmOverloads constructor(
     }
 
     companion object {
+        const val EXTRA_ID = "extra:id"
+        const val EXTRA_CODE = "extra:code"
+        const val EXTRA_DESCRIPTION = "extra:description"
+        const val EXTRA_COLOR = "extra:color"
+        const val EXTRA_IS_ARCHIVED = "extra:archived"
+
+        fun toBundle(subject: Subject): Bundle {
+            return bundleOf(
+                EXTRA_ID to subject.subjectID,
+                EXTRA_CODE to subject.code,
+                EXTRA_DESCRIPTION to subject.description,
+                EXTRA_COLOR to ColorConverter.fromColor(subject.tag),
+                EXTRA_IS_ARCHIVED to subject.isSubjectArchived
+            )
+        }
+
+        fun fromBundle(bundle: Bundle): Subject? {
+            if (!bundle.containsKey(EXTRA_ID))
+                return null
+
+            return Subject(
+                subjectID = bundle.getString(EXTRA_ID)!!,
+                code = bundle.getString(EXTRA_CODE),
+                description = bundle.getString(EXTRA_DESCRIPTION),
+                tag = ColorConverter.toColor(bundle.getInt(EXTRA_COLOR)) ?: Tag.SKY,
+                isSubjectArchived = bundle.getBoolean(EXTRA_IS_ARCHIVED)
+            )
+        }
+
         fun fromInputStream(inputStream: InputStream): Subject {
             return Subject().apply {
                 this.fromInputStream(inputStream)

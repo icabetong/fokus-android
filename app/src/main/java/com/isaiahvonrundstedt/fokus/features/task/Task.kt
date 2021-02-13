@@ -1,7 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Parcelable
+import androidx.core.os.bundleOf
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.isAfterNow
@@ -97,6 +99,47 @@ data class Task @JvmOverloads constructor(
     }
 
     companion object {
+        const val EXTRA_ID = "extra:id"
+        const val EXTRA_NAME = "extra:name"
+        const val EXTRA_DUE_DATE = "extra:due"
+        const val EXTRA_NOTES = "extra:notes"
+        const val EXTRA_SUBJECT = "extra:subject"
+        const val EXTRA_DATE_ADDED = "extra:added"
+        const val EXTRA_IS_IMPORTANT = "extra:important"
+        const val EXTRA_IS_FINISHED = "extra:finished"
+        const val EXTRA_IS_ARCHIVED = "extra:archived"
+
+        fun toBundle(task: Task): Bundle {
+            return bundleOf(
+                EXTRA_ID to task.taskID,
+                EXTRA_NAME to task.name,
+                EXTRA_DUE_DATE to task.dueDate,
+                EXTRA_NOTES to task.notes,
+                EXTRA_SUBJECT to task.subject,
+                EXTRA_DATE_ADDED to task.dateAdded,
+                EXTRA_IS_FINISHED to task.isFinished,
+                EXTRA_IS_IMPORTANT to task.isImportant,
+                EXTRA_IS_ARCHIVED to task.isTaskArchived
+            )
+        }
+
+        fun fromBundle(bundle: Bundle): Task? {
+            if (!bundle.containsKey(EXTRA_ID))
+                return null
+
+            return Task(
+                taskID = bundle.getString(EXTRA_ID)!!,
+                name = bundle.getString(EXTRA_NAME),
+                dueDate = bundle.getSerializable(EXTRA_DUE_DATE) as? ZonedDateTime,
+                notes = bundle.getString(EXTRA_NOTES),
+                subject = bundle.getString(EXTRA_SUBJECT),
+                dateAdded = bundle.getSerializable(EXTRA_DATE_ADDED) as? ZonedDateTime,
+                isFinished = bundle.getBoolean(EXTRA_IS_FINISHED),
+                isImportant = bundle.getBoolean(EXTRA_IS_IMPORTANT),
+                isTaskArchived = bundle.getBoolean(EXTRA_IS_ARCHIVED)
+            )
+        }
+
         fun fromInputStream(inputStream: InputStream): Task {
             return Task().apply {
                 this.fromInputStream(inputStream)

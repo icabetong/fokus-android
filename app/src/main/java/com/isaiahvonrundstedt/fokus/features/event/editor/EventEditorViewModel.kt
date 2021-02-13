@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
+import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -18,57 +19,100 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventEditorViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
-    private val scheduleDao: ScheduleDAO
+    private val scheduleDao: ScheduleDAO,
+    private val repository: EventRepository
 ): ViewModel() {
 
-    var event: Event? = Event()
-        set(value) {
-            field = value
-            _eventObservable.value = value
-        }
-    var subject: Subject? = null
-        set(value) {
-            field = value
-            _subjectObservable.value = value
-            if (value != null) {
-                event?.subject = value.subjectID
-                fetchSchedulesFromDatabase(value.subjectID)
-            } else {
-                event?.subject = null
-                schedules = emptyList()
-            }
-        }
+    private val _event: MutableLiveData<Event> = MutableLiveData(Event())
+    private val _subject: MutableLiveData<Subject> = MutableLiveData(null)
+
+    val event: LiveData<Event> = _event
+    val subject: LiveData<Subject> = _subject
+
     var schedules: List<Schedule> = emptyList()
 
-    private val _eventObservable = MutableLiveData<Event?>(event)
-    private val _subjectObservable = MutableLiveData<Subject?>(subject)
+    fun getEvent(): Event? {
+        return event.value
+    }
+    fun setEvent(event: Event?) {
+        _event.value = event
+    }
 
-    val eventObservable: LiveData<Event?> = _eventObservable
-    val subjectObservable: LiveData<Subject?> = _subjectObservable
+    fun getSubject(): Subject? {
+        return subject.value
+    }
+    fun setSubject(subject: Subject?) {
+        _subject.value = subject
+        if (subject != null) {
+            fetchSchedulesFromDatabase(subject.subjectID)
+            setEventSubjectID(subject.subjectID)
+        } else {
+            schedules = emptyList()
+            setEventSubjectID(null)
+        }
+    }
 
-    fun setEventName(name: String?) { event?.name = name }
-    fun getEventName(): String? = event?.name
-    fun hasEventName(): Boolean = event?.name?.isNotEmpty() == true
 
-    fun setSchedule(schedule: ZonedDateTime?) { event?.schedule = schedule }
-    fun getSchedule(): ZonedDateTime? = event?.schedule
-    fun hasSchedule(): Boolean = event?.schedule != null
-    fun getFormattedSchedule(): String = event?.formatSchedule(context) ?: ""
+    fun getName(): String? {
+        return getEvent()?.name
+    }
+    fun setName(name: String?) {
+        val event = getEvent()
+        event?.name = name
+        setEvent(event)
+    }
 
-    fun setLocation(location: String?) { event?.location = location }
-    fun hasLocation(): Boolean = event?.location?.isNotEmpty() == true
+    fun getSchedule(): ZonedDateTime? {
+        return getEvent()?.schedule
+    }
+    fun setSchedule(schedule: ZonedDateTime?) {
+        val event = getEvent()
+        event?.schedule = schedule
+        setEvent(event)
+    }
 
-    fun setIsImportant(isImportant: Boolean) { event?.isImportant = isImportant }
-    fun setNotes(notes: String?) { event?.notes = notes }
+    fun getLocation(): String? {
+        return getEvent()?.location
+    }
+    fun setLocation(location: String?) {
+        val event = getEvent()
+        event?.location = location
+        setEvent(event)
+    }
+
+    fun getEventSubjectID(): String? {
+        return getEvent()?.eventID
+    }
+    fun setEventSubjectID(id: String?) {
+        val event = getEvent()
+        event?.subject = id
+        setEvent(event)
+    }
+
+    fun getImportant(): Boolean {
+        return getEvent()?.isImportant == true
+    }
+    fun setImportant(isImportant: Boolean) {
+        val event = getEvent()
+        event?.isImportant = isImportant
+        setEvent(event)
+    }
+
+    fun getNotes(): String? {
+        return getEvent()?.notes
+    }
+    fun setNotes(notes: String) {
+        val event = getEvent()
+        event?.notes = notes
+        setEvent(event)
+    }
 
     fun setNextMeetingForDueDate() {
-        event?.schedule = getNextMeetingForSchedule()
+        setSchedule(getNextMeetingForSchedule())
     }
 
     fun setClassScheduleAsDueDate(schedule: Schedule) {
-        event?.schedule = schedule.startTime?.let { Schedule.getNearestDateTime(schedule.daysOfWeek, it) }
+        setSchedule(schedule.startTime?.let { Schedule.getNearestDateTime(schedule.daysOfWeek, it) })
     }
 
     private fun getNextMeetingForSchedule(): ZonedDateTime? {
@@ -103,5 +147,17 @@ class EventEditorViewModel @Inject constructor(
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
         schedules = scheduleDao.fetchUsingID(id)
+    }
+
+    fun insert() = viewModelScope.launch {
+        getEvent()?.let {
+            repository.insert(it)
+        }
+    }
+
+    fun update() = viewModelScope.launch {
+        getEvent()?.let {
+            repository.update(it)
+        }
     }
 }

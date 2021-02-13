@@ -9,7 +9,7 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectSingleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
 class SubjectAdapter(private val actionListener: ActionListener,
                      private val scheduleListener: ScheduleListener,
@@ -63,8 +63,7 @@ class SubjectAdapter(private val actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT +
-                            t.subject.subjectID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code
@@ -89,7 +88,7 @@ class SubjectAdapter(private val actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.subject.subjectID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code
@@ -113,7 +112,7 @@ class SubjectAdapter(private val actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is SubjectPackage) {
                 with(t.subject) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + t.subject.subjectID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.nameView.text = code

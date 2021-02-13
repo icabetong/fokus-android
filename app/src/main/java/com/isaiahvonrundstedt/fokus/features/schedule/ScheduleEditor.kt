@@ -215,7 +215,6 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manag
                 endTime = endTime,
                 subject = subjectID)
 
-            android.util.Log.e("DEBUG", "finished")
             setFragmentResult(requestKey, bundleOf(EXTRA_SCHEDULE to schedule))
             this.dismiss()
         }

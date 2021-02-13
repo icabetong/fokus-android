@@ -1,12 +1,14 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
@@ -14,8 +16,6 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
-import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.databinding.FragmentSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
@@ -30,15 +30,11 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     BaseAdapter.ArchiveListener {
 
     private var _binding: FragmentSubjectBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
     private val subjectAdapter = SubjectAdapter(this, this, this)
     private val viewModel: SubjectViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -48,13 +44,18 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.setTitle(getToolbarTitle())
+
+        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = subjectAdapter
         }
+
+        postponeEnterTransition()
+        binding.recyclerView.post { startPostponedEnterTransition() }
+        binding.actionButton.post { startPostponedEnterTransition() }
 
         ItemTouchHelper(ItemSwipeCallback(requireContext(), subjectAdapter))
             .attachToRecyclerView(binding.recyclerView)
@@ -82,12 +83,21 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
+    }
+
     override fun onResume() {
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            startActivityForResult(Intent(context, SubjectEditor::class.java),
-                SubjectEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
+            it.transitionName = TRANSITION_ELEMENT_ROOT
+
+            controller?.navigate(R.id.action_to_navigation_editor_subject, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
         }
     }
 
@@ -98,14 +108,16 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 // Create the intent for the editorUI and pass the extras
                 // and wait for the result
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(context, SubjectEditor::class.java).apply {
-                        putExtra(SubjectEditor.EXTRA_SUBJECT, t.subject)
-                        putExtra(SubjectEditor.EXTRA_SCHEDULE, t.schedules)
-                    }
+                    val transitionName = TRANSITION_ELEMENT_ROOT + t.subject.subjectID
+
+                    val args = bundleOf(
+                        SubjectEditor.EXTRA_SUBJECT to Subject.toBundle(t.subject),
+                        SubjectEditor.EXTRA_SCHEDULE to t.schedules
+                    )
 
                     container?.also {
-                        startActivityForResult(intent, SubjectEditor.REQUEST_CODE_UPDATE,
-                            buildTransitionOptions(it, it.transitionName))
+                        controller?.navigate(R.id.action_to_navigation_editor_subject, args, null,
+                            FragmentNavigatorExtras(it to transitionName))
                     }
                 }
                 // Item has been swiped from the RecyclerView, notify user action
@@ -126,31 +138,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         if (t is SubjectPackage) {
             t.subject.isSubjectArchived = true
             viewModel.update(t.subject)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_OK)
-            return
-
-        // Check the request code first if the data was from TaskEditor
-        // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT
-            || requestCode == SubjectEditor.REQUEST_CODE_UPDATE) {
-
-            val subject: Subject? = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-            val scheduleList: List<Schedule>? = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
-
-            subject?.also {
-                when (requestCode) {
-                    SubjectEditor.REQUEST_CODE_INSERT ->
-                        viewModel.insert(it, scheduleList ?: emptyList())
-                    SubjectEditor.REQUEST_CODE_UPDATE ->
-                        viewModel.update(it, scheduleList ?: emptyList())
-                }
-            }
         }
     }
 

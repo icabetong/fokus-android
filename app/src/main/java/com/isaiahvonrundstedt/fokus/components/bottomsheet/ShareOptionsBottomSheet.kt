@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetOptionsBinding
@@ -35,7 +37,8 @@ class ShareOptionsBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(ma
     }
 
     override fun onItemSelected(id: Int) {
-        receiver?.onReceive(id)
+        setFragmentResult(REQUEST_KEY, bundleOf(EXTRA_SHARE_OPTION to id))
+        this.dismiss()
     }
 
     override fun onDestroy() {
@@ -43,4 +46,8 @@ class ShareOptionsBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(ma
         _binding = null
     }
 
+    companion object {
+        const val REQUEST_KEY = "request:sharing"
+        const val EXTRA_SHARE_OPTION = "extra:share"
+    }
 }

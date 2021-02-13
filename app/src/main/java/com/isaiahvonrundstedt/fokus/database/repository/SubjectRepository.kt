@@ -32,7 +32,7 @@ class SubjectRepository @Inject constructor(
 
     suspend fun fetch(): List<SubjectPackage> = subjects.fetchAsPackage()
 
-    suspend fun insert(subject: Subject, scheduleList: List<Schedule> = emptyList()) {
+    suspend fun insert(subject: Subject, scheduleList: List<Schedule>) {
         subjects.insert(subject)
         if (scheduleList.isNotEmpty())
             scheduleList.forEach { schedules.insert(it) }

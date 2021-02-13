@@ -1,8 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Parcelable
 import android.text.format.DateFormat
+import androidx.core.os.bundleOf
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -94,8 +96,48 @@ data class Event @JvmOverloads constructor(
     }
 
     companion object {
+        const val EXTRA_ID = "extra:id"
+        const val EXTRA_NAME = "extra:name"
+        const val EXTRA_NOTES = "extra:notes"
+        const val EXTRA_SCHEDULE = "extra:schedule"
+        const val EXTRA_LOCATION = "extra:location"
+        const val EXTRA_SUBJECT = "extra:subject"
+        const val EXTRA_IS_IMPORTANT = "extra:important"
+        const val EXTRA_IS_ARCHIVED = "extra:archived"
+        const val EXTRA_DATE_ADDED = "extra:added"
+
         const val FORMAT_DATE_WITH_WEEKDAY_12_HOUR = "EEE - MMMM d, h:mm a"
         const val FORMAT_DATE_WITH_WEEKDAY_24_HOUR = "EEE - MMMM d, H:mm"
+
+        fun toBundle(event: Event): Bundle {
+            return bundleOf(
+                EXTRA_ID to event.eventID,
+                EXTRA_NAME to event.name,
+                EXTRA_LOCATION to event.location,
+                EXTRA_SCHEDULE to event.schedule,
+                EXTRA_NOTES to event.notes,
+                EXTRA_IS_IMPORTANT to event.isImportant,
+                EXTRA_IS_ARCHIVED to event.isEventArchived,
+                EXTRA_DATE_ADDED to event.dateAdded,
+                EXTRA_SUBJECT to event.subject
+            )
+        }
+
+        fun fromBundle(bundle: Bundle): Event? {
+            if (!bundle.containsKey(EXTRA_ID))
+                return null
+
+            return Event(
+                eventID = bundle.getString(EXTRA_ID)!!,
+                name = bundle.getString(EXTRA_NAME),
+                location = bundle.getString(EXTRA_LOCATION),
+                schedule = bundle.getSerializable(EXTRA_SCHEDULE) as? ZonedDateTime,
+                notes = bundle.getString(EXTRA_NOTES),
+                isImportant = bundle.getBoolean(EXTRA_IS_IMPORTANT),
+                isEventArchived = bundle.getBoolean(EXTRA_IS_ARCHIVED),
+                subject = bundle.getString(EXTRA_SUBJECT)
+            )
+        }
 
         fun fromInputStream(inputStream: InputStream): Event {
             return Event().apply {

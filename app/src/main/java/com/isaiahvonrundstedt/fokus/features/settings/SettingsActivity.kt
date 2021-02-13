@@ -19,6 +19,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
+import com.isaiahvonrundstedt.fokus.databinding.ActivitySettingsBinding
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationScheduler
@@ -26,15 +27,16 @@ import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWork
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import kotlinx.android.synthetic.main.layout_appbar.*
 import java.util.*
 
 class SettingsActivity : BaseActivity() {
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        setPersistentActionBar(toolbar)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.activity_settings)
     }
 

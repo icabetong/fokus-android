@@ -1,97 +1,86 @@
 package com.isaiahvonrundstedt.fokus.features.core.activities
 
-import android.app.Activity
 import android.app.NotificationManager
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
-import com.isaiahvonrundstedt.fokus.components.extensions.android.putExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
-import com.isaiahvonrundstedt.fokus.databinding.LayoutNavigationHeaderBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.EventViewModel
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_calendar_week_days.view.*
-import java.time.LocalTime
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     private var controller: NavController? = null
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.activity_tasks_pending)
+        controller = Navigation.findNavController(this, R.id.navigationHostFragment)
 
-        intent?.also {
-            when (it.action) {
+        intent?.also { intent ->
+            when (intent.action) {
                 ACTION_WIDGET_TASK -> {
-                    val task: Task? = it.getParcelableExtra(EXTRA_TASK)
-                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
-                    val attachments: List<Attachment>? = it.getParcelableListExtra(EXTRA_ATTACHMENTS)
+                    val task: Task? = intent.getParcelableExtra(EXTRA_TASK)
+                    val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
+                    val attachments: List<Attachment>? = intent.getParcelableListExtra(EXTRA_ATTACHMENTS)
 
-                    startActivityForResult(Intent(this, TaskEditor::class.java).apply {
-                        putExtra(TaskEditor.EXTRA_TASK, task)
-                        putExtra(TaskEditor.EXTRA_SUBJECT, subject)
-                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, attachments ?: emptyList())
-                    }, TaskEditor.REQUEST_CODE_INSERT)
+                    val args = bundleOf(
+                        TaskEditor.EXTRA_TASK to task?.let { Task.toBundle(it) },
+                        TaskEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
+                        TaskEditor.EXTRA_ATTACHMENTS to attachments
+                    )
+
+                    controller?.navigate(R.id.action_to_navigation_editor_task, args)
                 }
                 ACTION_WIDGET_EVENT -> {
-                    val event: Event? = it.getParcelableExtra(EXTRA_EVENT)
-                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
+                    val event: Event? = intent.getParcelableExtra(EXTRA_EVENT)
+                    val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
 
-                    startActivityForResult(Intent(this, EventEditor::class.java).apply {
-                        putExtra(EventEditor.EXTRA_EVENT, event)
-                        putExtra(EventEditor.EXTRA_SUBJECT, subject)
-                    }, EventEditor.REQUEST_CODE_UPDATE)
+                    val args = bundleOf(
+                        EventEditor.EXTRA_EVENT to event?.let { Event.toBundle(it) },
+                        EventEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) }
+                    )
+
+                    controller?.navigate(R.id.action_to_navigation_editor_event, args)
                 }
                 ACTION_WIDGET_SUBJECT -> {
-                    val subject: Subject? = it.getParcelableExtra(EXTRA_SUBJECT)
-                    val scheduleList: List<Schedule>? = it.getParcelableListExtra(EXTRA_SCHEDULES)
+                    val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
+                    val schedules: List<Schedule>? = intent.getParcelableListExtra(EXTRA_SCHEDULES)
 
-                    startActivityForResult(Intent(this, SubjectEditor::class.java).apply {
-                        putExtra(EXTRA_SUBJECT, subject)
-                        putExtra(EXTRA_SCHEDULES, scheduleList ?: emptyList())
-                    }, SubjectEditor.REQUEST_CODE_UPDATE)
+                    val args = bundleOf(
+                        SubjectEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
+                        SubjectEditor.EXTRA_SCHEDULE to schedules
+                    )
+
+                    controller?.navigate(R.id.action_to_navigation_editor_subject, args)
                 }
                 ACTION_SHORTCUT_TASK -> {
-                    startActivityForResult(Intent(this, TaskEditor::class.java),
-                        TaskEditor.REQUEST_CODE_INSERT)
+                    controller?.navigate(R.id.action_to_navigation_editor_task)
                 }
                 ACTION_SHORTCUT_EVENT -> {
-                    startActivityForResult(Intent(this, EventEditor::class.java),
-                        EventEditor.REQUEST_CODE_INSERT)
+                    controller?.navigate(R.id.action_to_navigation_editor_event)
                 }
                 ACTION_SHORTCUT_SUBJECT -> {
-                    startActivityForResult(Intent(this, SubjectEditor::class.java),
-                        SubjectEditor.REQUEST_CODE_INSERT)
+                    controller?.navigate(R.id.action_to_navigation_editor_subject)
                 }
                 ACTION_NAVIGATION_TASK -> {
                     controller?.navigate(R.id.action_to_navigation_tasks)
@@ -107,12 +96,10 @@ class MainActivity : BaseActivity() {
 
         TaskReminderWorker.reschedule(this.applicationContext)
 
-        controller = Navigation.findNavController(this, R.id.navigationHostFragment)
-        binding.appBarLayout.toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
-        binding.appBarLayout.toolbar.setNavigationOnClickListener {
-            NavigationBottomSheet(supportFragmentManager).show {
-                waitForResult { id ->
-                    controller?.navigate(id)
+        with(supportFragmentManager) {
+            setFragmentResultListener(NavigationBottomSheet.REQUEST_KEY, this@MainActivity) { _, args ->
+                args.getInt(NavigationBottomSheet.EXTRA_DESTINATION).also {
+                    controller?.navigate(it)
                 }
             }
         }
@@ -135,62 +122,62 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean = true
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
-                    val task: Task? =
-                        data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
-                    val attachments: List<Attachment>? =
-                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
-
-                    task?.also {
-                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
-                            tasksViewModel.insert(it, attachments ?: emptyList())
-                        else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
-                            tasksViewModel.update(it, attachments ?: emptyList())
-                    }
-                }
-                EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
-                    val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
-
-                    event?.also {
-                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
-                            eventsViewModel.insert(it)
-                        else eventsViewModel.update(it)
-                    }
-                }
-                SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
-                    val subject: Subject?
-                            = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-                    val schedules: List<Schedule>?
-                            = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
-
-                    subject?.also {
-                        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)
-                            subjectsViewModel.insert(it, schedules ?: emptyList())
-                        else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
-                            subjectsViewModel.update(it, schedules ?: emptyList())
-                    }
-                }
-            }
-        }
-    }
-
-    private val tasksViewModel by lazy {
-        ViewModelProvider(this).get(TaskViewModel::class.java)
-    }
-
-    private val eventsViewModel by lazy {
-        ViewModelProvider(this).get(EventViewModel::class.java)
-    }
-
-    private val subjectsViewModel by lazy {
-        ViewModelProvider(this).get(SubjectViewModel::class.java)
-    }
+    override fun onSupportNavigateUp(): Boolean = controller?.navigateUp() == true
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//            when (requestCode) {
+//                TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
+//                    val task: Task? =
+//                        data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
+//                    val attachments: List<Attachment>? =
+//                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
+//
+//                    task?.also {
+//                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
+//                            tasksViewModel.insert(it, attachments ?: emptyList())
+//                        else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
+//                            tasksViewModel.update(it, attachments ?: emptyList())
+//                    }
+//                }
+//                EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
+//                    val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
+//
+//                    event?.also {
+//                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
+//                            eventsViewModel.insert(it)
+//                        else eventsViewModel.update(it)
+//                    }
+//                }
+//                SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
+//                    val subject: Subject?
+//                            = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
+//                    val schedules: List<Schedule>?
+//                            = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
+//
+//                    subject?.also {
+//                        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)
+//                            subjectsViewModel.insert(it, schedules ?: emptyList())
+//                        else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
+//                            subjectsViewModel.update(it, schedules ?: emptyList())
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    private val tasksViewModel by lazy {
+//        ViewModelProvider(this).get(TaskViewModel::class.java)
+//    }
+//
+//    private val eventsViewModel by lazy {
+//        ViewModelProvider(this).get(EventViewModel::class.java)
+//    }
+//
+//    private val subjectsViewModel by lazy {
+//        ViewModelProvider(this).get(SubjectViewModel::class.java)
+//    }
 
     companion object {
         const val ACTION_SHORTCUT_TASK = "action:shortcut:task"

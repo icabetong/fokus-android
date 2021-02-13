@@ -12,7 +12,6 @@ import com.isaiahvonrundstedt.fokus.databinding.FragmentArchivedBinding
 import com.isaiahvonrundstedt.fokus.features.archived.event.ArchivedEventFragment
 import com.isaiahvonrundstedt.fokus.features.archived.subject.ArchivedSubjectFragment
 import com.isaiahvonrundstedt.fokus.features.archived.task.ArchivedTaskFragment
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.reflect.full.createInstance
@@ -35,7 +34,7 @@ class ArchivedFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.setTitle(R.string.activity_archives)
+        binding.appBarLayout.toolbar.setTitle(R.string.activity_archives)
 
         binding.viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

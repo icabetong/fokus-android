@@ -8,8 +8,7 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectPickerBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
-class SubjectPickerAdapter(private val actionListener: ActionListener,
-                           private val itemLongPressListener: ItemLongPressListener)
+class SubjectPickerAdapter(private val actionListener: ActionListener)
     : BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(SubjectPackage.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,10 +25,6 @@ class SubjectPickerAdapter(private val actionListener: ActionListener,
         actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE, null)
     }
 
-    interface ItemLongPressListener {
-        fun onItemLongPressed(subjectPackage: SubjectPackage, container: View?)
-    }
-
     inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectPickerBinding.bind(itemView)
@@ -41,11 +36,6 @@ class SubjectPickerAdapter(private val actionListener: ActionListener,
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.titleView.text = code
                     binding.summaryView.text = description
-                }
-
-                binding.root.setOnLongClickListener {
-                    itemLongPressListener.onItemLongPressed(t, binding.root)
-                    true
                 }
 
                 binding.root.setOnClickListener {

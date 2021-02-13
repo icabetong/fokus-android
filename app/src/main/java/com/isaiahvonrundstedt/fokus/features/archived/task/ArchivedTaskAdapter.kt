@@ -11,9 +11,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThrou
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedTaskBinding
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
-import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
 class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
@@ -36,7 +34,7 @@ class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
         override fun <T> onBind(t: T) {
             if (t is TaskPackage) {
                 with(t.task) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + taskID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
                         R.color.color_secondary_text

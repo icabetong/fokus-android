@@ -33,12 +33,12 @@
         tools:layout="@layout/activity_about"/>
 
     <action
-        android:id="@+id/action_to_navigation_archived"
-        app:destination="@id/navigation_archived"/>
+        android:id="@+id/action_to_navigation_main"
+        app:destination="@id/navigation_core"/>
 
     <action
-        android:id="@+id/action_to_navigation_main"
-        app:destination="@id/navigation_home"/>
+        android:id="@+id/action_to_navigation_archived"
+        app:destination="@id/navigation_archived"/>
 
     <action
         android:id="@+id/action_to_navigation_logs"
@@ -51,5 +51,36 @@
     <action
         android:id="@+id/action_to_navigation_about"
         app:destination="@id/navigation_about"/>
+
+
+    <!-- EditorUI -->
+    <fragment
+        android:id="@+id/navigation_editor_task"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor"
+        tools:layout="@layout/editor_task"/>
+
+    <action
+        android:id="@+id/action_to_navigation_editor_task"
+        app:destination="@id/navigation_editor_task"/>
+
+    <fragment
+        android:id="@+id/navigation_editor_event"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor"
+        tools:layout="@layout/editor_event"/>
+
+    <action
+        android:id="@+id/action_to_navigation_editor_event"
+        app:destination="@id/navigation_editor_event"/>
+
+    <fragment
+        android:id="@+id/navigation_editor_subject"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor"
+        tools:layout="@layout/editor_subject"/>
+
+    <action
+        android:id="@+id/action_to_navigation_editor_subject"
+        app:destination="@id/navigation_editor_subject"/>
+
+    <include app:graph="@navigation/navigation_core"/>
 
 </navigation>

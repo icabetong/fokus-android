@@ -12,14 +12,14 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <fragment
-            android:id="@+id/navigationHostFragment"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nestedNavigationHost"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:name="androidx.navigation.fragment.NavHostFragment"
             app:navGraph="@navigation/navigation_core"
-            app:defaultNavHost="true"
+            app:defaultNavHost="false"
             tools:ignore="FragmentTagUsage" />
 
         <github.com.st235.lib_expandablebottombar.ExpandableBottomBar

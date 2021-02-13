@@ -1,15 +1,17 @@
 package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.content.ClipboardManager
-import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
+import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -17,78 +19,136 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskEditorViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
     private val clipboardManager: ClipboardManager,
-    private val scheduleDao: ScheduleDAO
+    private val scheduleDao: ScheduleDAO,
+    private val repository: TaskRepository
 ): ViewModel() {
 
-    var task: Task? = Task()
-        set(value) {
-            field = value
-            _taskObservable.value = value
-        }
-    var attachments = arrayListOf<Attachment>()
-        set(value) {
-            field = value
-            _attachmentObservable.value = value
-        }
-    var subject: Subject? = null
-        set(value) {
-            field = value
-            _subjectObservable.value = value
-            if (value != null) {
-                task?.subject = value.subjectID
-                fetchSchedulesFromDatabase(value.subjectID)
-            } else {
-                task?.subject = null
-                schedules = emptyList()
-            }
-        }
-    var schedules = listOf<Schedule>()
+    private val _task: MutableLiveData<Task> = MutableLiveData(Task())
+    private val _attachments: MutableLiveData<ArrayList<Attachment>> = MutableLiveData(arrayListOf())
+    private val _subject: MutableLiveData<Subject?> = MutableLiveData(null)
 
-    private val _taskObservable = MutableLiveData<Task?>(task)
-    private val _attachmentObservable = MutableLiveData<List<Attachment>>(emptyList())
-    private val _subjectObservable = MutableLiveData<Subject?>(subject)
+    val task: LiveData<Task> = _task
+    val attachments: LiveData<ArrayList<Attachment>> = _attachments
+    val subject: LiveData<Subject?> = _subject
 
-    val taskObservable: LiveData<Task?> = _taskObservable
-    val attachmentObservable: LiveData<List<Attachment>> = _attachmentObservable
-    val subjectObservable: LiveData<Subject?> = _subjectObservable
+    var schedules: ArrayList<Schedule> = arrayListOf()
 
-    fun setTaskName(name: String?) { task?.name = name }
-    fun getTaskName(): String? = task?.name
-    fun hasTaskName(): Boolean = task?.name?.isNotEmpty() == true
-
-    fun setDueDate(dueDate: ZonedDateTime?) { task?.dueDate = dueDate }
-    fun getDueDate(): ZonedDateTime? = task?.dueDate
-    fun hasDueDate(): Boolean = task?.hasDueDate() == true
-    fun getFormattedDueDate(): String = task?.formatDueDate(context) ?: ""
-
-    fun hasAttachmentWithFile(): Boolean = attachments.any { it.type != Attachment.TYPE_WEBSITE_LINK }
-    fun setIsImportant(isImportant: Boolean) { task?.isImportant = isImportant }
-    fun setIsFinished(isFinished: Boolean) { task?.isFinished = isFinished }
-    fun setNotes(notes: String?) { task?.notes = notes }
-
-    fun addAttachment(item: Attachment) {
-        attachments.add(item)
-        _attachmentObservable.value = attachments
+    fun getTask(): Task? {
+        return task.value
     }
-    fun removeAttachment(item: Attachment) {
-        attachments.remove(item)
-        _attachmentObservable.value = attachments
+    fun setTask(task: Task?) {
+        _task.value = task
+    }
+
+    fun getSubject(): Subject? {
+        return subject.value
+    }
+    fun setSubject(subject: Subject?) {
+        _subject.value = subject
+
+        if (subject != null) {
+            fetchSchedulesFromDatabase(subject.subjectID)
+            setTaskSubjectID(subject.subjectID)
+        } else {
+            schedules.clear()
+            setTaskSubjectID(null)
+        }
+    }
+
+    fun getAttachments(): List<Attachment> {
+        return attachments.value ?: emptyList()
+    }
+    fun setAttachments(items: ArrayList<Attachment>) {
+        _attachments.value = items
+    }
+    fun addAttachment(attachment: Attachment) {
+        val items = ArrayList(getAttachments())
+        items.add(attachment)
+        setAttachments(items)
+    }
+    fun removeAttachment(attachment: Attachment) {
+        val items = ArrayList(getAttachments())
+        items.add(attachment)
+        setAttachments(items)
+    }
+
+
+    fun getID(): String? {
+        return getTask()?.taskID
+    }
+
+    fun getName(): String? {
+        return getTask()?.name
+    }
+    fun setName(name: String?) {
+        val task = getTask()
+        task?.name = name
+        setTask(task)
+    }
+
+    fun getDueDate(): ZonedDateTime? {
+        return getTask()?.dueDate
+    }
+    fun setDueDate(dueDate: ZonedDateTime?) {
+        val task = getTask()
+        task?.dueDate = dueDate
+        setTask(task)
+    }
+
+    fun getTaskSubjectID(): String? {
+        return getTask()?.subject
+    }
+    fun setTaskSubjectID(id: String?) {
+        val task = getTask()
+        task?.subject = id
+        setTask(task)
+    }
+
+    fun getImportant(): Boolean {
+        return getTask()?.isImportant == true
+    }
+    fun setImportant(isImportant: Boolean) {
+        val task = getTask()
+        task?.isImportant = isImportant
+        setTask(task)
+    }
+
+    fun getFinished(): Boolean {
+        return getTask()?.isFinished == true
+    }
+    fun setFinished(isFinished: Boolean) {
+        val task = getTask()
+        task?.isFinished = isFinished
+        setTask(task)
+    }
+
+    fun getNotes(): String? {
+        return getTask()?.notes
+    }
+    fun setNotes(notes: String?) {
+        val task = getTask()
+        task?.notes = notes
+        setTask(task)
+    }
+
+    fun hasFileAttachment(): Boolean {
+        return getAttachments().any {
+            it.type != Attachment.TYPE_WEBSITE_LINK
+        }
     }
 
     fun fetchRecentItemFromClipboard(): String
             = clipboardManager.primaryClip?.getItemAt(0)?.text.toString()
 
     fun setNextMeetingForDueDate() {
-        task?.dueDate = getDateTimeForNextMeeting()
+        setDueDate(getDateTimeForNextMeeting())
     }
 
     fun setClassScheduleAsDueDate(schedule: Schedule) {
-        task?.dueDate = schedule.startTime?.let {
+        setDueDate(schedule.startTime?.let {
             Schedule.getNearestDateTime(schedule.daysOfWeek, it)
-        }
+        })
     }
 
     private fun getDateTimeForNextMeeting(): ZonedDateTime? {
@@ -126,7 +186,18 @@ class TaskEditorViewModel @Inject constructor(
     }
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {
-        schedules = scheduleDao.fetchUsingID(id)
+        schedules.addAll(scheduleDao.fetchUsingID(id))
     }
 
+    fun insert() = viewModelScope.launch {
+        getTask()?.let {
+            repository.insert(it, getAttachments())
+        }
+    }
+
+    fun update() = viewModelScope.launch {
+        getTask()?.let {
+            repository.update(it, getAttachments())
+        }
+    }
 }

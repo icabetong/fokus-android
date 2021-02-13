@@ -10,7 +10,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemEventBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
 class EventAdapter(private val actionListener: ActionListener,
                    private val archiveListener: ArchiveListener)
@@ -43,7 +43,7 @@ class EventAdapter(private val actionListener: ActionListener,
         override fun <T> onBind(t: T) {
             if (t is EventPackage) {
                 with(t.event) {
-                    binding.root.transitionName = BaseEditor.TRANSITION_ELEMENT_ROOT + eventID
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + t.event.eventID
 
                     binding.locationView.text = location
                     binding.nameView.text = name

@@ -26,7 +26,7 @@ class MainFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navigationHost = childFragmentManager.findFragmentById(R.id.navigationHostFragment)
+        val navigationHost = childFragmentManager.findFragmentById(R.id.nestedNavigationHost)
         navigationHost?.findNavController()?.also {
             ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, it)
         }

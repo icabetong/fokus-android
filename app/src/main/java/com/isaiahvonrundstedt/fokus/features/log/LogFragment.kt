@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     private var _binding: FragmentLogsBinding? = null
+    private var controller: NavController? = null
 
     private val logAdapter = LogAdapter(this)
     private val viewModel: LogViewModel by viewModels()
@@ -36,7 +39,10 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.setTitle(R.string.activity_logs)
+
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        binding.appBarLayout.toolbar.setTitle(R.string.activity_logs)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))

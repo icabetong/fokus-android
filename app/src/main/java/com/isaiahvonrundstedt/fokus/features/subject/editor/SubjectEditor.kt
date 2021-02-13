@@ -6,20 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
@@ -27,16 +29,14 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
-import com.isaiahvonrundstedt.fokus.databinding.ActivityEditorSubjectBinding
+import com.isaiahvonrundstedt.fokus.databinding.EditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -46,45 +46,41 @@ import java.io.File
 
 @AndroidEntryPoint
 class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
-    private lateinit var binding: ActivityEditorSubjectBinding
-
-    private var requestCode = 0
+    private var _binding: EditorSubjectBinding? = null
+    private var controller: NavController? = null
+    private var requestKey = REQUEST_KEY_INSERT
 
     private val scheduleAdapter = ScheduleAdapter(this)
     private val viewModel: SubjectEditorViewModel by viewModels()
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditorSubjectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        _binding = EditorSubjectBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.root.transitionName = TRANSITION_ELEMENT_ROOT
+        controller = Navigation.findNavController(view)
 
-        // Check if the parent activity have passed some extras
-        requestCode = if (intent.hasExtra(EXTRA_SUBJECT)) REQUEST_CODE_UPDATE
-        else REQUEST_CODE_INSERT
+        binding.appBarLayout.toolbar.setNavigationOnClickListener { controller?.navigateUp() }
 
-        if (requestCode == REQUEST_CODE_UPDATE) {
-            viewModel.subject = intent.getParcelableExtra(EXTRA_SUBJECT)
-            viewModel.schedules = intent.getParcelableArrayListExtra(EXTRA_SCHEDULE) ?: arrayListOf()
+        arguments?.getBundle(EXTRA_SUBJECT)?.also {
+            requestKey = REQUEST_KEY_UPDATE
 
-            binding.root.transitionName = TRANSITION_ELEMENT_ROOT + viewModel.subject?.subjectID
-
-            window.sharedElementEnterTransition = buildContainerTransform(binding.root)
-            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
-                transitionDuration = TRANSITION_SHORT_DURATION)
-        } else {
-            binding.root.transitionName = TRANSITION_ELEMENT_ROOT
-
-            window.sharedElementEnterTransition = buildContainerTransform(binding.root,
-                withMotion = true)
-            window.sharedElementReturnTransition = buildContainerTransform(binding.root,
-                TRANSITION_SHORT_DURATION, true)
+            Subject.fromBundle(it)?.also { subject ->
+                viewModel.setSubject(subject)
+                binding.root.transitionName = TRANSITION_ELEMENT_ROOT + subject.subjectID
+            }
+        }
+        arguments?.getParcelableArrayList<Schedule>(EXTRA_SCHEDULE)?.also {
+            viewModel.setSchedules(it)
         }
 
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
+        sharedElementEnterTransition = getTransition()
+        sharedElementReturnTransition = getTransition()
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
@@ -99,17 +95,60 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             currentScrollPosition = binding.contentView.scrollY
         }
 
-        with(supportFragmentManager) {
-            setFragmentResultListener(ScheduleEditor.REQUEST_KEY_INSERT, this@SubjectEditor) { _, args ->
-                args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
-                    android.util.Log.e("DEBUG", "has parcelable")
-                    viewModel.addSchedule(it)
+        childFragmentManager.setFragmentResultListener(ShareOptionsBottomSheet.REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
+            var fileName = viewModel.getCode() ?: Streamable.ARCHIVE_NAME_GENERIC
+            when (requestKey) {
+                REQUEST_KEY_INSERT -> {
+                    if (binding.codeTextInput.text.isNullOrEmpty() ||
+                        binding.descriptionTextInput.text.isNullOrEmpty()
+                        || scheduleAdapter.itemCount < 1) {
+                        MaterialDialog(requireContext()).show {
+                            title(R.string.feedback_unable_to_share_title)
+                            message(R.string.feedback_unable_to_share_message)
+                            positiveButton(R.string.button_dismiss) { dismiss() }
+                        }
+                        return@setFragmentResultListener
+                    }
+                    fileName = binding.codeTextInput.text.toString()
+                }
+                REQUEST_KEY_UPDATE -> {
+                    fileName = viewModel.getCode() ?: Streamable.ARCHIVE_NAME_GENERIC
                 }
             }
-            setFragmentResultListener(ScheduleEditor.REQUEST_KEY_UPDATE, this@SubjectEditor) { _, args ->
-                args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
-                    viewModel.updateSchedule(it)
+            bundle.getInt(ShareOptionsBottomSheet.EXTRA_SHARE_OPTION).also {
+                when (it) {
+                    R.id.action_export -> {
+                        val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                            addCategory(Intent.CATEGORY_OPENABLE)
+                            putExtra(Intent.EXTRA_TITLE, fileName)
+                            type = Streamable.MIME_TYPE_ZIP
+                        }
+
+                        this@SubjectEditor.startActivityForResult(exportIntent,
+                            REQUEST_CODE_EXPORT)
+                    }
+                    R.id.action_share -> {
+                        val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                            action = DataExporterService.ACTION_EXPORT_SUBJECT
+                            putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                                viewModel.getSubject())
+                            putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                                viewModel.getSchedules())
+                        }
+
+                        context?.startService(serviceIntent)
+                    }
                 }
+            }
+        }
+        childFragmentManager.setFragmentResultListener(ScheduleEditor.REQUEST_KEY_INSERT, viewLifecycleOwner) { _, args ->
+            args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
+                viewModel.addSchedule(it)
+            }
+        }
+        childFragmentManager.setFragmentResultListener(ScheduleEditor.REQUEST_KEY_UPDATE, viewLifecycleOwner) { _, args ->
+            args.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
+                viewModel.updateSchedule(it)
             }
         }
     }
@@ -117,8 +156,11 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onStart() {
         super.onStart()
 
-        viewModel.subjectObservable.observe(this) {
-            if (requestCode == REQUEST_CODE_UPDATE && it != null) {
+        LocalBroadcastManager.getInstance(requireContext())
+            .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
+
+        viewModel.subject.observe(this) {
+            if (requestKey == REQUEST_KEY_UPDATE && it != null) {
                 with(it) {
                     binding.codeTextInput.setText(code)
                     binding.descriptionTextInput.setText(description)
@@ -131,27 +173,20 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
             }
         }
 
-        viewModel.schedulesObservable.observe(this) {
+        viewModel.schedules.observe(this) {
             scheduleAdapter.submitList(ArrayList(it))
         }
 
-        binding.codeTextInput.addTextChangedListener {
-            viewModel.setSubjectCode(it.toString())
-        }
-        binding.descriptionTextInput.addTextChangedListener {
-            viewModel.setDescription(it.toString())
-        }
-
         binding.addActionLayout.addItemButton.setOnClickListener {
-            ScheduleEditor(supportFragmentManager).show {
+            ScheduleEditor(childFragmentManager).show {
                 arguments = bundleOf(
-                    ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID
+                    ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID()
                 )
             }
         }
 
         binding.tagView.setOnClickListener {
-            MaterialDialog(this).show {
+            MaterialDialog(requireContext()).show {
                 lifecycleOwner(this@SubjectEditor)
                 title(R.string.dialog_pick_color_tag)
                 colorChooser(Subject.Tag.getColors(), waitForPositiveButton = false) { _, color ->
@@ -161,7 +196,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                         text = getString(viewModel.getTag()!!.getNameResource())
                         setTextColorFromResource(R.color.color_primary_text)
                         setCompoundDrawableAtStart(
-                            viewModel.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                            viewModel.getSubject()?.tintDrawable(getCompoundDrawableAtStart()))
                     }
                     this.dismiss()
                 }
@@ -169,32 +204,31 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         }
 
         binding.actionButton.setOnClickListener {
-            if (!viewModel.hasSubjectCode()) {
+            if (viewModel.getCode()?.isEmpty() == true) {
                 createSnackbar(R.string.feedback_subject_empty_name, binding.root)
                 binding.codeTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (!viewModel.hasDescription()) {
+            if (viewModel.getDescription()?.isEmpty() == true) {
                 createSnackbar(R.string.feedback_subject_empty_description, binding.root)
                 binding.descriptionTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (!viewModel.hasSchedules()) {
+            if (viewModel.getSchedules().size < 1) {
                 createSnackbar(R.string.feedback_subject_no_schedule, binding.root).show()
                 return@setOnClickListener
             }
 
-            // Pass the intent to the parent activity
-            setResult(Activity.RESULT_OK, Intent().apply {
-                putExtra(EXTRA_SUBJECT, viewModel.subject)
-                putExtra(EXTRA_SCHEDULE, viewModel.schedules)
-            })
+            viewModel.setCode(binding.codeTextInput.text.toString())
+            viewModel.setDescription(binding.descriptionTextInput.text.toString())
 
-            if (requestCode == REQUEST_CODE_UPDATE)
-                supportFinishAfterTransition()
-            else finish()
+            if (requestKey == REQUEST_KEY_INSERT)
+                viewModel.insert()
+            else viewModel.update()
+
+            controller?.navigateUp()
         }
     }
 
@@ -203,9 +237,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    ScheduleEditor(supportFragmentManager).show {
+                    ScheduleEditor(childFragmentManager).show {
                         arguments = bundleOf(
-                            ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.subject?.subjectID,
+                            ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
                             ScheduleEditor.EXTRA_SCHEDULE to t)
                     }
                 }
@@ -221,7 +255,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this)
+        LocalBroadcastManager.getInstance(requireContext())
             .unregisterReceiver(receiver)
     }
 
@@ -237,9 +271,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                         createSnackbar(R.string.feedback_export_completed, binding.root)
 
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            val uri = CoreApplication.obtainUriForFile(this@SubjectEditor, File(it))
+                            val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
 
-                            startActivity(ShareCompat.IntentBuilder.from(this@SubjectEditor)
+                            startActivity(ShareCompat.IntentBuilder.from(requireActivity())
                                 .addStream(uri)
                                 .setType(Streamable.MIME_TYPE_ZIP)
                                 .setChooserTitle(R.string.dialog_send_to)
@@ -255,9 +289,10 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
-                        val data: SubjectPackage? = intent.getParcelableExtra(BaseService.EXTRA_BROADCAST_DATA)
-                        viewModel.subject = data?.subject
-                        viewModel.schedules = data?.schedules?.toArrayList() ?: arrayListOf()
+                        intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
+                            viewModel.setSubject(it.subject)
+                            viewModel.setSchedules(ArrayList(it.schedules))
+                        }
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
                         createSnackbar(R.string.feedback_import_failed, binding.root)
@@ -275,16 +310,16 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
 
         when (requestCode) {
             REQUEST_CODE_IMPORT ->
-                startService(Intent(this, DataImporterService::class.java).apply {
+                context?.startService(Intent(context, DataImporterService::class.java).apply {
                     this.data = data?.data
                     action = DataImporterService.ACTION_IMPORT_SUBJECT
                 })
             REQUEST_CODE_EXPORT ->
-                startService(Intent(this, DataExporterService::class.java).apply {
+                context?.startService(Intent(context, DataExporterService::class.java).apply {
                     this.data = data?.data
                     action = DataExporterService.ACTION_EXPORT_SUBJECT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.subject)
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.schedules)
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getSubject())
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.getSchedules())
                 })
         }
     }
@@ -292,54 +327,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-
-                var fileName = viewModel.getSubjectCode() ?: Streamable.ARCHIVE_NAME_GENERIC
-                when (requestCode) {
-                    REQUEST_CODE_INSERT -> {
-                        if (binding.codeTextInput.text.isNullOrEmpty() ||
-                                binding.descriptionTextInput.text.isNullOrEmpty()
-                            || scheduleAdapter.itemCount < 1) {
-                            MaterialDialog(this).show {
-                                title(R.string.feedback_unable_to_share_title)
-                                message(R.string.feedback_unable_to_share_message)
-                                positiveButton(R.string.button_dismiss) { dismiss() }
-                            }
-                            return false
-                        }
-                        fileName = binding.codeTextInput.text.toString()
-                    }
-                    REQUEST_CODE_UPDATE -> {
-                        fileName = viewModel.getSubjectCode() ?: Streamable.ARCHIVE_NAME_GENERIC
-                    }
-                }
-
-                ShareOptionsBottomSheet(supportFragmentManager).show {
-                    waitForResult { id ->
-                        when (id) {
-                            R.id.action_export -> {
-                                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                                    addCategory(Intent.CATEGORY_OPENABLE)
-                                    putExtra(Intent.EXTRA_TITLE, fileName)
-                                    type = Streamable.MIME_TYPE_ZIP
-                                }
-
-                                this@SubjectEditor.startActivityForResult(exportIntent,
-                                    REQUEST_CODE_EXPORT)
-                            }
-                            R.id.action_share -> {
-                                val serviceIntent = Intent(this@SubjectEditor, DataExporterService::class.java).apply {
-                                    action = DataExporterService.ACTION_EXPORT_SUBJECT
-                                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                                        viewModel.subject)
-                                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
-                                        viewModel.schedules)
-                                }
-
-                                this@SubjectEditor.startService(serviceIntent)
-                            }
-                        }
-                    }
-                }
+                ShareOptionsBottomSheet(childFragmentManager)
+                    .show()
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -353,23 +342,25 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener {
         return true
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        with(outState) {
-            putParcelable(EXTRA_SUBJECT, viewModel.subject)
-            putParcelableArrayList(EXTRA_SCHEDULE, viewModel.schedules.toArrayList())
-        }
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        with(savedInstanceState) {
-            viewModel.subject = getParcelable(EXTRA_SUBJECT)
-            viewModel.schedules = getParcelableArrayList(EXTRA_SCHEDULE) ?: arrayListOf()
-        }
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        with(outState) {
+//            putParcelable(EXTRA_SUBJECT, viewModel.getSubject())
+//            putParcelableArrayList(EXTRA_SCHEDULE, viewModel.getSchedules())
+//        }
+//        super.onSaveInstanceState(outState)
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        savedInstanceState?.run {
+//            viewModel.setSubject(getParcelable(EXTRA_SUBJECT))
+//            viewModel.setSchedules(getParcelableArrayList(EXTRA_SCHEDULE) ?: arrayListOf())
+//        }
+//    }
 
     companion object {
+        const val REQUEST_KEY_INSERT = "request:insert"
+        const val REQUEST_KEY_UPDATE = "request:update"
         const val REQUEST_CODE_INSERT = 27
         const val REQUEST_CODE_UPDATE = 13
 

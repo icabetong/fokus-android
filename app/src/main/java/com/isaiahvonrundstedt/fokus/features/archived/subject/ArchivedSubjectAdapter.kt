@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
 class ArchivedSubjectAdapter(private val listener: ArchivedItemClickListener)

@@ -1,15 +1,20 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,17 +23,17 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
-import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
-import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.databinding.FragmentTaskBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
+import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_task.*
 import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 import java.io.File
@@ -36,8 +41,8 @@ import java.io.File
 @AndroidEntryPoint
 class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener,
     BaseAdapter.ArchiveListener {
-
     private var _binding: FragmentTaskBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
     private val taskAdapter = TaskAdapter(this, this, this)
@@ -56,7 +61,97 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activityToolbar?.setTitle(getToolbarTitle())
+
+        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+        binding.appBarLayout.toolbar.overrideOverflowMenu  { context, anchor ->
+            CascadePopupMenu(context, anchor).also { cascade ->
+                cascade.menu.addSubMenu(R.string.menu_sort).also {
+                    it.setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                    it.addSubMenu(R.string.field_task_name)?.apply {
+                        setIcon(R.drawable.ic_hero_pencil_24)
+
+                        add(R.string.sorting_directions_ascending).apply {
+                            setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                            setOnMenuItemClickListener {
+                                viewModel.sort = TaskViewModel.Sort.NAME
+                                viewModel.sortDirection = SortDirection.ASCENDING
+
+                                true
+                            }
+                        }
+                        add(R.string.sorting_directions_descending).apply {
+                            setIcon(R.drawable.ic_hero_sort_descending_24)
+
+                            setOnMenuItemClickListener {
+                                viewModel.sort = TaskViewModel.Sort.NAME
+                                viewModel.sortDirection = SortDirection.DESCENDING
+
+                                true
+                            }
+                        }
+                    }
+                    it.addSubMenu(R.string.field_due_date).apply {
+                        setIcon(R.drawable.ic_hero_clock_24)
+
+                        add(R.string.sorting_directions_ascending).apply {
+                            setIcon(R.drawable.ic_hero_sort_ascending_24)
+                            setOnMenuItemClickListener {
+                                viewModel.sort = TaskViewModel.Sort.DUE
+                                viewModel.sortDirection = SortDirection.ASCENDING
+
+                                true
+                            }
+                        }
+                        add(R.string.sorting_directions_descending).apply {
+                            setIcon(R.drawable.ic_hero_sort_descending_24)
+                            setOnMenuItemClickListener {
+                                viewModel.sort = TaskViewModel.Sort.DUE
+                                viewModel.sortDirection = SortDirection.DESCENDING
+
+                                true
+                            }
+                        }
+                    }
+                }
+                cascade.menu.addSubMenu(R.string.menu_filter)?.also {
+                    it.setIcon(R.drawable.ic_hero_filter_24)
+
+                    it.add(R.string.filter_options_all).apply {
+                        setIcon(R.drawable.ic_hero_clipboard_list_24)
+
+                        setOnMenuItemClickListener {
+                            viewModel.filterOption = TaskViewModel.Constraint.ALL
+                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                            true
+                        }
+                    }
+                    it.add(R.string.filter_options_pending_tasks).apply {
+                        setIcon(R.drawable.ic_hero_exclamation_circle_24)
+
+                        setOnMenuItemClickListener {
+                            viewModel.filterOption = TaskViewModel.Constraint.PENDING
+                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                            true
+                        }
+                    }
+                    it.add(R.string.filter_options_finished_tasks).apply {
+                        setIcon(R.drawable.ic_hero_check_24)
+
+                        setOnMenuItemClickListener {
+                            viewModel.filterOption = TaskViewModel.Constraint.FINISHED
+                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                            true
+                        }
+                    }
+                }
+                cascade.show()
+            }
+        }
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -86,12 +181,40 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
+
+        setFragmentResultListener(TaskEditor.REQUEST_KEY_INSERT) { _, args ->
+            args.getBundle(TaskEditor.EXTRA_TASK)?.also {
+                Task.fromBundle(it)?.also { task ->
+                    val attachments = args.getParcelableArrayList<Attachment>(TaskEditor.EXTRA_ATTACHMENTS)
+
+                    viewModel.insert(task, attachments ?: emptyList())
+                }
+            }
+        }
+        setFragmentResultListener(TaskEditor.REQUEST_KEY_UPDATE) { _, args ->
+            args.getBundle(TaskEditor.EXTRA_TASK)?.also {
+                Task.fromBundle(it)?.also { task ->
+                    val attachments = args.getParcelableArrayList<Attachment>(TaskEditor.EXTRA_ATTACHMENTS)
+
+                    viewModel.insert(task, attachments ?: emptyList())
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            startActivityForResult(Intent(context, TaskEditor::class.java),
-                TaskEditor.REQUEST_CODE_INSERT, buildTransitionOptions(it))
+            it.transitionName = TRANSITION_ELEMENT_ROOT
+
+            controller?.navigate(R.id.action_to_navigation_editor_task, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
         }
     }
 
@@ -133,15 +256,16 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 // Create the intent to the editorUI and pass the extras
                 // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val intent = Intent(context, TaskEditor::class.java).apply {
-                        putExtra(TaskEditor.EXTRA_TASK, t.task)
-                        putExtra(TaskEditor.EXTRA_SUBJECT, t.subject)
-                        putExtra(TaskEditor.EXTRA_ATTACHMENTS, t.attachments.toArrayList())
-                    }
+                    val transitionName = TRANSITION_ELEMENT_ROOT + t.task.taskID
+                    val args = bundleOf(
+                        TaskEditor.EXTRA_TASK to Task.toBundle(t.task),
+                        TaskEditor.EXTRA_ATTACHMENTS to t.attachments,
+                        TaskEditor.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
+                    )
 
                     container?.also {
-                        startActivityForResult(intent, TaskEditor.REQUEST_CODE_UPDATE,
-                            buildTransitionOptions(it, it.transitionName))
+                        controller?.navigate(R.id.action_to_navigation_editor_task, args, null,
+                            FragmentNavigatorExtras(it to transitionName))
                     }
                 }
                 // The item has been swiped down from the recyclerView
@@ -171,135 +295,10 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_OK)
-            return
-
-        // Check the request code first if the data was from TaskEditor
-        // so that it doesn't crash when casting the Parcelable object
-        if (requestCode == TaskEditor.REQUEST_CODE_INSERT
-            || requestCode == TaskEditor.REQUEST_CODE_UPDATE) {
-
-            val task: Task? = data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
-            val attachments: List<Attachment>? = data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
-
-            task?.also {
-                when (requestCode) {
-                    TaskEditor.REQUEST_CODE_INSERT ->
-                        viewModel.insert(it, attachments ?: emptyList())
-                    TaskEditor.REQUEST_CODE_UPDATE ->
-                        viewModel.update(it, attachments ?: emptyList())
-                }
-            }
-        }
-    }
-
     override fun <T> onItemArchive(t: T) {
         if (t is TaskPackage) {
             t.task.isTaskArchived = true
             viewModel.update(t.task)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_more -> {
-                activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
-                    val optionsMenu = CascadePopupMenu(requireContext(), view)
-                    optionsMenu.menu.addSubMenu(R.string.menu_sort).also {
-                        it.setIcon(R.drawable.ic_hero_sort_ascending_24)
-
-                        it.addSubMenu(R.string.field_task_name)?.apply {
-                            setIcon(R.drawable.ic_hero_pencil_24)
-
-                            add(R.string.sorting_directions_ascending).apply {
-                                setIcon(R.drawable.ic_hero_sort_ascending_24)
-
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = TaskViewModel.Sort.NAME
-                                    viewModel.sortDirection = SortDirection.ASCENDING
-
-                                    true
-                                }
-                            }
-                            add(R.string.sorting_directions_descending).apply {
-                                setIcon(R.drawable.ic_hero_sort_descending_24)
-
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = TaskViewModel.Sort.NAME
-                                    viewModel.sortDirection = SortDirection.DESCENDING
-
-                                    true
-                                }
-                            }
-                        }
-                        it.addSubMenu(R.string.field_due_date).apply {
-                            setIcon(R.drawable.ic_hero_clock_24)
-
-                            add(R.string.sorting_directions_ascending).apply {
-                                setIcon(R.drawable.ic_hero_sort_ascending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = TaskViewModel.Sort.DUE
-                                    viewModel.sortDirection = SortDirection.ASCENDING
-
-                                    true
-                                }
-                            }
-                            add(R.string.sorting_directions_descending).apply {
-                                setIcon(R.drawable.ic_hero_sort_descending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = TaskViewModel.Sort.DUE
-                                    viewModel.sortDirection = SortDirection.DESCENDING
-
-                                    true
-                                }
-                            }
-                        }
-                    }
-                    optionsMenu.menu.addSubMenu(R.string.menu_filter).also {
-                        it.setIcon(R.drawable.ic_hero_filter_24)
-
-                        it.add(R.string.filter_options_all).apply {
-                            setIcon(R.drawable.ic_hero_clipboard_list_24)
-
-                            setOnMenuItemClickListener {
-                                viewModel.filterOption = TaskViewModel.Constraint.ALL
-                                activityToolbar?.setTitle(getToolbarTitle())
-
-                                true
-                            }
-                        }
-                        it.add(R.string.filter_options_pending_tasks).apply {
-                            setIcon(R.drawable.ic_hero_exclamation_circle_24)
-
-                            setOnMenuItemClickListener {
-                                viewModel.filterOption = TaskViewModel.Constraint.PENDING
-                                activityToolbar?.setTitle(getToolbarTitle())
-
-                                true
-                            }
-                        }
-                        it.add(R.string.filter_options_finished_tasks).apply {
-                            setIcon(R.drawable.ic_hero_check_24)
-
-                            setOnMenuItemClickListener {
-                                viewModel.filterOption = TaskViewModel.Constraint.FINISHED
-                                activityToolbar?.setTitle(getToolbarTitle())
-
-                                true
-                            }
-                        }
-                    }
-                    optionsMenu.show()
-                }
-                true
-            } else -> super.onOptionsItemSelected(item)
         }
     }
 

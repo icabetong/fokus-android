@@ -6,11 +6,16 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
 
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/layout_appbar"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionGroup="true"/>
+        android:transitionGroup="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/confettiView"
@@ -24,7 +29,8 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="@dimen/activity_padding_medium"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
             android:layout_width="match_parent"
@@ -50,7 +56,8 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="@dimen/activity_padding_medium"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
             android:layout_width="match_parent"

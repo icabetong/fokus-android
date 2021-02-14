@@ -117,14 +117,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             adapter = scheduleAdapter
         }
 
-        var currentScrollPosition = 0
-        binding.contentView.viewTreeObserver.addOnScrollChangedListener {
-            if (binding.contentView.scrollY > currentScrollPosition)
-                binding.actionButton.hide()
-            else binding.actionButton.show()
-            currentScrollPosition = binding.contentView.scrollY
-        }
-
         registerForFragmentResult(arrayOf(
                 ShareOptionsSheet.REQUEST_KEY,
                 ScheduleEditor.REQUEST_KEY_INSERT,

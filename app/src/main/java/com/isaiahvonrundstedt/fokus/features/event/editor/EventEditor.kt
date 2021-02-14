@@ -122,14 +122,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         sharedElementEnterTransition = getTransition()
         sharedElementReturnTransition = getTransition()
 
-        var currentScrollPosition = 0
-        binding.contentView.viewTreeObserver.addOnScrollChangedListener {
-            if (binding.contentView.scrollY > currentScrollPosition)
-                binding.actionButton.hide()
-            else binding.actionButton.show()
-            currentScrollPosition = binding.contentView.scrollY
-        }
-
         registerForFragmentResult(arrayOf(
             ShareOptionsSheet.REQUEST_KEY,
             SchedulePickerSheet.REQUEST_KEY), this)

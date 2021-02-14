@@ -178,14 +178,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             adapter = attachmentAdapter
         }
 
-        var currentScrollPosition = 0
-        binding.contentView.viewTreeObserver.addOnScrollChangedListener {
-            if (binding.contentView.scrollY > currentScrollPosition)
-                binding.actionButton.hide()
-            else binding.actionButton.show()
-            currentScrollPosition = binding.contentView.scrollY
-        }
-
         registerForFragmentResult(
             arrayOf(ShareOptionsSheet.REQUEST_KEY,
                 SchedulePickerSheet.REQUEST_KEY,
@@ -209,7 +201,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                     binding.notesTextInput.setText(notes)
                     binding.prioritySwitch.isChecked = isImportant
                     binding.statusSwitch.isChecked = isFinished
-                    binding.removeDueDateButton.isVisible = dueDate != null
+                    binding.removeDueDateButton.isVisible = dueDate == null
 
                     if (it.hasDueDate()) {
                         binding.dueDateTextView.text = formatDueDate(requireContext())

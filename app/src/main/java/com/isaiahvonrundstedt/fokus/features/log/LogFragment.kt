@@ -16,6 +16,8 @@ import com.isaiahvonrundstedt.fokus.databinding.FragmentLogsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 
 @AndroidEntryPoint
 class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
@@ -25,11 +27,6 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     private val logAdapter = LogAdapter(this)
     private val viewModel: LogViewModel by viewModels()
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -41,7 +38,19 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
         super.onViewCreated(view, savedInstanceState)
 
         controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        binding.appBarLayout.toolbar.setTitle(R.string.activity_logs)
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_logs)
+            inflateMenu(R.menu.menu_logs)
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.action_clear_items -> viewModel.removeLogs()
+                }
+                true
+            }
+        }
+
         setupNavigation(binding.appBarLayout.toolbar, controller)
 
         with(binding.recyclerView) {
@@ -79,17 +88,4 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_logs, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_clear_items -> {
-                viewModel.removeLogs()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }

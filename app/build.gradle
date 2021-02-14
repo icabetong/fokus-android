@@ -16,7 +16,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 14
-        versionName "2.3.0"
+        versionName "2.3.0-beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,9 +35,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
-    }
-    kapt {
-        generateStubs = true
     }
 }
 

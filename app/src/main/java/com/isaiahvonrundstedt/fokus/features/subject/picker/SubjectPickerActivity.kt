@@ -73,8 +73,6 @@ class SubjectPickerActivity: BaseActivity(), BaseAdapter.ActionListener {
     }
 
     companion object {
-        const val REQUEST_CODE_PICK = 2
-
         const val EXTRA_SELECTED_SUBJECT = "extra:subject"
     }
 }

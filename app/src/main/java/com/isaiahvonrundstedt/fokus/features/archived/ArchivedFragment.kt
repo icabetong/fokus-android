@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.isaiahvonrundstedt.fokus.R
@@ -19,6 +21,7 @@ import kotlin.reflect.full.createInstance
 @AndroidEntryPoint
 class ArchivedFragment: BaseFragment() {
     private var _binding: FragmentArchivedBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +37,13 @@ class ArchivedFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.appBarLayout.toolbar.setTitle(R.string.activity_archives)
+
+        controller = Navigation.findNavController(view)
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_archives)
+            setupNavigation(this, controller)
+        }
 
         binding.viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

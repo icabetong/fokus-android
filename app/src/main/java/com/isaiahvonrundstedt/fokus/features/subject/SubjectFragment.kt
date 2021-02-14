@@ -24,6 +24,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 
 @AndroidEntryPoint
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener,
@@ -45,7 +46,11 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+        with(binding.appBarLayout.toolbar) {
+            setTitle(getToolbarTitle())
+            buildOptionsMenu(menu)
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+        }
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -141,117 +146,104 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
-    }
+    private fun buildOptionsMenu(menu: Menu) {
+        menu.addSubMenu(R.string.menu_sort).also {
+            it.setIcon(R.drawable.ic_hero_sort_ascending_24)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_more -> {
-                activityToolbar?.findViewById<View?>(R.id.action_more)?.also { view ->
-                    val optionsMenu = CascadePopupMenu(requireContext(), view)
-                    optionsMenu.menu.addSubMenu(R.string.menu_sort).also {
-                        it.setIcon(R.drawable.ic_hero_sort_ascending_24)
+            it.addSubMenu(R.string.field_subject_code).apply {
+                setIcon(R.drawable.ic_hero_hashtag_24)
 
-                        it.addSubMenu(R.string.field_subject_code).apply {
-                            setIcon(R.drawable.ic_hero_hashtag_24)
-
-                            add(R.string.sorting_directions_ascending).apply {
-                                setIcon(R.drawable.ic_hero_sort_ascending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.CODE
-                                    viewModel.direction = SortDirection.ASCENDING
-                                    true
-                                }
-                            }
-                            add(R.string.sorting_directions_descending).apply {
-                                setIcon(R.drawable.ic_hero_sort_descending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.CODE
-                                    viewModel.direction = SortDirection.DESCENDING
-                                    true
-                                }
-                            }
-                        }
-
-                        it.addSubMenu(R.string.field_description).apply {
-                            setIcon(R.drawable.ic_hero_pencil_24)
-
-                            add(R.string.sorting_directions_ascending).apply {
-                                setIcon(R.drawable.ic_hero_sort_ascending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
-                                    viewModel.direction = SortDirection.ASCENDING
-                                    true
-                                }
-                            }
-                            add(R.string.sorting_directions_descending).apply {
-                                setIcon(R.drawable.ic_hero_sort_descending_24)
-                                setOnMenuItemClickListener {
-                                    viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
-                                    viewModel.direction = SortDirection.DESCENDING
-                                    true
-                                }
-                            }
-                        }
-
-                        if (viewModel.constraint != SubjectViewModel.Constraint.ALL) {
-                            it.addSubMenu(R.string.field_schedule).apply {
-                                setIcon(R.drawable.ic_hero_clock_24)
-
-                                add(R.string.sorting_directions_ascending).apply {
-                                    setIcon(R.drawable.ic_hero_sort_ascending_24)
-                                    setOnMenuItemClickListener {
-                                        viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                                        viewModel.direction = SortDirection.ASCENDING
-                                        true
-                                    }
-                                }
-                                add(R.string.sorting_directions_descending).apply {
-                                    setIcon(R.drawable.ic_hero_sort_descending_24)
-                                    setOnMenuItemClickListener {
-                                        viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                                        viewModel.direction = SortDirection.DESCENDING
-                                        true
-                                    }
-                                }
-                            }
-                        }
+                add(R.string.sorting_directions_ascending).apply {
+                    setIcon(R.drawable.ic_hero_sort_ascending_24)
+                    setOnMenuItemClickListener {
+                        viewModel.sort = SubjectViewModel.Sort.CODE
+                        viewModel.direction = SortDirection.ASCENDING
+                        true
                     }
-                    optionsMenu.menu.addSubMenu(R.string.menu_filter).also {
-                        it.setIcon(R.drawable.ic_hero_filter_24)
-                        it.add(R.string.filter_options_all).apply {
-                            setIcon(R.drawable.ic_hero_clipboard_list_24)
-                            setOnMenuItemClickListener {
-                                viewModel.constraint = SubjectViewModel.Constraint.ALL
-                                subjectAdapter.constraint = viewModel.constraint
-                                activityToolbar?.setTitle(getToolbarTitle())
-                                true
-                            }
-                        }
-                        it.add(R.string.filter_options_today_classes).apply {
-                            setIcon(R.drawable.ic_hero_exclamation_circle_24)
-                            setOnMenuItemClickListener {
-                                viewModel.constraint = SubjectViewModel.Constraint.TODAY
-                                subjectAdapter.constraint = viewModel.constraint
-                                activityToolbar?.setTitle(getToolbarTitle())
-                                true
-                            }
-                        }
-                        it.add(R.string.filter_options_tomorrow_classes).apply {
-                            setIcon(R.drawable.ic_hero_calendar_24)
-                            setOnMenuItemClickListener {
-                                viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
-                                subjectAdapter.constraint = viewModel.constraint
-                                activityToolbar?.setTitle(getToolbarTitle())
-                                true
-                            }
-                        }
-                    }
-                    optionsMenu.show()
                 }
-                true
-            } else -> super.onOptionsItemSelected(item)
+                add(R.string.sorting_directions_descending).apply {
+                    setIcon(R.drawable.ic_hero_sort_descending_24)
+                    setOnMenuItemClickListener {
+                        viewModel.sort = SubjectViewModel.Sort.CODE
+                        viewModel.direction = SortDirection.DESCENDING
+                        true
+                    }
+                }
+            }
+
+            it.addSubMenu(R.string.field_description).apply {
+                setIcon(R.drawable.ic_hero_pencil_24)
+
+                add(R.string.sorting_directions_ascending).apply {
+                    setIcon(R.drawable.ic_hero_sort_ascending_24)
+                    setOnMenuItemClickListener {
+                        viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                        viewModel.direction = SortDirection.ASCENDING
+                        true
+                    }
+                }
+                add(R.string.sorting_directions_descending).apply {
+                    setIcon(R.drawable.ic_hero_sort_descending_24)
+                    setOnMenuItemClickListener {
+                        viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                        viewModel.direction = SortDirection.DESCENDING
+                        true
+                    }
+                }
+            }
+
+            if (viewModel.constraint != SubjectViewModel.Constraint.ALL) {
+                it.addSubMenu(R.string.field_schedule).apply {
+                    setIcon(R.drawable.ic_hero_clock_24)
+
+                    add(R.string.sorting_directions_ascending).apply {
+                        setIcon(R.drawable.ic_hero_sort_ascending_24)
+                        setOnMenuItemClickListener {
+                            viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                            viewModel.direction = SortDirection.ASCENDING
+                            true
+                        }
+                    }
+                    add(R.string.sorting_directions_descending).apply {
+                        setIcon(R.drawable.ic_hero_sort_descending_24)
+                        setOnMenuItemClickListener {
+                            viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                            viewModel.direction = SortDirection.DESCENDING
+                            true
+                        }
+                    }
+                }
+            }
+        }
+        menu.addSubMenu(R.string.menu_filter).also {
+            it.setIcon(R.drawable.ic_hero_filter_24)
+            it.add(R.string.filter_options_all).apply {
+                setIcon(R.drawable.ic_hero_clipboard_list_24)
+                setOnMenuItemClickListener {
+                    viewModel.constraint = SubjectViewModel.Constraint.ALL
+                    subjectAdapter.constraint = viewModel.constraint
+                    activityToolbar?.setTitle(getToolbarTitle())
+                    true
+                }
+            }
+            it.add(R.string.filter_options_today_classes).apply {
+                setIcon(R.drawable.ic_hero_exclamation_circle_24)
+                setOnMenuItemClickListener {
+                    viewModel.constraint = SubjectViewModel.Constraint.TODAY
+                    subjectAdapter.constraint = viewModel.constraint
+                    activityToolbar?.setTitle(getToolbarTitle())
+                    true
+                }
+            }
+            it.add(R.string.filter_options_tomorrow_classes).apply {
+                setIcon(R.drawable.ic_hero_calendar_24)
+                setOnMenuItemClickListener {
+                    viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
+                    subjectAdapter.constraint = viewModel.constraint
+                    activityToolbar?.setTitle(getToolbarTitle())
+                    true
+                }
+            }
         }
     }
 

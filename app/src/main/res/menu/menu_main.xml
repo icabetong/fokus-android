@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_more"
-        android:title="@string/app_name"
+        android:title="@string/menu_more"
         android:icon="@drawable/ic_hero_dots_vertical_24"
         app:iconTint="@color/color_on_surface"
         app:showAsAction="always"/>

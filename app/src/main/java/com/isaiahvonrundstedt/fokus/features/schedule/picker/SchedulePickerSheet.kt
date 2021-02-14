@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -12,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 
 class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager)
-    : BaseBottomSheet<Schedule>(manager), BaseAdapter.ActionListener {
+    : BaseBottomSheet(manager), BaseAdapter.ActionListener {
 
     private var _binding: LayoutSheetScheduleBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +40,12 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
                                        container: View?) {
         if (t is Schedule) {
             when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> receiver?.onReceive(t)
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    setFragmentResult(REQUEST_KEY, bundleOf(
+                        EXTRA_SCHEDULE to t
+                    ))
+                    this.dismiss()
+                }
                 BaseAdapter.ActionListener.Action.DELETE -> {}
             }
         }
@@ -47,5 +54,14 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        const val REQUEST_KEY = "request:pick"
+        const val EXTRA_SCHEDULE = "extra:schedule"
+
+        fun show(items: List<Schedule>, manager: FragmentManager) {
+            SchedulePickerSheet(items, manager).show()
+        }
     }
 }

@@ -24,6 +24,8 @@
     <string translatable="false" name="key_notices">noticesKey</string>
     <string translatable="false" name="key_version">versionKey</string>
 
+    <string translatable="false" name="key_no_confirm_import">noConfirmImportKey</string>
+
     <string translatable="false" name="key_credit_libraries">librariesKey</string>
     <string translatable="false" name="key_credit_notification_sound">notificationSoundKey</string>
     <string translatable="false" name="key_credit_launcher_icon">launcherIconKey</string>

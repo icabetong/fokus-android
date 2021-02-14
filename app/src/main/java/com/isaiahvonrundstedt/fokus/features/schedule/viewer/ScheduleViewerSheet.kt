@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 
 class ScheduleViewerSheet(private val items: List<Schedule>, manager: FragmentManager)
-    : BaseBottomSheet<Unit>(manager) {
+    : BaseBottomSheet(manager) {
 
     private var _binding: LayoutSheetScheduleBinding? = null
     private val binding get() = _binding!!

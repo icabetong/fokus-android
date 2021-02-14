@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
@@ -25,7 +27,7 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsBottomSheet
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
@@ -39,6 +41,7 @@ import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.databinding.EditorEventBinding
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
@@ -51,13 +54,45 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
-class EventEditor: BaseEditor() {
+class EventEditor: BaseEditor(), FragmentResultListener {
     private var _binding: EditorEventBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
     private val viewModel: EventEditorViewModel by viewModels()
     private val binding get() = _binding!!
+
+    private lateinit var exportLauncher: ActivityResultLauncher<Intent>
+    private lateinit var importLauncher: ActivityResultLauncher<Intent>
+    private lateinit var subjectLauncher: ActivityResultLauncher<Intent>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
+                ?.also { data ->
+                    viewModel.setSubject(data.subject)
+                    viewModel.schedules = data.schedules
+                }
+        }
+
+        exportLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            context?.startService(Intent(context, DataExporterService::class.java).apply {
+                this.data = it.data?.data
+                action = DataExporterService.ACTION_EXPORT_EVENT
+                putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getEvent())
+            })
+        }
+
+        importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            context?.startService(Intent(context, DataImporterService::class.java).apply {
+                this.data = it.data?.data
+                action = DataImporterService.ACTION_IMPORT_EVENT
+            })
+        }
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -95,50 +130,9 @@ class EventEditor: BaseEditor() {
             currentScrollPosition = binding.contentView.scrollY
         }
 
-        setFragmentResultListener(ShareOptionsBottomSheet.REQUEST_KEY) { _, bundle ->
-            var fileName = viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
-            when (requestKey) {
-                REQUEST_KEY_INSERT -> {
-                    if (viewModel.getName()?.isEmpty() == true || viewModel.getLocation()?.isEmpty() == true ||
-                        viewModel.getSchedule() == null) {
-                        MaterialDialog(requireContext()).show {
-                            title(R.string.feedback_unable_to_share_title)
-                            message(R.string.feedback_unable_to_share_message)
-                            positiveButton(R.string.button_dismiss) { dismiss() }
-                        }
-                        return@setFragmentResultListener
-                    }
-
-                    fileName = viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
-                }
-                REQUEST_KEY_UPDATE -> {
-                    fileName = viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
-                }
-            }
-
-            bundle.getInt(ShareOptionsBottomSheet.EXTRA_SHARE_OPTION).also {
-                when (it) {
-                    R.id.action_export -> {
-                        val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                            addCategory(Intent.CATEGORY_OPENABLE)
-                            putExtra(Intent.EXTRA_TITLE, fileName)
-                            type = Streamable.MIME_TYPE_ZIP
-                        }
-
-                        this@EventEditor.startActivityForResult(export, REQUEST_CODE_EXPORT)
-                    }
-                    R.id.action_share -> {
-                        val serviceIntent = Intent(context, DataExporterService::class.java).apply {
-                            action = DataExporterService.ACTION_EXPORT_EVENT
-                            putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                                viewModel.getEvent())
-                        }
-
-                        context?.startService(serviceIntent)
-                    }
-                }
-            }
-        }
+        registerForFragmentResult(arrayOf(
+            ShareOptionsSheet.REQUEST_KEY,
+            SchedulePickerSheet.REQUEST_KEY), this)
     }
 
     override fun onStart() {
@@ -214,8 +208,7 @@ class EventEditor: BaseEditor() {
         }
 
         binding.subjectTextView.setOnClickListener {
-            startActivityForResult(Intent(context, SubjectPickerActivity::class.java),
-                SubjectPickerActivity.REQUEST_CODE_PICK)
+            subjectLauncher.launch(Intent(context, SubjectPickerActivity::class.java))
         }
 
         binding.removeButton.setOnClickListener {
@@ -243,18 +236,8 @@ class EventEditor: BaseEditor() {
         }
 
         binding.pickDateTimeRadio.setOnClickListener {
-            SchedulePickerSheet(viewModel.schedules, childFragmentManager).show {
-                waitForResult { schedule ->
-                    viewModel.setClassScheduleAsDueDate(schedule)
-                    with(binding.pickDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
-                        subtitle = viewModel.getEvent()?.formatSchedule(context)
-                    }
-
-                    this.dismiss()
-                }
-            }
+            SchedulePickerSheet
+                .show(viewModel.schedules, childFragmentManager)
         }
 
         binding.customDateTimeRadio.setOnClickListener {
@@ -309,8 +292,31 @@ class EventEditor: BaseEditor() {
         }
     }
 
+    override fun onFragmentResult(requestKey: String, result: Bundle) {
+        when(requestKey) {
+            ShareOptionsSheet.REQUEST_KEY -> {
+                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
+                    triggerSystemSharingSheet(it)
+                }
+            }
+            SchedulePickerSheet.REQUEST_KEY -> {
+                result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
+                    viewModel.setClassScheduleAsDueDate(it)
+
+                    with(binding.pickDateTimeRadio) {
+                        titleTextColor = ContextCompat.getColor(context,
+                            R.color.color_primary_text)
+                        subtitle = viewModel.getEvent()?.formatSchedule(context)
+                    }
+                }
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+
+        _binding = null
         LocalBroadcastManager.getInstance(requireContext())
             .unregisterReceiver(receiver)
     }
@@ -360,7 +366,7 @@ class EventEditor: BaseEditor() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
-                ShareOptionsBottomSheet(childFragmentManager)
+                ShareOptionsSheet(childFragmentManager)
                     .show()
             }
             R.id.action_import -> {
@@ -368,7 +374,7 @@ class EventEditor: BaseEditor() {
                     type = Streamable.MIME_TYPE_ZIP
                 }, getString(R.string.dialog_select_file_import))
 
-                startActivityForResult(chooser, REQUEST_CODE_IMPORT)
+                importLauncher.launch(chooser)
             }
             else -> super.onOptionsItemSelected(item)
         }
@@ -391,30 +397,48 @@ class EventEditor: BaseEditor() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_OK)
-            return
-
-        when (requestCode) {
-            REQUEST_CODE_IMPORT ->
-                context?.startService(Intent(context, DataImporterService::class.java).apply {
-                    this.data = data?.data
-                    action = DataImporterService.ACTION_IMPORT_EVENT
-                })
-            REQUEST_CODE_EXPORT ->
-                context?.startService(Intent(context, DataExporterService::class.java).apply {
-                    this.data = data?.data
-                    action = DataExporterService.ACTION_EXPORT_EVENT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getEvent())
-                })
-            SubjectPickerActivity.REQUEST_CODE_PICK -> {
-                data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
-                    ?.also {
-                        viewModel.setSubject(it.subject)
-                        viewModel.schedules = it.schedules
+    private fun getSharingName(): String? {
+        return when (requestKey) {
+            REQUEST_KEY_INSERT -> {
+                if (viewModel.getName()?.isEmpty() == true || viewModel.getLocation()?.isEmpty() == true ||
+                    viewModel.getSchedule() == null) {
+                    MaterialDialog(requireContext()).show {
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_dismiss) { dismiss() }
                     }
+                    return null
+                }
+
+                viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
+            }
+            REQUEST_KEY_UPDATE -> {
+                viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
+            }
+            else -> null
+        }
+    }
+
+    private fun triggerSystemSharingSheet(option: Int) {
+        val fileName = getSharingName()
+        when (option) {
+            R.id.action_export -> {
+                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, fileName)
+                    type = Streamable.MIME_TYPE_ZIP
+                }
+
+                this@EventEditor.startActivityForResult(export, REQUEST_CODE_EXPORT)
+            }
+            R.id.action_share -> {
+                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                    action = DataExporterService.ACTION_EXPORT_EVENT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getEvent())
+                }
+
+                context?.startService(serviceIntent)
             }
         }
     }

@@ -3,12 +3,13 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.NavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
 
 abstract class BaseFragment : Fragment() {
 
@@ -25,14 +26,20 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    protected fun registerForFragmentResult(keys: Array<String>, listener: FragmentResultListener) {
+        keys.forEach {
+            childFragmentManager.setFragmentResultListener(it, viewLifecycleOwner, listener)
+        }
+    }
+
     protected fun setupNavigation(toolbar: MaterialToolbar, controller: NavController?) {
         toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
         toolbar.setNavigationOnClickListener {
-            NavigationBottomSheet.show(childFragmentManager)
+            NavigationSheet.show(childFragmentManager)
         }
 
-        childFragmentManager.setFragmentResultListener(NavigationBottomSheet.REQUEST_KEY, viewLifecycleOwner) { _, args ->
-            args.getInt(NavigationBottomSheet.EXTRA_DESTINATION).also {
+        childFragmentManager.setFragmentResultListener(NavigationSheet.REQUEST_KEY, viewLifecycleOwner) { _, args ->
+            args.getInt(NavigationSheet.EXTRA_DESTINATION).also {
                 exitTransition = MaterialFadeThrough().apply {
                     duration = TRANSITION_DURATION
                 }

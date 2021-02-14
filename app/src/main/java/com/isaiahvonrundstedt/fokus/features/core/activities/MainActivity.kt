@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationBottomSheet
+import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
@@ -97,8 +97,8 @@ class MainActivity : BaseActivity() {
         TaskReminderWorker.reschedule(this.applicationContext)
 
         with(supportFragmentManager) {
-            setFragmentResultListener(NavigationBottomSheet.REQUEST_KEY, this@MainActivity) { _, args ->
-                args.getInt(NavigationBottomSheet.EXTRA_DESTINATION).also {
+            setFragmentResultListener(NavigationSheet.REQUEST_KEY, this@MainActivity) { _, args ->
+                args.getInt(NavigationSheet.EXTRA_DESTINATION).also {
                     controller?.navigate(it)
                 }
             }

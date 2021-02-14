@@ -160,6 +160,17 @@ class PreferenceManager(private val context: Context?) {
         get() = sharedPreference.getString(R.string.key_subject_reminder_interval,
             SUBJECT_REMINDER_INTERVAL_30_MINUTES)
 
+    /* User-Defined Settings */
+    var noConfirmImport: Boolean
+        get() = sharedPreference.getBoolean(R.string.key_no_confirm_import,
+            false)
+        set(value) {
+            sharedPreference.edit().run {
+                putBoolean(R.string.key_no_confirm_import, value)
+                commit()
+            }
+        }
+
     private val sharedPreference by lazy {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
@@ -178,6 +189,10 @@ class PreferenceManager(private val context: Context?) {
 
     private fun SharedPreferences.Editor.putString(@StringRes id: Int, value: String?) {
         this.putString(context?.getString(id), value)
+    }
+
+    private fun SharedPreferences.Editor.putBoolean(@StringRes id: Int, value: Boolean) {
+        this.putBoolean(context?.getString(id), value)
     }
 
     companion object {

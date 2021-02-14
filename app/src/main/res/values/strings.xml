@@ -111,6 +111,9 @@
     <string name="dialog_confirm_deletion_summary">Once this item has been deleted, it cannot be recovered.</string>
     <string name="dialog_confirm_unarchive_title">Remove from archives?</string>
     <string name="dialog_confirm_unarchive_summary">You can always swipe left to archive this item again.</string>
+    <string name="dialog_import_attachment_title">Import attachment?</string>
+    <string name="dialog_import_attachment_summary">Due to the recent restrictions imposed by the Android system, the app will have to copy the file onto its own data folder. Continue?</string>
+    <string name="dialog_import_attachment_confirm">Never ask again</string>
     <string name="dialog_schedule_details">Schedule Details</string>
     <string name="dialog_discard_changes">Discard changes?</string>
     <string name="dialog_select_file_import">Select file to import</string>

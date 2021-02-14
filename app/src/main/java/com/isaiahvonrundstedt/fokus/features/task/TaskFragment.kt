@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
+import android.content.Context
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
@@ -33,6 +34,7 @@ import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_task.*
 import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideAllPopupMenus
 import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -62,94 +64,16 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-        binding.appBarLayout.toolbar.overrideOverflowMenu  { context, anchor ->
-            CascadePopupMenu(context, anchor).also { cascade ->
-                cascade.menu.addSubMenu(R.string.menu_sort).also {
-                    it.setIcon(R.drawable.ic_hero_sort_ascending_24)
-
-                    it.addSubMenu(R.string.field_task_name)?.apply {
-                        setIcon(R.drawable.ic_hero_pencil_24)
-
-                        add(R.string.sorting_directions_ascending).apply {
-                            setIcon(R.drawable.ic_hero_sort_ascending_24)
-
-                            setOnMenuItemClickListener {
-                                viewModel.sort = TaskViewModel.Sort.NAME
-                                viewModel.sortDirection = SortDirection.ASCENDING
-
-                                true
-                            }
-                        }
-                        add(R.string.sorting_directions_descending).apply {
-                            setIcon(R.drawable.ic_hero_sort_descending_24)
-
-                            setOnMenuItemClickListener {
-                                viewModel.sort = TaskViewModel.Sort.NAME
-                                viewModel.sortDirection = SortDirection.DESCENDING
-
-                                true
-                            }
-                        }
-                    }
-                    it.addSubMenu(R.string.field_due_date).apply {
-                        setIcon(R.drawable.ic_hero_clock_24)
-
-                        add(R.string.sorting_directions_ascending).apply {
-                            setIcon(R.drawable.ic_hero_sort_ascending_24)
-                            setOnMenuItemClickListener {
-                                viewModel.sort = TaskViewModel.Sort.DUE
-                                viewModel.sortDirection = SortDirection.ASCENDING
-
-                                true
-                            }
-                        }
-                        add(R.string.sorting_directions_descending).apply {
-                            setIcon(R.drawable.ic_hero_sort_descending_24)
-                            setOnMenuItemClickListener {
-                                viewModel.sort = TaskViewModel.Sort.DUE
-                                viewModel.sortDirection = SortDirection.DESCENDING
-
-                                true
-                            }
-                        }
-                    }
-                }
-                cascade.menu.addSubMenu(R.string.menu_filter)?.also {
-                    it.setIcon(R.drawable.ic_hero_filter_24)
-
-                    it.add(R.string.filter_options_all).apply {
-                        setIcon(R.drawable.ic_hero_clipboard_list_24)
-
-                        setOnMenuItemClickListener {
-                            viewModel.filterOption = TaskViewModel.Constraint.ALL
-                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-
-                            true
-                        }
-                    }
-                    it.add(R.string.filter_options_pending_tasks).apply {
-                        setIcon(R.drawable.ic_hero_exclamation_circle_24)
-
-                        setOnMenuItemClickListener {
-                            viewModel.filterOption = TaskViewModel.Constraint.PENDING
-                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-
-                            true
-                        }
-                    }
-                    it.add(R.string.filter_options_finished_tasks).apply {
-                        setIcon(R.drawable.ic_hero_check_24)
-
-                        setOnMenuItemClickListener {
-                            viewModel.filterOption = TaskViewModel.Constraint.FINISHED
-                            binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-
-                            true
-                        }
-                    }
-                }
-                cascade.show()
+        with(binding.appBarLayout.toolbar) {
+            setTitle(getToolbarTitle())
+            inflateMenu(R.menu.menu_main)
+            overrideOverflowMenu { context, anchor ->
+                android.util.Log.e("DEBUG", "overflow")
+                CascadePopupMenu(context, anchor)
+            }
+            overrideAllPopupMenus { context, anchor ->
+                android.util.Log.e("DEBUG", "all")
+                CascadePopupMenu(context, anchor)
             }
         }
 
@@ -300,6 +224,95 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             t.task.isTaskArchived = true
             viewModel.update(t.task)
         }
+    }
+
+    private fun showOptionsMenu(context: Context, anchor: View) {
+        CascadePopupMenu(context, anchor).also { cascade ->
+            cascade.menu.addSubMenu(R.string.menu_sort).also {
+                it.setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                it.addSubMenu(R.string.field_task_name)?.apply {
+                    setIcon(R.drawable.ic_hero_pencil_24)
+
+                    add(R.string.sorting_directions_ascending).apply {
+                        setIcon(R.drawable.ic_hero_sort_ascending_24)
+
+                        setOnMenuItemClickListener {
+                            viewModel.sort = TaskViewModel.Sort.NAME
+                            viewModel.sortDirection = SortDirection.ASCENDING
+
+                            true
+                        }
+                    }
+                    add(R.string.sorting_directions_descending).apply {
+                        setIcon(R.drawable.ic_hero_sort_descending_24)
+
+                        setOnMenuItemClickListener {
+                            viewModel.sort = TaskViewModel.Sort.NAME
+                            viewModel.sortDirection = SortDirection.DESCENDING
+
+                            true
+                        }
+                    }
+                }
+                it.addSubMenu(R.string.field_due_date).apply {
+                    setIcon(R.drawable.ic_hero_clock_24)
+
+                    add(R.string.sorting_directions_ascending).apply {
+                        setIcon(R.drawable.ic_hero_sort_ascending_24)
+                        setOnMenuItemClickListener {
+                            viewModel.sort = TaskViewModel.Sort.DUE
+                            viewModel.sortDirection = SortDirection.ASCENDING
+
+                            true
+                        }
+                    }
+                    add(R.string.sorting_directions_descending).apply {
+                        setIcon(R.drawable.ic_hero_sort_descending_24)
+                        setOnMenuItemClickListener {
+                            viewModel.sort = TaskViewModel.Sort.DUE
+                            viewModel.sortDirection = SortDirection.DESCENDING
+
+                            true
+                        }
+                    }
+                }
+            }
+            cascade.menu.addSubMenu(R.string.menu_filter)?.also {
+                it.setIcon(R.drawable.ic_hero_filter_24)
+
+                it.add(R.string.filter_options_all).apply {
+                    setIcon(R.drawable.ic_hero_clipboard_list_24)
+
+                    setOnMenuItemClickListener {
+                        viewModel.filterOption = TaskViewModel.Constraint.ALL
+                        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                        true
+                    }
+                }
+                it.add(R.string.filter_options_pending_tasks).apply {
+                    setIcon(R.drawable.ic_hero_exclamation_circle_24)
+
+                    setOnMenuItemClickListener {
+                        viewModel.filterOption = TaskViewModel.Constraint.PENDING
+                        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                        true
+                    }
+                }
+                it.add(R.string.filter_options_finished_tasks).apply {
+                    setIcon(R.drawable.ic_hero_check_24)
+
+                    setOnMenuItemClickListener {
+                        viewModel.filterOption = TaskViewModel.Constraint.FINISHED
+                        binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                        true
+                    }
+                }
+            }
+        }.show()
     }
 
     override fun onDestroy() {

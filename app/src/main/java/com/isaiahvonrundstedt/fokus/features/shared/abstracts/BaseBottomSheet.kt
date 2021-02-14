@@ -10,10 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
+abstract class BaseBottomSheet(private val manager: FragmentManager)
     : BottomSheetDialogFragment() {
-
-    protected var receiver: Receiver<T>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dialog?.setOnShowListener {
@@ -29,25 +27,14 @@ abstract class BaseBottomSheet<T>(private val manager: FragmentManager)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
             = BottomSheetDialog(requireContext(), theme)
 
-    fun waitForResult(receiver: Receiver<T>) {
-        this.receiver = receiver
-    }
-
     fun show() {
         if (!this.isAdded || !this.isVisible)
             show(manager, this::class.java.name)
     }
 
-    inline fun show(sheet: BaseBottomSheet<T>.() -> Unit) {
+    inline fun show(sheet: BaseBottomSheet.() -> Unit) {
         this.sheet()
         this.show()
     }
 
-    fun interface CancelListener {
-        fun onCancel()
-    }
-
-    fun interface Receiver<T> {
-        fun onReceive(t: T)
-    }
 }

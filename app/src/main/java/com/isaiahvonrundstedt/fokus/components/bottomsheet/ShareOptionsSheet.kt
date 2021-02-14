@@ -12,15 +12,15 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetOptionsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
-import java.time.LocalTime
 
-class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(manager),
+class ShareOptionsSheet(manager: FragmentManager): BaseBottomSheet(manager),
     MenuAdapter.MenuItemListener {
-    private var _binding: LayoutSheetOptionsBinding? = null
 
+    private var _binding: LayoutSheetOptionsBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+                              savedInstanceState: Bundle?): View? {
         _binding = LayoutSheetOptionsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,22 +28,16 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.menuTitleView.text = when(LocalTime.now().hour) {
-            in 0..6 -> getString(R.string.greeting_default)
-            in 7..12 -> getString(R.string.greeting_morning)
-            in 13..18 -> getString(R.string.greeting_afternoon)
-            in 19..23 -> getString(R.string.greeting_evening)
-            else -> getString(R.string.greeting_default)
-        }
+        binding.menuTitleView.text = getString(R.string.dialog_sharing_options)
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MenuAdapter(activity, R.menu.navigation_main, this@NavigationBottomSheet)
+            adapter = MenuAdapter(activity, R.menu.menu_share, this@ShareOptionsSheet)
         }
     }
 
     override fun onItemSelected(id: Int) {
-        setFragmentResult(REQUEST_KEY, bundleOf(EXTRA_DESTINATION to id))
+        setFragmentResult(REQUEST_KEY, bundleOf(EXTRA_SHARE_OPTION to id))
         this.dismiss()
     }
 
@@ -53,11 +47,7 @@ class NavigationBottomSheet(manager: FragmentManager): BaseBottomSheet<Int>(mana
     }
 
     companion object {
-        const val REQUEST_KEY = "request:navigation"
-        const val EXTRA_DESTINATION = "extra:destination"
-
-        fun show(manager: FragmentManager) {
-            NavigationBottomSheet(manager).show()
-        }
+        const val REQUEST_KEY = "request:sharing"
+        const val EXTRA_SHARE_OPTION = "extra:share"
     }
 }

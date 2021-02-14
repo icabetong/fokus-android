@@ -25,7 +25,7 @@ import java.time.DayOfWeek
 import java.time.LocalTime
 import java.util.*
 
-class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet<Schedule>(manager) {
+class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
     private var id: String? = null
     private var startTime: LocalTime? = null

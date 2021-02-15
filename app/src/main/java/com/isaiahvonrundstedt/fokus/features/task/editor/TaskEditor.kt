@@ -59,6 +59,8 @@ import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivit
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 import java.time.ZonedDateTime
 import javax.inject.Inject
@@ -125,6 +127,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
     }
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _binding = EditorTaskBinding.inflate(inflater, container, false)
@@ -136,23 +139,11 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         binding.root.transitionName = TRANSITION_ELEMENT_ROOT
         controller = Navigation.findNavController(view)
 
-        binding.appBarLayout.toolbar.inflateMenu(R.menu.menu_editor)
-        binding.appBarLayout.toolbar.setNavigationOnClickListener { controller?.navigateUp() }
-        binding.appBarLayout.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_share_options -> {
-                    ShareOptionsSheet(childFragmentManager)
-                        .show()
-                }
-                R.id.action_import -> {
-                    val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                        type = Streamable.MIME_TYPE_ZIP
-                    }, getString(R.string.dialog_select_file_import))
-
-                    importLauncher.launch(chooser)
-                }
-            }
-            true
+        with(binding.appBarLayout.toolbar) {
+            inflateMenu(R.menu.menu_editor)
+            setNavigationOnClickListener { controller?.navigateUp() }
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         arguments?.getBundle(EXTRA_TASK)?.also {
@@ -474,6 +465,23 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             dateAttached = ZonedDateTime.now()
             type = attachmentType
         }
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share_options -> {
+                ShareOptionsSheet(childFragmentManager)
+                    .show()
+            }
+            R.id.action_import -> {
+                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = Streamable.MIME_TYPE_ZIP
+                }, getString(R.string.dialog_select_file_import))
+
+                importLauncher.launch(chooser)
+            }
+        }
+        return true
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {

@@ -48,6 +48,8 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -104,7 +106,12 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         binding.root.transitionName = TRANSITION_ELEMENT_ROOT
         controller = Navigation.findNavController(view)
 
-        binding.appBarLayout.toolbar.setNavigationOnClickListener { controller?.navigateUp() }
+        with(binding.appBarLayout.toolbar) {
+            inflateMenu(R.menu.menu_editor)
+            setNavigationOnClickListener { controller?.navigateUp() }
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            setOnMenuItemClickListener(::onMenuItemClicked)
+        }
 
         arguments?.getBundle(EXTRA_EVENT)?.also {
             requestKey = REQUEST_KEY_UPDATE
@@ -354,7 +361,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
                 ShareOptionsSheet(childFragmentManager)
@@ -367,7 +374,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
                 importLauncher.launch(chooser)
             }
-            else -> super.onOptionsItemSelected(item)
         }
         return true
     }

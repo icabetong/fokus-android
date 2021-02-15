@@ -45,6 +45,8 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.CascadePopupMenu
+import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 
 @AndroidEntryPoint
@@ -95,7 +97,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         binding.root.transitionName = TRANSITION_ELEMENT_ROOT
         controller = Navigation.findNavController(view)
 
-        binding.appBarLayout.toolbar.setNavigationOnClickListener { controller?.navigateUp() }
+        with(binding.appBarLayout.toolbar) {
+            inflateMenu(R.menu.menu_editor)
+            setNavigationOnClickListener { controller?.navigateUp() }
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            setOnMenuItemClickListener(::onMenuItemClicked)
+        }
 
         arguments?.getBundle(EXTRA_SUBJECT)?.also {
             requestKey = REQUEST_KEY_UPDATE
@@ -242,6 +249,23 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 }
             }
         }
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share_options -> {
+                ShareOptionsSheet(childFragmentManager)
+                    .show()
+            }
+            R.id.action_import -> {
+                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    type = Streamable.MIME_TYPE_ZIP
+                }, getString(R.string.dialog_select_file_import))
+
+                importLauncher.launch(chooser)
+            }
+        }
+        return true
     }
 
     override fun onDestroy() {

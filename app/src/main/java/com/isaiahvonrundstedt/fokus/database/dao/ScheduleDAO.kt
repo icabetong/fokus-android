@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 interface ScheduleDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(schedule: Schedule)
+    suspend fun insert(vararg schedule: Schedule)
 
     @Delete
     suspend fun remove(schedule: Schedule)

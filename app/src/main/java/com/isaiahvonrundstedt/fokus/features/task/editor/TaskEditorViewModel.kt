@@ -12,6 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -189,13 +191,13 @@ class TaskEditorViewModel @Inject constructor(
         schedules.addAll(scheduleDao.fetchUsingID(id))
     }
 
-    fun insert() = viewModelScope.launch {
+    fun insert() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getTask()?.let {
             repository.insert(it, getAttachments())
         }
     }
 
-    fun update() = viewModelScope.launch {
+    fun update() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getTask()?.let {
             repository.update(it, getAttachments())
         }

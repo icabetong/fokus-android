@@ -354,6 +354,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
 
         binding.actionButton.setOnClickListener {
+            viewModel.setName(binding.taskNameTextInput.text.toString())
 
             // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,
@@ -479,7 +480,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         when(requestKey) {
             ShareOptionsSheet.REQUEST_KEY -> {
                 result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
-                    triggerSystemShareSheet(it)
+                    triggerSystemSharingComponent(it)
                 }
             }
             SchedulePickerSheet.REQUEST_KEY -> {
@@ -646,7 +647,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
     }
 
-    private fun triggerSystemShareSheet(option: Int) {
+    private fun triggerSystemSharingComponent(option: Int) {
         val fileName = getSharingName()
         if (fileName == null) {
             MaterialDialog(requireContext()).show {

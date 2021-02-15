@@ -39,6 +39,7 @@ class TaskRepository @Inject constructor(
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks.insert(task)
+        android.util.Log.e("DEBUG", "repo")
         if (attachmentList.isNotEmpty())
             attachmentList.forEach { attachments.insert(it) }
 

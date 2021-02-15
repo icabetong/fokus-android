@@ -9,6 +9,8 @@ import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -88,13 +90,13 @@ class SubjectEditorViewModel @Inject constructor(
         setSubject(subject)
     }
 
-    fun insert() = viewModelScope.launch {
+    fun insert() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getSubject()?.let {
             repository.insert(it, getSchedules())
         }
     }
 
-    fun update() = viewModelScope.launch {
+    fun update() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getSubject()?.let {
             repository.update(it, getSchedules())
         }

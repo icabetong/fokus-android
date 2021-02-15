@@ -6,16 +6,15 @@ import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SubjectViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
     private val repository: SubjectRepository,
     private val preferenceManager: PreferenceManager
 ) : ViewModel() {
@@ -61,23 +60,16 @@ class SubjectViewModel @Inject constructor(
         }
     }
 
-    fun insert(subject: Subject, scheduleList: List<Schedule>) = viewModelScope.launch {
-        repository.insert(subject, scheduleList)
-
-        SubjectWidgetProvider.triggerRefresh(context)
+    fun insert(subject: Subject, schedules: List<Schedule>) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+        repository.insert(subject, schedules)
     }
 
-    fun remove(subject: Subject) = viewModelScope.launch {
+    fun remove(subject: Subject) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.remove(subject)
-
-        SubjectWidgetProvider.triggerRefresh(context)
     }
 
-    fun update(subject: Subject,
-               scheduleList: List<Schedule> = emptyList()) = viewModelScope.launch {
-        repository.update(subject, scheduleList)
-
-        SubjectWidgetProvider.triggerRefresh(context)
+    fun update(subject: Subject, schedules: List<Schedule> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+        repository.update(subject, schedules)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

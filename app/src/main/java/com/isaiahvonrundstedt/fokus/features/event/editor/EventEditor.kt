@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.event.editor
 
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -288,7 +287,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         when(requestKey) {
             ShareOptionsSheet.REQUEST_KEY -> {
                 result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
-                    triggerSystemSharingSheet(it)
+                    triggerSystemSharingComponent(it)
                 }
             }
             SchedulePickerSheet.REQUEST_KEY -> {
@@ -411,7 +410,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         }
     }
 
-    private fun triggerSystemSharingSheet(option: Int) {
+    private fun triggerSystemSharingComponent(option: Int) {
         val fileName = getSharingName()
         when (option) {
             R.id.action_export -> {
@@ -421,7 +420,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                     type = Streamable.MIME_TYPE_ZIP
                 }
 
-                this@EventEditor.startActivityForResult(export, REQUEST_CODE_EXPORT)
+                exportLauncher.launch(export)
             }
             R.id.action_share -> {
                 val serviceIntent = Intent(context, DataExporterService::class.java).apply {
@@ -438,13 +437,8 @@ class EventEditor: BaseEditor(), FragmentResultListener {
     companion object {
         const val REQUEST_KEY_INSERT = "request:insert"
         const val REQUEST_KEY_UPDATE = "request:update"
-        const val REQUEST_CODE_INSERT = 24
-        const val REQUEST_CODE_UPDATE = 56
 
         const val EXTRA_EVENT = "extra:event"
         const val EXTRA_SUBJECT = "extra:subject"
-
-        private const val REQUEST_CODE_EXPORT = 58
-        private const val REQUEST_CODE_IMPORT = 57
     }
 }

@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.event.editor
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,8 @@ import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -149,13 +149,13 @@ class EventEditorViewModel @Inject constructor(
         schedules = scheduleDao.fetchUsingID(id)
     }
 
-    fun insert() = viewModelScope.launch {
+    fun insert() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getEvent()?.let {
             repository.insert(it)
         }
     }
 
-    fun update() = viewModelScope.launch {
+    fun update() = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         getEvent()?.let {
             repository.update(it)
         }

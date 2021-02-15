@@ -19,7 +19,6 @@ class FileImporterService: BaseService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        android.util.Log.e("DEBUG", "service")
         when (intent?.action) {
             ACTION_START -> {
                 targetDirectory = File(getExternalFilesDir(null),

@@ -1,11 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
-import android.content.Context
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
@@ -13,8 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
     private val repository: EventRepository
 ) : ViewModel() {
 
@@ -47,22 +44,16 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun insert(event: Event) = viewModelScope.launch {
+    fun insert(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.insert(event)
-
-        EventWidgetProvider.triggerRefresh(context)
     }
 
-    fun remove(event: Event) = viewModelScope.launch {
+    fun remove(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.remove(event)
-
-        EventWidgetProvider.triggerRefresh(context)
     }
 
-    fun update(event: Event) = viewModelScope.launch {
+    fun update(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.update(event)
-
-        EventWidgetProvider.triggerRefresh(context)
     }
 
 }

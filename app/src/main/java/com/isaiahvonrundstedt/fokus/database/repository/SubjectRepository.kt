@@ -34,8 +34,12 @@ class SubjectRepository @Inject constructor(
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule>) {
         subjects.insert(subject)
-        if (scheduleList.isNotEmpty())
-            scheduleList.forEach { schedules.insert(it) }
+        android.util.Log.e("DEBUG", "repo")
+        android.util.Log.e("DEBUG", scheduleList.size.toString())
+        scheduleList.forEach {
+            android.util.Log.e("DEBUG", it.toString())
+            schedules.insert(it)
+        }
 
         SubjectWidgetProvider.triggerRefresh(context)
 

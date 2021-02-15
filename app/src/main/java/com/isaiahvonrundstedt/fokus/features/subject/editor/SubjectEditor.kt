@@ -227,7 +227,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when(requestKey) {
             ShareOptionsSheet.REQUEST_KEY -> {
-                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION)?.also {
+                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
                     triggerSystemSharingComponent(it)
                 }
             }
@@ -319,6 +319,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 if (binding.codeTextInput.text.isNullOrEmpty() ||
                     binding.descriptionTextInput.text.isNullOrEmpty()
                     || scheduleAdapter.itemCount < 1) {
+
                     MaterialDialog(requireContext()).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)

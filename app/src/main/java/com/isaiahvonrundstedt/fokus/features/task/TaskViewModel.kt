@@ -9,13 +9,13 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
-    @ApplicationContext
-    private val context: Context,
     private val repository: TaskRepository,
     private val preferenceManager: PreferenceManager
 ) : ViewModel() {
@@ -57,22 +57,16 @@ class TaskViewModel @Inject constructor(
         }
     }
 
-    fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
+    fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.insert(task, attachmentList)
-
-        TaskWidgetProvider.triggerRefresh(context)
     }
 
-    fun remove(task: Task) = viewModelScope.launch {
+    fun remove(task: Task) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.remove(task)
-
-        TaskWidgetProvider.triggerRefresh(context)
     }
 
-    fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch {
+    fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.update(task, attachmentList)
-
-        TaskWidgetProvider.triggerRefresh(context)
     }
 
     private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)

@@ -1,7 +1,13 @@
 package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 
+import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsetsController
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.NavController

@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
@@ -85,6 +86,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = getTransition()
+        sharedElementReturnTransition = getTransition()
 
         subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -98,13 +101,12 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
 
         attachmentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val service = Intent(context, FileImporterService::class.java).apply {
+                context?.startService(Intent(context, FileImporterService::class.java).apply {
                     action = FileImporterService.ACTION_START
                     data = it.data?.data
                     putExtra(FileImporterService.EXTRA_DIRECTORY,
                         Streamable.DIRECTORY_ATTACHMENTS)
-                }
-                context?.startService(service)
+                })
             }
         }
 
@@ -127,7 +129,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         _binding = EditorTaskBinding.inflate(inflater, container, false)
@@ -136,15 +137,10 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.root.transitionName = TRANSITION_ELEMENT_ROOT
-        controller = Navigation.findNavController(view)
+        binding.coordinator.transitionName = TRANSITION_ELEMENT_ROOT
+        postponeEnterTransition()
 
-        with(binding.appBarLayout.toolbar) {
-            inflateMenu(R.menu.menu_editor)
-            setNavigationOnClickListener { controller?.navigateUp() }
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
-            setOnMenuItemClickListener(::onMenuItemClicked)
-        }
+        controller = Navigation.findNavController(view)
 
         arguments?.getBundle(EXTRA_TASK)?.also {
             requestKey = REQUEST_KEY_UPDATE
@@ -161,8 +157,12 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             viewModel.setSubject(Subject.fromBundle(it))
         }
 
-        sharedElementEnterTransition = getTransition()
-        sharedElementReturnTransition = getTransition()
+        with(binding.appBarLayout.toolbar) {
+            inflateMenu(R.menu.menu_editor)
+            setNavigationOnClickListener { controller?.navigateUp() }
+            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            setOnMenuItemClickListener(::onMenuItemClicked)
+        }
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
@@ -173,6 +173,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             arrayOf(ShareOptionsSheet.REQUEST_KEY,
                 SchedulePickerSheet.REQUEST_KEY,
                 AttachmentOptionSheet.REQUEST_KEY), this)
+
+        view.doOnLayout { startPostponedEnterTransition() }
     }
 
     private val dialogView: View by lazy {
@@ -192,7 +194,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                     binding.notesTextInput.setText(notes)
                     binding.prioritySwitch.isChecked = isImportant
                     binding.statusSwitch.isChecked = isFinished
-                    binding.removeDueDateButton.isVisible = dueDate == null
+                    binding.removeDueDateButton.isVisible = it.hasDueDate()
 
                     if (it.hasDueDate()) {
                         binding.dueDateTextView.text = formatDueDate(requireContext())
@@ -213,7 +215,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             binding.removeButton.isVisible = it != null
             binding.dateTimeRadioGroup.isVisible = it != null
             binding.dueDateTextView.isVisible = it == null
-            binding.removeDueDateButton.isVisible = it == null && viewModel.getDueDate() == null
+            binding.removeDueDateButton.isVisible = it == null && viewModel.getDueDate() != null
 
             if (it != null) {
                 with(binding.subjectTextView) {
@@ -223,7 +225,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                         R.drawable.shape_color_holder)?.let { shape -> it.tintDrawable(shape) })
                 }
 
-                if (viewModel.getDueDate() == null) {
+                if (viewModel.getDueDate() != null) {
                     with(binding.customDateTimeRadio) {
                         isChecked = true
                         titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
@@ -237,7 +239,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                     removeCompoundDrawableAtStart()
                 }
 
-                if (viewModel.getDueDate() == null) {
+                if (viewModel.getDueDate() != null) {
                     with(binding.dueDateTextView) {
                         text = viewModel.getTask()?.formatDueDate(context)
                         setTextColorFromResource(R.color.color_primary_text)
@@ -247,6 +249,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {
+            hideKeyboardFromCurrentFocus(requireView())
+
             AttachmentOptionSheet
                 .show(childFragmentManager)
         }
@@ -322,6 +326,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
 
         binding.pickDateTimeRadio.setOnClickListener {
+            hideKeyboardFromCurrentFocus(requireView())
+
             SchedulePickerSheet
                 .show(viewModel.schedules, childFragmentManager)
         }
@@ -470,6 +476,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
+                hideKeyboardFromCurrentFocus(requireView())
+
                 ShareOptionsSheet(childFragmentManager)
                     .show()
             }

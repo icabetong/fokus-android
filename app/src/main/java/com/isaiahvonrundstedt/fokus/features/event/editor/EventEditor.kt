@@ -234,6 +234,8 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         }
 
         binding.pickDateTimeRadio.setOnClickListener {
+            hideKeyboardFromCurrentFocus(requireView())
+
             SchedulePickerSheet
                 .show(viewModel.schedules, childFragmentManager)
         }
@@ -364,6 +366,8 @@ class EventEditor: BaseEditor(), FragmentResultListener {
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
+                hideKeyboardFromCurrentFocus(requireView())
+
                 ShareOptionsSheet(childFragmentManager)
                     .show()
             }

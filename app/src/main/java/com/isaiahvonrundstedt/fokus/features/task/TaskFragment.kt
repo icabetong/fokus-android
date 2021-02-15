@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.content.Context
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
@@ -11,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -53,7 +53,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        sharedElementEnterTransition = getTransition()
+        sharedElementReturnTransition = getTransition()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +65,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
 
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
@@ -77,12 +80,18 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             adapter = taskAdapter
         }
 
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         ItemTouchHelper(ItemSwipeCallback(requireContext(), taskAdapter))
             .attachToRecyclerView(binding.recyclerView)
 
-        viewModel.tasks.observe(viewLifecycleOwner) { taskAdapter.submitList(it) }
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            taskAdapter.submitList(it)
+            binding.recyclerView.doOnPreDraw { startPostponedEnterTransition() }
+        }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
-            when(viewModel.filterOption) {
+            when (viewModel.filterOption) {
                 TaskViewModel.Constraint.ALL -> {
                     binding.emptyViewPendingTasks.isVisible = it
                     binding.emptyViewFinishedTasks.isVisible = false
@@ -97,6 +106,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 }
             }
         }
+
+
     }
 
     override fun onStart() {
@@ -129,8 +140,6 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            it.transitionName = TRANSITION_ELEMENT_ROOT
-
             controller?.navigate(R.id.action_to_navigation_editor_task, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
         }
@@ -175,6 +184,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 // and wait for the result.
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     val transitionName = TRANSITION_ELEMENT_ROOT + t.task.taskID
+
                     val args = bundleOf(
                         TaskEditor.EXTRA_TASK to Task.toBundle(t.task),
                         TaskEditor.EXTRA_ATTACHMENTS to t.attachments,

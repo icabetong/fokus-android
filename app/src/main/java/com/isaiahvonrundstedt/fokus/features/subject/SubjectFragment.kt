@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -46,6 +47,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
             buildOptionsMenu(menu)
@@ -59,14 +62,15 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         }
 
         postponeEnterTransition()
-        binding.recyclerView.post { startPostponedEnterTransition() }
-        binding.actionButton.post { startPostponedEnterTransition() }
+        binding.recyclerView.doOnPreDraw { startPostponedEnterTransition() }
 
         ItemTouchHelper(ItemSwipeCallback(requireContext(), subjectAdapter))
             .attachToRecyclerView(binding.recyclerView)
 
         subjectAdapter.constraint = viewModel.constraint
-        viewModel.subjects.observe(viewLifecycleOwner) { subjectAdapter.submitList(it) }
+        viewModel.subjects.observe(viewLifecycleOwner) {
+            subjectAdapter.submitList(it)
+        }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when(viewModel.constraint) {
                 SubjectViewModel.Constraint.ALL -> {
@@ -99,8 +103,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            it.transitionName = TRANSITION_ELEMENT_ROOT
-
             controller?.navigate(R.id.action_to_navigation_editor_subject, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
         }
@@ -222,7 +224,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 setOnMenuItemClickListener {
                     viewModel.constraint = SubjectViewModel.Constraint.ALL
                     subjectAdapter.constraint = viewModel.constraint
-                    activityToolbar?.setTitle(getToolbarTitle())
+                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
                     true
                 }
             }
@@ -231,7 +233,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 setOnMenuItemClickListener {
                     viewModel.constraint = SubjectViewModel.Constraint.TODAY
                     subjectAdapter.constraint = viewModel.constraint
-                    activityToolbar?.setTitle(getToolbarTitle())
+                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
                     true
                 }
             }
@@ -240,7 +242,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 setOnMenuItemClickListener {
                     viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
                     subjectAdapter.constraint = viewModel.constraint
-                    activityToolbar?.setTitle(getToolbarTitle())
+                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
                     true
                 }
             }

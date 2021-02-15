@@ -66,22 +66,20 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appBarLayout.toolbar.title = viewModel.currentMonth.format(monthYearFormatter)
-        binding.appBarLayout.toolbar.overrideOverflowMenu { context, anchor ->
-            CascadePopupMenu(context, anchor).apply {
-                menu.add("test")
-                show()
-            }
-        }
+        binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
 
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
+        with(binding.appBarLayout.toolbar) {
+            title = viewModel.currentMonth.format(monthYearFormatter)
+        }
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = eventAdapter
         }
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         daysOfWeek = daysOfWeekFromLocale()
         binding.calendarView.apply {

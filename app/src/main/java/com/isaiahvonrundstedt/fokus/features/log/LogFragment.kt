@@ -43,12 +43,7 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
             setTitle(R.string.activity_logs)
             inflateMenu(R.menu.menu_logs)
             overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
-            setOnMenuItemClickListener {
-                when(it.itemId) {
-                    R.id.action_clear_items -> viewModel.removeLogs()
-                }
-                true
-            }
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         setupNavigation(binding.appBarLayout.toolbar, controller)
@@ -88,4 +83,15 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_clear_items -> viewModel.removeLogs()
+        }
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

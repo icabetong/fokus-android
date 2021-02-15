@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.isaiahvonrundstedt.fokus.R
@@ -43,8 +44,8 @@ abstract class BaseEditor: BaseFragment() {
                 ContextCompat.getColor(requireContext(), R.color.color_status_background)
             else Color.BLACK
 
-            navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                ContextCompat.getColor(requireContext(), R.color.color_status_background)
+            navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
+                ContextCompat.getColor(requireContext(), R.color.color_navigation_background)
             else Color.BLACK
         }
     }
@@ -85,18 +86,6 @@ abstract class BaseEditor: BaseFragment() {
                     systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
                 }
             } else return
-        }
-    }
-
-    fun getTransition(@IdRes id: Int = R.id.navigationHostFragment): MaterialContainerTransform {
-        return MaterialContainerTransform().apply {
-            drawingViewId = id
-            duration = TRANSITION_DURATION
-            scrimColor = Color.TRANSPARENT
-            fadeMode = MaterialContainerTransform.FADE_MODE_IN
-            interpolator = DecelerateInterpolator()
-            setAllContainerColors(MaterialColors.getColor(requireContext(), R.attr.colorSurface,
-                ContextCompat.getColor(requireContext(), R.color.color_surface)))
         }
     }
 

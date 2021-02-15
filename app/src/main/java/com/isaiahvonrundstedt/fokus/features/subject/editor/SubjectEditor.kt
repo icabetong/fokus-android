@@ -10,11 +10,13 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -64,6 +66,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = getTransition()
+        sharedElementReturnTransition = getTransition()
 
         importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -116,13 +120,13 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             viewModel.setSchedules(it)
         }
 
-        sharedElementEnterTransition = getTransition()
-        sharedElementReturnTransition = getTransition()
-
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
             adapter = scheduleAdapter
         }
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         registerForFragmentResult(arrayOf(
                 ShareOptionsSheet.REQUEST_KEY,
@@ -156,6 +160,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {
+            hideKeyboardFromCurrentFocus(requireView())
+
             ScheduleEditor(childFragmentManager).show {
                 arguments = bundleOf(
                     ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID()
@@ -254,6 +260,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_options -> {
+                hideKeyboardFromCurrentFocus(requireView())
                 ShareOptionsSheet(childFragmentManager)
                     .show()
             }

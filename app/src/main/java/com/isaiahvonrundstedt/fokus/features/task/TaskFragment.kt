@@ -34,8 +34,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_task.*
-import me.saket.cascade.CascadePopupMenu
-import me.saket.cascade.overrideAllPopupMenus
 import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -71,7 +69,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
             buildOptionsMenu(menu)
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
         }
 
         with(binding.recyclerView) {

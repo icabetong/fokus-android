@@ -20,6 +20,7 @@ import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
+import me.saket.cascade.CascadePopupMenu
 
 abstract class BaseFragment : Fragment() {
 
@@ -93,6 +94,14 @@ abstract class BaseFragment : Fragment() {
             setAllContainerColors(MaterialColors.getColor(requireContext(), R.attr.colorSurface,
                 ContextCompat.getColor(requireContext(), R.color.color_surface)))
     }
+
+    fun customPopupProvider(context: Context, anchor: View) =
+        CascadePopupMenu(context, anchor,
+            styler = CascadePopupMenu.Styler(
+                background = {
+                    ContextCompat.getDrawable(requireContext(), R.drawable.shape_cascade_background)
+                }
+            ))
 
     companion object {
         const val TRANSITION_DURATION = 300L

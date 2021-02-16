@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.transition.MaterialElevationScale
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -24,7 +25,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupMenu
 import me.saket.cascade.overrideOverflowMenu
 
 @AndroidEntryPoint
@@ -48,11 +48,13 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         super.onViewCreated(view, savedInstanceState)
 
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
             buildOptionsMenu(menu)
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
         }
 
         with(binding.recyclerView) {
@@ -60,9 +62,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
             layoutManager = LinearLayoutManager(context)
             adapter = subjectAdapter
         }
-
-        postponeEnterTransition()
-        binding.recyclerView.doOnPreDraw { startPostponedEnterTransition() }
 
         ItemTouchHelper(ItemSwipeCallback(requireContext(), subjectAdapter))
             .attachToRecyclerView(binding.recyclerView)
@@ -101,6 +100,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onResume() {
         super.onResume()
+
 
         binding.actionButton.setOnClickListener {
             controller?.navigate(R.id.action_to_navigation_editor_subject, null, null,

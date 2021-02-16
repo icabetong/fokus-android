@@ -60,7 +60,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivit
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupMenu
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 import java.time.ZonedDateTime
@@ -122,10 +121,12 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
 
         importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            context?.startService(Intent(context, DataImporterService::class.java).apply {
-                this.data = it.data?.data
-                action = DataImporterService.ACTION_IMPORT_TASK
-            })
+            if (it.resultCode == Activity.RESULT_OK) {
+                context?.startService(Intent(context, DataImporterService::class.java).apply {
+                    this.data = it.data?.data
+                    action = DataImporterService.ACTION_IMPORT_TASK
+                })
+            }
         }
     }
 
@@ -160,7 +161,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
             setNavigationOnClickListener { controller?.navigateUp() }
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
@@ -377,6 +378,12 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
     private fun triggerSystemFilePickerForAttachment() {
         attachmentLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT)
             .setType("*/*"))
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        hideKeyboardFromCurrentFocus(requireView())
     }
 
     override fun onDestroy() {

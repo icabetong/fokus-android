@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,7 +46,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupMenu
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 
@@ -104,7 +102,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
             setNavigationOnClickListener { controller?.navigateUp() }
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
@@ -124,9 +122,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             layoutManager = LinearLayoutManager(context)
             adapter = scheduleAdapter
         }
-
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
 
         registerForFragmentResult(arrayOf(
                 ShareOptionsSheet.REQUEST_KEY,
@@ -235,6 +230,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        hideKeyboardFromCurrentFocus(requireView())
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {

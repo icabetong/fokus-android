@@ -7,12 +7,7 @@ import android.view.View
 import android.view.WindowInsetsController
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import com.google.android.material.color.MaterialColors
-import com.google.android.material.transition.MaterialContainerTransform
 import com.isaiahvonrundstedt.fokus.R
 
 abstract class BaseEditor: BaseFragment() {

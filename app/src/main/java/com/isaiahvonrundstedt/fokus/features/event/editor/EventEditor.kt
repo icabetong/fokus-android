@@ -48,7 +48,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupMenu
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 import java.time.ZoneId
@@ -69,6 +68,8 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = getTransition()
+        sharedElementReturnTransition = getTransition()
 
         subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
@@ -109,7 +110,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
             setNavigationOnClickListener { controller?.navigateUp() }
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
@@ -125,8 +126,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             viewModel.setSubject(Subject.fromBundle(it))
         }
 
-        sharedElementEnterTransition = getTransition()
-        sharedElementReturnTransition = getTransition()
 
         registerForFragmentResult(arrayOf(
             ShareOptionsSheet.REQUEST_KEY,
@@ -311,6 +310,12 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        hideKeyboardFromCurrentFocus(requireView())
     }
 
     override fun onDestroy() {

@@ -291,7 +291,7 @@
     <string name="notification_restore_success">Herstel Voltooid</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">Toevoegen als bijlage</string>
+    <string name="sharing_attach_to_task">Toevoegen als bijlage</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Goedendag!</string>

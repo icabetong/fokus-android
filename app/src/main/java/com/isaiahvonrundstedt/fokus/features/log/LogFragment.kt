@@ -70,8 +70,8 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     override fun onStart() {
         super.onStart()
 
-        viewModel.logs.observe(this) { logAdapter.submitList(it) }
-        viewModel.isEmpty.observe(this) { binding.emptyView.isVisible = it }
+        viewModel.logs.observe(viewLifecycleOwner) { logAdapter.submitList(it) }
+        viewModel.isEmpty.observe(viewLifecycleOwner) { binding.emptyView.isVisible = it }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,

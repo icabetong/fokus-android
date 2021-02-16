@@ -291,7 +291,7 @@
     <string name="notification_restore_success">Restauracion completada</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">Agregar como adjunto</string>
+    <string name="sharing_attach_to_task">Agregar como adjunto</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Buen dia!</string>

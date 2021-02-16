@@ -68,8 +68,8 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = getTransition()
-        sharedElementReturnTransition = getTransition()
+        sharedElementEnterTransition = buildContainerTransform()
+        sharedElementReturnTransition = buildContainerTransform()
 
         subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
@@ -260,6 +260,9 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         }
 
         binding.actionButton.setOnClickListener {
+            viewModel.setName(binding.eventNameTextInput.text.toString())
+            viewModel.setLocation(binding.locationTextInput.text.toString())
+
             // Conditions to check if the fields are null or blank
             // then if resulted true, show a feedback then direct
             // user focus to the field and stop code execution.

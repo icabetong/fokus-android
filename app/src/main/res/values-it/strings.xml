@@ -289,7 +289,7 @@
     <string name="notification_restore_success">Ripristino completato</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">Aggiungi come allegato</string>
+    <string name="sharing_attach_to_task">Aggiungi come allegato</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Buona giornata!</string>

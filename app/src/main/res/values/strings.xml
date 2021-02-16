@@ -35,7 +35,6 @@
     <string name="navigation_subjects">Subjects</string>
     <string name="navigation_home">Home</string>
     <string name="navigation_archived">Archived</string>
-    <string name="navigation_tags">Tags</string>
     <string name="navigation_logs">Logs</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>
@@ -153,7 +152,7 @@
     <string name="field_location">Location</string>
     <string name="field_attachments">Attachments</string>
     <string name="field_class_time">Class Time</string>
-    <string name="field_color">Color</string>
+    <string name="field_color">Color Tag</string>
     <string name="field_priority">Priority</string>
     <string name="field_status">Status</string>
     <string name="field_not_set">Not Set</string>
@@ -161,7 +160,6 @@
     <string name="field_due_pick_from_schedule">Pick from class schedule</string>
     <string name="field_due_custom">Custom</string>
     <string name="field_attachment_name">Attachment name</string>
-    <string name="field_tag_name">Tag name</string>
 
     <string name="hint_subject_description">The name of the subject</string>
     <string name="hint_task_notes">Some ideas or minor details about the task</string>
@@ -302,8 +300,8 @@
     <string name="notification_restore_error">Restore Failed</string>
     <string name="notification_restore_success">Restore Completed</string>
 
-    <!-- System -->
-    <string name="intent_add_as_attachment">Add as Attachment</string>
+    <!-- Sharing -->
+    <string name="sharing_attach_to_task">Attach to Task</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Good day!</string>

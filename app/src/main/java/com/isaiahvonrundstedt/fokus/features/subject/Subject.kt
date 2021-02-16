@@ -79,9 +79,7 @@ data class Subject @JvmOverloads constructor(
 
             fun convertColorToTag(int: Int): Tag? = colors[int]
 
-            fun getColors(): IntArray {
-                return colors.keys.toIntArray()
-            }
+            fun getColors(): IntArray = colors.keys.toIntArray()
         }
     }
 

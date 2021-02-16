@@ -291,7 +291,7 @@
     <string name="notification_restore_success">اكتملت الاستعادة</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">أضف كمرفق</string>
+    <string name="sharing_attach_to_task">أضف كمرفق</string>
 
     <!-- Greetings -->
     <string name="greeting_default">يوم جيد</string>

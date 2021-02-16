@@ -289,7 +289,7 @@
     <string name="notification_restore_success">Wiederherstellung abgeschlossen</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">Als Anlage hinzufügen</string>
+    <string name="sharing_attach_to_task">Als Anlage hinzufügen</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Guten tag!</string>

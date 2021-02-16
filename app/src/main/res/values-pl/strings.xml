@@ -290,7 +290,7 @@
     <string name="notification_restore_success">Przywrócony Ukończony</string>
 
     <!-- System -->
-    <string name="intent_add_as_attachment">Dodaj jako załącznik</string>
+    <string name="sharing_attach_to_task">Dodaj jako załącznik</string>
 
     <!-- Greetings -->
     <string name="greeting_default">Dobry dzień!</string>

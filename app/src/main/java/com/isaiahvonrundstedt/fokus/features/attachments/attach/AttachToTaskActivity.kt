@@ -7,23 +7,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
-import com.isaiahvonrundstedt.fokus.databinding.ActivitySendAttachmentBinding
+import com.isaiahvonrundstedt.fokus.databinding.ActivityAttachToTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AttachToTaskActivity: BaseActivity(), AttachToTaskAdapter.AttachmentListener {
-    private lateinit var binding: ActivitySendAttachmentBinding
+    private lateinit var binding: ActivityAttachToTaskBinding
 
     private val sendAdapter = AttachToTaskAdapter(this)
     private val viewModel: AttachToTaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySendAttachmentBinding.inflate(layoutInflater)
+        binding = ActivityAttachToTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.intent_add_as_attachment)
+        setToolbarTitle(R.string.sharing_attach_to_task)
 
         intent?.also {
             viewModel.subject = it.getStringExtra(Intent.EXTRA_SUBJECT)

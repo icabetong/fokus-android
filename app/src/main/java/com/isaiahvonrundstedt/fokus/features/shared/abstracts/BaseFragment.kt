@@ -84,7 +84,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun getTransition(@IdRes id: Int = R.id.navigationHostFragment) =
+    fun buildContainerTransform(@IdRes id: Int = R.id.navigationHostFragment) =
         MaterialContainerTransform().apply {
             drawingViewId = id
             duration = TRANSITION_DURATION

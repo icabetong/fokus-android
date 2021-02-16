@@ -69,7 +69,7 @@
         <activity android:name=".features.about.LibrariesActivity" />
 
         <activity android:name=".features.attachments.attach.AttachToTaskActivity">
-            <intent-filter android:label="@string/intent_add_as_attachment">
+            <intent-filter android:label="@string/sharing_attach_to_task">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>

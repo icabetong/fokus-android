@@ -51,8 +51,8 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = getTransition()
-        sharedElementReturnTransition = getTransition()
+        sharedElementEnterTransition = buildContainerTransform()
+        sharedElementReturnTransition = buildContainerTransform()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -32,7 +32,6 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTime
@@ -170,8 +169,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
             adapter = attachmentAdapter
         }
 
-        registerForFragmentResult(
-            arrayOf(ShareOptionsSheet.REQUEST_KEY,
+        registerForFragmentResult(arrayOf(
                 SchedulePickerSheet.REQUEST_KEY,
                 AttachmentOptionSheet.REQUEST_KEY), this)
 
@@ -418,7 +416,8 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                             attachment.name = file?.name
                             viewModel.addAttachment(attachment)
 
-                            binding.appBarLayout.toolbar.menu?.findItem(R.id.action_share_options)?.isVisible = !viewModel.hasFileAttachment()
+                            binding.appBarLayout.toolbar
+                                .menu?.findItem(R.id.action_share_options)?.isVisible = !viewModel.hasFileAttachment()
                         }
                     }
                     FileImporterService.BROADCAST_IMPORT_FAILED -> {
@@ -482,11 +481,45 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share_options -> {
-                hideKeyboardFromCurrentFocus(requireView())
+            R.id.action_export -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
 
-                ShareOptionsSheet(childFragmentManager)
-                    .show()
+                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, fileName)
+                    type = Streamable.MIME_TYPE_ZIP
+                }
+
+                exportLauncher.launch(exportIntent)
+            }
+            R.id.action_share -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
+
+                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                    action = DataExporterService.ACTION_EXPORT_TASK
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getTask())
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                        viewModel.getAttachments())
+                }
+
+                context?.startService(serviceIntent)
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -501,11 +534,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when(requestKey) {
-            ShareOptionsSheet.REQUEST_KEY -> {
-                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
-                    triggerSystemSharingComponent(it)
-                }
-            }
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)
@@ -667,41 +695,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                 viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
             }
             else -> null
-        }
-    }
-
-    private fun triggerSystemSharingComponent(option: Int) {
-        val fileName = getSharingName()
-        if (fileName == null) {
-            MaterialDialog(requireContext()).show {
-                title(R.string.feedback_unable_to_share_title)
-                message(R.string.feedback_unable_to_share_message)
-                positiveButton(R.string.button_done) { dismiss() }
-            }
-            return
-        }
-
-        when(option) {
-            R.id.action_export -> {
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    putExtra(Intent.EXTRA_TITLE, fileName)
-                    type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(exportIntent)
-            }
-            R.id.action_share -> {
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
-                    action = DataExporterService.ACTION_EXPORT_TASK
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getTask())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
-                        viewModel.getAttachments())
-                }
-
-                context?.startService(serviceIntent)
-            }
         }
     }
 

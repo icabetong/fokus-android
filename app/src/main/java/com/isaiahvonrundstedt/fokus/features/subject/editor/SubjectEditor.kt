@@ -27,7 +27,6 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
@@ -122,8 +121,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             adapter = scheduleAdapter
         }
 
-        registerForFragmentResult(arrayOf(
-                ShareOptionsSheet.REQUEST_KEY,
+        registerForFragmentResult(
+            arrayOf(
                 ScheduleEditor.REQUEST_KEY_INSERT,
                 ScheduleEditor.REQUEST_KEY_UPDATE
             ), this)
@@ -239,11 +238,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when(requestKey) {
-            ShareOptionsSheet.REQUEST_KEY -> {
-                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
-                    triggerSystemSharingComponent(it)
-                }
-            }
             ScheduleEditor.REQUEST_KEY_INSERT -> {
                 result.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
                     viewModel.addSchedule(it)
@@ -259,10 +253,47 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share_options -> {
-                hideKeyboardFromCurrentFocus(requireView())
-                ShareOptionsSheet(childFragmentManager)
-                    .show()
+            R.id.action_export -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
+
+                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, fileName)
+                    type = Streamable.MIME_TYPE_ZIP
+                }
+
+                exportLauncher.launch(exportIntent)
+            }
+            R.id.action_share -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
+
+                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                    action = DataExporterService.ACTION_EXPORT_SUBJECT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getSubject())
+                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                        viewModel.getSchedules())
+                }
+
+                context?.startService(serviceIntent)
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -326,24 +357,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_share_options -> {
-                ShareOptionsSheet(childFragmentManager)
-                    .show()
-            }
-            R.id.action_import -> {
-                val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                    type = Streamable.MIME_TYPE_ZIP
-                }, getString(R.string.dialog_select_file_import))
-
-                importLauncher.launch(chooser)
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
     private fun getSharingName(): String? {
         return when (requestKey) {
             REQUEST_KEY_INSERT -> {
@@ -364,32 +377,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 viewModel.getCode() ?: Streamable.ARCHIVE_NAME_GENERIC
             }
             else -> null
-        }
-    }
-
-    private fun triggerSystemSharingComponent(option: Int) {
-        val fileName = getSharingName()
-        when (option) {
-            R.id.action_export -> {
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    putExtra(Intent.EXTRA_TITLE, fileName)
-                    type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(exportIntent)
-            }
-            R.id.action_share -> {
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
-                    action = DataExporterService.ACTION_EXPORT_SUBJECT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getSubject())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
-                        viewModel.getSchedules())
-                }
-
-                context?.startService(serviceIntent)
-            }
         }
     }
 

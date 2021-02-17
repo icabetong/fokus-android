@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
-import com.isaiahvonrundstedt.fokus.databinding.ActivitySubjectPickerBinding
+import com.isaiahvonrundstedt.fokus.databinding.ActivityPickerSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -19,15 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SubjectPickerActivity: BaseActivity(), BaseAdapter.ActionListener {
-
-    private lateinit var binding: ActivitySubjectPickerBinding
+    private lateinit var binding: ActivityPickerSubjectBinding
 
     private val pickerAdapter = SubjectPickerAdapter(this)
     private val viewModel: SubjectPickerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySubjectPickerBinding.inflate(layoutInflater)
+        binding = ActivityPickerSubjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setPersistentActionBar(binding.appBarLayout.toolbar)
         setToolbarTitle(R.string.dialog_assign_subject)

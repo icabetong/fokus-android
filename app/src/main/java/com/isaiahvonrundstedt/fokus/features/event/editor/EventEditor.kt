@@ -26,7 +26,6 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.ShareOptionsSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
@@ -126,9 +125,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             viewModel.setSubject(Subject.fromBundle(it))
         }
 
-
         registerForFragmentResult(arrayOf(
-            ShareOptionsSheet.REQUEST_KEY,
             SchedulePickerSheet.REQUEST_KEY), this)
     }
 
@@ -296,11 +293,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when(requestKey) {
-            ShareOptionsSheet.REQUEST_KEY -> {
-                result.getInt(ShareOptionsSheet.EXTRA_SHARE_OPTION).also {
-                    triggerSystemSharingComponent(it)
-                }
-            }
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)
@@ -373,11 +365,45 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share_options -> {
-                hideKeyboardFromCurrentFocus(requireView())
+            R.id.action_export -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
 
-                ShareOptionsSheet(childFragmentManager)
-                    .show()
+                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    putExtra(Intent.EXTRA_TITLE, fileName)
+                    type = Streamable.MIME_TYPE_ZIP
+                }
+
+                exportLauncher.launch(export)
+            }
+            R.id.action_share -> {
+                val fileName = getSharingName()
+                if (fileName == null) {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(R.string.feedback_unable_to_share_title)
+                        message(R.string.feedback_unable_to_share_message)
+                        positiveButton(R.string.button_done) { dismiss() }
+                    }
+                    return false
+                }
+
+                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                    action = DataExporterService.ACTION_EXPORT_EVENT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getEvent())
+                }
+
+                context?.startService(serviceIntent)
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -425,30 +451,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                 viewModel.getName() ?: Streamable.ARCHIVE_NAME_GENERIC
             }
             else -> null
-        }
-    }
-
-    private fun triggerSystemSharingComponent(option: Int) {
-        val fileName = getSharingName()
-        when (option) {
-            R.id.action_export -> {
-                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                    addCategory(Intent.CATEGORY_OPENABLE)
-                    putExtra(Intent.EXTRA_TITLE, fileName)
-                    type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(export)
-            }
-            R.id.action_share -> {
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
-                    action = DataExporterService.ACTION_EXPORT_EVENT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getEvent())
-                }
-
-                context?.startService(serviceIntent)
-            }
         }
     }
 

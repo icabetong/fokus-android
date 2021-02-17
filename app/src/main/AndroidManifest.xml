@@ -75,6 +75,8 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
+        <activity android:name=".features.subject.picker.SubjectPickerFragment" />
+        <activity android:name=".features.subject.editor.SubjectEditorContainer" />
         <activity android:name=".features.subject.picker.SubjectPickerActivity" />
 
         <service android:name=".components.service.NotificationActionService"

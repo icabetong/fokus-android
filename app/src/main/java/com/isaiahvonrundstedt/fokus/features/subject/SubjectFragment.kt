@@ -56,6 +56,9 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
             inflateMenu(R.menu.menu_subjects)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
+
+            menu.findItem(R.id.action_sort_schedule)
+                ?.isVisible = viewModel.constraint != SubjectViewModel.Constraint.ALL
         }
 
         with(binding.recyclerView) {
@@ -101,7 +104,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onResume() {
         super.onResume()
-
 
         binding.actionButton.setOnClickListener {
             controller?.navigate(R.id.action_to_navigation_editor_subject, null, null,

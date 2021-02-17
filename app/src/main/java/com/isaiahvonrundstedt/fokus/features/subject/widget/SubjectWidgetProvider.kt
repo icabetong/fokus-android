@@ -9,6 +9,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorContainer
 
 class SubjectWidgetProvider : AppWidgetProvider() {
 
@@ -43,9 +44,13 @@ class SubjectWidgetProvider : AppWidgetProvider() {
                 action = MainActivity.ACTION_WIDGET_SUBJECT
             }, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val addIntent = PendingIntent.getActivity(context, 0,
+            Intent(context, SubjectEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+
         val views = RemoteViews(context?.packageName, R.layout.layout_widget_subjects)
         with(views) {
             setOnClickPendingIntent(R.id.rootView, mainIntent)
+            setOnClickPendingIntent(R.id.actionButton, addIntent)
             setRemoteAdapter(R.id.listView, Intent(context, SubjectWidgetService::class.java))
             setPendingIntentTemplate(R.id.listView, itemIntent)
             setEmptyView(R.id.listView, R.id.emptyView)

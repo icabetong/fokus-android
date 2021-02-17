@@ -11,7 +11,7 @@
         android:shortcutShortLabel="@string/shortcut_add_task">
         <intent
             android:action="action:shortcut:task"
-            android:targetClass="com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorContainer"
             android:targetPackage="com.isaiahvonrundstedt.fokus"/>
     </shortcut>
 
@@ -22,7 +22,7 @@
         android:shortcutShortLabel="@string/shortcut_add_event">
         <intent
             android:action="action:shortcut:event"
-            android:targetClass="com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorContainer"
             android:targetPackage="com.isaiahvonrundstedt.fokus"/>
     </shortcut>
 
@@ -33,7 +33,7 @@
         android:shortcutShortLabel="@string/shortcut_add_subject">
         <intent
             android:action="action:shortcut:subject"
-            android:targetClass="com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity"
+            android:targetClass="com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorContainer"
             android:targetPackage="com.isaiahvonrundstedt.fokus"/>
     </shortcut>
 

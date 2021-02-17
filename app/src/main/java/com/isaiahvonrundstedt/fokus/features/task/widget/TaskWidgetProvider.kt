@@ -9,6 +9,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorContainer
 
 class TaskWidgetProvider : AppWidgetProvider() {
 
@@ -44,12 +45,16 @@ class TaskWidgetProvider : AppWidgetProvider() {
                 action = MainActivity.ACTION_WIDGET_TASK
             }, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val addIntent = PendingIntent.getActivity(context, 0,
+            Intent(context, TaskEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+
         val views = RemoteViews(context?.packageName, R.layout.layout_widget_tasks)
         with(views) {
             setOnClickPendingIntent(R.id.rootView, mainIntent)
             setRemoteAdapter(R.id.listView, Intent(context, TaskWidgetService::class.java))
             setPendingIntentTemplate(R.id.listView, itemIntent)
             setEmptyView(R.id.listView, R.id.emptyView)
+            setOnClickPendingIntent(R.id.actionButton, addIntent)
         }
 
         manager?.notifyAppWidgetViewDataChanged(id, R.id.listView)

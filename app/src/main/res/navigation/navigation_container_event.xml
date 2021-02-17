@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_container_event"
+    app:startDestination="@id/navigation_editor_event">
+
+    <fragment
+        android:id="@+id/navigation_editor_event"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor"
+        tools:layout="@layout/editor_task"/>
+
+</navigation>

@@ -9,6 +9,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.core.activities.MainActivity
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorContainer
 
 class EventWidgetProvider : AppWidgetProvider() {
 
@@ -43,9 +44,13 @@ class EventWidgetProvider : AppWidgetProvider() {
                 action = MainActivity.ACTION_WIDGET_EVENT
             }, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val addIntent = PendingIntent.getActivity(context, 0,
+            Intent(context, EventEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+
         val views = RemoteViews(context?.packageName, R.layout.layout_widget_events)
         with(views) {
             setOnClickPendingIntent(R.id.rootView, mainIntent)
+            setOnClickPendingIntent(R.id.actionButton, addIntent)
             setRemoteAdapter(R.id.listView, Intent(context, EventWidgetService::class.java))
             setPendingIntentTemplate(R.id.listView, itemIntent)
             setEmptyView(R.id.listView, R.id.emptyView)

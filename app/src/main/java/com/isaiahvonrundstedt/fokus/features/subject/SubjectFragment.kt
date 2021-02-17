@@ -53,8 +53,9 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
-            buildOptionsMenu(menu)
+            inflateMenu(R.menu.menu_subjects)
             overrideOverflowMenu(::customPopupProvider)
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         with(binding.recyclerView) {
@@ -148,105 +149,58 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         }
     }
 
-    private fun buildOptionsMenu(menu: Menu) {
-        menu.addSubMenu(R.string.menu_sort).also {
-            it.setIcon(R.drawable.ic_hero_sort_ascending_24)
-
-            it.addSubMenu(R.string.field_subject_code).apply {
-                setIcon(R.drawable.ic_hero_hashtag_24)
-
-                add(R.string.sorting_directions_ascending).apply {
-                    setIcon(R.drawable.ic_hero_sort_ascending_24)
-                    setOnMenuItemClickListener {
-                        viewModel.sort = SubjectViewModel.Sort.CODE
-                        viewModel.direction = SortDirection.ASCENDING
-                        true
-                    }
-                }
-                add(R.string.sorting_directions_descending).apply {
-                    setIcon(R.drawable.ic_hero_sort_descending_24)
-                    setOnMenuItemClickListener {
-                        viewModel.sort = SubjectViewModel.Sort.CODE
-                        viewModel.direction = SortDirection.DESCENDING
-                        true
-                    }
-                }
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_code_sort_ascending -> {
+                viewModel.sort = SubjectViewModel.Sort.CODE
+                viewModel.direction = SortDirection.ASCENDING
             }
-
-            it.addSubMenu(R.string.field_description).apply {
-                setIcon(R.drawable.ic_hero_pencil_24)
-
-                add(R.string.sorting_directions_ascending).apply {
-                    setIcon(R.drawable.ic_hero_sort_ascending_24)
-                    setOnMenuItemClickListener {
-                        viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
-                        viewModel.direction = SortDirection.ASCENDING
-                        true
-                    }
-                }
-                add(R.string.sorting_directions_descending).apply {
-                    setIcon(R.drawable.ic_hero_sort_descending_24)
-                    setOnMenuItemClickListener {
-                        viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
-                        viewModel.direction = SortDirection.DESCENDING
-                        true
-                    }
-                }
+            R.id.action_code_sort_descending -> {
+                viewModel.sort = SubjectViewModel.Sort.CODE
+                viewModel.direction = SortDirection.DESCENDING
             }
+            R.id.action_description_sort_ascending -> {
+                viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                viewModel.direction = SortDirection.ASCENDING
+            }
+            R.id.action_description_sort_descending -> {
+                viewModel.sort = SubjectViewModel.Sort.DESCRIPTION
+                viewModel.direction = SortDirection.DESCENDING
+            }
+            R.id.action_schedule_sort_ascending -> {
+                viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                viewModel.direction = SortDirection.ASCENDING
+            }
+            R.id.action_schedule_sort_descending -> {
+                viewModel.sort = SubjectViewModel.Sort.SCHEDULE
+                viewModel.direction = SortDirection.DESCENDING
+            }
+            R.id.action_filter_all -> {
+                viewModel.constraint = SubjectViewModel.Constraint.ALL
+                subjectAdapter.constraint = viewModel.constraint
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
 
-            if (viewModel.constraint != SubjectViewModel.Constraint.ALL) {
-                it.addSubMenu(R.string.field_schedule).apply {
-                    setIcon(R.drawable.ic_hero_clock_24)
+                binding.appBarLayout.toolbar.menu
+                    .findItem(R.id.action_sort_schedule).isVisible = false
+            }
+            R.id.action_filter_today -> {
+                viewModel.constraint = SubjectViewModel.Constraint.TODAY
+                subjectAdapter.constraint = viewModel.constraint
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
 
-                    add(R.string.sorting_directions_ascending).apply {
-                        setIcon(R.drawable.ic_hero_sort_ascending_24)
-                        setOnMenuItemClickListener {
-                            viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                            viewModel.direction = SortDirection.ASCENDING
-                            true
-                        }
-                    }
-                    add(R.string.sorting_directions_descending).apply {
-                        setIcon(R.drawable.ic_hero_sort_descending_24)
-                        setOnMenuItemClickListener {
-                            viewModel.sort = SubjectViewModel.Sort.SCHEDULE
-                            viewModel.direction = SortDirection.DESCENDING
-                            true
-                        }
-                    }
-                }
+                binding.appBarLayout.toolbar.menu
+                    .findItem(R.id.action_sort_schedule).isVisible = true
+            }
+            R.id.action_filter_tomorrow -> {
+                viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
+                subjectAdapter.constraint = viewModel.constraint
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+
+                binding.appBarLayout.toolbar.menu
+                    .findItem(R.id.action_sort_schedule).isVisible = true
             }
         }
-        menu.addSubMenu(R.string.menu_filter).also {
-            it.setIcon(R.drawable.ic_hero_filter_24)
-            it.add(R.string.filter_options_all).apply {
-                setIcon(R.drawable.ic_hero_clipboard_list_24)
-                setOnMenuItemClickListener {
-                    viewModel.constraint = SubjectViewModel.Constraint.ALL
-                    subjectAdapter.constraint = viewModel.constraint
-                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-                    true
-                }
-            }
-            it.add(R.string.filter_options_today_classes).apply {
-                setIcon(R.drawable.ic_hero_exclamation_circle_24)
-                setOnMenuItemClickListener {
-                    viewModel.constraint = SubjectViewModel.Constraint.TODAY
-                    subjectAdapter.constraint = viewModel.constraint
-                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-                    true
-                }
-            }
-            it.add(R.string.filter_options_tomorrow_classes).apply {
-                setIcon(R.drawable.ic_hero_calendar_24)
-                setOnMenuItemClickListener {
-                    viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
-                    subjectAdapter.constraint = viewModel.constraint
-                    binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
-                    true
-                }
-            }
-        }
+        return true
     }
 
     override fun onScheduleListener(items: List<Schedule>) {

@@ -51,7 +51,7 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_logs)
             inflateMenu(R.menu.menu_logs)
-            overrideOverflowMenu { context, anchor -> CascadePopupMenu(context, anchor) }
+            overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
 

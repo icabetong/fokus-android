@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="@string/menu_sort"
+        android:icon="@drawable/ic_hero_sort_ascending_24"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:title="@string/field_task_name"
+                android:icon="@drawable/ic_hero_pencil_24">
+                <menu>
+                    <item
+                        android:id="@+id/action_name_sort_ascending"
+                        android:title="@string/sorting_directions_ascending"
+                        android:icon="@drawable/ic_hero_sort_ascending_24"/>
+
+                    <item
+                        android:id="@+id/action_name_sort_descending"
+                        android:title="@string/sorting_directions_descending"
+                        android:icon="@drawable/ic_hero_sort_descending_24"/>
+                </menu>
+            </item>
+            <item
+                android:title="@string/field_due_date"
+                android:icon="@drawable/ic_hero_clock_24">
+                <menu>
+                    <item
+                        android:id="@+id/action_due_sort_ascending"
+                        android:title="@string/sorting_directions_ascending"
+                        android:icon="@drawable/ic_hero_sort_ascending_24"/>
+
+                    <item
+                        android:id="@+id/action_due_sort_descending"
+                        android:title="@string/sorting_directions_descending"
+                        android:icon="@drawable/ic_hero_sort_descending_24"/>
+                </menu>
+            </item>
+        </menu>
+
+    </item>
+
+    <item
+        android:title="@string/menu_filter"
+        android:icon="@drawable/ic_hero_filter_24"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/action_filter_all"
+                android:title="@string/filter_options_all"
+                android:icon="@drawable/ic_hero_clipboard_list_24"/>
+            <item
+                android:id="@+id/action_filter_pending"
+                android:title="@string/filter_options_pending_tasks"
+                android:icon="@drawable/ic_hero_exclamation_circle_24" />
+            <item
+                android:id="@+id/action_filter_finished"
+                android:title="@string/filter_options_finished_tasks"
+                android:icon="@drawable/ic_hero_check_24"/>
+        </menu>
+    </item>
+
+</menu>

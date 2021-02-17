@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="@string/menu_sort"
+        android:icon="@drawable/ic_hero_sort_ascending_24"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:title="@string/field_subject_code"
+                android:icon="@drawable/ic_hero_hashtag_24">
+                <menu>
+                    <item
+                        android:id="@+id/action_code_sort_ascending"
+                        android:title="@string/sorting_directions_ascending"
+                        android:icon="@drawable/ic_hero_sort_ascending_24"/>
+
+                    <item
+                        android:id="@+id/action_code_sort_descending"
+                        android:title="@string/sorting_directions_descending"
+                        android:icon="@drawable/ic_hero_sort_descending_24"/>
+                </menu>
+            </item>
+            <item
+                android:title="@string/field_description"
+                android:icon="@drawable/ic_hero_clock_24">
+                <menu>
+                    <item
+                        android:id="@+id/action_description_sort_ascending"
+                        android:title="@string/sorting_directions_ascending"
+                        android:icon="@drawable/ic_hero_sort_ascending_24"/>
+
+                    <item
+                        android:id="@+id/action_description_sort_descending"
+                        android:title="@string/sorting_directions_descending"
+                        android:icon="@drawable/ic_hero_sort_descending_24"/>
+                </menu>
+            </item>
+            <item
+                android:id="@+id/action_sort_schedule"
+                android:title="@string/field_schedule"
+                android:icon="@drawable/ic_hero_calendar_24">
+                <menu>
+                    <item
+                        android:id="@+id/action_schedule_sort_ascending"
+                        android:title="@string/sorting_directions_ascending"
+                        android:icon="@drawable/ic_hero_sort_ascending_24"/>
+
+                    <item
+                        android:id="@+id/action_schedule_sort_descending"
+                        android:title="@string/sorting_directions_descending"
+                        android:icon="@drawable/ic_hero_sort_descending_24"/>
+                </menu>
+            </item>
+        </menu>
+
+    </item>
+
+    <item
+        android:title="@string/menu_filter"
+        android:icon="@drawable/ic_hero_filter_24"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/action_filter_all"
+                android:title="@string/filter_options_all"
+                android:icon="@drawable/ic_hero_clipboard_list_24"/>
+            <item
+                android:id="@+id/action_filter_today"
+                android:title="@string/filter_options_today_classes"
+                android:icon="@drawable/ic_hero_exclamation_circle_24" />
+            <item
+                android:id="@+id/action_filter_tomorrow"
+                android:title="@string/filter_options_tomorrow_classes"
+                android:icon="@drawable/ic_hero_calendar_24"/>
+        </menu>
+    </item>
+
+</menu>

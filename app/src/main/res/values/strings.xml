@@ -12,7 +12,6 @@
     <string name="activity_subjects_today">Your Subjects Today</string>
     <string name="activity_subjects_tomorrow">Your Subjects Tomorrow</string>
     <string name="activity_archives">Your Archived Items</string>
-    <string name="activity_tags">Your Tags</string>
     <string name="activity_logs">Notification Logs</string>
     <string name="activity_settings">Settings</string>
     <string name="activity_backup">Backup and Restore</string>

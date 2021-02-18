@@ -11,6 +11,7 @@
     <string name="activity_subjects">Tus Asignaturas</string>
     <string name="activity_subjects_today">Tus asignaturas de hoy</string>
     <string name="activity_subjects_tomorrow">Tus asignaturas de mañana</string>
+    <string name="activity_archives">Sus artículos archivados</string>
     <string name="activity_logs">Registro de notificaciones</string>
     <string name="activity_settings">Configuracion</string>
     <string name="activity_backup">Backup y Restauración</string>
@@ -72,6 +73,9 @@
     <string name="empty_view_no_events_summary">Por el momento no tienes eventos programados. Si tienes uno, añadela con el boton de abajo.</string>
     <string name="empty_view_no_previous_title">No hay eventos previos</string>
     <string name="empty_view_no_previous_summary">Por el momento no tienes eventos previos. Cada evento que haya pasado su fecha de programación, aparecerá aquí.</string>
+    <string name="empty_view_no_archived_tasks">No hay tareas archivadas</string>
+    <string name="empty_view_no_archived_events">No hay eventos archivados</string>
+    <string name="empty_view_no_archived_subjects">No hay temas archivados</string>
 
     <string name="days_of_week_item_sunday">Domingo</string>
     <string name="days_of_week_item_monday">Lunes</string>
@@ -103,6 +107,11 @@
     <string name="dialog_choose_backup">Seleccionar archivo de backup</string>
     <string name="dialog_confirm_deletion_title">Quieres remover \"%1$s\"?</string>
     <string name="dialog_confirm_deletion_summary">Una vez que este item sea borrado, no se puede recuperar.</string>
+    <string name="dialog_confirm_unarchive_title">¿Sacar de los archivos?</string>
+    <string name="dialog_confirm_unarchive_summary">Siempre puedes deslizar el dedo hacia la izquierda para volver a archivar este elemento.</string>
+    <string name="dialog_import_attachment_title">¿Importar el archivo adjunto?</string>
+    <string name="dialog_import_attachment_summary">Debido a las recientes restricciones impuestas por el sistema Android, la aplicación tendrá que copiar el archivo en su propia carpeta de datos. ¿Continuar?</string>
+    <string name="dialog_import_attachment_confirm">No vuelvas a preguntar</string>
     <string name="dialog_schedule_details">Detalles del programa</string>
     <string name="dialog_discard_changes">Descartar cambios?</string>
     <string name="dialog_select_file_import">Seleccionar archivo para importar</string>
@@ -114,6 +123,8 @@
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Ingresa la URL del sitio web</string>
     <string name="dialog_sorting">Ordenar</string>
+    <string name="dialog_permission_needed_title">Permiso de almacenamiento necesario</string>
+    <string name="dialog_permission_needed_summary">Para adjuntar un archivo desde su dispositivo, la aplicación necesita que se conceda el permiso de almacenamiento.</string>
 
     <string name="attachment_type_import_file">Importar archivo</string>
     <string name="attachment_type_website_url">URL del sitio web</string>

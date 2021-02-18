@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.task.editor
 
+import android.Manifest
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -74,6 +75,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
     private val viewModel: TaskEditorViewModel by viewModels()
     private val binding get() = _binding!!
 
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var subjectLauncher: ActivityResultLauncher<Intent>
     private lateinit var attachmentLauncher: ActivityResultLauncher<Intent>
     private lateinit var exportLauncher: ActivityResultLauncher<Intent>
@@ -86,6 +88,20 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = buildContainerTransform()
         sharedElementReturnTransition = buildContainerTransform()
+
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                triggerSystemFilePickerForAttachment()
+            } else {
+                MaterialDialog(requireContext()).show {
+                    lifecycleOwner(viewLifecycleOwner)
+                    title(R.string.dialog_permission_needed_title)
+                    message(R.string.dialog_permission_needed_summary)
+                    positiveButton(R.string.button_continue) {}
+                    negativeButton(R.string.button_cancel)
+                }
+            }
+        }
 
         subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -138,7 +154,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.coordinator.transitionName = TRANSITION_ELEMENT_ROOT
-        postponeEnterTransition()
 
         controller = Navigation.findNavController(view)
 
@@ -172,8 +187,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         registerForFragmentResult(arrayOf(
                 SchedulePickerSheet.REQUEST_KEY,
                 AttachmentOptionSheet.REQUEST_KEY), this)
-
-        view.doOnLayout { startPostponedEnterTransition() }
     }
 
     private val dialogView: View by lazy {
@@ -381,6 +394,11 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
     override fun onStop() {
         super.onStop()
 
+        /**
+         * Check if the soft keyboard is visible
+         * then hide it before the user leaves
+         * the fragment
+         */
         hideKeyboardFromCurrentFocus(requireView())
     }
 
@@ -461,15 +479,6 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-                                            grantResults: IntArray) {
-        if (requestCode == PermissionManager.STORAGE_READ_REQUEST_CODE
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            triggerSystemFilePickerForAttachment()
-        } else
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
     private fun createAttachment(targetPath: String, attachmentType: Int): Attachment {
         return Attachment().apply {
             task = viewModel.getID()!!
@@ -492,13 +501,15 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                     return false
                 }
 
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                /**
+                 * Make the user specify where to save
+                 * the exported file
+                 */
+                exportLauncher.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     putExtra(Intent.EXTRA_TITLE, fileName)
                     type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(exportIntent)
+                })
             }
             R.id.action_share -> {
                 val fileName = getSharingName()
@@ -511,15 +522,17 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                     return false
                 }
 
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                /**
+                 * We need first to export the data as a raw file
+                 * then pass it onto the system sharing component
+                 */
+                context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_TASK
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
                         viewModel.getTask())
                     putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
                         viewModel.getAttachments())
-                }
-
-                context?.startService(serviceIntent)
+                })
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -567,7 +580,7 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
                                     }
                                 else triggerSystemFilePickerForAttachment()
                             } else
-                                PermissionManager.requestReadStoragePermission(requireActivity())
+                                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                         }
                         R.id.action_website_url -> {
                             var attachment: Attachment?

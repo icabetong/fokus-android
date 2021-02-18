@@ -7,12 +7,12 @@ import androidx.core.view.isVisible
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDrawableAtStart
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedEventBinding
-import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
-class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
-    ArchivedAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
+class ArchivedEventAdapter(private val listener: SelectListener):
+    BaseAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedEventViewHolder {
         val binding = LayoutItemArchivedEventBinding.inflate(LayoutInflater.from(parent.context),
@@ -24,7 +24,7 @@ class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
         holder.onBind(getItem(position))
     }
 
-    class ArchivedEventViewHolder(itemView: View, private val listener: ArchivedItemClickListener)
+    class ArchivedEventViewHolder(itemView: View, private val listener: SelectListener)
         : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedEventBinding.bind(itemView)
 
@@ -39,7 +39,7 @@ class ArchivedEventAdapter(private val listener: ArchivedItemClickListener):
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onArchivedItemClicked(t)
+                    listener.onItemSelected(t)
                 }
 
                 if (t.subject != null) {

@@ -74,6 +74,7 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
                     Color.parseColor(COLOR_ICON_DARK_ARCHIVE)
                 else Color.parseColor(COLOR_ICON_LIGHT_ARCHIVE)
 
+                it.mutate()
                 it.setTint(tintColor)
 
                 val iconMargin: Int = (itemView.height - it.intrinsicHeight) / 2
@@ -98,6 +99,7 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
                     Color.parseColor(COLOR_ICON_DARK_DELETE)
                 else Color.parseColor(COLOR_ICON_LIGHT_DELETE)
 
+                it.mutate()
                 it.setTint(tintColor)
 
                 val iconMargin: Int = (itemView.height - it.intrinsicHeight) / 2

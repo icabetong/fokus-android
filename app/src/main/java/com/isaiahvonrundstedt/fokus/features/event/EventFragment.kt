@@ -10,7 +10,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -35,9 +34,6 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_event.*
-import me.saket.cascade.CascadePopupMenu
-import me.saket.cascade.overrideOverflowMenu
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -76,6 +72,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = eventAdapter
+
+            ItemTouchHelper(ItemSwipeCallback(context, eventAdapter))
+                .attachToRecyclerView(this)
         }
 
         postponeEnterTransition()
@@ -90,32 +89,16 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         if (savedInstanceState == null)
             binding.calendarView.post { setCurrentDate(viewModel.today) }
-
-        ItemTouchHelper(ItemSwipeCallback(requireContext(), eventAdapter))
-            .attachToRecyclerView(binding.recyclerView)
-
-        viewModel.events.observe(viewLifecycleOwner) {
-            eventAdapter.submitList(it)
-        }
-        viewModel.eventsEmpty.observe(viewLifecycleOwner) {
-            binding.emptyView.isVisible = it
-        }
-
-        setFragmentResultListener(EventEditor.REQUEST_KEY_INSERT) { _, args ->
-            Event.fromBundle(args)?.let {
-                viewModel.insert(it)
-            }
-        }
-        setFragmentResultListener(EventEditor.REQUEST_KEY_UPDATE) { _, args ->
-            Event.fromBundle(args)?.let {
-                viewModel.update(it)
-            }
-        }
     }
 
     override fun onStart() {
         super.onStart()
 
+        /**
+         * Get the NavController here so
+         * that it doesn't crash when
+         * the host activity is recreated.
+         */
         controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
         setupNavigation(binding.appBarLayout.toolbar, controller)
 
@@ -133,11 +116,18 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             }
         }
 
+        viewModel.events.observe(viewLifecycleOwner) {
+            eventAdapter.submitList(it)
+        }
+        viewModel.eventsEmpty.observe(viewLifecycleOwner) {
+            binding.emptyView.isVisible = it
+        }
+
         class MonthViewContainer(view: View): ViewContainer(view) {
             val headerLayout: LinearLayout = view.findViewById(R.id.headerLayout)
         }
 
-        calendarView.dayBinder = object: DayBinder<DayViewContainer> {
+        binding.calendarView.dayBinder = object: DayBinder<DayViewContainer> {
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
@@ -145,7 +135,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             }
         }
 
-        calendarView.monthHeaderBinder = object: MonthHeaderFooterBinder<MonthViewContainer> {
+        binding.calendarView.monthHeaderBinder = object: MonthHeaderFooterBinder<MonthViewContainer> {
             override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
             override fun bind(container: MonthViewContainer, month: CalendarMonth) {

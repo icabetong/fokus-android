@@ -10,12 +10,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setCompoundDra
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setStrikeThroughEffect
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedTaskBinding
-import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
-class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
-    : ArchivedAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
+class ArchivedTaskAdapter (private val listener: SelectListener)
+    : BaseAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedTaskViewHolder {
         val binding = LayoutItemArchivedTaskBinding.inflate(LayoutInflater.from(parent.context),
@@ -27,7 +27,7 @@ class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
         holder.onBind(getItem(position))
     }
 
-    class ArchivedTaskViewHolder(itemView: View, private val listener: ArchivedItemClickListener)
+    class ArchivedTaskViewHolder(itemView: View, private val listener: SelectListener)
         : BaseViewHolder(itemView) {
     private val binding = LayoutItemArchivedTaskBinding.bind(itemView)
 
@@ -50,7 +50,7 @@ class ArchivedTaskAdapter (private val listener: ArchivedItemClickListener)
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onArchivedItemClicked(t)
+                    listener.onItemSelected(t)
                 }
 
                 if (t.subject != null) {

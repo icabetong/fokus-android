@@ -233,6 +233,11 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
     override fun onStop() {
         super.onStop()
 
+        /**
+         * Check if the soft keyboard is visible
+         * then hide it before the user leaves
+         * the fragment
+         */
         hideKeyboardFromCurrentFocus(requireView())
     }
 
@@ -265,13 +270,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                     return false
                 }
 
-                val exportIntent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                /**
+                 * Make the user specify where to save
+                 * the exported file
+                 */
+                exportLauncher.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     putExtra(Intent.EXTRA_TITLE, fileName)
                     type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(exportIntent)
+                })
             }
             R.id.action_share -> {
                 val fileName = getSharingName()
@@ -285,15 +292,17 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                     return false
                 }
 
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                /**
+                 * We need first to export the data as a raw file
+                 * then pass it onto the system sharing component
+                 */
+                context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_SUBJECT
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
                         viewModel.getSubject())
                     putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
                         viewModel.getSchedules())
-                }
-
-                context?.startService(serviceIntent)
+                })
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

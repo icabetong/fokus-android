@@ -11,17 +11,6 @@ class PermissionManager(var context: Context) {
 
     companion object {
         const val STORAGE_READ_REQUEST_CODE = 3
-        const val STORAGE_WRITE_REQUEST_CODE = 4
-
-        fun requestReadStoragePermission(activity: Activity) {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                STORAGE_READ_REQUEST_CODE)
-        }
-
-        fun requestWriteStoragePermission(activity: Activity) {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                STORAGE_WRITE_REQUEST_CODE)
-        }
     }
 
     val readStorageGranted: Boolean

@@ -310,6 +310,11 @@ class EventEditor: BaseEditor(), FragmentResultListener {
     override fun onStop() {
         super.onStop()
 
+        /**
+         * Check if the soft keyboard is visible
+         * then hide it before the user leaves
+         * the fragment
+         */
         hideKeyboardFromCurrentFocus(requireView())
     }
 
@@ -377,13 +382,15 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                     return false
                 }
 
-                val export = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                /**
+                 * Make the user specify where to save
+                 * the exported file
+                 */
+                exportLauncher.launch(Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     putExtra(Intent.EXTRA_TITLE, fileName)
                     type = Streamable.MIME_TYPE_ZIP
-                }
-
-                exportLauncher.launch(export)
+                })
             }
             R.id.action_share -> {
                 val fileName = getSharingName()
@@ -397,13 +404,15 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                     return false
                 }
 
-                val serviceIntent = Intent(context, DataExporterService::class.java).apply {
+                /**
+                 * We need first to export the data as a raw file
+                 * then pass it onto the system sharing component
+                 */
+                context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_EVENT
                     putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
                         viewModel.getEvent())
-                }
-
-                context?.startService(serviceIntent)
+                })
             }
             R.id.action_import -> {
                 val chooser = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {

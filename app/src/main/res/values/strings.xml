@@ -123,6 +123,8 @@
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Enter Website URL</string>
     <string name="dialog_sorting">Sorting</string>
+    <string name="dialog_permission_needed_title">Storage Permission needed</string>
+    <string name="dialog_permission_needed_summary">To attach a file from your device, the application needs the storage permission to be granted.</string>
 
     <string name="attachment_type_import_file">Import file</string>
     <string name="attachment_type_website_url">Website URL</string>

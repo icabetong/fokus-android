@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -17,7 +18,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.Hold
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -31,7 +31,6 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_task.*
 import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
@@ -75,6 +74,9 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
+
+            ItemTouchHelper(ItemSwipeCallback(context, taskAdapter))
+                .attachToRecyclerView(this)
         }
 
         postponeEnterTransition()
@@ -82,10 +84,20 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
         ItemTouchHelper(ItemSwipeCallback(requireContext(), taskAdapter))
             .attachToRecyclerView(binding.recyclerView)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        /**
+         * Get the NavController here so that
+         * it doesn't crash at startup
+         */
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             taskAdapter.submitList(it)
-            binding.recyclerView.doOnPreDraw { startPostponedEnterTransition() }
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
             when (viewModel.filterOption) {
@@ -100,34 +112,6 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 TaskViewModel.Constraint.FINISHED -> {
                     binding.emptyViewPendingTasks.isVisible = false
                     binding.emptyViewFinishedTasks.isVisible = it
-                }
-            }
-        }
-
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        setupNavigation(binding.appBarLayout.toolbar, controller)
-
-        setFragmentResultListener(TaskEditor.REQUEST_KEY_INSERT) { _, args ->
-            args.getBundle(TaskEditor.EXTRA_TASK)?.also {
-                Task.fromBundle(it)?.also { task ->
-                    val attachments = args.getParcelableArrayList<Attachment>(TaskEditor.EXTRA_ATTACHMENTS)
-
-                    viewModel.insert(task, attachments ?: emptyList())
-                }
-            }
-        }
-        setFragmentResultListener(TaskEditor.REQUEST_KEY_UPDATE) { _, args ->
-            args.getBundle(TaskEditor.EXTRA_TASK)?.also {
-                Task.fromBundle(it)?.also { task ->
-                    val attachments = args.getParcelableArrayList<Attachment>(TaskEditor.EXTRA_ATTACHMENTS)
-
-                    viewModel.insert(task, attachments ?: emptyList())
                 }
             }
         }
@@ -199,7 +183,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.task)
 
-                    createSnackbar(R.string.feedback_task_removed, recyclerView).run {
+                    createSnackbar(R.string.feedback_task_removed, binding.recyclerView).run {
                         addCallback(object: Snackbar.Callback() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                 super.onDismissed(transientBottomBar, event)

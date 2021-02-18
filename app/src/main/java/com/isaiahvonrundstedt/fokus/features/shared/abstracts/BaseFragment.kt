@@ -34,14 +34,23 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    /**
+     * @param view the root view of the fragment
+     */
     protected fun hideKeyboardFromCurrentFocus(view: View) {
         if (view is ViewGroup)
             findCurrentFocus(view)
     }
 
+    /**
+     * @param viewGroup check if any of its children has focus then
+     * hide the keyboard
+     */
     private fun findCurrentFocus(viewGroup: ViewGroup) {
         viewGroup.children.forEach {
             if (it is ViewGroup)
+                // If the current children is an instance of
+                // a ViewGroup, then iterate its children too.
                 findCurrentFocus(it)
             else {
                 if (it.hasFocus()) {
@@ -52,6 +61,12 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    /**
+     * @param view the view which has the focus
+     * then get the inputMethodManager service then
+     * try to hide the soft keyboard with the view's
+     * window token
+     */
     private fun hideKeyboardFromView(view: View) {
         (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run {
             hideSoftInputFromWindow(view.windowToken, 0)

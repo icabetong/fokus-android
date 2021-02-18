@@ -12,13 +12,13 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.databinding.FragmentArchivedEventBinding
-import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArchivedEventFragment: BaseFragment(), ArchivedAdapter.ArchivedItemClickListener {
+class ArchivedEventFragment: BaseFragment(), BaseAdapter.SelectListener {
     private var _binding: FragmentArchivedEventBinding? = null
 
     private val archivedEventAdapter = ArchivedEventAdapter(this)
@@ -41,14 +41,14 @@ class ArchivedEventFragment: BaseFragment(), ArchivedAdapter.ArchivedItemClickLi
         }
     }
 
-    override fun <T> onArchivedItemClicked(data: T) {
-        if (data is EventPackage) {
+    override fun <T> onItemSelected(t: T) {
+        if (t is EventPackage) {
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
                 title(R.string.dialog_confirm_unarchive_title)
                 message(R.string.dialog_confirm_unarchive_summary)
                 positiveButton {
-                    viewModel.removeFromArchive(data)
+                    viewModel.removeFromArchive(t)
                 }
                 negativeButton(R.string.button_cancel)
             }

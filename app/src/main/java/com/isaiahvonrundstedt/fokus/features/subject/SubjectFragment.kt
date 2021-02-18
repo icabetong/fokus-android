@@ -48,8 +48,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         super.onViewCreated(view, savedInstanceState)
 
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
-        postponeEnterTransition()
-        view.doOnPreDraw { startPostponedEnterTransition() }
 
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
@@ -65,10 +63,25 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
             adapter = subjectAdapter
+
+            ItemTouchHelper(ItemSwipeCallback(context, subjectAdapter))
+                .attachToRecyclerView(this)
         }
 
-        ItemTouchHelper(ItemSwipeCallback(requireContext(), subjectAdapter))
-            .attachToRecyclerView(binding.recyclerView)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        /**
+         * Get the NavController here so
+         * it doesn't crash when the host
+         * activity is recreated.
+         */
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         subjectAdapter.constraint = viewModel.constraint
         viewModel.subjects.observe(viewLifecycleOwner) {
@@ -93,13 +106,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        setupNavigation(binding.appBarLayout.toolbar, controller)
     }
 
     override fun onResume() {

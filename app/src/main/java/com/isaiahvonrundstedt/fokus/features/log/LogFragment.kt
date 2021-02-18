@@ -46,16 +46,12 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_logs)
             inflateMenu(R.menu.menu_logs)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
-
-        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -70,8 +66,20 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     override fun onStart() {
         super.onStart()
 
-        viewModel.logs.observe(viewLifecycleOwner) { logAdapter.submitList(it) }
-        viewModel.isEmpty.observe(viewLifecycleOwner) { binding.emptyView.isVisible = it }
+        /**
+         * Get the NavController here so
+         * it doesn't crash when the host
+         * activity is recreated.
+         */
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
+
+        viewModel.logs.observe(viewLifecycleOwner) {
+            logAdapter.submitList(it)
+        }
+        viewModel.isEmpty.observe(viewLifecycleOwner) {
+            binding.emptyView.isVisible = it
+        }
     }
 
     override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,

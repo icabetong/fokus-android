@@ -27,6 +27,10 @@ class MainFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /**
+         * Enables the return transition between the inner
+         * fragments.
+         */
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 

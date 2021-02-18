@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedSubjectBinding
-import com.isaiahvonrundstedt.fokus.features.archived.ArchivedAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
-class ArchivedSubjectAdapter(private val listener: ArchivedItemClickListener)
-    : ArchivedAdapter<SubjectPackage, ArchivedSubjectAdapter.ArchivedSubjectViewHolder>(SubjectPackage.DIFF_CALLBACK) {
+class ArchivedSubjectAdapter(private val listener: SelectListener)
+    : BaseAdapter<SubjectPackage, ArchivedSubjectAdapter.ArchivedSubjectViewHolder>(SubjectPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedSubjectViewHolder {
         val binding = LayoutItemArchivedSubjectBinding.inflate(LayoutInflater.from(parent.context),
@@ -20,7 +20,7 @@ class ArchivedSubjectAdapter(private val listener: ArchivedItemClickListener)
         holder.onBind(getItem(position))
     }
 
-    class ArchivedSubjectViewHolder(itemView: View, private val listener: ArchivedItemClickListener)
+    class ArchivedSubjectViewHolder(itemView: View, private val listener: SelectListener)
         : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedSubjectBinding.bind(itemView)
 
@@ -34,7 +34,7 @@ class ArchivedSubjectAdapter(private val listener: ArchivedItemClickListener)
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onArchivedItemClicked(t)
+                    listener.onItemSelected(t)
                 }
             }
         }

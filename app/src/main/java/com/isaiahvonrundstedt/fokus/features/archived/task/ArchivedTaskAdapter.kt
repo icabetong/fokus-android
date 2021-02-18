@@ -31,9 +31,9 @@ class ArchivedTaskAdapter (private val listener: SelectListener)
         : BaseViewHolder(itemView) {
     private val binding = LayoutItemArchivedTaskBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is TaskPackage) {
-                with(t.task) {
+        override fun <T> onBind(data: T) {
+            if (data is TaskPackage) {
+                with(data.task) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
@@ -50,13 +50,13 @@ class ArchivedTaskAdapter (private val listener: SelectListener)
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onItemSelected(t)
+                    listener.onItemSelected(data)
                 }
 
-                if (t.subject != null) {
+                if (data.subject != null) {
                     with(binding.subjectView) {
-                        text = t.subject?.code
-                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        text = data.subject?.code
+                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 } else binding.subjectView.isVisible = false
             }

@@ -52,7 +52,8 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.
         fun <T> onItemSelected(t: T)
     }
 
-    abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        abstract fun <T> onBind(t: T)
+    abstract class BaseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+
+        abstract fun <T> onBind(data: T)
     }
 }

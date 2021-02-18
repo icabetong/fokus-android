@@ -44,13 +44,14 @@ class TaskAdapter(private val actionListener: ActionListener,
     }
 
     class TaskViewHolder(itemView: View,
-                         private val actionListener: ActionListener,
-                         private val statusListener: TaskStatusListener): BaseViewHolder(itemView) {
+        private val actionListener: ActionListener,
+        private val statusListener: TaskStatusListener
+    ): BaseViewHolder(itemView) {
         private val binding = LayoutItemTaskBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is TaskPackage) {
-                with(t.task) {
+        override fun <T> onBind(data: T) {
+            if (data is TaskPackage) {
+                with(data.task) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + taskID
 
                     val textColorRes = if (isFinished)
@@ -67,25 +68,25 @@ class TaskAdapter(private val actionListener: ActionListener,
                     else binding.dueDateView.isVisible = false
                 }
 
-                if (t.subject != null) {
+                if (data.subject != null) {
                     with(binding.subjectView) {
-                        text = t.subject?.code
-                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        text = data.subject?.code
+                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 } else binding.subjectView.isVisible = false
 
                 binding.checkBox.setOnClickListener { view ->
                     with(view as AppCompatCheckBox) {
-                        t.task.isFinished = isChecked
+                        data.task.isFinished = isChecked
                         binding.taskNameView.setStrikeThroughEffect(isChecked)
                         if (isChecked)
                             binding.taskNameView.setTextColorFromResource(R.color.color_secondary_text)
                     }
-                    statusListener.onStatusChanged(t, view.isChecked)
+                    statusListener.onStatusChanged(data, view.isChecked)
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                    actionListener.onActionPerformed(data, ActionListener.Action.SELECT, it)
                 }
             }
         }

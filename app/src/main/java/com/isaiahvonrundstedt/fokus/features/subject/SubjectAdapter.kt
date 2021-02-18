@@ -23,17 +23,17 @@ class SubjectAdapter(private val actionListener: ActionListener,
             ITEM_TYPE_ALL_SCHEDULE -> {
                 val binding = LayoutItemSubjectBinding.inflate(LayoutInflater.from(parent.context),
                     parent, false)
-                CoreViewHolder(binding.root)
+                CoreViewHolder(binding.root, actionListener, scheduleListener, )
             }
             ITEM_TYPE_SINGLE_SCHEDULE_TODAY -> {
                 val binding = LayoutItemSubjectSingleBinding.inflate(LayoutInflater.from(parent.context),
                     parent, false)
-                TodayViewHolder(binding.root)
+                TodayViewHolder(binding.root, actionListener)
             }
             ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW -> {
                 val binding = LayoutItemSubjectSingleBinding.inflate(LayoutInflater.from(parent.context),
                     parent, false)
-                TomorrowViewHolder(binding.root)
+                TomorrowViewHolder(binding.root, actionListener)
             }
             else -> throw IllegalStateException("Unknown Item type")
         }
@@ -55,14 +55,19 @@ class SubjectAdapter(private val actionListener: ActionListener,
         if (direction == ItemTouchHelper.START)
             actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
                 null)
+        else if (direction == ItemTouchHelper.END)
+            archiveListener.onItemArchive(getItem(position))
     }
 
-    inner class CoreViewHolder(itemView: View) : BaseViewHolder(itemView) {
+    class CoreViewHolder(itemView: View,
+        private val actionListener: ActionListener,
+        private val scheduleListener: ScheduleListener
+    ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemSubjectBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is SubjectPackage) {
-                with(t.subject) {
+        override fun <T> onBind(data: T) {
+            if (data is SubjectPackage) {
+                with(data.subject) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
@@ -71,23 +76,25 @@ class SubjectAdapter(private val actionListener: ActionListener,
                 }
 
                 binding.scheduleView.setOnClickListener {
-                    scheduleListener.onScheduleListener(t.schedules)
+                    scheduleListener.onScheduleListener(data.schedules)
                 }
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                    actionListener.onActionPerformed(data, ActionListener.Action.SELECT, it)
                 }
             }
         }
     }
 
-    inner class TodayViewHolder(itemView: View): BaseViewHolder(itemView) {
+    class TodayViewHolder(itemView: View,
+        private val actionListener: ActionListener
+    ): BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectSingleBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is SubjectPackage) {
-                with(t.subject) {
+        override fun <T> onBind(data: T) {
+            if (data is SubjectPackage) {
+                with(data.subject) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
@@ -95,23 +102,25 @@ class SubjectAdapter(private val actionListener: ActionListener,
                     binding.descriptionView.text = description
                 }
 
-                val todaySchedule = t.getScheduleToday()
+                val todaySchedule = data.getScheduleToday()
                 binding.scheduleView.text = todaySchedule?.formatBothTime(binding.root.context)
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                    actionListener.onActionPerformed(data, ActionListener.Action.SELECT, it)
                 }
             }
         }
     }
 
-    inner class TomorrowViewHolder(itemView: View): BaseViewHolder(itemView) {
+    class TomorrowViewHolder(itemView: View,
+        private val actionListener: ActionListener
+    ): BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectSingleBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is SubjectPackage) {
-                with(t.subject) {
+        override fun <T> onBind(data: T) {
+            if (data is SubjectPackage) {
+                with(data.subject) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + subjectID
 
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
@@ -119,11 +128,11 @@ class SubjectAdapter(private val actionListener: ActionListener,
                     binding.descriptionView.text = description
                 }
 
-                val tomorrowSchedule = t.getScheduleTomorrow()
+                val tomorrowSchedule = data.getScheduleTomorrow()
                 binding.scheduleView.text = tomorrowSchedule?.format(itemView.context)
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                    actionListener.onActionPerformed(data, ActionListener.Action.SELECT, it)
                 }
             }
         }

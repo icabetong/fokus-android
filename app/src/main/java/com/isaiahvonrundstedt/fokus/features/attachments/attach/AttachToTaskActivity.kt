@@ -9,13 +9,15 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createToast
 import com.isaiahvonrundstedt.fokus.databinding.ActivityAttachToTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AttachToTaskActivity: BaseActivity(), AttachToTaskAdapter.AttachmentListener {
+class AttachToTaskActivity: BaseActivity(), BaseAdapter.SelectListener {
     private lateinit var binding: ActivityAttachToTaskBinding
 
-    private val sendAdapter = AttachToTaskAdapter(this)
+    private val attachAdapter = AttachToTaskAdapter(this)
     private val viewModel: AttachToTaskViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class AttachToTaskActivity: BaseActivity(), AttachToTaskAdapter.AttachmentListen
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
-            adapter = sendAdapter
+            adapter = attachAdapter
         }
     }
 
@@ -42,13 +44,18 @@ class AttachToTaskActivity: BaseActivity(), AttachToTaskAdapter.AttachmentListen
 
         binding.titleView.text = viewModel.subject
         binding.summaryView.text = viewModel.url
-        viewModel.tasks.observe(this) { sendAdapter.submitList(it) }
+
+        viewModel.tasks.observe(this) {
+            attachAdapter.submitList(it)
+        }
     }
 
-    override fun onAttachedToTask(taskID: String) {
-        viewModel.addAttachment(taskID)
-        createToast(R.string.feedback_attachment_added)
-        finish()
+    override fun <T> onItemSelected(t: T) {
+        if (t is TaskPackage) {
+            viewModel.addAttachment(t.task.taskID)
+            createToast(R.string.feedback_attachment_added)
+            finish()
+        }
     }
 
 }

@@ -31,12 +31,12 @@ class LogAdapter(private var actionListener: ActionListener)
 
         private val binding = LayoutItemLogBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is Log) {
-                with(t) {
+        override fun <T> onBind(data: T) {
+            if (data is Log) {
+                with(data) {
                     binding.titleView.text = title
                     binding.summaryView.text = content
-                    binding.dateTimeView.text = t.formatDateTime(binding.root.context)
+                    binding.dateTimeView.text = data.formatDateTime(binding.root.context)
                     binding.iconView.setImageResource(getIconResource())
                 }
             }

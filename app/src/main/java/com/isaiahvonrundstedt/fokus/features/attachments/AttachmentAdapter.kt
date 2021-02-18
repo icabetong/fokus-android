@@ -6,53 +6,50 @@ import android.view.View
 import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemAttachmentBinding
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
 import java.io.File
 
-class AttachmentAdapter(private var actionListener: ActionListener<Attachment>)
-    : BaseBasicAdapter<Attachment, AttachmentAdapter.ViewHolder>() {
+class AttachmentAdapter(private var actionListener: ActionListener)
+    : BaseAdapter<Attachment, AttachmentAdapter.AttachmentViewHolder>(Attachment.DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
         val binding = LayoutItemAttachmentBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return ViewHolder(binding.root)
+        return AttachmentViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(items[position], position)
-    }
+    override fun onBindViewHolder(holder: AttachmentViewHolder, position: Int) {
+        val t: Attachment = getItem(position)
+        val binding = holder.binding
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+        with (binding) {
+            titleView.text = when (t.type) {
+                Attachment.TYPE_IMPORTED_FILE ->
+                    t.target?.let { File(it) }?.name
+                Attachment.TYPE_WEBSITE_LINK ->
+                    t.name ?: t.target
+                Attachment.TYPE_CONTENT_URI ->
+                    t.name ?: Uri.parse(t.target).getFileName(binding.root.context)
+                else ->
+                    t.target
+            }
 
-    inner class ViewHolder(itemView: View): BaseBasicViewHolder<Attachment>(itemView) {
+            iconView.setImageResource(t.getIconResource())
 
-        private val binding = LayoutItemAttachmentBinding.bind(itemView)
+            removeButton.setOnClickListener {
+                actionListener.onActionPerformed(t, ActionListener.Action.DELETE, null)
+            }
 
-        override fun onBind(t: Attachment, position: Int) {
-            with (binding) {
-                titleView.text = when (t.type) {
-                    Attachment.TYPE_IMPORTED_FILE ->
-                        t.target?.let { File(it) }?.name
-                    Attachment.TYPE_WEBSITE_LINK ->
-                        t.name ?: t.target
-                    Attachment.TYPE_CONTENT_URI ->
-                        t.name ?: Uri.parse(t.target).getFileName(itemView.context)
-                    else ->
-                        t.target
-                }
-
-                iconView.setImageResource(t.getIconResource())
-
-                removeButton.setOnClickListener {
-                    actionListener.onActionPerformed(t, position, ActionListener.Action.DELETE)
-                }
-
-                root.setOnClickListener {
-                    actionListener.onActionPerformed(t, position, ActionListener.Action.SELECT)
-                }
+            root.setOnClickListener {
+                actionListener.onActionPerformed(t, ActionListener.Action.SELECT, null)
             }
         }
+    }
+
+    class AttachmentViewHolder(itemView: View): BaseViewHolder(itemView) {
+        val binding = LayoutItemAttachmentBinding.bind(itemView)
+
+        override fun <T> onBind(t: T) {}
     }
 }

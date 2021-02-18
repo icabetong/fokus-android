@@ -24,13 +24,14 @@ class ArchivedEventAdapter(private val listener: SelectListener):
         holder.onBind(getItem(position))
     }
 
-    class ArchivedEventViewHolder(itemView: View, private val listener: SelectListener)
-        : BaseViewHolder(itemView) {
+    class ArchivedEventViewHolder(itemView: View,
+              private val listener: SelectListener
+      ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedEventBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is EventPackage) {
-                with(t.event) {
+        override fun <T> onBind(data: T) {
+            if (data is EventPackage) {
+                with(data.event) {
                     binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + eventID
 
                     binding.locationView.text = location
@@ -39,13 +40,13 @@ class ArchivedEventAdapter(private val listener: SelectListener):
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onItemSelected(t)
+                    listener.onItemSelected(data)
                 }
 
-                if (t.subject != null) {
+                if (data.subject != null) {
                     with(binding.subjectView) {
-                        text = t.subject?.code
-                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        text = data.subject?.code
+                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 } else binding.subjectView.isVisible = false
             }

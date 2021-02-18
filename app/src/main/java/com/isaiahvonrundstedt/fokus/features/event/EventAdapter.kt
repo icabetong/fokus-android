@@ -19,7 +19,7 @@ class EventAdapter(private val actionListener: ActionListener,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = LayoutItemEventBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
-        return EventViewHolder(binding.root)
+        return EventViewHolder(binding.root, actionListener)
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
@@ -36,29 +36,30 @@ class EventAdapter(private val actionListener: ActionListener,
         }
     }
 
-    inner class EventViewHolder(itemView: View): BaseViewHolder(itemView) {
-
+    class EventViewHolder(itemView: View,
+          private val actionListener: ActionListener
+    ): BaseViewHolder(itemView) {
         private val binding = LayoutItemEventBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is EventPackage) {
-                with(t.event) {
-                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + t.event.eventID
+        override fun <T> onBind(data: T) {
+            if (data is EventPackage) {
+                with(data.event) {
+                    binding.root.transitionName = BaseFragment.TRANSITION_ELEMENT_ROOT + data.event.eventID
 
                     binding.locationView.text = location
                     binding.nameView.text = name
                     binding.timeView.text = formatScheduleTime(binding.root.context)
                 }
 
-                if (t.subject != null) {
+                if (data.subject != null) {
                     with(binding.subjectView) {
-                        text = t.subject?.code
-                        setCompoundDrawableAtStart(t.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        text = data.subject?.code
+                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
                     }
                 } else binding.subjectView.isVisible = false
 
                 binding.root.setOnClickListener {
-                    actionListener.onActionPerformed(t, ActionListener.Action.SELECT, it)
+                    actionListener.onActionPerformed(data, ActionListener.Action.SELECT, it)
                 }
             }
         }

@@ -20,13 +20,14 @@ class ArchivedSubjectAdapter(private val listener: SelectListener)
         holder.onBind(getItem(position))
     }
 
-    class ArchivedSubjectViewHolder(itemView: View, private val listener: SelectListener)
-        : BaseViewHolder(itemView) {
+    class ArchivedSubjectViewHolder(itemView: View,
+        private val listener: SelectListener
+    ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedSubjectBinding.bind(itemView)
 
-        override fun <T> onBind(t: T) {
-            if (t is SubjectPackage) {
-                with(t.subject) {
+        override fun <T> onBind(data: T) {
+            if (data is SubjectPackage) {
+                with(data.subject) {
                     binding.root.transitionName = subjectID
                     binding.tagView.setImageDrawable(tintDrawable(binding.tagView.drawable))
                     binding.titleView.text = code
@@ -34,7 +35,7 @@ class ArchivedSubjectAdapter(private val listener: SelectListener)
                 }
 
                 binding.root.setOnClickListener {
-                    listener.onItemSelected(t)
+                    listener.onItemSelected(data)
                 }
             }
         }

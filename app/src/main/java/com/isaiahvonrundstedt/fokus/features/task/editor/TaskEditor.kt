@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -16,7 +15,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
@@ -51,7 +49,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -66,7 +64,7 @@ import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, FragmentResultListener {
+class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListener {
     private var _binding: EditorTaskBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
@@ -617,34 +615,37 @@ class TaskEditor : BaseEditor(), BaseBasicAdapter.ActionListener<Attachment>, Fr
         }
     }
 
-    override fun onActionPerformed(t: Attachment, position: Int,action: BaseBasicAdapter.ActionListener.Action) {
-        when (action) {
-            BaseBasicAdapter.ActionListener.Action.SELECT -> {
-                if (t.target != null)
-                    onParseForIntent(t.target!!, t.type)
-            }
-            BaseBasicAdapter.ActionListener.Action.DELETE -> {
-                val uri = Uri.parse(t.target)
-                val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
-                    t.name ?: uri.getFileName(requireContext())
+    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
+                                       container: View?) {
+        if (t is Attachment) {
+            when (action) {
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                    if (t.target != null)
+                        onParseForIntent(t.target!!, t.type)
+                }
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                    val uri = Uri.parse(t.target)
+                    val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
+                        t.name ?: uri.getFileName(requireContext())
                     else t.target!!
 
-                MaterialDialog(requireContext()).show {
-                    lifecycleOwner(viewLifecycleOwner)
-                    title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                        name))
-                    message(R.string.dialog_confirm_deletion_summary)
-                    positiveButton(R.string.button_delete) {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
+                            name))
+                        message(R.string.dialog_confirm_deletion_summary)
+                        positiveButton(R.string.button_delete) {
 
-                        viewModel.removeAttachment(t)
-                        when (t.type) {
-                            Attachment.TYPE_CONTENT_URI ->
-                                context.contentResolver.delete(uri, null, null)
-                            Attachment.TYPE_IMPORTED_FILE ->
-                                t.target?.let { File(it) }?.delete()
+                            viewModel.removeAttachment(t)
+                            when (t.type) {
+                                Attachment.TYPE_CONTENT_URI ->
+                                    context.contentResolver.delete(uri, null, null)
+                                Attachment.TYPE_IMPORTED_FILE ->
+                                    t.target?.let { File(it) }?.delete()
+                            }
                         }
+                        negativeButton(R.string.button_cancel)
                     }
-                    negativeButton(R.string.button_cancel)
                 }
             }
         }

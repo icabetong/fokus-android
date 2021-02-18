@@ -11,6 +11,7 @@
     <string name="activity_subjects">الموضوع</string>
     <string name="activity_subjects_today">مواضيعك لهذا اليوم</string>
     <string name="activity_subjects_tomorrow">مواضيعك ليوم غد</string>
+    <string name="activity_archives">الأشياء المؤرشفة</string>
     <string name="activity_logs">سجل الأشعارات</string>
     <string name="activity_settings">الأعدادات</string>
     <string name="activity_backup">النسخ الأحتياطي والأستعادة</string>
@@ -72,6 +73,9 @@
     <string name="empty_view_no_events_summary">ليس لديك حاليا أي أحداث مجدولة. إذا كان لديك واحد ، قم بإضافته باستخدام الزر أدناه</string>
     <string name="empty_view_no_previous_title">لاتوجد أحداث سابقة</string>
     <string name="empty_view_no_previous_summary">ليس لديك حاليا أي أحداث سابقة. سيظهر هنا كل حدث تجاوز جدوله الزمني</string>
+    <string name="empty_view_no_archived_tasks">لا توجد مهام مؤرشفة</string>
+    <string name="empty_view_no_archived_events">لا توجد أحداث مؤرشفة</string>
+    <string name="empty_view_no_archived_subjects">لا توجد مواضيع مؤرشفة</string>
 
     <string name="days_of_week_item_sunday">الأحد</string>
     <string name="days_of_week_item_monday">الأثنين</string>
@@ -103,6 +107,11 @@
     <string name="dialog_choose_backup">اختر ملف النسخ الاحتياطي</string>
     <string name="dialog_confirm_deletion_title">هل تريد الأزالة \"%1$s\"?</string>
     <string name="dialog_confirm_deletion_summary">بمجرد حذف هذا العنصر ، لا يمكن استعادته</string>
+    <string name="dialog_confirm_unarchive_title">حذف من الارشيف؟</string>
+    <string name="dialog_confirm_unarchive_summary">يمكنك السحب الى اليسار لأرشفة هذا العنصر مرة اخرى</string>
+    <string name="dialog_import_attachment_title">استيراد المرفقات؟</string>
+    <string name="dialog_import_attachment_summary">نظرًا للقيود الأخيرة التي يفرضها نظام أندرويد سيتعين على التطبيق نسخ الملف إلى مجلد البيانات الخاص به. أستمرار؟</string>
+    <string name="dialog_import_attachment_confirm">لا تسأل مرة أخرى</string>
     <string name="dialog_schedule_details">تفاصيل الجدول</string>
     <string name="dialog_discard_changes">تجاهل التغييرات؟</string>
     <string name="dialog_select_file_import">حدد ملفًا للاستيراد</string>
@@ -114,6 +123,8 @@
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">أدخل عنوان لموقع الويب</string>
     <string name="dialog_sorting">ترتيب</string>
+    <string name="dialog_permission_needed_title">يحتاج الى اذن التخزين</string>
+    <string name="dialog_permission_needed_summary">لإرفاق ملف من جهازك ، يحتاج التطبيق إلى منح إذن التخزين.</string>
 
     <string name="attachment_type_import_file">استيراد ملف</string>
     <string name="attachment_type_website_url">رابط الموقع</string>

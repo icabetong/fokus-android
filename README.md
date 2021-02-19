@@ -1,7 +1,7 @@
 # Fokus - To Do app tailored specifically for students
-[![License](https://img.shields.io/github/license/asayah-san/fokus-android)](https://www.gnu.org/licenses/agpl-3.0.en.html)
-![Issues](https://img.shields.io/github/issues/asayah-san/fokus-android)
-![PRs](https://img.shields.io/github/issues-pr/asayah-san/fokus-android)
+[![License](https://img.shields.io/github/license/icabetong/fokus)](https://www.gnu.org/licenses/agpl-3.0.en.html)
+![Issues](https://img.shields.io/github/issues/icabetong/fokus)
+![PRs](https://img.shields.io/github/issues-pr/icabetong/fokus)
 
 Fokus is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It's fast and beautiful yet simple design that can help you focus on what matters most.
 
@@ -17,9 +17,12 @@ Fokus is an open source application that combines a todo list and a calendar tha
 
 ## Screenshots
 
-<img src="art/1-tasks.png" width="250"><img src="art/2-events.png" width="250"><img src="art/3-tags.png" width="250">
+<img src="art/preview-1.jpeg" width="250"><img src="art/preview-2.jpeg" width="250"><img src="art/preview-3.jpeg" width="250"><img src="art/preview-4.jpeg" width="250">
+
+*Our preview mockups were created using 'Previewed' at https://previewed.app*
 
 ## Translations
+
 * 🇮🇶 Arabic (Thanks! Mustafa K.Mirza)
 * 🇺🇸 English
 * 🇫🇷 French (Thanks! David Simon)

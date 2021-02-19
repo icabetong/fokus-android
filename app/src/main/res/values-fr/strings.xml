@@ -9,6 +9,7 @@
     <string name="activity_subjects">Vos matières</string>
     <string name="activity_subjects_today">Vos matières d’aujourd’hui</string>
     <string name="activity_subjects_tomorrow">Vos matières de demain</string>
+    <string name="activity_archives">Vos archives</string>
     <string name="activity_logs">Journaux de notification</string>
     <string name="activity_settings">Paramètres</string>
     <string name="activity_backup">Sauvegarde et restauration</string>
@@ -70,6 +71,9 @@
     <string name="empty_view_no_events_summary">Vous n’avez actuellement aucun événement planifié. Vous pouvez en ajouter un en utilisant le bouton ci-dessous.</string>
     <string name="empty_view_no_previous_title">Aucun événement antérieur</string>
     <string name="empty_view_no_previous_summary">Vous n’avez actuellement aucun événement antérieur. Vous retrouverez ici tous les éléments dont la date est dépassée.</string>
+    <string name="empty_view_no_archived_tasks">Aucune tâche archivée</string>
+    <string name="empty_view_no_archived_events">Aucun événement archivé</string>
+    <string name="empty_view_no_archived_subjects">Aucune matière archivée</string>
 
     <string name="days_of_week_item_sunday">Dimanche</string>
     <string name="days_of_week_item_monday">Lundi</string>
@@ -101,6 +105,11 @@
     <string name="dialog_choose_backup">Choisir un fichier de sauvegarde</string>
     <string name="dialog_confirm_deletion_title">Voulez-vous supprimer \"%1$s\" ?</string>
     <string name="dialog_confirm_deletion_summary">Une fois supprimé, il ne pourra plus être récupéré.</string>
+    <string name="dialog_confirm_unarchive_title">Supprimer des archives ?</string>
+    <string name="dialog_confirm_unarchive_summary">Vous pouvez toujours glisser vers la gauche pour l\'archiver à nouveau.</string>
+    <string name="dialog_import_attachment_title">Importer la pièce jointe ?</string>
+    <string name="dialog_import_attachment_summary">De nouvelles restrictions imposées par le système Android obligent l\'application à copier le fichier dans son propre répertoire de données. Continuer ?</string>
+    <string name="dialog_import_attachment_confirm">Ne plus demander</string>
     <string name="dialog_schedule_details">Détails des horaires</string>
     <string name="dialog_discard_changes">Annuler les modifications ?</string>
     <string name="dialog_select_file_import">Sélectionner un fichier à importer</string>
@@ -112,6 +121,8 @@
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Saisissez l’URL du site Web</string>
     <string name="dialog_sorting">Tri</string>
+    <string name="dialog_permission_needed_title">Permission de stockage requise</string>
+    <string name="dialog_permission_needed_summary">Pour joindre un fichier depuis votre appareil, vous devez accorder la permission de stockage à l\'application.</string>
 
     <string name="attachment_type_import_file">Importer le fichier</string>
     <string name="attachment_type_website_url">URL du site Web</string>

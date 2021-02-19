@@ -10,6 +10,7 @@
     <string name="activity_subjects">Ваши субъекты</string>
     <string name="activity_subjects_today">Ваши темы сегодня</string>
     <string name="activity_subjects_tomorrow">Ваши темы Завтра</string>
+    <string name="activity_archives">Ваши заархивированные предметы</string>
     <string name="activity_logs">Журналы уведомлений</string>
     <string name="activity_settings">Настройки</string>
     <string name="activity_backup">Резервное копирование и восстановление</string>
@@ -71,6 +72,9 @@
     <string name="empty_view_no_events_summary">В настоящее время у вас нет запланированных мероприятий. Если оно у вас есть, добавьте его с помощью кнопки ниже.</string>
     <string name="empty_view_no_previous_title">Предыдущие события отсутствуют</string>
     <string name="empty_view_no_previous_summary">В настоящее время у вас нет никаких предыдущих событий. Каждое событие, прошедшее по расписанию, будет отображаться здесь.</string>
+    <string name="empty_view_no_archived_tasks">Архивных задач нет</string>
+    <string name="empty_view_no_archived_events">Нет архивных событий</string>
+    <string name="empty_view_no_archived_subjects">Нет архивных материалов</string>
 
     <string name="days_of_week_item_sunday">воскресенье</string>
     <string name="days_of_week_item_monday">Понедельник</string>
@@ -102,6 +106,11 @@
     <string name="dialog_choose_backup">Выберите резервный файл</string>
     <string name="dialog_confirm_deletion_title">Вы хотите удалить \ "%1$s\"?</string>
     <string name="dialog_confirm_deletion_summary">После удаления этот пункт не может быть восстановлен.</string>
+    <string name="dialog_confirm_unarchive_title">Удалить из архивов?</string>
+    <string name="dialog_confirm_unarchive_summary">Вы всегда можете пролистать влево, чтобы заново архивировать этот пункт.</string>
+    <string name="dialog_import_attachment_title">Импортное крепление?</string>
+    <string name="dialog_import_attachment_summary">В связи с недавними ограничениями, наложенными системой Android, приложение должно будет скопировать файл в свою собственную папку данных. Продолжить?</string>
+    <string name="dialog_import_attachment_confirm">Никогда больше не спрашивайте.</string>
     <string name="dialog_schedule_details">Подробная информация о расписании</string>
     <string name="dialog_discard_changes">Отбрасывать изменения?</string>
     <string name="dialog_select_file_import">Выберите файл для импорта</string>
@@ -113,6 +122,8 @@
     <string name="dialog_attachment_name">@string/field_attachment_name</string>
     <string name="dialog_enter_website_url">Введите URL-адрес сайта</string>
     <string name="dialog_sorting">Сортировка</string>
+    <string name="dialog_permission_needed_title">Разрешение на хранение необходимо</string>
+    <string name="dialog_permission_needed_summary">Чтобы прикрепить файл с устройства, приложению необходимо получить разрешение на хранение.</string>
 
     <string name="attachment_type_import_file">Файл импорта</string>
     <string name="attachment_type_website_url">URL-адрес веб-сайта</string>

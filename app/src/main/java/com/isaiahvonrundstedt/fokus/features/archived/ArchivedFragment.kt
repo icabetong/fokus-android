@@ -40,7 +40,7 @@ class ArchivedFragment: BaseFragment() {
 
         controller = Navigation.findNavController(view)
 
-        with(binding.appBarLayout.toolbar) {
+        with(binding.toolbar) {
             setTitle(R.string.activity_archives)
             setupNavigation(this, controller)
         }

@@ -16,6 +16,7 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
@@ -23,6 +24,7 @@ import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
@@ -135,12 +137,15 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
+        if (requestKey == REQUEST_KEY_UPDATE) {
+            binding.eventNameTextInput.setText(viewModel.getName())
+            binding.locationTextInput.setText(viewModel.getLocation())
+            binding.notesTextInput.setText(viewModel.getNotes())
+        }
+
         viewModel.event.observe(viewLifecycleOwner) {
             if (requestKey == REQUEST_KEY_UPDATE && it != null) {
                 with(it) {
-                    binding.eventNameTextInput.setText(name)
-                    binding.notesTextInput.setText(notes)
-                    binding.locationTextInput.setText(location)
                     binding.scheduleTextView.text = formatSchedule(requireContext())
                     binding.prioritySwitch.isChecked = isImportant
                 }
@@ -183,6 +188,19 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                     }
                 }
             }
+        }
+
+        binding.eventNameTextInput.textChanged {
+            android.util.Log.e("LISTENER", it.toString())
+            viewModel.setName(it.toString())
+        }
+
+        binding.notesTextInput.textChanged {
+            viewModel.setNotes(it.toString())
+        }
+
+        binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setImportant(isChecked)
         }
 
         binding.scheduleTextView.setOnClickListener { v ->

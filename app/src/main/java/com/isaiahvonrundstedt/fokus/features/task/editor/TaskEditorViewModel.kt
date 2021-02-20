@@ -84,6 +84,10 @@ class TaskEditorViewModel @Inject constructor(
         return getTask()?.name
     }
     fun setName(name: String?) {
+        // Check if the same value is being set
+        if (name == getName())
+            return
+
         val task = getTask()
         task?.name = name
         setTask(task)
@@ -129,6 +133,10 @@ class TaskEditorViewModel @Inject constructor(
         return getTask()?.notes
     }
     fun setNotes(notes: String?) {
+        // Check if the same value is being set
+        if (notes == getNotes())
+            return
+
         val task = getTask()
         task?.notes = notes
         setTask(task)

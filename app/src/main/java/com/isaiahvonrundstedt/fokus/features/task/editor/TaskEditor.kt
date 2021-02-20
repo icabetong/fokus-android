@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,6 +18,8 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -28,6 +32,7 @@ import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
@@ -197,11 +202,14 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
+        if (requestKey == REQUEST_KEY_UPDATE) {
+            binding.taskNameTextInput.setText(viewModel.getName())
+            binding.notesTextInput.setText(viewModel.getNotes())
+        }
+
         viewModel.task.observe(this) {
             if (requestKey == REQUEST_KEY_UPDATE && it != null) {
                 with(it) {
-                    binding.taskNameTextInput.setText(name)
-                    binding.notesTextInput.setText(notes)
                     binding.prioritySwitch.isChecked = isImportant
                     binding.statusSwitch.isChecked = isFinished
                     binding.removeDueDateButton.isVisible = it.hasDueDate()
@@ -256,6 +264,22 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                     }
                 }
             }
+        }
+
+        binding.taskNameTextInput.textChanged {
+            viewModel.setName(it.toString())
+        }
+
+        binding.notesTextInput.textChanged {
+            viewModel.setNotes(it.toString())
+        }
+
+        binding.statusSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setFinished(isChecked)
+        }
+
+        binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setImportant(isChecked)
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {
@@ -361,7 +385,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         }
 
         binding.actionButton.setOnClickListener {
-            viewModel.setName(binding.taskNameTextInput.text.toString())
+            hideKeyboardFromCurrentFocus(requireView())
 
             // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,
@@ -374,12 +398,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                 return@setOnClickListener
             }
 
-            viewModel.setImportant(binding.prioritySwitch.isChecked)
-            viewModel.setFinished(binding.statusSwitch.isChecked)
-
             if (requestKey == REQUEST_KEY_INSERT)
                 viewModel.insert()
             else viewModel.update()
+
             controller?.navigateUp()
         }
     }

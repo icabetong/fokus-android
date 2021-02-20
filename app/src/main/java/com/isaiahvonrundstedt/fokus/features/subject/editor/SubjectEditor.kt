@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
@@ -134,6 +137,11 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         LocalBroadcastManager.getInstance(requireContext())
             .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
 
+        if (requestKey == REQUEST_KEY_UPDATE) {
+            binding.codeTextInput.setText(viewModel.getCode())
+            binding.descriptionTextInput.setText(viewModel.getDescription())
+        }
+
         viewModel.subject.observe(this) {
             if (requestKey == REQUEST_KEY_UPDATE && it != null) {
                 with(it) {
@@ -150,6 +158,14 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
         viewModel.schedules.observe(this) {
             scheduleAdapter.submitList(ArrayList(it))
+        }
+
+        binding.codeTextInput.textChanged {
+            viewModel.setCode(it.toString())
+        }
+
+        binding.descriptionTextInput.textChanged {
+            viewModel.setDescription(it.toString())
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {

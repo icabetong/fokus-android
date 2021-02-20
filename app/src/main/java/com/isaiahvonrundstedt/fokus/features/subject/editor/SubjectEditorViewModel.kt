@@ -67,6 +67,9 @@ class SubjectEditorViewModel @Inject constructor(
         return getSubject()?.code
     }
     fun setCode(code: String) {
+        if (code == getCode())
+            return
+
         val subject = getSubject()
         subject?.code = code
         setSubject(subject)
@@ -76,6 +79,9 @@ class SubjectEditorViewModel @Inject constructor(
         return getSubject()?.description
     }
     fun setDescription(description: String) {
+        if (description == getDescription())
+            return
+
         val subject = getSubject()
         subject?.description = description
         setSubject(subject)

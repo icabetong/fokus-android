@@ -57,8 +57,14 @@ class EventEditorViewModel @Inject constructor(
         return getEvent()?.name
     }
     fun setName(name: String?) {
+        android.util.Log.e("VM FUNC", name!!)
+        // Check if the same value is being set
+        if (name == getName())
+            return
+
         val event = getEvent()
         event?.name = name
+        android.util.Log.e("OBJECT", event?.name!!)
         setEvent(event)
     }
 
@@ -75,6 +81,10 @@ class EventEditorViewModel @Inject constructor(
         return getEvent()?.location
     }
     fun setLocation(location: String?) {
+        // Check if the same value is being set
+        if (location == getLocation())
+            return
+
         val event = getEvent()
         event?.location = location
         setEvent(event)
@@ -102,6 +112,9 @@ class EventEditorViewModel @Inject constructor(
         return getEvent()?.notes
     }
     fun setNotes(notes: String) {
+        if (notes == getNotes())
+            return
+
         val event = getEvent()
         event?.notes = notes
         setEvent(event)

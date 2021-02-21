@@ -22,6 +22,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okio.Okio
+import okio.buffer
+import okio.sink
 import org.apache.commons.io.FileUtils
 import java.io.EOFException
 import java.io.File
@@ -232,7 +234,7 @@ class BackupRestoreService: BaseService() {
 
     private fun createCache(name: String, json: String): File {
         return File(cacheDir, name).apply {
-            Okio.buffer(Okio.sink(this)).use {
+            this.sink().buffer().use {
                 it.write(json.toByteArray())
                 it.flush()
             }

@@ -8,8 +8,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,8 +16,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -62,10 +58,10 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import com.isaiahvonrundstedt.fokus.features.viewer.ImageViewer
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -118,11 +114,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
         attachmentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
+                val attachmentId = Attachment.generateId()
+
                 context?.startService(Intent(context, FileImporterService::class.java).apply {
                     action = FileImporterService.ACTION_START
                     data = it.data?.data
-                    putExtra(FileImporterService.EXTRA_DIRECTORY,
-                        Streamable.DIRECTORY_ATTACHMENTS)
+                    putExtra(FileImporterService.EXTRA_OBJECT_ID, attachmentId)
                 })
             }
         }
@@ -446,12 +443,22 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                     FileImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
-                        val attachment = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.let {
-                            createAttachment(it, Attachment.TYPE_IMPORTED_FILE)
-                        }
-                        if (attachment != null) {
-                            val file = attachment.target?.let { File(it) }
-                            attachment.name = file?.name
+                        if (intent.hasExtra(BaseService.EXTRA_BROADCAST_DATA) &&
+                                intent.hasExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)) {
+
+                            val id = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)
+                            val name = intent.getStringExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)
+
+                            val extension = File(name!!).extension
+
+                            val attachment = Attachment(
+                                attachmentID = id!!,
+                                name = name,
+                                target = File(Attachment.getTargetDirectory(context), "${id}.${extension}").name,
+                                type = Attachment.TYPE_IMPORTED_FILE,
+                                task = viewModel.getID()!!
+                            )
+
                             viewModel.addAttachment(attachment)
 
                             binding.appBarLayout.toolbar
@@ -496,15 +503,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                     }
                 }
             }
-        }
-    }
-
-    private fun createAttachment(targetPath: String, attachmentType: Int): Attachment {
-        return Attachment().apply {
-            task = viewModel.getID()!!
-            target = targetPath
-            dateAttached = ZonedDateTime.now()
-            type = attachmentType
         }
     }
 
@@ -611,11 +609,14 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                                 positiveButton(R.string.button_done) {
                                     val binding = LayoutDialogInputAttachmentBinding.bind(it.view)
 
-                                    attachment = createAttachment(binding.editText.text.toString(),
-                                        Attachment.TYPE_WEBSITE_LINK)
-                                    attachment?.name = binding.editText.text.toString()
+                                    attachment = Attachment(
+                                        target = binding.editText.text.toString(),
+                                        name = binding.editText.text.toString(),
+                                        type = Attachment.TYPE_WEBSITE_LINK,
+                                        task = viewModel.getID()!!
+                                    )
 
-                                    attachment?.let { item -> viewModel.addAttachment(item) }
+                                    attachment?.also { item -> viewModel.addAttachment(item) }
                                 }
                                 onShow {
                                     val webLink = viewModel.fetchRecentItemFromClipboard()
@@ -643,18 +644,15 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     if (t.target != null)
-                        onParseForIntent(t.target!!, t.type)
+                        onParseForIntent(t)
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     val uri = Uri.parse(t.target)
-                    val name: String = if (t.type == Attachment.TYPE_CONTENT_URI)
-                        t.name ?: uri.getFileName(requireContext())
-                    else t.target!!
 
                     MaterialDialog(requireContext()).show {
                         lifecycleOwner(viewLifecycleOwner)
                         title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                            name))
+                            t.name))
                         message(R.string.dialog_confirm_deletion_summary)
                         positiveButton(R.string.button_delete) {
 
@@ -663,7 +661,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                                 Attachment.TYPE_CONTENT_URI ->
                                     context.contentResolver.delete(uri, null, null)
                                 Attachment.TYPE_IMPORTED_FILE ->
-                                    t.target?.let { File(it) }?.delete()
+                                    File(t.target!!).delete()
                             }
                         }
                         negativeButton(R.string.button_cancel)
@@ -676,10 +674,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     // This function invokes the corresponding application that
     // will open the uri of the attachment if the user clicks
     // on the attachment item
-    private fun onParseForIntent(target: String, type: Int) {
-        when(type) {
+    private fun onParseForIntent(attachment: Attachment) {
+        when(attachment.type) {
             Attachment.TYPE_CONTENT_URI -> {
-                val targetUri: Uri = Uri.parse(target)
+                val targetUri: Uri = Uri.parse(attachment.target)
 
                 val intent = Intent(Intent.ACTION_VIEW)
                     .setDataAndType(targetUri, requireContext().contentResolver?.getType(targetUri))
@@ -689,18 +687,29 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                     startActivity(intent)
             }
             Attachment.TYPE_IMPORTED_FILE -> {
-                val targetUri: Uri = CoreApplication.obtainUriForFile(requireContext(), File(target))
+                val file = File(Attachment.getTargetDirectory(context), attachment.target!!)
 
-                val intent = Intent(Intent.ACTION_VIEW)
-                    .setDataAndType(targetUri, requireContext().contentResolver?.getType(targetUri))
-                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                when {
+                    Attachment.isImage(file.path) -> {
+                        ImageViewer.show(childFragmentManager, file.path, attachment.name)
+                    }
+                    else -> {
+                        val targetUri = CoreApplication.obtainUriForFile(requireContext(),
+                            file)
 
-                if (intent.resolveActivity(context?.packageManager!!) != null)
-                    startActivity(intent)
+                        val intent = Intent(Intent.ACTION_VIEW)
+                            .setDataAndType(targetUri, requireContext().contentResolver?.getType(targetUri))
+                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                        if (intent.resolveActivity(context?.packageManager!!) != null)
+                            startActivity(intent)
+                    }
+                }
             }
             Attachment.TYPE_WEBSITE_LINK -> {
-                var targetPath: String = target
-                if (!target.startsWith("http://") && !target.startsWith("https://"))
+                var targetPath: String? = attachment.target
+                if (attachment.target?.startsWith("http://") != true
+                    && attachment.target?.startsWith("https://") != true)
                     targetPath = "http://$targetPath"
 
                 val targetUri: Uri = Uri.parse(targetPath)

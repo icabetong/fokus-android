@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import android.os.IBinder
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
@@ -22,16 +23,17 @@ class FileImporterService: BaseService() {
         when (intent?.action) {
             ACTION_START -> {
                 targetDirectory = File(getExternalFilesDir(null),
-                    intent.getStringExtra(EXTRA_DIRECTORY) ?: Streamable.DIRECTORY_GENERIC)
+                    Streamable.DIRECTORY_ATTACHMENTS)
 
-                intent.data?.let { onStartCopy(it, intent.getStringExtra(EXTRA_FILE_NAME)) }
+                intent.data?.let { onStartCopy(it, intent.getStringExtra(EXTRA_OBJECT_ID)!!) }
             }
             ACTION_CANCEL -> terminateService()
         }
         return START_REDELIVER_INTENT
     }
 
-    private fun onStartCopy(uri: Uri, name: String? = null) {
+    private fun onStartCopy(uri: Uri, id: String) {
+        // Check if we have access to the storage
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
             terminateService(BROADCAST_IMPORT_FAILED)
             return
@@ -40,10 +42,16 @@ class FileImporterService: BaseService() {
 
         try {
             contentResolver.openInputStream(uri)?.use {
-                val imported = File(targetDirectory, name ?: uri.getFileName(this))
-                FileUtils.copyToFile(it, imported)
+                // Use the attachment id to link the raw file
+                // to the database
+                // note: need to remove the target column in the database as it becomes redundant.
+                val fileName = uri.getFileName(this)
+                val extension = File(fileName).extension
 
-                terminateService(BROADCAST_IMPORT_COMPLETED, imported.path)
+                val targetFile = File(targetDirectory, "${id}.${extension}")
+                FileUtils.copyToFile(it, targetFile)
+
+                broadcastResultThenTerminate(id, fileName)
             }
         } catch (e: Exception) {
 
@@ -52,12 +60,36 @@ class FileImporterService: BaseService() {
         }
     }
 
+    /**
+     *  Sends the required data back to the activity then
+     *  terminates itself.
+     *  @param id the attachment id that the file will be linked in
+     *  @param name the original file name of the file
+     */
+    private fun broadcastResultThenTerminate(id: String, name: String) {
+        LocalBroadcastManager.getInstance(this)
+            .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
+
+                // This function is only called when the import is
+                // completed and therefore we should just
+                // put a completed status in the broadcast
+                putExtra(EXTRA_BROADCAST_STATUS, BROADCAST_IMPORT_COMPLETED)
+
+                // Send the attachment id back to the calling activity
+                putExtra(EXTRA_BROADCAST_DATA, id)
+
+                // Send the file name back to the calling activity
+                putExtra(EXTRA_BROADCAST_EXTRA, name)
+            })
+        stopSelf()
+    }
+
     companion object {
         const val ACTION_START = "action:start"
         const val ACTION_CANCEL = "action:cancel"
 
-        const val EXTRA_DIRECTORY = "extra:directory"
-        const val EXTRA_FILE_NAME = "extra:filename"
+        const val EXTRA_OBJECT_ID = "extra:id"
+        const val EXTRA_BROADCAST_EXTRA = "extra:broadcast:extra"
 
         const val BROADCAST_IMPORT_ONGOING = "broadcast:attachment:ongoing"
         const val BROADCAST_IMPORT_COMPLETED = "broadcast:attachment:completed"

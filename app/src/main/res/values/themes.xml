@@ -11,6 +11,13 @@
     </style>
 
     <style name="Fokus.Theme.Core.Navigation"/>
-    <style name="Fokus.Theme.Core.Editor"/>
+
+    <!-- Components -->
+    <style name="Fokus.Component.Viewer" parent="Fokus.Component.Viewer.Bridge">
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+    <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Fokus"/>
     <!-- Base application theme -->
@@ -56,8 +56,16 @@
         <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
         <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
     </style>
-    <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="Fokus.Component.Viewer.Bridge" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorSecondary">@color/color_primary</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorOnSurface">@color/color_on_surface</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/color_window_background</item>
+
+        <item name="appBarLayoutStyle">@style/Fokus.Widget.AppBar</item>
+        <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
     </style>
     <style name="Fokus.Component.BottomSheet.Bridge" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="colorPrimary">@color/color_primary</item>
@@ -216,6 +224,13 @@
     </style>
     <style name="Fokus.TextAppearance.Preference.Group" parent="Fokus.TextAppearance.List.Overline">
         <item name="android:textColor">@color/color_primary</item>
+    </style>
+
+    <!-- Animations -->
+    <style name="Fokus.Animations"/>
+    <style name="Fokus.Animations.Slide">
+        <item name="android:windowEnterAnimation">@anim/anim_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/anim_slide_down</item>
     </style>
 
     <!-- Used for Adaptive Launcher Icon Background -->

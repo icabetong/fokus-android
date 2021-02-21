@@ -14,10 +14,11 @@
         <item name="android:navigationBarColor">@color/color_surface</item>
     </style>
 
-    <style name="Fokus.Theme.Core.Editor">
-        <item name="android:statusBarColor">@color/color_window_background</item>
+    <!-- Components -->
+    <style name="Fokus.Component.Viewer" parent="Fokus.Component.Viewer.Bridge">
+        <item name="android:statusBarColor">@color/color_status_background</item>
+        <item name="android:navigationBarColor">@color/color_navigation_background</item>
     </style>
-
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/color_surface</item>

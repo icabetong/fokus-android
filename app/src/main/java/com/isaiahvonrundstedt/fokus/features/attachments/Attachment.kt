@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.attachments
 
+import android.content.Context
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
@@ -15,7 +16,10 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
+import java.net.URLConnection
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -60,9 +64,22 @@ data class Attachment @JvmOverloads constructor(
             }
         }
 
+        fun isImage(path: String): Boolean {
+            val mimeType = URLConnection.guessContentTypeFromName(path)
+            return mimeType != null && mimeType.startsWith("image")
+        }
+
+        fun generateId(): String {
+            return UUID.randomUUID().toString()
+        }
+
+        fun getTargetDirectory(context: Context?): File {
+            return File(context?.getExternalFilesDir(null), Streamable.DIRECTORY_ATTACHMENTS)
+        }
+
         fun toJsonFile(items: List<Attachment>, destination: File, name: String = Streamable.FILE_NAME_ATTACHMENT): File {
             return File(destination, name).apply {
-                Okio.buffer(Okio.sink(this)).use {
+                this.sink().buffer().use {
                     JsonDataStreamer.encodeToJson(items, Attachment::class.java)?.also { json ->
                         it.write(json.toByteArray())
                     }

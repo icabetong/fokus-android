@@ -5,6 +5,8 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okio.Okio
+import okio.buffer
+import okio.source
 import java.io.InputStream
 import java.time.LocalTime
 import java.time.ZonedDateTime
@@ -70,7 +72,7 @@ class JsonDataStreamer private constructor () {
             if (stream.isEmpty()) return null
 
             val adapter: JsonAdapter<T> = moshi.adapter(dataType)
-            return adapter.fromJson(Okio.buffer(Okio.source(stream)))
+            return adapter.fromJson(stream.source().buffer())
         }
 
         fun <T> decodeFromJson(stream: InputStream, dataType: Class<T>): List<T>? {
@@ -78,7 +80,7 @@ class JsonDataStreamer private constructor () {
 
             val type = Types.newParameterizedType(List::class.java, dataType)
             val adapter: JsonAdapter<List<T>> = moshi.adapter(type)
-            return adapter.fromJson(Okio.buffer(Okio.source(stream)))
+            return adapter.fromJson(stream.source().buffer())
         }
 
         private fun InputStream.isEmpty(): Boolean {

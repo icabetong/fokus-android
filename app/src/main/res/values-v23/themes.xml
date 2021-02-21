@@ -15,4 +15,10 @@
     <style name="Fokus.Theme.Core.Navigation"/>
     <style name="Fokus.Theme.Core.Editor"/>
 
+    <!-- Components -->
+    <style name="Fokus.Component.Viewer" parent="Fokus.Component.Viewer.Bridge">
+        <item name="android:statusBarColor">@color/color_status_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
 </resources>

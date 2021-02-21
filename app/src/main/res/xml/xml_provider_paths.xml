@@ -6,10 +6,10 @@
 
     <!-- Path must be same value with DataImporterService.DIRECTORY_ATTACHMENTS -->
     <external-files-path
-        name="attachments" path="attachments"/>
+        name="attachments" path="."/>
 
     <!-- Path must be same value with DataImporterService.DIRECTORY_ASSETS -->
     <external-files-path
-        name="assets" path="assets"/>
+        name="assets" path="."/>
 
 </paths>

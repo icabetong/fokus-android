@@ -26,7 +26,7 @@ class AttachmentAdapter(private var actionListener: ActionListener)
         with (binding) {
             titleView.text = when (t.type) {
                 Attachment.TYPE_IMPORTED_FILE ->
-                    t.target?.let { File(it) }?.name
+                    t.name ?: t.target
                 Attachment.TYPE_WEBSITE_LINK ->
                     t.name ?: t.target
                 Attachment.TYPE_CONTENT_URI ->

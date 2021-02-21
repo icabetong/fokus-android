@@ -5,6 +5,8 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.database.AppDatabase
 import com.squareup.moshi.JsonClass
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.InputStream
 
@@ -34,7 +36,7 @@ data class Metadata @JvmOverloads constructor (
 
     override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
-            Okio.buffer(Okio.sink(this)).use {
+            this.sink().buffer().use {
                 toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }

@@ -14,6 +14,8 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.InputStream
 import java.time.LocalDate
@@ -62,7 +64,7 @@ data class Log @JvmOverloads constructor(
 
     override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
-            Okio.buffer(Okio.sink(this)).use {
+            this.sink().buffer().use {
                 toJsonString()?.also { json -> it.write(json.toByteArray()) }
                 it.flush()
             }

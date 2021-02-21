@@ -18,6 +18,8 @@ import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.InputStream
 import java.util.*
@@ -95,7 +97,7 @@ data class Subject @JvmOverloads constructor(
 
     override fun toJsonFile(destination: File, name: String): File {
         return File(destination, name).apply {
-            Okio.buffer(Okio.sink(this)).use {
+            this.sink().buffer().use {
                 toJsonString()?.also { json -> it.write(json.toByteArray()) }
             }
         }

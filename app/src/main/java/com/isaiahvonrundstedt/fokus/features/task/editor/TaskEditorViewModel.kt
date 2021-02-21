@@ -1,10 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.content.ClipboardManager
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -31,7 +28,9 @@ class TaskEditorViewModel @Inject constructor(
     private val _subject: MutableLiveData<Subject?> = MutableLiveData(null)
 
     val task: LiveData<Task> = _task
-    val attachments: LiveData<ArrayList<Attachment>> = _attachments
+    val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) {
+        it.distinctBy { attachment -> attachment.attachmentID }.toList()
+    }
     val subject: LiveData<Subject?> = _subject
 
     var schedules: ArrayList<Schedule> = arrayListOf()

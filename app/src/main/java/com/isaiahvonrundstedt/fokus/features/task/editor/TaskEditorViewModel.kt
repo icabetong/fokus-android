@@ -70,7 +70,7 @@ class TaskEditorViewModel @Inject constructor(
     }
     fun removeAttachment(attachment: Attachment) {
         val items = ArrayList(getAttachments())
-        items.add(attachment)
+        items.remove(attachment)
         setAttachments(items)
     }
 

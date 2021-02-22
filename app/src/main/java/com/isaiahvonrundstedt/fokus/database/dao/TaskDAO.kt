@@ -20,7 +20,7 @@ interface TaskDAO {
     @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
     suspend fun setFinished(taskID: String, status: Int)
 
-    @Query("SELECT * FROM tasks WHERE isFinished = 0")
+    @Query("SELECT * FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
     suspend fun fetch(): List<Task>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0")

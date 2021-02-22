@@ -89,8 +89,7 @@ class TaskRepository @Inject constructor(
         // Check if notifications for tasks is turned on and if the task
         // is not finished then reschedule the notification from
         // WorkManager
-        if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture() &&
-                task.hasDueDate()) {
+        if (preferenceManager.taskReminder && !task.isFinished) {
 
             workManager.cancelUniqueWork(task.taskID)
             val data = BaseWorker.convertTaskToData(task)

@@ -9,7 +9,7 @@
         android:id="@+id/appBarLayout"
         layout="@layout/layout_appbar_viewer"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/imageContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -5,11 +5,11 @@ import org.junit.Assert.*
 
 class AttachmentTests {
 
-    @Test
-    fun fileType_isImage() {
-        val type = "/storage/emulated/0/Android/data/com.isaiahvonrundstedt.fokus/files/image.jpg"
+    private val path = "/storage/emulated/0/Android/data/com.isaiahvonrundstedt.fokus/files/image.jpg"
 
-        assertTrue(type, Attachment.isImage(type))
+    @Test
+    fun `Get attachment file type and check if it's an image`() {
+        assertTrue(Attachment.isImage(path))
     }
 
 }

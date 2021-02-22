@@ -246,30 +246,6 @@ data class Schedule @JvmOverloads constructor(
             return currentDate.with(DayOfWeek.of(day))
         }
 
-        fun toBundle(schedule: Schedule): Bundle {
-            return bundleOf(
-                EXTRA_ID to schedule.scheduleID,
-                EXTRA_START_TIME to schedule.startTime,
-                EXTRA_END_TIME to schedule.endTime,
-                EXTRA_DAYS_OF_WEEK to schedule.daysOfWeek,
-                EXTRA_WEEKS_OF_MONTH to schedule.weeksOfMonth
-            )
-        }
-
-        fun fromBundle(bundle: Bundle): Schedule? {
-            if (!bundle.containsKey(EXTRA_ID) || !bundle.containsKey(EXTRA_SUBJECT_ID))
-                return null
-
-            return Schedule(
-                scheduleID = bundle.getString(EXTRA_ID)!!,
-                startTime = bundle.getSerializable(EXTRA_START_TIME) as? LocalTime,
-                endTime = bundle.getSerializable(EXTRA_END_TIME) as? LocalTime,
-                daysOfWeek = bundle.getInt(EXTRA_DAYS_OF_WEEK),
-                weeksOfMonth = bundle.getInt(EXTRA_WEEKS_OF_MONTH),
-                subject = bundle.getString(EXTRA_SUBJECT_ID)!!
-            )
-        }
-
         fun toJsonFile(items: List<Schedule>, destination: File,
                        name: String = Streamable.FILE_NAME_SCHEDULE): File {
             return File(destination, name).apply {

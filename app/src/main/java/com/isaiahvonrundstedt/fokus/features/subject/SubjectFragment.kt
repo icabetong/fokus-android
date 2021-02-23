@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils.loadLayoutAnimation
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
@@ -12,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.transition.MaterialElevationScale
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -85,6 +85,15 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         subjectAdapter.constraint = viewModel.constraint
         viewModel.subjects.observe(viewLifecycleOwner) {
+            /**
+             * We'll have to load the animation programmatically
+             * because reasons.
+             * Thanks, Google.
+             */
+            val animation = loadLayoutAnimation(context,
+                R.anim.layout_anim_from_bottom)
+            binding.recyclerView.layoutAnimation = animation
+
             subjectAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

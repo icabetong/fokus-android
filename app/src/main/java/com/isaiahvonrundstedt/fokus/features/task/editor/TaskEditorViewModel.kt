@@ -2,6 +2,7 @@ package com.isaiahvonrundstedt.fokus.features.task.editor
 
 import android.content.ClipboardManager
 import androidx.lifecycle.*
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
@@ -28,9 +29,7 @@ class TaskEditorViewModel @Inject constructor(
     private val _subject: MutableLiveData<Subject?> = MutableLiveData(null)
 
     val task: LiveData<Task> = _task
-    val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) {
-        it.distinctBy { attachment -> attachment.attachmentID }.toList()
-    }
+    val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) { it.toList() }
     val subject: LiveData<Subject?> = _subject
 
     var schedules: ArrayList<Schedule> = arrayListOf()
@@ -66,12 +65,12 @@ class TaskEditorViewModel @Inject constructor(
     fun addAttachment(attachment: Attachment) {
         val items = ArrayList(getAttachments())
         items.add(attachment)
-        setAttachments(items)
+        setAttachments(items.distinctBy { it.attachmentID }.toArrayList())
     }
     fun removeAttachment(attachment: Attachment) {
         val items = ArrayList(getAttachments())
         items.remove(attachment)
-        setAttachments(items)
+        setAttachments(items.distinctBy { it.attachmentID}.toArrayList())
     }
 
 

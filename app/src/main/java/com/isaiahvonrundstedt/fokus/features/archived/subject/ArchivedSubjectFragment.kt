@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +60,15 @@ class ArchivedSubjectFragment: BaseFragment(), BaseAdapter.SelectListener {
         super.onStart()
 
         viewModel.items.observe(viewLifecycleOwner) {
+            /**
+             * We'll have to load the animation programmatically
+             * because reasons.
+             * Thanks, Google.
+             */
+            val animation = AnimationUtils.loadLayoutAnimation(context,
+                R.anim.layout_anim_from_bottom)
+            binding.recyclerView.layoutAnimation = animation
+
             archivedSubjectAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

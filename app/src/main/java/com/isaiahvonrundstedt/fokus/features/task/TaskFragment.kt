@@ -5,12 +5,11 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.view.animation.AnimationUtils
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -97,6 +96,15 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         setupNavigation(binding.appBarLayout.toolbar, controller)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
+            /**
+             * We'll have to load the animation programmatically
+             * because reasons.
+             * Thanks, Google.
+             */
+            val animation = AnimationUtils.loadLayoutAnimation(context,
+                R.anim.layout_anim_from_bottom)
+            binding.recyclerView.layoutAnimation = animation
+
             taskAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

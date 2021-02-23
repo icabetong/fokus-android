@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -117,6 +118,15 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         }
 
         viewModel.events.observe(viewLifecycleOwner) {
+            /**
+             * We'll have to load the animation programmatically
+             * because reasons.
+             * Thanks, Google.
+             */
+            val animation = AnimationUtils.loadLayoutAnimation(context,
+                R.anim.layout_anim_from_bottom)
+            binding.recyclerView.layoutAnimation = animation
+
             eventAdapter.submitList(it)
         }
         viewModel.eventsEmpty.observe(viewLifecycleOwner) {

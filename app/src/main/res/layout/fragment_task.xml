@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionGroup="true"
-        android:layoutAnimation="@anim/layout_anim_fall_down"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <nl.dionsegijn.konfetti.KonfettiView

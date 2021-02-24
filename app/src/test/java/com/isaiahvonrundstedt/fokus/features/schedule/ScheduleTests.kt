@@ -1,6 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.DayOfWeek
@@ -17,10 +16,4 @@ class ScheduleTests {
         assertTrue(Schedule.parseDaysOfWeek(daysOfWeek).contains(DayOfWeek.THURSDAY.value))
     }
 
-    @Test
-    fun `Check schedule if it's Monday return false`() {
-        val daysOfWeek = Schedule.BIT_VALUE_SUNDAY + Schedule.BIT_VALUE_WEDNESDAY
-
-        assertFalse(Schedule.parseDaysOfWeek(daysOfWeek).contains(DayOfWeek.MONDAY.value))
-    }
 }

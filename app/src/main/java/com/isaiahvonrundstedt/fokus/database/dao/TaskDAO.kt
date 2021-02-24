@@ -23,7 +23,7 @@ interface TaskDAO {
     @Query("SELECT * FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
     suspend fun fetch(): List<Task>
 
-    @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0")
+    @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
     suspend fun fetchCount(): Int
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")

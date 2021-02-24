@@ -169,13 +169,6 @@ data class Schedule @JvmOverloads constructor(
     }
 
     companion object {
-        const val EXTRA_ID = "extra:id"
-        const val EXTRA_START_TIME = "extra:start"
-        const val EXTRA_END_TIME = "extra:end"
-        const val EXTRA_DAYS_OF_WEEK = "extra:days"
-        const val EXTRA_WEEKS_OF_MONTH = "extra:weeks"
-        const val EXTRA_SUBJECT_ID = "extra:subject"
-
         const val BIT_VALUE_SUNDAY = 1
         const val BIT_VALUE_MONDAY = 2
         const val BIT_VALUE_TUESDAY = 4

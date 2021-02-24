@@ -163,17 +163,25 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             setCurrentDate(it.yearMonth.atDay(1))
             binding.appBarLayout.toolbar.title = it.yearMonth.format(monthYearFormatter)
 
+            // Check if the user is nearing the end of the month list.
+            // Then continually add more months so that the user
+            // can scroll infinitely.
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
+                // The user is two months away from the starting month in the CalendarView
+                // we'll need to add more months at the start
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
                 binding.calendarView.updateMonthRangeAsync(startMonth = viewModel.startMonth)
 
             } else if (it.yearMonth.plusMonths(2) == viewModel.endMonth) {
-
+                // The user is two months away from the ending month in the CalendarView
+                // we'll need to add more months at the end
                 viewModel.endMonth = viewModel.endMonth.plusMonths(2)
                 binding.calendarView.updateMonthRangeAsync(endMonth = viewModel.endMonth)
             }
         }
 
+        // Observe dates with events then rebind the
+        // dayBinder to the Calendar.
         viewModel.dates.observe(viewLifecycleOwner) { dates ->
             binding.calendarView.dayBinder = object: DayBinder<DayViewContainer> {
                 override fun create(view: View): DayViewContainer {

@@ -1,5 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
+import android.content.Context
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
@@ -44,12 +45,6 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     private val binding get() = _binding!!
     private val taskAdapter = TaskAdapter(this, this, this)
     private val viewModel: TaskViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = buildContainerTransform()
-        sharedElementReturnTransition = buildContainerTransform()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -96,15 +91,6 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         setupNavigation(binding.appBarLayout.toolbar, controller)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
-            /**
-             * We'll have to load the animation programmatically
-             * because reasons.
-             * Thanks, Google.
-             */
-            val animation = AnimationUtils.loadLayoutAnimation(context,
-                R.anim.layout_anim_from_bottom)
-            binding.recyclerView.layoutAnimation = animation
-
             taskAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

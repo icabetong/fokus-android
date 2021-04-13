@@ -118,15 +118,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         }
 
         viewModel.events.observe(viewLifecycleOwner) {
-            /**
-             * We'll have to load the animation programmatically
-             * because reasons.
-             * Thanks, Google.
-             */
-            val animation = AnimationUtils.loadLayoutAnimation(context,
-                R.anim.layout_anim_from_bottom)
-            binding.recyclerView.layoutAnimation = animation
-
             eventAdapter.submitList(it)
         }
         viewModel.eventsEmpty.observe(viewLifecycleOwner) {

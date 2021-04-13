@@ -60,15 +60,6 @@ class ArchivedTaskFragment: BaseFragment(), BaseAdapter.SelectListener {
         super.onStart()
 
         viewModel.items.observe(viewLifecycleOwner) {
-            /**
-             * We'll have to load the animation programmatically
-             * because reasons.
-             * Thanks, Google.
-             */
-            val animation = AnimationUtils.loadLayoutAnimation(context,
-                R.anim.layout_anim_from_bottom)
-            binding.recyclerView.layoutAnimation = animation
-
             archivedTaskAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

@@ -22,7 +22,7 @@ class ReactiveTextColorSwitch @JvmOverloads constructor (
         }
     }
 
-    fun setTextColorRes(@ColorRes resId: Int) {
+    private fun setTextColorRes(@ColorRes resId: Int) {
         setTextColor(ContextCompat.getColor(context, resId))
     }
 }

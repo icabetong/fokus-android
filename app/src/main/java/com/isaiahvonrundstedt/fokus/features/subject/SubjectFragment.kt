@@ -85,15 +85,6 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         subjectAdapter.constraint = viewModel.constraint
         viewModel.subjects.observe(viewLifecycleOwner) {
-            /**
-             * We'll have to load the animation programmatically
-             * because reasons.
-             * Thanks, Google.
-             */
-            val animation = loadLayoutAnimation(context,
-                R.anim.layout_anim_from_bottom)
-            binding.recyclerView.layoutAnimation = animation
-
             subjectAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {

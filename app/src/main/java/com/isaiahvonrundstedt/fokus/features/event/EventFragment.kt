@@ -83,9 +83,11 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         daysOfWeek = daysOfWeekFromLocale()
         binding.calendarView.apply {
-            setup(viewModel.startMonth, viewModel.endMonth,
+            setup(viewModel.currentMonth, viewModel.currentMonth,
                 daysOfWeek.first())
             scrollToMonth(viewModel.currentMonth)
+            setupAsync(viewModel.startMonth, viewModel.endMonth,
+                daysOfWeek.first())
         }
 
         if (savedInstanceState == null)

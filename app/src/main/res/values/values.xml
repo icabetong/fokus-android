@@ -111,7 +111,6 @@
         <item name="exb_itemBackgroundCornerRadius">32dp</item>
         <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>
         <item name="exb_transitionDuration">50</item>
-        <item name="layout_behavior">@string/behavior_expandable_bottom_bar</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.MaterialComponents.Button">
         <item name="iconTint">@color/color_on_primary</item>

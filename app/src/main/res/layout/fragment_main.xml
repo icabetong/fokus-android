@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:exb_items="@menu/navigation_core"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             style="@style/Fokus.Widget.Navigation"/>
 
     </LinearLayout>

@@ -85,7 +85,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         binding.calendarView.apply {
             setup(viewModel.currentMonth, viewModel.currentMonth,
                 daysOfWeek.first())
-            scrollToMonth(viewModel.currentMonth)
             setupAsync(viewModel.startMonth, viewModel.endMonth,
                 daysOfWeek.first())
         }
@@ -191,6 +190,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     override fun onResume() {
         super.onResume()
 
+        binding.calendarView.scrollToMonth(viewModel.currentMonth)
         binding.actionButton.setOnClickListener {
             it.transitionName = TRANSITION_ELEMENT_ROOT
 

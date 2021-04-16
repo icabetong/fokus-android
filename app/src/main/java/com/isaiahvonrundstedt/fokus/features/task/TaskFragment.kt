@@ -1,12 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import android.content.Context
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.view.animation.AnimationUtils
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
@@ -17,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
@@ -24,8 +23,10 @@ import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
+import com.isaiahvonrundstedt.fokus.databinding.FragmentMainBinding
 import com.isaiahvonrundstedt.fokus.databinding.FragmentTaskBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.core.fragments.MainFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -57,8 +58,9 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
 
-        with(binding.appBarLayout.toolbar) {
+        getParentToolbar()?.run {
             setTitle(getToolbarTitle())
+            menu?.clear()
             inflateMenu(R.menu.menu_tasks)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
@@ -82,13 +84,6 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onStart() {
         super.onStart()
-
-        /**
-         * Get the NavController here so that
-         * it doesn't crash at startup
-         */
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         viewModel.tasks.observe(viewLifecycleOwner) {
             taskAdapter.submitList(it)
@@ -225,15 +220,15 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             }
             R.id.action_filter_all -> {
                 viewModel.filterOption = TaskViewModel.Constraint.ALL
-                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+                getParentToolbar()?.setTitle(getToolbarTitle())
             }
             R.id.action_filter_pending -> {
                 viewModel.filterOption = TaskViewModel.Constraint.PENDING
-                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+                getParentToolbar()?.setTitle(getToolbarTitle())
             }
             R.id.action_filter_finished -> {
                 viewModel.filterOption = TaskViewModel.Constraint.FINISHED
-                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
+                getParentToolbar()?.setTitle(getToolbarTitle())
             }
         }
         return true

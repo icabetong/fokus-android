@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.NavController
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
@@ -32,6 +33,15 @@ abstract class BaseFragment : Fragment() {
         reenterTransition = MaterialElevationScale(true).apply {
             duration = TRANSITION_DURATION
         }
+    }
+
+    /**
+     * @return returns the Parent Fragment with the Toolbar view
+     * useful when dealing with MainFragment.kt then its ChildFragments
+     */
+    protected fun getParentToolbar(): MaterialToolbar? {
+        // see https://stackoverflow.com/a/63200538
+        return parentFragment?.parentFragment?.view?.findViewById(R.id.toolbar)
     }
 
     /**

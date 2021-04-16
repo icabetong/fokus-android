@@ -65,8 +65,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
 
-        with(binding.appBarLayout.toolbar) {
+        getParentToolbar()?.run {
             title = viewModel.currentMonth.format(monthYearFormatter)
+            menu?.clear()
         }
 
         with(binding.recyclerView) {
@@ -96,14 +97,14 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
     override fun onStart() {
         super.onStart()
-
-        /**
-         * Get the NavController here so
-         * that it doesn't crash when
-         * the host activity is recreated.
-         */
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        setupNavigation(binding.appBarLayout.toolbar, controller)
+//
+//        /**
+//         * Get the NavController here so
+//         * that it doesn't crash when
+//         * the host activity is recreated.
+//         */
+//        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+//        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         class DayViewContainer(view: View): ViewContainer(view) {
             lateinit var day: CalendarDay
@@ -154,7 +155,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
-            binding.appBarLayout.toolbar.title = it.yearMonth.format(monthYearFormatter)
+            getParentToolbar()?.title = it.yearMonth.format(monthYearFormatter)
 
             // Check if the user is nearing the end of the month list.
             // Then continually add more months so that the user

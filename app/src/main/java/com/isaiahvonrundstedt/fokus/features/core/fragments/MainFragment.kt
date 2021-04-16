@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +19,7 @@ import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNa
 @AndroidEntryPoint
 class MainFragment: BaseFragment() {
     private var _binding: FragmentMainBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
 
@@ -28,6 +31,9 @@ class MainFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        controller = Navigation.findNavController(view)
+        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         /**
          * Enables the return transition between the inner

@@ -4,12 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
     android:animateLayoutChanges="true">
-
-    <include
-        android:id="@+id/appBarLayout"
-        layout="@layout/layout_appbar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -21,7 +16,7 @@
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/confettiView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/emptyViewPendingTasks"

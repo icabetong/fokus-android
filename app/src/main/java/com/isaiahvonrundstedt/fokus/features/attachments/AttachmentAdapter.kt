@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getFileName
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBasicAdapter
-import java.io.File
 
 class AttachmentAdapter(private var actionListener: ActionListener)
     : BaseAdapter<Attachment, AttachmentAdapter.AttachmentViewHolder>(Attachment.DIFF_CALLBACK) {

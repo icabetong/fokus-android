@@ -1,8 +1,10 @@
 package com.isaiahvonrundstedt.fokus.features.subject
 
 import android.os.Bundle
-import android.view.*
-import android.view.animation.AnimationUtils.loadLayoutAnimation
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
@@ -76,6 +78,13 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onStart() {
         super.onStart()
+
+        /**
+         * Get the NavController here so
+         * that it doesn't crash when
+         * the host activity is recreated.
+         */
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
 
         subjectAdapter.constraint = viewModel.constraint
         viewModel.subjects.observe(viewLifecycleOwner) {

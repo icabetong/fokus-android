@@ -17,6 +17,7 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.*
 import javax.inject.Inject
 
 class TaskRepository @Inject constructor(
@@ -36,6 +37,10 @@ class TaskRepository @Inject constructor(
     suspend fun fetchCore(): List<Task> = tasks.fetch()
 
     suspend fun fetchCount(): Int = tasks.fetchCount()
+
+    suspend fun checkNameCount(name: String?): Boolean {
+        return tasks.checkNameCount(name?.toLowerCase(Locale.ROOT)) != 0
+    }
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks.insert(task)

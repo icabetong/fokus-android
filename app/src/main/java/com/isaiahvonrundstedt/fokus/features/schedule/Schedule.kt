@@ -1,10 +1,8 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
 import android.content.Context
-import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -17,7 +15,6 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
-import okio.Okio
 import okio.buffer
 import okio.sink
 import java.io.File

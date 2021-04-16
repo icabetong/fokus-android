@@ -2,7 +2,6 @@ package com.isaiahvonrundstedt.fokus.features.event
 
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
-import com.kizitonwose.calendarview.model.CalendarDay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable

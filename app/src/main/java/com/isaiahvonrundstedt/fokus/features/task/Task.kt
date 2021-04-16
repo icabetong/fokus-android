@@ -16,7 +16,6 @@ import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
-import okio.Okio
 import okio.buffer
 import okio.sink
 import java.io.File

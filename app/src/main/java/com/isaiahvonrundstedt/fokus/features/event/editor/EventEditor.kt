@@ -16,7 +16,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
@@ -190,8 +189,13 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             }
         }
 
+        viewModel.isNameTaken.observe(this) {
+            binding.eventNameTextInputLayout.error =
+                if (it) getString(R.string.error_event_name_exists)
+                else null
+        }
+
         binding.eventNameTextInput.textChanged {
-            android.util.Log.e("LISTENER", it.toString())
             viewModel.setName(it.toString())
         }
 

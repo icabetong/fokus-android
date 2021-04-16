@@ -263,6 +263,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             }
         }
 
+        viewModel.isNameExists.observe(this) {
+            binding.taskNameTextInputLayout.error =
+                if (it) getString(R.string.error_task_name_exists)
+                else null
+        }
+
         binding.taskNameTextInput.textChanged {
             viewModel.setName(it.toString())
         }

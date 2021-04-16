@@ -25,9 +25,11 @@ class EventEditorViewModel @Inject constructor(
 
     private val _event: MutableLiveData<Event> = MutableLiveData(Event())
     private val _subject: MutableLiveData<Subject> = MutableLiveData(null)
+    private val _isNameTaken: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val event: LiveData<Event> = _event
     val subject: LiveData<Subject> = _subject
+    val isNameTaken: LiveData<Boolean> = _isNameTaken
 
     var schedules: List<Schedule> = emptyList()
 
@@ -56,16 +58,16 @@ class EventEditorViewModel @Inject constructor(
     fun getName(): String? {
         return getEvent()?.name
     }
-    fun setName(name: String?) {
-        android.util.Log.e("VM FUNC", name!!)
+    fun setName(name: String?) = viewModelScope.launch {
         // Check if the same value is being set
         if (name == getName())
-            return
+            return@launch
 
         val event = getEvent()
         event?.name = name
-        android.util.Log.e("OBJECT", event?.name!!)
         setEvent(event)
+
+        _isNameTaken.value = repository.checkNameCount(name)
     }
 
     fun getSchedule(): ZonedDateTime? {

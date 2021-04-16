@@ -17,6 +17,9 @@ interface SubjectDAO {
     @Update
     suspend fun update(subject: Subject)
 
+    @Query("SELECT COUNT(*) FROM subjects WHERE code = :c")
+    suspend fun checkCodeCount(c: String?): Int
+
     @Query("SELECT * FROM subjects")
     suspend fun fetch(): List<Subject>
 
@@ -30,5 +33,6 @@ interface SubjectDAO {
     @Transaction
     @Query("SELECT * FROM subjects WHERE isSubjectArchived = 1 ORDER BY code ASC")
     fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>>
+
 
 }

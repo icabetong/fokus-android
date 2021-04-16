@@ -4,7 +4,6 @@ import android.net.Uri
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.squareup.moshi.*
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import okio.Okio
 import okio.buffer
 import okio.source
 import java.io.InputStream

@@ -17,6 +17,9 @@ interface EventDAO {
     @Update
     suspend fun update(event: Event)
 
+    @Query("SELECT COUNT(*) FROM events WHERE name = LOWER(:n)")
+    suspend fun checkNameCount(n: String?): Int
+
     @Query("SELECT * FROM events")
     suspend fun fetch(): List<Event>
 

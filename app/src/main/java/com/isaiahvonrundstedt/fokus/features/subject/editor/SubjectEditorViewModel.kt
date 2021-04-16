@@ -21,9 +21,11 @@ class SubjectEditorViewModel @Inject constructor(
 
     private val _subject: MutableLiveData<Subject> = MutableLiveData(Subject())
     private val _schedules: MutableLiveData<ArrayList<Schedule>> = MutableLiveData(arrayListOf())
+    private val _isCodeTaken: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val subject: LiveData<Subject> = _subject
     val schedules: LiveData<ArrayList<Schedule>> = _schedules
+    val isCodeTaken: LiveData<Boolean> = _isCodeTaken
 
     fun getSubject(): Subject? {
         return subject.value
@@ -66,13 +68,15 @@ class SubjectEditorViewModel @Inject constructor(
     fun getCode(): String? {
         return getSubject()?.code
     }
-    fun setCode(code: String) {
+    fun setCode(code: String) = viewModelScope.launch {
         if (code == getCode())
-            return
+            return@launch
 
         val subject = getSubject()
         subject?.code = code
         setSubject(subject)
+
+        _isCodeTaken.value = repository.checkCodeExists(code)
     }
 
     fun getDescription(): String? {

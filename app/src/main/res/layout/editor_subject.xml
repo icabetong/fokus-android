@@ -23,10 +23,12 @@
             android:paddingBottom="@dimen/activity_padding">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/codeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_padding"
                 android:hint="@string/field_subject_code"
+                app:errorEnabled="true"
                 style="@style/Fokus.Widget.TextInput.Layout">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_marginVertical="8dp"
+                android:layout_marginBottom="8dp"
                 android:paddingVertical="@dimen/editor_container_padding"
                 android:orientation="vertical"
                 android:background="@drawable/shape_card_background">

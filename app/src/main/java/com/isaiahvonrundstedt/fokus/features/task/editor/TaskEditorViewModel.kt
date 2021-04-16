@@ -27,10 +27,12 @@ class TaskEditorViewModel @Inject constructor(
     private val _task: MutableLiveData<Task> = MutableLiveData(Task())
     private val _attachments: MutableLiveData<ArrayList<Attachment>> = MutableLiveData(arrayListOf())
     private val _subject: MutableLiveData<Subject?> = MutableLiveData(null)
+    private val _isNameExists: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val task: LiveData<Task> = _task
     val attachments: LiveData<List<Attachment>> = Transformations.map(_attachments) { it.toList() }
     val subject: LiveData<Subject?> = _subject
+    val isNameExists: LiveData<Boolean> = _isNameExists
 
     var schedules: ArrayList<Schedule> = arrayListOf()
 
@@ -81,14 +83,16 @@ class TaskEditorViewModel @Inject constructor(
     fun getName(): String? {
         return getTask()?.name
     }
-    fun setName(name: String?) {
+    fun setName(name: String?) = viewModelScope.launch {
         // Check if the same value is being set
         if (name == getName())
-            return
+            return@launch
 
         val task = getTask()
         task?.name = name
         setTask(task)
+
+        _isNameExists.value = repository.checkNameCount(name)
     }
 
     fun getDueDate(): ZonedDateTime? {

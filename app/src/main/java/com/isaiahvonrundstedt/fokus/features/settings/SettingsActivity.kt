@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
@@ -28,8 +27,6 @@ import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWork
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
-import me.saket.cascade.CascadePopupMenu
-import me.saket.cascade.overrideOverflowMenu
 import java.util.*
 
 class SettingsActivity : BaseActivity() {

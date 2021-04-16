@@ -15,8 +15,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -158,6 +156,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
         viewModel.schedules.observe(this) {
             scheduleAdapter.submitList(ArrayList(it))
+        }
+
+        viewModel.isCodeTaken.observe(this) {
+            binding.codeTextInputLayout.error =
+                if (it) getString(R.string.error_code_is_taken)
+                else null
         }
 
         binding.codeTextInput.textChanged {

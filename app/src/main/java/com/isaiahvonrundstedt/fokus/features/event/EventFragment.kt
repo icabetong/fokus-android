@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -97,14 +96,13 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
     override fun onStart() {
         super.onStart()
-//
-//        /**
-//         * Get the NavController here so
-//         * that it doesn't crash when
-//         * the host activity is recreated.
-//         */
-//        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-//        setupNavigation(binding.appBarLayout.toolbar, controller)
+
+        /**
+         * Get the NavController here so
+         * that it doesn't crash when
+         * the host activity is recreated.
+         */
+        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
 
         class DayViewContainer(view: View): ViewContainer(view) {
             lateinit var day: CalendarDay

@@ -1,14 +1,14 @@
 package com.isaiahvonrundstedt.fokus.features.log
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.os.bundleOf
-import androidx.core.view.doOnPreDraw
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -16,16 +16,9 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.databinding.FragmentLogsBinding
-import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectAdapter
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
-import com.isaiahvonrundstedt.fokus.features.subject.SubjectViewModel
-import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import dagger.hilt.android.AndroidEntryPoint
-import me.saket.cascade.CascadePopupMenu
 import me.saket.cascade.overrideOverflowMenu
 
 @AndroidEntryPoint

@@ -77,6 +77,10 @@
     <string name="empty_view_no_archived_events">No Archived Events</string>
     <string name="empty_view_no_archived_subjects">No Archived Subjects</string>
 
+    <string name="error_code_is_taken">A subject with this code already exists.</string>
+    <string name="error_task_name_exists">A task with this name already exists.</string>
+    <string name="error_event_name_exists">A event with this name already exists.</string>
+
     <string name="days_of_week_item_sunday">Sunday</string>
     <string name="days_of_week_item_monday">Monday</string>
     <string name="days_of_week_item_tuesday">Tuesday</string>

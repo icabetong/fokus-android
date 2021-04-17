@@ -26,7 +26,7 @@
             </item>
             <item
                 android:title="@string/field_description"
-                android:icon="@drawable/ic_hero_clock_24">
+                android:icon="@drawable/ic_hero_pencil_24">
                 <menu>
                     <item
                         android:id="@+id/action_description_sort_ascending"

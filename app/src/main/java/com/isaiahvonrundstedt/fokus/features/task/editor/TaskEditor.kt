@@ -30,6 +30,7 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
@@ -270,11 +271,19 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         }
 
         binding.taskNameTextInput.textChanged {
-            viewModel.setName(it.toString())
+            viewModel.checkNameUniqueness(it.toString())
         }
 
-        binding.notesTextInput.textChanged {
-            viewModel.setNotes(it.toString())
+        binding.taskNameTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setName(v.text.toString())
+            }
+        }
+
+        binding.notesTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setNotes(v.text.toString())
+            }
         }
 
         binding.statusSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -389,6 +398,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
         binding.actionButton.setOnClickListener {
             hideKeyboardFromCurrentFocus(requireView())
+
+            viewModel.setName(binding.taskNameTextInput.text.toString())
 
             // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,

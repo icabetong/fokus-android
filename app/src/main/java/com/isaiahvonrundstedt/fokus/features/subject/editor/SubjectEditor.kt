@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
@@ -165,11 +166,19 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
 
         binding.codeTextInput.textChanged {
-            viewModel.setCode(it.toString())
+            viewModel.checkCodeUniqueness(it.toString())
         }
 
-        binding.descriptionTextInput.textChanged {
-            viewModel.setDescription(it.toString())
+        binding.codeTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setCode(v.text.toString())
+            }
+        }
+
+        binding.descriptionTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setDescription(v.text.toString())
+            }
         }
 
         binding.addActionLayout.addItemButton.setOnClickListener {

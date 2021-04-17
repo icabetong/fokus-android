@@ -32,7 +32,7 @@ class SubjectRepository @Inject constructor(
     fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>> = subjects.fetchArchivedLiveData()
 
     suspend fun checkCodeExists(code: String?): Boolean {
-        return subjects.checkCodeCount(code) != 0
+        return subjects.checkCodeCount(code?.toLowerCase(Locale.getDefault())) != 0
     }
 
     suspend fun fetch(): List<SubjectPackage> = subjects.fetchAsPackage()

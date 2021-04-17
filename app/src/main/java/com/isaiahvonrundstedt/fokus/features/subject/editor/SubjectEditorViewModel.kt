@@ -60,6 +60,9 @@ class SubjectEditorViewModel @Inject constructor(
         }
     }
 
+    fun checkCodeUniqueness(code: String?) = viewModelScope.launch {
+        _isCodeTaken.value = repository.checkCodeExists(code)
+    }
 
     fun getID(): String? {
         return getSubject()?.subjectID
@@ -68,15 +71,14 @@ class SubjectEditorViewModel @Inject constructor(
     fun getCode(): String? {
         return getSubject()?.code
     }
-    fun setCode(code: String) = viewModelScope.launch {
+    fun setCode(code: String) {
         if (code == getCode())
-            return@launch
+            return
 
         val subject = getSubject()
         subject?.code = code
         setSubject(subject)
 
-        _isCodeTaken.value = repository.checkCodeExists(code)
     }
 
     fun getDescription(): String? {

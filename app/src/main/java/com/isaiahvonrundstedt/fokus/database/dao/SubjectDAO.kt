@@ -17,7 +17,7 @@ interface SubjectDAO {
     @Update
     suspend fun update(subject: Subject)
 
-    @Query("SELECT COUNT(*) FROM subjects WHERE code = :c")
+    @Query("SELECT COUNT(*) FROM subjects WHERE code = LOWER(:c)")
     suspend fun checkCodeCount(c: String?): Int
 
     @Query("SELECT * FROM subjects")

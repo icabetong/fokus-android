@@ -25,6 +25,7 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.CoreApplication
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
@@ -196,11 +197,25 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         }
 
         binding.eventNameTextInput.textChanged {
-            viewModel.setName(it.toString())
+            viewModel.checkNameUniqueness(it.toString())
         }
 
-        binding.notesTextInput.textChanged {
-            viewModel.setNotes(it.toString())
+        binding.eventNameTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setName(v.text.toString())
+            }
+        }
+
+        binding.locationTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setLocation(v.text.toString())
+            }
+        }
+
+        binding.notesTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setNotes(v.text.toString())
+            }
         }
 
         binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->

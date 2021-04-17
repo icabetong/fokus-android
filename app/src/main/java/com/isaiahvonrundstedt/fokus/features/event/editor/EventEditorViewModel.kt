@@ -54,20 +54,21 @@ class EventEditorViewModel @Inject constructor(
         }
     }
 
+    fun checkNameUniqueness(name: String?) = viewModelScope.launch {
+        _isNameTaken.value = repository.checkNameCount(name)
+    }
 
     fun getName(): String? {
         return getEvent()?.name
     }
-    fun setName(name: String?) = viewModelScope.launch {
+    fun setName(name: String?) {
         // Check if the same value is being set
         if (name == getName())
-            return@launch
+            return
 
         val event = getEvent()
         event?.name = name
         setEvent(event)
-
-        _isNameTaken.value = repository.checkNameCount(name)
     }
 
     fun getSchedule(): ZonedDateTime? {

@@ -76,6 +76,10 @@ class TaskEditorViewModel @Inject constructor(
     }
 
 
+    fun checkNameUniqueness(name: String?) = viewModelScope.launch {
+        _isNameExists.value = repository.checkNameCount(name)
+    }
+
     fun getID(): String? {
         return getTask()?.taskID
     }
@@ -83,16 +87,14 @@ class TaskEditorViewModel @Inject constructor(
     fun getName(): String? {
         return getTask()?.name
     }
-    fun setName(name: String?) = viewModelScope.launch {
+    fun setName(name: String?) {
         // Check if the same value is being set
         if (name == getName())
-            return@launch
+            return
 
         val task = getTask()
         task?.name = name
         setTask(task)
-
-        _isNameExists.value = repository.checkNameCount(name)
     }
 
     fun getDueDate(): ZonedDateTime? {

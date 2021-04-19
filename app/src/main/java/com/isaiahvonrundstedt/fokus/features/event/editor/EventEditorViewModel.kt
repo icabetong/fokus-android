@@ -55,7 +55,12 @@ class EventEditorViewModel @Inject constructor(
     }
 
     fun checkNameUniqueness(name: String?) = viewModelScope.launch {
-        _isNameTaken.value = repository.checkNameCount(name)
+        val result = repository.checkNameUniqueness(name)
+        _isNameTaken.value = !result.contains(name) && result.isNotEmpty()
+    }
+
+    fun getID(): String? {
+        return getEvent()?.eventID
     }
 
     fun getName(): String? {

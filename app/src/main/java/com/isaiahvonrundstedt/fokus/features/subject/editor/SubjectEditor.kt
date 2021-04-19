@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -159,13 +161,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             scheduleAdapter.submitList(ArrayList(it))
         }
 
-        viewModel.isCodeTaken.observe(this) {
-            binding.codeTextInputLayout.error =
-                if (it) getString(R.string.error_code_is_taken)
-                else null
+        viewModel.isCodeExists.observe(this) {
+            binding.codeTextInputLayout.error = if (it) getString(R.string.feedback_subject_code_exists)
+            else null
         }
 
-        binding.codeTextInput.textChanged {
+        binding.codeTextInput.doAfterTextChanged {
             viewModel.checkCodeUniqueness(it.toString())
         }
 
@@ -210,6 +211,10 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
 
         binding.actionButton.setOnClickListener {
+
+            viewModel.setCode(binding.codeTextInput.text.toString())
+            viewModel.setDescription(binding.descriptionTextInput.text.toString())
+
             if (viewModel.getCode()?.isEmpty() == true) {
                 createSnackbar(R.string.feedback_subject_empty_name, binding.root)
                 binding.codeTextInput.requestFocus()
@@ -227,8 +232,6 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 return@setOnClickListener
             }
 
-            viewModel.setCode(binding.codeTextInput.text.toString())
-            viewModel.setDescription(binding.descriptionTextInput.text.toString())
 
             if (requestKey == REQUEST_KEY_INSERT)
                 viewModel.insert()

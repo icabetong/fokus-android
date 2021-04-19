@@ -16,7 +16,6 @@ import com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationWorker
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.*
 import javax.inject.Inject
 
 class EventRepository @Inject constructor(
@@ -32,9 +31,7 @@ class EventRepository @Inject constructor(
 
     fun fetchArchivedLiveData(): LiveData<List<EventPackage>> = events.fetchArchivedLiveData()
 
-    suspend fun checkNameCount(name: String?): Boolean {
-        return events.checkNameCount(name?.toLowerCase(Locale.ROOT)) != 0
-    }
+    suspend fun checkNameUniqueness(name: String?): List<String> = events.checkNameUniqueness(name)
 
     suspend fun fetch(): List<EventPackage> = events.fetchPackage()
 

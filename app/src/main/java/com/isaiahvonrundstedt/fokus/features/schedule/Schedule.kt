@@ -27,7 +27,7 @@ import java.util.*
 @Entity(tableName = "schedules", foreignKeys = [ForeignKey(entity = Subject::class,
     parentColumns = arrayOf("subjectID"), childColumns = arrayOf("subject"),
     onDelete = ForeignKey.CASCADE)])
-data class Schedule @JvmOverloads constructor(
+data class  Schedule @JvmOverloads constructor(
     @PrimaryKey
     var scheduleID: String = UUID.randomUUID().toString(),
     var daysOfWeek: Int = 0,
@@ -193,7 +193,6 @@ data class Schedule @JvmOverloads constructor(
                         && oldItem.subject == newItem.subject
             }
         }
-
 
         fun formatTime(context: Context, time: LocalTime?): String? {
             return time?.format(DateTimeConverter.getTimeFormatter(context))

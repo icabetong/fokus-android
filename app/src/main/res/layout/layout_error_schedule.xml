@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/errorScheduleConflictView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:paddingVertical="@dimen/item_padding_small"
+    android:paddingHorizontal="@dimen/item_padding"
+    android:text="@string/feedback_schedule_exists"
+    android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
+    android:drawablePadding="@dimen/item_padding_small"
+    app:drawableStartCompat="@drawable/ic_hero_exclamation_circle_24" />

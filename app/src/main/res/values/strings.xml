@@ -77,10 +77,6 @@
     <string name="empty_view_no_archived_events">No Archived Events</string>
     <string name="empty_view_no_archived_subjects">No Archived Subjects</string>
 
-    <string name="error_code_is_taken">A subject with this code already exists.</string>
-    <string name="error_task_name_exists">A task with this name already exists.</string>
-    <string name="error_event_name_exists">A event with this name already exists.</string>
-
     <string name="days_of_week_item_sunday">Sunday</string>
     <string name="days_of_week_item_monday">Monday</string>
     <string name="days_of_week_item_tuesday">Tuesday</string>
@@ -203,6 +199,11 @@
     <string name="feedback_export_failed">Export failed</string>
     <string name="feedback_unable_to_share_title">Unable to share</string>
     <string name="feedback_unable_to_share_message">There are no valid information that can be shared</string>
+    <string name="feedback_subject_code_exists">A subject with this code already exists.</string>
+    <string name="feedback_schedule_exists">A schedule conflicts with another schedule.</string>
+    <string name="feedback_task_name_exists">A task with this name already exists.</string>
+    <string name="feedback_event_name_exists">An event with this name already exists.</string>
+    <string name="feedback_event_schedule_exists">An event with the same schedule already exists.</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sound</string>

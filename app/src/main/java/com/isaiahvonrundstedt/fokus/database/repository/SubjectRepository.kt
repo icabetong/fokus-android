@@ -15,7 +15,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.*
 import javax.inject.Inject
 
 class SubjectRepository @Inject constructor(
@@ -31,11 +30,9 @@ class SubjectRepository @Inject constructor(
 
     fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>> = subjects.fetchArchivedLiveData()
 
-    suspend fun checkCodeExists(code: String?): Boolean {
-        return subjects.checkCodeCount(code?.toLowerCase(Locale.getDefault())) != 0
-    }
-
     suspend fun fetch(): List<SubjectPackage> = subjects.fetchAsPackage()
+
+    suspend fun checkCodeExists(code: String?): List<String> = subjects.checkCodeUniqueness(code)
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule>) {
         subjects.insert(subject)

@@ -1,9 +1,6 @@
 package com.isaiahvonrundstedt.fokus.features.subject.editor
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.getIndexByID
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
@@ -21,11 +18,11 @@ class SubjectEditorViewModel @Inject constructor(
 
     private val _subject: MutableLiveData<Subject> = MutableLiveData(Subject())
     private val _schedules: MutableLiveData<ArrayList<Schedule>> = MutableLiveData(arrayListOf())
-    private val _isCodeTaken: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _isCodeExists: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val subject: LiveData<Subject> = _subject
     val schedules: LiveData<ArrayList<Schedule>> = _schedules
-    val isCodeTaken: LiveData<Boolean> = _isCodeTaken
+    val isCodeExists: LiveData<Boolean> = _isCodeExists
 
     fun getSubject(): Subject? {
         return subject.value
@@ -61,7 +58,8 @@ class SubjectEditorViewModel @Inject constructor(
     }
 
     fun checkCodeUniqueness(code: String?) = viewModelScope.launch {
-        _isCodeTaken.value = repository.checkCodeExists(code)
+        val result = repository.checkCodeExists(code)
+        _isCodeExists.value = !result.contains(getID()) && result.isNotEmpty()
     }
 
     fun getID(): String? {

@@ -192,7 +192,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
         viewModel.isNameTaken.observe(this) {
             binding.eventNameTextInputLayout.error =
-                if (it) getString(R.string.error_event_name_exists)
+                if (it) getString(R.string.feedback_event_name_exists)
                 else null
         }
 

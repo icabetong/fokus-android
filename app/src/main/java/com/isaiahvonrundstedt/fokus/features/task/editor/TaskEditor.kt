@@ -266,7 +266,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
         viewModel.isNameExists.observe(this) {
             binding.taskNameTextInputLayout.error =
-                if (it) getString(R.string.error_task_name_exists)
+                if (it) getString(R.string.feedback_task_name_exists)
                 else null
         }
 
@@ -400,6 +400,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             hideKeyboardFromCurrentFocus(requireView())
 
             viewModel.setName(binding.taskNameTextInput.text.toString())
+            viewModel.setNotes(binding.notesTextInput.text.toString())
 
             // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,

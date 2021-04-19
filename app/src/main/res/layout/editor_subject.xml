@@ -94,6 +94,11 @@
                     android:layout_height="wrap_content" />
 
                 <include
+                    android:id="@+id/errorScheduleConflictView"
+                    android:visibility="gone"
+                    layout="@layout/layout_error_schedule"/>
+
+                <include
                     android:id="@+id/addActionLayout"
                     layout="@layout/layout_item_add"/>
 

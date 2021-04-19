@@ -17,8 +17,8 @@ interface TaskDAO {
     @Update
     suspend fun update(task: Task)
 
-    @Query("SELECT COUNT(*) FROM tasks WHERE name = LOWER(:n)")
-    suspend fun checkNameCount(n: String?): Int
+    @Query("SELECT taskID FROM tasks WHERE name = :task COLLATE NOCASE")
+    suspend fun checkNameUniqueness(task: String?): List<String>
 
     @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
     suspend fun setFinished(taskID: String, status: Int)

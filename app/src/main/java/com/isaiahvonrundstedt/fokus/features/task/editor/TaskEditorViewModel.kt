@@ -77,7 +77,8 @@ class TaskEditorViewModel @Inject constructor(
 
 
     fun checkNameUniqueness(name: String?) = viewModelScope.launch {
-        _isNameExists.value = repository.checkNameCount(name)
+        val result = repository.checkNameUniqueness(name)
+        _isNameExists.value = !result.contains(name) && result.isNotEmpty()
     }
 
     fun getID(): String? {

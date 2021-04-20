@@ -110,7 +110,12 @@ class EventEditor: BaseEditor(), FragmentResultListener {
 
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setNavigationOnClickListener {
+                if (controller?.graph?.id == R.id.navigation_container_event)
+                    requireActivity().finish()
+                else controller?.navigateUp()
+            }
+
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
@@ -324,7 +329,9 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                 viewModel.insert()
             else viewModel.update()
 
-            controller?.navigateUp()
+            if (controller?.graph?.id == R.id.navigation_container_event)
+                requireActivity().finish()
+            else controller?.navigateUp()
         }
     }
 

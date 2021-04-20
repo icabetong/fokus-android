@@ -32,8 +32,8 @@ class EventViewModel @Inject constructor(
             events.value = _events.value?.filter { it.event.schedule!!.toLocalDate() == selectedDate }
         }
 
-    var startMonth: YearMonth = currentMonth.minusMonths(5)
-    var endMonth: YearMonth = currentMonth.plusMonths(5)
+    var startMonth: YearMonth = currentMonth.minusMonths(1)
+    var endMonth: YearMonth = currentMonth.plusMonths(1)
 
     init {
         events.addSource(_events) { items ->

@@ -24,6 +24,7 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_share">Share</string>
+    <string name="menu_view">View as</string>
     <string name="menu_import">Import</string>
     <string name="menu_clear_items">Clear Logs</string>
     <string name="menu_export_to_file">Export to file</string>
@@ -137,6 +138,9 @@
     <string name="filter_options_finished_tasks">Finished only</string>
     <string name="filter_options_today_classes">Today only</string>
     <string name="filter_options_tomorrow_classes">Tomorrow only</string>
+
+    <string name="view_options_month">Month</string>
+    <string name="view_options_week">Week</string>
 
     <string name="field_subject_code">Subject Code</string>
     <string name="field_description">Description</string>

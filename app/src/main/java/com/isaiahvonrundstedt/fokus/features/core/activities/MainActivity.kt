@@ -122,62 +122,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean = controller?.navigateUp() == true
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == Activity.RESULT_OK) {
-//            when (requestCode) {
-//                TaskEditor.REQUEST_CODE_INSERT, TaskEditor.REQUEST_CODE_UPDATE -> {
-//                    val task: Task? =
-//                        data?.getParcelableExtra(TaskEditor.EXTRA_TASK)
-//                    val attachments: List<Attachment>? =
-//                        data?.getParcelableListExtra(TaskEditor.EXTRA_ATTACHMENTS)
-//
-//                    task?.also {
-//                        if (requestCode == TaskEditor.REQUEST_CODE_INSERT)
-//                            tasksViewModel.insert(it, attachments ?: emptyList())
-//                        else if (requestCode == TaskEditor.REQUEST_CODE_UPDATE)
-//                            tasksViewModel.update(it, attachments ?: emptyList())
-//                    }
-//                }
-//                EventEditor.REQUEST_CODE_INSERT, EventEditor.REQUEST_CODE_UPDATE -> {
-//                    val event: Event? = data?.getParcelableExtra(EventEditor.EXTRA_EVENT)
-//
-//                    event?.also {
-//                        if (requestCode == EventEditor.REQUEST_CODE_INSERT)
-//                            eventsViewModel.insert(it)
-//                        else eventsViewModel.update(it)
-//                    }
-//                }
-//                SubjectEditor.REQUEST_CODE_INSERT, SubjectEditor.REQUEST_CODE_UPDATE -> {
-//                    val subject: Subject?
-//                            = data?.getParcelableExtra(SubjectEditor.EXTRA_SUBJECT)
-//                    val schedules: List<Schedule>?
-//                            = data?.getParcelableListExtra(SubjectEditor.EXTRA_SCHEDULE)
-//
-//                    subject?.also {
-//                        if (requestCode == SubjectEditor.REQUEST_CODE_INSERT)
-//                            subjectsViewModel.insert(it, schedules ?: emptyList())
-//                        else if (requestCode == SubjectEditor.REQUEST_CODE_UPDATE)
-//                            subjectsViewModel.update(it, schedules ?: emptyList())
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private val tasksViewModel by lazy {
-//        ViewModelProvider(this).get(TaskViewModel::class.java)
-//    }
-//
-//    private val eventsViewModel by lazy {
-//        ViewModelProvider(this).get(EventViewModel::class.java)
-//    }
-//
-//    private val subjectsViewModel by lazy {
-//        ViewModelProvider(this).get(SubjectViewModel::class.java)
-//    }
+    override fun onSupportNavigateUp(): Boolean = controller?.navigateUp() ?: false
 
     companion object {
         const val ACTION_SHORTCUT_TASK = "action:shortcut:task"

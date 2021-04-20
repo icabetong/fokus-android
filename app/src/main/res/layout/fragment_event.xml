@@ -23,7 +23,8 @@
                 app:cv_dayViewResource="@layout/layout_calendar_day"
                 app:cv_monthHeaderResource="@layout/layout_calendar_week_days"
                 app:cv_orientation="horizontal"
-                app:cv_scrollMode="paged"/>
+                app:cv_scrollMode="paged"
+                app:cv_outDateStyle="endOfRow"/>
 
             <TextView
                 android:id="@+id/currentDateTextView"

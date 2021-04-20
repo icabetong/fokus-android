@@ -175,7 +175,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setNavigationOnClickListener {
+                if (controller?.graph?.id == R.id.navigation_container_task)
+                    requireActivity().finish()
+                else controller?.navigateUp()
+            }
+
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
@@ -417,7 +422,9 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                 viewModel.insert()
             else viewModel.update()
 
-            controller?.navigateUp()
+            if (controller?.graph?.id == R.id.navigation_container_task)
+                requireActivity().finish()
+            else controller?.navigateUp()
         }
     }
 

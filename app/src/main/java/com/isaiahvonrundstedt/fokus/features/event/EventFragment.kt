@@ -1,15 +1,20 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -30,10 +35,12 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
+import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import dagger.hilt.android.AndroidEntryPoint
+import me.saket.cascade.overrideOverflowMenu
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -67,6 +74,8 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         getParentToolbar()?.run {
             title = viewModel.currentMonth.format(monthYearFormatter)
             menu?.clear()
+            overrideOverflowMenu(::customPopupProvider)
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         with(binding.recyclerView) {
@@ -83,10 +92,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         daysOfWeek = daysOfWeekFromLocale()
         binding.calendarView.apply {
-            setup(viewModel.currentMonth, viewModel.currentMonth,
+            setup(viewModel.startMonth, viewModel.endMonth,
                 daysOfWeek.first())
-            setupAsync(viewModel.startMonth, viewModel.endMonth,
-                daysOfWeek.first())
+            scrollToMonth(viewModel.currentMonth)
         }
 
         if (savedInstanceState == null)
@@ -161,13 +169,13 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                 // The user is two months away from the starting month in the CalendarView
                 // we'll need to add more months at the start
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
-                binding.calendarView.updateMonthRangeAsync(startMonth = viewModel.startMonth)
+                binding.calendarView.updateMonthRange(startMonth = viewModel.startMonth)
 
             } else if (it.yearMonth.plusMonths(2) == viewModel.endMonth) {
                 // The user is two months away from the ending month in the CalendarView
                 // we'll need to add more months at the end
                 viewModel.endMonth = viewModel.endMonth.plusMonths(2)
-                binding.calendarView.updateMonthRangeAsync(endMonth = viewModel.endMonth)
+                binding.calendarView.updateMonthRange(endMonth = viewModel.endMonth)
             }
         }
 
@@ -191,6 +199,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         super.onResume()
 
         binding.calendarView.scrollToMonth(viewModel.currentMonth)
+        binding.calendarView.scrollToDate(viewModel.today)
+        setCurrentDate(viewModel.today)
+
         binding.actionButton.setOnClickListener {
             it.transitionName = TRANSITION_ELEMENT_ROOT
 
@@ -232,6 +243,58 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                 }
             }
         }
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        val firstDate = binding.calendarView.findFirstVisibleDay()?.date ?: return false
+        val lastDate = binding.calendarView.findLastVisibleDay()?.date ?: return false
+
+        val oneWeekHeight = binding.calendarView.daySize.height
+        val oneMonthHeight = oneWeekHeight * 6
+
+        when(item.itemId) {
+            R.id.action_view_week -> {
+
+                val animator = ValueAnimator.ofInt(oneMonthHeight, oneWeekHeight)
+                animator.addUpdateListener { anim ->
+                    binding.calendarView.updateLayoutParams {
+                        height = anim.animatedValue as Int
+                    }
+                }
+
+                animator.doOnEnd {
+                    binding.calendarView.updateMonthConfiguration(
+                        inDateStyle = InDateStyle.FIRST_MONTH,
+                        maxRowCount = 1,
+                        hasBoundaries = false
+                    )
+                }
+
+                animator.duration = 250
+                animator.start()
+            }
+            R.id.action_view_month -> {
+
+                val animator = ValueAnimator.ofInt(oneMonthHeight, oneWeekHeight)
+                animator.addUpdateListener { anim ->
+                    binding.calendarView.updateLayoutParams {
+                        height = anim.animatedValue as Int
+                    }
+                }
+
+                animator.doOnStart {
+                    binding.calendarView.updateMonthConfiguration(
+                        inDateStyle = InDateStyle.ALL_MONTHS,
+                        maxRowCount = 6,
+                        hasBoundaries = true
+                    )
+                }
+
+                animator.duration = 250
+                animator.start()
+            }
+        }
+        return true
     }
 
     private fun bindToCalendar(day: CalendarDay, textView: TextView, view: View,

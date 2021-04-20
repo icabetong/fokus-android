@@ -101,7 +101,12 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
         with(binding.appBarLayout.toolbar) {
             inflateMenu(R.menu.menu_editor)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setNavigationOnClickListener {
+                if (controller?.graph?.id == R.id.navigation_container_subject)
+                    requireActivity().finish()
+                else controller?.navigateUp()
+            }
+
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
@@ -235,7 +240,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                 viewModel.insert()
             else viewModel.update()
 
-            controller?.navigateUp()
+            if (controller?.graph?.id == R.id.navigation_container_subject)
+                requireActivity().finish()
+            else controller?.navigateUp()
         }
     }
 

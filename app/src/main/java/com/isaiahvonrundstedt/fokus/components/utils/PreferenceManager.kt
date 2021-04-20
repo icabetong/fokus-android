@@ -2,8 +2,6 @@ package com.isaiahvonrundstedt.fokus.components.utils
 
 import android.content.ContentResolver
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
@@ -31,21 +29,21 @@ class PreferenceManager(private val context: Context?) {
     }
 
     var theme: Theme
-        get() = Theme.parse(sharedPreference.getString(R.string.key_theme,
+        get() = Theme.parse(sharedPreference.getString(PREFERENCE_THEME,
             Theme.SYSTEM.toString()))
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_theme, value.toString())
+                putString(PREFERENCE_THEME, value.toString())
                 apply()
             }
         }
 
     var previousBackupDate: ZonedDateTime?
         get() = DateTimeConverter.toZonedDateTime(
-            sharedPreference.getString(context?.getString(R.string.key_backup), null))
+            sharedPreference.getString(PREFERENCE_BACKUP, null))
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_backup,
+                putString(PREFERENCE_BACKUP,
                     DateTimeConverter.fromZonedDateTime(value))
                 apply()
             }
@@ -53,146 +51,131 @@ class PreferenceManager(private val context: Context?) {
 
     var reminderTime: LocalTime?
         get() = DateTimeConverter.toLocalTime(
-            sharedPreference.getString(R.string.key_reminder_time, "08:30"))
+            sharedPreference.getString(PREFERENCE_REMINDER_TIME, "08:30"))
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_reminder_time, DateTimeConverter.fromLocalTime(value))
+                putString(PREFERENCE_REMINDER_TIME, DateTimeConverter.fromLocalTime(value))
                 apply()
             }
         }
 
     var taskConstraint: TaskViewModel.Constraint
         get() = TaskViewModel.Constraint.parse(
-            sharedPreference.getString(R.string.key_behaviour_tasks_filter,
-                TaskViewModel.Constraint.ALL.toString()))
+            sharedPreference.getString(PREFERENCE_TASK_FILTER_OPTION,
+                TaskViewModel.Constraint.ALL.toString()) ?: TaskViewModel.Constraint.ALL.toString())
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_tasks_filter, value.toString())
+                putString(PREFERENCE_TASK_FILTER_OPTION, value.toString())
                 apply()
             }
         }
 
     var tasksSort: TaskViewModel.Sort
         get() = TaskViewModel.Sort.parse(
-            sharedPreference.getString(R.string.key_behaviour_tasks_sort,
-                TaskViewModel.Sort.NAME.toString()))
+            sharedPreference.getString(PREFERENCE_TASK_SORT_OPTION,
+                TaskViewModel.Sort.NAME.toString()) ?: TaskViewModel.Sort.NAME.toString())
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_tasks_sort, value.toString())
+                putString(PREFERENCE_TASK_SORT_OPTION, value.toString())
                 apply()
             }
         }
 
     var tasksSortDirection: SortDirection
         get() = SortDirection.parse(
-            sharedPreference.getString(R.string.key_behaviour_tasks_direction,
+            sharedPreference.getString(PREFERENCE_TASK_SORT_DIRECTION,
                 SortDirection.ASCENDING.toString()))
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_tasks_direction, value.toString())
+                putString(PREFERENCE_TASK_SORT_DIRECTION, value.toString())
                 apply()
             }
         }
 
     var subjectConstraint: SubjectViewModel.Constraint
         get() = SubjectViewModel.Constraint.parse(
-            sharedPreference.getString(R.string.key_behaviour_subjects_filter,
-                SubjectViewModel.Constraint.ALL.toString()))
+            sharedPreference.getString(PREFERENCE_SUBJECT_FILTER_OPTION,
+                SubjectViewModel.Constraint.ALL.toString()) ?: SubjectViewModel.Constraint.ALL.toString())
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_subjects_filter, value.toString())
+                putString(PREFERENCE_SUBJECT_FILTER_OPTION, value.toString())
                 apply()
             }
         }
 
     var subjectSort: SubjectViewModel.Sort
         get() = SubjectViewModel.Sort.parse(
-            sharedPreference.getString(R.string.key_behaviour_tasks_sort,
-                SubjectViewModel.Sort.CODE.toString()))
+            sharedPreference.getString(PREFERENCE_SUBJECT_SORT_OPTION,
+                SubjectViewModel.Sort.CODE.toString()) ?: SubjectViewModel.Sort.CODE.toString())
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_subjects_sort, value.toString())
+                putString(PREFERENCE_SUBJECT_SORT_OPTION, value.toString())
                 apply()
             }
         }
 
     var subjectSortDirection: SortDirection
-        get() = SortDirection.parse(sharedPreference.getString(R.string.key_behaviour_subjects_direction,
-            SortDirection.ASCENDING.toString()))
+        get() = SortDirection.parse(
+            sharedPreference.getString(PREFERENCE_SUBJECT_SORT_DIRECTION,
+                SortDirection.ASCENDING.toString()) ?: SubjectViewModel.Sort.CODE.toString())
         set(value) {
             sharedPreference.edit().run {
-                putString(R.string.key_behaviour_subjects_direction, value.toString())
+                putString(PREFERENCE_SUBJECT_SORT_DIRECTION, value.toString())
                 apply()
             }
         }
 
     val confetti: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_confetti, true)
+        get() = sharedPreference.getBoolean(PREFERENCE_CONFETTI, true)
 
     val sounds: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_sound, true)
+        get() = sharedPreference.getBoolean(PREFERENCE_SOUND, true)
 
     val taskReminder: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_task_reminder, true)
+        get() = sharedPreference.getBoolean(PREFERENCE_TASK_NOTIFICATION, true)
 
     val eventReminder: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_event_reminder, true)
+        get() = sharedPreference.getBoolean(PREFERENCE_EVENT_NOTIFICATION, true)
 
     val subjectReminder: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_subject_reminder, true)
+        get() = sharedPreference.getBoolean(PREFERENCE_COURSE_NOTIFICATION, true)
 
     val useExternalBrowser: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_external_browser, false)
+        get() = sharedPreference.getBoolean(PREFERENCE_USE_EXTERNAL_BROWSER, false)
+
+    val allowWeekNumbers: Boolean
+        get() = sharedPreference.getBoolean(PREFERENCE_ALLOW_WEEK_NUMBERS, false)
 
     val reminderFrequency: String
-        get() = sharedPreference.getString(R.string.key_reminder_frequency,
-            DURATION_EVERYDAY)
+        get() = sharedPreference.getString(PREFERENCE_REMINDER_FREQUENCY,
+            DURATION_EVERYDAY) ?: DURATION_EVERYDAY
 
     val taskReminderInterval: String
-        get() = sharedPreference.getString(R.string.key_task_reminder_interval,
-            TASK_REMINDER_INTERVAL_3_HOURS)
+        get() = sharedPreference.getString(PREFERENCE_TASK_NOTIFICATION_INTERVAL,
+            TASK_REMINDER_INTERVAL_3_HOURS) ?: TASK_REMINDER_INTERVAL_3_HOURS
 
     val eventReminderInterval: String
-        get() = sharedPreference.getString(R.string.key_event_reminder_interval,
-            EVENT_REMINDER_INTERVAL_30_MINUTES)
+        get() = sharedPreference.getString(PREFERENCE_EVENT_NOTIFICATION_INTERVAL,
+            EVENT_REMINDER_INTERVAL_30_MINUTES) ?: EVENT_REMINDER_INTERVAL_30_MINUTES
 
     val subjectReminderInterval: String
-        get() = sharedPreference.getString(R.string.key_subject_reminder_interval,
-            SUBJECT_REMINDER_INTERVAL_30_MINUTES)
+        get() = sharedPreference.getString(PREFERENCE_COURSE_NOTIFICATION_INTERVAL,
+            SUBJECT_REMINDER_INTERVAL_30_MINUTES) ?: SUBJECT_REMINDER_INTERVAL_30_MINUTES
+
 
     /* User-Defined Settings */
     var noConfirmImport: Boolean
-        get() = sharedPreference.getBoolean(R.string.key_no_confirm_import,
+        get() = sharedPreference.getBoolean(PREFERENCE_NO_CONFIRM_IMPORT,
             false)
         set(value) {
             sharedPreference.edit().run {
-                putBoolean(R.string.key_no_confirm_import, value)
+                putBoolean(PREFERENCE_NO_CONFIRM_IMPORT, value)
                 commit()
             }
         }
 
     private val sharedPreference by lazy {
         PreferenceManager.getDefaultSharedPreferences(context)
-    }
-
-    /**
-     *  Extension functions for SharedPreference object
-     *  to accept String Resource ID as Keys
-     */
-    private fun SharedPreferences.getString(@StringRes id: Int, default: String): String {
-        return this.getString(context?.getString(id), default) ?: default
-    }
-
-    private fun SharedPreferences.getBoolean(@StringRes id: Int, default: Boolean): Boolean {
-        return this.getBoolean(context?.getString(id), default)
-    }
-
-    private fun SharedPreferences.Editor.putString(@StringRes id: Int, value: String?) {
-        this.putString(context?.getString(id), value)
-    }
-
-    private fun SharedPreferences.Editor.putBoolean(@StringRes id: Int, value: Boolean) {
-        this.putBoolean(context?.getString(id), value)
     }
 
     companion object {
@@ -214,6 +197,46 @@ class PreferenceManager(private val context: Context?) {
         const val SUBJECT_REMINDER_INTERVAL_15_MINUTES = "15"
         const val SUBJECT_REMINDER_INTERVAL_30_MINUTES = "30"
 
-        const val DEFAULT_REMINDER_TIME = "8:30"
+        // Preferences that are visible in the SettingsActivity
+        const val PREFERENCE_THEME = "KEY_THEME"
+        const val PREFERENCE_CONFETTI = "KEY_CONFETTI"
+        const val PREFERENCE_SOUND = "KEY_SOUND"
+        const val PREFERENCE_REMINDER_FREQUENCY = "KEY_REMINDER_FREQUENCY"
+        const val PREFERENCE_REMINDER_TIME = "KEY_REMINDER_TIME"
+        const val PREFERENCE_TASK_NOTIFICATION = "KEY_TASK_NOTIFICATION"
+        const val PREFERENCE_TASK_NOTIFICATION_INTERVAL = "KEY_TASK_NOTIFICATION_INTERVAL"
+        const val PREFERENCE_EVENT_NOTIFICATION = "KEY_EVENT_NOTIFICATION"
+        const val PREFERENCE_EVENT_NOTIFICATION_INTERVAL = "KEY_EVENT_NOTIFICATION_INTERVAL"
+        const val PREFERENCE_COURSE_NOTIFICATION = "KEY_COURSE_NOTIFICATION"
+        const val PREFERENCE_COURSE_NOTIFICATION_INTERVAL = "KEY_COURSE_NOTIFICATION_INTERVAL"
+        const val PREFERENCE_SYSTEM_NOTIFICATION = "KEY_SYSTEM_NOTIFICATION"
+        const val PREFERENCE_ALLOW_WEEK_NUMBERS = "KEY_ALLOW_WEEK_NUMBERS"
+        const val PREFERENCE_BACKUP_RESTORE = "KEY_BACKUP_RESTORE"
+        const val PREFERENCE_BACKUP = "KEY_BACKUP"
+        const val PREFERENCE_RESTORE = "KEY_RESTORE"
+        const val PREFERENCE_USE_EXTERNAL_BROWSER = "KEY_USE_EXTERNAL_BROWSER"
+        const val PREFERENCE_BATTERY_OPTIMIZATION = "KEY_BATTERY_OPTIMIZATION"
+
+        // Preferences that are visible in AboutActivity
+        const val PREFERENCE_REPORT_ISSUE = "KEY_REPORT_ISSUE"
+        const val PREFERENCE_TRANSLATE = "KEY_TRANSLATE"
+        const val PREFERENCE_NOTICES = "KEY_NOTICES"
+        const val PREFERENCE_VERSION = "KEY_VERSION"
+
+        // Preferences that are visible in NoticesActivity
+        const val PREFERENCE_LIBRARIES = "KEY_LIBRARIES"
+        const val PREFERENCE_NOTIFICATION_SOUND = "KEY_NOTIFICATION_SOUND"
+        const val PREFERENCE_LAUNCHER_ICON = "KEY_LAUNCHER_ICON"
+        const val PREFERENCE_UI_ICONS = "KEY_UI_ICONS"
+
+        // Preferences that are not visible in anywhere and are only
+        // used for remembering user choices in the UI
+        const val PREFERENCE_NO_CONFIRM_IMPORT = "KEY_NO_CONFIRM_IMPORT"
+        const val PREFERENCE_TASK_FILTER_OPTION = "KEY_TASKS_FILTER_OPTION"
+        const val PREFERENCE_TASK_SORT_OPTION = "KEY_TASK_SORT_OPTION"
+        const val PREFERENCE_TASK_SORT_DIRECTION = "KEY_TASK_SORT_DIRECTION"
+        const val PREFERENCE_SUBJECT_FILTER_OPTION = "KEY_SUBJECT_FILTER_OPTION"
+        const val PREFERENCE_SUBJECT_SORT_OPTION = "KEY_SUBJECT_SORT_OPTION"
+        const val PREFERENCE_SUBJECT_SORT_DIRECTION = "KEY_SUBJECT_SORT_DIRECTION"
     }
 }

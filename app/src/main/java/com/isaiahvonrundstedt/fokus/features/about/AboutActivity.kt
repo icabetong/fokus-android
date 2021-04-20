@@ -7,6 +7,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityAboutBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
@@ -36,13 +37,13 @@ class AboutActivity : BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                findPreference<Preference>(R.string.key_notices)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_NOTICES)
                     ?.setOnPreferenceClickListener {
                         startActivity(Intent(context, NoticesActivity::class.java))
                         true
                     }
 
-                findPreference<Preference>(R.string.key_translate)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_TRANSLATE)
                     ?.setOnPreferenceClickListener {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse("mailto:${ABOUT_DEVELOPER_EMAIL}")
@@ -53,7 +54,7 @@ class AboutActivity : BaseActivity() {
                         true
                     }
 
-                findPreference<Preference>(R.string.key_report_issue)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_REPORT_ISSUE)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(ABOUT_ISSUE_URL))
@@ -61,8 +62,8 @@ class AboutActivity : BaseActivity() {
                         true
                     }
 
-                setPreferenceSummary(R.string.key_version, BuildConfig.VERSION_NAME)
-                findPreference<Preference>(R.string.key_version)
+                setPreferenceSummary(PreferenceManager.PREFERENCE_VERSION, BuildConfig.VERSION_NAME)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_VERSION)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(ABOUT_RELEASE_URL))

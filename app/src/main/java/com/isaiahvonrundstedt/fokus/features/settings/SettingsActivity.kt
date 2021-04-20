@@ -50,7 +50,7 @@ class SettingsActivity : BaseActivity() {
             override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
                 super.onViewCreated(view, savedInstanceState)
 
-                findPreference<ListPreference>(R.string.key_theme)
+                findPreference<ListPreference>(PreferenceManager.PREFERENCE_THEME)
                     ?.setOnPreferenceChangeListener { _, value ->
                         if (value is String) {
                             val theme = value.toString()
@@ -59,7 +59,7 @@ class SettingsActivity : BaseActivity() {
                         true
                     }
 
-                findPreference<SwitchPreferenceCompat>(R.string.key_task_reminder)
+                findPreference<SwitchPreferenceCompat>(PreferenceManager.PREFERENCE_TASK_NOTIFICATION)
                     ?.setOnPreferenceChangeListener { _, isChecked ->
                         if (isChecked is Boolean) {
                             val workerClass = TaskNotificationScheduler::class.java
@@ -69,7 +69,7 @@ class SettingsActivity : BaseActivity() {
                         } else false
                     }
 
-                findPreference<SwitchPreferenceCompat>(R.string.key_event_reminder)
+                findPreference<SwitchPreferenceCompat>(PreferenceManager.PREFERENCE_EVENT_NOTIFICATION)
                     ?.setOnPreferenceChangeListener { _, isChecked ->
                         if (isChecked is Boolean) {
                             val workerClass = EventNotificationScheduler::class.java
@@ -79,7 +79,7 @@ class SettingsActivity : BaseActivity() {
                         } else false
                     }
 
-                findPreference<SwitchPreferenceCompat>(R.string.key_subject_reminder)
+                findPreference<SwitchPreferenceCompat>(PreferenceManager.PREFERENCE_COURSE_NOTIFICATION)
                     ?.setOnPreferenceChangeListener { _, isChecked ->
                         if (isChecked is Boolean) {
                             val workerClass = ClassNotificationScheduler::class.java
@@ -89,25 +89,25 @@ class SettingsActivity : BaseActivity() {
                         } else false
                     }
 
-                findPreference<Preference>(R.string.key_task_reminder_interval)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_TASK_NOTIFICATION_INTERVAL)
                     ?.setOnPreferenceChangeListener { _, _ ->
                         scheduleWorker(TaskNotificationScheduler::class.java)
                     }
 
 
-                findPreference<Preference>(R.string.key_event_reminder_interval)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_EVENT_NOTIFICATION_INTERVAL)
                     ?.setOnPreferenceChangeListener { _, _ ->
                         scheduleWorker(EventNotificationScheduler::class.java)
                     }
 
-                findPreference<Preference>(R.string.key_subject_reminder_interval)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_COURSE_NOTIFICATION_INTERVAL)
                     ?.setOnPreferenceChangeListener { _, _ ->
                         scheduleWorker(ClassNotificationScheduler::class.java)
                     }
 
-                setPreferenceSummary(R.string.key_reminder_time,
+                setPreferenceSummary(PreferenceManager.PREFERENCE_REMINDER_TIME,
                     preferences.reminderTime?.format(DateTimeConverter.getTimeFormatter(requireContext())))
-                findPreference<Preference>(R.string.key_reminder_time)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_REMINDER_TIME)
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
                             timePicker(show24HoursView = false) { _, time ->
@@ -123,7 +123,7 @@ class SettingsActivity : BaseActivity() {
                         true
                     }
 
-                findPreference<Preference>(R.string.key_more_notification_settings)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_SYSTEM_NOTIFICATION)
                     ?.setOnPreferenceClickListener {
                         val intent = Intent()
                         with(intent) {
@@ -141,14 +141,14 @@ class SettingsActivity : BaseActivity() {
                     }
 
 
-                findPreference<Preference>(R.string.key_backup_restore)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_BACKUP_RESTORE)
                     ?.setOnPreferenceClickListener {
                         startActivity(Intent(context, BackupActivity::class.java))
                         true
                     }
 
 
-                findPreference<Preference>(R.string.key_battery_optimization)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_BATTERY_OPTIMIZATION)
                     ?.setOnPreferenceClickListener {
                         val manufacturerArray = resources.getStringArray(R.array.oem_battery_optimization)
 

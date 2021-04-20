@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityNoticesBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
@@ -37,14 +38,14 @@ class NoticesActivity: BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                findPreference<Preference>(R.string.key_credit_libraries)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_LIBRARIES)
                     ?.setOnPreferenceClickListener {
                         startActivity(Intent(requireContext(), LibrariesActivity::class.java))
                         true
                     }
 
 
-                findPreference<Preference>(R.string.key_credit_notification_sound)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_NOTIFICATION_SOUND)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(URL_NOTIFICATION_SOUND))
@@ -53,7 +54,7 @@ class NoticesActivity: BaseActivity() {
                     }
 
 
-                findPreference<Preference>(R.string.key_credit_launcher_icon)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_LAUNCHER_ICON)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(URL_LAUNCHER_ICON_BASE))
@@ -61,7 +62,7 @@ class NoticesActivity: BaseActivity() {
                         true
                     }
 
-                findPreference<Preference>(R.string.key_credit_user_interface_icons)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_UI_ICONS)
                     ?.setOnPreferenceClickListener {
                         CustomTabsIntent.Builder().build()
                             .launchUrl(requireContext(), Uri.parse(URL_USER_INTERFACE_ICONS))

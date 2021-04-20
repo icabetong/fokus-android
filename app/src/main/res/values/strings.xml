@@ -246,6 +246,8 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">More Settings</string>
 
+    <string name="settings_allow_week_numbers_title">Enable Week Numbers</string>
+    <string name="settings_allow_week_numbers_summary">Show week numbers when configuring schedules.</string>
     <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No Previous Backups</string>

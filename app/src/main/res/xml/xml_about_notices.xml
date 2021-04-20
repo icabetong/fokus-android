@@ -3,24 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="@string/key_credit_libraries"
+        app:key="KEY_LIBRARIES"
         app:title="@string/open_source_libraries"/>
 
     <PreferenceCategory
         app:title="@string/credit_other_resources">
 
         <Preference
-            app:key="@string/key_credit_notification_sound"
+            app:key="KEY_NOTIFICATION_SOUND"
             app:title="@string/credit_notification_sound_title"
             app:summary="@string/credit_notification_sound_summary"/>
 
         <Preference
-            app:key="@string/key_credit_launcher_icon"
+            app:key="KEY_LAUNCHER_ICON"
             app:title="@string/credit_launcher_icon_title"
             app:summary="@string/credit_launcher_icon_summary"/>
 
         <Preference
-            app:key="@string/key_credit_user_interface_icons"
+            app:key="KEY_UI_ICONS"
             app:title="@string/credit_user_interface_icons_title"
             app:summary="@string/credit_user_interface_icons_summary"/>
     </PreferenceCategory>

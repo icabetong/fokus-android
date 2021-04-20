@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResult
 import com.afollestad.materialdialogs.MaterialDialog
@@ -19,6 +20,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTimeToday
+import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import java.time.DayOfWeek
@@ -47,6 +49,11 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!PreferenceManager(requireContext()).allowWeekNumbers) {
+            binding.weekOfMonthGroup.isVisible = false
+            binding.weekNumbersHeader.isVisible = false
+        }
 
         arguments?.also {
             subjectID = it.getString(EXTRA_SUBJECT_ID)

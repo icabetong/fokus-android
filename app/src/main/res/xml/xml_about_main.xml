@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="@string/key_notices"
+        app:key="KEY_NOTICES"
         app:title="@string/settings_third_party_notices"
         app:icon="@drawable/ic_hero_scale_24"/>
 
     <Preference
-        app:key="@string/key_version"
+        app:key="KEY_VERSION"
         app:title="@string/settings_build_version"
         app:icon="@drawable/ic_hero_code_24"/>
 
@@ -16,12 +16,12 @@
         app:title="@string/settings_group_contribute">
 
         <Preference
-            app:key="@string/key_translate"
+            app:key="KEY_TRANSLATE"
             app:title="@string/settings_translate"
             app:icon="@drawable/ic_hero_translate_24"/>
 
         <Preference
-            app:key="@string/key_report_issue"
+            app:key="KEY_REPORT_ISSUE"
             app:title="@string/settings_report_an_issue"/>
 
     </PreferenceCategory>

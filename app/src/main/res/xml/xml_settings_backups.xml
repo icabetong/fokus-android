@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:key="@string/key_backup"
+        app:key="KEY_BACKUP"
         app:title="@string/settings_backup"/>
 
     <Preference
-        app:key="@string/key_restore"
+        app:key="KEY_RESTORE"
         app:title="@string/settings_restore"/>
 
 </PreferenceScreen>

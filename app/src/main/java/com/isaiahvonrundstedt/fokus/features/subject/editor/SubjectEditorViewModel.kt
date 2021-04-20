@@ -1,6 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.subject.editor
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.getIndexByID
 import com.isaiahvonrundstedt.fokus.database.repository.SubjectRepository
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule

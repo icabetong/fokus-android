@@ -80,7 +80,7 @@ class BackupActivity: BaseActivity() {
                     if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                         when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                             BackupRestoreService.BROADCAST_BACKUP_SUCCESS ->
-                                setPreferenceSummary(R.string.key_backup,
+                                setPreferenceSummary(PreferenceManager.PREFERENCE_BACKUP,
                                     manager.previousBackupDate.parseForSummary())
                             BackupRestoreService.BROADCAST_BACKUP_FAILED ->
                                 createSnackbar(R.string.feedback_backup_failed, requireView())
@@ -94,8 +94,8 @@ class BackupActivity: BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                setPreferenceSummary(R.string.key_backup, manager.previousBackupDate.parseForSummary())
-                findPreference<Preference>(R.string.key_backup)
+                setPreferenceSummary(PreferenceManager.PREFERENCE_BACKUP, manager.previousBackupDate.parseForSummary())
+                findPreference<Preference>(PreferenceManager.PREFERENCE_BACKUP)
                     ?.setOnPreferenceClickListener {
                     val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                         addCategory(Intent.CATEGORY_OPENABLE)
@@ -108,7 +108,7 @@ class BackupActivity: BaseActivity() {
                 }
 
 
-                findPreference<Preference>(R.string.key_restore)
+                findPreference<Preference>(PreferenceManager.PREFERENCE_RESTORE)
                     ?.setOnPreferenceClickListener {
                         val intent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                             type = Streamable.MIME_TYPE_ZIP

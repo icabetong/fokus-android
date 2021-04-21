@@ -74,8 +74,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         getParentToolbar()?.run {
             title = viewModel.currentMonth.format(monthYearFormatter)
             menu?.clear()
-            overrideOverflowMenu(::customPopupProvider)
-            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         with(binding.recyclerView) {
@@ -243,58 +241,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                 }
             }
         }
-    }
-
-    private fun onMenuItemClicked(item: MenuItem): Boolean {
-        val firstDate = binding.calendarView.findFirstVisibleDay()?.date ?: return false
-        val lastDate = binding.calendarView.findLastVisibleDay()?.date ?: return false
-
-        val oneWeekHeight = binding.calendarView.daySize.height
-        val oneMonthHeight = oneWeekHeight * 6
-
-        when(item.itemId) {
-            R.id.action_view_week -> {
-
-                val animator = ValueAnimator.ofInt(oneMonthHeight, oneWeekHeight)
-                animator.addUpdateListener { anim ->
-                    binding.calendarView.updateLayoutParams {
-                        height = anim.animatedValue as Int
-                    }
-                }
-
-                animator.doOnEnd {
-                    binding.calendarView.updateMonthConfiguration(
-                        inDateStyle = InDateStyle.FIRST_MONTH,
-                        maxRowCount = 1,
-                        hasBoundaries = false
-                    )
-                }
-
-                animator.duration = 250
-                animator.start()
-            }
-            R.id.action_view_month -> {
-
-                val animator = ValueAnimator.ofInt(oneMonthHeight, oneWeekHeight)
-                animator.addUpdateListener { anim ->
-                    binding.calendarView.updateLayoutParams {
-                        height = anim.animatedValue as Int
-                    }
-                }
-
-                animator.doOnStart {
-                    binding.calendarView.updateMonthConfiguration(
-                        inDateStyle = InDateStyle.ALL_MONTHS,
-                        maxRowCount = 6,
-                        hasBoundaries = true
-                    )
-                }
-
-                animator.duration = 250
-                animator.start()
-            }
-        }
-        return true
     }
 
     private fun bindToCalendar(day: CalendarDay, textView: TextView, view: View,

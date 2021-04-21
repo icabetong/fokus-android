@@ -23,6 +23,7 @@ import okio.buffer
 import okio.sink
 import java.io.File
 import java.io.InputStream
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -45,7 +46,7 @@ data class Event @JvmOverloads constructor(
     @TypeConverters(DateTimeConverter::class)
     var schedule: ZonedDateTime? = null,
     @TypeConverters(DateTimeConverter::class)
-    var dateAdded: ZonedDateTime = ZonedDateTime.now()
+    var dateAdded: ZonedDateTime? = ZonedDateTime.now()
 ) : Parcelable, Streamable {
 
     fun isToday(): Boolean {

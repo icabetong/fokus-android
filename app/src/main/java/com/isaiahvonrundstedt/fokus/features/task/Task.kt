@@ -20,6 +20,7 @@ import okio.buffer
 import okio.sink
 import java.io.File
 import java.io.InputStream
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.util.*
 
@@ -37,11 +38,11 @@ data class Task @JvmOverloads constructor(
     var subject: String? = null,
     var isImportant: Boolean = false,
     @TypeConverters(DateTimeConverter::class)
-    var dateAdded: ZonedDateTime? = ZonedDateTime.now(),
-    @TypeConverters(DateTimeConverter::class)
     var dueDate: ZonedDateTime? = null,
     var isFinished: Boolean = false,
     var isTaskArchived: Boolean = false,
+    @TypeConverters(DateTimeConverter::class)
+    var dateAdded: ZonedDateTime? = ZonedDateTime.now(),
 ) : Parcelable, Streamable {
 
     fun hasDueDate(): Boolean {
@@ -134,7 +135,7 @@ data class Task @JvmOverloads constructor(
                 dueDate = bundle.getSerializable(EXTRA_DUE_DATE) as? ZonedDateTime,
                 notes = bundle.getString(EXTRA_NOTES),
                 subject = bundle.getString(EXTRA_SUBJECT),
-                dateAdded = bundle.getSerializable(EXTRA_DATE_ADDED) as? ZonedDateTime,
+                dateAdded = bundle.getSerializable(EXTRA_DATE_ADDED) as ZonedDateTime,
                 isFinished = bundle.getBoolean(EXTRA_IS_FINISHED),
                 isImportant = bundle.getBoolean(EXTRA_IS_IMPORTANT),
                 isTaskArchived = bundle.getBoolean(EXTRA_IS_ARCHIVED)

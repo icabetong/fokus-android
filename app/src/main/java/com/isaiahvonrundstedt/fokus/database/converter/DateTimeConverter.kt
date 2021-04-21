@@ -70,7 +70,7 @@ class DateTimeConverter private constructor() {
         @TypeConverter
         fun fromZonedDateTime(zonedDateTime: ZonedDateTime?): String? {
             return if (zonedDateTime != null)
-                DateTimeFormatter.ISO_ZONED_DATE_TIME.format(zonedDateTime)
+                DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(zonedDateTime)
             else null
         }
 

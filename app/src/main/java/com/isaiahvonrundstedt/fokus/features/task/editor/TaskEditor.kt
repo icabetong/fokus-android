@@ -291,14 +291,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             }
         }
 
-        binding.statusSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setFinished(isChecked)
-        }
-
-        binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setImportant(isChecked)
-        }
-
         binding.addActionLayout.addItemButton.setOnClickListener {
             hideKeyboardFromCurrentFocus(requireView())
 
@@ -406,6 +398,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
             viewModel.setName(binding.taskNameTextInput.text.toString())
             viewModel.setNotes(binding.notesTextInput.text.toString())
+            viewModel.setFinished(binding.statusSwitch.isChecked)
+            viewModel.setImportant(binding.prioritySwitch.isChecked)
 
             // These if checks if the user have entered the
             // values on the fields, if we don't have the value required,

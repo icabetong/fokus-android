@@ -223,10 +223,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             }
         }
 
-        binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setImportant(isChecked)
-        }
-
         binding.scheduleTextView.setOnClickListener { v ->
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
@@ -301,6 +297,7 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         binding.actionButton.setOnClickListener {
             viewModel.setName(binding.eventNameTextInput.text.toString())
             viewModel.setLocation(binding.locationTextInput.text.toString())
+            viewModel.setImportant(binding.prioritySwitch.isChecked)
 
             // Conditions to check if the fields are null or blank
             // then if resulted true, show a feedback then direct

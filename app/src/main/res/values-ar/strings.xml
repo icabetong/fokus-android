@@ -28,12 +28,12 @@
     <string name="menu_clear_items">تنظيف السجل</string>
     <string name="menu_export_to_file">تصدير الى ملف</string>
     <string name="menu_share_directly">مشاركة مباشرة</string>
+    <string name="menu_archived">مؤرشف</string>
 
     <string name="navigation_tasks">المهام</string>
     <string name="navigation_events">الأحداث</string>
     <string name="navigation_subjects">المواضيع</string>
     <string name="navigation_home">منزل</string>
-    <string name="navigation_archived">مؤرشف</string>
     <string name="navigation_logs">السجلات</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

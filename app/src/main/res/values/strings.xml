@@ -28,12 +28,13 @@
     <string name="menu_clear_items">Clear Logs</string>
     <string name="menu_export_to_file">Export to file</string>
     <string name="menu_share_directly">Share directly</string>
+    <string name="menu_archived">Archived</string>
 
     <string name="navigation_tasks">Tasks</string>
     <string name="navigation_events">Events</string>
     <string name="navigation_subjects">Subjects</string>
     <string name="navigation_home">Home</string>
-    <string name="navigation_archived">Archived</string>
+
     <string name="navigation_logs">Logs</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

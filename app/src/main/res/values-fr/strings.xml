@@ -26,12 +26,12 @@
     <string name="menu_clear_items">Effacer les journaux</string>
     <string name="menu_export_to_file">Exporter dans un fichier</string>
     <string name="menu_share_directly">Partager directement</string>
+    <string name="menu_archived">Archivé</string>
 
     <string name="navigation_tasks">Tâches</string>
     <string name="navigation_events">Événements</string>
     <string name="navigation_subjects">Matières</string>
     <string name="navigation_home">Accueil</string>
-    <string name="navigation_archived">Archivé</string>
     <string name="navigation_logs">Journaux</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

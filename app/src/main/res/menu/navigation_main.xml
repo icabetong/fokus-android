@@ -10,11 +10,6 @@
             android:icon="@drawable/ic_hero_home_24"/>
 
         <item
-            android:id="@+id/navigation_archived"
-            android:title="@string/navigation_archived"
-            android:icon="@drawable/ic_hero_archive_24"/>
-
-        <item
             android:id="@+id/navigation_logs"
             android:title="@string/navigation_logs"
             android:icon="@drawable/ic_hero_document_report_24"/>

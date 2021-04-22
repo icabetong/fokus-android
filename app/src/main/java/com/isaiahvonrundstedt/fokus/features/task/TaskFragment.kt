@@ -236,6 +236,9 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 viewModel.filterOption = TaskViewModel.Constraint.FINISHED
                 getParentToolbar()?.setTitle(getToolbarTitle())
             }
+            R.id.action_archived -> {
+                controller?.navigate(R.id.action_to_navigation_archived_task)
+            }
         }
         return true
     }

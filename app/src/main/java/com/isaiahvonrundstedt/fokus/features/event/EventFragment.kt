@@ -74,6 +74,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         getParentToolbar()?.run {
             title = viewModel.currentMonth.format(monthYearFormatter)
             menu?.clear()
+            inflateMenu(R.menu.menu_events)
+            overrideOverflowMenu(::customPopupProvider)
+            setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
         with(binding.recyclerView) {
@@ -241,6 +244,15 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                 }
             }
         }
+    }
+
+    private fun onMenuItemClicked(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_archived -> {
+                controller?.navigate(R.id.action_to_navigation_archived_event)
+            }
+        }
+        return true
     }
 
     private fun bindToCalendar(day: CalendarDay, textView: TextView, view: View,

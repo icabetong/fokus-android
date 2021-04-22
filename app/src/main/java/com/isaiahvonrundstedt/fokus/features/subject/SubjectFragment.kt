@@ -215,6 +215,9 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                     menu?.findItem(R.id.action_sort_schedule)?.isVisible = true
                 }
             }
+            R.id.action_archived -> {
+                controller?.navigate(R.id.action_to_navigation_archived_subject)
+            }
         }
         return true
     }

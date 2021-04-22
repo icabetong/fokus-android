@@ -11,12 +11,6 @@
         tools:layout="@layout/fragment_main"/>
 
     <fragment
-        android:id="@+id/navigation_archived"
-        android:name="com.isaiahvonrundstedt.fokus.features.archived.ArchivedFragment"
-        android:label="@string/activity_archives"
-        tools:layout="@layout/fragment_archived"/>
-
-    <fragment
         android:id="@+id/navigation_logs"
         android:name="com.isaiahvonrundstedt.fokus.features.log.LogFragment"
         android:label="@string/activity_logs"
@@ -35,10 +29,6 @@
     <action
         android:id="@+id/action_to_navigation_main"
         app:destination="@id/navigation_core"/>
-
-    <action
-        android:id="@+id/action_to_navigation_archived"
-        app:destination="@id/navigation_archived"/>
 
     <action
         android:id="@+id/action_to_navigation_logs"
@@ -80,6 +70,38 @@
     <action
         android:id="@+id/action_to_navigation_editor_subject"
         app:destination="@id/navigation_editor_subject"/>
+
+    <!-- Archived -->
+
+    <fragment
+        android:id="@+id/navigation_archived_event"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.archived.ArchivedEventFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_event"/>
+
+    <fragment
+        android:id="@+id/navigation_archived_subject"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.archived.ArchivedSubjectFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_subject"/>
+
+    <fragment
+        android:id="@+id/navigation_archived_task"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.archived.ArchivedTaskFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_task"/>
+
+    <action
+        android:id="@+id/action_to_navigation_archived_event"
+        app:destination="@id/navigation_archived_event"/>
+
+    <action
+        android:id="@+id/action_to_navigation_archived_subject"
+        app:destination="@id/navigation_archived_subject"/>
+
+    <action
+        android:id="@+id/action_to_navigation_archived_task"
+        app:destination="@id/navigation_archived_task"/>
 
     <include app:graph="@navigation/navigation_core"/>
 

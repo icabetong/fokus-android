@@ -28,12 +28,13 @@
     <string name="menu_clear_items">Eliminar registros</string>
     <string name="menu_export_to_file">Exportar a archivo</string>
     <string name="menu_share_directly">Compartir directamente</string>
+    <string name="menu_archived">Archivado</string>
 
     <string name="navigation_tasks">Tareas</string>
     <string name="navigation_events">Eventos</string>
     <string name="navigation_subjects">Asignaturas</string>
     <string name="navigation_home">Inicio</string>
-    <string name="navigation_archived">Archivado</string>
+
     <string name="navigation_logs">Registro</string>
     <string name="navigation_settings">@string/activity_settings</string>
     <string name="navigation_about">@string/activity_about</string>

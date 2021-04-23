@@ -17,7 +17,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 
 ## Screenshots
 
-<img src="art/preview-1.jpeg" width="250"><img src="art/preview-2.jpeg" width="250"><img src="art/preview-3.jpeg" width="250"><img src="art/preview-4.jpeg" width="250">
+<img src="art/preview-1.jpeg" width="200"><img src="art/preview-2.jpeg" width="200"><img src="art/preview-3.jpeg" width="200"><img src="art/preview-4.jpeg" width="200">
 
 *Our preview mockups were created using 'Previewed' at https://previewed.app*
 

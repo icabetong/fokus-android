@@ -15,11 +15,13 @@ class ReactiveTextColorSwitch @JvmOverloads constructor (
 
     init {
         setSwitchTextAppearance(context, R.style.Fokus_TextAppearance_Editor_Value)
-        setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                this.setTextColorRes(R.color.color_primary_text)
-            else this.setTextColorRes(R.color.color_secondary_text)
-        }
+    }
+
+    override fun setChecked(checked: Boolean) {
+        super.setChecked(checked)
+        if (checked)
+            setTextColorRes(R.color.color_primary_text)
+        else setTextColorRes(R.color.color_secondary_text)
     }
 
     private fun setTextColorRes(@ColorRes resId: Int) {

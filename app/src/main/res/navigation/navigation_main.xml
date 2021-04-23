@@ -28,7 +28,7 @@
 
     <action
         android:id="@+id/action_to_navigation_main"
-        app:destination="@id/navigation_core"/>
+        app:destination="@id/navigation_main"/>
 
     <action
         android:id="@+id/action_to_navigation_logs"

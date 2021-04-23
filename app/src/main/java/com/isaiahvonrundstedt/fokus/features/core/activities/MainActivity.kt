@@ -83,13 +83,13 @@ class MainActivity : BaseActivity() {
                     controller?.navigate(R.id.action_to_navigation_editor_subject)
                 }
                 ACTION_NAVIGATION_TASK -> {
-                    controller?.navigate(R.id.action_to_navigation_tasks)
+                    controller?.navigate(R.id.action_to_navigation_main)
                 }
                 ACTION_NAVIGATION_EVENT -> {
-                    controller?.navigate(R.id.action_to_navigation_events)
+                    controller?.navigate(R.id.action_to_navigation_main)
                 }
                 ACTION_NAVIGATION_SUBJECT -> {
-                    controller?.navigate(R.id.action_to_navigation_subjects)
+                    controller?.navigate(R.id.action_to_navigation_main)
                 }
             }
         }

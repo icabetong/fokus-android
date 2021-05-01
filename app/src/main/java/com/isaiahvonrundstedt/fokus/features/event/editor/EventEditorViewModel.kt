@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
 import com.isaiahvonrundstedt.fokus.database.dao.ScheduleDAO
 import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
 import com.isaiahvonrundstedt.fokus.features.event.Event
@@ -54,9 +55,10 @@ class EventEditorViewModel @Inject constructor(
         }
     }
 
-    fun checkNameUniqueness(name: String?) = viewModelScope.launch {
-        val result = repository.checkNameUniqueness(name)
-        _isNameTaken.value = !result.contains(name) && result.isNotEmpty()
+    fun checkNameUniqueness(name: String? = null, schedule: ZonedDateTime? = null) = viewModelScope.launch {
+        val result = repository.checkNameUniqueness(name ?: getName(),
+            DateTimeConverter.fromLocalDate(schedule?.toLocalDate() ?: getSchedule()?.toLocalDate()))
+        _isNameTaken.value = result.isNotEmpty()
     }
 
     fun getID(): String? {
@@ -83,6 +85,8 @@ class EventEditorViewModel @Inject constructor(
         val event = getEvent()
         event?.schedule = schedule
         setEvent(event)
+
+        checkNameUniqueness(getName())
     }
 
     fun getLocation(): String? {

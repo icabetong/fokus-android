@@ -199,6 +199,11 @@
     <string name="feedback_export_failed">فشل التصدير</string>
     <string name="feedback_unable_to_share_title">غير قادر على المشاركة</string>
     <string name="feedback_unable_to_share_message">لا توجد معلومات صالحة يمكن مشاركتها</string>
+    <string name="feedback_subject_code_exists">موضوع بهذا الرمز موجود بالفعل.</string>
+    <string name="feedback_schedule_exists">جدول يتعارض مع جدول آخر.</string>
+    <string name="feedback_task_name_exists">توجد بالفعل مهمة بهذا الاسم.</string>
+    <string name="feedback_event_name_exists">يوجد بالفعل حدث بهذا الاسم.</string>
+    <string name="feedback_event_schedule_exists">حدث بالفعل بنفس الجدول الزمني موجود بالفعل.</string>
 
     <string name="settings_group_interface">واجهه المستخدم</string>
     <string name="settings_group_sound">صوت</string>
@@ -241,6 +246,8 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">المزيد من الإعدادات</string>
 
+    <string name="settings_allow_week_numbers_title">تمكين أرقام الأسبوع</string>
+    <string name="settings_allow_week_numbers_summary">إظهار أرقام الأسبوع عند تكوين الجداول.</string>
     <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">نسخ أحتياطي</string>
     <string name="settings_backup_summary_no_previous">لا توجد نسخ احتياطية سابقة</string>

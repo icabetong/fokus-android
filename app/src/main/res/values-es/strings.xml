@@ -200,6 +200,11 @@
     <string name="feedback_export_failed">Exportacion fallida</string>
     <string name="feedback_unable_to_share_title">No es posible compartir</string>
     <string name="feedback_unable_to_share_message">No hay inforamción valida para ser compartida</string>
+    <string name="feedback_subject_code_exists">Ya existe un asignacion con este código.</string>
+    <string name="feedback_schedule_exists">Un horario entra en conflicto con otro horario.</string>
+    <string name="feedback_task_name_exists">Ya existe una tarea con este nombre.</string>
+    <string name="feedback_event_name_exists">Ya existe un evento con este nombre.</string>
+    <string name="feedback_event_schedule_exists">Ya existe un evento con el mismo horario.</string>
 
     <string name="settings_group_interface">Interface</string>
     <string name="settings_group_sound">Sonido</string>
@@ -242,6 +247,8 @@
     <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
     <string name="settings_more_notification_settings">Mas opciones</string>
 
+    <string name="settings_allow_week_numbers_title">Activar los números de la semana</string>
+    <string name="settings_allow_week_numbers_summary">Mostrar los números de semana al configurar los horarios.</string>
     <string name="settings_backup_and_restore">@string/activity_backup</string>
     <string name="settings_backup">Backup</string>
     <string name="settings_backup_summary_no_previous">No hay Backups previos</string>

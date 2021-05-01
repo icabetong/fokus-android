@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
+import java.time.LocalDate
 
 @Dao
 interface EventDAO {
@@ -17,8 +18,8 @@ interface EventDAO {
     @Update
     suspend fun update(event: Event)
 
-    @Query("SELECT eventID FROM events WHERE name = :event COLLATE NOCASE")
-    suspend fun checkNameUniqueness(event: String?): List<String>
+    @Query("SELECT eventID FROM events WHERE name = :event AND DATE(schedule) = DATE(:schedule) COLLATE NOCASE")
+    suspend fun checkNameUniqueness(event: String?, schedule: String?): List<String>
 
     @Query("SELECT * FROM events")
     suspend fun fetch(): List<Event>

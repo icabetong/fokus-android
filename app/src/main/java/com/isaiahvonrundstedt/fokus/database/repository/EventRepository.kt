@@ -31,7 +31,7 @@ class EventRepository @Inject constructor(
 
     fun fetchArchivedLiveData(): LiveData<List<EventPackage>> = events.fetchArchivedLiveData()
 
-    suspend fun checkNameUniqueness(name: String?): List<String> = events.checkNameUniqueness(name)
+    suspend fun checkNameUniqueness(name: String?, schedule: String?): List<String> = events.checkNameUniqueness(name, schedule)
 
     suspend fun fetch(): List<EventPackage> = events.fetchPackage()
 

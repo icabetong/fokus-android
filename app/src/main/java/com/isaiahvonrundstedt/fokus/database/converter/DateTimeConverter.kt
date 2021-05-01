@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.database.converter
 import android.content.Context
 import android.text.format.DateFormat
 import androidx.room.TypeConverter
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -57,6 +58,21 @@ class DateTimeConverter private constructor() {
             }
 
             return DateTimeFormatter.ofPattern(pattern)
+        }
+
+        @JvmStatic
+        @TypeConverter
+        fun fromLocalDate(localDate: LocalDate?): String? {
+            return if (localDate != null)
+                DateTimeFormatter.ISO_LOCAL_DATE.format(localDate)
+            else null
+        }
+
+        @JvmStatic
+        @TypeConverter
+        fun toLocalDate(date: String?): LocalDate? {
+            return if (date.isNullOrEmpty()) null
+                else LocalDate.parse(date)
         }
 
         @JvmStatic

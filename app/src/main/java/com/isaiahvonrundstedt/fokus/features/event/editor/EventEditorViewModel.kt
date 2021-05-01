@@ -85,8 +85,6 @@ class EventEditorViewModel @Inject constructor(
         val event = getEvent()
         event?.schedule = schedule
         setEvent(event)
-
-        checkNameUniqueness(getName())
     }
 
     fun getLocation(): String? {

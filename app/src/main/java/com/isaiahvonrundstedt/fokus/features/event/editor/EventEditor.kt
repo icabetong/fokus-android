@@ -201,10 +201,6 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                 else null
         }
 
-        binding.eventNameTextInput.textChanged {
-            viewModel.checkNameUniqueness(it.toString())
-        }
-
         binding.eventNameTextInput.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus && v is TextInputEditText) {
                 viewModel.setName(v.text.toString())

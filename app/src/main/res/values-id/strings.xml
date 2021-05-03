@@ -1,0 +1,340 @@
+<resources>
+    <string translatable="false" name="app_name">Fokus</string>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Tugas Kamu</string>
+    <string name="activity_tasks_pending">Tugas Tertunda</string>
+    <string name="activity_tasks_finished">Tugas Selesai</string>
+    <string name="activity_subjects">Subjek Anda</string>
+    <string name="activity_subjects_today">Subjek Anda Hari Ini</string>
+    <string name="activity_subjects_tomorrow">Subjek Anda Besok</string>
+    <string name="activity_archives">Item Anda yang Diarsipkan</string>
+    <string name="activity_logs">Log Pemberitahuan</string>
+    <string name="activity_settings">Pengaturan</string>
+    <string name="activity_backup">Cadangkan dan Pulihkan</string>
+    <string name="activity_notices">Pemberitahuan Pihak Ketiga</string>
+    <string name="activity_open_source_licenses">Lisensi Sumber Terbuka</string>
+    <string name="activity_about">Tentang</string>
+
+    <string name="menu_add">@string/button_add</string>
+    <string name="menu_more">Lainnya</string>
+    <string name="menu_sort">Menyortir</string>
+    <string name="menu_filter">Saring</string>
+    <string name="menu_share">Bagikan</string>
+    <string name="menu_import">Impor</string>
+    <string name="menu_clear_items">Hapus Log</string>
+    <string name="menu_export_to_file">Ekspor ke file</string>
+    <string name="menu_share_directly">Bagikan langsung</string>
+    <string name="menu_archived">Arsip</string>
+
+    <string name="navigation_tasks">Tugas</string>
+    <string name="navigation_events">Acara</string>
+    <string name="navigation_subjects">Subjek</string>
+    <string name="navigation_home">Beranda</string>
+    <string name="navigation_logs">Log</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
+
+    <string name="button_add_task">Tambah tugas</string>
+    <string name="button_add_event">Tambah acara</string>
+    <string name="button_add_subject">Tambah subjek</string>
+    <string name="button_add">Tambah</string>
+    <string name="button_new">Baru</string>
+    <string name="button_save">Simpan</string>
+    <string name="button_done">Selesai</string>
+    <string name="button_undo">Undo</string>
+    <string name="button_remove">Hapus</string>
+    <string name="button_continue">Lanjut</string>
+    <string name="button_mark_as_finished">Tandai selesai</string>
+    <string name="button_mark_as_important">Tandai penting</string>
+    <string name="button_delete">Hapus</string>
+    <string name="button_cancel">Batal</string>
+    <string name="button_discard">Batal</string>
+    <string name="button_dismiss">Batal</string>
+    <string name="button_learn_more">Pelajari lebih lanjut</string>
+    <string name="button_view_schedules">Lihat Jadwal</string>
+
+    <string name="empty_view_no_subjects_title">Tidak Ada Subjek yang Ditambahkan</string>
+    <string name="empty_view_no_subjects_summary">Subjek membantu mengurutkan tugas dan acara Anda, Jika ada, tambahkan menggunakan tombol di bawah ini.</string>
+    <string name="empty_view_no_classes_today_title">Tidak Ada Kelas untuk Hari Ini</string>
+    <string name="empty_view_no_classes_today_summary">Anda tidak memiliki kelas yang dijadwalkan untuk hari ini.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Tidak Ada Kelas untuk Besok</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Anda tidak memiliki jadwal kelas untuk besok.</string>
+    <string name="empty_view_no_tasks_title">Tidak Ada Tugas yang Menunggu Keputusan</string>
+    <string name="empty_view_no_tasks_summary">Saat ini Anda tidak memiliki tugas yang menunggu keputusan. Jika Anda punya, tambahkan menggunakan tombol di bawah.</string>
+    <string name="empty_view_no_finished_title">Tidak Ada Tugas yang Selesai</string>
+    <string name="empty_view_no_finished_summary">Saat ini Anda tidak memiliki tugas yang sudah selesai. Setiap tugas yang Anda tandai sebagai selesai akan ditampilkan di sini.</string>
+    <string name="empty_view_no_logs_title">Tidak Ada Log Terekam</string>
+    <string name="empty_view_no_logs_summary">Setelah tugas, acara, atau pengingat apa pun muncul di bayangan pemberitahuan Anda, itu juga akan muncul di sini.</string>
+    <string name="empty_view_no_events_title">Tidak Ada Acara Terjadwal</string>
+    <string name="empty_view_no_events_summary">Saat ini Anda tidak memiliki acara terjadwal. Jika Anda punya, tambahkan menggunakan tombol di bawah.</string>
+    <string name="empty_view_no_previous_title">Tidak Ada Acara Sebelumnya</string>
+    <string name="empty_view_no_previous_summary">Saat ini Anda tidak memiliki acara sebelumnya. Setiap acara yang melewati jadwalnya akan muncul di sini</string>
+    <string name="empty_view_no_archived_tasks">Tidak Ada Tugas yang Diarsipkan</string>
+    <string name="empty_view_no_archived_events">Tidak Ada Acara yang Diarsipkan</string>
+    <string name="empty_view_no_archived_subjects">Tidak Ada Subjek yang Diarsipkan</string>
+
+    <string name="days_of_week_item_sunday">Minggu</string>
+    <string name="days_of_week_item_monday">Senin</string>
+    <string name="days_of_week_item_tuesday">Selasa</string>
+    <string name="days_of_week_item_wednesday">Rabu</string>
+    <string name="days_of_week_item_friday">Jumat</string>
+    <string name="days_of_week_item_saturday">Sabtu</string>
+
+    <string name="days_of_week_item_sunday_short">Min</string>
+    <string name="days_of_week_item_monday_short">Sen</string>
+    <string name="days_of_week_item_tuesday_short">Sel</string>
+    <string name="days_of_week_item_wednesday_short">Rab</string>
+    <string name="days_of_week_item_thursday_short">Kam</string>
+    <string name="days_of_week_item_friday_short">Jum</string>
+    <string name="days_of_week_item_saturday_short">Sab</string>
+
+    <string name="weeks_of_month_item_week_1">Minggu 1</string>
+    <string name="weeks_of_month_item_week_2">Minggu 2</string>
+    <string name="weeks_of_month_item_week_3">Minggu 3</string>
+    <string name="weeks_of_month_item_week_4">Minggu 4</string>
+
+    <string name="dialog_assign_subject">Tetapkan Subjek</string>
+    <string name="dialog_pick_start_time">Pilih Waktu Mulai</string>
+    <string name="dialog_pick_end_time">Pilih Waktu Berakhir</string>
+    <string name="dialog_pick_color_tag">Pilih label warna</string>
+    <string name="dialog_select_notification_interval">Pilih interval pemberitahuan</string>
+    <string name="dialog_choose_theme">Pilih tema</string>
+    <string name="dialog_choose_backup">Pilih file cadangan</string>
+    <string name="dialog_confirm_deletion_title">Apakah Anda ingin menghapus \"%1$s\"?</string>
+    <string name="dialog_confirm_deletion_summary">Setelah item ini dihapus, item tersebut tidak dapat dipulihkan.</string>
+    <string name="dialog_confirm_unarchive_title">Hapus dari arsip?</string>
+    <string name="dialog_confirm_unarchive_summary">Anda selalu dapat menggeser ke kiri untuk mengarsipkan item ini lagi.</string>
+    <string name="dialog_import_attachment_title">Impor lampiran?</string>
+    <string name="dialog_import_attachment_summary">Aplikasi harus menyalin file ke folder datanya sendiri karena batasan terbaru yang diberlakukan oleh sistem Android. Lanjutkan?</string>
+    <string name="dialog_import_attachment_confirm">Jangan tanya lagi</string>
+    <string name="dialog_schedule_details">Detail Jadwal</string>
+    <string name="dialog_discard_changes">Membuang perubahan?</string>
+    <string name="dialog_select_file_import">Pilih file untuk diimpor</string>
+    <string name="dialog_send_to">Kirim ke</string>
+    <string name="dialog_sharing_options">Opsi berbagi</string>
+    <string name="dialog_class_schedules">Jadwal Kelas</string>
+    <string name="dialog_filter_options">Opsi Filter</string>
+    <string name="dialog_new_attachment">Lampiran Baru</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Masukkan URL Situs Web</string>
+    <string name="dialog_sorting">Penyortiran</string>
+    <string name="dialog_permission_needed_title">Izin Penyimpanan diperlukan</string>
+    <string name="dialog_permission_needed_summary">Untuk melampirkan file dari perangkat Anda, aplikasi memerlukan izin penyimpanan yang akan diberikan.</string>
+
+    <string name="attachment_type_import_file">Impor file</string>
+    <string name="attachment_type_website_url">URL Situs Web</string>
+
+    <string name="sorting_directions_ascending">Menaik</string>
+    <string name="sorting_directions_descending">Menurun</string>
+
+    <string name="filter_options_all">Semua</string>
+    <string name="filter_options_pending_tasks">Tertunda saja</string>
+    <string name="filter_options_finished_tasks">Selesai saja</string>
+    <string name="filter_options_today_classes">Hari ini saja</string>
+    <string name="filter_options_tomorrow_classes">Besok saja</string>
+
+    <string name="field_subject_code">Kode Subjek</string>
+    <string name="field_description">Deskripsi</string>
+    <string name="field_days_of_week">Hari dalam seminggu</string>
+    <string name="field_weeks_of_month">Minggu dalam sebulan</string>
+    <string name="field_start_time">Waktu Mulai</string>
+    <string name="field_end_time">Waktu Akhir</string>
+    <string name="field_task_name">Nama Tugas</string>
+    <string name="field_notes">Catatan</string>
+    <string name="field_subject">Subjek</string>
+    <string name="field_due_date">Tenggat Waktu</string>
+    <string name="field_event_name">Nama Acara</string>
+    <string name="field_schedule">Jadwal</string>
+    <string name="field_location">Lokasi</string>
+    <string name="field_attachments">Lampiran</string>
+    <string name="field_class_time">Waktu Kelas</string>
+    <string name="field_color">Label Warna</string>
+    <string name="field_priority">Prioritas</string>
+    <string name="field_status">Status</string>
+    <string name="field_not_set">Tidak diatur</string>
+    <string name="field_due_in_the_next_meeting">Dalam pertemuan berikutnya</string>
+    <string name="field_due_pick_from_schedule">Pilih dari jadwal kelas</string>
+    <string name="field_due_custom">Kustom</string>
+    <string name="field_attachment_name">Nama lampiran</string>
+
+    <string name="hint_subject_description">Nama subjek</string>
+    <string name="hint_task_notes">Beberapa ide atau detail kecil tentang tugas</string>
+    <string name="hint_event_location">Masuki ruangan, gedung, atau tempat mana pun</string>
+    <string name="hint_event_notes">Beberapa ide atau detail kecil tentang acara tersebut</string>
+
+    <string name="feedback_subject_removed">Subjek dihapus</string>
+    <string name="feedback_log_removed">Log dihapus</string>
+    <string name="feedback_task_removed">Tugas dihapus</string>
+    <string name="feedback_schedule_removed">Jadwal dihapus</string>
+    <string name="feedback_attachment_added">Lampiran ditambahkan</string>
+    <string name="feedback_attachment_removed">Lampiran dihapus</string>
+    <string name="feedback_event_removed">Acara dihapus</string>
+    <string name="feedback_task_marked_as_finished">Tugas ditandai sebagai selesai</string>
+    <string name="feedback_task_marked_as_pending">Tugas ditandai sebagai tertunda</string>
+    <string name="feedback_subject_empty_name">Anda lupa memasukkan kode subjek</string>
+    <string name="feedback_subject_empty_description">Anda lupa memasukkan deskripsi</string>
+    <string name="feedback_subject_no_schedule">Anda lupa menambahkan jadwal</string>
+    <string name="feedback_schedule_empty_days">Anda lupa menentukan hari</string>
+    <string name="feedback_schedule_empty_start_time">Anda lupa memasukkan waktu mulai</string>
+    <string name="feedback_schedule_empty_end_time">Anda lupa memasukkan waktu akhir</string>
+    <string name="feedback_task_empty_name">Anda lupa memasukkan nama tugas</string>
+    <string name="feedback_task_empty_due_date">Anda lupa menentukan tanggal jatuh tempo</string>
+    <string name="feedback_event_empty_name">Anda lupa memasukkan nama acara</string>
+    <string name="feedback_event_empty_location">Anda lupa memasukkan lokasi</string>
+    <string name="feedback_event_empty_schedule">Anda lupa memasukkan jadwal</string>
+    <string name="feedback_restore_invalid">File cadangan tidak valid</string>
+    <string name="feedback_restore_corrupted">File cadangan rusak atau tidak dapat dibaca</string>
+    <string name="feedback_backup_empty">Tidak ada item untuk dicadangkan</string>
+    <string name="feedback_backup_failed">Proses pencadangan mengalami kesalahan</string>
+    <string name="feedback_import_ongoing">Impor sedang berlangsung</string>
+    <string name="feedback_import_completed">Impor selesai</string>
+    <string name="feedback_import_failed">Impor gagal</string>
+    <string name="feedback_export_ongoing">Ekspor sedang berlangsung</string>
+    <string name="feedback_export_completed">Ekspor berhasil</string>
+    <string name="feedback_export_failed">Ekspor gagal</string>
+    <string name="feedback_unable_to_share_title">Tidak dapat membagikan</string>
+    <string name="feedback_unable_to_share_message">Tidak ada informasi valid yang dapat dibagikan</string>
+
+    <string name="settings_group_interface">Antarmuka</string>
+    <string name="settings_group_sound">Suara</string>
+    <string name="settings_group_notification">Notifikasi</string>
+    <string name="settings_group_advanced">Lanjutan</string>
+    <string name="settings_group_debugging">Debugging</string>
+    <string name="settings_group_contribute">Kontribusi</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_item_system">Default sistem</string>
+    <string name="settings_theme_item_dark">Gelap</string>
+    <string name="settings_theme_item_light">Terang</string>
+    <string name="settings_confetti_title">Konfeti</string>
+    <string name="settings_confetti_summary">Tunjukkan konfeti ketika tugas ditandai sebagai selesai</string>
+
+    <string name="settings_completion_sounds_title">Suara Penyelesaian</string>
+    <string name="settings_completion_sounds_summary">Putar suara saat Anda menandai tugas sebagai selesai</string>
+
+    <string name="settings_reminder_frequency_title">Frekuensi pengingat</string>
+    <string name="settings_reminder_frequency_item_everyday">Setiap hari</string>
+    <string name="settings_reminder_frequency_item_weekends">Akhir pekan</string>
+    <string name="settings_remind_me_in_time_of_day">Ingatkan saya saat ini</string>
+    <string name="settings_when_nearing_due_title">Saat tugas hampir jatuh tempo</string>
+    <string name="settings_when_nearing_due_summary">Tampilkan pemberitahuan untuk tugas yang mendekati tenggat waktunya</string>
+    <string name="settings_task_reminders">Interval pengingat tugas</string>
+    <string name="settings_task_reminders_item_hour">Sejam sebelumnya</string>
+    <string name="settings_task_reminders_item_three_hours">3 jam sebelumnya</string>
+    <string name="settings_task_reminders_item_day">1 hari sebelumnya</string>
+    <string name="settings_incoming_events_title">Acara yang akan datang</string>
+    <string name="settings_incoming_events_summary">Tampilkan pemberitahuan tentang acara masuk hari ini</string>
+    <string name="settings_event_reminders">Interval pengingat acara</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 menit sebelumnya</string>
+    <string name="settings_event_reminders_item_half_hour">30 menit sebelumnya</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Kelas untuk hari ini</string>
+    <string name="settings_classes_for_this_day_summary">Tampilkan pemberitahuan tentang kelas untuk subjek saya hari ini</string>
+    <string name="settings_class_reminders">Interval pengingat kelas</string>
+    <string name="settings_class_reminders_item_5_minutes">5 menit sebelumnya</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">Pengaturan Lainnya</string>
+
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
+    <string name="settings_backup">Cadangan</string>
+    <string name="settings_backup_summary_no_previous">Tidak ada cadangan</string>
+    <string name="settings_restore">Pulihkan</string>
+    <string name="settings_use_external_browser_title">Buka tautan di browser eksternal</string>
+    <string name="settings_use_external_browser_summary">Gunakan browser default sistem untuk menangani hyperlink</string>
+
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
+    <string name="settings_not_working_notifications_info">Terkadang, pemberitahuan Anda mungkin tidak terpicu karena pengoptimalan baterai yang agresif oleh pabrikan ponsel Anda.</string>
+
+    <string name="settings_translate">Terjemahkan</string>
+    <string name="settings_report_an_issue">Laporkan masalah</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Versi</string>
+
+    <string name="color_sky">Sky</string>
+    <string name="color_grass">Grass</string>
+    <string name="color_sunset">Sunset</string>
+    <string name="color_lemon">Lemon</string>
+    <string name="color_sea">Sea</string>
+    <string name="color_grape">Grape</string>
+    <string name="color_cherry">Cherry</string>
+    <string name="color_coral">Coral</string>
+    <string name="color_midnight">Midnight</string>
+    <string name="color_mint">Mint</string>
+    <string name="color_lavender">Lavender</string>
+    <string name="color_graphite">Grafit</string>
+
+    <string name="widget_task_name">Widget Tugas</string>
+    <string name="widget_task_title">Tugas</string>
+    <string name="widget_task_empty">Kamu tidak ada tugas hari ini</string>
+    <string name="widget_event_name">Widget Acara</string>
+    <string name="widget_event_title">Acara</string>
+    <string name="widget_event_empty">Kamu tidak ada acara hari ini</string>
+    <string name="widget_class_name">Widget Kelas</string>
+    <string name="widget_class_title">Kelas</string>
+    <string name="widget_class_empty">Kamu tidak ada kelas hari ini</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Menandai ini sebagai penting berarti ini akan menampilkan pemberitahuan terus-menerus di bayangan pemberitahuan Anda.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Pengingat</string>
+
+    <string name="notification_channel_general">Umum</string>
+    <string name="notification_channel_task_reminders">Pengingat Tugas</string>
+    <string name="notification_channel_event_reminders">Pengingat Acara</string>
+    <string name="notification_channel_class_reminders">Pengingat Kelas</string>
+
+    <string name="notification_pending_tasks_title">Kamu punya %1$d tugas yang tertunda</string>
+    <string name="notification_pending_tasks_summary">Mungkin layak untuk dilihat</string>
+
+    <string name="notification_backup_ongoing">Melakukan pencadangan</string>
+    <string name="notification_backup_error">Pencadangan gagal</string>
+    <string name="notification_backup_success">Pencadangan selesai</string>
+
+    <string name="notification_restore_ongoing">Memulihkan cadangan</string>
+    <string name="notification_restore_error">Pemulihan gagal</string>
+    <string name="notification_restore_success">Pemulihan selesai</string>
+
+    <!-- System -->
+    <string name="sharing_attach_to_task">Lampirkan pada tugas</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">Semoga harimu menyenangkan!</string>
+    <string name="greeting_morning">Selamat pagi!</string>
+    <string name="greeting_afternoon">Selamat siang!</string>
+    <string name="greeting_evening">Selamat sore!</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and">&#160;dan&#160;</string>
+    <string name="yesterday_at">Kemarin pukul %1$s</string>
+    <string name="yesterday">Kemarin</string>
+    <string name="tomorrow_at">Besok pukul %1$s</string>
+    <string name="tomorrow">Besok</string>
+    <string name="today_at">Hari ini pukul %1$s</string>
+    <string name="today">Hari ini</string>
+    <string name="due_today_at">" Tenggat hari ini pukul %1$s"</string>
+    <string name="due_tomorrow_at">" Tenggat besok pukul %1$s"</string>
+
+    <string name="open_source_libraries">Open Source Libraries</string>
+    <string name="credit_other_resources">Bahan Lainnya</string>
+    <string name="credit_notification_sound_title" translatable="false">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Suara Notifikasi</string>
+    <string name="credit_launcher_icon_title" translatable="false">Freepik</string>
+    <string name="credit_launcher_icon_summary">Ikon Launcher</string>
+    <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
+    <string name="credit_user_interface_icons_summary">Ikon Antarmuka Pengguna</string>
+    <string name="settings_allow_week_numbers_title">Aktifkan Nomor Minggu</string>
+    <string name="settings_allow_week_numbers_summary">Tampilkan nomor minggu saat mengonfigurasi jadwal.</string>
+    <string name="feedback_event_schedule_exists">Acara dengan jadwal yang sama sudah ada.</string>
+    <string name="feedback_event_name_exists">Acara dengan nama ini sudah ada.</string>
+    <string name="feedback_task_name_exists">Tugas dengan nama ini sudah ada.</string>
+    <string name="feedback_schedule_exists">Jadwal bentrok dengan jadwal lain.</string>
+    <string name="feedback_subject_code_exists">Subjek dengan kode ini sudah ada.</string>
+    <string name="days_of_week_item_thursday">Kamis</string>
+
+</resources>

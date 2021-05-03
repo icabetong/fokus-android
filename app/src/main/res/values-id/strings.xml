@@ -5,7 +5,7 @@
     <string name="shortcut_add_event">@string/button_add_event</string>
     <string name="shortcut_add_subject">@string/button_add_subject</string>
 
-    <string name="activity_tasks">Tugas Kamu</string>
+    <string name="activity_tasks">Tugas Anda</string>
     <string name="activity_tasks_pending">Tugas Tertunda</string>
     <string name="activity_tasks_finished">Tugas Selesai</string>
     <string name="activity_subjects">Subjek Anda</string>
@@ -270,13 +270,13 @@
 
     <string name="widget_task_name">Widget Tugas</string>
     <string name="widget_task_title">Tugas</string>
-    <string name="widget_task_empty">Kamu tidak ada tugas hari ini</string>
+    <string name="widget_task_empty">Anda tidak ada tugas hari ini</string>
     <string name="widget_event_name">Widget Acara</string>
     <string name="widget_event_title">Acara</string>
-    <string name="widget_event_empty">Kamu tidak ada acara hari ini</string>
+    <string name="widget_event_empty">Anda tidak ada acara hari ini</string>
     <string name="widget_class_name">Widget Kelas</string>
     <string name="widget_class_title">Kelas</string>
-    <string name="widget_class_empty">Kamu tidak ada kelas hari ini</string>
+    <string name="widget_class_empty">Anda tidak ada kelas hari ini</string>
 
     <!-- Helper Text -->
     <string name="helper_this_is_important">Menandai ini sebagai penting berarti ini akan menampilkan pemberitahuan terus-menerus di bayangan pemberitahuan Anda.</string>
@@ -289,7 +289,7 @@
     <string name="notification_channel_event_reminders">Pengingat Acara</string>
     <string name="notification_channel_class_reminders">Pengingat Kelas</string>
 
-    <string name="notification_pending_tasks_title">Kamu punya %1$d tugas yang tertunda</string>
+    <string name="notification_pending_tasks_title">Anda punya %1$d tugas yang tertunda</string>
     <string name="notification_pending_tasks_summary">Mungkin layak untuk dilihat</string>
 
     <string name="notification_backup_ongoing">Melakukan pencadangan</string>

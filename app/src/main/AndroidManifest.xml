@@ -37,9 +37,16 @@
         android:theme="@style/Fokus.Theme.Core">
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            tools:node="remove"/>
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- If you are using androidx.startup to initialize other components -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -52,6 +59,7 @@
         </provider>
 
         <activity android:name=".features.core.activities.MainActivity"
+            android:exported="true"
             android:theme="@style/Fokus.Theme.Core.Navigation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,7 +76,8 @@
         <activity android:name=".features.about.NoticesActivity" />
         <activity android:name=".features.about.LibrariesActivity" />
 
-        <activity android:name=".features.attachments.attach.AttachToTaskActivity">
+        <activity android:name=".features.attachments.attach.AttachToTaskActivity"
+            android:exported="true">
             <intent-filter android:label="@string/sharing_attach_to_task">
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -109,7 +118,8 @@
         </receiver>
         <receiver
             android:name="com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider"
-            android:label="@string/widget_task_name">
+            android:label="@string/widget_task_name"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -119,7 +129,8 @@
         </receiver>
         <receiver
             android:name="com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider"
-            android:label="@string/widget_event_name">
+            android:label="@string/widget_event_name"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -129,7 +140,8 @@
         </receiver>
         <receiver
             android:name="com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider"
-            android:label="@string/widget_class_name">
+            android:label="@string/widget_class_name"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

@@ -1,9 +1,11 @@
 package com.isaiahvonrundstedt.fokus.features.core.compose
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -79,6 +81,7 @@ fun MainScreen(onNavigate: (String) -> Unit) {
                         contentDescription = stringResource(id = R.string.button_add)
                     )
                 },
+                shape = RoundedCornerShape(dimensionResource(id = R.dimen.shape_radius)),
                 text = { Text(stringResource(id = R.string.button_add)) },
                 onClick = {
                     onNavigate(route)

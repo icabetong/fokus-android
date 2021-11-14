@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="container_padding">16dp</dimen>
+    <dimen name="composable_spacing">8dp</dimen>
+    <dimen name="composable_spacing_siblings">2dp</dimen>
+    <dimen name="shape_radius">8dp</dimen>
+
+    <!-- Legacy -->
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="activity_padding_medium">32dp</dimen>
 

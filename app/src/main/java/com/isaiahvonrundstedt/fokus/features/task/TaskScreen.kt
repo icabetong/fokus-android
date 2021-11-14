@@ -7,9 +7,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.features.shared.components.EmptyState
+import com.isaiahvonrundstedt.fokus.features.shared.composables.EmptyState
 
 @Composable
 fun TaskScreenLayout(viewModel: TaskViewModel) {

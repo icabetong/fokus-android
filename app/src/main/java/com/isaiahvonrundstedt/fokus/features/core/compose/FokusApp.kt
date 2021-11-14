@@ -16,8 +16,8 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.features.event.EventScreenLayout
-import com.isaiahvonrundstedt.fokus.features.shared.components.BottomBar
-import com.isaiahvonrundstedt.fokus.features.shared.components.HomeSections
+import com.isaiahvonrundstedt.fokus.features.shared.composables.custom.BottomBar
+import com.isaiahvonrundstedt.fokus.features.shared.composables.custom.HomeSections
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectEditorRoute
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectScreenLayout
 import com.isaiahvonrundstedt.fokus.features.task.TaskScreenLayout

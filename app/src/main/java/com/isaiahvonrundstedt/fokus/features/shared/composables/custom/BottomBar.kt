@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.shared.components
+package com.isaiahvonrundstedt.fokus.features.shared.composables.custom
 
 import androidx.annotation.FloatRange
 import androidx.compose.animation.animateColorAsState

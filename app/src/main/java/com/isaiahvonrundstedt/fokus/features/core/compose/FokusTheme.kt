@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.lightColors
+import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -23,6 +24,7 @@ private val AppLightColorScheme = lightColors(
     onPrimary = Color.White,
     secondary = colorLightBlue500,
     onSecondary = Color.White,
+    surface = Color.White
 )
 
 object FokusTheme {

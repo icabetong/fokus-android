@@ -1,4 +1,4 @@
-package com.isaiahvonrundstedt.fokus.features.shared.components
+package com.isaiahvonrundstedt.fokus.features.shared.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon

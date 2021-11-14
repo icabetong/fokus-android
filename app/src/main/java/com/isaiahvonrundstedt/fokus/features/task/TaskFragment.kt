@@ -47,8 +47,10 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     private val taskAdapter = TaskAdapter(this, this, this)
     private val viewModel: TaskViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentTaskBinding.inflate(inflater)
         return binding.root
     }
@@ -116,8 +118,10 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            controller?.navigate(R.id.action_to_navigation_editor_task, null, null,
-                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
+            controller?.navigate(
+                R.id.action_to_navigation_editor_task, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
+            )
         }
     }
 
@@ -139,21 +143,27 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                         .setTimeToLive(1000L)
                         .addShapes(Shape.Square, Shape.Circle)
                         .addSizes(Size(12, 5f))
-                        .setPosition(binding.confettiView.x + binding.confettiView.width / 2,
-                            binding.confettiView.y + binding.confettiView.height / 3)
+                        .setPosition(
+                            binding.confettiView.x + binding.confettiView.width / 2,
+                            binding.confettiView.y + binding.confettiView.height / 3
+                        )
                         .burst(100)
                 }
 
                 if (sounds)
-                    RingtoneManager.getRingtone(requireContext(),
-                        Uri.parse(PreferenceManager.DEFAULT_SOUND)).play()
+                    RingtoneManager.getRingtone(
+                        requireContext(),
+                        Uri.parse(PreferenceManager.DEFAULT_SOUND)
+                    ).play()
             }
         }
     }
 
     // Callback from the RecyclerView Adapter
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is TaskPackage) {
             when (action) {
                 // Create the intent to the editorUI and pass the extras
@@ -168,8 +178,10 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                     )
 
                     container?.also {
-                        controller?.navigate(R.id.action_to_navigation_editor_task, args, null,
-                            FragmentNavigatorExtras(it to transitionName))
+                        controller?.navigate(
+                            R.id.action_to_navigation_editor_task, args, null,
+                            FragmentNavigatorExtras(it to transitionName)
+                        )
                     }
                 }
                 // The item has been swiped down from the recyclerView
@@ -179,7 +191,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                     viewModel.remove(t.task)
 
                     createSnackbar(R.string.feedback_task_removed, binding.recyclerView).run {
-                        addCallback(object: Snackbar.Callback() {
+                        addCallback(object : Snackbar.Callback() {
                             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                 super.onDismissed(transientBottomBar, event)
 
@@ -207,7 +219,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_name_sort_ascending -> {
                 viewModel.sort = TaskViewModel.Sort.NAME
                 viewModel.sortDirection = SortDirection.ASCENDING

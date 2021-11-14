@@ -3,45 +3,65 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
-import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
+import com.isaiahvonrundstedt.fokus.features.core.compose.FokusApp
+import com.isaiahvonrundstedt.fokus.features.core.compose.FokusTheme
 import com.isaiahvonrundstedt.fokus.features.event.Event
+import com.isaiahvonrundstedt.fokus.features.event.EventScreenLayout
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.components.BottomBar
+import com.isaiahvonrundstedt.fokus.features.shared.components.HomeSections
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.subject.SubjectScreenLayout
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskScreenLayout
+import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.layout_calendar_week_days.view.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val taskViewModel: TaskViewModel by viewModels()
 
     private var controller: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        controller = Navigation.findNavController(this, R.id.navigationHostFragment)
+        //binding = ActivityMainBinding.inflate(layoutInflater)
+        setContent { FokusApp() }
+        //controller = Navigation.findNavController(this, R.id.navigationHostFragment)
 
         intent?.also { intent ->
             when (intent.action) {
                 ACTION_WIDGET_TASK -> {
                     val task: Task? = intent.getParcelableExtra(EXTRA_TASK)
                     val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
-                    val attachments: List<Attachment>? = intent.getParcelableListExtra(EXTRA_ATTACHMENTS)
+                    val attachments: List<Attachment>? =
+                        intent.getParcelableListExtra(EXTRA_ATTACHMENTS)
 
                     val args = bundleOf(
                         TaskEditor.EXTRA_TASK to task?.let { Task.toBundle(it) },
@@ -110,14 +130,22 @@ class MainActivity : BaseActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             with(NotificationChannelManager(this)) {
-                register(NotificationChannelManager.CHANNEL_ID_GENERIC,
-                    NotificationManager.IMPORTANCE_DEFAULT)
-                register(NotificationChannelManager.CHANNEL_ID_TASK,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
-                register(NotificationChannelManager.CHANNEL_ID_EVENT,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
-                register(NotificationChannelManager.CHANNEL_ID_CLASS,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                register(
+                    NotificationChannelManager.CHANNEL_ID_GENERIC,
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+                register(
+                    NotificationChannelManager.CHANNEL_ID_TASK,
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                )
+                register(
+                    NotificationChannelManager.CHANNEL_ID_EVENT,
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                )
+                register(
+                    NotificationChannelManager.CHANNEL_ID_CLASS,
+                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                )
             }
         }
     }

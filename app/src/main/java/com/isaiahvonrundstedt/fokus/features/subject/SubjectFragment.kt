@@ -29,6 +29,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 
+
 @AndroidEntryPoint
 class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapter.ScheduleListener,
     BaseAdapter.ArchiveListener {

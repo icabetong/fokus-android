@@ -1,7 +1,7 @@
 # Fokus - To Do app tailored specifically for students
-[![License](https://img.shields.io/github/license/icabetong/fokus)](https://www.gnu.org/licenses/agpl-3.0.en.html)
-![Issues](https://img.shields.io/github/issues/icabetong/fokus)
-![PRs](https://img.shields.io/github/issues-pr/icabetong/fokus)
+[![License](https://img.shields.io/github/license/icabetong/fokus-android)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+![Issues](https://img.shields.io/github/issues/icabetong/fokus-android)
+![PRs](https://img.shields.io/github/issues-pr/icabetong/fokus-android)
 
 Fokus is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It's fast and beautiful yet simple design that can help you focus on what matters most.
 

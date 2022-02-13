@@ -156,7 +156,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                     putExtra(NotificationActionService.EXTRA_TASK_ID, log.data)
                     putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, log.isImportant)
                     action = NotificationActionService.ACTION_FINISHED
-                }, PendingIntent.FLAG_UPDATE_CURRENT)
+                }, PendingIntent.FLAG_IMMUTABLE)
 
             manager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
                 createNotification(log, NOTIFICATION_CHANNEL_ID_TASK,
@@ -188,7 +188,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
     private val contentIntent: PendingIntent
         get() {
             return PendingIntent.getActivity(applicationContext, 0,
-                Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+                Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
         }
 
     private val notificationSoundUri: Uri

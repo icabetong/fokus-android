@@ -3,18 +3,18 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
+import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.core.compose.FokusApp
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
@@ -33,12 +33,13 @@ class MainActivity : BaseActivity() {
     private val taskViewModel: TaskViewModel by viewModels()
 
     private var controller: NavController? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = ActivityMainBinding.inflate(layoutInflater)
-        setContent { FokusApp() }
-        //controller = Navigation.findNavController(this, R.id.navigationHostFragment)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        controller = findNavController(R.id.navigationHostFragment)
 
         intent?.also { intent ->
             when (intent.action) {

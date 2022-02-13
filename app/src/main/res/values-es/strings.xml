@@ -328,6 +328,7 @@
     <string name="today">Hoy</string>
     <string name="due_today_at">Fecha limite hoy a las %1$s</string>
     <string name="due_tomorrow_at">Fecha limite hoy a las %1$s</string>
+    <string name="due_at">Con fecha de vencimiento en %1$s</string>
 
     <string name="open_source_libraries">Open Source Libraries</string>
     <string name="credit_other_resources">Otros recursos</string>

@@ -283,6 +283,7 @@
     <string name="today">Heute</string>
     <string name="due_today_at">Fällig heute, %1$s</string>
     <string name="due_tomorrow_at">Fällig morgen, %1$s</string>
+    <string name="due_at">Fällig am %1$s</string>
     <string name="open_source_libraries">Open-Source-Bibliotheken</string>
     <string name="credit_other_resources">Andere Ressourcen</string>
     <string name="credit_notification_sound_summary">Benachrichtigungs-Ton</string>

@@ -328,6 +328,7 @@
     <string name="today">Today</string>
     <string name="due_today_at">Due today at %1$s</string>
     <string name="due_tomorrow_at">Due tomorrow at %1$s</string>
+    <string name="due_at">Due at %1$s</string>
 
     <string name="open_source_libraries">Open Source Libraries</string>
     <string name="credit_other_resources">Other Resources</string>

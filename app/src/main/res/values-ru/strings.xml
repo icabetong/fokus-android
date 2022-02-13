@@ -326,6 +326,7 @@
     <string name="today">Сегодня</string>
     <string name="due_today_at">Срок исполнения сегодня %1$s</string>
     <string name="due_tomorrow_at">Срок исполнения завтрашнего дня %1$s</string>
+    <string name="due_at">В срок %1$s</string>
 
     <string name="open_source_libraries">Библиотеки с открытым исходным кодом</string>
     <string name="credit_other_resources">Прочие ресурсы</string>

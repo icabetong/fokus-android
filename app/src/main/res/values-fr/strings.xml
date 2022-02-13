@@ -323,6 +323,7 @@
     <string name="today">Aujourd’hui</string>
     <string name="due_today_at">Prévu aujourd’hui à %1$s</string>
     <string name="due_tomorrow_at">Prévu demain à %1$s</string>
+    <string name="due_at">Due à %1$s</string>
 
     <string name="open_source_libraries">Bibliothèques open source</string>
     <string name="credit_other_resources">Autres ressources</string>

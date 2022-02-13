@@ -319,6 +319,7 @@
     <string name="today">Hari ini</string>
     <string name="due_today_at">" Tenggat hari ini pukul %1$s"</string>
     <string name="due_tomorrow_at">" Tenggat besok pukul %1$s"</string>
+    <string name="due_at">Jatuh tempo pada %1$s</string>
 
     <string name="open_source_libraries">Open Source Libraries</string>
     <string name="credit_other_resources">Bahan Lainnya</string>

@@ -32,7 +32,7 @@ class TaskNotificationWorker @AssistedInject constructor(
     override suspend fun doWork(): Result {
 
         val task = convertDataToTask(inputData)
-        val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_tomorrow_at
+        val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_at
         val log = Log().apply {
             title = task.name
             content = if (task.hasDueDate()) String.format(applicationContext.getString(resID),

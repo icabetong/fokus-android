@@ -327,6 +327,7 @@
     <string name="today">اليوم</string>
     <string name="due_today_at"> %1$s اليوم في</string>
     <string name="due_tomorrow_at"> %1$s موعد التسليم غدًا في</string>
+    <string name="due_at">موعد التسليم %1$s</string>
 
     <string name="open_source_libraries">مكتبات مفتوحة المصدر</string>
     <string name="credit_other_resources">مصادر أخرى</string>

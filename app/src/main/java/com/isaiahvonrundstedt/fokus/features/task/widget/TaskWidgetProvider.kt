@@ -20,13 +20,17 @@ class TaskWidgetProvider : AppWidgetProvider() {
             val manager = AppWidgetManager.getInstance(context)
             val component = ComponentName(context!!, TaskWidgetProvider::class.java)
 
-            manager.notifyAppWidgetViewDataChanged(manager.getAppWidgetIds(component),
-                R.id.listView)
+            manager.notifyAppWidgetViewDataChanged(
+                manager.getAppWidgetIds(component),
+                R.id.listView
+            )
         }
     }
 
-    override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?,
-                          appWidgetIds: IntArray?) {
+    override fun onUpdate(
+        context: Context?, appWidgetManager: AppWidgetManager?,
+        appWidgetIds: IntArray?
+    ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
         appWidgetIds?.forEach {
@@ -35,18 +39,24 @@ class TaskWidgetProvider : AppWidgetProvider() {
     }
 
     private fun onUpdateWidget(context: Context?, manager: AppWidgetManager?, id: Int) {
-        val mainIntent = PendingIntent.getActivity(context, 0,
+        val mainIntent = PendingIntent.getActivity(
+            context, 0,
             Intent(context, MainActivity::class.java).apply {
                 action = MainActivity.ACTION_NAVIGATION_TASK
-            }, 0)
+            }, 0
+        )
 
-        val itemIntent = PendingIntent.getActivity(context, 0,
+        val itemIntent = PendingIntent.getActivity(
+            context, 0,
             Intent(context, MainActivity::class.java).apply {
                 action = MainActivity.ACTION_WIDGET_TASK
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
+            }, PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
-        val addIntent = PendingIntent.getActivity(context, 0,
-            Intent(context, TaskEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+        val addIntent = PendingIntent.getActivity(
+            context, 0,
+            Intent(context, TaskEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val views = RemoteViews(context?.packageName, R.layout.layout_widget_tasks)
         with(views) {

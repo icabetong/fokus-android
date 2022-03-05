@@ -10,14 +10,16 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 
-class ScheduleViewerSheet(private val items: List<Schedule>, manager: FragmentManager)
-    : BaseBottomSheet(manager) {
+class ScheduleViewerSheet(private val items: List<Schedule>, manager: FragmentManager) :
+    BaseBottomSheet(manager) {
 
     private var _binding: LayoutSheetScheduleBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = LayoutSheetScheduleBinding.inflate(inflater, container, false)
         return binding.root
     }

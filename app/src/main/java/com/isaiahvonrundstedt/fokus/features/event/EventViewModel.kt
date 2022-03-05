@@ -29,7 +29,8 @@ class EventViewModel @Inject constructor(
     var selectedDate: LocalDate = today
         set(value) {
             field = value
-            events.value = _events.value?.filter { it.event.schedule!!.toLocalDate() == selectedDate }
+            events.value =
+                _events.value?.filter { it.event.schedule!!.toLocalDate() == selectedDate }
         }
 
     var startMonth: YearMonth = currentMonth.minusMonths(1)

@@ -51,15 +51,18 @@ class TaskRepository @Inject constructor(
         // Check if notifications for tasks are turned on and check if
         // the task is not finished, then schedule a notification
         if (preferenceManager.taskReminder && !task.isFinished && task.isDueDateInFuture() &&
-                task.hasDueDate()) {
+            task.hasDueDate()
+        ) {
 
             val data = BaseWorker.convertTaskToData(task)
             val request = OneTimeWorkRequest.Builder(TaskNotificationWorker::class.java)
                 .setInputData(data)
                 .addTag(task.taskID)
                 .build()
-            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
-                request)
+            workManager.enqueueUniqueWork(
+                task.taskID, ExistingWorkPolicy.REPLACE,
+                request
+            )
         }
     }
 
@@ -101,8 +104,10 @@ class TaskRepository @Inject constructor(
                 .setInputData(data)
                 .addTag(task.taskID)
                 .build()
-            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
-                request)
+            workManager.enqueueUniqueWork(
+                task.taskID, ExistingWorkPolicy.REPLACE,
+                request
+            )
         }
     }
 

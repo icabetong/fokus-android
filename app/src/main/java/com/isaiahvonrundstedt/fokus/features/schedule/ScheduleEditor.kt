@@ -41,8 +41,10 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = LayoutSheetScheduleEditorBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -96,14 +98,17 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_start_time)
-                timePicker(show24HoursView = false,
-                    currentTime = startTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                timePicker(
+                    show24HoursView = false,
+                    currentTime = startTime?.toZonedDateTimeToday()?.toCalendar()
+                ) { _, time ->
                     startTime = time.toLocalTime()
                     if (endTime == null)
                         endTime = startTime
 
                     if (startTime!!.isAfter(endTime)
-                        || startTime!!.compareTo(endTime) == 0) {
+                        || startTime!!.compareTo(endTime) == 0
+                    ) {
 
                         endTime = startTime
                             ?.plusHours(1)
@@ -126,15 +131,18 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
             MaterialDialog(it.context).show {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_end_time)
-                timePicker(show24HoursView = false,
-                    currentTime = endTime?.toZonedDateTimeToday()?.toCalendar()) { _, time ->
+                timePicker(
+                    show24HoursView = false,
+                    currentTime = endTime?.toZonedDateTimeToday()?.toCalendar()
+                ) { _, time ->
                     endTime = time.toLocalTime()
 
                     if (startTime == null)
                         startTime = endTime
 
                     if (endTime!!.isBefore(startTime)
-                        || endTime!!.compareTo(startTime) == 0) {
+                        || endTime!!.compareTo(startTime) == 0
+                    ) {
 
                         startTime = endTime
                             ?.minusHours(1)
@@ -220,7 +228,8 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
                 weeksOfMonth = weeksOfMonth,
                 startTime = startTime,
                 endTime = endTime,
-                subject = subjectID)
+                subject = subjectID
+            )
 
             setFragmentResult(requestKey, bundleOf(EXTRA_SCHEDULE to schedule))
             this.dismiss()

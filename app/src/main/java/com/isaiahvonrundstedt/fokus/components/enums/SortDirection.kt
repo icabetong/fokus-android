@@ -5,7 +5,7 @@ enum class SortDirection {
 
     companion object {
         fun parse(s: String?): SortDirection {
-            return when(s) {
+            return when (s) {
                 ASCENDING.toString() -> ASCENDING
                 DESCENDING.toString() -> DESCENDING
                 else -> throw IllegalStateException("Sort Direction must be ascending or descending")

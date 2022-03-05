@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubjectEditorViewModel @Inject constructor(
     private val repository: SubjectRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _subject: MutableLiveData<Subject> = MutableLiveData(Subject())
     private val _schedules: MutableLiveData<ArrayList<Schedule>> = MutableLiveData(arrayListOf())
@@ -30,6 +30,7 @@ class SubjectEditorViewModel @Inject constructor(
     fun getSubject(): Subject? {
         return subject.value
     }
+
     fun setSubject(data: Subject?) {
         _subject.value = data
     }
@@ -37,19 +38,23 @@ class SubjectEditorViewModel @Inject constructor(
     fun getSchedules(): ArrayList<Schedule> {
         return schedules.value ?: arrayListOf()
     }
+
     fun setSchedules(items: ArrayList<Schedule>) {
         _schedules.value = items
     }
+
     fun addSchedule(schedule: Schedule) {
         val items = ArrayList(getSchedules())
         items.add(schedule)
         setSchedules(items)
     }
+
     fun removeSchedule(schedule: Schedule) {
         val items = ArrayList(getSchedules())
         items.remove(schedule)
         setSchedules(items)
     }
+
     fun updateSchedule(schedule: Schedule) {
         val items = ArrayList(getSchedules())
         val index: Int = items.getIndexByID(schedule.scheduleID)
@@ -72,6 +77,7 @@ class SubjectEditorViewModel @Inject constructor(
     fun getCode(): String? {
         return getSubject()?.code
     }
+
     fun setCode(code: String) {
         if (code == getCode())
             return
@@ -85,6 +91,7 @@ class SubjectEditorViewModel @Inject constructor(
     fun getDescription(): String? {
         return getSubject()?.description
     }
+
     fun setDescription(description: String) {
         if (description == getDescription())
             return
@@ -97,6 +104,7 @@ class SubjectEditorViewModel @Inject constructor(
     fun getTag(): Subject.Tag? {
         return getSubject()?.tag
     }
+
     fun setTag(tag: Subject.Tag) {
         val subject = getSubject()
         subject?.tag = tag

@@ -18,9 +18,11 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import java.time.ZonedDateTime
 
-@Database(entities = [Subject::class, Task::class, Attachment::class, Log::class,
-    Event::class, Schedule::class],
-    version = AppDatabase.DATABASE_VERSION, exportSchema = false)
+@Database(
+    entities = [Subject::class, Task::class, Attachment::class, Log::class,
+        Event::class, Schedule::class],
+    version = AppDatabase.DATABASE_VERSION, exportSchema = false
+)
 @TypeConverters(DateTimeConverter::class, ColorConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -40,8 +42,10 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (instance == null) {
                 synchronized(AppDatabase::class) {
-                    instance = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, DATABASE_NAME)
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java, DATABASE_NAME
+                    )
                         .addMigrations(*migrations)
                         .build()
                 }
@@ -49,7 +53,7 @@ abstract class AppDatabase : RoomDatabase() {
             return instance!!
         }
 
-        private var migration_4_6 = object: Migration(4, 6) {
+        private var migration_4_6 = object : Migration(4, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     // schedules
@@ -66,7 +70,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private var migration_5_6 = object: Migration(5, 6) {
+        private var migration_5_6 = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     execSQL("ALTER TABLE tasks ADD COLUMN `isTaskArchived` INTEGER NOT NULL DEFAULT 0")
@@ -76,7 +80,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private var migration_4_7 = object: Migration(4, 7) {
+        private var migration_4_7 = object : Migration(4, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     // schedules
@@ -95,7 +99,7 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val taskList = arrayListOf<Task>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val task = Task()
                     task.taskID = cursor.getString(cursor.getColumnIndex("taskID"))
                     task.name = cursor.getString(cursor.getColumnIndex("name"))
@@ -104,8 +108,11 @@ abstract class AppDatabase : RoomDatabase() {
                     task.isFinished = cursor.getInt(cursor.getColumnIndex("isFinished")) > 0
                     task.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
                     task.isTaskArchived = cursor.getInt(cursor.getColumnIndex("isTaskArchived")) > 0
-                    task.dueDate = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
-                    task.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    task.dueDate =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
+                    task.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
 
                     taskList.add(task)
                 }
@@ -113,7 +120,8 @@ abstract class AppDatabase : RoomDatabase() {
 
                 database.execSQL("DELETE FROM tasks")
                 taskList.forEach {
-                    val statement = database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.taskID)
                         bindString(2, it.name)
@@ -133,22 +141,27 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val eventList = arrayListOf<Event>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val event = Event()
                     event.eventID = cursor.getString(cursor.getColumnIndex("eventID"))
                     event.name = cursor.getString(cursor.getColumnIndex("name"))
                     event.notes = cursor.getString(cursor.getColumnIndex("notes"))
-                    event.schedule = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
+                    event.schedule =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
                     event.location = cursor.getString(cursor.getColumnIndex("location"))
                     event.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
-                    event.isEventArchived = cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
-                    event.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    event.isEventArchived =
+                        cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
+                    event.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
                 }
                 cursor.close()
 
                 database.execSQL("DELETE FROM events")
                 eventList.forEach {
-                    val statement = database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.eventID)
                         bindString(2, it.name)
@@ -166,7 +179,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private var migration_5_7 = object: Migration(5, 7) {
+        private var migration_5_7 = object : Migration(5, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     execSQL("ALTER TABLE tasks ADD COLUMN `isTaskArchived` INTEGER NOT NULL DEFAULT 0")
@@ -183,7 +196,7 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val taskList = arrayListOf<Task>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val task = Task()
                     task.taskID = cursor.getString(cursor.getColumnIndex("taskID"))
                     task.name = cursor.getString(cursor.getColumnIndex("name"))
@@ -192,8 +205,11 @@ abstract class AppDatabase : RoomDatabase() {
                     task.isFinished = cursor.getInt(cursor.getColumnIndex("isFinished")) > 0
                     task.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
                     task.isTaskArchived = cursor.getInt(cursor.getColumnIndex("isTaskArchived")) > 0
-                    task.dueDate = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
-                    task.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    task.dueDate =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
+                    task.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
 
                     taskList.add(task)
                 }
@@ -201,7 +217,8 @@ abstract class AppDatabase : RoomDatabase() {
 
                 database.execSQL("DELETE FROM tasks")
                 taskList.forEach {
-                    val statement = database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.taskID)
                         bindString(2, it.name)
@@ -221,22 +238,27 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val eventList = arrayListOf<Event>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val event = Event()
                     event.eventID = cursor.getString(cursor.getColumnIndex("eventID"))
                     event.name = cursor.getString(cursor.getColumnIndex("name"))
                     event.notes = cursor.getString(cursor.getColumnIndex("notes"))
-                    event.schedule = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
+                    event.schedule =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
                     event.location = cursor.getString(cursor.getColumnIndex("location"))
                     event.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
-                    event.isEventArchived = cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
-                    event.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    event.isEventArchived =
+                        cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
+                    event.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
                 }
                 cursor.close()
 
                 database.execSQL("DELETE FROM events")
                 eventList.forEach {
-                    val statement = database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.eventID)
                         bindString(2, it.name)
@@ -254,7 +276,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private var migration_6_7 = object: Migration(6, 7) {
+        private var migration_6_7 = object : Migration(6, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 with(database) {
                     execSQL("CREATE TABLE IF NOT EXISTS `events_new` (`eventID` TEXT NOT NULL, `name` TEXT, `notes` TEXT, `location` TEXT, `subject` TEXT, `isImportant` INTEGER NOT NULL, `isEventArchived` INTEGER NOT NULL, `schedule` TEXT, `dateAdded` TEXT, PRIMARY KEY(`eventID`), FOREIGN KEY(`subject`) REFERENCES `subjects`(`subjectID`) ON UPDATE NO ACTION ON DELETE SET NULL )")
@@ -267,7 +289,7 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val taskList = arrayListOf<Task>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val task = Task()
                     task.taskID = cursor.getString(cursor.getColumnIndex("taskID"))
                     task.name = cursor.getString(cursor.getColumnIndex("name"))
@@ -276,8 +298,11 @@ abstract class AppDatabase : RoomDatabase() {
                     task.isFinished = cursor.getInt(cursor.getColumnIndex("isFinished")) > 0
                     task.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
                     task.isTaskArchived = cursor.getInt(cursor.getColumnIndex("isTaskArchived")) > 0
-                    task.dueDate = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
-                    task.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    task.dueDate =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dueDate")))
+                    task.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
 
                     taskList.add(task)
                 }
@@ -285,7 +310,8 @@ abstract class AppDatabase : RoomDatabase() {
 
                 database.execSQL("DELETE FROM tasks")
                 taskList.forEach {
-                    val statement = database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO tasks VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.taskID)
                         bindString(2, it.name)
@@ -305,23 +331,28 @@ abstract class AppDatabase : RoomDatabase() {
                 cursor.moveToFirst()
 
                 val eventList = arrayListOf<Event>()
-                while(cursor.moveToNext()) {
+                while (cursor.moveToNext()) {
                     val event = Event()
                     event.eventID = cursor.getString(cursor.getColumnIndex("eventID"))
                     event.name = cursor.getString(cursor.getColumnIndex("name"))
                     event.notes = cursor.getString(cursor.getColumnIndex("notes"))
-                    event.schedule = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
+                    event.schedule =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("schedule")))
                     event.location = cursor.getString(cursor.getColumnIndex("location"))
                     event.isImportant = cursor.getInt(cursor.getColumnIndex("isImportant")) > 0
-                    event.isEventArchived = cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
-                    event.dateAdded = DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded"))) ?: ZonedDateTime.now()
+                    event.isEventArchived =
+                        cursor.getInt(cursor.getColumnIndex("isEventArchived")) > 0
+                    event.dateAdded =
+                        DateTimeConverter.toZonedDateTime(cursor.getString(cursor.getColumnIndex("dateAdded")))
+                            ?: ZonedDateTime.now()
                     event.subject = cursor.getString(cursor.getColumnIndex("subject"))
                 }
                 cursor.close()
 
                 database.execSQL("DELETE FROM events")
                 eventList.forEach {
-                    val statement = database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                    val statement =
+                        database.compileStatement("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
                     with(statement) {
                         bindString(1, it.eventID)
                         bindString(2, it.name)
@@ -339,6 +370,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        private val migrations = arrayOf(migration_4_6, migration_5_6, migration_4_7, migration_5_7, migration_6_7)
+        private val migrations =
+            arrayOf(migration_4_6, migration_5_6, migration_4_7, migration_5_7, migration_6_7)
     }
 }

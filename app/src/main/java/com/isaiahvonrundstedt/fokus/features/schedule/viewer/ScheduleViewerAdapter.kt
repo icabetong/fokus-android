@@ -7,7 +7,7 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
+class ScheduleViewerAdapter(items: List<Schedule>) : BaseAdapter<Schedule,
         ScheduleViewerAdapter.ScheduleViewHolder>(Schedule.DIFF_CALLBACK) {
 
     init {
@@ -15,8 +15,10 @@ class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        val binding = LayoutItemScheduleBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ScheduleViewHolder(binding.root)
     }
 
@@ -24,7 +26,7 @@ class ScheduleViewerAdapter(items: List<Schedule>): BaseAdapter<Schedule,
         holder.onBind(getItem(position))
     }
 
-    class ScheduleViewHolder(itemView: View): BaseAdapter.BaseViewHolder(itemView) {
+    class ScheduleViewHolder(itemView: View) : BaseAdapter.BaseViewHolder(itemView) {
 
         private val binding = LayoutItemScheduleBinding.bind(itemView)
 

@@ -7,12 +7,14 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemArchivedSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
-class ArchivedSubjectAdapter(private val listener: SelectListener)
-    : BaseAdapter<SubjectPackage, ArchivedSubjectAdapter.ArchivedSubjectViewHolder>(SubjectPackage.DIFF_CALLBACK) {
+class ArchivedSubjectAdapter(private val listener: SelectListener) :
+    BaseAdapter<SubjectPackage, ArchivedSubjectAdapter.ArchivedSubjectViewHolder>(SubjectPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedSubjectViewHolder {
-        val binding = LayoutItemArchivedSubjectBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemArchivedSubjectBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ArchivedSubjectViewHolder(binding.root, listener)
     }
 
@@ -20,7 +22,8 @@ class ArchivedSubjectAdapter(private val listener: SelectListener)
         holder.onBind(getItem(position))
     }
 
-    class ArchivedSubjectViewHolder(itemView: View,
+    class ArchivedSubjectViewHolder(
+        itemView: View,
         private val listener: SelectListener
     ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedSubjectBinding.bind(itemView)

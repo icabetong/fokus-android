@@ -28,7 +28,7 @@ class AboutActivity : BaseActivity() {
         const val ABOUT_RELEASE_URL = "https://github.com/asayah-san/fokus-android/releases"
         const val ABOUT_DEVELOPER_EMAIL = "isaiahcollins_02@live.com"
 
-        class AboutFragment: BasePreference() {
+        class AboutFragment : BasePreference() {
 
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
                 setPreferencesFromResource(R.xml.xml_about_main, rootKey)

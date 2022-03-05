@@ -24,10 +24,14 @@ import java.util.*
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-@Entity(tableName = "schedules", foreignKeys = [ForeignKey(entity = Subject::class,
-    parentColumns = arrayOf("subjectID"), childColumns = arrayOf("subject"),
-    onDelete = ForeignKey.CASCADE)])
-data class  Schedule @JvmOverloads constructor(
+@Entity(
+    tableName = "schedules", foreignKeys = [ForeignKey(
+        entity = Subject::class,
+        parentColumns = arrayOf("subjectID"), childColumns = arrayOf("subject"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class Schedule @JvmOverloads constructor(
     @PrimaryKey
     var scheduleID: String = UUID.randomUUID().toString(),
     var daysOfWeek: Int = 0,
@@ -179,7 +183,7 @@ data class  Schedule @JvmOverloads constructor(
         const val BIT_VALUE_WEEK_THREE = 4
         const val BIT_VALUE_WEEK_FOUR = 8
 
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Schedule>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Schedule>() {
             override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule): Boolean {
                 return oldItem.scheduleID == newItem.scheduleID
             }
@@ -217,7 +221,7 @@ data class  Schedule @JvmOverloads constructor(
             val currentDayOfWeek = currentDate.dayOfWeek.value
             var targetDay: Long = day.toLong()
 
-            if (day <= currentDayOfWeek)
+            if (day < currentDayOfWeek)
                 targetDay += 7
 
             return currentDate.plusDays(targetDay - currentDayOfWeek)
@@ -235,8 +239,10 @@ data class  Schedule @JvmOverloads constructor(
             return currentDate.with(DayOfWeek.of(day))
         }
 
-        fun toJsonFile(items: List<Schedule>, destination: File,
-                       name: String = Streamable.FILE_NAME_SCHEDULE): File {
+        fun toJsonFile(
+            items: List<Schedule>, destination: File,
+            name: String = Streamable.FILE_NAME_SCHEDULE
+        ): File {
             return File(destination, name).apply {
                 this.sink().buffer().use {
                     JsonDataStreamer.encodeToJson(items, Schedule::class.java)?.also { json ->

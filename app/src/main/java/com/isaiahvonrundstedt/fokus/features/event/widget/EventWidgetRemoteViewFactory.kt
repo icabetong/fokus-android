@@ -12,8 +12,8 @@ import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class EventWidgetRemoteViewFactory(private var context: Context)
-    : RemoteViewsService.RemoteViewsFactory {
+class EventWidgetRemoteViewFactory(private var context: Context) :
+    RemoteViewsService.RemoteViewsFactory {
 
     private var itemList = mutableListOf<EventPackage>()
 
@@ -31,7 +31,8 @@ class EventWidgetRemoteViewFactory(private var context: Context)
 
     override fun onDataSetChanged() = fetch()
 
-    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews =
+        RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

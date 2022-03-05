@@ -56,8 +56,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private val viewModel: EventViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentEventBinding.inflate(inflater)
         return binding.root
     }
@@ -89,8 +91,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         daysOfWeek = daysOfWeekFromLocale()
         binding.calendarView.apply {
-            setup(viewModel.startMonth, viewModel.endMonth,
-                daysOfWeek.first())
+            setup(
+                viewModel.startMonth, viewModel.endMonth,
+                daysOfWeek.first()
+            )
             scrollToMonth(viewModel.currentMonth)
         }
 
@@ -108,7 +112,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
          */
         controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
 
-        class DayViewContainer(view: View): ViewContainer(view) {
+        class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay
 
             val textView: TextView = LayoutCalendarDayBinding.bind(view).calendarDayView
@@ -129,11 +133,11 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             binding.emptyView.isVisible = it
         }
 
-        class MonthViewContainer(view: View): ViewContainer(view) {
+        class MonthViewContainer(view: View) : ViewContainer(view) {
             val headerLayout: LinearLayout = view.findViewById(R.id.headerLayout)
         }
 
-        binding.calendarView.dayBinder = object: DayBinder<DayViewContainer> {
+        binding.calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View): DayViewContainer = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
@@ -141,19 +145,21 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             }
         }
 
-        binding.calendarView.monthHeaderBinder = object: MonthHeaderFooterBinder<MonthViewContainer> {
-            override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
+        binding.calendarView.monthHeaderBinder =
+            object : MonthHeaderFooterBinder<MonthViewContainer> {
+                override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
 
-            override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                val headerLayout = container.headerLayout
-                if (container.headerLayout.tag == null) {
-                    headerLayout.tag = month.yearMonth
-                    headerLayout.children.map { it as TextView }.forEachIndexed { index, textView ->
-                        textView.text = daysOfWeek[index].name.first().toString()
+                override fun bind(container: MonthViewContainer, month: CalendarMonth) {
+                    val headerLayout = container.headerLayout
+                    if (container.headerLayout.tag == null) {
+                        headerLayout.tag = month.yearMonth
+                        headerLayout.children.map { it as TextView }
+                            .forEachIndexed { index, textView ->
+                                textView.text = daysOfWeek[index].name.first().toString()
+                            }
                     }
                 }
             }
-        }
 
         binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
@@ -179,7 +185,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         // Observe dates with events then rebind the
         // dayBinder to the Calendar.
         viewModel.dates.observe(viewLifecycleOwner) { dates ->
-            binding.calendarView.dayBinder = object: DayBinder<DayViewContainer> {
+            binding.calendarView.dayBinder = object : DayBinder<DayViewContainer> {
                 override fun create(view: View): DayViewContainer {
                     return DayViewContainer(view)
                 }
@@ -202,8 +208,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         binding.actionButton.setOnClickListener {
             it.transitionName = TRANSITION_ELEMENT_ROOT
 
-            controller?.navigate(R.id.action_to_navigation_editor_event, null, null,
-                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
+            controller?.navigate(
+                R.id.action_to_navigation_editor_event, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
+            )
         }
     }
 
@@ -214,8 +222,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is EventPackage) {
             when (action) {
                 // Show up the editorUI and pass the extra
@@ -227,8 +237,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                         EventEditor.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
                     )
 
-                    controller?.navigate(R.id.action_to_navigation_editor_event, args, null,
-                        FragmentNavigatorExtras(container!! to transitionName))
+                    controller?.navigate(
+                        R.id.action_to_navigation_editor_event, args, null,
+                        FragmentNavigatorExtras(container!! to transitionName)
+                    )
                 }
                 // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
@@ -243,7 +255,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_archived -> {
                 controller?.navigate(R.id.action_to_navigation_archived_event)
             }
@@ -251,8 +263,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         return true
     }
 
-    private fun bindToCalendar(day: CalendarDay, textView: TextView, view: View,
-                               dates: List<LocalDate> = emptyList()) {
+    private fun bindToCalendar(
+        day: CalendarDay, textView: TextView, view: View,
+        dates: List<LocalDate> = emptyList()
+    ) {
 
         textView.text = day.date.dayOfMonth.toString()
         if (day.owner == DayOwner.THIS_MONTH) {

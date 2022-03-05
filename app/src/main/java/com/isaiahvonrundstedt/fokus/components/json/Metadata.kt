@@ -17,12 +17,12 @@ import java.io.InputStream
  *   with the application.
  */
 @JsonClass(generateAdapter = true)
-data class Metadata @JvmOverloads constructor (
+data class Metadata @JvmOverloads constructor(
     var appVersion: Int = BuildConfig.VERSION_CODE,
     var appBuildName: String? = BuildConfig.VERSION_NAME,
     var databaseVersion: Int = AppDatabase.DATABASE_VERSION,
     var data: String? = null
-): Streamable {
+) : Streamable {
 
     fun verify(dataString: String): Boolean {
         return databaseVersion == AppDatabase.DATABASE_VERSION &&

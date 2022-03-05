@@ -13,7 +13,8 @@ import javax.inject.Inject
 @HiltAndroidApp
 class CoreApplication : Application(), Configuration.Provider {
 
-    @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration(): Configuration {
         return Configuration.Builder()
@@ -23,8 +24,10 @@ class CoreApplication : Application(), Configuration.Provider {
 
     companion object {
         fun obtainUriForFile(context: Context, source: File): Uri {
-            return FileProvider.getUriForFile(context,
-                "${BuildConfig.APPLICATION_ID}.provider", source)
+            return FileProvider.getUriForFile(
+                context,
+                "${BuildConfig.APPLICATION_ID}.provider", source
+            )
         }
     }
 

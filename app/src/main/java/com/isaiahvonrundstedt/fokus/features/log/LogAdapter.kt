@@ -8,12 +8,14 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemLogBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class LogAdapter(private var actionListener: ActionListener)
-    : BaseAdapter<Log, LogAdapter.ViewHolder>(Log.DIFF_CALLBACK), Swipeable {
+class LogAdapter(private var actionListener: ActionListener) :
+    BaseAdapter<Log, LogAdapter.ViewHolder>(Log.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LayoutItemLogBinding.inflate(LayoutInflater.from(parent.context), parent,
-            false)
+        val binding = LayoutItemLogBinding.inflate(
+            LayoutInflater.from(parent.context), parent,
+            false
+        )
         return ViewHolder(binding.root)
     }
 
@@ -23,8 +25,10 @@ class LogAdapter(private var actionListener: ActionListener)
 
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                null)
+            actionListener.onActionPerformed(
+                getItem(position), ActionListener.Action.DELETE,
+                null
+            )
     }
 
     class ViewHolder(itemView: View) : BaseViewHolder(itemView) {

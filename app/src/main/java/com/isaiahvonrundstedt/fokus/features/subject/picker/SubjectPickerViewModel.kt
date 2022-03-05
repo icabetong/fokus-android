@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SubjectPickerViewModel @Inject constructor(
     private val repository: SubjectRepository,
-): ViewModel() {
+) : ViewModel() {
 
     val subjects: LiveData<List<SubjectPackage>> = repository.fetchLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(subjects) { it.isEmpty() }

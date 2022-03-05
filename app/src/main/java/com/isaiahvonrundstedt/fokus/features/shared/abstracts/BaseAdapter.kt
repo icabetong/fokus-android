@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.ItemCallback<T>)
-    : ListAdapter<T, VH>(callback){
+abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.ItemCallback<T>) :
+    ListAdapter<T, VH>(callback) {
 
     /**
      * interface used when triggering
@@ -52,7 +52,7 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder?>(callback: DiffUtil.
         fun <T> onItemSelected(t: T)
     }
 
-    abstract class BaseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         abstract fun <T> onBind(data: T)
     }

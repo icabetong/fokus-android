@@ -11,7 +11,7 @@ open class RadioButtonCompat @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = R.attr.radioButtonStyle
-): AppCompatRadioButton(context, attributeSet, defStyleAttr) {
+) : AppCompatRadioButton(context, attributeSet, defStyleAttr) {
 
     init {
         val typedArray = context.obtainStyledAttributes(
@@ -27,7 +27,8 @@ open class RadioButtonCompat @JvmOverloads constructor(
                 R.style.Fokus_TextAppearance_Body_Medium
             )
             setTextAppearanceCompat(textAppearance)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
         typedArray.recycle()
     }
 

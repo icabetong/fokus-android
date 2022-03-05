@@ -19,7 +19,7 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import java.util.zip.ZipEntry
 
-class DataImporterService: BaseService() {
+class DataImporterService : BaseService() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -41,7 +41,8 @@ class DataImporterService: BaseService() {
                 archive.getInputStream(archive.getEntry(Metadata.FILE_NAME)).use { it ->
                     val metadata = Metadata.fromInputStream(it)
                     if (metadata.verify(Metadata.DATA_SUBJECT) &&
-                        intent.action == ACTION_IMPORT_SUBJECT) {
+                        intent.action == ACTION_IMPORT_SUBJECT
+                    ) {
 
                         val subjectPackage = SubjectPackage(Subject())
                         for (entry: ZipEntry in archive.entries()) {
@@ -52,16 +53,21 @@ class DataImporterService: BaseService() {
                                 }
                             } else if (entry.name == Streamable.FILE_NAME_SCHEDULE) {
                                 archive.getInputStream(entry)?.use { inputStream ->
-                                    JsonDataStreamer.decodeFromJson(inputStream, Schedule::class.java)?.also { items ->
-                                        subjectPackage.schedules = items
-                                    }
+                                    JsonDataStreamer.decodeFromJson(
+                                        inputStream,
+                                        Schedule::class.java
+                                    )
+                                        ?.also { items ->
+                                            subjectPackage.schedules = items
+                                        }
                                 }
                             }
                         }
 
                         sendResult(subjectPackage)
                     } else if (metadata.verify(Metadata.DATA_TASK) &&
-                            intent.action == ACTION_IMPORT_TASK) {
+                        intent.action == ACTION_IMPORT_TASK
+                    ) {
 
                         val taskPackage = TaskPackage(Task())
                         for (entry: ZipEntry in archive.entries()) {
@@ -72,16 +78,21 @@ class DataImporterService: BaseService() {
                                 }
                             } else if (entry.name == Streamable.FILE_NAME_ATTACHMENT) {
                                 archive.getInputStream(entry)?.use { inputStream ->
-                                    JsonDataStreamer.decodeFromJson(inputStream, Attachment::class.java)?.also { items ->
-                                        taskPackage.attachments = items
-                                    }
+                                    JsonDataStreamer.decodeFromJson(
+                                        inputStream,
+                                        Attachment::class.java
+                                    )
+                                        ?.also { items ->
+                                            taskPackage.attachments = items
+                                        }
                                 }
                             }
                         }
 
                         sendResult(taskPackage)
                     } else if (metadata.verify(Metadata.DATA_EVENT) &&
-                            intent.action == ACTION_IMPORT_EVENT) {
+                        intent.action == ACTION_IMPORT_EVENT
+                    ) {
 
                         val eventPackage = EventPackage(Event())
                         for (entry: ZipEntry in archive.entries()) {
@@ -102,7 +113,7 @@ class DataImporterService: BaseService() {
         }
     }
 
-    private fun <T: Parcelable> sendResult(t: T) {
+    private fun <T : Parcelable> sendResult(t: T) {
         LocalBroadcastManager.getInstance(this)
             .sendBroadcast(Intent(ACTION_SERVICE_BROADCAST).apply {
                 putExtra(EXTRA_BROADCAST_STATUS, BROADCAST_IMPORT_COMPLETED)

@@ -20,7 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArchivedTaskFragment: BaseFragment(), BaseAdapter.SelectListener {
+class ArchivedTaskFragment : BaseFragment(), BaseAdapter.SelectListener {
     private var _binding: FragmentArchivedTaskBinding? = null
     private var controller: NavController? = null
 
@@ -28,8 +28,10 @@ class ArchivedTaskFragment: BaseFragment(), BaseAdapter.SelectListener {
     private val viewModel: ArchivedTaskViewModel by viewModels()
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentArchivedTaskBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

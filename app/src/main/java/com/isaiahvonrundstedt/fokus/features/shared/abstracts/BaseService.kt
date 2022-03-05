@@ -14,7 +14,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 
-abstract class BaseService: Service() {
+abstract class BaseService : Service() {
 
     protected fun startForegroundCompat(id: Int, notification: Notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -28,13 +28,17 @@ abstract class BaseService: Service() {
         else manager?.cancel(id)
     }
 
-    protected fun createNotification(ongoing: Boolean = false,
-                                     @StringRes titleRes: Int,
-                                     @StringRes contentRes: Int = 0,
-                                     @DrawableRes iconRes: Int = R.drawable.ic_hero_check_24): Notification {
+    protected fun createNotification(
+        ongoing: Boolean = false,
+        @StringRes titleRes: Int,
+        @StringRes contentRes: Int = 0,
+        @DrawableRes iconRes: Int = R.drawable.ic_hero_check_24
+    ): Notification {
 
-        return NotificationCompat.Builder(this,
-            NotificationChannelManager.CHANNEL_ID_GENERIC).apply {
+        return NotificationCompat.Builder(
+            this,
+            NotificationChannelManager.CHANNEL_ID_GENERIC
+        ).apply {
             setSmallIcon(iconRes)
             setContentTitle(getString(titleRes))
             if (contentRes != 0) setContentText(getString(contentRes))

@@ -38,8 +38,10 @@ class TaskReminderWorker @AssistedInject constructor(
         var log: Log? = null
         if (taskSize > 0) {
             log = Log().apply {
-                title = String.format(applicationContext.getString(R.string.notification_pending_tasks_title),
-                    taskSize)
+                title = String.format(
+                    applicationContext.getString(R.string.notification_pending_tasks_title),
+                    taskSize
+                )
                 content = applicationContext.getString(R.string.notification_pending_tasks_summary)
                 type = Log.TYPE_TASK
                 dateTimeTriggered = ZonedDateTime.now()
@@ -48,7 +50,8 @@ class TaskReminderWorker @AssistedInject constructor(
 
         if (preferenceManager.reminderFrequency == PreferenceManager.DURATION_WEEKENDS
             && !(currentTime.dayOfWeek == DayOfWeek.SUNDAY
-                    || currentTime.dayOfWeek == DayOfWeek.SATURDAY))
+                    || currentTime.dayOfWeek == DayOfWeek.SATURDAY)
+        )
             return Result.success()
 
         if (log != null) {
@@ -64,8 +67,10 @@ class TaskReminderWorker @AssistedInject constructor(
             val manager = WorkManager.getInstance(context)
             val preferences = PreferenceManager(context)
 
-            val reminderTime: ZonedDateTime? = ZonedDateTime.of(LocalDate.now(),
-                preferences.reminderTime, ZoneId.systemDefault())
+            val reminderTime: ZonedDateTime? = ZonedDateTime.of(
+                LocalDate.now(),
+                preferences.reminderTime, ZoneId.systemDefault()
+            )
 
             val executionTime: ZonedDateTime? = if (ZonedDateTime.now().isBefore(reminderTime))
                 LocalDate.now().atStartOfDay(ZoneId.systemDefault())
@@ -81,8 +86,10 @@ class TaskReminderWorker @AssistedInject constructor(
             manager.cancelAllWorkByTag(this::class.java.simpleName)
 
             val request = OneTimeWorkRequest.Builder(TaskReminderWorker::class.java)
-                .setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
-                    TimeUnit.MINUTES)
+                .setInitialDelay(
+                    Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
+                    TimeUnit.MINUTES
+                )
                 .addTag(this::class.java.simpleName)
                 .build()
             manager.enqueue(request)

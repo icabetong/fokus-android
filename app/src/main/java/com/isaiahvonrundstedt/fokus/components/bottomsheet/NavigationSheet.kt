@@ -14,13 +14,15 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
 import java.time.LocalTime
 
-class NavigationSheet(manager: FragmentManager): BaseBottomSheet(manager),
+class NavigationSheet(manager: FragmentManager) : BaseBottomSheet(manager),
     MenuAdapter.MenuItemListener {
     private var _binding: LayoutSheetOptionsBinding? = null
 
     private val binding get() = _binding!!
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = LayoutSheetOptionsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,7 +30,7 @@ class NavigationSheet(manager: FragmentManager): BaseBottomSheet(manager),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.menuTitleView.text = when(LocalTime.now().hour) {
+        binding.menuTitleView.text = when (LocalTime.now().hour) {
             in 0..6 -> getString(R.string.greeting_default)
             in 7..12 -> getString(R.string.greeting_morning)
             in 13..18 -> getString(R.string.greeting_afternoon)

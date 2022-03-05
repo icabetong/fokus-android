@@ -25,9 +25,13 @@ import java.util.*
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-@Entity(tableName = "tasks", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
-        childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)])
+@Entity(
+    tableName = "tasks", foreignKeys = [
+        ForeignKey(
+            entity = Subject::class, parentColumns = arrayOf("subjectID"),
+            childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL
+        )]
+)
 data class Task @JvmOverloads constructor(
     @PrimaryKey
     @ColumnInfo(index = true)
@@ -62,16 +66,22 @@ data class Task @JvmOverloads constructor(
 
         // Check if the day on the task's due is today
         return if (dueDate?.isToday() == true)
-            String.format(context.getString(R.string.today_at),
-                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
+            String.format(
+                context.getString(R.string.today_at),
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context))
+            )
         // Now check if the day is yesterday
         else if (dueDate?.isYesterday() == true)
-            String.format(context.getString(R.string.yesterday_at),
-                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
+            String.format(
+                context.getString(R.string.yesterday_at),
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context))
+            )
         // Now check if its tomorrow
         else if (dueDate?.isTomorrow() == true)
-            String.format(context.getString(R.string.tomorrow_at),
-                dueDate?.format(DateTimeConverter.getTimeFormatter(context)))
+            String.format(
+                context.getString(R.string.tomorrow_at),
+                dueDate?.format(DateTimeConverter.getTimeFormatter(context))
+            )
         // Just print the date what could go wrong?
         else dueDate?.format(DateTimeConverter.getDateTimeFormatter(context))
     }

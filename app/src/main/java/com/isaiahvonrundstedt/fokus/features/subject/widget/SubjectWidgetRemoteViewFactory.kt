@@ -12,11 +12,11 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class SubjectWidgetRemoteViewFactory(private var context: Context)
-    : RemoteViewsService.RemoteViewsFactory {
-    
+class SubjectWidgetRemoteViewFactory(private var context: Context) :
+    RemoteViewsService.RemoteViewsFactory {
+
     private var itemList = mutableListOf<SubjectPackage>()
-    
+
     private fun fetch() {
         itemList.clear()
 
@@ -35,7 +35,8 @@ class SubjectWidgetRemoteViewFactory(private var context: Context)
 
     override fun onDataSetChanged() = fetch()
 
-    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews =
+        RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

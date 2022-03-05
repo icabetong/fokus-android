@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArchivedSubjectViewModel @Inject constructor(
     private val subjectRepository: SubjectRepository
-): ViewModel() {
+) : ViewModel() {
 
     val items: LiveData<List<SubjectPackage>> = subjectRepository.fetchArchivedLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(items) { it.isEmpty() }

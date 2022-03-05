@@ -44,8 +44,12 @@ data class Log @JvmOverloads constructor(
             dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
         else if (dateTimeTriggered!!.toLocalDate().year == currentDateTime.year)
             dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, true))
-        else dateTimeTriggered?.format(DateTimeConverter.getDateTimeFormatter(context, isShort = true,
-            withYear = true))
+        else dateTimeTriggered?.format(
+            DateTimeConverter.getDateTimeFormatter(
+                context, isShort = true,
+                withYear = true
+            )
+        )
     }
 
     @DrawableRes
@@ -88,7 +92,7 @@ data class Log @JvmOverloads constructor(
         const val TYPE_EVENT = 2
         const val TYPE_CLASS = 3
 
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Log>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Log>() {
             override fun areItemsTheSame(oldItem: Log, newItem: Log): Boolean {
                 return oldItem.logID == newItem.logID
             }

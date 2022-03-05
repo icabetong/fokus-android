@@ -67,29 +67,36 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         sharedElementEnterTransition = buildContainerTransform()
         sharedElementReturnTransition = buildContainerTransform()
 
-        importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                context?.startService(Intent(context, DataImporterService::class.java).apply {
-                    this.data = it.data?.data
-                    action = DataImporterService.ACTION_IMPORT_SUBJECT
-                })
+        importLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    context?.startService(Intent(context, DataImporterService::class.java).apply {
+                        this.data = it.data?.data
+                        action = DataImporterService.ACTION_IMPORT_SUBJECT
+                    })
+                }
             }
-        }
 
-        exportLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                context?.startService(Intent(context, DataExporterService::class.java).apply {
-                    this.data = it.data?.data
-                    action = DataExporterService.ACTION_EXPORT_SUBJECT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getSubject())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.getSchedules())
-                })
+        exportLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    context?.startService(Intent(context, DataExporterService::class.java).apply {
+                        this.data = it.data?.data
+                        action = DataExporterService.ACTION_EXPORT_SUBJECT
+                        putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getSubject())
+                        putExtra(
+                            DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                            viewModel.getSchedules()
+                        )
+                    })
+                }
             }
-        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = EditorSubjectBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -132,7 +139,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             arrayOf(
                 ScheduleEditor.REQUEST_KEY_INSERT,
                 ScheduleEditor.REQUEST_KEY_UPDATE
-            ), this)
+            ), this
+        )
     }
 
     override fun onStart() {
@@ -165,8 +173,9 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
 
         viewModel.isCodeExists.observe(this) {
-            binding.codeTextInputLayout.error = if (it) getString(R.string.feedback_subject_code_exists)
-            else null
+            binding.codeTextInputLayout.error =
+                if (it) getString(R.string.feedback_subject_code_exists)
+                else null
         }
 
         binding.codeTextInput.doAfterTextChanged {
@@ -206,7 +215,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                         text = getString(viewModel.getTag()!!.getNameResource())
                         setTextColorFromResource(R.color.color_primary_text)
                         setCompoundDrawableAtStart(
-                            viewModel.getSubject()?.tintDrawable(getCompoundDrawableAtStart()))
+                            viewModel.getSubject()?.tintDrawable(getCompoundDrawableAtStart())
+                        )
                     }
                     this.dismiss()
                 }
@@ -246,15 +256,18 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
                     ScheduleEditor(childFragmentManager).show {
                         arguments = bundleOf(
                             ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
-                            ScheduleEditor.EXTRA_SCHEDULE to t)
+                            ScheduleEditor.EXTRA_SCHEDULE to t
+                        )
                     }
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
@@ -279,7 +292,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
-        when(requestKey) {
+        when (requestKey) {
             ScheduleEditor.REQUEST_KEY_INSERT -> {
                 result.getParcelable<Schedule>(ScheduleEditor.EXTRA_SCHEDULE)?.also {
                     viewModel.addSchedule(it)
@@ -335,10 +348,14 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                  */
                 context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_SUBJECT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getSubject())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
-                        viewModel.getSchedules())
+                    putExtra(
+                        DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getSubject()
+                    )
+                    putExtra(
+                        DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                        viewModel.getSchedules()
+                    )
                 })
             }
             R.id.action_import -> {
@@ -360,13 +377,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             .unregisterReceiver(receiver)
     }
 
-    private var receiver = object: BroadcastReceiver() {
+    private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_export_ongoing, binding.root,
-                            Snackbar.LENGTH_INDEFINITE)
+                        createSnackbar(
+                            R.string.feedback_export_ongoing, binding.root,
+                            Snackbar.LENGTH_INDEFINITE
+                        )
                     }
                     DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_export_completed, binding.root)
@@ -374,11 +393,13 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
                             val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
 
-                            startActivity(ShareCompat.IntentBuilder.from(requireActivity())
-                                .addStream(uri)
-                                .setType(Streamable.MIME_TYPE_ZIP)
-                                .setChooserTitle(R.string.dialog_send_to)
-                                .intent)
+                            startActivity(
+                                ShareCompat.IntentBuilder.from(requireActivity())
+                                    .addStream(uri)
+                                    .setType(Streamable.MIME_TYPE_ZIP)
+                                    .setChooserTitle(R.string.dialog_send_to)
+                                    .intent
+                            )
                         }
                     }
                     DataExporterService.BROADCAST_EXPORT_FAILED -> {
@@ -390,10 +411,11 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
-                        intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            viewModel.setSubject(it.subject)
-                            viewModel.setSchedules(ArrayList(it.schedules))
-                        }
+                        intent.getParcelableExtra<SubjectPackage>(BaseService.EXTRA_BROADCAST_DATA)
+                            ?.also {
+                                viewModel.setSubject(it.subject)
+                                viewModel.setSchedules(ArrayList(it.schedules))
+                            }
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
                         createSnackbar(R.string.feedback_import_failed, binding.root)
@@ -408,7 +430,8 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
             REQUEST_KEY_INSERT -> {
                 if (binding.codeTextInput.text.isNullOrEmpty() ||
                     binding.descriptionTextInput.text.isNullOrEmpty()
-                    || scheduleAdapter.itemCount < 1) {
+                    || scheduleAdapter.itemCount < 1
+                ) {
 
                     MaterialDialog(requireContext()).show {
                         title(R.string.feedback_unable_to_share_title)

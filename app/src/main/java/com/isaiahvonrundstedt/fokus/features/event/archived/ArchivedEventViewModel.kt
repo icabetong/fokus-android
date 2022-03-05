@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArchivedEventViewModel @Inject constructor(
     private val eventRepository: EventRepository
-): ViewModel() {
+) : ViewModel() {
 
     val items: LiveData<List<EventPackage>> = eventRepository.fetchArchivedLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(items) { it.isEmpty() }

@@ -66,102 +66,104 @@ class TaskViewModel @Inject constructor(
         }
     }
 
-    fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.insert(task, attachmentList)
-    }
+    fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) =
+        viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+            repository.insert(task, attachmentList)
+        }
 
     fun remove(task: Task) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.remove(task)
     }
 
-    fun update(task: Task, attachmentList: List<Attachment> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.update(task, attachmentList)
-    }
+    fun update(task: Task, attachmentList: List<Attachment> = emptyList()) =
+        viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+            repository.update(task, attachmentList)
+        }
 
-    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)
-        = when(filter) {
-        Constraint.ALL -> {
-            _tasks.value?.let { items ->
-                tasks.value = when (sort) {
-                    Sort.NAME -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.sortedBy { it.task.name }
-                            SortDirection.DESCENDING ->
-                                items.sortedByDescending { it.task.name }
+    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection) =
+        when (filter) {
+            Constraint.ALL -> {
+                _tasks.value?.let { items ->
+                    tasks.value = when (sort) {
+                        Sort.NAME -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.sortedBy { it.task.name }
+                                SortDirection.DESCENDING ->
+                                    items.sortedByDescending { it.task.name }
+                            }
+                        }
+                        Sort.DUE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.sortedBy { it.task.dueDate }
+                                SortDirection.DESCENDING ->
+                                    items.sortedByDescending { it.task.dueDate }
+                            }
                         }
                     }
-                    Sort.DUE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.sortedBy { it.task.dueDate }
-                            SortDirection.DESCENDING ->
-                                items.sortedByDescending { it.task.dueDate }
+                }
+            }
+            Constraint.PENDING -> {
+                _tasks.value?.let { items ->
+                    tasks.value = when (sort) {
+                        Sort.NAME -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { !it.task.isFinished }
+                                        .sortedBy { it.task.name }
+                                SortDirection.DESCENDING ->
+                                    items.filter { !it.task.isFinished }
+                                        .sortedByDescending { it.task.name }
+                            }
+                        }
+                        Sort.DUE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { !it.task.isFinished }
+                                        .sortedBy { it.task.dueDate }
+                                SortDirection.DESCENDING ->
+                                    items.filter { !it.task.isFinished }
+                                        .sortedByDescending { it.task.dueDate }
+                            }
+                        }
+                    }
+                }
+            }
+            Constraint.FINISHED -> {
+                _tasks.value?.let { items ->
+                    tasks.value = when (sort) {
+                        Sort.NAME -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.task.isFinished }
+                                        .sortedBy { it.task.name }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.task.isFinished }
+                                        .sortedByDescending { it.task.name }
+                            }
+                        }
+                        Sort.DUE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.task.isFinished }
+                                        .sortedBy { it.task.dueDate }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.task.isFinished }
+                                        .sortedByDescending { it.task.dueDate }
+                            }
                         }
                     }
                 }
             }
         }
-        Constraint.PENDING -> {
-            _tasks.value?.let { items ->
-                tasks.value = when (sort) {
-                    Sort.NAME -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { !it.task.isFinished }
-                                    .sortedBy { it.task.name }
-                            SortDirection.DESCENDING ->
-                                items.filter { !it.task.isFinished }
-                                    .sortedByDescending { it.task.name }
-                        }
-                    }
-                    Sort.DUE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { !it.task.isFinished }
-                                    .sortedBy { it.task.dueDate }
-                            SortDirection.DESCENDING ->
-                                items.filter { !it.task.isFinished }
-                                    .sortedByDescending { it.task.dueDate }
-                        }
-                    }
-                }
-            }
-        }
-        Constraint.FINISHED -> {
-            _tasks.value?.let { items ->
-                tasks.value = when (sort) {
-                    Sort.NAME -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.task.isFinished }
-                                    .sortedBy { it.task.name }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.task.isFinished }
-                                    .sortedByDescending { it.task.name }
-                        }
-                    }
-                    Sort.DUE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.task.isFinished }
-                                    .sortedBy { it.task.dueDate }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.task.isFinished }
-                                    .sortedByDescending { it.task.dueDate }
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     enum class Sort {
         NAME, DUE;
 
         companion object {
             fun parse(value: String): Sort {
-                return when(value) {
+                return when (value) {
                     NAME.toString() -> NAME
                     DUE.toString() -> DUE
                     else -> NAME
@@ -175,7 +177,7 @@ class TaskViewModel @Inject constructor(
 
         companion object {
             fun parse(value: String): Constraint {
-                return when(value) {
+                return when (value) {
                     ALL.toString() -> ALL
                     PENDING.toString() -> PENDING
                     FINISHED.toString() -> FINISHED

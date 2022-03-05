@@ -58,123 +58,125 @@ class SubjectViewModel @Inject constructor(
         }
     }
 
-    fun insert(subject: Subject, schedules: List<Schedule>) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.insert(subject, schedules)
-    }
+    fun insert(subject: Subject, schedules: List<Schedule>) =
+        viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+            repository.insert(subject, schedules)
+        }
 
     fun remove(subject: Subject) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
         repository.remove(subject)
     }
 
-    fun update(subject: Subject, schedules: List<Schedule> = emptyList()) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.update(subject, schedules)
-    }
+    fun update(subject: Subject, schedules: List<Schedule> = emptyList()) =
+        viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+            repository.update(subject, schedules)
+        }
 
-    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection)
-            = when (filter) {
-        Constraint.ALL -> {
-            _subjects.value?.let { items ->
-                subjects.value = when(sort) {
-                    Sort.CODE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.sortedBy { it.subject.code }
-                            SortDirection.DESCENDING ->
-                                items.sortedByDescending { it.subject.code }
+    private fun rearrange(filter: Constraint, sort: Sort, direction: SortDirection) =
+        when (filter) {
+            Constraint.ALL -> {
+                _subjects.value?.let { items ->
+                    subjects.value = when (sort) {
+                        Sort.CODE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.sortedBy { it.subject.code }
+                                SortDirection.DESCENDING ->
+                                    items.sortedByDescending { it.subject.code }
+                            }
                         }
-                    }
-                    Sort.DESCRIPTION -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.sortedBy { it.subject.description }
-                            SortDirection.DESCENDING ->
-                                items.sortedByDescending { it.subject.description }
+                        Sort.DESCRIPTION -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.sortedBy { it.subject.description }
+                                SortDirection.DESCENDING ->
+                                    items.sortedByDescending { it.subject.description }
+                            }
                         }
-                    }
-                    Sort.SCHEDULE -> items.sortedBy { it.subject.code }
-                }
-            }
-        }
-        Constraint.TODAY -> {
-            _subjects.value?.let { items ->
-                subjects.value = when(sort) {
-                    Sort.CODE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedBy { it.subject.code }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedByDescending { it.subject.code }
-                        }
-                    }
-                    Sort.DESCRIPTION -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedBy { it.subject.description }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedByDescending { it.subject.description }
-                        }
-                    }
-                    Sort.SCHEDULE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedBy { it.getScheduleToday()?.startTime }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleToday() }
-                                    .sortedByDescending { it.getScheduleToday()?.startTime }
-                        }
+                        Sort.SCHEDULE -> items.sortedBy { it.subject.code }
                     }
                 }
             }
-        }
-        Constraint.TOMORROW -> {
-            _subjects.value?.let { items ->
-                subjects.value = when(sort) {
-                    Sort.CODE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedBy { it.subject.code }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedByDescending { it.subject.code }
+            Constraint.TODAY -> {
+                _subjects.value?.let { items ->
+                    subjects.value = when (sort) {
+                        Sort.CODE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedBy { it.subject.code }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedByDescending { it.subject.code }
+                            }
                         }
-                    }
-                    Sort.DESCRIPTION -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedBy { it.subject.description }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedByDescending { it.subject.description }
+                        Sort.DESCRIPTION -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedBy { it.subject.description }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedByDescending { it.subject.description }
+                            }
                         }
-                    }
-                    Sort.SCHEDULE -> {
-                        when (direction) {
-                            SortDirection.ASCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedBy { it.getScheduleTomorrow()?.startTime }
-                            SortDirection.DESCENDING ->
-                                items.filter { it.hasScheduleTomorrow() }
-                                    .sortedByDescending { it.getScheduleTomorrow()?.startTime }
+                        Sort.SCHEDULE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedBy { it.getScheduleToday()?.startTime }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleToday() }
+                                        .sortedByDescending { it.getScheduleToday()?.startTime }
+                            }
                         }
                     }
                 }
             }
+            Constraint.TOMORROW -> {
+                _subjects.value?.let { items ->
+                    subjects.value = when (sort) {
+                        Sort.CODE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedBy { it.subject.code }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedByDescending { it.subject.code }
+                            }
+                        }
+                        Sort.DESCRIPTION -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedBy { it.subject.description }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedByDescending { it.subject.description }
+                            }
+                        }
+                        Sort.SCHEDULE -> {
+                            when (direction) {
+                                SortDirection.ASCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedBy { it.getScheduleTomorrow()?.startTime }
+                                SortDirection.DESCENDING ->
+                                    items.filter { it.hasScheduleTomorrow() }
+                                        .sortedByDescending { it.getScheduleTomorrow()?.startTime }
+                            }
+                        }
+                    }
+                }
+            }
         }
-    }
 
     enum class Sort {
         CODE, DESCRIPTION, SCHEDULE;
 
         companion object {
             fun parse(value: String): Sort {
-                return when(value) {
+                return when (value) {
                     CODE.toString() -> CODE
                     DESCRIPTION.toString() -> DESCRIPTION
                     SCHEDULE.toString() -> SCHEDULE
@@ -189,7 +191,7 @@ class SubjectViewModel @Inject constructor(
 
         companion object {
             fun parse(value: String): Constraint {
-                return when(value) {
+                return when (value) {
                     ALL.toString() -> ALL
                     TODAY.toString() -> TODAY
                     TOMORROW.toString() -> TOMORROW

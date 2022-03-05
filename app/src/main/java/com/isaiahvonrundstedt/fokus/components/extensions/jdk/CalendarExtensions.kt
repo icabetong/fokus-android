@@ -13,8 +13,10 @@ import java.util.*
  *   @return the converted LocalTime instance
  */
 fun Calendar.toLocalTime(): LocalTime {
-    return LocalTime.of(this.get(Calendar.HOUR_OF_DAY), this.get(Calendar.MINUTE),
-        this.get(Calendar.SECOND))
+    return LocalTime.of(
+        this.get(Calendar.HOUR_OF_DAY), this.get(Calendar.MINUTE),
+        this.get(Calendar.SECOND)
+    )
 }
 
 /**

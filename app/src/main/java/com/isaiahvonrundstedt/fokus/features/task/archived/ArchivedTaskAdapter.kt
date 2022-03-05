@@ -14,12 +14,14 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
-class ArchivedTaskAdapter (private val listener: SelectListener)
-    : BaseAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
+class ArchivedTaskAdapter(private val listener: SelectListener) :
+    BaseAdapter<TaskPackage, ArchivedTaskAdapter.ArchivedTaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedTaskViewHolder {
-        val binding = LayoutItemArchivedTaskBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemArchivedTaskBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ArchivedTaskViewHolder(binding.root, listener)
     }
 
@@ -27,9 +29,9 @@ class ArchivedTaskAdapter (private val listener: SelectListener)
         holder.onBind(getItem(position))
     }
 
-    class ArchivedTaskViewHolder(itemView: View, private val listener: SelectListener)
-        : BaseViewHolder(itemView) {
-    private val binding = LayoutItemArchivedTaskBinding.bind(itemView)
+    class ArchivedTaskViewHolder(itemView: View, private val listener: SelectListener) :
+        BaseViewHolder(itemView) {
+        private val binding = LayoutItemArchivedTaskBinding.bind(itemView)
 
         override fun <T> onBind(data: T) {
             if (data is TaskPackage) {
@@ -56,7 +58,11 @@ class ArchivedTaskAdapter (private val listener: SelectListener)
                 if (data.subject != null) {
                     with(binding.subjectView) {
                         text = data.subject?.code
-                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        setCompoundDrawableAtStart(
+                            data.subject?.tintDrawable(
+                                getCompoundDrawableAtStart()
+                            )
+                        )
                     }
                 } else binding.subjectView.isVisible = false
             }

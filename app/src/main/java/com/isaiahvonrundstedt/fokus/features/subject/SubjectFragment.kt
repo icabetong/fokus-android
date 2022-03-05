@@ -41,8 +41,10 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     private val subjectAdapter = SubjectAdapter(this, this, this)
     private val viewModel: SubjectViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentSubjectBinding.inflate(inflater)
         return binding.root
     }
@@ -92,7 +94,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
             subjectAdapter.submitList(it)
         }
         viewModel.isEmpty.observe(viewLifecycleOwner) {
-            when(viewModel.constraint) {
+            when (viewModel.constraint) {
                 SubjectViewModel.Constraint.ALL -> {
                     binding.emptyViewSubjectsAll.isVisible = it
                     binding.emptyViewSubjectsToday.isVisible = false
@@ -116,13 +118,17 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            controller?.navigate(R.id.action_to_navigation_editor_subject, null, null,
-                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT))
+            controller?.navigate(
+                R.id.action_to_navigation_editor_subject, null, null,
+                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
+            )
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is SubjectPackage) {
             when (action) {
                 // Create the intent for the editorUI and pass the extras
@@ -136,8 +142,10 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                     )
 
                     container?.also {
-                        controller?.navigate(R.id.action_to_navigation_editor_subject, args, null,
-                            FragmentNavigatorExtras(it to transitionName))
+                        controller?.navigate(
+                            R.id.action_to_navigation_editor_subject, args, null,
+                            FragmentNavigatorExtras(it to transitionName)
+                        )
                     }
                 }
                 // Item has been swiped from the RecyclerView, notify user action
@@ -162,7 +170,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_code_sort_ascending -> {
                 viewModel.sort = SubjectViewModel.Sort.CODE
                 viewModel.direction = SortDirection.ASCENDING
@@ -230,7 +238,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     @StringRes
     private fun getToolbarTitle(): Int {
-        return when(viewModel.constraint) {
+        return when (viewModel.constraint) {
             SubjectViewModel.Constraint.ALL -> R.string.activity_subjects
             SubjectViewModel.Constraint.TODAY -> R.string.activity_subjects_today
             SubjectViewModel.Constraint.TOMORROW -> R.string.activity_subjects_tomorrow

@@ -13,14 +13,16 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutSheetOptionsBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 import com.isaiahvonrundstedt.fokus.features.shared.adapters.MenuAdapter
 
-class AttachmentOptionSheet(manager: FragmentManager): BaseBottomSheet(manager),
+class AttachmentOptionSheet(manager: FragmentManager) : BaseBottomSheet(manager),
     MenuAdapter.MenuItemListener {
 
     private var _binding: LayoutSheetOptionsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = LayoutSheetOptionsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -32,15 +34,19 @@ class AttachmentOptionSheet(manager: FragmentManager): BaseBottomSheet(manager),
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MenuAdapter(activity, R.menu.menu_attachment,
-                this@AttachmentOptionSheet)
+            adapter = MenuAdapter(
+                activity, R.menu.menu_attachment,
+                this@AttachmentOptionSheet
+            )
         }
     }
 
     override fun onItemSelected(id: Int) {
-        setFragmentResult(REQUEST_KEY, bundleOf(
-            EXTRA_OPTION to id
-        ))
+        setFragmentResult(
+            REQUEST_KEY, bundleOf(
+                EXTRA_OPTION to id
+            )
+        )
     }
 
     override fun onDestroy() {

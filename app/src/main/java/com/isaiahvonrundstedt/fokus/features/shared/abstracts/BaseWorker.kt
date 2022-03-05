@@ -21,8 +21,8 @@ import com.isaiahvonrundstedt.fokus.features.log.Log
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.task.Task
 
-abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
-    : CoroutineWorker(context, workerParameters) {
+abstract class BaseWorker(context: Context, workerParameters: WorkerParameters) :
+    CoroutineWorker(context, workerParameters) {
 
     companion object {
         const val NOTIFICATION_ID_EVENT = 14
@@ -99,8 +99,14 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Data.Builder().apply {
                 putString(EXTRA_SCHEDULE_ID, schedule.scheduleID)
                 putString(EXTRA_SCHEDULE_SUBJECT, schedule.subject)
-                putString(EXTRA_SCHEDULE_START_TIME, DateTimeConverter.fromLocalTime(schedule.startTime))
-                putString(EXTRA_SCHEDULE_END_TIME, DateTimeConverter.fromLocalTime(schedule.endTime))
+                putString(
+                    EXTRA_SCHEDULE_START_TIME,
+                    DateTimeConverter.fromLocalTime(schedule.startTime)
+                )
+                putString(
+                    EXTRA_SCHEDULE_END_TIME,
+                    DateTimeConverter.fromLocalTime(schedule.endTime)
+                )
                 putInt(EXTRA_SCHEDULE_DAY_OF_WEEK, schedule.daysOfWeek)
             }.build()
         }
@@ -133,7 +139,8 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
                 name = workerData.getString(EXTRA_EVENT_NAME)
                 notes = workerData.getString(EXTRA_EVENT_NOTES)
                 location = workerData.getString(EXTRA_EVENT_LOCATION)
-                schedule = DateTimeConverter.toZonedDateTime(workerData.getString(EXTRA_EVENT_SCHEDULE))
+                schedule =
+                    DateTimeConverter.toZonedDateTime(workerData.getString(EXTRA_EVENT_SCHEDULE))
                 isImportant = workerData.getBoolean(EVENT_EVENT_IMPORTANCE, false)
             }
         }
@@ -142,8 +149,10 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
             return Schedule().apply {
                 workerData.getString(EXTRA_SCHEDULE_ID)?.let { scheduleID = it }
                 subject = workerData.getString(EXTRA_SCHEDULE_SUBJECT)
-                startTime = DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_START_TIME))
-                endTime = DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_END_TIME))
+                startTime =
+                    DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_START_TIME))
+                endTime =
+                    DateTimeConverter.toLocalTime(workerData.getString(EXTRA_SCHEDULE_END_TIME))
                 daysOfWeek = workerData.getInt(EXTRA_SCHEDULE_DAY_OF_WEEK, 0)
             }
         }
@@ -151,27 +160,43 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     protected fun sendNotification(log: Log, manager: NotificationManager, tag: String? = null) {
         if (log.type == Log.TYPE_TASK && log.data != null) {
-            val intent = PendingIntent.getService(applicationContext, NotificationActionService.NOTIFICATION_ID_FINISH,
+            val intent = PendingIntent.getService(
+                applicationContext,
+                NotificationActionService.NOTIFICATION_ID_FINISH,
                 Intent(applicationContext, NotificationActionService::class.java).apply {
                     putExtra(NotificationActionService.EXTRA_TASK_ID, log.data)
                     putExtra(NotificationActionService.EXTRA_IS_PERSISTENT, log.isImportant)
                     action = NotificationActionService.ACTION_FINISHED
-                }, PendingIntent.FLAG_IMMUTABLE)
+                },
+                PendingIntent.FLAG_IMMUTABLE
+            )
 
-            manager.notify(tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
-                createNotification(log, NOTIFICATION_CHANNEL_ID_TASK,
-                    NotificationCompat.Action(R.drawable.ic_hero_check_24,
-                        applicationContext.getString(R.string.button_mark_as_finished), intent)))
+            manager.notify(
+                tag ?: NOTIFICATION_TAG_TASK, NOTIFICATION_ID_TASK,
+                createNotification(
+                    log, NOTIFICATION_CHANNEL_ID_TASK,
+                    NotificationCompat.Action(
+                        R.drawable.ic_hero_check_24,
+                        applicationContext.getString(R.string.button_mark_as_finished), intent
+                    )
+                )
+            )
         } else if (log.type == Log.TYPE_EVENT)
-            manager.notify(tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
-                createNotification(log, NOTIFICATION_CHANNEL_ID_EVENT))
-        else manager.notify(tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
-            createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC))
+            manager.notify(
+                tag ?: NOTIFICATION_TAG_EVENT, NOTIFICATION_ID_EVENT,
+                createNotification(log, NOTIFICATION_CHANNEL_ID_EVENT)
+            )
+        else manager.notify(
+            tag ?: NOTIFICATION_TAG_GENERIC, NOTIFICATION_ID_GENERIC,
+            createNotification(log, NOTIFICATION_CHANNEL_ID_GENERIC)
+        )
     }
 
-    private fun createNotification(log: Log?,
-                                   channelID: String,
-                                   action: NotificationCompat.Action? = null): Notification {
+    private fun createNotification(
+        log: Log?,
+        channelID: String,
+        action: NotificationCompat.Action? = null
+    ): Notification {
         return NotificationCompat.Builder(applicationContext, channelID).apply {
             setSound(notificationSoundUri)
             setSmallIcon(log?.getIconResource() ?: R.drawable.ic_hero_check_24)
@@ -187,8 +212,10 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters)
 
     private val contentIntent: PendingIntent
         get() {
-            return PendingIntent.getActivity(applicationContext, 0,
-                Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+            return PendingIntent.getActivity(
+                applicationContext, 0,
+                Intent(applicationContext, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE
+            )
         }
 
     private val notificationSoundUri: Uri

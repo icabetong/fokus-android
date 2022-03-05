@@ -15,6 +15,7 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,10 +23,11 @@ class TaskEditorViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val scheduleDao: ScheduleDAO,
     private val repository: TaskRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _task: MutableLiveData<Task> = MutableLiveData(Task())
-    private val _attachments: MutableLiveData<ArrayList<Attachment>> = MutableLiveData(arrayListOf())
+    private val _attachments: MutableLiveData<ArrayList<Attachment>> =
+        MutableLiveData(arrayListOf())
     private val _subject: MutableLiveData<Subject?> = MutableLiveData(null)
     private val _isNameExists: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -39,6 +41,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getTask(): Task? {
         return task.value
     }
+
     fun setTask(task: Task?) {
         _task.value = task
     }
@@ -46,6 +49,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getSubject(): Subject? {
         return subject.value
     }
+
     fun setSubject(subject: Subject?) {
         _subject.value = subject
 
@@ -61,18 +65,21 @@ class TaskEditorViewModel @Inject constructor(
     fun getAttachments(): List<Attachment> {
         return attachments.value ?: emptyList()
     }
+
     fun setAttachments(items: ArrayList<Attachment>) {
         _attachments.value = items
     }
+
     fun addAttachment(attachment: Attachment) {
         val items = ArrayList(getAttachments())
         items.add(attachment)
         setAttachments(items.distinctBy { it.attachmentID }.toArrayList())
     }
+
     fun removeAttachment(attachment: Attachment) {
         val items = ArrayList(getAttachments())
         items.remove(attachment)
-        setAttachments(items.distinctBy { it.attachmentID}.toArrayList())
+        setAttachments(items.distinctBy { it.attachmentID }.toArrayList())
     }
 
 
@@ -88,6 +95,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getName(): String? {
         return getTask()?.name
     }
+
     fun setName(name: String?) {
         // Check if the same value is being set
         if (name == getName())
@@ -101,6 +109,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getDueDate(): ZonedDateTime? {
         return getTask()?.dueDate
     }
+
     fun setDueDate(dueDate: ZonedDateTime?) {
         val task = getTask()
         task?.dueDate = dueDate
@@ -110,6 +119,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getTaskSubjectID(): String? {
         return getTask()?.subject
     }
+
     fun setTaskSubjectID(id: String?) {
         val task = getTask()
         task?.subject = id
@@ -119,6 +129,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getImportant(): Boolean {
         return getTask()?.isImportant == true
     }
+
     fun setImportant(isImportant: Boolean) {
         val task = getTask()
         task?.isImportant = isImportant
@@ -128,6 +139,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getFinished(): Boolean {
         return getTask()?.isFinished == true
     }
+
     fun setFinished(isFinished: Boolean) {
         val task = getTask()
         task?.isFinished = isFinished
@@ -137,6 +149,7 @@ class TaskEditorViewModel @Inject constructor(
     fun getNotes(): String? {
         return getTask()?.notes
     }
+
     fun setNotes(notes: String?) {
         // Check if the same value is being set
         if (notes == getNotes())
@@ -153,8 +166,8 @@ class TaskEditorViewModel @Inject constructor(
         }
     }
 
-    fun fetchRecentItemFromClipboard(): String
-            = clipboardManager.primaryClip?.getItemAt(0)?.text.toString()
+    fun fetchRecentItemFromClipboard(): String =
+        clipboardManager.primaryClip?.getItemAt(0)?.text.toString()
 
     fun setNextMeetingForDueDate() {
         setDueDate(getDateTimeForNextMeeting())
@@ -174,8 +187,10 @@ class TaskEditorViewModel @Inject constructor(
         // one day of week each
         schedules.forEach {
             it.parseDaysOfWeek().forEach { day ->
-                val newSchedule = Schedule(startTime = it.startTime,
-                    endTime = it.endTime)
+                val newSchedule = Schedule(
+                    startTime = it.startTime,
+                    endTime = it.endTime
+                )
                 newSchedule.daysOfWeek = day
                 individualDates.add(newSchedule)
             }
@@ -185,19 +200,13 @@ class TaskEditorViewModel @Inject constructor(
         // dateTime instances
         val dates = individualDates.map {
             it.startTime?.let { time -> Schedule.getNearestDateTime(it.daysOfWeek, time) }
-
         }
         if (dates.isEmpty())
             return null
 
-        // Get the nearest date
-        var targetDate = dates[0]
-        dates.forEach {
-            if (currentDate.isAfter(it?.toLocalDate()) && targetDate?.isBefore(it) == true)
-                targetDate = it
-        }
-
-        return targetDate
+        return dates.singleOrNull {
+            currentDate.isAfter(it?.toLocalDate()) || currentDate.isEqual(it?.toLocalDate())
+        } ?: dates[0]
     }
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {

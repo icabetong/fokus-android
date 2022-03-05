@@ -20,7 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArchivedSubjectFragment: BaseFragment(), BaseAdapter.SelectListener {
+class ArchivedSubjectFragment : BaseFragment(), BaseAdapter.SelectListener {
     private var _binding: FragmentArchivedSubjectBinding? = null
     private var controller: NavController? = null
 
@@ -28,8 +28,10 @@ class ArchivedSubjectFragment: BaseFragment(), BaseAdapter.SelectListener {
     private val viewModel: ArchivedSubjectViewModel by viewModels()
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentArchivedSubjectBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

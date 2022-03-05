@@ -52,16 +52,20 @@ class ClassNotificationWorker @AssistedInject constructor(
             }
 
             if (triggerTime?.isAfterNow() == true)
-                request.setInitialDelay(Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
-                    TimeUnit.MINUTES)
+                request.setInitialDelay(
+                    Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
+                    TimeUnit.MINUTES
+                )
 
             val weekFields = WeekFields.of(Locale.getDefault())
             val weekNumber = triggerTime?.get(weekFields.weekOfMonth())
             if (!schedule.hasWeek(weekNumber!!))
                 return@forEach
 
-            workManager.enqueueUniqueWork(schedule.scheduleID, ExistingWorkPolicy.APPEND,
-                request.build())
+            workManager.enqueueUniqueWork(
+                schedule.scheduleID, ExistingWorkPolicy.APPEND,
+                request.build()
+            )
             reschedule(schedule.scheduleID, inputData, triggerTime)
         }
 
@@ -71,9 +75,13 @@ class ClassNotificationWorker @AssistedInject constructor(
     private fun reschedule(tag: String, data: Data, triggerTime: ZonedDateTime?) {
         val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
             .setInputData(data)
-            .setInitialDelay(Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
-                TimeUnit.MINUTES)
-        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.APPEND,
-            request.build())
+            .setInitialDelay(
+                Duration.between(ZonedDateTime.now(), triggerTime).toMinutes(),
+                TimeUnit.MINUTES
+            )
+        workManager.enqueueUniqueWork(
+            tag, ExistingWorkPolicy.APPEND,
+            request.build()
+        )
     }
 }

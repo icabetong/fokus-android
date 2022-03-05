@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AttachToTaskViewModel @Inject constructor(
     private val repository: TaskRepository
-): ViewModel() {
+) : ViewModel() {
 
     val tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }

@@ -16,9 +16,11 @@ class NotificationChannelManager(private var context: Context) {
     private val manager = NotificationManagerCompat.from(context)
 
     @RequiresApi(26)
-    fun register(id: String,
-                 importance: Int = NotificationManager.IMPORTANCE_HIGH,
-                 groupID: String? = null) {
+    fun register(
+        id: String,
+        importance: Int = NotificationManager.IMPORTANCE_HIGH,
+        groupID: String? = null
+    ) {
 
         if (groupID != null && manager.getNotificationChannelGroup(groupID) == null) {
             manager.createNotificationChannelGroup(createGroup(groupID))
@@ -28,9 +30,11 @@ class NotificationChannelManager(private var context: Context) {
     }
 
     @RequiresApi(26)
-    private fun createChannel(id: String,
-                              importance: Int = NotificationManager.IMPORTANCE_HIGH,
-                              groupID: String?): NotificationChannel {
+    private fun createChannel(
+        id: String,
+        importance: Int = NotificationManager.IMPORTANCE_HIGH,
+        groupID: String?
+    ): NotificationChannel {
         return NotificationChannel(id, context.getString(getChannelNameRes(id)), importance).apply {
             setSound(notificationSoundUri, attributes)
             group = groupID
@@ -55,7 +59,7 @@ class NotificationChannelManager(private var context: Context) {
 
     @StringRes
     private fun getGroupNameRes(id: String): Int {
-        return when(id) {
+        return when (id) {
             CHANNEL_GROUP_ID_REMINDERS -> R.string.notification_channel_group_reminders
             else -> 0
         }

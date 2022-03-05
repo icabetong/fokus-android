@@ -31,7 +31,8 @@ class EventRepository @Inject constructor(
 
     fun fetchArchivedLiveData(): LiveData<List<EventPackage>> = events.fetchArchivedLiveData()
 
-    suspend fun checkNameUniqueness(name: String?, schedule: String?): List<String> = events.checkNameUniqueness(name, schedule)
+    suspend fun checkNameUniqueness(name: String?, schedule: String?): List<String> =
+        events.checkNameUniqueness(name, schedule)
 
     suspend fun fetch(): List<EventPackage> = events.fetchPackage()
 
@@ -48,8 +49,10 @@ class EventRepository @Inject constructor(
                 .setInputData(data)
                 .addTag(event.eventID)
                 .build()
-            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-                request)
+            workManager.enqueueUniqueWork(
+                event.eventID, ExistingWorkPolicy.REPLACE,
+                request
+            )
         }
     }
 
@@ -78,8 +81,10 @@ class EventRepository @Inject constructor(
                 .setInputData(data)
                 .addTag(event.eventID)
                 .build()
-            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-                request)
+            workManager.enqueueUniqueWork(
+                event.eventID, ExistingWorkPolicy.REPLACE,
+                request
+            )
         }
     }
 }

@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemScheduleEditorBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 
-class ScheduleAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>(Schedule.DIFF_CALLBACK) {
+class ScheduleAdapter(private val actionListener: ActionListener) :
+    BaseAdapter<Schedule, ScheduleAdapter.ScheduleViewHolder>(Schedule.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
-        val binding = LayoutItemScheduleEditorBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemScheduleEditorBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ScheduleViewHolder(binding.root)
     }
 
@@ -33,7 +35,7 @@ class ScheduleAdapter(private val actionListener: ActionListener)
         }
     }
 
-    class ScheduleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = LayoutItemScheduleEditorBinding.bind(itemView)
     }
 

@@ -10,11 +10,12 @@ import androidx.annotation.MenuRes
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemMenuBinding
 
-class MenuAdapter(activity: Activity?,
-                  @MenuRes
-                  private val resId: Int,
-                  private val menuItemListener: MenuItemListener)
-    : RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
+class MenuAdapter(
+    activity: Activity?,
+    @MenuRes
+    private val resId: Int,
+    private val menuItemListener: MenuItemListener
+) : RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
     private var itemList = mutableListOf<MenuItem>()
 
@@ -30,8 +31,10 @@ class MenuAdapter(activity: Activity?,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LayoutItemMenuBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemMenuBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ViewHolder(binding.root)
     }
 
@@ -41,7 +44,7 @@ class MenuAdapter(activity: Activity?,
         holder.onBind(itemList[position])
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binding = LayoutItemMenuBinding.bind(itemView)
 

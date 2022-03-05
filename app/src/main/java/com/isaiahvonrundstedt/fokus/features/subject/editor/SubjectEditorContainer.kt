@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * transaction.
  */
 @AndroidEntryPoint
-class SubjectEditorContainer: BaseActivity() {
+class SubjectEditorContainer : BaseActivity() {
     private lateinit var binding: ActivityContainerSubjectBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

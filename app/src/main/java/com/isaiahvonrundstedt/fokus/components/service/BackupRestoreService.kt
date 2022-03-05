@@ -31,7 +31,7 @@ import java.time.ZonedDateTime
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
-class BackupRestoreService: BaseService() {
+class BackupRestoreService : BaseService() {
 
     private lateinit var database: AppDatabase
 
@@ -57,9 +57,13 @@ class BackupRestoreService: BaseService() {
     }
 
     private fun startRestore(uri: Uri) {
-        startForegroundCompat(NOTIFICATION_RESTORE_ONGOING,
-            createNotification(true, R.string.notification_restore_ongoing,
-                iconRes = R.drawable.ic_hero_download_24))
+        startForegroundCompat(
+            NOTIFICATION_RESTORE_ONGOING,
+            createNotification(
+                true, R.string.notification_restore_ongoing,
+                iconRes = R.drawable.ic_hero_download_24
+            )
+        )
 
         try {
             val archiveStream: InputStream? = contentResolver.openInputStream(uri)
@@ -70,8 +74,10 @@ class BackupRestoreService: BaseService() {
 
                 if (!metadata.verify(Metadata.DATA_BUNDLE)) {
                     stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
-                    manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                        createNotification(titleRes = R.string.notification_restore_error))
+                    manager?.notify(
+                        NOTIFICATION_RESTORE_FAILED,
+                        createNotification(titleRes = R.string.notification_restore_error)
+                    )
                     terminateService()
                     archive.close()
                 }
@@ -84,8 +90,10 @@ class BackupRestoreService: BaseService() {
             }
 
             stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
-            manager?.notify(NOTIFICATION_RESTORE_SUCCESS,
-                createNotification(titleRes = R.string.notification_restore_success))
+            manager?.notify(
+                NOTIFICATION_RESTORE_SUCCESS,
+                createNotification(titleRes = R.string.notification_restore_success)
+            )
             terminateService()
 
             archive.close()
@@ -93,17 +101,25 @@ class BackupRestoreService: BaseService() {
             e.printStackTrace()
 
             stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
-            manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                createNotification(titleRes = R.string.notification_restore_error,
-                    contentRes = R.string.feedback_restore_corrupted))
+            manager?.notify(
+                NOTIFICATION_RESTORE_FAILED,
+                createNotification(
+                    titleRes = R.string.notification_restore_error,
+                    contentRes = R.string.feedback_restore_corrupted
+                )
+            )
             terminateService()
         } catch (e: Exception) {
             e.printStackTrace()
 
             stopForegroundCompat(NOTIFICATION_RESTORE_ONGOING)
-            manager?.notify(NOTIFICATION_RESTORE_FAILED,
-                createNotification(titleRes = R.string.notification_restore_error,
-                    contentRes = R.string.feedback_restore_invalid))
+            manager?.notify(
+                NOTIFICATION_RESTORE_FAILED,
+                createNotification(
+                    titleRes = R.string.notification_restore_error,
+                    contentRes = R.string.feedback_restore_invalid
+                )
+            )
             terminateService()
         }
     }
@@ -134,10 +150,13 @@ class BackupRestoreService: BaseService() {
                 runBlocking { forEach { database.logs().insert(it) } }
             }
         } else if (entry.name.contains(Streamable.DIRECTORY_ATTACHMENTS)
-            && !entry.isDirectory) {
+            && !entry.isDirectory
+        ) {
 
-            val targetDirectory = File(getExternalFilesDir(null),
-                Streamable.DIRECTORY_ATTACHMENTS)
+            val targetDirectory = File(
+                getExternalFilesDir(null),
+                Streamable.DIRECTORY_ATTACHMENTS
+            )
 
             val destination = File(targetDirectory, File(entry.name).name)
 
@@ -151,9 +170,13 @@ class BackupRestoreService: BaseService() {
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED)
             return
 
-        startForegroundCompat(NOTIFICATION_BACKUP_ONGOING,
-            createNotification(ongoing = true, titleRes = R.string.notification_backup_ongoing,
-                iconRes = R.drawable.ic_hero_upload_24))
+        startForegroundCompat(
+            NOTIFICATION_BACKUP_ONGOING,
+            createNotification(
+                ongoing = true, titleRes = R.string.notification_backup_ongoing,
+                iconRes = R.drawable.ic_hero_upload_24
+            )
+        )
 
         try {
             runBlocking {
@@ -180,13 +203,17 @@ class BackupRestoreService: BaseService() {
                 JsonDataStreamer.encodeToJson(attachments, Attachment::class.java)?.let {
                     items.add(createCache(Streamable.FILE_NAME_ATTACHMENT, it))
                 }
-                val attachmentFolder = File(cacheDir,
-                    Streamable.DIRECTORY_ATTACHMENTS)
+                val attachmentFolder = File(
+                    cacheDir,
+                    Streamable.DIRECTORY_ATTACHMENTS
+                )
                 if (!attachmentFolder.exists()) attachmentFolder.mkdir()
                 attachments?.forEach {
                     if (it.type == Attachment.TYPE_IMPORTED_FILE && it.target != null)
-                        FileUtils.copyFileToDirectory(File(it.target!!),
-                            attachmentFolder)
+                        FileUtils.copyFileToDirectory(
+                            File(it.target!!),
+                            attachmentFolder
+                        )
                 }
                 items.add(attachmentFolder)
 
@@ -200,8 +227,10 @@ class BackupRestoreService: BaseService() {
                     items.add(createCache(Streamable.FILE_NAME_LOG, it))
                 }
 
-                items.add(Metadata(data = Metadata.DATA_BUNDLE)
-                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
+                items.add(
+                    Metadata(data = Metadata.DATA_BUNDLE)
+                        .toJsonFile(cacheDir, Metadata.FILE_NAME)
+                )
 
                 if (items.isEmpty()) {
                     stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
@@ -217,16 +246,20 @@ class BackupRestoreService: BaseService() {
                     .previousBackupDate = ZonedDateTime.now()
 
                 stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
-                manager?.notify(NOTIFICATION_BACKUP_SUCCESS,
-                    createNotification(titleRes = R.string.notification_backup_success))
+                manager?.notify(
+                    NOTIFICATION_BACKUP_SUCCESS,
+                    createNotification(titleRes = R.string.notification_backup_success)
+                )
                 terminateService(BROADCAST_BACKUP_SUCCESS)
             }
         } catch (e: Exception) {
             e.printStackTrace()
 
             stopForegroundCompat(NOTIFICATION_BACKUP_ONGOING)
-            manager?.notify(NOTIFICATION_BACKUP_FAILED,
-                createNotification(titleRes = R.string.notification_backup_error))
+            manager?.notify(
+                NOTIFICATION_BACKUP_FAILED,
+                createNotification(titleRes = R.string.notification_backup_error)
+            )
             terminateService(BROADCAST_BACKUP_FAILED)
         }
     }

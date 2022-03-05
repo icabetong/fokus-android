@@ -29,8 +29,12 @@ class PreferenceManager(private val context: Context?) {
     }
 
     var theme: Theme
-        get() = Theme.parse(sharedPreference.getString(PREFERENCE_THEME,
-            Theme.SYSTEM.toString()))
+        get() = Theme.parse(
+            sharedPreference.getString(
+                PREFERENCE_THEME,
+                Theme.SYSTEM.toString()
+            )
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_THEME, value.toString())
@@ -40,18 +44,22 @@ class PreferenceManager(private val context: Context?) {
 
     var previousBackupDate: ZonedDateTime?
         get() = DateTimeConverter.toZonedDateTime(
-            sharedPreference.getString(PREFERENCE_BACKUP, null))
+            sharedPreference.getString(PREFERENCE_BACKUP, null)
+        )
         set(value) {
             sharedPreference.edit().run {
-                putString(PREFERENCE_BACKUP,
-                    DateTimeConverter.fromZonedDateTime(value))
+                putString(
+                    PREFERENCE_BACKUP,
+                    DateTimeConverter.fromZonedDateTime(value)
+                )
                 apply()
             }
         }
 
     var reminderTime: LocalTime?
         get() = DateTimeConverter.toLocalTime(
-            sharedPreference.getString(PREFERENCE_REMINDER_TIME, "08:30"))
+            sharedPreference.getString(PREFERENCE_REMINDER_TIME, "08:30")
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_REMINDER_TIME, DateTimeConverter.fromLocalTime(value))
@@ -61,8 +69,11 @@ class PreferenceManager(private val context: Context?) {
 
     var taskConstraint: TaskViewModel.Constraint
         get() = TaskViewModel.Constraint.parse(
-            sharedPreference.getString(PREFERENCE_TASK_FILTER_OPTION,
-                TaskViewModel.Constraint.ALL.toString()) ?: TaskViewModel.Constraint.ALL.toString())
+            sharedPreference.getString(
+                PREFERENCE_TASK_FILTER_OPTION,
+                TaskViewModel.Constraint.ALL.toString()
+            ) ?: TaskViewModel.Constraint.ALL.toString()
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_TASK_FILTER_OPTION, value.toString())
@@ -72,8 +83,11 @@ class PreferenceManager(private val context: Context?) {
 
     var tasksSort: TaskViewModel.Sort
         get() = TaskViewModel.Sort.parse(
-            sharedPreference.getString(PREFERENCE_TASK_SORT_OPTION,
-                TaskViewModel.Sort.NAME.toString()) ?: TaskViewModel.Sort.NAME.toString())
+            sharedPreference.getString(
+                PREFERENCE_TASK_SORT_OPTION,
+                TaskViewModel.Sort.NAME.toString()
+            ) ?: TaskViewModel.Sort.NAME.toString()
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_TASK_SORT_OPTION, value.toString())
@@ -83,8 +97,11 @@ class PreferenceManager(private val context: Context?) {
 
     var tasksSortDirection: SortDirection
         get() = SortDirection.parse(
-            sharedPreference.getString(PREFERENCE_TASK_SORT_DIRECTION,
-                SortDirection.ASCENDING.toString()))
+            sharedPreference.getString(
+                PREFERENCE_TASK_SORT_DIRECTION,
+                SortDirection.ASCENDING.toString()
+            )
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_TASK_SORT_DIRECTION, value.toString())
@@ -94,8 +111,11 @@ class PreferenceManager(private val context: Context?) {
 
     var subjectConstraint: SubjectViewModel.Constraint
         get() = SubjectViewModel.Constraint.parse(
-            sharedPreference.getString(PREFERENCE_SUBJECT_FILTER_OPTION,
-                SubjectViewModel.Constraint.ALL.toString()) ?: SubjectViewModel.Constraint.ALL.toString())
+            sharedPreference.getString(
+                PREFERENCE_SUBJECT_FILTER_OPTION,
+                SubjectViewModel.Constraint.ALL.toString()
+            ) ?: SubjectViewModel.Constraint.ALL.toString()
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_SUBJECT_FILTER_OPTION, value.toString())
@@ -105,8 +125,11 @@ class PreferenceManager(private val context: Context?) {
 
     var subjectSort: SubjectViewModel.Sort
         get() = SubjectViewModel.Sort.parse(
-            sharedPreference.getString(PREFERENCE_SUBJECT_SORT_OPTION,
-                SubjectViewModel.Sort.CODE.toString()) ?: SubjectViewModel.Sort.CODE.toString())
+            sharedPreference.getString(
+                PREFERENCE_SUBJECT_SORT_OPTION,
+                SubjectViewModel.Sort.CODE.toString()
+            ) ?: SubjectViewModel.Sort.CODE.toString()
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_SUBJECT_SORT_OPTION, value.toString())
@@ -116,8 +139,11 @@ class PreferenceManager(private val context: Context?) {
 
     var subjectSortDirection: SortDirection
         get() = SortDirection.parse(
-            sharedPreference.getString(PREFERENCE_SUBJECT_SORT_DIRECTION,
-                SortDirection.ASCENDING.toString()) ?: SubjectViewModel.Sort.CODE.toString())
+            sharedPreference.getString(
+                PREFERENCE_SUBJECT_SORT_DIRECTION,
+                SortDirection.ASCENDING.toString()
+            ) ?: SubjectViewModel.Sort.CODE.toString()
+        )
         set(value) {
             sharedPreference.edit().run {
                 putString(PREFERENCE_SUBJECT_SORT_DIRECTION, value.toString())
@@ -147,26 +173,36 @@ class PreferenceManager(private val context: Context?) {
         get() = sharedPreference.getBoolean(PREFERENCE_ALLOW_WEEK_NUMBERS, false)
 
     val reminderFrequency: String
-        get() = sharedPreference.getString(PREFERENCE_REMINDER_FREQUENCY,
-            DURATION_EVERYDAY) ?: DURATION_EVERYDAY
+        get() = sharedPreference.getString(
+            PREFERENCE_REMINDER_FREQUENCY,
+            DURATION_EVERYDAY
+        ) ?: DURATION_EVERYDAY
 
     val taskReminderInterval: String
-        get() = sharedPreference.getString(PREFERENCE_TASK_NOTIFICATION_INTERVAL,
-            TASK_REMINDER_INTERVAL_3_HOURS) ?: TASK_REMINDER_INTERVAL_3_HOURS
+        get() = sharedPreference.getString(
+            PREFERENCE_TASK_NOTIFICATION_INTERVAL,
+            TASK_REMINDER_INTERVAL_3_HOURS
+        ) ?: TASK_REMINDER_INTERVAL_3_HOURS
 
     val eventReminderInterval: String
-        get() = sharedPreference.getString(PREFERENCE_EVENT_NOTIFICATION_INTERVAL,
-            EVENT_REMINDER_INTERVAL_30_MINUTES) ?: EVENT_REMINDER_INTERVAL_30_MINUTES
+        get() = sharedPreference.getString(
+            PREFERENCE_EVENT_NOTIFICATION_INTERVAL,
+            EVENT_REMINDER_INTERVAL_30_MINUTES
+        ) ?: EVENT_REMINDER_INTERVAL_30_MINUTES
 
     val subjectReminderInterval: String
-        get() = sharedPreference.getString(PREFERENCE_COURSE_NOTIFICATION_INTERVAL,
-            SUBJECT_REMINDER_INTERVAL_30_MINUTES) ?: SUBJECT_REMINDER_INTERVAL_30_MINUTES
+        get() = sharedPreference.getString(
+            PREFERENCE_COURSE_NOTIFICATION_INTERVAL,
+            SUBJECT_REMINDER_INTERVAL_30_MINUTES
+        ) ?: SUBJECT_REMINDER_INTERVAL_30_MINUTES
 
 
     /* User-Defined Settings */
     var noConfirmImport: Boolean
-        get() = sharedPreference.getBoolean(PREFERENCE_NO_CONFIRM_IMPORT,
-            false)
+        get() = sharedPreference.getBoolean(
+            PREFERENCE_NO_CONFIRM_IMPORT,
+            false
+        )
         set(value) {
             sharedPreference.edit().run {
                 putBoolean(PREFERENCE_NO_CONFIRM_IMPORT, value)

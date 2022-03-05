@@ -10,13 +10,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseBottomSheet(private val manager: FragmentManager)
-    : BottomSheetDialogFragment() {
+abstract class BaseBottomSheet(private val manager: FragmentManager) : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dialog?.setOnShowListener {
             val bottomSheetDialog = dialog as BottomSheetDialog
-            val bottomSheet = bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
+            val bottomSheet =
+                bottomSheetDialog.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
             with(BottomSheetBehavior.from(bottomSheet)) {
                 state = BottomSheetBehavior.STATE_EXPANDED
             }
@@ -24,8 +24,8 @@ abstract class BaseBottomSheet(private val manager: FragmentManager)
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog
-            = BottomSheetDialog(requireContext(), theme)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+        BottomSheetDialog(requireContext(), theme)
 
     fun show() {
         if (!this.isAdded || !this.isVisible)

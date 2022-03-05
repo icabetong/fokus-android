@@ -54,7 +54,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
-class EventEditor: BaseEditor(), FragmentResultListener {
+class EventEditor : BaseEditor(), FragmentResultListener {
     private var _binding: EditorEventBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
@@ -71,33 +71,38 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         sharedElementEnterTransition = buildContainerTransform()
         sharedElementReturnTransition = buildContainerTransform()
 
-        subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
-                ?.also { data ->
-                    viewModel.setSubject(data.subject)
-                    viewModel.schedules = data.schedules
-                }
-        }
+        subjectLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
+                    ?.also { data ->
+                        viewModel.setSubject(data.subject)
+                        viewModel.schedules = data.schedules
+                    }
+            }
 
-        exportLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            context?.startService(Intent(context, DataExporterService::class.java).apply {
-                this.data = it.data?.data
-                action = DataExporterService.ACTION_EXPORT_EVENT
-                putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getEvent())
-            })
-        }
+        exportLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                context?.startService(Intent(context, DataExporterService::class.java).apply {
+                    this.data = it.data?.data
+                    action = DataExporterService.ACTION_EXPORT_EVENT
+                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getEvent())
+                })
+            }
 
-        importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            context?.startService(Intent(context, DataImporterService::class.java).apply {
-                this.data = it.data?.data
-                action = DataImporterService.ACTION_IMPORT_EVENT
-            })
-        }
+        importLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                context?.startService(Intent(context, DataImporterService::class.java).apply {
+                    this.data = it.data?.data
+                    action = DataImporterService.ACTION_IMPORT_EVENT
+                })
+            }
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = EditorEventBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -131,8 +136,11 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             viewModel.setSubject(Subject.fromBundle(it))
         }
 
-        registerForFragmentResult(arrayOf(
-            SchedulePickerSheet.REQUEST_KEY), this)
+        registerForFragmentResult(
+            arrayOf(
+                SchedulePickerSheet.REQUEST_KEY
+            ), this
+        )
     }
 
     override fun onStart() {
@@ -165,16 +173,19 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                 with(binding.subjectTextView) {
                     text = it.code
                     setTextColorFromResource(R.color.color_primary_text)
-                    ContextCompat.getDrawable(context, R.drawable.shape_color_holder)?.also { shape ->
-                        this.setCompoundDrawableAtStart(it.tintDrawable(shape))
-                    }
+                    ContextCompat.getDrawable(context, R.drawable.shape_color_holder)
+                        ?.also { shape ->
+                            this.setCompoundDrawableAtStart(it.tintDrawable(shape))
+                        }
                 }
 
                 if (viewModel.schedules.isNotEmpty()) {
                     with(binding.customDateTimeRadio) {
                         isChecked = true
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
+                        titleTextColor = ContextCompat.getColor(
+                            context,
+                            R.color.color_primary_text
+                        )
                         subtitle = viewModel.getEvent()?.formatSchedule(context)
                     }
                 }
@@ -225,8 +236,10 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         binding.scheduleTextView.setOnClickListener { v ->
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
-                dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getSchedule()?.toCalendar()) { _, datetime ->
+                dateTimePicker(
+                    requireFutureDateTime = true,
+                    currentDateTime = viewModel.getSchedule()?.toCalendar()
+                ) { _, datetime ->
                     viewModel.setSchedule(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
@@ -250,8 +263,10 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         binding.dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             for (v: View in radioGroup.children) {
                 if (v is TwoLineRadioButton && !v.isChecked) {
-                    v.titleTextColor = ContextCompat.getColor(v.context,
-                        R.color.color_secondary_text)
+                    v.titleTextColor = ContextCompat.getColor(
+                        v.context,
+                        R.color.color_secondary_text
+                    )
                     v.subtitle = null
                 }
             }
@@ -276,16 +291,24 @@ class EventEditor: BaseEditor(), FragmentResultListener {
         binding.customDateTimeRadio.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
-                dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getSchedule()?.toCalendar()) { _, datetime ->
-                    viewModel.setSchedule(ZonedDateTime.ofInstant(datetime.toInstant(),
-                        ZoneId.systemDefault()))
+                dateTimePicker(
+                    requireFutureDateTime = true,
+                    currentDateTime = viewModel.getSchedule()?.toCalendar()
+                ) { _, datetime ->
+                    viewModel.setSchedule(
+                        ZonedDateTime.ofInstant(
+                            datetime.toInstant(),
+                            ZoneId.systemDefault()
+                        )
+                    )
                 }
                 positiveButton(R.string.button_done) {
 
                     with(binding.customDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
+                        titleTextColor = ContextCompat.getColor(
+                            context,
+                            R.color.color_primary_text
+                        )
                         subtitle = viewModel.getEvent()?.formatSchedule(context)
                     }
                 }
@@ -331,14 +354,16 @@ class EventEditor: BaseEditor(), FragmentResultListener {
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
-        when(requestKey) {
+        when (requestKey) {
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)
 
                     with(binding.pickDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
+                        titleTextColor = ContextCompat.getColor(
+                            context,
+                            R.color.color_primary_text
+                        )
                         subtitle = viewModel.getEvent()?.formatSchedule(context)
                     }
                 }
@@ -365,13 +390,15 @@ class EventEditor: BaseEditor(), FragmentResultListener {
             .unregisterReceiver(receiver)
     }
 
-    private var receiver = object: BroadcastReceiver() {
+    private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     DataExporterService.BROADCAST_EXPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_export_ongoing, binding.root,
-                            Snackbar.LENGTH_INDEFINITE)
+                        createSnackbar(
+                            R.string.feedback_export_ongoing, binding.root,
+                            Snackbar.LENGTH_INDEFINITE
+                        )
                     }
                     DataExporterService.BROADCAST_EXPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_export_completed, binding.root)
@@ -379,11 +406,13 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
                             val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
 
-                            startActivity(ShareCompat.IntentBuilder.from(requireActivity())
-                                .addStream(uri)
-                                .setType(Streamable.MIME_TYPE_ZIP)
-                                .setChooserTitle(R.string.dialog_send_to)
-                                .intent)
+                            startActivity(
+                                ShareCompat.IntentBuilder.from(requireActivity())
+                                    .addStream(uri)
+                                    .setType(Streamable.MIME_TYPE_ZIP)
+                                    .setChooserTitle(R.string.dialog_send_to)
+                                    .intent
+                            )
                         }
                     }
                     DataExporterService.BROADCAST_EXPORT_FAILED -> {
@@ -395,9 +424,10 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
-                        intent.getParcelableExtra<EventPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            viewModel.setEvent(it.event)
-                        }
+                        intent.getParcelableExtra<EventPackage>(BaseService.EXTRA_BROADCAST_DATA)
+                            ?.also {
+                                viewModel.setEvent(it.event)
+                            }
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
                         createSnackbar(R.string.feedback_import_failed, binding.root)
@@ -449,8 +479,10 @@ class EventEditor: BaseEditor(), FragmentResultListener {
                  */
                 context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_EVENT
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getEvent())
+                    putExtra(
+                        DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getEvent()
+                    )
                 })
             }
             R.id.action_import -> {
@@ -483,8 +515,10 @@ class EventEditor: BaseEditor(), FragmentResultListener {
     private fun getSharingName(): String? {
         return when (requestKey) {
             REQUEST_KEY_INSERT -> {
-                if (viewModel.getName()?.isEmpty() == true || viewModel.getLocation()?.isEmpty() == true ||
-                    viewModel.getSchedule() == null) {
+                if (viewModel.getName()?.isEmpty() == true || viewModel.getLocation()
+                        ?.isEmpty() == true ||
+                    viewModel.getSchedule() == null
+                ) {
                     MaterialDialog(requireContext()).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)

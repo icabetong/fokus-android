@@ -30,8 +30,10 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
     private val viewModel: LogViewModel by viewModels()
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -75,26 +77,31 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is Log) {
             when (action) {
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t)
-                    val snackbar = Snackbar.make(binding.recyclerView, R.string.feedback_log_removed,
-                        Snackbar.LENGTH_SHORT)
+                    val snackbar = Snackbar.make(
+                        binding.recyclerView, R.string.feedback_log_removed,
+                        Snackbar.LENGTH_SHORT
+                    )
                     snackbar.setAction(R.string.button_undo) {
                         viewModel.insert(t)
                     }
                     snackbar.show()
                 }
-                BaseAdapter.ActionListener.Action.SELECT -> { }
+                BaseAdapter.ActionListener.Action.SELECT -> {
+                }
             }
         }
     }
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_clear_items -> viewModel.removeLogs()
         }
         return true

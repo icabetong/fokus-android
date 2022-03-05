@@ -13,7 +13,7 @@ data class SubjectPackage @JvmOverloads constructor(
     var subject: Subject,
     @Relation(entity = Schedule::class, parentColumn = "subjectID", entityColumn = "subject")
     var schedules: List<Schedule> = emptyList()
-): Parcelable {
+) : Parcelable {
 
     fun hasScheduleToday(): Boolean {
         for (s: Schedule in schedules)
@@ -40,14 +40,18 @@ data class SubjectPackage @JvmOverloads constructor(
     }
 
     companion object {
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<SubjectPackage>() {
-            override fun areItemsTheSame(oldItem: SubjectPackage,
-                                         newItem: SubjectPackage): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SubjectPackage>() {
+            override fun areItemsTheSame(
+                oldItem: SubjectPackage,
+                newItem: SubjectPackage
+            ): Boolean {
                 return oldItem.subject.subjectID == newItem.subject.subjectID
             }
 
-            override fun areContentsTheSame(oldItem: SubjectPackage,
-                                            newItem: SubjectPackage): Boolean {
+            override fun areContentsTheSame(
+                oldItem: SubjectPackage,
+                newItem: SubjectPackage
+            ): Boolean {
                 return oldItem == newItem
             }
         }

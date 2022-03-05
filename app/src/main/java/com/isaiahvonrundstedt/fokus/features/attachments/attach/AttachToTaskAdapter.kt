@@ -7,12 +7,14 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskSendBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 
-class AttachToTaskAdapter(private val selectListener: SelectListener)
-    : BaseAdapter<TaskPackage, AttachToTaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
+class AttachToTaskAdapter(private val selectListener: SelectListener) :
+    BaseAdapter<TaskPackage, AttachToTaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = LayoutItemTaskSendBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemTaskSendBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return TaskViewHolder(binding.root, selectListener)
     }
 
@@ -20,9 +22,10 @@ class AttachToTaskAdapter(private val selectListener: SelectListener)
         holder.onBind(getItem(position))
     }
 
-    class TaskViewHolder(itemView: View,
-          private val selectListener: SelectListener
-     ): BaseAdapter.BaseViewHolder(itemView) {
+    class TaskViewHolder(
+        itemView: View,
+        private val selectListener: SelectListener
+    ) : BaseAdapter.BaseViewHolder(itemView) {
         private val binding = LayoutItemTaskSendBinding.bind(itemView)
 
         override fun <T> onBind(data: T) {

@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ArchivedTaskViewModel @Inject constructor(
     private val taskRepository: TaskRepository
-): ViewModel() {
+) : ViewModel() {
 
     val items: LiveData<List<TaskPackage>> = taskRepository.fetchArchived()
     val isEmpty: LiveData<Boolean> = Transformations.map(items) { it.isEmpty() }

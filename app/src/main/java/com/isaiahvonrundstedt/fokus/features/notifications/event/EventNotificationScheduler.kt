@@ -32,8 +32,10 @@ class EventNotificationScheduler @AssistedInject constructor(
                 val request = OneTimeWorkRequest.Builder(EventNotificationWorker::class.java)
                     .setInputData(convertEventToData(event))
                     .build()
-                WorkManager.getInstance(applicationContext).enqueueUniqueWork(event.eventID,
-                    ExistingWorkPolicy.REPLACE, request)
+                WorkManager.getInstance(applicationContext).enqueueUniqueWork(
+                    event.eventID,
+                    ExistingWorkPolicy.REPLACE, request
+                )
             }
         }
         return Result.success()

@@ -29,10 +29,14 @@ import java.util.*
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-@Entity(tableName = "events", foreignKeys = [
-    ForeignKey(entity = Subject::class, parentColumns = arrayOf("subjectID"),
-        childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL)
-])
+@Entity(
+    tableName = "events", foreignKeys = [
+        ForeignKey(
+            entity = Subject::class, parentColumns = arrayOf("subjectID"),
+            childColumns = arrayOf("subject"), onDelete = ForeignKey.SET_NULL
+        )
+    ]
+)
 data class Event @JvmOverloads constructor(
     @PrimaryKey
     var eventID: String = UUID.randomUUID().toString(),
@@ -62,15 +66,21 @@ data class Event @JvmOverloads constructor(
         else FORMAT_DATE_WITH_WEEKDAY_12_HOUR
 
         return if (schedule?.isToday() == true)
-                String.format(context.getString(R.string.today_at),
-                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
-            else if (schedule?.isYesterday() == true)
-                String.format(context.getString(R.string.yesterday_at),
-                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
-            else if (schedule?.isTomorrow() == true)
-                String.format(context.getString(R.string.tomorrow_at),
-                    schedule?.format(DateTimeConverter.getTimeFormatter(context)))
-            else schedule?.format(DateTimeFormatter.ofPattern(datePattern))
+            String.format(
+                context.getString(R.string.today_at),
+                schedule?.format(DateTimeConverter.getTimeFormatter(context))
+            )
+        else if (schedule?.isYesterday() == true)
+            String.format(
+                context.getString(R.string.yesterday_at),
+                schedule?.format(DateTimeConverter.getTimeFormatter(context))
+            )
+        else if (schedule?.isTomorrow() == true)
+            String.format(
+                context.getString(R.string.tomorrow_at),
+                schedule?.format(DateTimeConverter.getTimeFormatter(context))
+            )
+        else schedule?.format(DateTimeFormatter.ofPattern(datePattern))
     }
 
     override fun toJsonString(): String? = JsonDataStreamer.encodeToJson(this, Event::class.java)

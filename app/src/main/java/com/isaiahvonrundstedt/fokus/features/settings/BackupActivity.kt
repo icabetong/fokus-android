@@ -26,7 +26,7 @@ import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BackupActivity: BaseActivity() {
+class BackupActivity : BaseActivity() {
     private lateinit var binding: ActivityBackupBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,33 +39,36 @@ class BackupActivity: BaseActivity() {
 
     companion object {
         @AndroidEntryPoint
-        class BackupFragment: BasePreference() {
+        class BackupFragment : BasePreference() {
 
             private lateinit var createLauncher: ActivityResultLauncher<Intent>
             private lateinit var restoreLauncher: ActivityResultLauncher<Intent>
 
-            @Inject lateinit var manager: PreferenceManager
+            @Inject
+            lateinit var manager: PreferenceManager
 
             override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
 
-                createLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                    val service = Intent(context, BackupRestoreService::class.java).apply {
-                        action = BackupRestoreService.ACTION_BACKUP
-                        data = it.data?.data
+                createLauncher =
+                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                        val service = Intent(context, BackupRestoreService::class.java).apply {
+                            action = BackupRestoreService.ACTION_BACKUP
+                            data = it.data?.data
+                        }
+
+                        context?.startForegroundServiceCompat(service)
                     }
 
-                    context?.startForegroundServiceCompat(service)
-                }
+                restoreLauncher =
+                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                        val service = Intent(context, BackupRestoreService::class.java).apply {
+                            action = BackupRestoreService.ACTION_RESTORE
+                            data = it.data?.data
+                        }
 
-                restoreLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                    val service = Intent(context, BackupRestoreService::class.java).apply {
-                        action = BackupRestoreService.ACTION_RESTORE
-                        data = it.data?.data
+                        context?.startForegroundServiceCompat(service)
                     }
-
-                    context?.startForegroundServiceCompat(service)
-                }
 
                 LocalBroadcastManager.getInstance(requireContext())
                     .registerReceiver(receiver, IntentFilter(BaseService.ACTION_SERVICE_BROADCAST))
@@ -75,13 +78,15 @@ class BackupActivity: BaseActivity() {
                 setPreferencesFromResource(R.xml.xml_settings_backups, rootKey)
             }
 
-            private var receiver = object: BroadcastReceiver() {
+            private var receiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context?, intent: Intent?) {
                     if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                         when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                             BackupRestoreService.BROADCAST_BACKUP_SUCCESS ->
-                                setPreferenceSummary(PreferenceManager.PREFERENCE_BACKUP,
-                                    manager.previousBackupDate.parseForSummary())
+                                setPreferenceSummary(
+                                    PreferenceManager.PREFERENCE_BACKUP,
+                                    manager.previousBackupDate.parseForSummary()
+                                )
                             BackupRestoreService.BROADCAST_BACKUP_FAILED ->
                                 createSnackbar(R.string.feedback_backup_failed, requireView())
                             BackupRestoreService.BROADCAST_BACKUP_EMPTY ->
@@ -94,25 +99,29 @@ class BackupActivity: BaseActivity() {
             override fun onStart() {
                 super.onStart()
 
-                setPreferenceSummary(PreferenceManager.PREFERENCE_BACKUP, manager.previousBackupDate.parseForSummary())
+                setPreferenceSummary(
+                    PreferenceManager.PREFERENCE_BACKUP,
+                    manager.previousBackupDate.parseForSummary()
+                )
                 findPreference<Preference>(PreferenceManager.PREFERENCE_BACKUP)
                     ?.setOnPreferenceClickListener {
-                    val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME)
-                        type = Streamable.MIME_TYPE_ZIP
-                    }
+                        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                            addCategory(Intent.CATEGORY_OPENABLE)
+                            putExtra(Intent.EXTRA_TITLE, BackupRestoreService.FILE_BACKUP_NAME)
+                            type = Streamable.MIME_TYPE_ZIP
+                        }
 
-                    createLauncher.launch(intent)
-                    true
-                }
+                        createLauncher.launch(intent)
+                        true
+                    }
 
 
                 findPreference<Preference>(PreferenceManager.PREFERENCE_RESTORE)
                     ?.setOnPreferenceClickListener {
-                        val intent = Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                            type = Streamable.MIME_TYPE_ZIP
-                        }, getString(R.string.dialog_choose_backup))
+                        val intent =
+                            Intent.createChooser(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                                type = Streamable.MIME_TYPE_ZIP
+                            }, getString(R.string.dialog_choose_backup))
 
                         restoreLauncher.launch(intent)
                         true
@@ -133,14 +142,20 @@ class BackupActivity: BaseActivity() {
                 val currentDateTime = ZonedDateTime.now()
 
                 return if (this.toLocalDate().isEqual(LocalDate.now()))
-                    String.format(getString(R.string.today_at),
-                        format(DateTimeConverter.getTimeFormatter(requireContext())))
+                    String.format(
+                        getString(R.string.today_at),
+                        format(DateTimeConverter.getTimeFormatter(requireContext()))
+                    )
                 else if (this.minusDays(1)?.compareTo(currentDateTime) == 0)
-                    String.format(getString(R.string.yesterday_at),
-                        format(DateTimeConverter.getTimeFormatter(requireContext())))
+                    String.format(
+                        getString(R.string.yesterday_at),
+                        format(DateTimeConverter.getTimeFormatter(requireContext()))
+                    )
                 else if (this.plusDays(1)?.compareTo(currentDateTime) == 0)
-                    String.format(getString(R.string.tomorrow_at),
-                        format(DateTimeConverter.getTimeFormatter(requireContext())))
+                    String.format(
+                        getString(R.string.tomorrow_at),
+                        format(DateTimeConverter.getTimeFormatter(requireContext()))
+                    )
                 else format(DateTimeConverter.getDateTimeFormatter(requireContext()))
             }
         }

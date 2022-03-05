@@ -13,14 +13,16 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseBottomSheet
 
-class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager)
-    : BaseBottomSheet(manager), BaseAdapter.ActionListener {
+class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentManager) :
+    BaseBottomSheet(manager), BaseAdapter.ActionListener {
 
     private var _binding: LayoutSheetScheduleBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = LayoutSheetScheduleBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,17 +38,22 @@ class SchedulePickerSheet(private val items: List<Schedule>, manager: FragmentMa
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is Schedule) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    setFragmentResult(REQUEST_KEY, bundleOf(
-                        EXTRA_SCHEDULE to t
-                    ))
+                    setFragmentResult(
+                        REQUEST_KEY, bundleOf(
+                            EXTRA_SCHEDULE to t
+                        )
+                    )
                     this.dismiss()
                 }
-                BaseAdapter.ActionListener.Action.DELETE -> {}
+                BaseAdapter.ActionListener.Action.DELETE -> {
+                }
             }
         }
     }

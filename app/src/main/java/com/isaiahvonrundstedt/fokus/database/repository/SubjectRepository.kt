@@ -53,8 +53,10 @@ class SubjectRepository @Inject constructor(
                     .addTag(it.scheduleID)
                     .build()
 
-                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
-                    request)
+                workManager.enqueueUniqueWork(
+                    it.scheduleID, ExistingWorkPolicy.REPLACE,
+                    request
+                )
             }
         }
     }
@@ -86,8 +88,10 @@ class SubjectRepository @Inject constructor(
                     .addTag(subject.subjectID)
                     .addTag(it.scheduleID)
                     .build()
-                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
-                    request)
+                workManager.enqueueUniqueWork(
+                    it.scheduleID, ExistingWorkPolicy.REPLACE,
+                    request
+                )
             }
         }
     }

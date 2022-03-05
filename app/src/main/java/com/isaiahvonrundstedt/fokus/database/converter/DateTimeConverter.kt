@@ -30,9 +30,11 @@ class DateTimeConverter private constructor() {
             return DateTimeFormatter.ofPattern(pattern)
         }
 
-        fun getDateTimeFormatter(context: Context,
-                                 isShort: Boolean = false,
-                                 withYear: Boolean = false): DateTimeFormatter {
+        fun getDateTimeFormatter(
+            context: Context,
+            isShort: Boolean = false,
+            withYear: Boolean = false
+        ): DateTimeFormatter {
             val is24Hour: Boolean = DateFormat.is24HourFormat(context)
 
             val pattern = if (isShort) {
@@ -72,14 +74,14 @@ class DateTimeConverter private constructor() {
         @TypeConverter
         fun toLocalDate(date: String?): LocalDate? {
             return if (date.isNullOrEmpty()) null
-                else LocalDate.parse(date)
+            else LocalDate.parse(date)
         }
 
         @JvmStatic
         @TypeConverter
         fun toZonedDateTime(time: String?): ZonedDateTime? {
             return if (time.isNullOrEmpty()) null
-                else ZonedDateTime.parse(time)
+            else ZonedDateTime.parse(time)
         }
 
         @JvmStatic
@@ -94,7 +96,7 @@ class DateTimeConverter private constructor() {
         @TypeConverter
         fun toLocalTime(time: String?): LocalTime? {
             return if (time.isNullOrEmpty()) null
-                else LocalTime.parse(time)
+            else LocalTime.parse(time)
         }
 
         @JvmStatic

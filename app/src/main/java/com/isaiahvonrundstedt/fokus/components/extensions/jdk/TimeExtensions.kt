@@ -1,4 +1,3 @@
-
 package com.isaiahvonrundstedt.fokus.components.extensions.jdk
 
 import java.time.LocalDate

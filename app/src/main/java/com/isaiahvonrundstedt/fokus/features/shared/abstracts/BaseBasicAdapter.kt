@@ -3,7 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.shared.abstracts
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseBasicAdapter<T, VH: BaseBasicAdapter.BaseBasicViewHolder<T>>
+abstract class BaseBasicAdapter<T, VH : BaseBasicAdapter.BaseBasicViewHolder<T>>
     : RecyclerView.Adapter<VH>() {
 
     protected val items = arrayListOf<T>()
@@ -20,7 +20,7 @@ abstract class BaseBasicAdapter<T, VH: BaseBasicAdapter.BaseBasicViewHolder<T>>
         enum class Action { SELECT, DELETE }
     }
 
-    abstract class BaseBasicViewHolder<T>(itemView: View): RecyclerView.ViewHolder(itemView) {
+    abstract class BaseBasicViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
         abstract fun onBind(t: T, position: Int)
     }
 }

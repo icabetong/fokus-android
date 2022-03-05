@@ -22,7 +22,7 @@ import javax.inject.Inject
 class EventEditorViewModel @Inject constructor(
     private val scheduleDao: ScheduleDAO,
     private val repository: EventRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _event: MutableLiveData<Event> = MutableLiveData(Event())
     private val _subject: MutableLiveData<Subject> = MutableLiveData(null)
@@ -37,6 +37,7 @@ class EventEditorViewModel @Inject constructor(
     fun getEvent(): Event? {
         return event.value
     }
+
     fun setEvent(event: Event?) {
         _event.value = event
     }
@@ -44,6 +45,7 @@ class EventEditorViewModel @Inject constructor(
     fun getSubject(): Subject? {
         return subject.value
     }
+
     fun setSubject(subject: Subject?) {
         _subject.value = subject
         if (subject != null) {
@@ -55,11 +57,16 @@ class EventEditorViewModel @Inject constructor(
         }
     }
 
-    fun checkNameUniqueness(name: String? = null, schedule: ZonedDateTime? = null) = viewModelScope.launch {
-        val result = repository.checkNameUniqueness(name ?: getName(),
-            DateTimeConverter.fromLocalDate(schedule?.toLocalDate() ?: getSchedule()?.toLocalDate()))
-        _isNameTaken.value = result.isNotEmpty()
-    }
+    fun checkNameUniqueness(name: String? = null, schedule: ZonedDateTime? = null) =
+        viewModelScope.launch {
+            val result = repository.checkNameUniqueness(
+                name ?: getName(),
+                DateTimeConverter.fromLocalDate(
+                    schedule?.toLocalDate() ?: getSchedule()?.toLocalDate()
+                )
+            )
+            _isNameTaken.value = result.isNotEmpty()
+        }
 
     fun getID(): String? {
         return getEvent()?.eventID
@@ -68,6 +75,7 @@ class EventEditorViewModel @Inject constructor(
     fun getName(): String? {
         return getEvent()?.name
     }
+
     fun setName(name: String?) {
         // Check if the same value is being set
         if (name == getName())
@@ -81,6 +89,7 @@ class EventEditorViewModel @Inject constructor(
     fun getSchedule(): ZonedDateTime? {
         return getEvent()?.schedule
     }
+
     fun setSchedule(schedule: ZonedDateTime?) {
         val event = getEvent()
         event?.schedule = schedule
@@ -90,6 +99,7 @@ class EventEditorViewModel @Inject constructor(
     fun getLocation(): String? {
         return getEvent()?.location
     }
+
     fun setLocation(location: String?) {
         // Check if the same value is being set
         if (location == getLocation())
@@ -103,6 +113,7 @@ class EventEditorViewModel @Inject constructor(
     fun getEventSubjectID(): String? {
         return getEvent()?.eventID
     }
+
     fun setEventSubjectID(id: String?) {
         val event = getEvent()
         event?.subject = id
@@ -112,6 +123,7 @@ class EventEditorViewModel @Inject constructor(
     fun getImportant(): Boolean {
         return getEvent()?.isImportant == true
     }
+
     fun setImportant(isImportant: Boolean) {
         val event = getEvent()
         event?.isImportant = isImportant
@@ -121,6 +133,7 @@ class EventEditorViewModel @Inject constructor(
     fun getNotes(): String? {
         return getEvent()?.notes
     }
+
     fun setNotes(notes: String) {
         if (notes == getNotes())
             return
@@ -135,7 +148,12 @@ class EventEditorViewModel @Inject constructor(
     }
 
     fun setClassScheduleAsDueDate(schedule: Schedule) {
-        setSchedule(schedule.startTime?.let { Schedule.getNearestDateTime(schedule.daysOfWeek, it) })
+        setSchedule(schedule.startTime?.let {
+            Schedule.getNearestDateTime(
+                schedule.daysOfWeek,
+                it
+            )
+        })
     }
 
     private fun getNextMeetingForSchedule(): ZonedDateTime? {
@@ -146,8 +164,10 @@ class EventEditorViewModel @Inject constructor(
         // with individual day of week values
         schedules.forEach {
             it.parseDaysOfWeek().forEach { day ->
-                val newSchedule = Schedule(startTime = it.startTime,
-                    endTime = it.endTime)
+                val newSchedule = Schedule(
+                    startTime = it.startTime,
+                    endTime = it.endTime
+                )
                 newSchedule.daysOfWeek = day
                 individualDates.add(newSchedule)
             }
@@ -155,17 +175,20 @@ class EventEditorViewModel @Inject constructor(
 
         // Map the schedule instances to
         // a ZonedDateTime instance
-        val dates = individualDates.map { it.startTime?.let { time -> Schedule.getNearestDateTime(it.daysOfWeek, time) } }
+        val dates = individualDates.map {
+            it.startTime?.let { time ->
+                Schedule.getNearestDateTime(
+                    it.daysOfWeek,
+                    time
+                )
+            }
+        }
         if (dates.isEmpty())
             return null
 
-        // Get the nearest date
-        var targetDate = dates[0]
-        dates.forEach {
-            if (currentDate.isAfter(it?.toLocalDate()) && targetDate?.isBefore(it) == true)
-                targetDate = it
-        }
-        return targetDate
+        return dates.singleOrNull {
+            currentDate.isAfter(it?.toLocalDate()) || currentDate.isEqual(it?.toLocalDate())
+        } ?: dates[0]
     }
 
     private fun fetchSchedulesFromDatabase(id: String) = viewModelScope.launch {

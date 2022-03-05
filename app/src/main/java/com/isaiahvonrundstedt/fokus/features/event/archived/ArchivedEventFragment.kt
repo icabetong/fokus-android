@@ -20,7 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArchivedEventFragment: BaseFragment(), BaseAdapter.SelectListener {
+class ArchivedEventFragment : BaseFragment(), BaseAdapter.SelectListener {
     private var _binding: FragmentArchivedEventBinding? = null
     private var controller: NavController? = null
 
@@ -28,8 +28,10 @@ class ArchivedEventFragment: BaseFragment(), BaseAdapter.SelectListener {
     private val viewModel: ArchivedEventViewModel by viewModels()
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentArchivedEventBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

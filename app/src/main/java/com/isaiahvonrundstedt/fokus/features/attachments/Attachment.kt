@@ -24,10 +24,14 @@ import java.util.*
 
 @Parcelize
 @JsonClass(generateAdapter = true)
-@Entity(tableName = "attachments", foreignKeys = [ForeignKey(entity = Task::class,
-    parentColumns = arrayOf("taskID"), childColumns = arrayOf("task"),
-    onDelete = ForeignKey.CASCADE)
-])
+@Entity(
+    tableName = "attachments", foreignKeys = [ForeignKey(
+        entity = Task::class,
+        parentColumns = arrayOf("taskID"), childColumns = arrayOf("task"),
+        onDelete = ForeignKey.CASCADE
+    )
+    ]
+)
 data class Attachment @JvmOverloads constructor(
     @PrimaryKey
     var attachmentID: String = UUID.randomUUID().toString(),
@@ -41,7 +45,7 @@ data class Attachment @JvmOverloads constructor(
 
     @DrawableRes
     fun getIconResource(): Int {
-        return when(type) {
+        return when (type) {
             TYPE_WEBSITE_LINK -> R.drawable.ic_hero_link_24
             else -> R.drawable.ic_hero_document_24
         }
@@ -53,7 +57,7 @@ data class Attachment @JvmOverloads constructor(
         const val TYPE_IMPORTED_FILE = 2
         const val TYPE_WEBSITE_LINK = 3
 
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<Attachment>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Attachment>() {
             override fun areItemsTheSame(oldItem: Attachment, newItem: Attachment): Boolean {
                 return oldItem.attachmentID == newItem.attachmentID
             }
@@ -76,7 +80,11 @@ data class Attachment @JvmOverloads constructor(
             return File(context?.getExternalFilesDir(null), Streamable.DIRECTORY_ATTACHMENTS)
         }
 
-        fun toJsonFile(items: List<Attachment>, destination: File, name: String = Streamable.FILE_NAME_ATTACHMENT): File {
+        fun toJsonFile(
+            items: List<Attachment>,
+            destination: File,
+            name: String = Streamable.FILE_NAME_ATTACHMENT
+        ): File {
             return File(destination, name).apply {
                 this.sink().buffer().use {
                     JsonDataStreamer.encodeToJson(items, Attachment::class.java)?.also { json ->

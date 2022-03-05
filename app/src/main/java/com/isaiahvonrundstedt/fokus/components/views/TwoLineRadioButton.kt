@@ -14,7 +14,7 @@ class TwoLineRadioButton @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = R.attr.radioButtonStyle
-): RadioButtonCompat(context, attributeSet, defStyleAttr) {
+) : RadioButtonCompat(context, attributeSet, defStyleAttr) {
 
     private val titleSpan: TextAppearanceSpan
     private val subtitleSpan: TextAppearanceSpan
@@ -57,10 +57,14 @@ class TwoLineRadioButton @JvmOverloads constructor(
             title = typedArray.getString(R.styleable.TwoLineRadioButton_titleText) ?: ""
             subtitle = typedArray.getString(R.styleable.TwoLineRadioButton_subtitleText)
 
-            titleTextColor = typedArray.getColor(R.styleable.TwoLineRadioButton_titleTextColor,
-                titleTextColor)
-            subtitleTextColor = typedArray.getColor(R.styleable.TwoLineRadioButton_subtitleTextColor,
-                subtitleTextColor)
+            titleTextColor = typedArray.getColor(
+                R.styleable.TwoLineRadioButton_titleTextColor,
+                titleTextColor
+            )
+            subtitleTextColor = typedArray.getColor(
+                R.styleable.TwoLineRadioButton_subtitleTextColor,
+                subtitleTextColor
+            )
 
             val titleTextAppearance = typedArray.getResourceId(
                 R.styleable.TwoLineRadioButton_titleTextAppearance,
@@ -88,20 +92,28 @@ class TwoLineRadioButton @JvmOverloads constructor(
         subtitleTextColorSpan = ForegroundColorSpan(subtitleTextColor)
 
         val textToRender = if (subtitle.isNullOrEmpty()) title
-            else "$title\n$subtitle"
+        else "$title\n$subtitle"
 
         val builder = SpannableStringBuilder(textToRender).apply {
-            setSpan(titleSpan, 0, title.length,
-                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
-            setSpan(titleTextColorSpan, 0, title.length,
-                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+            setSpan(
+                titleSpan, 0, title.length,
+                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+            )
+            setSpan(
+                titleTextColorSpan, 0, title.length,
+                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+            )
 
             subtitle?.also {
                 if (it.isNotEmpty()) {
-                    setSpan(subtitleSpan, title.length,
-                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
-                    setSpan(subtitleTextColorSpan, title.length,
-                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE)
+                    setSpan(
+                        subtitleSpan, title.length,
+                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                    )
+                    setSpan(
+                        subtitleTextColorSpan, title.length,
+                        title.length + it.length + 1, SpannableString.SPAN_EXCLUSIVE_INCLUSIVE
+                    )
                 }
             }
         }

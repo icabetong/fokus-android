@@ -41,7 +41,7 @@ class SettingsActivity : BaseActivity() {
     }
 
     companion object {
-        class SettingsFragment: BasePreference() {
+        class SettingsFragment : BasePreference() {
 
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
                 setPreferencesFromResource(R.xml.xml_settings_main, rootKey)
@@ -105,8 +105,14 @@ class SettingsActivity : BaseActivity() {
                         scheduleWorker(ClassNotificationScheduler::class.java)
                     }
 
-                setPreferenceSummary(PreferenceManager.PREFERENCE_REMINDER_TIME,
-                    preferences.reminderTime?.format(DateTimeConverter.getTimeFormatter(requireContext())))
+                setPreferenceSummary(
+                    PreferenceManager.PREFERENCE_REMINDER_TIME,
+                    preferences.reminderTime?.format(
+                        DateTimeConverter.getTimeFormatter(
+                            requireContext()
+                        )
+                    )
+                )
                 findPreference<Preference>(PreferenceManager.PREFERENCE_REMINDER_TIME)
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
@@ -150,15 +156,18 @@ class SettingsActivity : BaseActivity() {
 
                 findPreference<Preference>(PreferenceManager.PREFERENCE_BATTERY_OPTIMIZATION)
                     ?.setOnPreferenceClickListener {
-                        val manufacturerArray = resources.getStringArray(R.array.oem_battery_optimization)
+                        val manufacturerArray =
+                            resources.getStringArray(R.array.oem_battery_optimization)
 
                         var manufacturer = Build.MANUFACTURER.toLowerCase(Locale.getDefault())
                         if (!manufacturerArray.contains(manufacturer))
                             manufacturer = "generic"
 
                         CustomTabsIntent.Builder().build()
-                            .launchUrl(requireContext(),
-                                Uri.parse(SETTINGS_URL_BATTERY_OPTIMIZATION + manufacturer))
+                            .launchUrl(
+                                requireContext(),
+                                Uri.parse(SETTINGS_URL_BATTERY_OPTIMIZATION + manufacturer)
+                            )
 
                         true
                     }
@@ -178,17 +187,19 @@ class SettingsActivity : BaseActivity() {
                 }
             }
 
-            private fun <T: BaseWorker> cancelWorker(worker: Class<T>): Boolean {
+            private fun <T : BaseWorker> cancelWorker(worker: Class<T>): Boolean {
                 try {
                     WorkManager.getInstance(requireContext())
                         .cancelAllWorkByTag(worker.simpleName)
 
                     return true
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 return false
             }
 
-            private fun <T: BaseWorker> scheduleWorker(worker: Class<T>): Boolean {
+            private fun <T : BaseWorker> scheduleWorker(worker: Class<T>): Boolean {
                 try {
                     val request = OneTimeWorkRequest.Builder(worker)
                         .addTag(worker.simpleName)
@@ -198,7 +209,9 @@ class SettingsActivity : BaseActivity() {
                         .enqueue(request)
 
                     return true
-                } catch (e: Exception) { e.printStackTrace() }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 return false
             }
 

@@ -16,10 +16,10 @@ data class EventPackage @JvmOverloads constructor(
     var event: Event,
     @Embedded
     var subject: Subject? = null
-): Parcelable {
+) : Parcelable {
 
     companion object {
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<EventPackage>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EventPackage>() {
             override fun areItemsTheSame(oldItem: EventPackage, newItem: EventPackage): Boolean {
                 return oldItem.event.eventID == newItem.event.eventID
             }

@@ -21,10 +21,10 @@ data class TaskPackage @JvmOverloads constructor(
     var subject: Subject? = null,
     @Relation(entity = Attachment::class, parentColumn = "taskID", entityColumn = "task")
     var attachments: List<Attachment> = emptyList()
-): Parcelable {
+) : Parcelable {
 
     companion object {
-        val DIFF_CALLBACK = object: DiffUtil.ItemCallback<TaskPackage>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TaskPackage>() {
             override fun areItemsTheSame(oldItem: TaskPackage, newItem: TaskPackage): Boolean {
                 return oldItem.task.taskID == newItem.task.taskID
             }

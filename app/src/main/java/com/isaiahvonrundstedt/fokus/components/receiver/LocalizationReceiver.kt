@@ -16,14 +16,22 @@ class LocalizationReceiver : BroadcastReceiver() {
         if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 with(NotificationChannelManager(context!!)) {
-                    register(NotificationChannelManager.CHANNEL_ID_GENERIC,
-                        NotificationManager.IMPORTANCE_DEFAULT)
-                    register(NotificationChannelManager.CHANNEL_ID_TASK,
-                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
-                    register(NotificationChannelManager.CHANNEL_ID_EVENT,
-                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
-                    register(NotificationChannelManager.CHANNEL_ID_CLASS,
-                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS)
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_GENERIC,
+                        NotificationManager.IMPORTANCE_DEFAULT
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_TASK,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_EVENT,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_CLASS,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
                 }
             }
         }

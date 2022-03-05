@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.databinding.ActivityNoticesBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 
-class NoticesActivity: BaseActivity() {
+class NoticesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityNoticesBinding
 
@@ -26,10 +26,11 @@ class NoticesActivity: BaseActivity() {
     companion object {
 
         const val URL_LAUNCHER_ICON_BASE = "https://flaticon.com/authors/freepik"
-        const val URL_NOTIFICATION_SOUND = "https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/"
+        const val URL_NOTIFICATION_SOUND =
+            "https://www.zapsplat.com/music/ui-alert-prompt-warm-wooden-mallet-style-notification-tone-generic-11/"
         const val URL_USER_INTERFACE_ICONS = "https://heroicons.dev"
 
-        class NoticesFragment: BasePreference() {
+        class NoticesFragment : BasePreference() {
 
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
                 setPreferencesFromResource(R.xml.xml_about_notices, rootKey)

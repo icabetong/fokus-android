@@ -16,14 +16,17 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemTaskBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
-class TaskAdapter(private val actionListener: ActionListener,
-                  private val statusListener: TaskStatusListener,
-                  private val archiveListener: ArchiveListener)
-    : BaseAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK), Swipeable {
+class TaskAdapter(
+    private val actionListener: ActionListener,
+    private val statusListener: TaskStatusListener,
+    private val archiveListener: ArchiveListener
+) : BaseAdapter<TaskPackage, TaskAdapter.TaskViewHolder>(TaskPackage.DIFF_CALLBACK), Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = LayoutItemTaskBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemTaskBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return TaskViewHolder(binding.root, actionListener, statusListener)
     }
 
@@ -32,10 +35,12 @@ class TaskAdapter(private val actionListener: ActionListener,
     }
 
     override fun onSwipe(position: Int, direction: Int) {
-        when(direction) {
+        when (direction) {
             ItemTouchHelper.START -> {
-                actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                    null)
+                actionListener.onActionPerformed(
+                    getItem(position), ActionListener.Action.DELETE,
+                    null
+                )
             }
             ItemTouchHelper.END -> {
                 archiveListener.onItemArchive(getItem(position))
@@ -43,10 +48,11 @@ class TaskAdapter(private val actionListener: ActionListener,
         }
     }
 
-    class TaskViewHolder(itemView: View,
+    class TaskViewHolder(
+        itemView: View,
         private val actionListener: ActionListener,
         private val statusListener: TaskStatusListener
-    ): BaseViewHolder(itemView) {
+    ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemTaskBinding.bind(itemView)
 
         override fun <T> onBind(data: T) {
@@ -71,7 +77,11 @@ class TaskAdapter(private val actionListener: ActionListener,
                 if (data.subject != null) {
                     with(binding.subjectView) {
                         text = data.subject?.code
-                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        setCompoundDrawableAtStart(
+                            data.subject?.tintDrawable(
+                                getCompoundDrawableAtStart()
+                            )
+                        )
                     }
                 } else binding.subjectView.isVisible = false
 

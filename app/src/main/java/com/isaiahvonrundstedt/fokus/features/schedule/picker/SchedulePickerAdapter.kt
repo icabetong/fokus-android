@@ -8,8 +8,8 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import java.time.DayOfWeek
 
-class SchedulePickerAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
+class SchedulePickerAdapter(private val actionListener: ActionListener) :
+    BaseAdapter<Schedule, SchedulePickerAdapter.ViewHolder>(Schedule.DIFF_CALLBACK) {
 
     private val itemList = mutableListOf<Schedule>()
 
@@ -18,8 +18,10 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
         items.forEach {
             it.parseDaysOfWeek().forEach { day ->
                 if (day <= DayOfWeek.SUNDAY.value) {
-                    val newSchedule = Schedule(startTime = it.startTime,
-                        endTime = it.endTime)
+                    val newSchedule = Schedule(
+                        startTime = it.startTime,
+                        endTime = it.endTime
+                    )
                     newSchedule.daysOfWeek = day
                     itemList.add(newSchedule)
                 }
@@ -29,8 +31,10 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LayoutItemScheduleBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemScheduleBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ViewHolder(binding.root)
     }
 
@@ -38,13 +42,14 @@ class SchedulePickerAdapter(private val actionListener: ActionListener)
         holder.onBind(getItem(position))
     }
 
-    inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         private val binding = LayoutItemScheduleBinding.bind(itemView)
 
         override fun <T> onBind(t: T) {
             if (t is Schedule) {
-                binding.titleView.text = binding.root.context.getString(t.getStringResourceForDay(t.daysOfWeek))
+                binding.titleView.text =
+                    binding.root.context.getString(t.getStringResourceForDay(t.daysOfWeek))
                 binding.summaryView.text = t.formatBothTime(binding.root.context)
             }
 

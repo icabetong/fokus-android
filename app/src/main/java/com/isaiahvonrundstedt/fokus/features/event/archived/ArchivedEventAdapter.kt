@@ -11,12 +11,14 @@ import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
-class ArchivedEventAdapter(private val listener: SelectListener):
+class ArchivedEventAdapter(private val listener: SelectListener) :
     BaseAdapter<EventPackage, ArchivedEventAdapter.ArchivedEventViewHolder>(EventPackage.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArchivedEventViewHolder {
-        val binding = LayoutItemArchivedEventBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemArchivedEventBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ArchivedEventViewHolder(binding.root, listener)
     }
 
@@ -24,9 +26,10 @@ class ArchivedEventAdapter(private val listener: SelectListener):
         holder.onBind(getItem(position))
     }
 
-    class ArchivedEventViewHolder(itemView: View,
-              private val listener: SelectListener
-      ) : BaseViewHolder(itemView) {
+    class ArchivedEventViewHolder(
+        itemView: View,
+        private val listener: SelectListener
+    ) : BaseViewHolder(itemView) {
         private val binding = LayoutItemArchivedEventBinding.bind(itemView)
 
         override fun <T> onBind(data: T) {
@@ -46,7 +49,11 @@ class ArchivedEventAdapter(private val listener: SelectListener):
                 if (data.subject != null) {
                     with(binding.subjectView) {
                         text = data.subject?.code
-                        setCompoundDrawableAtStart(data.subject?.tintDrawable(getCompoundDrawableAtStart()))
+                        setCompoundDrawableAtStart(
+                            data.subject?.tintDrawable(
+                                getCompoundDrawableAtStart()
+                            )
+                        )
                     }
                 } else binding.subjectView.isVisible = false
             }

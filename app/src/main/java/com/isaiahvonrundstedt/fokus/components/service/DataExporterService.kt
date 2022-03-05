@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import java.io.File
 
-class DataExporterService: BaseService() {
+class DataExporterService : BaseService() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -40,11 +40,14 @@ class DataExporterService: BaseService() {
         try {
             when (intent?.action) {
                 ACTION_EXPORT_SUBJECT -> {
-                    items.add(Metadata(data = Metadata.DATA_SUBJECT)
-                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
+                    items.add(
+                        Metadata(data = Metadata.DATA_SUBJECT)
+                            .toJsonFile(cacheDir, Metadata.FILE_NAME)
+                    )
 
                     val subject: Subject? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
-                    val schedules: List<Schedule>? = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS)
+                    val schedules: List<Schedule>? =
+                        intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS)
 
                     if (subject != null) {
                         fileName = subject.code ?: Streamable.ARCHIVE_NAME_GENERIC
@@ -54,8 +57,10 @@ class DataExporterService: BaseService() {
 
                 }
                 ACTION_EXPORT_TASK -> {
-                    items.add(Metadata(data = Metadata.DATA_TASK)
-                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
+                    items.add(
+                        Metadata(data = Metadata.DATA_TASK)
+                            .toJsonFile(cacheDir, Metadata.FILE_NAME)
+                    )
 
                     val task: Task? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
                     if (task != null) {
@@ -63,14 +68,17 @@ class DataExporterService: BaseService() {
                         items.add(task.toJsonFile(cacheDir, Streamable.FILE_NAME_TASK))
                     }
 
-                    var attachments: List<Attachment> = intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS) ?: emptyList()
+                    var attachments: List<Attachment> =
+                        intent.getParcelableListExtra(EXTRA_EXPORT_DEPENDENTS) ?: emptyList()
                     attachments = attachments.filter { it.type == Attachment.TYPE_WEBSITE_LINK }
                     items.add(Attachment.toJsonFile(attachments, cacheDir))
                 }
                 ACTION_EXPORT_EVENT -> {
 
-                    items.add(Metadata(data = Metadata.DATA_EVENT)
-                        .toJsonFile(cacheDir, Metadata.FILE_NAME))
+                    items.add(
+                        Metadata(data = Metadata.DATA_EVENT)
+                            .toJsonFile(cacheDir, Metadata.FILE_NAME)
+                    )
 
                     val event: Event? = intent.getParcelableExtra(EXTRA_EXPORT_SOURCE)
 
@@ -98,7 +106,9 @@ class DataExporterService: BaseService() {
 
                 terminateService(BROADCAST_EXPORT_COMPLETED)
             }
-        } catch (e: Exception) { terminateService(BROADCAST_EXPORT_FAILED) }
+        } catch (e: Exception) {
+            terminateService(BROADCAST_EXPORT_FAILED)
+        }
     }
 
     companion object {

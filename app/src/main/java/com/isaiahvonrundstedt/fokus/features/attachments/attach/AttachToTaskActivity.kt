@@ -14,7 +14,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AttachToTaskActivity: BaseActivity(), BaseAdapter.SelectListener {
+class AttachToTaskActivity : BaseActivity(), BaseAdapter.SelectListener {
     private lateinit var binding: ActivityAttachToTaskBinding
 
     private val attachAdapter = AttachToTaskAdapter(this)

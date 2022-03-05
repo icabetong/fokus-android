@@ -43,8 +43,10 @@ class EventNotificationWorker @AssistedInject constructor(
         request.setInputData(convertLogToData(notification))
 
         if (notification.isImportant) {
-            workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-                request.build())
+            workManager.enqueueUniqueWork(
+                event.eventID, ExistingWorkPolicy.REPLACE,
+                request.build()
+            )
             return Result.success()
         }
 
@@ -59,11 +61,15 @@ class EventNotificationWorker @AssistedInject constructor(
         }
 
         if (executionTime?.isAfterNow() == true)
-            request.setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
-                TimeUnit.MINUTES)
+            request.setInitialDelay(
+                Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
+                TimeUnit.MINUTES
+            )
 
-        workManager.enqueueUniqueWork(event.eventID, ExistingWorkPolicy.REPLACE,
-            request.build())
+        workManager.enqueueUniqueWork(
+            event.eventID, ExistingWorkPolicy.REPLACE,
+            request.build()
+        )
 
         return Result.success()
     }

@@ -11,28 +11,36 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 
-class SubjectAdapter(private val actionListener: ActionListener,
-                     private val scheduleListener: ScheduleListener,
-                     private val archiveListener: ArchiveListener)
-    : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(SubjectPackage.DIFF_CALLBACK), Swipeable {
+class SubjectAdapter(
+    private val actionListener: ActionListener,
+    private val scheduleListener: ScheduleListener,
+    private val archiveListener: ArchiveListener
+) : BaseAdapter<SubjectPackage, BaseAdapter.BaseViewHolder>(SubjectPackage.DIFF_CALLBACK),
+    Swipeable {
 
     var constraint = SubjectViewModel.Constraint.TODAY
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             ITEM_TYPE_ALL_SCHEDULE -> {
-                val binding = LayoutItemSubjectBinding.inflate(LayoutInflater.from(parent.context),
-                    parent, false)
-                CoreViewHolder(binding.root, actionListener, scheduleListener, )
+                val binding = LayoutItemSubjectBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+                CoreViewHolder(binding.root, actionListener, scheduleListener)
             }
             ITEM_TYPE_SINGLE_SCHEDULE_TODAY -> {
-                val binding = LayoutItemSubjectSingleBinding.inflate(LayoutInflater.from(parent.context),
-                    parent, false)
+                val binding = LayoutItemSubjectSingleBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
                 TodayViewHolder(binding.root, actionListener)
             }
             ITEM_TYPE_SINGLE_SCHEDULE_TOMORROW -> {
-                val binding = LayoutItemSubjectSingleBinding.inflate(LayoutInflater.from(parent.context),
-                    parent, false)
+                val binding = LayoutItemSubjectSingleBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
                 TomorrowViewHolder(binding.root, actionListener)
             }
             else -> throw IllegalStateException("Unknown Item type")
@@ -53,13 +61,16 @@ class SubjectAdapter(private val actionListener: ActionListener,
 
     override fun onSwipe(position: Int, direction: Int) {
         if (direction == ItemTouchHelper.START)
-            actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE,
-                null)
+            actionListener.onActionPerformed(
+                getItem(position), ActionListener.Action.DELETE,
+                null
+            )
         else if (direction == ItemTouchHelper.END)
             archiveListener.onItemArchive(getItem(position))
     }
 
-    class CoreViewHolder(itemView: View,
+    class CoreViewHolder(
+        itemView: View,
         private val actionListener: ActionListener,
         private val scheduleListener: ScheduleListener
     ) : BaseViewHolder(itemView) {
@@ -86,9 +97,10 @@ class SubjectAdapter(private val actionListener: ActionListener,
         }
     }
 
-    class TodayViewHolder(itemView: View,
+    class TodayViewHolder(
+        itemView: View,
         private val actionListener: ActionListener
-    ): BaseViewHolder(itemView) {
+    ) : BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectSingleBinding.bind(itemView)
 
@@ -112,9 +124,10 @@ class SubjectAdapter(private val actionListener: ActionListener,
         }
     }
 
-    class TomorrowViewHolder(itemView: View,
+    class TomorrowViewHolder(
+        itemView: View,
         private val actionListener: ActionListener
-    ): BaseViewHolder(itemView) {
+    ) : BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectSingleBinding.bind(itemView)
 

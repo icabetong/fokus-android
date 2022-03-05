@@ -81,73 +81,86 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     private lateinit var exportLauncher: ActivityResultLauncher<Intent>
     private lateinit var importLauncher: ActivityResultLauncher<Intent>
 
-    @Inject lateinit var permissionManager: PermissionManager
-    @Inject lateinit var preferenceManager: PreferenceManager
+    @Inject
+    lateinit var permissionManager: PermissionManager
+
+    @Inject
+    lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = buildContainerTransform()
         sharedElementReturnTransition = buildContainerTransform()
 
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                triggerSystemFilePickerForAttachment()
-            } else {
-                MaterialDialog(requireContext()).show {
-                    lifecycleOwner(viewLifecycleOwner)
-                    title(R.string.dialog_permission_needed_title)
-                    message(R.string.dialog_permission_needed_summary)
-                    positiveButton(R.string.button_continue) {}
-                    negativeButton(R.string.button_cancel)
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (isGranted) {
+                    triggerSystemFilePickerForAttachment()
+                } else {
+                    MaterialDialog(requireContext()).show {
+                        lifecycleOwner(viewLifecycleOwner)
+                        title(R.string.dialog_permission_needed_title)
+                        message(R.string.dialog_permission_needed_summary)
+                        positiveButton(R.string.button_continue) {}
+                        negativeButton(R.string.button_cancel)
+                    }
                 }
             }
-        }
 
-        subjectLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
-                    ?.also {
-                        viewModel.setSubject(it.subject)
-                        viewModel.schedules = ArrayList(it.schedules)
-                    }
+        subjectLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    result.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
+                        ?.also {
+                            viewModel.setSubject(it.subject)
+                            viewModel.schedules = ArrayList(it.schedules)
+                        }
+                }
             }
-        }
 
-        attachmentLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val attachmentId = Attachment.generateId()
+        attachmentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    val attachmentId = Attachment.generateId()
 
-                context?.startService(Intent(context, FileImporterService::class.java).apply {
-                    action = FileImporterService.ACTION_START
-                    data = it.data?.data
-                    putExtra(FileImporterService.EXTRA_OBJECT_ID, attachmentId)
-                })
+                    context?.startService(Intent(context, FileImporterService::class.java).apply {
+                        action = FileImporterService.ACTION_START
+                        data = it.data?.data
+                        putExtra(FileImporterService.EXTRA_OBJECT_ID, attachmentId)
+                    })
+                }
             }
-        }
 
-        exportLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                context?.startService(Intent(context, DataExporterService::class.java).apply {
-                    this.data = it.data?.data
-                    action = DataExporterService.ACTION_EXPORT_TASK
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getTask())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS, viewModel.getAttachments())
-                })
+        exportLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    context?.startService(Intent(context, DataExporterService::class.java).apply {
+                        this.data = it.data?.data
+                        action = DataExporterService.ACTION_EXPORT_TASK
+                        putExtra(DataExporterService.EXTRA_EXPORT_SOURCE, viewModel.getTask())
+                        putExtra(
+                            DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                            viewModel.getAttachments()
+                        )
+                    })
+                }
             }
-        }
 
-        importLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                context?.startService(Intent(context, DataImporterService::class.java).apply {
-                    this.data = it.data?.data
-                    action = DataImporterService.ACTION_IMPORT_TASK
-                })
+        importLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    context?.startService(Intent(context, DataImporterService::class.java).apply {
+                        this.data = it.data?.data
+                        action = DataImporterService.ACTION_IMPORT_TASK
+                    })
+                }
             }
-        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = EditorTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -190,9 +203,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             adapter = attachmentAdapter
         }
 
-        registerForFragmentResult(arrayOf(
+        registerForFragmentResult(
+            arrayOf(
                 SchedulePickerSheet.REQUEST_KEY,
-                AttachmentOptionSheet.REQUEST_KEY), this)
+                AttachmentOptionSheet.REQUEST_KEY
+            ), this
+        )
     }
 
     private val dialogView: View by lazy {
@@ -242,8 +258,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                 with(binding.subjectTextView) {
                     text = it.code
                     setTextColorFromResource(R.color.color_primary_text)
-                    setCompoundDrawableAtStart(ContextCompat.getDrawable(context,
-                        R.drawable.shape_color_holder)?.let { shape -> it.tintDrawable(shape) })
+                    setCompoundDrawableAtStart(ContextCompat.getDrawable(
+                        context,
+                        R.drawable.shape_color_holder
+                    )?.let { shape -> it.tintDrawable(shape) })
                 }
 
                 if (viewModel.getDueDate() != null) {
@@ -301,8 +319,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         binding.dueDateTextView.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
-                dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getDueDate()?.toCalendar()) { _, datetime ->
+                dateTimePicker(
+                    requireFutureDateTime = true,
+                    currentDateTime = viewModel.getDueDate()?.toCalendar()
+                ) { _, datetime ->
                     viewModel.setDueDate(datetime.toZonedDateTime())
                     binding.removeDueDateButton.isVisible = true
                 }
@@ -320,8 +340,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
             binding.removeDueDateButton.isVisible = false
             binding.dueDateTextView.setText(R.string.field_not_set)
-            binding.dueDateTextView.setTextColor(ContextCompat.getColor(it.context,
-                R.color.color_secondary_text))
+            binding.dueDateTextView.setTextColor(
+                ContextCompat.getColor(
+                    it.context,
+                    R.color.color_secondary_text
+                )
+            )
         }
 
         binding.subjectTextView.setOnClickListener {
@@ -330,8 +354,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
         binding.removeButton.setOnClickListener {
             binding.dueDateTextView.setText(R.string.field_not_set)
-            binding.dueDateTextView.setTextColor(ContextCompat.getColor(it.context,
-                R.color.color_secondary_text))
+            binding.dueDateTextView.setTextColor(
+                ContextCompat.getColor(
+                    it.context,
+                    R.color.color_secondary_text
+                )
+            )
             binding.subjectTextView.startAnimation(animation)
 
             it.isVisible = false
@@ -343,12 +371,18 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         binding.dateTimeRadioGroup.setOnCheckedChangeListener { radioGroup, _ ->
             for (v: View in radioGroup.children) {
                 if (v is TwoLineRadioButton && !v.isChecked) {
-                    v.titleTextColor = ContextCompat.getColor(v.context,
-                        R.color.color_secondary_text)
+                    v.titleTextColor = ContextCompat.getColor(
+                        v.context,
+                        R.color.color_secondary_text
+                    )
                     v.subtitle = null
                 } else if (v is RadioButtonCompat && !v.isChecked) {
-                    v.setTextColor(ContextCompat.getColor(v.context,
-                        R.color.color_secondary_text))
+                    v.setTextColor(
+                        ContextCompat.getColor(
+                            v.context,
+                            R.color.color_secondary_text
+                        )
+                    )
                 }
             }
         }
@@ -364,8 +398,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         binding.noDueRadioButton.setOnClickListener {
             viewModel.setDueDate(null)
             binding.dueDateTextView.setText(R.string.field_not_set)
-            (it as RadioButtonCompat).setTextColor(ContextCompat.getColor(it.context,
-                R.color.color_primary_text))
+            (it as RadioButtonCompat).setTextColor(
+                ContextCompat.getColor(
+                    it.context,
+                    R.color.color_primary_text
+                )
+            )
         }
 
         binding.inNextMeetingRadio.setOnClickListener {
@@ -386,14 +424,18 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         binding.customDateTimeRadio.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 lifecycleOwner(viewLifecycleOwner)
-                dateTimePicker(requireFutureDateTime = true,
-                    currentDateTime = viewModel.getDueDate()?.toCalendar()) { _, datetime ->
+                dateTimePicker(
+                    requireFutureDateTime = true,
+                    currentDateTime = viewModel.getDueDate()?.toCalendar()
+                ) { _, datetime ->
                     viewModel.setDueDate(datetime.toZonedDateTime())
                 }
                 positiveButton(R.string.button_done) {
                     with(binding.customDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
+                        titleTextColor = ContextCompat.getColor(
+                            context,
+                            R.color.color_primary_text
+                        )
                         subtitle = viewModel.getTask()?.formatDueDate(context)
                     }
                 }
@@ -429,8 +471,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     }
 
     private fun triggerSystemFilePickerForAttachment() {
-        attachmentLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT)
-            .setType("*/*"))
+        attachmentLauncher.launch(
+            Intent(Intent.ACTION_OPEN_DOCUMENT)
+                .setType("*/*")
+        )
     }
 
     override fun onStop() {
@@ -457,29 +501,36 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         })
     }
 
-    private var receiver = object: BroadcastReceiver() {
+    private var receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == BaseService.ACTION_SERVICE_BROADCAST) {
                 when (intent.getStringExtra(BaseService.EXTRA_BROADCAST_STATUS)) {
                     FileImporterService.BROADCAST_IMPORT_ONGOING -> {
-                        createSnackbar(R.string.feedback_import_ongoing, binding.root,
-                            Snackbar.LENGTH_INDEFINITE)
+                        createSnackbar(
+                            R.string.feedback_import_ongoing, binding.root,
+                            Snackbar.LENGTH_INDEFINITE
+                        )
                     }
                     FileImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
                         if (intent.hasExtra(BaseService.EXTRA_BROADCAST_DATA) &&
-                                intent.hasExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)) {
+                            intent.hasExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)
+                        ) {
 
                             val id = intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)
-                            val name = intent.getStringExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)
+                            val name =
+                                intent.getStringExtra(FileImporterService.EXTRA_BROADCAST_EXTRA)
 
                             val extension = File(name!!).extension
 
                             val attachment = Attachment(
                                 attachmentID = id!!,
                                 name = name,
-                                target = File(Attachment.getTargetDirectory(context), "${id}.${extension}").name,
+                                target = File(
+                                    Attachment.getTargetDirectory(context),
+                                    "${id}.${extension}"
+                                ).name,
                                 type = Attachment.TYPE_IMPORTED_FILE,
                                 task = viewModel.getID()!!
                             )
@@ -487,7 +538,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                             viewModel.addAttachment(attachment)
 
                             binding.appBarLayout.toolbar
-                                .menu?.findItem(R.id.action_share_options)?.isVisible = !viewModel.hasFileAttachment()
+                                .menu?.findItem(R.id.action_share_options)?.isVisible =
+                                !viewModel.hasFileAttachment()
                         }
                     }
                     FileImporterService.BROADCAST_IMPORT_FAILED -> {
@@ -502,11 +554,13 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
                             val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
 
-                            startActivity(ShareCompat.IntentBuilder.from(requireActivity())
-                                .addStream(uri)
-                                .setType(Streamable.MIME_TYPE_ZIP)
-                                .setChooserTitle(R.string.dialog_send_to)
-                                .intent)
+                            startActivity(
+                                ShareCompat.IntentBuilder.from(requireActivity())
+                                    .addStream(uri)
+                                    .setType(Streamable.MIME_TYPE_ZIP)
+                                    .setChooserTitle(R.string.dialog_send_to)
+                                    .intent
+                            )
                         }
                     }
                     DataExporterService.BROADCAST_EXPORT_FAILED -> {
@@ -518,10 +572,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                     DataImporterService.BROADCAST_IMPORT_COMPLETED -> {
                         createSnackbar(R.string.feedback_import_completed, binding.root)
 
-                        intent.getParcelableExtra<TaskPackage>(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            viewModel.setTask(it.task)
-                            viewModel.setAttachments(ArrayList(it.attachments))
-                        }
+                        intent.getParcelableExtra<TaskPackage>(BaseService.EXTRA_BROADCAST_DATA)
+                            ?.also {
+                                viewModel.setTask(it.task)
+                                viewModel.setAttachments(ArrayList(it.attachments))
+                            }
                     }
                     DataImporterService.BROADCAST_IMPORT_FAILED -> {
                         createSnackbar(R.string.feedback_import_failed, binding.root)
@@ -571,10 +626,14 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                  */
                 context?.startService(Intent(context, DataExporterService::class.java).apply {
                     action = DataExporterService.ACTION_EXPORT_TASK
-                    putExtra(DataExporterService.EXTRA_EXPORT_SOURCE,
-                        viewModel.getTask())
-                    putExtra(DataExporterService.EXTRA_EXPORT_DEPENDENTS,
-                        viewModel.getAttachments())
+                    putExtra(
+                        DataExporterService.EXTRA_EXPORT_SOURCE,
+                        viewModel.getTask()
+                    )
+                    putExtra(
+                        DataExporterService.EXTRA_EXPORT_DEPENDENTS,
+                        viewModel.getAttachments()
+                    )
                 })
             }
             R.id.action_import -> {
@@ -589,14 +648,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
-        when(requestKey) {
+        when (requestKey) {
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)
 
                     with(binding.pickDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(context,
-                            R.color.color_primary_text)
+                        titleTextColor = ContextCompat.getColor(
+                            context,
+                            R.color.color_primary_text
+                        )
                         subtitle = viewModel.getTask()?.formatDueDate(context)
                     }
                 }
@@ -648,9 +709,11 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
                                     if (webLink.startsWith("https://") ||
                                         webLink.startsWith("http://") ||
-                                        webLink.startsWith("www")) {
+                                        webLink.startsWith("www")
+                                    ) {
 
-                                        val binding = LayoutDialogInputAttachmentBinding.bind(it.view)
+                                        val binding =
+                                            LayoutDialogInputAttachmentBinding.bind(it.view)
                                         binding.editText.setText(webLink)
                                     }
                                 }
@@ -663,8 +726,10 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is Attachment) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
@@ -676,8 +741,12 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
 
                     MaterialDialog(requireContext()).show {
                         lifecycleOwner(viewLifecycleOwner)
-                        title(text = String.format(getString(R.string.dialog_confirm_deletion_title),
-                            t.name))
+                        title(
+                            text = String.format(
+                                getString(R.string.dialog_confirm_deletion_title),
+                                t.name
+                            )
+                        )
                         message(R.string.dialog_confirm_deletion_summary)
                         positiveButton(R.string.button_delete) {
 
@@ -700,7 +769,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     // will open the uri of the attachment if the user clicks
     // on the attachment item
     private fun onParseForIntent(attachment: Attachment) {
-        when(attachment.type) {
+        when (attachment.type) {
             Attachment.TYPE_CONTENT_URI -> {
                 val targetUri: Uri = Uri.parse(attachment.target)
 
@@ -719,11 +788,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                         ImageViewer.show(childFragmentManager, file.path, attachment.name)
                     }
                     else -> {
-                        val targetUri = CoreApplication.obtainUriForFile(requireContext(),
-                            file)
+                        val targetUri = CoreApplication.obtainUriForFile(
+                            requireContext(),
+                            file
+                        )
 
                         val intent = Intent(Intent.ACTION_VIEW)
-                            .setDataAndType(targetUri, requireContext().contentResolver?.getType(targetUri))
+                            .setDataAndType(
+                                targetUri,
+                                requireContext().contentResolver?.getType(targetUri)
+                            )
                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
                         if (intent.resolveActivity(context?.packageManager!!) != null)
@@ -734,7 +808,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
             Attachment.TYPE_WEBSITE_LINK -> {
                 var targetPath: String? = attachment.target
                 if (attachment.target?.startsWith("http://") != true
-                    && attachment.target?.startsWith("https://") != true)
+                    && attachment.target?.startsWith("https://") != true
+                )
                     targetPath = "http://$targetPath"
 
                 val targetUri: Uri = Uri.parse(targetPath)
@@ -755,7 +830,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         return when (requestKey) {
             REQUEST_KEY_INSERT -> {
                 if (viewModel.getName()?.isEmpty() == true
-                    || viewModel.getDueDate() == null) {
+                    || viewModel.getDueDate() == null
+                ) {
                     return null
                 }
 

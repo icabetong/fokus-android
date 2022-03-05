@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseEditor: BaseFragment() {
+abstract class BaseEditor : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
@@ -78,7 +78,8 @@ abstract class BaseEditor: BaseFragment() {
                 )
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                 decorView.run {
-                    systemUiVisibility = systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    systemUiVisibility =
+                        systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
                 }
             } else return
         }

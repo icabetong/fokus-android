@@ -15,7 +15,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 
-class LibrariesActivity: BaseActivity() {
+class LibrariesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLibrariesBinding
 
@@ -32,13 +32,15 @@ class LibrariesActivity: BaseActivity() {
         }
     }
 
-    class LibraryAdapter(private val itemList: List<Library>)
-        : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
+    class LibraryAdapter(private val itemList: List<Library>) :
+        RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
-            val rowView: View = LayoutInflater.from(parent.context).inflate(R.layout.layout_item_library,
-                parent, false)
+            val rowView: View = LayoutInflater.from(parent.context).inflate(
+                R.layout.layout_item_library,
+                parent, false
+            )
             return LibraryViewHolder(rowView)
         }
 
@@ -48,7 +50,7 @@ class LibrariesActivity: BaseActivity() {
 
         override fun getItemCount(): Int = itemList.size
 
-        class LibraryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        class LibraryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             private val binding = LayoutItemLibraryBinding.bind(itemView)
 
@@ -67,7 +69,10 @@ class LibrariesActivity: BaseActivity() {
                     binding.licenseNameTextView.text = license.licenseName
                     binding.licenseDescriptionTextView.text =
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            Html.fromHtml(license.licenseShortDescription, Html.FROM_HTML_MODE_COMPACT)
+                            Html.fromHtml(
+                                license.licenseShortDescription,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
                         else Html.fromHtml(license.licenseShortDescription)
                 } else {
                     binding.licenseNameTextView.visibility = View.GONE

@@ -11,13 +11,15 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutViewerImageBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewer
 import java.io.File
 
-class ImageViewer(manager: FragmentManager): BaseViewer(manager) {
+class ImageViewer(manager: FragmentManager) : BaseViewer(manager) {
     private var _binding: LayoutViewerImageBinding? = null
 
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = LayoutViewerImageBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.interfaces.Swipeable
 
-class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
-    : ItemTouchHelper.Callback() {
+class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T) :
+    ItemTouchHelper.Callback() {
 
     private var isThemeDark: Boolean = false
     private var iconDelete = ContextCompat.getDrawable(context, R.drawable.ic_hero_trash_24)
@@ -38,13 +38,17 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
         backgroundArchive = ColorDrawable(colorArchive)
     }
 
-    override fun getMovementFlags(recyclerView: RecyclerView,
-                                  viewHolder: RecyclerView.ViewHolder): Int {
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
         return makeMovementFlags(0, ItemTouchHelper.START or ItemTouchHelper.END)
     }
 
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder): Boolean = false
+    override fun onMove(
+        recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ): Boolean = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         adapter.onSwipe(viewHolder.bindingAdapterPosition, direction)
@@ -54,9 +58,11 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
         return defaultValue * 10
     }
 
-    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView,
-                             viewHolder: RecyclerView.ViewHolder,
-                             dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+    override fun onChildDraw(
+        c: Canvas, recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+    ) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
         val itemView: View = viewHolder.itemView
@@ -64,8 +70,10 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
 
         if (dX > 0) {
             with(backgroundArchive) {
-                setBounds(itemView.left, itemView.top,
-                    itemView.left + dX.toInt() + backgroundCornerOffset, itemView.bottom)
+                setBounds(
+                    itemView.left, itemView.top,
+                    itemView.left + dX.toInt() + backgroundCornerOffset, itemView.bottom
+                )
                 draw(c)
             }
 
@@ -89,8 +97,10 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
             }
         } else if (dX < 0) {
             with(backgroundDelete) {
-                setBounds(itemView.right + dX.toInt() - backgroundCornerOffset, itemView.top,
-                    itemView.right, itemView.bottom)
+                setBounds(
+                    itemView.right + dX.toInt() - backgroundCornerOffset, itemView.top,
+                    itemView.right, itemView.bottom
+                )
                 draw(c)
             }
 

@@ -10,28 +10,25 @@ import java.io.InputStream
 import java.time.LocalTime
 import java.time.ZonedDateTime
 
-class JsonDataStreamer private constructor () {
+class JsonDataStreamer private constructor() {
 
     class DateTimeAdapter {
 
         @FromJson
-        fun toDateTime(string: String): ZonedDateTime?
-            = DateTimeConverter.toZonedDateTime(string)
+        fun toDateTime(string: String): ZonedDateTime? = DateTimeConverter.toZonedDateTime(string)
 
         @ToJson
-        fun fromDateTime(dateTime: ZonedDateTime): String?
-            = DateTimeConverter.fromZonedDateTime(dateTime)
+        fun fromDateTime(dateTime: ZonedDateTime): String? =
+            DateTimeConverter.fromZonedDateTime(dateTime)
     }
 
     class LocalTimeAdapter {
 
         @FromJson
-        fun toLocalTime(string: String): LocalTime?
-                = DateTimeConverter.toLocalTime(string)
+        fun toLocalTime(string: String): LocalTime? = DateTimeConverter.toLocalTime(string)
 
         @ToJson
-        fun fromLocalTime(time: LocalTime): String?
-                = DateTimeConverter.fromLocalTime(time)
+        fun fromLocalTime(time: LocalTime): String? = DateTimeConverter.fromLocalTime(time)
     }
 
     class UriAdapter {

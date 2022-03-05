@@ -28,8 +28,10 @@ class ClassNotificationScheduler @AssistedInject constructor(
 
                 val request = OneTimeWorkRequest.Builder(ClassNotificationWorker::class.java)
                     .setInputData(convertScheduleToData(it))
-                workManager.enqueueUniqueWork(it.scheduleID, ExistingWorkPolicy.REPLACE,
-                    request.build())
+                workManager.enqueueUniqueWork(
+                    it.scheduleID, ExistingWorkPolicy.REPLACE,
+                    request.build()
+                )
             }
         }
         return Result.success()

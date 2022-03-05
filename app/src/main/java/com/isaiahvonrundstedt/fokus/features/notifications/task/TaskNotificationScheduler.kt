@@ -17,7 +17,7 @@ import dagger.assisted.AssistedInject
 // This only triggers when the user has changed the fokus interval
 // for tasks in the Settings
 @HiltWorker
-class TaskNotificationScheduler @AssistedInject constructor (
+class TaskNotificationScheduler @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParameters: WorkerParameters,
     private val repository: TaskRepository,

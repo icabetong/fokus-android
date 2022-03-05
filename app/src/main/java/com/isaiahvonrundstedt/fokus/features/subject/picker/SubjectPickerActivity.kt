@@ -18,7 +18,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SubjectPickerActivity: BaseActivity(), BaseAdapter.ActionListener {
+class SubjectPickerActivity : BaseActivity(), BaseAdapter.ActionListener {
     private lateinit var binding: ActivityPickerSubjectBinding
 
     private val pickerAdapter = SubjectPickerAdapter(this)
@@ -48,12 +48,14 @@ class SubjectPickerActivity: BaseActivity(), BaseAdapter.ActionListener {
         viewModel.isEmpty.observe(this) { binding.emptyView.isVisible = it }
     }
 
-    override fun <T> onActionPerformed(t: T, action: BaseAdapter.ActionListener.Action,
-                                       container: View?) {
+    override fun <T> onActionPerformed(
+        t: T, action: BaseAdapter.ActionListener.Action,
+        container: View?
+    ) {
         if (t is SubjectPackage) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    setResult(RESULT_OK, Intent().apply{
+                    setResult(RESULT_OK, Intent().apply {
                         putExtra(EXTRA_SELECTED_SUBJECT, t)
                     })
                     finish()

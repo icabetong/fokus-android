@@ -13,8 +13,8 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-class TaskWidgetRemoteViewFactory(private var context: Context)
-    : RemoteViewsService.RemoteViewsFactory {
+class TaskWidgetRemoteViewFactory(private var context: Context) :
+    RemoteViewsService.RemoteViewsFactory {
 
     private var itemList = mutableListOf<TaskPackage>()
 
@@ -24,7 +24,7 @@ class TaskWidgetRemoteViewFactory(private var context: Context)
         val tasks = AppDatabase.getInstance(context).tasks()
         var items = emptyList<TaskPackage>()
         runBlocking {
-            val job = async { tasks.fetchAsPackage()  }
+            val job = async { tasks.fetchAsPackage() }
             items = job.await() ?: emptyList()
             items.forEach { if (it.task.isDueToday() || !it.task.hasDueDate()) itemList.add(it) }
         }
@@ -32,7 +32,8 @@ class TaskWidgetRemoteViewFactory(private var context: Context)
 
     override fun onDataSetChanged() = fetch()
 
-    override fun getLoadingView(): RemoteViews = RemoteViews(context.packageName, R.layout.layout_widget_progress)
+    override fun getLoadingView(): RemoteViews =
+        RemoteViews(context.packageName, R.layout.layout_widget_progress)
 
     override fun getItemId(position: Int): Long = position.toLong()
 

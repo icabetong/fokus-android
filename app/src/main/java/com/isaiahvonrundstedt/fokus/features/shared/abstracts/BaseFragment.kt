@@ -58,8 +58,8 @@ abstract class BaseFragment : Fragment() {
     private fun findCurrentFocus(viewGroup: ViewGroup) {
         viewGroup.children.forEach {
             if (it is ViewGroup)
-                // If the current children is an instance of
-                // a ViewGroup, then iterate its children too.
+            // If the current children is an instance of
+            // a ViewGroup, then iterate its children too.
                 findCurrentFocus(it)
             else {
                 if (it.hasFocus()) {
@@ -94,7 +94,10 @@ abstract class BaseFragment : Fragment() {
             NavigationSheet.show(childFragmentManager)
         }
 
-        childFragmentManager.setFragmentResultListener(NavigationSheet.REQUEST_KEY, viewLifecycleOwner) { _, args ->
+        childFragmentManager.setFragmentResultListener(
+            NavigationSheet.REQUEST_KEY,
+            viewLifecycleOwner
+        ) { _, args ->
             args.getInt(NavigationSheet.EXTRA_DESTINATION).also {
                 exitTransition = MaterialFadeThrough().apply {
                     duration = TRANSITION_DURATION
@@ -115,9 +118,13 @@ abstract class BaseFragment : Fragment() {
             scrimColor = Color.TRANSPARENT
             fadeMode = MaterialContainerTransform.FADE_MODE_OUT
             interpolator = FastOutSlowInInterpolator()
-            setAllContainerColors(MaterialColors.getColor(requireContext(), R.attr.colorSurface,
-                ContextCompat.getColor(requireContext(), R.color.color_surface)))
-    }
+            setAllContainerColors(
+                MaterialColors.getColor(
+                    requireContext(), R.attr.colorSurface,
+                    ContextCompat.getColor(requireContext(), R.color.color_surface)
+                )
+            )
+        }
 
     fun customPopupProvider(context: Context, anchor: View) =
         CascadePopupMenu(context, anchor,

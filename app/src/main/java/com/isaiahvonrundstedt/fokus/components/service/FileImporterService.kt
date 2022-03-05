@@ -11,7 +11,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import org.apache.commons.io.FileUtils
 import java.io.File
 
-class FileImporterService: BaseService() {
+class FileImporterService : BaseService() {
 
     private lateinit var targetDirectory: File
 
@@ -22,8 +22,10 @@ class FileImporterService: BaseService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_START -> {
-                targetDirectory = File(getExternalFilesDir(null),
-                    Streamable.DIRECTORY_ATTACHMENTS)
+                targetDirectory = File(
+                    getExternalFilesDir(null),
+                    Streamable.DIRECTORY_ATTACHMENTS
+                )
 
                 intent.data?.let { onStartCopy(it, intent.getStringExtra(EXTRA_OBJECT_ID)!!) }
             }

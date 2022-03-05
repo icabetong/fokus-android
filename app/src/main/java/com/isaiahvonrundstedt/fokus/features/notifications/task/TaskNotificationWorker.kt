@@ -35,9 +35,11 @@ class TaskNotificationWorker @AssistedInject constructor(
         val resID = if (task.isDueToday()) R.string.due_today_at else R.string.due_at
         val log = Log().apply {
             title = task.name
-            content = if (task.hasDueDate()) String.format(applicationContext.getString(resID),
-                task.dueDate?.format(DateTimeConverter.getDateTimeFormatter(applicationContext)))
-                else null
+            content = if (task.hasDueDate()) String.format(
+                applicationContext.getString(resID),
+                task.dueDate?.format(DateTimeConverter.getDateTimeFormatter(applicationContext))
+            )
+            else null
             type = Log.TYPE_TASK
             isImportant = task.isImportant
             data = task.taskID
@@ -50,8 +52,10 @@ class TaskNotificationWorker @AssistedInject constructor(
             .setInputData(convertLogToData(log))
 
         if (log.isImportant) {
-            workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
-                request.build())
+            workManager.enqueueUniqueWork(
+                task.taskID, ExistingWorkPolicy.REPLACE,
+                request.build()
+            )
             return Result.success()
         }
 
@@ -66,11 +70,15 @@ class TaskNotificationWorker @AssistedInject constructor(
         }
 
         if (executionTime?.isAfterNow() == true)
-            request.setInitialDelay(Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
-                TimeUnit.MINUTES)
+            request.setInitialDelay(
+                Duration.between(ZonedDateTime.now(), executionTime).toMinutes(),
+                TimeUnit.MINUTES
+            )
 
-        workManager.enqueueUniqueWork(task.taskID, ExistingWorkPolicy.REPLACE,
-            request.build())
+        workManager.enqueueUniqueWork(
+            task.taskID, ExistingWorkPolicy.REPLACE,
+            request.build()
+        )
 
         return Result.success()
     }

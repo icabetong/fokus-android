@@ -8,12 +8,15 @@ import com.isaiahvonrundstedt.fokus.databinding.LayoutItemSubjectPickerBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 
-class SubjectPickerAdapter(private val actionListener: ActionListener)
-    : BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(SubjectPackage.DIFF_CALLBACK), Swipeable {
+class SubjectPickerAdapter(private val actionListener: ActionListener) :
+    BaseAdapter<SubjectPackage, SubjectPickerAdapter.ViewHolder>(SubjectPackage.DIFF_CALLBACK),
+    Swipeable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = LayoutItemSubjectPickerBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false)
+        val binding = LayoutItemSubjectPickerBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
         return ViewHolder(binding.root)
     }
 
@@ -25,7 +28,7 @@ class SubjectPickerAdapter(private val actionListener: ActionListener)
         actionListener.onActionPerformed(getItem(position), ActionListener.Action.DELETE, null)
     }
 
-    inner class ViewHolder(itemView: View): BaseViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         private val binding = LayoutItemSubjectPickerBinding.bind(itemView)
 

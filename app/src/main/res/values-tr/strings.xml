@@ -277,13 +277,13 @@
     <string name="color_lavender">Lavanta</string>
     <string name="color_graphite">Grafit</string>
 
-    <string name="widget_task_name">Görev Widget'ı</string>
+    <string name="widget_task_name">Görev Widget\'ı</string>
     <string name="widget_task_title">Görevler</string>
     <string name="widget_task_empty">Bugün göreviniz yok</string>
-    <string name="widget_event_name">Etkinlik Widget'ı</string>
+    <string name="widget_event_name">Etkinlik Widget\'ı</string>
     <string name="widget_event_title">Etkinlikler</string>
     <string name="widget_event_empty">Bugün etkinliğiniz yok</string>
-    <string name="widget_class_name">Ders Widget'ı</string>
+    <string name="widget_class_name">Ders Widget\'ı</string>
     <string name="widget_class_title">Dersler</string>
     <string name="widget_class_empty">Bugün dersiniz yok</string>
 

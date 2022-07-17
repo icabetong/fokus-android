@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -50,6 +51,7 @@ import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivit
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
+import java.text.DateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -238,7 +240,8 @@ class EventEditor : BaseEditor(), FragmentResultListener {
                 lifecycleOwner(viewLifecycleOwner)
                 dateTimePicker(
                     requireFutureDateTime = true,
-                    currentDateTime = viewModel.getSchedule()?.toCalendar()
+                    currentDateTime = viewModel.getSchedule()?.toCalendar(),
+                    show24HoursView = is24HourFormat(requireContext())
                 ) { _, datetime ->
                     viewModel.setSchedule(datetime.toZonedDateTime())
                 }
@@ -293,7 +296,8 @@ class EventEditor : BaseEditor(), FragmentResultListener {
                 lifecycleOwner(viewLifecycleOwner)
                 dateTimePicker(
                     requireFutureDateTime = true,
-                    currentDateTime = viewModel.getSchedule()?.toCalendar()
+                    currentDateTime = viewModel.getSchedule()?.toCalendar(),
+                    show24HoursView = is24HourFormat(requireContext())
                 ) { _, datetime ->
                     viewModel.setSchedule(
                         ZonedDateTime.ofInstant(

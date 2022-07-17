@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.text.format.DateFormat.is24HourFormat
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
@@ -116,7 +117,9 @@ class SettingsActivity : BaseActivity() {
                 findPreference<Preference>(PreferenceManager.PREFERENCE_REMINDER_TIME)
                     ?.setOnPreferenceClickListener {
                         MaterialDialog(requireContext()).show {
-                            timePicker(show24HoursView = false) { _, time ->
+                            timePicker(
+                                show24HoursView = is24HourFormat(requireContext())
+                            ) { _, time ->
                                 preferences.reminderTime = time.toLocalTime()
 
                                 TaskReminderWorker.reschedule(requireContext())

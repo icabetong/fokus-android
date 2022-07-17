@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.view.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -321,7 +322,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                 lifecycleOwner(viewLifecycleOwner)
                 dateTimePicker(
                     requireFutureDateTime = true,
-                    currentDateTime = viewModel.getDueDate()?.toCalendar()
+                    currentDateTime = viewModel.getDueDate()?.toCalendar(),
+                    show24HoursView = is24HourFormat(requireContext())
                 ) { _, datetime ->
                     viewModel.setDueDate(datetime.toZonedDateTime())
                     binding.removeDueDateButton.isVisible = true
@@ -426,7 +428,8 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
                 lifecycleOwner(viewLifecycleOwner)
                 dateTimePicker(
                     requireFutureDateTime = true,
-                    currentDateTime = viewModel.getDueDate()?.toCalendar()
+                    currentDateTime = viewModel.getDueDate()?.toCalendar(),
+                    show24HoursView = is24HourFormat(requireContext())
                 ) { _, datetime ->
                     viewModel.setDueDate(datetime.toZonedDateTime())
                 }

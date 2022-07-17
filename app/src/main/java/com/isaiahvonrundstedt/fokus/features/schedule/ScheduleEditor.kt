@@ -1,6 +1,7 @@
 package com.isaiahvonrundstedt.fokus.features.schedule
 
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -99,7 +100,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_start_time)
                 timePicker(
-                    show24HoursView = false,
+                    show24HoursView = is24HourFormat(requireContext()),
                     currentTime = startTime?.toZonedDateTimeToday()?.toCalendar()
                 ) { _, time ->
                     startTime = time.toLocalTime()
@@ -132,7 +133,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
                 lifecycleOwner(this@ScheduleEditor)
                 title(R.string.dialog_pick_end_time)
                 timePicker(
-                    show24HoursView = false,
+                    show24HoursView = is24HourFormat(requireContext()),
                     currentTime = endTime?.toZonedDateTimeToday()?.toCalendar()
                 ) { _, time ->
                     endTime = time.toLocalTime()

@@ -1,0 +1,341 @@
+<resources>
+    <string translatable="false" name="app_name">Fokus</string>
+
+    <string name="shortcut_add_task">@string/button_add_task</string>
+    <string name="shortcut_add_event">@string/button_add_event</string>
+    <string name="shortcut_add_subject">@string/button_add_subject</string>
+
+    <string name="activity_tasks">Görevler</string>
+    <string name="activity_tasks_pending">Bekleyen Görevler</string>
+    <string name="activity_tasks_finished">Tamamlanmış Görevler</string>
+    <string name="activity_subjects">Konular</string>
+    <string name="activity_subjects_today">Bugünkü Konular</string>
+    <string name="activity_subjects_tomorrow">Yarınki Konular</string>
+    <string name="activity_archives">Arşivlenmiş Kayıtlar</string>
+    <string name="activity_logs">Bildirim Günlüğü</string>
+    <string name="activity_settings">Ayarlar</string>
+    <string name="activity_backup">Yedekle ve Geri Yükle</string>
+    <string name="activity_notices">Third Party Notices</string>
+    <string name="activity_open_source_licenses">Açık Kaynak Lisansları</string>
+    <string name="activity_about">Hakkında</string>
+
+    <string name="menu_add">@string/button_add</string>
+    <string name="menu_more">Daha Çok</string>
+    <string name="menu_sort">Sırala</string>
+    <string name="menu_filter">Filtrele</string>
+    <string name="menu_share">Paylaş</string>
+    <string name="menu_import">İçe Aktar</string>
+    <string name="menu_clear_items">Günlüğü Temizle</string>
+    <string name="menu_export_to_file">Dosya olarak dışa aktar</string>
+    <string name="menu_share_directly">Direkt paylaş</string>
+    <string name="menu_archived">Arşivlenmiş</string>
+
+    <string name="navigation_tasks">Görevler</string>
+    <string name="navigation_events">Etkinlikler</string>
+    <string name="navigation_subjects">Konular</string>
+    <string name="navigation_home">Ana Sayfa</string>
+
+    <string name="navigation_logs">Günlük</string>
+    <string name="navigation_settings">@string/activity_settings</string>
+    <string name="navigation_about">@string/activity_about</string>
+
+    <string name="button_add_task">Görev Oluştur</string>
+    <string name="button_add_event">Etkinlik Oluştur</string>
+    <string name="button_add_subject">Konu Oluştur</string>
+    <string name="button_add">Oluştur</string>
+    <string name="button_new">Yeni</string>
+    <string name="button_save">Kaydet</string>
+    <string name="button_done">Tamamla</string>
+    <string name="button_undo">Geri Al</string>
+    <string name="button_remove">Sil</string>
+    <string name="button_continue">Devam Et</string>
+    <string name="button_mark_as_finished">Tamamlandı Olarak İşaretle</string>
+    <string name="button_mark_as_important">Önemli Olarak İşaretle</string>
+    <string name="button_delete">Sil</string>
+    <string name="button_cancel">İptal</string>
+    <string name="button_discard">Vazgeç</string>
+    <string name="button_dismiss">Reddet</string>
+    <string name="button_learn_more">Daha Fazlası</string>
+    <string name="button_view_schedules">Hatırlatıcıları Görüntüle</string>
+
+    <string name="empty_view_no_subjects_title">Hiç hatırlatıcı yok</string>
+    <string name="empty_view_no_subjects_summary">Konular, görevlerinizi ve etkinliklerinizi filtrelemenize yardımcı olur. Daha önce bir konu oluşturmadıysanız aşağıdaki butonu kullanarak ekleyebilirsiniz.</string>
+    <string name="empty_view_no_classes_today_title">Bugün Ders Yok</string>
+    <string name="empty_view_no_classes_today_summary">Bugün için ayarlanmış herhangi bir ders bulunmuyor.</string>
+    <string name="empty_view_no_classes_tomorrow_title">Yarın Ders Yok</string>
+    <string name="empty_view_no_classes_tomorrow_summary">Yarın için ayarlanmış herhangi bir ders bulunmuyor.</string>
+    <string name="empty_view_no_tasks_title">Bekleyen Görev Yok</string>
+    <string name="empty_view_no_tasks_summary">Bekleyen hiçbir göreviniz bulunmuyor. Yeni bir görev eklemek için aşağıdaki butonu kullanabilirsiniz.</string>
+    <string name="empty_view_no_finished_title">Tamamlanmış Görev Yok</string>
+    <string name="empty_view_no_finished_summary">Tamamlanmış hiçbir göreviniz bulunmuyor. Tamamlandı olarak işaretlediğiniz görevler burada görünür.</string>
+    <string name="empty_view_no_logs_title">Kayıt Günlüğü Boş</string>
+    <string name="empty_view_no_logs_summary">Herhangi bir görev,olay veya hatırlatıcı bildirim çubuğunuzda göründüğünde; burada da görünüyor olacak.</string>
+    <string name="empty_view_no_events_title">Planlanmış Etkinlik Yok</string>
+    <string name="empty_view_no_events_summary">Planlanmış hiçbir etkinlik bulunmuyor. Yeni bir etkinlik eklemek için aşağıdaki butonu kullanabilirsiniz.</string>
+    <string name="empty_view_no_previous_title">Geçmiş Etkinlik Yok</string>
+    <string name="empty_view_no_previous_summary">Tarihi geçmiş hiçbir etkinlik bulunmuyor. Tarihi geçmi etkinlikler burada görünür.</string>
+    <string name="empty_view_no_archived_tasks">Arşivlenmiş Görev Yok</string>
+    <string name="empty_view_no_archived_events">Arşivlenmiş Etkinlik Yok</string>
+    <string name="empty_view_no_archived_subjects">Arşivlenmiş Konu Yok</string>
+
+    <string name="days_of_week_item_sunday">Pazar</string>
+    <string name="days_of_week_item_monday">Pazartesi</string>
+    <string name="days_of_week_item_tuesday">Salı</string>
+    <string name="days_of_week_item_wednesday">Çarşamba</string>
+    <string name="days_of_week_item_thursday">Perşembe</string>
+    <string name="days_of_week_item_friday">Cuma</string>
+    <string name="days_of_week_item_saturday">Cumartesi</string>
+
+    <string name="days_of_week_item_sunday_short">Pzr</string>
+    <string name="days_of_week_item_monday_short">Pzt</string>
+    <string name="days_of_week_item_tuesday_short">Sal</string>
+    <string name="days_of_week_item_wednesday_short">Çrş</string>
+    <string name="days_of_week_item_thursday_short">Prş</string>
+    <string name="days_of_week_item_friday_short">Cum</string>
+    <string name="days_of_week_item_saturday_short">Cts</string>
+
+    <string name="weeks_of_month_item_week_1">1. Hafta</string>
+    <string name="weeks_of_month_item_week_2">2. Hafta</string>
+    <string name="weeks_of_month_item_week_3">3. Hafta</string>
+    <string name="weeks_of_month_item_week_4">4. Hafta</string>
+
+    <string name="dialog_assign_subject">Konu Ata</string>
+    <string name="dialog_pick_start_time">Başlangıç Tarihi Seç</string>
+    <string name="dialog_pick_end_time">Bitiş Tarihi Seç</string>
+    <string name="dialog_pick_color_tag">Etiket rengi seç</string>
+    <string name="dialog_select_notification_interval">Bildirim aralığını seç</string>
+    <string name="dialog_choose_theme">Temayı seç</string>
+    <string name="dialog_choose_backup">Yedekleme dosyası seç</string>
+    <string name="dialog_confirm_deletion_title">\"%1$s\" silinecek.</string>
+    <string name="dialog_confirm_deletion_summary">Bu işlem geri alınamaz. Devam etmek istiyor musunuz?</string>
+    <string name="dialog_confirm_unarchive_title">Arşivden silinsin mi?</string>
+    <string name="dialog_confirm_unarchive_summary">Sola doğru kaydırarak bu kaydı arşivleyebilirsiniz.</string>
+    <string name="dialog_import_attachment_title">Ek içe aktarılsın mı?</string>
+    <string name="dialog_import_attachment_summary">Android işletim sisteminin getirdiği yeni kısıtlamalardan dolayı, uygulama ek dosyasını kendi alanına kopyalayacak. Devam edilsin mi?</string>
+    <string name="dialog_import_attachment_confirm">Bir daha sorma</string>
+    <string name="dialog_schedule_details">Hatırlatıcı Detayları</string>
+    <string name="dialog_discard_changes">Değişiklerden vazgeçilsin mi?</string>
+    <string name="dialog_select_file_import">İçe aktarılacak dosyayı seçin</string>
+    <string name="dialog_send_to">Şuna gönder</string>
+    <string name="dialog_sharing_options">Paylaşım Ayarları</string>
+    <string name="dialog_class_schedules">Ders Hatırlatıcıları</string>
+    <string name="dialog_filter_options">Filtreleme Ayarları</string>
+    <string name="dialog_new_attachment">Yeni Ek Oluştur</string>
+    <string name="dialog_attachment_name">@string/field_attachment_name</string>
+    <string name="dialog_enter_website_url">Web site adresini girin</string>
+    <string name="dialog_sorting">Sıralama</string>
+    <string name="dialog_permission_needed_title">Kayıt Yeri İzni Gerekiyor</string>
+    <string name="dialog_permission_needed_summary">Cihazınızdan bir dosyayı içe aktarabilmek için kayıt yeri iznine ihtiyacımız var.</string>
+
+    <string name="attachment_type_import_file">Dosyayı İçeri Aktar</string>
+    <string name="attachment_type_website_url">Web Adresi</string>
+
+    <string name="sorting_directions_ascending">Artan</string>
+    <string name="sorting_directions_descending">Azalan</string>
+
+    <string name="filter_options_all">Tümü</string>
+    <string name="filter_options_pending_tasks">Bekleyen</string>
+    <string name="filter_options_finished_tasks">Tamamlanmış</string>
+    <string name="filter_options_today_classes">Bugün</string>
+    <string name="filter_options_tomorrow_classes">Yarın</string>
+
+    <string name="field_subject_code">Konu</string>
+    <string name="field_description">Açıklama</string>
+    <string name="field_days_of_week">Haftanın Günleri</string>
+    <string name="field_weeks_of_month">Ayın Haftaları</string>
+    <string name="field_start_time">Başlangıç Tarihi</string>
+    <string name="field_end_time">Bitiş Tarihi</string>
+    <string name="field_task_name">Görev Adı</string>
+    <string name="field_notes">Notlar</string>
+    <string name="field_subject">Konu</string>
+    <string name="field_due_date">Bitiş Tarihi</string>
+    <string name="field_event_name">Etkinlik Adı</string>
+    <string name="field_schedule">Hatılatıcı</string>
+    <string name="field_location">Konum</string>
+    <string name="field_attachments">Ekler</string>
+    <string name="field_class_time">Ders Saati</string>
+    <string name="field_color">Renk Etiketi</string>
+    <string name="field_priority">Öncelik</string>
+    <string name="field_status">Durum</string>
+    <string name="field_not_set">Ayarlanmamış</string>
+    <string name="field_due_in_the_next_meeting">Bir sonraki toplantıda</string>
+    <string name="field_due_pick_from_schedule">Ders Hatırlatıcılarından seç</string>
+    <string name="field_due_custom">Özel</string>
+    <string name="field_attachment_name">Ek adı</string>
+
+    <string name="hint_subject_description">Konunun adı</string>
+    <string name="hint_task_notes">Görevle ilgili bazı fikirler veya küçük notlar</string>
+    <string name="hint_event_location">Bir oda, bina veya herhangi bir yer belirtin</string>
+    <string name="hint_event_notes">Etkinlikle ilgili bazı fikirler veya küçük notlar</string>
+
+    <string name="feedback_subject_removed">Konu silindi</string>
+    <string name="feedback_log_removed">Günlük silindi</string>
+    <string name="feedback_task_removed">Görev silindi</string>
+    <string name="feedback_schedule_removed">Hatılatıcı silindi</string>
+    <string name="feedback_attachment_added">Ek eklendi</string>
+    <string name="feedback_attachment_removed">Ek silindi</string>
+    <string name="feedback_event_removed">Etkinlik silindi</string>
+    <string name="feedback_task_marked_as_finished">Görev, tamamlandı olarak işaretlendi</string>
+    <string name="feedback_task_marked_as_pending">Görev, bekleyen olarak işaretlendi</string>
+    <string name="feedback_subject_empty_name">Konu belirtmeyi unuttunuz</string>
+    <string name="feedback_subject_empty_description">Açıklama girmeyi unuttunuz</string>
+    <string name="feedback_subject_no_schedule">Hatırlatıcı eklemeyi unuttunuz</string>
+    <string name="feedback_schedule_empty_days">Gün belirtmeyi unuttunuz</string>
+    <string name="feedback_schedule_empty_start_time">Başlangıç tarihini belirtmeyi unuttunuz</string>
+    <string name="feedback_schedule_empty_end_time">Bitiş tarihini belirtmeyi unuttunuz</string>
+    <string name="feedback_task_empty_name">Görev adını girmeyi unuttunuz</string>
+    <string name="feedback_task_empty_due_date">Bitiş tarihini belirtmeyi unuttunuz</string>
+    <string name="feedback_event_empty_name">Etkinlik adını belirtmeyi unuttunuz</string>
+    <string name="feedback_event_empty_location">Konum bilgisini unuttunuz</string>
+    <string name="feedback_event_empty_schedule">Hatırlatıcı eklemeyi unuttunuz</string>
+    <string name="feedback_restore_invalid">Yedek dosyası geçersiz</string>
+    <string name="feedback_restore_corrupted">Yedek dosyası bozulmuş veya okunamıyor</string>
+    <string name="feedback_backup_empty">Yedeklenecek bir kayıt yok</string>
+    <string name="feedback_backup_failed">Yedekleme işlemi sırasında bir sorunla karşılaşıldı</string>
+    <string name="feedback_import_ongoing">İçe aktarma devam ediyor</string>
+    <string name="feedback_import_completed">İçe aktarma başarılı</string>
+    <string name="feedback_import_failed">İçe aktarma sırasında bir sorunla karşılaşıldı</string>
+    <string name="feedback_export_ongoing">Dışarı aktarma devam ediyor</string>
+    <string name="feedback_export_completed">Dışa aktarma başarılı</string>
+    <string name="feedback_export_failed">Dışa aktarma sırasında bir sorunla karşılaşıldı</string>
+    <string name="feedback_unable_to_share_title">Paylaşılamıyor</string>
+    <string name="feedback_unable_to_share_message">Paylaşılabilecek geçerli bir bilgi yok</string>
+    <string name="feedback_subject_code_exists">Aynı isimde bir konu zaten mevcut.</string>
+    <string name="feedback_schedule_exists">Hatırlatıcı başka bir hatırlatıcı ile çakışıyor.</string>
+    <string name="feedback_task_name_exists">Aynı isimde başka bir görev zaten mevcut.</string>
+    <string name="feedback_event_name_exists">Aynı isimde başka bir etkinlik zaten mevcut.</string>
+    <string name="feedback_event_schedule_exists">Aynı hatırlatıcıya sahip başka bir etkinlik zaten mevcut.</string>
+
+    <string name="settings_group_interface">Arayüz</string>
+    <string name="settings_group_sound">Ses</string>
+    <string name="settings_group_notification">Bildirimler</string>
+    <string name="settings_group_advanced">Gelişmiş</string>
+    <string name="settings_group_debugging">Hata Ayıklama</string>
+    <string name="settings_group_contribute">Katkıda Bulun</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_item_system">Sistem varsayılanı</string>
+    <string name="settings_theme_item_dark">Karanlık</string>
+    <string name="settings_theme_item_light">Açık</string>
+    <string name="settings_confetti_title">Konfeti</string>
+    <string name="settings_confetti_summary">Görevler tamamlandığında konfeti efekti göster</string>
+
+    <string name="settings_completion_sounds_title">Tamamlanma Sesleri</string>
+    <string name="settings_completion_sounds_summary">Bir görev tamamlandı olarak işaretlendiğinde ses çal</string>
+
+    <string name="settings_reminder_frequency_title">Hatırlatma sıklığı</string>
+    <string name="settings_reminder_frequency_item_everyday">Her Gün</string>
+    <string name="settings_reminder_frequency_item_weekends">Hafta Sonu</string>
+    <string name="settings_remind_me_in_time_of_day">Şu saatte hatırlat</string>
+    <string name="settings_when_nearing_due_title">Bir görevin bitiş tarihi yaklaştığında</string>
+    <string name="settings_when_nearing_due_summary">Son teslim tarihine yaklaşan görevler için bildirimleri göster</string>
+    <string name="settings_task_reminders">Görev hatırlatma aralığı</string>
+    <string name="settings_task_reminders_item_hour">1 saat önce</string>
+    <string name="settings_task_reminders_item_three_hours">3 saat önce</string>
+    <string name="settings_task_reminders_item_day">1 gün önce</string>
+    <string name="settings_incoming_events_title">Yaklaşan etkinlikler</string>
+    <string name="settings_incoming_events_summary">Bugün yaklaşan etkinliklerle ilgili bildirimleri göster</string>
+    <string name="settings_event_reminders">Etkinlik hatırlatma aralığı</string>
+    <string name="settings_event_reminders_item_quarter_hour">15 dakika önce</string>
+    <string name="settings_event_reminders_item_half_hour">30 dakika önce</string>
+    <string name="settings_event_reminders_item_hour">@string/settings_task_reminders_item_hour</string>
+    <string name="settings_classes_for_this_day_title">Bugünkü dersler</string>
+    <string name="settings_classes_for_this_day_summary">Bugünkü derslerimle ilgili bildirimleri göster.</string>
+    <string name="settings_class_reminders">Ders hatırlatma aralığı</string>
+    <string name="settings_class_reminders_item_5_minutes">5 dakika önce</string>
+    <string name="settings_class_reminders_item_15_minutes">@string/settings_event_reminders_item_quarter_hour</string>
+    <string name="settings_class_reminders_item_30_minutes">@string/settings_event_reminders_item_half_hour</string>
+    <string name="settings_more_notification_settings">Daha Çok Ayar</string>
+
+    <string name="settings_allow_week_numbers_title">Hafta Numaralarını Etkinleştir</string>
+    <string name="settings_allow_week_numbers_summary">Hatırlatıcıları ayarlarken hafta numaralarını gösterin.</string>
+    <string name="settings_backup_and_restore">@string/activity_backup</string>
+    <string name="settings_backup">Yedekle</string>
+    <string name="settings_backup_summary_no_previous">Hiç Yedekleme Yapılmamış</string>
+    <string name="settings_restore">Geri Yükle</string>
+    <string name="settings_use_external_browser_title">Bağlantıları harici tarayıcıda aç</string>
+    <string name="settings_use_external_browser_summary">Web site linklerini işlemek için sistem varsayılan tarayıcısını kullanın</string>
+
+    <string name="settings_not_working_notifications">@string/button_learn_more</string>
+    <string name="settings_not_working_notifications_info">Bazen, telefon üreticinizin agresif pil optimizasyonu nedeniyle bildiriminiz tetiklenmeyebilir.</string>
+
+    <string name="settings_translate">Çevir</string>
+    <string name="settings_report_an_issue">Sorun bildir</string>
+    <string name="settings_third_party_notices">@string/activity_notices</string>
+    <string name="settings_build_version">Uygulama Versiyonu</string>
+
+    <string name="color_sky">Gökyüzü</string>
+    <string name="color_grass">Çimen</string>
+    <string name="color_sunset">Gün Batımı</string>
+    <string name="color_lemon">Limon</string>
+    <string name="color_sea">Deniz</string>
+    <string name="color_grape">Üzüm</string>
+    <string name="color_cherry">Kiraz</string>
+    <string name="color_coral">Mercan</string>
+    <string name="color_midnight">Gece Mavisi</string>
+    <string name="color_mint">Nane</string>
+    <string name="color_lavender">Lavanta</string>
+    <string name="color_graphite">Grafit</string>
+
+    <string name="widget_task_name">Görev Widget\'ı</string>
+    <string name="widget_task_title">Görevler</string>
+    <string name="widget_task_empty">Bugün göreviniz yok</string>
+    <string name="widget_event_name">Etkinlik Widget\'ı</string>
+    <string name="widget_event_title">Etkinlikler</string>
+    <string name="widget_event_empty">Bugün etkinliğiniz yok</string>
+    <string name="widget_class_name">Ders Widget\'ı</string>
+    <string name="widget_class_title">Dersler</string>
+    <string name="widget_class_empty">Bugün dersiniz yok</string>
+
+    <!-- Helper Text -->
+    <string name="helper_this_is_important">Bunu önemli olarak işaretlemek, sistem tepsisinde kalıcı bir bildirim olarak gösterileceği anlamına gelir.</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_group_reminders">Hatırlatıcılar</string>
+
+    <string name="notification_channel_general">Genel</string>
+    <string name="notification_channel_task_reminders">Görev Hatırlatıcıları</string>
+    <string name="notification_channel_event_reminders">Etkinlik Hatırlatıcıları</string>
+    <string name="notification_channel_class_reminders">Ders Hatırlatıcıları</string>
+
+    <string name="notification_pending_tasks_title">Bekleyen %1$d göreviniz var</string>
+    <string name="notification_pending_tasks_summary">Göz atmak isteyebilirsiniz</string>
+
+    <string name="notification_backup_ongoing">Yedekleniyor</string>
+    <string name="notification_backup_error">Yedekleme Başarısız</string>
+    <string name="notification_backup_success">Yedekleme Başarılı</string>
+
+    <string name="notification_restore_ongoing">Geri Yükleniyor</string>
+    <string name="notification_restore_error">Geri Yükleme Başarısız</string>
+    <string name="notification_restore_success">Geri Yükleme Başarılı</string>
+
+    <!-- Sharing -->
+    <string name="sharing_attach_to_task">Göreve Ekle</string>
+
+    <!-- Greetings -->
+    <string name="greeting_default">İyi günler!</string>
+    <string name="greeting_morning">Günaydın!</string>
+    <string name="greeting_afternoon">Tünaydın!</string>
+    <string name="greeting_evening">İyi akşamlar!</string>
+
+    <!-- used for concat and formatting -->
+    <string name="and">&#160;ve&#160;</string>
+    <string name="yesterday_at">Dün şu saatte %1$s</string>
+    <string name="yesterday">Dün</string>
+    <string name="tomorrow_at">Yarın şu saatte %1$s</string>
+    <string name="tomorrow">Yarın</string>
+    <string name="today_at">Bugün şu saatte %1$s</string>
+    <string name="today">Bugün</string>
+    <string name="due_today_at">Bugün şu saatte bitiyor %1$s</string>
+    <string name="due_tomorrow_at">Yarın şu saatte bitiyor %1$s</string>
+
+    <string name="open_source_libraries">Açık Kaynak Kodlu Kütüphaneler</string>
+    <string name="credit_other_resources">Diğer Kaynaklar</string>
+    <string name="credit_notification_sound_title" translatable="false">Zapsplat</string>
+    <string name="credit_notification_sound_summary">Bildirim Sesi</string>
+    <string name="credit_launcher_icon_title" translatable="false">Freepik</string>
+    <string name="credit_launcher_icon_summary">Uygulama Simgesi</string>
+    <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
+    <string name="credit_user_interface_icons_summary">Arayüz Simgeleri</string>
+
+</resources>

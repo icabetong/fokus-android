@@ -8,7 +8,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SubjectPackage @JvmOverloads constructor(
+data class SubjectPackage(
     @Embedded
     var subject: Subject,
     @Relation(entity = Schedule::class, parentColumn = "subjectID", entityColumn = "subject")

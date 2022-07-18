@@ -9,28 +9,28 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 interface TaskDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(task: Task)
+    fun insert(task: Task)
 
     @Delete
-    suspend fun remove(task: Task)
+    fun remove(task: Task)
 
     @Update
-    suspend fun update(task: Task)
+    fun update(task: Task)
 
     @Query("SELECT taskID FROM tasks WHERE name = :task COLLATE NOCASE")
-    suspend fun checkNameUniqueness(task: String?): List<String>
+    fun checkNameUniqueness(task: String?): List<String>
 
     @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
-    suspend fun setFinished(taskID: String, status: Int)
+    fun setFinished(taskID: String, status: Int)
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
-    suspend fun fetch(): List<Task>
+    fun fetch(): List<Task>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
-    suspend fun fetchCount(): Int
+    fun fetchCount(): Int
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    suspend fun fetchAsPackage(): List<TaskPackage>
+    fun fetchAsPackage(): List<TaskPackage>
 
     @Transaction
     @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isTaskArchived = 0 ORDER BY dueDate ASC")

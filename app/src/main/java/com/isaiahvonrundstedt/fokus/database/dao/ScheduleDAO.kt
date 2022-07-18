@@ -7,21 +7,21 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 interface ScheduleDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg schedule: Schedule)
+    fun insert(vararg schedule: Schedule)
 
     @Delete
-    suspend fun remove(schedule: Schedule)
+    fun remove(schedule: Schedule)
 
     @Update
-    suspend fun update(schedule: Schedule)
+    fun update(schedule: Schedule)
 
     @Query("DELETE FROM schedules WHERE subject = :id")
-    suspend fun removeUsingSubjectID(id: String)
+    fun removeUsingSubjectID(id: String)
 
     @Query("SELECT * FROM schedules")
-    suspend fun fetch(): List<Schedule>
+    fun fetch(): List<Schedule>
 
     @Query("SELECT * FROM schedules WHERE subject = :id")
-    suspend fun fetchUsingID(id: String?): List<Schedule>
+    fun fetchUsingID(id: String?): List<Schedule>
 
 }

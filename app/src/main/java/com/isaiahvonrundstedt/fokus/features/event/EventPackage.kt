@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  *   events and subject in the UI
  */
 @Parcelize
-data class EventPackage @JvmOverloads constructor(
+data class EventPackage(
     @Embedded
     var event: Event,
     @Embedded

@@ -12,7 +12,7 @@ import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import java.time.LocalTime
 import java.time.ZonedDateTime
 
-class PreferenceManager(private val context: Context?) {
+class PreferenceManager(private val context: Context) {
 
     enum class Theme {
         SYSTEM, DARK, LIGHT;

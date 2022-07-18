@@ -30,8 +30,7 @@ Fokus is an open source application that combines a todo list and a calendar tha
 * 🇪🇸 Spanish (Thanks! Emmanuel Kunst)
 * 🇷🇺 Russian
 * 🇮🇩 Indonesian (Thanks! [Ilham Syahid S](https://github.com/ilhamsyahids))
-* 🇹🇷 Turkish (Thanks! [
-Ahmet YÜREKLİ](https://github.com/vedfi))
+* 🇹🇷 Turkish (Thanks! [Ahmet YÜREKLİ](https://github.com/vedfi))
 
 ## Built with
 

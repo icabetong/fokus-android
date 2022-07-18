@@ -13,7 +13,7 @@
         android:transitionGroup="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <nl.dionsegijn.konfetti.KonfettiView
+    <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/confettiView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -162,6 +162,8 @@
     <string name="field_due_pick_from_schedule">Ders Hatırlatıcılarından seç</string>
     <string name="field_due_custom">Özel</string>
     <string name="field_attachment_name">Ek adı</string>
+    <string name="field_instructor">Eğitmen</string>
+    <string name="field_classroom">Sınıf</string>
 
     <string name="hint_subject_description">Konunun adı</string>
     <string name="hint_task_notes">Görevle ilgili bazı fikirler veya küçük notlar</string>

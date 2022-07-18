@@ -32,6 +32,7 @@ data class Subject @JvmOverloads constructor(
     var subjectID: String = UUID.randomUUID().toString(),
     var code: String? = null,
     var description: String? = null,
+    var instructor: String? = null,
     @TypeConverters(ColorConverter::class)
     var tag: Tag = Tag.SKY,
     var isSubjectArchived: Boolean = false,

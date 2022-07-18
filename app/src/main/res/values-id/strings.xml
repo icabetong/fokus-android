@@ -160,6 +160,8 @@
     <string name="field_due_pick_from_schedule">Pilih dari jadwal kelas</string>
     <string name="field_due_custom">Kustom</string>
     <string name="field_attachment_name">Nama lampiran</string>
+    <string name="field_instructor">Instruktur</string>
+    <string name="field_classroom">Ruang Kelas</string>
 
     <string name="hint_subject_description">Nama subjek</string>
     <string name="hint_task_notes">Beberapa ide atau detail kecil tentang tugas</string>

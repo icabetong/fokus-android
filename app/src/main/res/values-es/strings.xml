@@ -162,6 +162,8 @@
     <string name="field_due_pick_from_schedule">Elegir del programa de clases</string>
     <string name="field_due_custom">Personalizado</string>
     <string name="field_attachment_name">Nombre del archivo adjunto</string>
+    <string name="field_instructor">Instructor</string>
+    <string name="field_classroom">Aula</string>
 
     <string name="hint_subject_description">El nombre de la asignatura</string>
     <string name="hint_task_notes">Algunas ideas o detalles menores sobre la tarea</string>

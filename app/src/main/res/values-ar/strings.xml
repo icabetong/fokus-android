@@ -161,6 +161,8 @@
     <string name="field_due_pick_from_schedule">اختر من جدول الحصص</string>
     <string name="field_due_custom">مخصص</string>
     <string name="field_attachment_name">أسم المرفق</string>
+    <string name="field_instructor">معلم</string>
+    <string name="field_classroom">قاعة الدراسة</string>
 
     <string name="hint_subject_description">اسم الموضوع</string>
     <string name="hint_task_notes">بعض الأفكار أو التفاصيل الصغيرة حول المهمة</string>

@@ -145,6 +145,9 @@
     <string name="field_due_pick_from_schedule">Aus dem Stundenplan auswählen</string>
     <string name="field_due_custom">Benutzerdefiniert</string>
     <string name="field_attachment_name">Name des Anhangs</string>
+    <string name="field_instructor">Ausbilder</string>
+    <string name="field_classroom">Klassenzimmer</string>
+
     <string name="hint_task_notes">Ein paar Ideen oder Details zur der Aufgabe</string>
     <string name="hint_event_location">Geben Sie einen Raum, ein Gebäude oder einen Platz ein</string>
     <string name="hint_event_notes">Ein paar Ideen oder Details zu dem Termin</string>

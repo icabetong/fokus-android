@@ -33,9 +33,13 @@ import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
-import nl.dionsegijn.konfetti.models.Shape
-import nl.dionsegijn.konfetti.models.Size
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.Shape
+import nl.dionsegijn.konfetti.core.models.Size
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener,
@@ -133,21 +137,20 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         if (isFinished) {
             createSnackbar(R.string.feedback_task_marked_as_finished, binding.recyclerView)
 
-            with(PreferenceManager(context)) {
+            with(PreferenceManager(requireContext())) {
                 if (confetti) {
-                    binding.confettiView.build()
-                        .addColors(Color.YELLOW, Color.MAGENTA, Color.CYAN)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(1000L)
-                        .addShapes(Shape.Square, Shape.Circle)
-                        .addSizes(Size(12, 5f))
-                        .setPosition(
-                            binding.confettiView.x + binding.confettiView.width / 2,
-                            binding.confettiView.y + binding.confettiView.height / 3
-                        )
-                        .burst(100)
+                    binding.confettiView.start(Party(
+                        colors = listOf(Color.YELLOW, Color.MAGENTA, Color.CYAN),
+                        shapes = listOf(Shape.Square, Shape.Circle),
+                        speed = 1f,
+                        maxSpeed = 5f,
+                        fadeOutEnabled = true,
+                        timeToLive = 1000L,
+                        spread = 360,
+                        position = Position.Relative(0.5, 0.3),
+                        size = listOf(Size(12, 5f)),
+                        emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100),
+                    ))
                 }
 
                 if (sounds)

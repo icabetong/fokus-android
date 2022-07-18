@@ -22,6 +22,7 @@ class NotificationActionService : IntentService(SERVICE_NAME) {
         getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onHandleIntent(intent: Intent?) {
         val taskID = intent?.getStringExtra(EXTRA_TASK_ID)
         val isPersistent = intent?.getBooleanExtra(EXTRA_IS_PERSISTENT, false) ?: false

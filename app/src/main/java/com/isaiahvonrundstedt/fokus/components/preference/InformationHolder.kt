@@ -35,6 +35,5 @@ class InformationHolder(
 
     override fun onClick() {}
     override fun performClick() {}
-    override fun performClick(view: View?) {}
 
 }

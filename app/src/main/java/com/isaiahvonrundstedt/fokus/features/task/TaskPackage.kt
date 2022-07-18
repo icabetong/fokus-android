@@ -3,6 +3,7 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
+import androidx.room.Ignore
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -14,7 +15,7 @@ import kotlinx.android.parcel.Parcelize
  *  in the UI
  */
 @Parcelize
-data class TaskPackage @JvmOverloads constructor(
+data class TaskPackage(
     @Embedded
     var task: Task,
     @Embedded
@@ -26,7 +27,7 @@ data class TaskPackage @JvmOverloads constructor(
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TaskPackage>() {
             override fun areItemsTheSame(oldItem: TaskPackage, newItem: TaskPackage): Boolean {
-                return oldItem.task.taskID == newItem.task.taskID
+                return oldItem.task?.taskID == newItem.task?.taskID
             }
 
             override fun areContentsTheSame(oldItem: TaskPackage, newItem: TaskPackage): Boolean {

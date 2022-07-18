@@ -9,22 +9,22 @@ import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 interface EventDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(event: Event)
+    fun insert(event: Event)
 
     @Delete
-    suspend fun remove(event: Event)
+    fun remove(event: Event)
 
     @Update
-    suspend fun update(event: Event)
+    fun update(event: Event)
 
     @Query("SELECT eventID FROM events WHERE name = :event AND DATE(schedule) = DATE(:schedule) COLLATE NOCASE")
-    suspend fun checkNameUniqueness(event: String?, schedule: String?): List<String>
+    fun checkNameUniqueness(event: String?, schedule: String?): List<String>
 
     @Query("SELECT * FROM events")
-    suspend fun fetch(): List<Event>
+    fun fetch(): List<Event>
 
     @Query("SELECT * FROM events")
-    suspend fun fetchPackage(): List<EventPackage>
+    fun fetchPackage(): List<EventPackage>
 
     @Transaction
     @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE isEventArchived = 0 ORDER BY schedule ASC")

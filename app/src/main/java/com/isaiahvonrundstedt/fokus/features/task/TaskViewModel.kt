@@ -1,8 +1,5 @@
 package com.isaiahvonrundstedt.fokus.features.task
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
 import com.isaiahvonrundstedt.fokus.components.enums.SortDirection
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
@@ -21,15 +18,6 @@ class TaskViewModel @Inject constructor(
 ) : ViewModel() {
 
     val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
-
-    var tasksCompose by mutableStateOf(listOf<TaskPackage>())
-        private set
-
-    init {
-        viewModelScope.launch {
-            tasksCompose = repository.fetchAsPackage()
-        }
-    }
 
     val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
     val isEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }

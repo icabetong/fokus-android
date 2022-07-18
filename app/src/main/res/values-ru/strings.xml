@@ -160,6 +160,8 @@
     <string name="field_due_pick_from_schedule">Выберите из расписания занятий</string>
     <string name="field_due_custom">Пользовательский</string>
     <string name="field_attachment_name">Имя приложения</string>
+    <string name="field_instructor">Инструктор</string>
+    <string name="field_classroom">Классная комната</string>
 
     <string name="hint_subject_description">Имя субъекта</string>
     <string name="hint_task_notes">Некоторые идеи или мелкие детали задачи</string>

@@ -34,6 +34,7 @@ import java.util.*
 data class Schedule @JvmOverloads constructor(
     @PrimaryKey
     var scheduleID: String = UUID.randomUUID().toString(),
+    var classroom: String? = null,
     var daysOfWeek: Int = 0,
     var weeksOfMonth: Int = 0,
     @TypeConverters(DateTimeConverter::class)

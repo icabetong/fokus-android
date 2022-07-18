@@ -160,6 +160,8 @@
     <string name="field_due_pick_from_schedule">Choisir dans les horaires des classes</string>
     <string name="field_due_custom">Personnalisé</string>
     <string name="field_attachment_name">Nom de la pièce jointe</string>
+    <string name="field_instructor">Instructeur</string>
+    <string name="field_classroom">Salle de classe</string>
 
     <string name="hint_subject_description">Le nom de la matière</string>
     <string name="hint_task_notes">Quelques idées ou détails mineurs concernant la dernière tâche</string>

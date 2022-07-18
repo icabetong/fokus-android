@@ -18,7 +18,7 @@ interface SubjectDAO {
     fun update(subject: Subject)
 
     @Query("SELECT subjectID FROM subjects WHERE code = :code COLLATE NOCASE")
-    fun checkCodeUniqueness(code: String?): List<String>
+    suspend fun checkCodeUniqueness(code: String?): List<String>
 
     @Query("SELECT * FROM subjects")
     fun fetch(): List<Subject>
@@ -33,6 +33,5 @@ interface SubjectDAO {
     @Transaction
     @Query("SELECT * FROM subjects WHERE isSubjectArchived = 1 ORDER BY code ASC")
     fun fetchArchivedLiveData(): LiveData<List<SubjectPackage>>
-
 
 }

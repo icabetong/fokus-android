@@ -1,10 +1,7 @@
 package com.isaiahvonrundstedt.fokus.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.isaiahvonrundstedt.fokus.database.converter.ColorConverter
@@ -19,9 +16,9 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import java.time.ZonedDateTime
 
 @Database(
-    entities = [Subject::class, Task::class, Attachment::class, Log::class,
-        Event::class, Schedule::class],
-    version = AppDatabase.DATABASE_VERSION, exportSchema = false
+    entities = [Subject::class, Task::class, Attachment::class, Log::class, Event::class, Schedule::class],
+    version = AppDatabase.DATABASE_VERSION,
+    exportSchema = true
 )
 @TypeConverters(DateTimeConverter::class, ColorConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -34,7 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun logs(): LogDAO
 
     companion object {
-        const val DATABASE_VERSION = 7
+        const val DATABASE_VERSION = 8
         private const val DATABASE_NAME = "fokus"
 
         private var instance: AppDatabase? = null
@@ -370,7 +367,16 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private var migration_7_8 = object : Migration(7, 8) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                with(database) {
+                    execSQL("ALTER TABLE subjects ADD COLUMN `instructor` TEXT")
+                    execSQL("ALTER TABLE schedules ADD COLUMN `classroom` TEXT")
+                }
+            }
+        }
+
         private val migrations =
-            arrayOf(migration_4_6, migration_5_6, migration_4_7, migration_5_7, migration_6_7)
+            arrayOf(migration_4_6, migration_5_6, migration_4_7, migration_5_7, migration_6_7, migration_7_8)
     }
 }

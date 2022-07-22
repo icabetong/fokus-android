@@ -3,7 +3,7 @@
 
     <style name="Fokus.Theme.Base" parent="Fokus.Theme">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/color_status_background</item>
+        <item name="android:statusBarColor">@color/theme_surface</item>
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
@@ -17,7 +17,7 @@
 
     <!-- Components -->
     <style name="Fokus.Component.Viewer" parent="Fokus.Component.Viewer.Bridge">
-        <item name="android:statusBarColor">@color/color_status_background</item>
+        <item name="android:statusBarColor">@color/theme_surface</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

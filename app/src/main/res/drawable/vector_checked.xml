@@ -8,7 +8,7 @@
     <path
         android:name="tick"
         android:pathData="M7,12.448 L10.254,15.348 L17.265,9"
-        android:strokeColor="@color/color_primary"
+        android:strokeColor="@color/theme_primary"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
         android:strokeWidth="1.5" />
@@ -16,6 +16,6 @@
     <path
         android:name="circle"
         android:pathData="M12,2 C17.5228,2,22,6.47715,22,12 C22,17.5228,17.5228,22,12,22 C6.47715,22,2,17.5228,2,12 C2,6.47715,6.47715,2,12,2 Z"
-        android:strokeColor="@color/color_primary"
+        android:strokeColor="@color/theme_primary"
         android:strokeWidth="1.5" />
 </vector>

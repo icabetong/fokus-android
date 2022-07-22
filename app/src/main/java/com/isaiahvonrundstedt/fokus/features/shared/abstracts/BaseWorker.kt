@@ -206,7 +206,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters) 
             setOngoing(log?.isImportant == true)
             if (action != null)
                 addAction(action)
-            color = ContextCompat.getColor(applicationContext, R.color.color_primary)
+            color = ContextCompat.getColor(applicationContext, R.color.theme_primary)
         }.build()
     }
 

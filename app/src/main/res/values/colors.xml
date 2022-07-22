@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">@color/color_fokus_blue_500</color>
-    <color name="color_primary_dark">@color/color_fokus_blue_700</color>
-    <color name="color_on_primary">#ffffff</color>
+    <color name="theme_primary">#006591</color>
+    <color name="theme_on_primary">#ffffff</color>
+    <color name="theme_primary_container">#c9e6ff</color>
+    <color name="theme_on_primary_container">#001e2f</color>
+    <color name="theme_secondary">#1160a4</color>
+    <color name="theme_on_secondary">#ffffff</color>
+    <color name="theme_secondary_container">#d2e4ff</color>
+    <color name="theme_on_secondary_container">#001c38</color>
+    <color name="theme_tertiary">#494bd6</color>
+    <color name="theme_on_tertiary">#ffffff</color>
+    <color name="theme_tertiary_container">#e1e0ff</color>
+    <color name="theme_on_tertiary_container">#07006c</color>
+    <color name="theme_error">#ba1a1a</color>
+    <color name="theme_on_error">#ffffff</color>
+    <color name="theme_error_container">#ffdad6</color>
+    <color name="theme_on_error_container">#410002</color>
+    <color name="theme_background">#fcfcff</color>
+    <color name="theme_on_background">#191c1e</color>
+    <color name="theme_surface">#fcfcff</color>
+    <color name="theme_on_surface">#191c1e</color>
+    <color name="theme_surface_variant">#dde3ea</color>
+    <color name="theme_on_surface_variant">#41474d</color>
+    <color name="theme_outline">#71787e</color>
+
     <color name="color_widget_tint">#c1e4f8</color>
     <color name="color_surface">#ffffff</color>
     <color name="color_on_surface">#111111</color>
@@ -11,9 +32,8 @@
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#ffffff</color>
 
-    <color name="color_status_background">@color/color_surface</color>
-    <color name="color_toolbar_background">@color/color_surface</color>
-    <color name="color_window_background">@color/color_surface</color>
+    <color name="color_status_background">@color/theme_surface</color>
+    <color name="color_window_background">@color/theme_surface</color>
     <color name="color_navigation_background">@color/color_window_background</color>
 
     <color name="color_primary_text">@color/color_on_surface</color>

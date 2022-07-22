@@ -121,7 +121,7 @@ abstract class BaseFragment : Fragment() {
             setAllContainerColors(
                 MaterialColors.getColor(
                     requireContext(), R.attr.colorSurface,
-                    ContextCompat.getColor(requireContext(), R.color.color_surface)
+                    ContextCompat.getColor(requireContext(), R.color.theme_background)
                 )
             )
         }

@@ -5,6 +5,6 @@
         android:state_checked="true"/>
     <item android:color="@color/color_chip_background_transparent"
         android:state_selected="true"/>
-    <item android:color="@color/color_surface"/>
+    <item android:color="@color/theme_primary_container"/>
 
 </selector>

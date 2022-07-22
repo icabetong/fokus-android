@@ -1,8 +1,8 @@
 <resources>
 
     <style name="Fokus.Theme.Base" parent="Fokus.Theme">
-        <item name="android:statusBarColor">@color/color_status_background</item>
-        <item name="android:navigationBarColor">@color/color_navigation_background</item>
+        <item name="android:statusBarColor">@color/theme_surface</item>
+        <item name="android:navigationBarColor">@color/theme_surface</item>
     </style>
 
     <style name="Fokus.Theme.Core" parent="Fokus.Theme.Base">
@@ -11,17 +11,17 @@
     </style>
 
     <style name="Fokus.Theme.Core.Navigation">
-        <item name="android:navigationBarColor">@color/color_surface</item>
+        <item name="android:navigationBarColor">@color/theme_surface</item>
     </style>
 
     <!-- Components -->
     <style name="Fokus.Component.Viewer" parent="Fokus.Component.Viewer.Bridge">
-        <item name="android:statusBarColor">@color/color_status_background</item>
-        <item name="android:navigationBarColor">@color/color_navigation_background</item>
+        <item name="android:statusBarColor">@color/theme_surface</item>
+        <item name="android:navigationBarColor">@color/theme_surface</item>
     </style>
     <style name="Fokus.Component.BottomSheet" parent="Fokus.Component.BottomSheet.Bridge">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/color_surface</item>
+        <item name="android:navigationBarColor">@color/theme_surface</item>
     </style>
 
 </resources>

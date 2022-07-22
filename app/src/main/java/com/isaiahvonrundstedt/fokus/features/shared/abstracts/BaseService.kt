@@ -46,7 +46,7 @@ abstract class BaseService : Service() {
             setCategory(Notification.CATEGORY_SERVICE)
             setChannelId(NotificationChannelManager.CHANNEL_ID_GENERIC)
             if (ongoing) setProgress(0, 0, true)
-            color = ContextCompat.getColor(this@BaseService, R.color.color_primary)
+            color = ContextCompat.getColor(this@BaseService, R.color.theme_primary)
         }.build()
     }
 

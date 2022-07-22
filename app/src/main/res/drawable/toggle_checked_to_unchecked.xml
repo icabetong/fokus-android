@@ -21,7 +21,7 @@
                 android:duration="@android:integer/config_shortAnimTime"
                 android:interpolator="@android:interpolator/accelerate_decelerate"
                 android:propertyName="strokeColor"
-                android:valueFrom="@color/color_primary"
+                android:valueFrom="@color/theme_primary"
                 android:valueTo="@color/color_secondary_text"
                 android:valueType="intType" />
         </aapt:attr>

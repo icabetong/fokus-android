@@ -272,12 +272,12 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         if (day.owner == DayOwner.THIS_MONTH) {
             when (day.date) {
                 viewModel.today -> {
-                    textView.setTextColorFromResource(R.color.color_on_primary)
+                    textView.setTextColorFromResource(R.color.theme_on_primary_container)
                     textView.setBackgroundResource(R.drawable.shape_calendar_current_day)
                     view.isVisible = false
                 }
                 viewModel.selectedDate -> {
-                    textView.setTextColorFromResource(R.color.color_primary)
+                    textView.setTextColorFromResource(R.color.theme_on_primary_container)
                     textView.setBackgroundResource(R.drawable.shape_calendar_selected_day)
                     view.isVisible = false
                 }

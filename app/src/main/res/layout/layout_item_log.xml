@@ -19,7 +19,7 @@
             android:layout_height="@dimen/icon_height"
             android:padding="4dp"
             android:background="@drawable/shape_icon_background"
-            app:tint="@color/color_fokus_blue_900"
+            app:tint="@color/theme_on_primary_container"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

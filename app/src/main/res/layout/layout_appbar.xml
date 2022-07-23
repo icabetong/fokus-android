@@ -6,13 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:liftOnScroll="true">
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        style="@style/Fokus.Widget.Toolbar"
+        app:layout_scrollFlags="snap"
         tools:title="@string/activity_tasks" />
 
 </com.google.android.material.appbar.AppBarLayout>

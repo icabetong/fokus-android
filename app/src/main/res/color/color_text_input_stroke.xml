@@ -7,6 +7,6 @@
         android:state_focused="true"/>
     <item android:color="?attr/colorPrimary"
         android:state_selected="true"/>
-    <item android:color="@color/color_surface_secondary"/>
+    <item android:color="@color/theme_surface_variant"/>
 
 </selector>

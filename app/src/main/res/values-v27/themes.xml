@@ -4,7 +4,7 @@
     <style name="Fokus.Theme.Base" parent="Fokus.Theme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryContainer</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:navigationBarColor">?attr/backgroundColor</item>
     </style>
 

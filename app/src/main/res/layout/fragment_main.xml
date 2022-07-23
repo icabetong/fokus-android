@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/appBarLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/nestedNavigationHost"
         layout="@layout/layout_appbar"/>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nestedNavigationHost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/navigation_core"
-        app:defaultNavHost="false"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        app:layout_constraintBottom_toTopOf="@id/navigationView"
-        tools:ignore="FragmentTagUsage"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:exb_items="@menu/navigation_core"
-        app:layout_constraintTop_toBottomOf="@id/nestedNavigationHost"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Fokus.Widget.Navigation"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nestedNavigationHost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph="@navigation/navigation_core"
+            app:defaultNavHost="false"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintBottom_toTopOf="@id/navigationView"
+            tools:ignore="FragmentTagUsage"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+            android:id="@+id/navigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:exb_items="@menu/navigation_core"
+            app:layout_constraintTop_toBottomOf="@id/nestedNavigationHost"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Fokus.Widget.Navigation"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

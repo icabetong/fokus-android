@@ -30,16 +30,7 @@
     <color name="theme_surface_tint">#89ceff</color>
     <color name="theme_surface_tint_color">#89ceff</color>
 
-    <color name="color_surface">#121212</color>
-    <color name="color_on_surface">#ffffff</color>
-    <color name="color_surface_secondary">#1c1c1c</color>
-    <color name="color_on_surface_secondary">@color/color_on_surface</color>
-
-    <color name="color_status_background">@color/theme_surface</color>
-    <color name="color_window_background">#080808</color>
-    <color name="color_navigation_background">@color/theme_surface</color>
-
-    <color name="color_primary_text">@color/color_on_surface</color>
+    <color name="color_primary_text">@color/theme_on_surface</color>
     <color name="color_secondary_text">#808080</color>
 
 </resources>

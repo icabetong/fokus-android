@@ -5,13 +5,14 @@ import android.util.AttributeSet
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.isaiahvonrundstedt.fokus.R
 
 class ReactiveTextColorSwitch @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = R.attr.switchStyle
-) : SwitchCompat(context, attributeSet, defStyleAttr) {
+) : SwitchMaterial(context, attributeSet, defStyleAttr) {
 
     init {
         setSwitchTextAppearance(context, R.style.Fokus_TextAppearance_Editor_Value)

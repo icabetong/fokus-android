@@ -3,7 +3,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="@color/color_on_surface">
+    android:tint="@color/theme_on_surface">
   <path
       android:pathData="M3,4H16M3,8H12M3,12H9M13,12L17,8M17,8L21,12M17,8V20"
       android:strokeLineJoin="round"

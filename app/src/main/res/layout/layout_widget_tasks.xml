@@ -42,7 +42,7 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/button_add"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_hero_plus_24"
+                android:src="@drawable/ic_round_add_24"
                 android:tint="@color/theme_primary"
                 tools:ignore="UseAppTint" />
 

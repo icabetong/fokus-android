@@ -174,7 +174,7 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_hero_check_24"
+        app:icon="@drawable/ic_round_check_24"
         style="@style/Fokus.Widget.Button.Outlined"/>
 
 </LinearLayout>

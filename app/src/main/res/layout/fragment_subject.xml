@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_hero_plus_24"/>
+        android:contentDescription="@string/button_add"
+        app:srcCompat="@drawable/ic_round_add_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

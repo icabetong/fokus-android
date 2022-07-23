@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_hero_x_24"
+        app:navigationIcon="@drawable/ic_round_close_24"
         tools:title="@string/activity_tasks" />
 
 </com.google.android.material.appbar.AppBarLayout>

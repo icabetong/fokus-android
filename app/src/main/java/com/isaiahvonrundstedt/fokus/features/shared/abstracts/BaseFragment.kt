@@ -89,7 +89,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun setupNavigation(toolbar: MaterialToolbar, controller: NavController?) {
-        toolbar.setNavigationIcon(R.drawable.ic_hero_menu_24)
+        toolbar.setNavigationIcon(R.drawable.ic_round_menu_24)
         toolbar.setNavigationOnClickListener {
             NavigationSheet.show(childFragmentManager)
         }

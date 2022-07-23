@@ -23,6 +23,12 @@
     <color name="theme_surface_variant">#dde3ea</color>
     <color name="theme_on_surface_variant">#41474d</color>
     <color name="theme_outline">#71787e</color>
+    <color name="theme_inverse_on_surface">#f0f0f3</color>
+    <color name="theme_inverse_surface">#2e3133</color>
+    <color name="theme_inverse_primary">#89ceff</color>
+    <color name="theme_shadow">#000000</color>
+    <color name="theme_surface_tint">#006591</color>
+    <color name="theme_surface_tint_color">#006591</color>
 
     <color name="color_widget_tint">#c1e4f8</color>
     <color name="color_surface">#ffffff</color>

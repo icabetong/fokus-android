@@ -4,10 +4,8 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.compose.runtime.*
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
@@ -26,7 +24,6 @@ import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.layout_calendar_week_days.view.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {

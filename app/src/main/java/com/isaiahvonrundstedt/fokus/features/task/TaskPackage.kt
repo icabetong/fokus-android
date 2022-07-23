@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.features.task
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Embedded
-import androidx.room.Ignore
 import androidx.room.Relation
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject

@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.components.views
 import android.content.Context
 import android.util.AttributeSet
 import androidx.annotation.ColorRes
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.isaiahvonrundstedt.fokus.R

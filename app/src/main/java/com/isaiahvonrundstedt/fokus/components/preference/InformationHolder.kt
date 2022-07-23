@@ -3,7 +3,6 @@ package com.isaiahvonrundstedt.fokus.components.preference
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import androidx.core.content.res.TypedArrayUtils
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R

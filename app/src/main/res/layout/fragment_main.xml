@@ -28,14 +28,13 @@
             app:layout_constraintBottom_toTopOf="@id/navigationView"
             tools:ignore="FragmentTagUsage"/>
 
-        <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:exb_items="@menu/navigation_core"
+            app:menu="@menu/navigation_core"
             app:layout_constraintTop_toBottomOf="@id/nestedNavigationHost"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Fokus.Widget.Navigation"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </LinearLayout>
 

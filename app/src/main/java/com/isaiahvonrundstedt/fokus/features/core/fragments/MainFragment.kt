@@ -8,11 +8,11 @@ import androidx.core.view.doOnPreDraw
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.databinding.FragmentMainBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import github.com.st235.lib_expandablebottombar.navigation.ExpandableBottomBarNavigationUI
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment() {
@@ -44,7 +44,7 @@ class MainFragment : BaseFragment() {
 
         val navigationHost = childFragmentManager.findFragmentById(R.id.nestedNavigationHost)
         navigationHost?.findNavController()?.also {
-            ExpandableBottomBarNavigationUI.setupWithNavController(binding.navigationView, it)
+            binding.navigationView.setupWithNavController(it)
         }
     }
 

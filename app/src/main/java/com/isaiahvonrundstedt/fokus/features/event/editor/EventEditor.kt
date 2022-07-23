@@ -17,7 +17,8 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.fragment.app.*
+import androidx.fragment.app.FragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -51,7 +52,6 @@ import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivit
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
-import java.text.DateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
 

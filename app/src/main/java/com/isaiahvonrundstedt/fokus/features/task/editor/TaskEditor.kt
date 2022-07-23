@@ -9,7 +9,10 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent

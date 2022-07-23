@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:checkableBehavior="single">
+    <group android:id="@+id/groupFragments" android:checkableBehavior="single">
 
         <item
-            android:id="@+id/navigation_home"
-            android:title="@string/navigation_home"
-            android:icon="@drawable/ic_round_home_24"/>
+            android:id="@+id/navigation_tasks"
+            android:title="@string/navigation_tasks"
+            android:icon="@drawable/ic_round_check_24"/>
+
+        <item
+            android:id="@+id/navigation_events"
+            android:title="@string/navigation_events"
+            android:icon="@drawable/ic_round_event_24"/>
+
+        <item
+            android:id="@+id/navigation_subjects"
+            android:title="@string/navigation_subjects"
+            android:icon="@drawable/ic_round_science_24"/>
 
         <item
             android:id="@+id/navigation_logs"
@@ -16,14 +25,16 @@
 
     </group>
 
-    <item
-        android:id="@+id/navigation_settings"
-        android:title="@string/navigation_settings"
-        android:icon="@drawable/ic_round_settings_24"/>
+    <group android:id="@+id/groupActivities" android:checkableBehavior="none">
+        <item
+            android:id="@+id/navigation_settings"
+            android:title="@string/navigation_settings"
+            android:icon="@drawable/ic_round_settings_24"/>
 
-    <item
-        android:id="@+id/navigation_about"
-        android:title="@string/navigation_about"
-        android:icon="@drawable/ic_round_info_24"/>
+        <item
+            android:id="@+id/navigation_about"
+            android:title="@string/navigation_about"
+            android:icon="@drawable/ic_round_info_24"/>
+    </group>
 
 </menu>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="container_padding_medium">24dp</dimen>
     <dimen name="container_padding">16dp</dimen>
     <dimen name="composable_spacing">8dp</dimen>
     <dimen name="composable_spacing_siblings">2dp</dimen>

@@ -3,13 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/navigation_home">
+    app:startDestination="@id/navigation_tasks">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.isaiahvonrundstedt.fokus.features.core.fragments.MainFragment"
-        tools:layout="@layout/fragment_main"/>
-
+        android:id="@+id/navigation_tasks"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
+        android:label="@string/navigation_tasks"
+        tools:layout="@layout/fragment_task"/>
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
+        android:label="@string/navigation_events"
+        tools:layout="@layout/fragment_event"/>
+    <fragment
+        android:id="@+id/navigation_subjects"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment"
+        android:label="@string/activity_subjects"
+        tools:layout="@layout/fragment_subject"/>
     <fragment
         android:id="@+id/navigation_logs"
         android:name="com.isaiahvonrundstedt.fokus.features.log.LogFragment"
@@ -27,17 +37,20 @@
         tools:layout="@layout/activity_about"/>
 
     <action
-        android:id="@+id/action_to_navigation_main"
-        app:destination="@id/navigation_main"/>
-
+        android:id="@+id/action_to_navigation_tasks"
+        app:destination="@id/navigation_tasks"/>
+    <action
+        android:id="@+id/action_to_navigation_events"
+        app:destination="@id/navigation_events"/>
+    <action
+        android:id="@+id/action_to_navigation_subjects"
+        app:destination="@id/navigation_subjects"/>
     <action
         android:id="@+id/action_to_navigation_logs"
         app:destination="@id/navigation_logs"/>
-
     <action
         android:id="@+id/action_to_navigation_settings"
         app:destination="@id/navigation_settings"/>
-
     <action
         android:id="@+id/action_to_navigation_about"
         app:destination="@id/navigation_about"/>
@@ -102,7 +115,5 @@
     <action
         android:id="@+id/action_to_navigation_archived_task"
         app:destination="@id/navigation_archived_task"/>
-
-    <include app:graph="@navigation/navigation_core"/>
 
 </navigation>

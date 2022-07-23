@@ -5,10 +5,15 @@ import android.content.Intent
 import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.DimenRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+
+fun Context.getDimension(@DimenRes res: Int): Int {
+    return (resources.getDimension(res) / resources.displayMetrics.density).toInt()
+}
 
 fun Context.startForegroundServiceCompat(service: Intent) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)

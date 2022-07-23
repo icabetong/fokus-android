@@ -61,15 +61,21 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar,
+            arrayOf(
+                binding.recyclerView,
+                binding.emptyViewPendingTasks,
+                binding.emptyViewFinishedTasks),
+            binding.actionButton
+        )
 
-        getParentToolbar()?.run {
+        with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
-            menu?.clear()
             inflateMenu(R.menu.menu_tasks)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
+            setupNavigation(this)
         }
 
         with(binding.recyclerView) {
@@ -241,15 +247,15 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
             }
             R.id.action_filter_all -> {
                 viewModel.filterOption = TaskViewModel.Constraint.ALL
-                getParentToolbar()?.setTitle(getToolbarTitle())
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
             }
             R.id.action_filter_pending -> {
                 viewModel.filterOption = TaskViewModel.Constraint.PENDING
-                getParentToolbar()?.setTitle(getToolbarTitle())
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
             }
             R.id.action_filter_finished -> {
                 viewModel.filterOption = TaskViewModel.Constraint.FINISHED
-                getParentToolbar()?.setTitle(getToolbarTitle())
+                binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
             }
             R.id.action_archived -> {
                 controller?.navigate(R.id.action_to_navigation_archived_task)

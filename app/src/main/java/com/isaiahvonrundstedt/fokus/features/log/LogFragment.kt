@@ -40,12 +40,14 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.emptyView))
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_logs)
             inflateMenu(R.menu.menu_logs)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
+            setupNavigation(binding.appBarLayout.toolbar)
         }
 
         with(binding.recyclerView) {
@@ -67,7 +69,6 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
          * activity is recreated.
          */
         controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
-        setupNavigation(binding.appBarLayout.toolbar, controller)
 
         viewModel.logs.observe(viewLifecycleOwner) {
             logAdapter.submitList(it)

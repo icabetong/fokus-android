@@ -8,21 +8,23 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
+import androidx.core.view.*
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.navigation.NavController
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
-import com.google.android.material.transition.MaterialFadeThrough
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
+import com.isaiahvonrundstedt.fokus.components.extensions.android.getDimension
 import me.saket.cascade.CascadePopupMenu
 
 abstract class BaseFragment : Fragment() {
+
+    private val activityDrawerLayout: DrawerLayout?
+        get() = activity?.findViewById(R.id.drawerLayout) as? DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +36,40 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    /**
-     * @return returns the Parent Fragment with the Toolbar view
-     * useful when dealing with MainFragment.kt then its ChildFragments
-     */
-    protected fun getParentToolbar(): MaterialToolbar? {
-        // see https://stackoverflow.com/a/63200538
-        return parentFragment?.parentFragment?.view?.findViewById(R.id.toolbar)
+    protected fun setupNavigation(toolbar: MaterialToolbar) {
+        with(toolbar) {
+            setNavigationIcon(R.drawable.ic_round_menu_24)
+            setNavigationOnClickListener { triggerNavigationDrawer() }
+        }
+    }
+
+    private fun triggerNavigationDrawer() {
+        if (activityDrawerLayout?.isDrawerOpen(GravityCompat.START) == true)
+            activityDrawerLayout?.closeDrawer(GravityCompat.START)
+        else activityDrawerLayout?.openDrawer(GravityCompat.START)
+    }
+
+    protected fun setInsets(
+        root: View,
+        topView: View,
+        contentViews: Array<View> = emptyArray(),
+        bottomView: View? = null
+    ) {
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
+            val windowInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            topView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = windowInsets.top
+            }
+            bottomView?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = windowInsets.bottom + view.context.getDimension(R.dimen.container_padding_medium)
+            }
+            contentViews.forEach { contentView ->
+                contentView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    bottomMargin = windowInsets.bottom
+                }
+            }
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     /**
@@ -85,29 +114,6 @@ abstract class BaseFragment : Fragment() {
     protected fun registerForFragmentResult(keys: Array<String>, listener: FragmentResultListener) {
         keys.forEach {
             childFragmentManager.setFragmentResultListener(it, viewLifecycleOwner, listener)
-        }
-    }
-
-    protected fun setupNavigation(toolbar: MaterialToolbar, controller: NavController?) {
-        toolbar.setNavigationIcon(R.drawable.ic_round_menu_24)
-        toolbar.setNavigationOnClickListener {
-            NavigationSheet.show(childFragmentManager)
-        }
-
-        childFragmentManager.setFragmentResultListener(
-            NavigationSheet.REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, args ->
-            args.getInt(NavigationSheet.EXTRA_DESTINATION).also {
-                exitTransition = MaterialFadeThrough().apply {
-                    duration = TRANSITION_DURATION
-                }
-                enterTransition = MaterialFadeThrough().apply {
-                    duration = TRANSITION_DURATION
-                }
-
-                controller?.navigate(it)
-            }
         }
     }
 

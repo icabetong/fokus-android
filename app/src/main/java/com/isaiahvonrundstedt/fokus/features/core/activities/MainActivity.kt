@@ -3,12 +3,11 @@ package com.isaiahvonrundstedt.fokus.features.core.activities
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.components.bottomsheet.NavigationSheet
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
@@ -21,14 +20,11 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
-    private val taskViewModel: TaskViewModel by viewModels()
-
     private var controller: NavController? = null
     private lateinit var binding: ActivityMainBinding
 
@@ -86,26 +82,18 @@ class MainActivity : BaseActivity() {
                     controller?.navigate(R.id.action_to_navigation_editor_subject)
                 }
                 ACTION_NAVIGATION_TASK -> {
-                    controller?.navigate(R.id.action_to_navigation_main)
+                    controller?.navigate(R.id.action_to_navigation_tasks)
                 }
                 ACTION_NAVIGATION_EVENT -> {
-                    controller?.navigate(R.id.action_to_navigation_main)
+                    controller?.navigate(R.id.action_to_navigation_events)
                 }
                 ACTION_NAVIGATION_SUBJECT -> {
-                    controller?.navigate(R.id.action_to_navigation_main)
+                    controller?.navigate(R.id.action_to_navigation_subjects)
                 }
             }
         }
 
         TaskReminderWorker.reschedule(this.applicationContext)
-
-        with(supportFragmentManager) {
-            setFragmentResultListener(NavigationSheet.REQUEST_KEY, this@MainActivity) { _, args ->
-                args.getInt(NavigationSheet.EXTRA_DESTINATION).also {
-                    controller?.navigate(it)
-                }
-            }
-        }
     }
 
     override fun onStart() {
@@ -130,6 +118,16 @@ class MainActivity : BaseActivity() {
                     groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
                 )
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.navigationView.setNavigationItemSelectedListener {
+            controller?.navigate(it.itemId)
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
         }
     }
 

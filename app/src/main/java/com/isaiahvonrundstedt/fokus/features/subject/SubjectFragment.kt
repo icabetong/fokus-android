@@ -51,16 +51,23 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar,
+            arrayOf(
+                binding.recyclerView,
+                binding.emptyViewSubjectsToday,
+                binding.emptyViewSubjectsAll,
+                binding.emptyViewSubjectsTomorrow
+            ), binding.actionButton
+        )
 
-        getParentToolbar()?.run {
+        with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
-
             menu?.clear()
             inflateMenu(R.menu.menu_subjects)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
+            setupNavigation(this)
 
             menu.findItem(R.id.action_sort_schedule)
                 ?.isVisible = viewModel.constraint != SubjectViewModel.Constraint.ALL
@@ -199,9 +206,8 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 viewModel.constraint = SubjectViewModel.Constraint.ALL
                 subjectAdapter.constraint = viewModel.constraint
 
-                getParentToolbar()?.run {
+                with(binding.appBarLayout.toolbar) {
                     setTitle(getToolbarTitle())
-
                     menu?.findItem(R.id.action_sort_schedule)?.isVisible = false
                 }
             }
@@ -209,18 +215,16 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 viewModel.constraint = SubjectViewModel.Constraint.TODAY
                 subjectAdapter.constraint = viewModel.constraint
 
-                getParentToolbar()?.run {
+                with(binding.appBarLayout.toolbar) {
                     setTitle(getToolbarTitle())
-
                     menu?.findItem(R.id.action_sort_schedule)?.isVisible = false
                 }
             }
             R.id.action_filter_tomorrow -> {
                 viewModel.constraint = SubjectViewModel.Constraint.TOMORROW
                 subjectAdapter.constraint = viewModel.constraint
-                getParentToolbar()?.run {
+                with(binding.appBarLayout.toolbar) {
                     setTitle(getToolbarTitle())
-
                     menu?.findItem(R.id.action_sort_schedule)?.isVisible = true
                 }
             }

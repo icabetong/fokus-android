@@ -66,15 +66,17 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.containerLayout),
+            binding.actionButton)
 
-        getParentToolbar()?.run {
+        with(binding.appBarLayout.toolbar) {
             title = viewModel.currentMonth.format(monthYearFormatter)
             menu?.clear()
             inflateMenu(R.menu.menu_events)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
+            setupNavigation(this)
         }
 
         with(binding.recyclerView) {
@@ -163,7 +165,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
 
         binding.calendarView.monthScrollListener = {
             setCurrentDate(it.yearMonth.atDay(1))
-            getParentToolbar()?.title = it.yearMonth.format(monthYearFormatter)
+            binding.appBarLayout.toolbar.title = it.yearMonth.format(monthYearFormatter)
 
             // Check if the user is nearing the end of the month list.
             // Then continually add more months so that the user

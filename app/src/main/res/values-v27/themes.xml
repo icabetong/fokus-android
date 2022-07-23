@@ -4,8 +4,8 @@
     <style name="Fokus.Theme.Base" parent="Fokus.Theme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:statusBarColor">?attr/colorSurface</item>
-        <item name="android:navigationBarColor">?attr/backgroundColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Fokus.Theme.Core" parent="Fokus.Theme.Base">
@@ -14,8 +14,9 @@
     </style>
 
     <style name="Fokus.Theme.Core.Navigation">
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <!-- Components -->

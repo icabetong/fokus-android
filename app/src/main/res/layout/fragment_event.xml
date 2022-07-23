@@ -6,7 +6,12 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true">
 
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/layout_appbar"/>
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

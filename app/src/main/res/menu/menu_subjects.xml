@@ -11,7 +11,7 @@
         <menu>
             <item
                 android:title="@string/field_subject_code"
-                android:icon="@drawable/ic_hero_hashtag_24">
+                android:icon="@drawable/ic_round_numbers_24">
                 <menu>
                     <item
                         android:id="@+id/action_code_sort_ascending"
@@ -26,7 +26,7 @@
             </item>
             <item
                 android:title="@string/field_description"
-                android:icon="@drawable/ic_hero_pencil_24">
+                android:icon="@drawable/ic_round_edit_24">
                 <menu>
                     <item
                         android:id="@+id/action_description_sort_ascending"
@@ -42,7 +42,7 @@
             <item
                 android:id="@+id/action_sort_schedule"
                 android:title="@string/field_schedule"
-                android:icon="@drawable/ic_hero_calendar_24">
+                android:icon="@drawable/ic_round_event_24">
                 <menu>
                     <item
                         android:id="@+id/action_schedule_sort_ascending"
@@ -61,28 +61,28 @@
 
     <item
         android:title="@string/menu_filter"
-        android:icon="@drawable/ic_hero_filter_24"
+        android:icon="@drawable/ic_round_filter_alt_24"
         app:showAsAction="never">
 
         <menu>
             <item
                 android:id="@+id/action_filter_all"
                 android:title="@string/filter_options_all"
-                android:icon="@drawable/ic_hero_clipboard_list_24"/>
+                android:icon="@drawable/ic_round_checklist_24"/>
             <item
                 android:id="@+id/action_filter_today"
                 android:title="@string/filter_options_today_classes"
-                android:icon="@drawable/ic_hero_exclamation_circle_24" />
+                android:icon="@drawable/ic_round_warning_24" />
             <item
                 android:id="@+id/action_filter_tomorrow"
                 android:title="@string/filter_options_tomorrow_classes"
-                android:icon="@drawable/ic_hero_calendar_24"/>
+                android:icon="@drawable/ic_round_event_24"/>
         </menu>
     </item>
 
     <item
         android:id="@+id/action_archived"
         android:title="@string/menu_archived"
-        android:icon="@drawable/ic_hero_archive_24"/>
+        android:icon="@drawable/ic_round_archive_24"/>
 
 </menu>

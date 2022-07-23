@@ -20,7 +20,7 @@
         android:id="@android:id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_hero_information_circle_24"
+        android:drawableStart="@drawable/ic_round_info_24"
         android:drawablePadding="32dp"
         app:drawableTint="?attr/colorControlNormal"
         tools:text="text"/>

@@ -10,7 +10,7 @@
         <menu>
             <item
                 android:title="@string/field_task_name"
-                android:icon="@drawable/ic_hero_pencil_24">
+                android:icon="@drawable/ic_round_edit_24">
                 <menu>
                     <item
                         android:id="@+id/action_name_sort_ascending"
@@ -25,7 +25,7 @@
             </item>
             <item
                 android:title="@string/field_due_date"
-                android:icon="@drawable/ic_hero_clock_24">
+                android:icon="@drawable/ic_round_access_time_24">
                 <menu>
                     <item
                         android:id="@+id/action_due_sort_ascending"
@@ -44,28 +44,28 @@
 
     <item
         android:title="@string/menu_filter"
-        android:icon="@drawable/ic_hero_filter_24"
+        android:icon="@drawable/ic_round_filter_alt_24"
         app:showAsAction="never">
 
         <menu>
             <item
                 android:id="@+id/action_filter_all"
                 android:title="@string/filter_options_all"
-                android:icon="@drawable/ic_hero_clipboard_list_24"/>
+                android:icon="@drawable/ic_round_checklist_24"/>
             <item
                 android:id="@+id/action_filter_pending"
                 android:title="@string/filter_options_pending_tasks"
-                android:icon="@drawable/ic_hero_exclamation_circle_24" />
+                android:icon="@drawable/ic_round_warning_24" />
             <item
                 android:id="@+id/action_filter_finished"
                 android:title="@string/filter_options_finished_tasks"
-                android:icon="@drawable/ic_hero_check_24"/>
+                android:icon="@drawable/ic_round_check_24"/>
         </menu>
     </item>
 
     <item
         android:id="@+id/action_archived"
         android:title="@string/menu_archived"
-        android:icon="@drawable/ic_hero_archive_24"/>
+        android:icon="@drawable/ic_round_archive_24"/>
 
 </menu>

@@ -27,6 +27,9 @@
         <item name="colorSurfaceVariant">@color/theme_surface_variant</item>
         <item name="colorOnSurfaceVariant">@color/theme_on_surface_variant</item>
         <item name="colorOutline">@color/theme_outline</item>
+        <item name="colorOnSurfaceInverse">@color/theme_inverse_on_surface</item>
+        <item name="colorSurfaceInverse">@color/theme_inverse_surface</item>
+        <item name="colorPrimaryInverse">@color/theme_inverse_primary</item>
 
         <item name="preferenceTheme">@style/Fokus.Component.Preference</item>
         <item name="bottomSheetDialogTheme">@style/Fokus.Component.BottomSheet</item>
@@ -143,30 +146,40 @@
     </style>
 
     <style name="Fokus.Widget.AppBar" parent="Widget.Material3.AppBarLayout">
-<!--        <item name="android:background">@color/color_toolbar_background</item>-->
+        <item name="backgroundColor">?attr/colorSurface</item>
     </style>
-    <style name="Fokus.Widget.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="navigationIcon">@drawable/ic_hero_arrow_left_24</item>
+    <style name="Fokus.Widget.Toolbar" parent="Widget.Material3.Toolbar.Surface">
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
+        <item name="titleCentered">true</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
+        <item name="maxButtonHeight">48dp</item>
+        <item name="backgroundColor">?attr/colorSurface</item>
+        <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
+    </style>
+    <style name="Fokus.Widget.Toolbar.Surface" parent="Widget.Material3.Toolbar.Surface">
+        <item name="contentInsetStart">@dimen/toolbar_keyline</item>
+        <item name="titleCentered">true</item>
+        <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
+        <item name="backgroundColor">?attr/colorSurface</item>
         <item name="maxButtonHeight">48dp</item>
         <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">@color/color_on_surface</item>
+        <item name="tint">?attr/colorOnSurface</item>
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="srcCompat">@drawable/ic_hero_dots_vertical_24</item>
-        <item name="tint">@color/color_on_surface</item>
+        <item name="srcCompat">@drawable/ic_round_more_vert_24</item>
+        <item name="tint">?attr/colorOnPrimaryContainer</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
     <style name="Fokus.Widget.Navigation" parent="ExpandableBottomBar">
         <item name="exb_backgroundColor">?attr/colorSurface</item>
         <item name="exb_itemBackgroundCornerRadius">32dp</item>
-        <item name="exb_itemInactiveColor">?attr/colorControlNormal</item>
+        <item name="exb_itemInactiveColor">?attr/colorOnSurface</item>
         <item name="exb_transitionDuration">50</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.Material3.Button">

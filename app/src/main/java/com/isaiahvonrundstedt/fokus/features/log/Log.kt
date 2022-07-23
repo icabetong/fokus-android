@@ -55,11 +55,11 @@ data class Log @JvmOverloads constructor(
     @DrawableRes
     fun getIconResource(): Int {
         return when (type) {
-            TYPE_TASK -> R.drawable.ic_hero_check_24
-            TYPE_EVENT -> R.drawable.ic_hero_calendar_24
-            TYPE_CLASS -> R.drawable.ic_hero_beaker_24
-            TYPE_GENERIC -> R.drawable.ic_hero_light_bulb_24
-            else -> R.drawable.ic_hero_light_bulb_24
+            TYPE_TASK -> R.drawable.ic_round_check_24
+            TYPE_EVENT -> R.drawable.ic_round_event_24
+            TYPE_CLASS -> R.drawable.ic_round_science_24
+            TYPE_GENERIC -> R.drawable.ic_round_lightbulb_24
+            else -> R.drawable.ic_round_lightbulb_24
         }
     }
 

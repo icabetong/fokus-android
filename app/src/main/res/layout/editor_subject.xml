@@ -69,6 +69,22 @@
                     android:inputType="textCapWords"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="@string/field_description"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/instructorTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editor_item_height"
+                    android:layout_marginHorizontal="@dimen/editor_container_padding"
+                    android:hint="@string/hint_subject_description"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -149,6 +165,6 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_hero_check_24"/>
+        app:icon="@drawable/ic_round_check_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

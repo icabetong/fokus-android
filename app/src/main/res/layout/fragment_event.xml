@@ -31,14 +31,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="@color/color_surface_secondary"
+                android:background="?attr/colorSecondaryContainer"
                 android:fontFamily="sans-serif-medium"
                 android:paddingStart="20dp"
                 android:paddingTop="12dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="12dp"
                 android:textAllCaps="true"
-                android:textColor="@color/color_primary_text"
+                android:textColor="?attr/colorOnSecondaryContainer"
                 android:textSize="14sp" />
 
             <FrameLayout
@@ -90,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
-        app:srcCompat="@drawable/ic_hero_plus_24" />
+        android:contentDescription="@string/button_add"
+        app:srcCompat="@drawable/ic_round_add_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -216,7 +216,7 @@
                     android:paddingHorizontal="16dp"
                     android:text="@string/helper_this_is_important"
                     android:textColor="@color/color_secondary_text"
-                    android:drawableStart="@drawable/ic_hero_information_circle_24"
+                    android:drawableStart="@drawable/ic_round_info_24"
                     android:drawablePadding="16dp"
                     app:drawableTint="?attr/colorControlNormal"/>
 
@@ -264,7 +264,7 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_hero_check_24"/>
+        app:icon="@drawable/ic_round_check_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

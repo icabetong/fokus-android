@@ -17,11 +17,11 @@ abstract class BaseEditor : BaseFragment() {
 
         with(requireActivity().window) {
             statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                ContextCompat.getColor(requireContext(), R.color.color_window_background)
+                ContextCompat.getColor(requireContext(), R.color.theme_surface)
             else Color.BLACK
 
             navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
-                ContextCompat.getColor(requireContext(), R.color.color_navigation_background)
+                ContextCompat.getColor(requireContext(), R.color.theme_background)
             else Color.BLACK
 
             if (!isThemeDark) {
@@ -36,11 +36,11 @@ abstract class BaseEditor : BaseFragment() {
 
         with(requireActivity().window) {
             statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                ContextCompat.getColor(requireContext(), R.color.theme_surface)
+                ContextCompat.getColor(requireContext(), R.color.theme_surface_variant)
             else Color.BLACK
 
             navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1)
-                ContextCompat.getColor(requireContext(), R.color.color_navigation_background)
+                ContextCompat.getColor(requireContext(), R.color.theme_surface_variant)
             else Color.BLACK
         }
     }

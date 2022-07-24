@@ -48,7 +48,7 @@ import com.isaiahvonrundstedt.fokus.components.utils.PermissionManager
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
-import com.isaiahvonrundstedt.fokus.databinding.EditorTaskBinding
+import com.isaiahvonrundstedt.fokus.databinding.FragmentEditorTaskBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutDialogInputAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
@@ -71,7 +71,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListener {
-    private var _binding: EditorTaskBinding? = null
+    private var _binding: FragmentEditorTaskBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
@@ -165,15 +165,16 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = EditorTaskBinding.inflate(inflater, container, false)
+        _binding = FragmentEditorTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.coordinator.transitionName = TRANSITION_ELEMENT_ROOT
-
         controller = Navigation.findNavController(view)
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.contentView),
+            binding.actionButton)
 
         arguments?.getBundle(EXTRA_TASK)?.also {
             requestKey = REQUEST_KEY_UPDATE
@@ -495,8 +496,6 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-
         _binding = null
         LocalBroadcastManager.getInstance(requireContext())
             .unregisterReceiver(receiver)
@@ -505,6 +504,7 @@ class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListe
         context?.startService(Intent(context, FileImporterService::class.java).apply {
             action = FileImporterService.ACTION_CANCEL
         })
+        super.onDestroy()
     }
 
     private var receiver = object : BroadcastReceiver() {

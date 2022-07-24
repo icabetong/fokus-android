@@ -25,7 +25,7 @@ import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.viewer.ScheduleViewerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
-import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 
@@ -126,7 +126,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
 
         binding.actionButton.setOnClickListener {
             controller?.navigate(
-                R.id.action_to_navigation_editor_subject, null, null,
+                R.id.navigation_editor_subject, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
             )
         }
@@ -144,13 +144,13 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                     val transitionName = TRANSITION_ELEMENT_ROOT + t.subject.subjectID
 
                     val args = bundleOf(
-                        SubjectEditor.EXTRA_SUBJECT to Subject.toBundle(t.subject),
-                        SubjectEditor.EXTRA_SCHEDULE to t.schedules
+                        SubjectEditorFragment.EXTRA_SUBJECT to Subject.toBundle(t.subject),
+                        SubjectEditorFragment.EXTRA_SCHEDULE to t.schedules
                     )
 
                     container?.also {
                         controller?.navigate(
-                            R.id.action_to_navigation_editor_subject, args, null,
+                            R.id.navigation_editor_subject, args, null,
                             FragmentNavigatorExtras(it to transitionName)
                         )
                     }
@@ -229,7 +229,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 }
             }
             R.id.action_archived -> {
-                controller?.navigate(R.id.action_to_navigation_archived_subject)
+                controller?.navigate(R.id.navigation_archived_subject)
             }
         }
         return true

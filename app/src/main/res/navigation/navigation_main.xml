@@ -3,87 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/navigation_tasks">
+    app:startDestination="@id/navigation_root">
 
     <fragment
-        android:id="@+id/navigation_tasks"
-        android:name="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
-        android:label="@string/navigation_tasks"
-        tools:layout="@layout/fragment_task"/>
+        android:id="@+id/navigation_root"
+        android:name="com.isaiahvonrundstedt.fokus.features.core.fragment.RootFragment"
+        tools:layout="@layout/fragment_root"/>
     <fragment
-        android:id="@+id/navigation_events"
-        android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
-        android:label="@string/navigation_events"
-        tools:layout="@layout/fragment_event"/>
+        android:id="@+id/navigation_notices"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.NoticesFragment"
+        tools:layout="@layout/fragment_notices"/>
     <fragment
-        android:id="@+id/navigation_subjects"
-        android:name="com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment"
-        android:label="@string/activity_subjects"
-        tools:layout="@layout/fragment_subject"/>
-    <fragment
-        android:id="@+id/navigation_logs"
-        android:name="com.isaiahvonrundstedt.fokus.features.log.LogFragment"
-        android:label="@string/activity_logs"
-        tools:layout="@layout/fragment_logs"/>
-
-    <activity
-        android:id="@+id/navigation_settings"
-        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity"
-        tools:layout="@layout/activity_settings"/>
-
-    <activity
-        android:id="@+id/navigation_about"
-        android:name="com.isaiahvonrundstedt.fokus.features.about.AboutActivity"
-        tools:layout="@layout/activity_about"/>
-
-    <action
-        android:id="@+id/action_to_navigation_tasks"
-        app:destination="@id/navigation_tasks"/>
-    <action
-        android:id="@+id/action_to_navigation_events"
-        app:destination="@id/navigation_events"/>
-    <action
-        android:id="@+id/action_to_navigation_subjects"
-        app:destination="@id/navigation_subjects"/>
-    <action
-        android:id="@+id/action_to_navigation_logs"
-        app:destination="@id/navigation_logs"/>
-    <action
-        android:id="@+id/action_to_navigation_settings"
-        app:destination="@id/navigation_settings"/>
-    <action
-        android:id="@+id/action_to_navigation_about"
-        app:destination="@id/navigation_about"/>
-
+        android:id="@+id/navigation_libraries"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.LibrariesFragment"
+        tools:layout="@layout/fragment_libraries"/>
 
     <!-- EditorUI -->
     <fragment
         android:id="@+id/navigation_editor_task"
-        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor"
-        tools:layout="@layout/editor_task"/>
-
-    <action
-        android:id="@+id/action_to_navigation_editor_task"
-        app:destination="@id/navigation_editor_task"/>
-
+        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment"
+        tools:layout="@layout/fragment_editor_task"/>
     <fragment
         android:id="@+id/navigation_editor_event"
-        android:name="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor"
-        tools:layout="@layout/editor_event"/>
-
-    <action
-        android:id="@+id/action_to_navigation_editor_event"
-        app:destination="@id/navigation_editor_event"/>
-
+        android:name="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorFragment"
+        tools:layout="@layout/fragment_editor_event"/>
     <fragment
         android:id="@+id/navigation_editor_subject"
-        android:name="com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor"
-        tools:layout="@layout/editor_subject"/>
-
-    <action
-        android:id="@+id/action_to_navigation_editor_subject"
-        app:destination="@id/navigation_editor_subject"/>
-
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorFragment"
+        tools:layout="@layout/fragment_editor_subject"/>
     <!-- Archived -->
 
     <fragment
@@ -91,29 +38,15 @@
         android:name="com.isaiahvonrundstedt.fokus.features.event.archived.ArchivedEventFragment"
         android:label="@string/activity_archives"
         tools:layout="@layout/fragment_archived_event"/>
-
     <fragment
         android:id="@+id/navigation_archived_subject"
         android:name="com.isaiahvonrundstedt.fokus.features.subject.archived.ArchivedSubjectFragment"
         android:label="@string/activity_archives"
         tools:layout="@layout/fragment_archived_subject"/>
-
     <fragment
         android:id="@+id/navigation_archived_task"
         android:name="com.isaiahvonrundstedt.fokus.features.task.archived.ArchivedTaskFragment"
         android:label="@string/activity_archives"
         tools:layout="@layout/fragment_archived_task"/>
-
-    <action
-        android:id="@+id/action_to_navigation_archived_event"
-        app:destination="@id/navigation_archived_event"/>
-
-    <action
-        android:id="@+id/action_to_navigation_archived_subject"
-        app:destination="@id/navigation_archived_subject"/>
-
-    <action
-        android:id="@+id/action_to_navigation_archived_task"
-        app:destination="@id/navigation_archived_task"/>
 
 </navigation>

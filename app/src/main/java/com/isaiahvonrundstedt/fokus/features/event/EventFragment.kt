@@ -24,7 +24,7 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
-import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -211,7 +211,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             it.transitionName = TRANSITION_ELEMENT_ROOT
 
             controller?.navigate(
-                R.id.action_to_navigation_editor_event, null, null,
+                R.id.navigation_editor_event, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
             )
         }
@@ -235,12 +235,12 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
                     val transitionName = TRANSITION_ELEMENT_ROOT + t.event.eventID
 
                     val args = bundleOf(
-                        EventEditor.EXTRA_EVENT to Event.toBundle(t.event),
-                        EventEditor.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
+                        EventEditorFragment.EXTRA_EVENT to Event.toBundle(t.event),
+                        EventEditorFragment.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
                     )
 
                     controller?.navigate(
-                        R.id.action_to_navigation_editor_event, args, null,
+                        R.id.navigation_editor_event, args, null,
                         FragmentNavigatorExtras(container!! to transitionName)
                     )
                 }
@@ -259,7 +259,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_archived -> {
-                controller?.navigate(R.id.action_to_navigation_archived_event)
+                controller?.navigate(R.id.navigation_archived_event)
             }
         }
         return true

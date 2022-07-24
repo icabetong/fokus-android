@@ -4,9 +4,10 @@
     android:id="@+id/menuTitleView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/bottom_sheet_padding"
-    android:layout_marginStart="@dimen/bottom_sheet_padding"
-    android:layout_marginEnd="@dimen/bottom_sheet_padding"
-    android:layout_marginBottom="16dp"
+    android:layout_marginTop="@dimen/container_padding_large"
+    android:layout_marginStart="@dimen/container_padding_medium"
+    android:layout_marginEnd="@dimen/container_padding_medium"
+    android:layout_marginBottom="@dimen/container_padding"
     android:text="@string/app_name"
-    android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title" />
+    android:textColor="?attr/colorOnSurfaceVariant"
+    android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title" />

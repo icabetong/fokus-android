@@ -36,12 +36,12 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFr
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
-import com.isaiahvonrundstedt.fokus.databinding.EditorSubjectBinding
+import com.isaiahvonrundstedt.fokus.databinding.FragmentEditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -50,8 +50,8 @@ import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 
 @AndroidEntryPoint
-class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListener {
-    private var _binding: EditorSubjectBinding? = null
+class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, FragmentResultListener {
+    private var _binding: FragmentEditorSubjectBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
@@ -97,13 +97,15 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = EditorSubjectBinding.inflate(inflater, container, false)
+        _binding = FragmentEditorSubjectBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.root.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.contentView),
+            binding.actionButton)
         controller = Navigation.findNavController(view)
 
         with(binding.appBarLayout.toolbar) {
@@ -206,7 +208,7 @@ class SubjectEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultLi
 
         binding.tagView.setOnClickListener {
             MaterialDialog(requireContext()).show {
-                lifecycleOwner(this@SubjectEditor)
+                lifecycleOwner(this@SubjectEditorFragment)
                 title(R.string.dialog_pick_color_tag)
                 colorChooser(Subject.Tag.getColors(), waitForPositiveButton = false) { _, color ->
                     viewModel.setTag(Subject.Tag.convertColorToTag(color) ?: Subject.Tag.SKY)

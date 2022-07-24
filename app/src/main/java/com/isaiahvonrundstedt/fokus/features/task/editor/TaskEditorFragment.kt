@@ -56,7 +56,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -70,7 +70,7 @@ import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TaskEditor : BaseEditor(), BaseAdapter.ActionListener, FragmentResultListener {
+class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, FragmentResultListener {
     private var _binding: FragmentEditorTaskBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT

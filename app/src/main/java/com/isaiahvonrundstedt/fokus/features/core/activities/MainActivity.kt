@@ -4,7 +4,6 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.isaiahvonrundstedt.fokus.R
@@ -13,14 +12,14 @@ import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.event.Event
-import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditor
+import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorFragment
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditor
+import com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorFragment
 import com.isaiahvonrundstedt.fokus.features.task.Task
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,52 +42,52 @@ class MainActivity : BaseActivity() {
                         intent.getParcelableListExtra(EXTRA_ATTACHMENTS)
 
                     val args = bundleOf(
-                        TaskEditor.EXTRA_TASK to task?.let { Task.toBundle(it) },
-                        TaskEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
-                        TaskEditor.EXTRA_ATTACHMENTS to attachments
+                        TaskEditorFragment.EXTRA_TASK to task?.let { Task.toBundle(it) },
+                        TaskEditorFragment.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
+                        TaskEditorFragment.EXTRA_ATTACHMENTS to attachments
                     )
 
-                    controller?.navigate(R.id.action_to_navigation_editor_task, args)
+                    controller?.navigate(R.id.navigation_editor_task, args)
                 }
                 ACTION_WIDGET_EVENT -> {
                     val event: Event? = intent.getParcelableExtra(EXTRA_EVENT)
                     val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
 
                     val args = bundleOf(
-                        EventEditor.EXTRA_EVENT to event?.let { Event.toBundle(it) },
-                        EventEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) }
+                        EventEditorFragment.EXTRA_EVENT to event?.let { Event.toBundle(it) },
+                        EventEditorFragment.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) }
                     )
 
-                    controller?.navigate(R.id.action_to_navigation_editor_event, args)
+                    controller?.navigate(R.id.navigation_editor_event, args)
                 }
                 ACTION_WIDGET_SUBJECT -> {
                     val subject: Subject? = intent.getParcelableExtra(EXTRA_SUBJECT)
                     val schedules: List<Schedule>? = intent.getParcelableListExtra(EXTRA_SCHEDULES)
 
                     val args = bundleOf(
-                        SubjectEditor.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
-                        SubjectEditor.EXTRA_SCHEDULE to schedules
+                        SubjectEditorFragment.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
+                        SubjectEditorFragment.EXTRA_SCHEDULE to schedules
                     )
 
-                    controller?.navigate(R.id.action_to_navigation_editor_subject, args)
+                    controller?.navigate(R.id.navigation_editor_subject, args)
                 }
                 ACTION_SHORTCUT_TASK -> {
-                    controller?.navigate(R.id.action_to_navigation_editor_task)
+                    controller?.navigate(R.id.navigation_editor_task)
                 }
                 ACTION_SHORTCUT_EVENT -> {
-                    controller?.navigate(R.id.action_to_navigation_editor_event)
+                    controller?.navigate(R.id.navigation_editor_event)
                 }
                 ACTION_SHORTCUT_SUBJECT -> {
-                    controller?.navigate(R.id.action_to_navigation_editor_subject)
+                    controller?.navigate(R.id.navigation_editor_subject)
                 }
                 ACTION_NAVIGATION_TASK -> {
-                    controller?.navigate(R.id.action_to_navigation_tasks)
+                    controller?.navigate(R.id.navigation_tasks)
                 }
                 ACTION_NAVIGATION_EVENT -> {
-                    controller?.navigate(R.id.action_to_navigation_events)
+                    controller?.navigate(R.id.navigation_events)
                 }
                 ACTION_NAVIGATION_SUBJECT -> {
-                    controller?.navigate(R.id.action_to_navigation_subjects)
+                    controller?.navigate(R.id.navigation_subjects)
                 }
             }
         }
@@ -118,16 +117,6 @@ class MainActivity : BaseActivity() {
                     groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
                 )
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        binding.navigationView.setNavigationItemSelectedListener {
-            controller?.navigate(it.itemId)
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            true
         }
     }
 

@@ -39,12 +39,12 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
-import com.isaiahvonrundstedt.fokus.databinding.EditorEventBinding
+import com.isaiahvonrundstedt.fokus.databinding.FragmentEditorEventBinding
 import com.isaiahvonrundstedt.fokus.features.event.Event
 import com.isaiahvonrundstedt.fokus.features.event.EventPackage
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditor
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
@@ -56,8 +56,8 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 @AndroidEntryPoint
-class EventEditor : BaseEditor(), FragmentResultListener {
-    private var _binding: EditorEventBinding? = null
+class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
+    private var _binding: FragmentEditorEventBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
@@ -105,13 +105,15 @@ class EventEditor : BaseEditor(), FragmentResultListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = EditorEventBinding.inflate(inflater, container, false)
+        _binding = FragmentEditorEventBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.root.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.contentView),
+            binding.actionButton)
         controller = Navigation.findNavController(view)
 
         with(binding.appBarLayout.toolbar) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="container_padding_large">32dp</dimen>
     <dimen name="container_padding_medium">24dp</dimen>
     <dimen name="container_padding">16dp</dimen>
     <dimen name="composable_spacing">8dp</dimen>
@@ -54,7 +55,10 @@
     <dimen name="switch_track_stroke_size">1dp</dimen>
 
     <!-- Radio -->
-    <dimen name="radio_button_width">24dp</dimen>
-    <dimen name="radio_button_height">24dp</dimen>
+    <dimen name="radio_button_width">48dp</dimen>
+    <dimen name="radio_button_height">48dp</dimen>
+
+    <!-- Icon -->
+    <dimen name="icon_dimen">24dp</dimen>
 
 </resources>

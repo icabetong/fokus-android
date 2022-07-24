@@ -30,7 +30,7 @@ import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
-import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.core.Party
@@ -129,7 +129,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
         binding.actionButton.setOnClickListener {
             controller?.navigate(
-                R.id.action_to_navigation_editor_task, null, null,
+                R.id.navigation_editor_task, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
             )
         }
@@ -181,14 +181,14 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                     val transitionName = TRANSITION_ELEMENT_ROOT + t.task.taskID
 
                     val args = bundleOf(
-                        TaskEditor.EXTRA_TASK to Task.toBundle(t.task),
-                        TaskEditor.EXTRA_ATTACHMENTS to t.attachments,
-                        TaskEditor.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
+                        TaskEditorFragment.EXTRA_TASK to Task.toBundle(t.task),
+                        TaskEditorFragment.EXTRA_ATTACHMENTS to t.attachments,
+                        TaskEditorFragment.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
                     )
 
                     container?.also {
                         controller?.navigate(
-                            R.id.action_to_navigation_editor_task, args, null,
+                            R.id.navigation_editor_task, args, null,
                             FragmentNavigatorExtras(it to transitionName)
                         )
                     }
@@ -258,7 +258,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                 binding.appBarLayout.toolbar.setTitle(getToolbarTitle())
             }
             R.id.action_archived -> {
-                controller?.navigate(R.id.action_to_navigation_archived_task)
+                controller?.navigate(R.id.navigation_archived_task)
             }
         }
         return true

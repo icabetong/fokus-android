@@ -10,12 +10,19 @@
         android:id="@+id/appBarLayout"
         layout="@layout/layout_appbar"/>
 
-    <fragment
-        android:id="@+id/container"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsActivity$Companion$SettingsFragment"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="FragmentTagUsage"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <fragment
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsFragment$Companion$SettingsFragment"
+            tools:ignore="FragmentTagUsage"/>
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

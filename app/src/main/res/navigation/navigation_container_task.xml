@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_editor_task"
-        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditor"
-        tools:layout="@layout/editor_task"/>
+        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment"
+        tools:layout="@layout/fragment_editor_task"/>
 
 </navigation>

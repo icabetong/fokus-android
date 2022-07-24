@@ -6,7 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.format.DateFormat.is24HourFormat
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.preference.ListPreference
@@ -20,25 +22,43 @@ import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toLocalTime
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.databinding.ActivitySettingsBinding
+import com.isaiahvonrundstedt.fokus.databinding.FragmentSettingsBinding
 import com.isaiahvonrundstedt.fokus.features.notifications.event.EventNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.notifications.subject.ClassNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskNotificationScheduler
 import com.isaiahvonrundstedt.fokus.features.notifications.task.TaskReminderWorker
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseWorker
 import java.util.*
 
-class SettingsActivity : BaseActivity() {
-    private lateinit var binding: ActivitySettingsBinding
+class SettingsFragment : BaseFragment() {
+    private var _binding: FragmentSettingsBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.activity_settings)
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.frameLayout))
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_settings)
+            setupNavigation(this)
+        }
     }
 
     companion object {

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/dialog_schedule_details"
-        android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title"/>
+        android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -3,24 +3,49 @@ package com.isaiahvonrundstedt.fokus.features.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
-import com.isaiahvonrundstedt.fokus.databinding.ActivityNoticesBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.databinding.FragmentNoticesBinding
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 
-class NoticesActivity : BaseActivity() {
+class NoticesFragment : BaseFragment() {
+    private var _binding: FragmentNoticesBinding? = null
+    private var controller: NavController? = null
 
-    private lateinit var binding: ActivityNoticesBinding
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityNoticesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.activity_notices)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentNoticesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar)
+        controller = Navigation.findNavController(view)
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_notices)
+            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
+            setNavigationOnClickListener { controller?.navigateUp() }
+        }
     }
 
     companion object {
@@ -31,6 +56,7 @@ class NoticesActivity : BaseActivity() {
         const val URL_USER_INTERFACE_ICONS = "https://heroicons.dev"
 
         class NoticesFragment : BasePreference() {
+            private var controller: NavController? = null
 
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
                 setPreferencesFromResource(R.xml.xml_about_notices, rootKey)
@@ -38,10 +64,11 @@ class NoticesActivity : BaseActivity() {
 
             override fun onStart() {
                 super.onStart()
+                controller = Navigation.findNavController(requireView())
 
                 findPreference<Preference>(PreferenceManager.PREFERENCE_LIBRARIES)
                     ?.setOnPreferenceClickListener {
-                        startActivity(Intent(requireContext(), LibrariesActivity::class.java))
+                        controller?.navigate(R.id.navigation_libraries)
                         true
                     }
 

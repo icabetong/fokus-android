@@ -79,7 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/empty_view_no_events_summary"/>
+                        android:text="@string/empty_view_no_events_summary"
+                        android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
 
                 </LinearLayout>
 

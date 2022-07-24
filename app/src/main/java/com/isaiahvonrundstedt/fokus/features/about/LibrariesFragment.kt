@@ -6,25 +6,47 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.isaiahvonrundstedt.fokus.R
-import com.isaiahvonrundstedt.fokus.databinding.ActivityLibrariesBinding
+import com.isaiahvonrundstedt.fokus.databinding.FragmentLibrariesBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutItemLibraryBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 
-class LibrariesActivity : BaseActivity() {
+class LibrariesFragment : BaseFragment() {
+    private var _binding: FragmentLibrariesBinding? = null
+    private var controller: NavController? = null
 
-    private lateinit var binding: ActivityLibrariesBinding
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLibrariesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.activity_open_source_licenses)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentLibrariesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.recyclerView))
+        controller = Navigation.findNavController(view)
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_open_source_licenses)
+            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
+            setNavigationOnClickListener { controller?.navigateUp() }
+        }
 
         with(binding.recyclerView) {
             layoutManager = LinearLayoutManager(context)

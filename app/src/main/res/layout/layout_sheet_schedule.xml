@@ -15,7 +15,7 @@
         android:layout_marginEnd="@dimen/bottom_sheet_padding"
         android:layout_marginBottom="16dp"
         android:text="@string/dialog_class_schedules"
-        android:textAppearance="@style/Fokus.TextAppearance.BottomSheet.Title" />
+        android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

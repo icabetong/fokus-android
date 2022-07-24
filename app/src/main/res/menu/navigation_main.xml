@@ -7,30 +7,28 @@
             android:id="@+id/navigation_tasks"
             android:title="@string/navigation_tasks"
             android:icon="@drawable/ic_round_check_24"/>
-
         <item
             android:id="@+id/navigation_events"
             android:title="@string/navigation_events"
             android:icon="@drawable/ic_round_event_24"/>
-
         <item
             android:id="@+id/navigation_subjects"
             android:title="@string/navigation_subjects"
             android:icon="@drawable/ic_round_science_24"/>
 
-        <item
-            android:id="@+id/navigation_logs"
-            android:title="@string/navigation_logs"
-            android:icon="@drawable/ic_round_query_stats_24"/>
 
     </group>
 
     <group android:id="@+id/groupActivities" android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navigation_logs"
+            android:title="@string/navigation_logs"
+            android:icon="@drawable/ic_round_query_stats_24"/>
         <item
             android:id="@+id/navigation_settings"
             android:title="@string/navigation_settings"
             android:icon="@drawable/ic_round_settings_24"/>
-
         <item
             android:id="@+id/navigation_about"
             android:title="@string/navigation_about"

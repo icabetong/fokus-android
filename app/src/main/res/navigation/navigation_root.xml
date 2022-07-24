@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/navigation_root">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_root"
+    app:startDestination="@id/navigation_tasks">
+
+    <fragment
+        android:id="@+id/navigation_tasks"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.TaskFragment"
+        android:label="@string/navigation_tasks"
+        tools:layout="@layout/fragment_task"/>
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.EventFragment"
+        android:label="@string/navigation_events"
+        tools:layout="@layout/fragment_event"/>
+    <fragment
+        android:id="@+id/navigation_subjects"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.SubjectFragment"
+        android:label="@string/activity_subjects"
+        tools:layout="@layout/fragment_subject"/>
+    <fragment
+        android:id="@+id/navigation_logs"
+        android:name="com.isaiahvonrundstedt.fokus.features.log.LogFragment"
+        android:label="@string/activity_logs"
+        tools:layout="@layout/fragment_logs"/>
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings"/>
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.AboutFragment"
+        tools:layout="@layout/fragment_about"/>
 
 </navigation>

@@ -45,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_tasks_summary"/>
+            android:text="@string/empty_view_no_tasks_summary"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
 
     </LinearLayout>
 
@@ -72,7 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_finished_summary"/>
+            android:text="@string/empty_view_no_finished_summary"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
 
     </LinearLayout>
 

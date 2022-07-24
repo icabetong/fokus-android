@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_summary"/>
+            android:text="@string/empty_view_no_subjects_summary"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
 
     </LinearLayout>
 
@@ -63,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_classes_today_summary"/>
+            android:text="@string/empty_view_no_classes_today_summary"
+            style="@style/Fokus.TextAppearance.Status.Summary"/>
 
     </LinearLayout>
 
@@ -88,7 +90,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_classes_tomorrow_summary"/>
+            android:text="@string/empty_view_no_classes_tomorrow_summary"
+            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
 
     </LinearLayout>
 

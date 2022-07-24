@@ -38,10 +38,13 @@ class ArchivedSubjectFragment : BaseFragment(), BaseAdapter.SelectListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar,
+            arrayOf(binding.recyclerView, binding.emptyView))
         controller = Navigation.findNavController(view)
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_archives)
+            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
             setNavigationOnClickListener { controller?.navigateUp() }
         }
 

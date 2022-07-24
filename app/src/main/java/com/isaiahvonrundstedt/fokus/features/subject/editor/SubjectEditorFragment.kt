@@ -15,16 +15,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ShareCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.CoreApplication
@@ -38,9 +39,7 @@ import com.isaiahvonrundstedt.fokus.components.service.DataExporterService
 import com.isaiahvonrundstedt.fokus.components.service.DataImporterService
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEditorSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
-import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleAdapter
 import com.isaiahvonrundstedt.fokus.features.schedule.ScheduleEditor
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -50,12 +49,11 @@ import me.saket.cascade.overrideOverflowMenu
 import java.io.File
 
 @AndroidEntryPoint
-class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, FragmentResultListener {
+class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
     private var _binding: FragmentEditorSubjectBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
-    private val scheduleAdapter = ScheduleAdapter(this)
     private val viewModel: SubjectEditorViewModel by viewModels()
     private val binding get() = _binding!!
 
@@ -132,11 +130,6 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
             viewModel.setSchedules(it)
         }
 
-        with(binding.recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = scheduleAdapter
-        }
-
         registerForFragmentResult(
             arrayOf(
                 ScheduleEditor.REQUEST_KEY_INSERT,
@@ -173,7 +166,33 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
         }
 
         viewModel.schedules.observe(this) {
-            scheduleAdapter.submitList(ArrayList(it))
+            binding.schedulesChipGroup.children.forEach { view ->
+                if (view.id != R.id.addActionChip)
+                    binding.schedulesChipGroup.removeView(view)
+            }
+            it.forEach { schedule ->
+                binding.schedulesChipGroup.addView(Chip(requireContext()).apply {
+                    text = schedule.formatDaysOfWeek(requireContext(), true)
+                    tag = schedule.scheduleID
+                    isCloseIconVisible = true
+                    setCloseIconResource(R.drawable.ic_outline_close_24)
+                    setOnClickListener {
+                        ScheduleEditor(childFragmentManager).show {
+                            arguments = bundleOf(
+                                ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
+                                ScheduleEditor.EXTRA_SCHEDULE to schedule
+                            )
+                        }
+                    }
+                    setOnCloseIconClickListener {
+                        viewModel.removeSchedule(schedule)
+                        createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
+                            setAction(R.string.button_undo) { viewModel.addSchedule(schedule) }
+                        }
+                    }
+                })
+            }
+
         }
 
         viewModel.isCodeExists.observe(this) {
@@ -204,7 +223,7 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
             }
         }
 
-        binding.addActionLayout.addItemButton.setOnClickListener {
+        binding.addActionChip.setOnClickListener {
             hideKeyboardFromCurrentFocus(requireView())
 
             ScheduleEditor(childFragmentManager).show {
@@ -263,30 +282,6 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
             if (controller?.graph?.id == R.id.navigation_container_subject)
                 requireActivity().finish()
             else controller?.navigateUp()
-        }
-    }
-
-    override fun <T> onActionPerformed(
-        t: T, action: BaseAdapter.ActionListener.Action,
-        container: View?
-    ) {
-        if (t is Schedule) {
-            when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    ScheduleEditor(childFragmentManager).show {
-                        arguments = bundleOf(
-                            ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
-                            ScheduleEditor.EXTRA_SCHEDULE to t
-                        )
-                    }
-                }
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    viewModel.removeSchedule(t)
-                    createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
-                        setAction(R.string.button_undo) { viewModel.addSchedule(t) }
-                    }
-                }
-            }
         }
     }
 
@@ -440,9 +435,8 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
             REQUEST_KEY_INSERT -> {
                 if (binding.codeTextInput.text.isNullOrEmpty() ||
                     binding.descriptionTextInput.text.isNullOrEmpty()
-                    || scheduleAdapter.itemCount < 1
+                    || binding.schedulesChipGroup.children.none()
                 ) {
-
                     MaterialDialog(requireContext()).show {
                         title(R.string.feedback_unable_to_share_title)
                         message(R.string.feedback_unable_to_share_message)

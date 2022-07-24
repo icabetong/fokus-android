@@ -9,22 +9,22 @@ import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 interface SubjectDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(subject: Subject)
+    suspend fun insert(subject: Subject)
 
     @Delete
-    fun remove(subject: Subject)
+    suspend fun remove(subject: Subject)
 
     @Update
-    fun update(subject: Subject)
+    suspend fun update(subject: Subject)
 
     @Query("SELECT subjectID FROM subjects WHERE code = :code COLLATE NOCASE")
     suspend fun checkCodeUniqueness(code: String?): List<String>
 
     @Query("SELECT * FROM subjects")
-    fun fetch(): List<Subject>
+    suspend fun fetch(): List<Subject>
 
     @Query("SELECT * FROM subjects")
-    fun fetchAsPackage(): List<SubjectPackage>
+    suspend fun fetchAsPackage(): List<SubjectPackage>
 
     @Transaction
     @Query("SELECT * FROM subjects WHERE isSubjectArchived = 0 ORDER BY code ASC")

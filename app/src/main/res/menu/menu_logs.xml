@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_clear_items"
         android:title="@string/menu_clear_items"
-        android:icon="@drawable/ic_round_delete_outline_24"
+        android:icon="@drawable/ic_outline_delete_24"
         app:showAsAction="never"/>
 
 </menu>

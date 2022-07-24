@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true">
@@ -19,14 +20,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_padding">
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/codeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_padding"
+                android:layout_marginHorizontal="@dimen/container_padding_regular"
                 android:hint="@string/field_subject_code"
                 app:errorEnabled="true"
                 style="@style/Fokus.Widget.TextInput.Layout">
@@ -61,17 +61,13 @@
                     android:layout_width="0dp"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
                     android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/container_padding_regular"
                     android:hint="@string/field_description"
                     android:inputType="textCapWords"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?attr/colorOnSurfaceInverse"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,18 +86,13 @@
                     android:layout_width="0dp"
                     android:layout_height="?attr/listPreferredItemHeightSmall"
                     android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/container_padding_regular"
                     android:hint="@string/field_instructor"
                     android:inputType="textCapWords"
                     android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?attr/colorOnSurfaceInverse"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -129,33 +120,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_padding"
-                android:layout_marginVertical="8dp"
-                android:paddingVertical="@dimen/editor_container_padding"
-                android:orientation="vertical"
-                android:background="@drawable/shape_card_background"
+                android:orientation="horizontal"
                 android:animateLayoutChanges="true">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_dimen"
+                    android:layout_height="@dimen/icon_dimen"
+                    android:layout_margin="16dp"
+                    app:srcCompat="@drawable/ic_outline_event_repeat_24"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:text="@string/field_schedule"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+                    android:layout_marginEnd="@dimen/container_padding_regular"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-                <include
-                    android:id="@+id/errorScheduleConflictView"
-                    android:visibility="gone"
-                    layout="@layout/layout_error_schedule"/>
+                    <include
+                        android:id="@+id/errorScheduleConflictView"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        layout="@layout/layout_error_schedule"/>
 
-                <include
-                    android:id="@+id/addActionLayout"
-                    layout="@layout/layout_item_add"/>
+                    <include
+                        android:id="@+id/addActionLayout"
+                        layout="@layout/layout_item_add"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -170,6 +167,6 @@
         android:layout_margin="@dimen/activity_padding"
         android:layout_gravity="bottom|end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_round_check_24"/>
+        app:icon="@drawable/ic_outline_save_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

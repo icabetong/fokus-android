@@ -154,6 +154,7 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
         if (requestKey == REQUEST_KEY_UPDATE) {
             binding.codeTextInput.setText(viewModel.getCode())
             binding.descriptionTextInput.setText(viewModel.getDescription())
+            binding.instructorTextInput.setText(viewModel.getInstructor())
         }
 
         viewModel.subject.observe(this) {
@@ -161,6 +162,7 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
                 with(it) {
                     binding.codeTextInput.setText(code)
                     binding.descriptionTextInput.setText(description)
+                    binding.instructorTextInput.setText(instructor)
                     binding.tagView.setCompoundDrawableAtStart(binding.tagView.getCompoundDrawableAtStart()
                         ?.let { drawable -> tintDrawable(drawable) })
                     binding.tagView.setText(tag.getNameResource())
@@ -196,6 +198,12 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
             }
         }
 
+        binding.instructorTextInput.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus && v is TextInputEditText) {
+                viewModel.setInstructor(v.text.toString())
+            }
+        }
+
         binding.addActionLayout.addItemButton.setOnClickListener {
             hideKeyboardFromCurrentFocus(requireView())
 
@@ -226,9 +234,9 @@ class SubjectEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, 
         }
 
         binding.actionButton.setOnClickListener {
-
             viewModel.setCode(binding.codeTextInput.text.toString())
             viewModel.setDescription(binding.descriptionTextInput.text.toString())
+            viewModel.setInstructor(binding.instructorTextInput.text.toString())
 
             if (viewModel.getCode()?.isEmpty() == true) {
                 createSnackbar(R.string.feedback_subject_empty_name, binding.root)

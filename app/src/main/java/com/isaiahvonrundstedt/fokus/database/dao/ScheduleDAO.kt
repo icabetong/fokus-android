@@ -16,12 +16,12 @@ interface ScheduleDAO {
     fun update(schedule: Schedule)
 
     @Query("DELETE FROM schedules WHERE subject = :id")
-    fun removeUsingSubjectID(id: String)
+    suspend fun removeUsingSubjectID(id: String)
 
     @Query("SELECT * FROM schedules")
-    fun fetch(): List<Schedule>
+    suspend fun fetch(): List<Schedule>
 
     @Query("SELECT * FROM schedules WHERE subject = :id")
-    fun fetchUsingID(id: String?): List<Schedule>
+    suspend fun fetchUsingID(id: String?): List<Schedule>
 
 }

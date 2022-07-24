@@ -12,4 +12,4 @@
     android:text="@string/feedback_schedule_exists"
     android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
     android:drawablePadding="@dimen/item_padding_small"
-    app:drawableStartCompat="@drawable/ic_round_warning_24" />
+    app:drawableStartCompat="@drawable/ic_outline_priority_high_24" />

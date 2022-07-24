@@ -5,12 +5,12 @@
     <Preference
         app:key="KEY_NOTICES"
         app:title="@string/settings_third_party_notices"
-        app:icon="@drawable/ic_round_balance_24"/>
+        app:icon="@drawable/ic_outline_balance_24"/>
 
     <Preference
         app:key="KEY_VERSION"
         app:title="@string/settings_build_version"
-        app:icon="@drawable/ic_round_code_24"/>
+        app:icon="@drawable/ic_outline_code_24"/>
 
     <PreferenceCategory
         app:title="@string/settings_group_contribute">
@@ -18,7 +18,7 @@
         <Preference
             app:key="KEY_TRANSLATE"
             app:title="@string/settings_translate"
-            app:icon="@drawable/ic_round_translate_24"/>
+            app:icon="@drawable/ic_outline_translate_24"/>
 
         <Preference
             app:key="KEY_REPORT_ISSUE"

@@ -102,6 +102,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
         android:contentDescription="@string/button_add"
-        app:srcCompat="@drawable/ic_round_add_24"/>
+        app:srcCompat="@drawable/ic_outline_add_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

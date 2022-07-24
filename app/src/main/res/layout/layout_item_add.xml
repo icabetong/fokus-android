@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:text="@string/button_add"
-    app:icon="@drawable/ic_round_add_24"
+    app:icon="@drawable/ic_outline_add_24"
     app:iconGravity="textStart"
     style="@style/Widget.MaterialComponents.Button.TextButton"/>
 

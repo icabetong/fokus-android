@@ -101,6 +101,19 @@ class SubjectEditorViewModel @Inject constructor(
         setSubject(subject)
     }
 
+    fun getInstructor(): String? {
+        return getSubject()?.instructor
+    }
+    fun setInstructor(instructor: String?) {
+        if (instructor == getInstructor())
+            return
+
+        val subject = getSubject()
+        subject?.instructor = instructor
+        android.util.Log.e("DEBUG", instructor ?: "null")
+        setSubject(subject)
+    }
+
     fun getTag(): Subject.Tag? {
         return getSubject()?.tag
     }

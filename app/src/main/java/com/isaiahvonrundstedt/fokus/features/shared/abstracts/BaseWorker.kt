@@ -176,7 +176,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters) 
                 createNotification(
                     log, NOTIFICATION_CHANNEL_ID_TASK,
                     NotificationCompat.Action(
-                        R.drawable.ic_round_check_24,
+                        R.drawable.ic_outline_check_24,
                         applicationContext.getString(R.string.button_mark_as_finished), intent
                     )
                 )
@@ -199,7 +199,7 @@ abstract class BaseWorker(context: Context, workerParameters: WorkerParameters) 
     ): Notification {
         return NotificationCompat.Builder(applicationContext, channelID).apply {
             setSound(notificationSoundUri)
-            setSmallIcon(log?.getIconResource() ?: R.drawable.ic_round_check_24)
+            setSmallIcon(log?.getIconResource() ?: R.drawable.ic_outline_check_24)
             setContentIntent(contentIntent)
             setContentTitle(log?.title)
             if (log?.content != null) setContentText(log.content)

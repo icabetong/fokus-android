@@ -46,8 +46,8 @@ data class Attachment @JvmOverloads constructor(
     @DrawableRes
     fun getIconResource(): Int {
         return when (type) {
-            TYPE_WEBSITE_LINK -> R.drawable.ic_round_link_24
-            else -> R.drawable.ic_round_file_open_24
+            TYPE_WEBSITE_LINK -> R.drawable.ic_outline_link_24
+            else -> R.drawable.ic_outline_file_open_24
         }
     }
 

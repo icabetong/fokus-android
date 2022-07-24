@@ -108,6 +108,7 @@ data class Subject @JvmOverloads constructor(
             subjectID = it.subjectID
             code = it.code
             description = it.description
+            instructor = it.instructor
             tag = it.tag
         }
     }
@@ -116,6 +117,7 @@ data class Subject @JvmOverloads constructor(
         const val EXTRA_ID = "extra:id"
         const val EXTRA_CODE = "extra:code"
         const val EXTRA_DESCRIPTION = "extra:description"
+        const val EXTRA_INSTRUCTOR = "extra:instructor"
         const val EXTRA_COLOR = "extra:color"
         const val EXTRA_IS_ARCHIVED = "extra:archived"
 
@@ -124,6 +126,7 @@ data class Subject @JvmOverloads constructor(
                 EXTRA_ID to subject.subjectID,
                 EXTRA_CODE to subject.code,
                 EXTRA_DESCRIPTION to subject.description,
+                EXTRA_INSTRUCTOR to subject.instructor,
                 EXTRA_COLOR to ColorConverter.fromColor(subject.tag),
                 EXTRA_IS_ARCHIVED to subject.isSubjectArchived
             )
@@ -137,6 +140,7 @@ data class Subject @JvmOverloads constructor(
                 subjectID = bundle.getString(EXTRA_ID)!!,
                 code = bundle.getString(EXTRA_CODE),
                 description = bundle.getString(EXTRA_DESCRIPTION),
+                instructor = bundle.getString(EXTRA_INSTRUCTOR),
                 tag = ColorConverter.toColor(bundle.getInt(EXTRA_COLOR)) ?: Tag.SKY,
                 isSubjectArchived = bundle.getBoolean(EXTRA_IS_ARCHIVED)
             )

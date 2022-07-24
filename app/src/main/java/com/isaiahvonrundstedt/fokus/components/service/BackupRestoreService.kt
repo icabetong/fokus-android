@@ -61,7 +61,7 @@ class BackupRestoreService : BaseService() {
             NOTIFICATION_RESTORE_ONGOING,
             createNotification(
                 true, R.string.notification_restore_ongoing,
-                iconRes = R.drawable.ic_round_download_24
+                iconRes = R.drawable.ic_outline_file_download_24
             )
         )
 
@@ -174,7 +174,7 @@ class BackupRestoreService : BaseService() {
             NOTIFICATION_BACKUP_ONGOING,
             createNotification(
                 ongoing = true, titleRes = R.string.notification_backup_ongoing,
-                iconRes = R.drawable.ic_round_file_upload_24
+                iconRes = R.drawable.ic_outline_file_upload_24
             )
         )
 

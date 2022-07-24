@@ -38,7 +38,7 @@ abstract class BaseFragment : Fragment() {
 
     protected fun setupNavigation(toolbar: MaterialToolbar) {
         with(toolbar) {
-            setNavigationIcon(R.drawable.ic_round_menu_24)
+            setNavigationIcon(R.drawable.ic_outline_menu_24)
             setNavigationOnClickListener { triggerNavigationDrawer() }
         }
     }

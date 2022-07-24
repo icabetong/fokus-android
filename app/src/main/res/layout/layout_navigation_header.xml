@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/container_padding_large"
     android:layout_marginStart="@dimen/container_padding_medium"
     android:layout_marginEnd="@dimen/container_padding_medium"
-    android:layout_marginBottom="@dimen/container_padding"
+    android:layout_marginBottom="@dimen/container_padding_regular"
     android:text="@string/app_name"
     android:textColor="?attr/colorOnSurfaceVariant"
     android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title" />

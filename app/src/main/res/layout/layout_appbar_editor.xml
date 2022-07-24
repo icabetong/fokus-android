@@ -9,6 +9,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_round_close_24"/>
+        app:navigationIcon="@drawable/ic_outline_close_24"/>
 
 </com.google.android.material.appbar.AppBarLayout>

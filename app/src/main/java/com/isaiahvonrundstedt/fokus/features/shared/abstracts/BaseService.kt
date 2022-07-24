@@ -32,7 +32,7 @@ abstract class BaseService : Service() {
         ongoing: Boolean = false,
         @StringRes titleRes: Int,
         @StringRes contentRes: Int = 0,
-        @DrawableRes iconRes: Int = R.drawable.ic_round_check_24
+        @DrawableRes iconRes: Int = R.drawable.ic_outline_check_24
     ): Notification {
 
         return NotificationCompat.Builder(

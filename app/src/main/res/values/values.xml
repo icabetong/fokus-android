@@ -156,22 +156,13 @@
         <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
         <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
     </style>
-    <style name="Fokus.Widget.Toolbar.Surface" parent="Widget.Material3.Toolbar.Surface">
-        <item name="contentInsetStart">@dimen/toolbar_keyline</item>
-        <item name="titleCentered">true</item>
-        <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title</item>
-        <item name="backgroundColor">?attr/colorSurface</item>
-        <item name="maxButtonHeight">48dp</item>
-        <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
-        <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
-    </style>
     <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">?attr/colorOnSurface</item>
+        <item name="tint">?attr/colorOnSurfaceVariant</item>
         <item name="android:minWidth">48dp</item>
     </style>
     <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="srcCompat">@drawable/ic_round_more_vert_24</item>
-        <item name="tint">?attr/colorOnPrimaryContainer</item>
+        <item name="srcCompat">@drawable/ic_outline_more_vert_24</item>
+        <item name="tint">?attr/colorOnSurfaceVariant</item>
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
     </style>
@@ -193,7 +184,7 @@
     <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
-    <style name="Fokus.Widget.Chip" parent="Widget.Material3.Chip.Assist"/>
+    <style name="Fokus.Widget.Chip" parent="Widget.Material3.Chip.Filter"/>
     <style name="Fokus.Widget.Switch" parent="Widget.Material3.CompoundButton.Switch"/>
     <style name="Fokus.Widget.FAB" parent="Widget.Material3.FloatingActionButton.Primary"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.Material3.ExtendedFloatingActionButton.Primary"/>
@@ -214,7 +205,7 @@
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/theme_on_surface</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
     </style>
     <style name="Fokus.TextAppearance.Title.Collapsing" parent="Fokus.TextAppearance">
         <item name="android:textStyle">bold</item>
@@ -256,7 +247,9 @@
     <style name="Fokus.TextAppearance.Editor.Hint" parent="Fokus.TextAppearance.List.Overline">
         <item name="android:textColor">@color/theme_primary</item>
     </style>
-    <style name="Fokus.TextAppearance.Editor.Value" parent="TextAppearance.Material3.LabelLarge"/>
+    <style name="Fokus.TextAppearance.Editor.Value" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
     <style name="Fokus.TextAppearance.Status.Title" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>

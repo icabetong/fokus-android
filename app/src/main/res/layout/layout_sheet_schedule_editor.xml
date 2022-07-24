@@ -22,8 +22,9 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/daysOfWeekGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacingVertical="0dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/sundayChip"
@@ -131,7 +132,8 @@
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/weekOfMonthGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:chipSpacingVertical="0dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/weekOneChip"
@@ -174,7 +176,9 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="end"
         android:text="@string/button_save"
-        app:icon="@drawable/ic_round_check_24"
-        style="@style/Fokus.Widget.Button.Outlined"/>
+        app:icon="@drawable/ic_outline_save_24"
+        app:iconGravity="textStart"
+        app:iconPadding="@dimen/container_padding_regular"
+        style="@style/Fokus.Widget.Button"/>
 
 </LinearLayout>

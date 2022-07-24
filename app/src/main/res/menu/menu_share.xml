@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_export"
         android:title="@string/menu_export_to_file"
-        android:icon="@drawable/ic_round_file_upload_24"
+        android:icon="@drawable/ic_outline_file_upload_24"
         app:iconTint="@color/theme_on_surface"/>
 
     <item
         android:id="@+id/action_share"
         android:title="@string/menu_share_directly"
-        android:icon="@drawable/ic_round_share_24"
+        android:icon="@drawable/ic_outline_share_24"
         app:iconTint="@color/theme_on_surface"/>
 
 </menu>

@@ -17,8 +17,8 @@ class ItemSwipeCallback<T : Swipeable>(context: Context, private var adapter: T)
     ItemTouchHelper.Callback() {
 
     private var isThemeDark: Boolean = false
-    private var iconDelete = ContextCompat.getDrawable(context, R.drawable.ic_round_delete_outline_24)
-    private var iconArchive = ContextCompat.getDrawable(context, R.drawable.ic_round_archive_24)
+    private var iconDelete = ContextCompat.getDrawable(context, R.drawable.ic_outline_delete_24)
+    private var iconArchive = ContextCompat.getDrawable(context, R.drawable.ic_outline_archive_24)
     private var backgroundDelete: Drawable
     private var backgroundArchive: Drawable
 

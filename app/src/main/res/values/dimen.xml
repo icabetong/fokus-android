@@ -2,9 +2,8 @@
 <resources>
     <dimen name="container_padding_large">32dp</dimen>
     <dimen name="container_padding_medium">24dp</dimen>
-    <dimen name="container_padding">16dp</dimen>
-    <dimen name="composable_spacing">8dp</dimen>
-    <dimen name="composable_spacing_siblings">2dp</dimen>
+    <dimen name="container_padding_regular">16dp</dimen>
+    <dimen name="container_padding_small">8dp</dimen>
     <dimen name="shape_radius">8dp</dimen>
 
     <!-- Legacy -->
@@ -24,7 +23,7 @@
     <dimen name="surface_corner_radius">8dp</dimen>
 
     <dimen name="editor_container_padding">12dp</dimen>
-    <dimen name="editor_item_height">48dp</dimen>
+    <dimen name="editor_item_height">56dp</dimen>
 
     <!-- RecyclerView -->
     <dimen name="item_padding">16dp</dimen>

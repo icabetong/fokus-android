@@ -9,7 +9,7 @@
         <ListPreference
             app:key="KEY_THEME"
             app:title="@string/settings_theme"
-            app:icon="@drawable/ic_round_color_lens_24"
+            app:icon="@drawable/ic_outline_color_lens_24"
             app:dialogTitle="@string/dialog_choose_theme"
             app:entries="@array/settings_dark_theme_items"
             app:entryValues="@array/settings_dark_theme_values"
@@ -20,7 +20,7 @@
             app:key="KEY_CONFETTI"
             app:title="@string/settings_confetti_title"
             app:summary="@string/settings_confetti_summary"
-            app:icon="@drawable/ic_round_celebration_24"
+            app:icon="@drawable/ic_outline_celebration_24"
             app:defaultValue="true"/>
 
     </PreferenceCategory>
@@ -33,7 +33,7 @@
             app:title="@string/settings_completion_sounds_title"
             app:summary="@string/settings_completion_sounds_summary"
             app:defaultValue="true"
-            app:icon="@drawable/ic_round_music_note_24"/>
+            app:icon="@drawable/ic_outline_music_note_24"/>
 
     </PreferenceCategory>
 
@@ -46,7 +46,7 @@
             app:entries="@array/settings_task_reminder_frequency_items"
             app:entryValues="@array/settings_task_reminder_frequency_values"
             app:defaultValue="EVERYDAY"
-            app:icon="@drawable/ic_round_notifications_active_24"
+            app:icon="@drawable/ic_outline_notifications_active_24"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
@@ -57,7 +57,7 @@
             app:key="KEY_TASK_NOTIFICATION"
             app:title="@string/settings_when_nearing_due_title"
             app:summary="@string/settings_when_nearing_due_summary"
-            app:icon="@drawable/ic_round_access_time_24"
+            app:icon="@drawable/ic_outline_access_time_24"
             app:defaultValue="true"/>
 
         <ListPreference
@@ -74,7 +74,7 @@
             app:key="KEY_EVENT_NOTIFICATION"
             app:title="@string/settings_incoming_events_title"
             app:summary="@string/settings_incoming_events_summary"
-            app:icon="@drawable/ic_round_confirmation_number_24"
+            app:icon="@drawable/ic_outline_confirmation_number_24"
             app:defaultValue="true"/>
 
         <ListPreference
@@ -91,7 +91,7 @@
             app:key="KEY_COURSE_NOTIFICATION"
             app:title="@string/settings_classes_for_this_day_title"
             app:summary="@string/settings_classes_for_this_day_summary"
-            app:icon="@drawable/ic_round_wb_sunny_24"
+            app:icon="@drawable/ic_outline_wb_sunny_24"
             app:defaultValue="true"/>
 
         <ListPreference
@@ -121,13 +121,13 @@
         <Preference
             app:key="KEY_BACKUP_RESTORE"
             app:title="@string/settings_backup_and_restore"
-            app:icon="@drawable/ic_round_file_open_24"/>
+            app:icon="@drawable/ic_outline_file_open_24"/>
 
         <SwitchPreference
             app:key="KEY_USE_EXTERNAL_BROWSER"
             app:title="@string/settings_use_external_browser_title"
             app:summary="@string/settings_use_external_browser_summary"
-            app:icon="@drawable/ic_round_open_in_new_24"
+            app:icon="@drawable/ic_outline_open_in_new_24"
             app:defaultValue="false"/>
 
     </PreferenceCategory>

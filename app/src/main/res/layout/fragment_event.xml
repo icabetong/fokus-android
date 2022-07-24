@@ -36,14 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:background="?attr/colorSecondaryContainer"
+                android:background="?attr/colorSurfaceVariant"
                 android:fontFamily="sans-serif-medium"
                 android:paddingStart="20dp"
                 android:paddingTop="12dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="12dp"
                 android:textAllCaps="true"
-                android:textColor="?attr/colorOnSecondaryContainer"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="14sp" />
 
             <FrameLayout
@@ -97,6 +97,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/activity_padding"
         android:contentDescription="@string/button_add"
-        app:srcCompat="@drawable/ic_round_add_24" />
+        app:srcCompat="@drawable/ic_outline_add_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -166,10 +166,7 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
         }
 
         viewModel.schedules.observe(this) {
-            binding.schedulesChipGroup.children.forEach { view ->
-                if (view.id != R.id.addActionChip)
-                    binding.schedulesChipGroup.removeView(view)
-            }
+            binding.schedulesChipGroup.removeAllViews()
             it.forEach { schedule ->
                 binding.schedulesChipGroup.addView(Chip(requireContext()).apply {
                     text = schedule.formatDaysOfWeek(requireContext(), true)
@@ -192,7 +189,6 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
                     }
                 })
             }
-
         }
 
         viewModel.isCodeExists.observe(this) {

@@ -72,6 +72,7 @@ class RootFragment: BaseFragment() {
         super.onResume()
 
         binding.navigationView.setNavigationItemSelectedListener {
+            binding.navigationView.setCheckedItem(it.itemId)
             try {
                 controller?.navigate(it.itemId)
                 binding.drawerLayout.closeDrawer(GravityCompat.START)

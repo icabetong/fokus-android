@@ -69,12 +69,7 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/xml_launcher_shortcuts"/>
         </activity>
-
-        <activity android:name=".features.settings.SettingsFragment" />
         <activity android:name=".features.settings.BackupActivity"/>
-        <activity android:name=".features.about.AboutFragment" />
-        <activity android:name=".features.about.NoticesFragment" />
-        <activity android:name=".features.about.LibrariesFragment" />
 
         <activity android:name=".features.attachments.attach.AttachToTaskActivity"
             android:exported="true">

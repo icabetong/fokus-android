@@ -5,7 +5,8 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_widget_background">
+    android:background="?android:attr/colorBackground"
+    android:theme="@style/Theme.Material3.DynamicColors.DayNight">
 
     <TextView
         android:id="@+id/emptyView"
@@ -15,8 +16,8 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/widget_task_empty"
-        android:textSize="@dimen/widget_empty_text"
-        android:textAppearance="@style/Fokus.TextAppearance.Body.Medium" />
+        android:textColor="?attr/colorPrimary"
+        android:textAppearance="@style/Fokus.TextAppearance.Label.Medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/widget_task_title"
-                android:textColor="@color/theme_primary"
+                android:textColor="?attr/colorPrimary"
                 android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"/>
 
             <ImageButton
@@ -43,7 +44,7 @@
                 android:contentDescription="@string/button_add"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_outline_add_24"
-                android:tint="@color/theme_primary"
+                android:tint="?attr/colorPrimary"
                 tools:ignore="UseAppTint" />
 
         </RelativeLayout>

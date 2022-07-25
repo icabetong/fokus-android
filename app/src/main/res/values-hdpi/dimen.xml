@@ -6,7 +6,6 @@
     <dimen name="widget_title_padding">16sp</dimen>
     <dimen name="widget_item_text_title">18sp</dimen>
     <dimen name="widget_item_tag_padding_end">16dp</dimen>
-    <dimen name="widget_empty_text">18sp</dimen>
     <dimen name="widget_empty_text_padding">16dp</dimen>
 
 </resources>

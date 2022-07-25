@@ -53,7 +53,7 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.frameLayout))
+        setInsets(binding.root, binding.appBarLayout.toolbar, emptyArray())
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_settings)

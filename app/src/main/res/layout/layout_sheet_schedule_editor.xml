@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/dialog_schedule_details"
-        android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title"/>
+        android:textAppearance="@style/Fokus.TextAppearance.Title.Large"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:hint="@string/field_classroom"
             android:inputType="text"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+            android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
             android:background="@android:color/transparent"/>
 
     </LinearLayout>
@@ -125,7 +125,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/field_start_time"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+            android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
             android:clickable="true"
             android:focusable="true"/>
 
@@ -137,7 +137,7 @@
             android:gravity="center_vertical"
             android:layout_marginEnd="@dimen/container_padding_regular"
             android:text="@string/field_end_time"
-            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+            android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
             android:clickable="true"
             android:focusable="true"/>
 

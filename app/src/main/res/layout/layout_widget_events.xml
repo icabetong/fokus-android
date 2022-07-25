@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/widget_event_title"
                 android:textColor="@color/theme_primary"
-                android:textAppearance="@style/Fokus.TextAppearance.Widget.Title"/>
+                android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"/>
 
             <ImageButton
                 android:id="@+id/actionButton"

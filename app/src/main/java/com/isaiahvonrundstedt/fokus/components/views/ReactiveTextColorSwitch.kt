@@ -14,7 +14,7 @@ class ReactiveTextColorSwitch @JvmOverloads constructor(
 ) : SwitchMaterial(context, attributeSet, defStyleAttr) {
 
     init {
-        setSwitchTextAppearance(context, R.style.Fokus_TextAppearance_Editor_Value)
+        setSwitchTextAppearance(context, R.style.Fokus_TextAppearance_Label_Large)
     }
 
     override fun setChecked(checked: Boolean) {

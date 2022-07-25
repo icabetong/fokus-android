@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
+                    android:textAppearance="@style/Fokus.TextAppearance.Title.Medium">
 
                     <requestFocus/>
 
@@ -64,7 +64,7 @@
                     android:layout_marginEnd="@dimen/container_padding_regular"
                     android:hint="@string/field_description"
                     android:inputType="textCapWords"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_marginEnd="@dimen/container_padding_regular"
                     android:hint="@string/field_instructor"
                     android:inputType="textCapWords"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>
@@ -109,7 +109,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:text="@string/color_sky"
                     android:textColor="@color/color_primary_text"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                     android:clickable="true"
                     android:focusable="true"
                     android:drawablePadding="16dp"

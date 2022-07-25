@@ -18,7 +18,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textAlignment="center"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
             tools:text="10:00AM"
             app:layout_constraintWidth_percent="0.3"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +31,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="@dimen/item_padding"
-            app:layout_constraintWidth_percent="0.75"
+            app:layout_constraintWidth_percent="0.7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/timeView">
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="@dimen/item_spacing_small"
                 android:lines="1"
                 android:ellipsize="end"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
+                android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/locationView"
                 tools:text="Academic Seminar"/>
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:ellipsize="end"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+                android:textAppearance="@style/Fokus.TextAppearance.Body.Small"
                 app:layout_constraintTop_toBottomOf="@id/nameView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="CLSU Auditorium"/>
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_spacing_large"
-                android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+                android:textAppearance="@style/Fokus.TextAppearance.Label.Medium"
                 android:drawablePadding="@dimen/item_spacing_large"
                 app:drawableStartCompat="@drawable/shape_color_holder_chip"
                 tools:text="Intech 1100"/>

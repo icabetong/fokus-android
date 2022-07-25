@@ -23,7 +23,7 @@
             android:layout_marginEnd="@dimen/item_padding"
             android:lines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
             tools:text="Draw the Flowchart"/>
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_marginEnd="@dimen/item_padding"
             android:lines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
             tools:text="Tomorrow at 1:00PM"/>
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_marginEnd="@dimen/item_padding"
             android:lines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Small"
             android:drawablePadding="@dimen/item_spacing_large"
             app:drawableStartCompat="@drawable/shape_color_holder_chip"
             tools:text="COMSCI 2101"/>

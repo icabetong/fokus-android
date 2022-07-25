@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Overline"
+            android:textAppearance="@style/Fokus.TextAppearance.Label.Medium"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/descriptionView"
             app:layout_constraintStart_toEndOf="@id/tagView"
@@ -41,7 +41,7 @@
             android:layout_marginBottom="@dimen/item_spacing_medium"
             android:layout_marginStart="24dp"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
             app:layout_constraintTop_toBottomOf="@id/nameView"
             app:layout_constraintBottom_toTopOf="@id/scheduleView"
             app:layout_constraintStart_toEndOf="@id/tagView"
@@ -52,10 +52,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Small"
             app:layout_constraintTop_toBottomOf="@id/descriptionView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagView" />
+            app:layout_constraintStart_toEndOf="@id/tagView"
+            tools:text="Wednesdays at 7:00am"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

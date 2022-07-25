@@ -135,11 +135,20 @@
                         android:layout_margin="16dp"
                         app:srcCompat="@drawable/ic_outline_event_repeat_24"/>
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/schedulesChipGroup"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/editor_item_height">
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/container_padding_regular"
+                        android:gravity="center_vertical"
+                        android:minHeight="@dimen/editor_item_height"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/schedulesChipGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:chipSpacingVertical="0dp"/>
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/addActionChip"
@@ -148,19 +157,31 @@
                             android:text="@string/button_add"
                             app:chipIcon="@drawable/ic_outline_add_24"/>
 
-                    </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <include
-                    android:id="@+id/errorScheduleConflictView"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/errorScheduleConflict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/container_padding_regular"
+                    android:layout_marginBottom="@dimen/container_padding_regular"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    layout="@layout/layout_error_schedule"/>
+                    style="@style/Widget.Material3.CardView.Filled">
 
-                <include
-                    android:id="@+id/addActionLayout"
-                    layout="@layout/layout_item_add"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/container_padding_small"
+                        android:text="@string/feedback_schedule_exists"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:drawableStart="@drawable/ic_outline_event_busy_24"
+                        android:drawablePadding="@dimen/container_padding_regular"
+                        android:gravity="center_vertical"/>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

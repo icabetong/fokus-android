@@ -295,16 +295,21 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/container_padding_regular"
                     android:layout_gravity="center"
+                    android:minHeight="@dimen/editor_item_height"
                     android:orientation="vertical">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/attachmentsChipGroup"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:chipSpacingVertical="0dp"/>
 
-                    <include
-                        android:id="@+id/addActionLayout"
-                        layout="@layout/layout_item_add"/>
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/addActionChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_add"
+                        app:chipIcon="@drawable/ic_outline_add_24"/>
 
                 </LinearLayout>
 

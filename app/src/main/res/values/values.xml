@@ -167,32 +167,26 @@
         <item name="android:paddingEnd">0dp</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.Material3.Button">
-        <item name="iconTint">@color/theme_on_primary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
         <item name="iconGravity">end</item>
         <item name="iconPadding">@dimen/button_icon_padding</item>
-        <item name="cornerRadius">@dimen/surface_corner_radius</item>
-        <item name="android:textColor">@color/theme_on_primary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Fokus.Widget.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
         <item name="iconTint">@color/theme_primary</item>
         <item name="iconGravity">end</item>
         <item name="iconPadding">@dimen/button_icon_padding</item>
-        <item name="cornerRadius">@dimen/surface_corner_radius</item>
-        <item name="android:textColor">@color/theme_primary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Fokus.Widget.Button.Text" parent="Widget.Material3.Button.TextButton"/>
     <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
     </style>
     <style name="Fokus.Widget.Chip" parent="Widget.Material3.Chip.Filter"/>
-    <style name="Fokus.Widget.Switch" parent="Widget.Material3.CompoundButton.Switch"/>
+    <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch"/>
     <style name="Fokus.Widget.FAB" parent="Widget.Material3.FloatingActionButton.Primary"/>
     <style name="Fokus.Widget.FAB.Extended" parent="Widget.Material3.ExtendedFloatingActionButton.Primary"/>
     <style name="Fokus.Widget.TextInput.Layout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxCornerRadiusTopStart">@dimen/surface_corner_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/surface_corner_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/surface_corner_radius</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/surface_corner_radius</item>
         <item name="boxStrokeColor">@color/color_text_input_stroke</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="hintTextAppearance">@style/Fokus.TextAppearance.Editor.Hint</item>

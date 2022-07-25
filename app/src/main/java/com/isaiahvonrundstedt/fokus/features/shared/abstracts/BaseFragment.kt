@@ -23,8 +23,8 @@ import me.saket.cascade.CascadePopupMenu
 
 abstract class BaseFragment : Fragment() {
 
-    private val activityDrawerLayout: DrawerLayout?
-        get() = activity?.findViewById(R.id.drawerLayout) as? DrawerLayout
+    private val parentDrawer: DrawerLayout?
+        get() = getParentView()?.findViewById(R.id.drawerLayout) as? DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,18 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    /**
+     *  @returns the view of the outermost fragment
+     *  on the nested fragment setup
+     */
+    private fun getParentView(): View? {
+        return parentFragment?.parentFragment?.view
+    }
+
+    /**
+     *  @param toolbar adds the navigation icon at the start of
+     *  the toolbar and registers an onClick callback on it
+     */
     protected fun setupNavigation(toolbar: MaterialToolbar) {
         with(toolbar) {
             setNavigationIcon(R.drawable.ic_outline_menu_24)
@@ -43,10 +55,14 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    /**
+     *  This function triggers the drawerLayout in the
+     *  outermost layer of the nested fragment setup
+     */
     private fun triggerNavigationDrawer() {
-        if (activityDrawerLayout?.isDrawerOpen(GravityCompat.START) == true)
-            activityDrawerLayout?.closeDrawer(GravityCompat.START)
-        else activityDrawerLayout?.openDrawer(GravityCompat.START)
+        if (parentDrawer?.isDrawerOpen(GravityCompat.START) == true)
+            parentDrawer?.closeDrawer(GravityCompat.START)
+        else parentDrawer?.openDrawer(GravityCompat.START)
     }
 
     protected fun setInsets(
@@ -137,7 +153,8 @@ abstract class BaseFragment : Fragment() {
             styler = CascadePopupMenu.Styler(
                 background = {
                     ContextCompat.getDrawable(requireContext(), R.drawable.shape_cascade_background)
-                }
+                },
+
             ))
 
     companion object {

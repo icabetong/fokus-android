@@ -25,7 +25,6 @@ import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
@@ -33,6 +32,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.utils.MDUtil.textChanged
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.CoreApplication
@@ -51,11 +51,9 @@ import com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEditorTaskBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutDialogInputAttachmentBinding
 import com.isaiahvonrundstedt.fokus.features.attachments.Attachment
-import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentAdapter
 import com.isaiahvonrundstedt.fokus.features.attachments.AttachmentOptionSheet
 import com.isaiahvonrundstedt.fokus.features.schedule.Schedule
 import com.isaiahvonrundstedt.fokus.features.schedule.picker.SchedulePickerSheet
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
@@ -70,12 +68,11 @@ import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, FragmentResultListener {
+class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
     private var _binding: FragmentEditorTaskBinding? = null
     private var controller: NavController? = null
     private var requestKey = REQUEST_KEY_INSERT
 
-    private val attachmentAdapter = AttachmentAdapter(this)
     private val viewModel: TaskEditorViewModel by viewModels()
     private val binding get() = _binding!!
 
@@ -203,11 +200,6 @@ class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, Fra
             setOnMenuItemClickListener(::onMenuItemClicked)
         }
 
-        with(binding.recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = attachmentAdapter
-        }
-
         registerForFragmentResult(
             arrayOf(
                 SchedulePickerSheet.REQUEST_KEY,
@@ -250,7 +242,43 @@ class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, Fra
         }
 
         viewModel.attachments.observe(this) {
-            attachmentAdapter.submitList(it)
+            binding.attachmentsChipGroup.removeAllViews()
+            it.forEach { attachment ->
+                binding.attachmentsChipGroup.addView(Chip(requireContext()).apply {
+                    text = attachment.name
+                    tag = attachment.attachmentID
+                    isCloseIconVisible = true
+                    setCloseIconResource(R.drawable.ic_outline_close_24)
+                    setOnClickListener {
+                        if (attachment.target != null)
+                            onParseForIntent(attachment)
+                    }
+                    setOnCloseIconClickListener {
+                        val uri = Uri.parse(attachment.target)
+                        MaterialDialog(requireContext()).show {
+                            lifecycleOwner(viewLifecycleOwner)
+                            title(
+                                text = String.format(
+                                    getString(R.string.dialog_confirm_deletion_title),
+                                    attachment.name
+                                )
+                            )
+                            message(R.string.dialog_confirm_deletion_summary)
+                            positiveButton(R.string.button_delete) {
+
+                                viewModel.removeAttachment(attachment)
+                                when (attachment.type) {
+                                    Attachment.TYPE_CONTENT_URI ->
+                                        context.contentResolver.delete(uri, null, null)
+                                    Attachment.TYPE_IMPORTED_FILE ->
+                                        File(attachment.target!!).delete()
+                                }
+                            }
+                            negativeButton(R.string.button_cancel)
+                        }
+                    }
+                })
+            }
         }
 
         viewModel.subject.observe(this) {
@@ -314,11 +342,9 @@ class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, Fra
             }
         }
 
-        binding.addActionLayout.addItemButton.setOnClickListener {
+        binding.addActionChip.setOnClickListener {
             hideKeyboardFromCurrentFocus(requireView())
-
-            AttachmentOptionSheet
-                .show(childFragmentManager)
+            AttachmentOptionSheet.show(childFragmentManager)
         }
 
         binding.dueDateTextView.setOnClickListener {
@@ -732,44 +758,6 @@ class TaskEditorFragment : BaseEditorFragment(), BaseAdapter.ActionListener, Fra
         }
     }
 
-    override fun <T> onActionPerformed(
-        t: T, action: BaseAdapter.ActionListener.Action,
-        container: View?
-    ) {
-        if (t is Attachment) {
-            when (action) {
-                BaseAdapter.ActionListener.Action.SELECT -> {
-                    if (t.target != null)
-                        onParseForIntent(t)
-                }
-                BaseAdapter.ActionListener.Action.DELETE -> {
-                    val uri = Uri.parse(t.target)
-
-                    MaterialDialog(requireContext()).show {
-                        lifecycleOwner(viewLifecycleOwner)
-                        title(
-                            text = String.format(
-                                getString(R.string.dialog_confirm_deletion_title),
-                                t.name
-                            )
-                        )
-                        message(R.string.dialog_confirm_deletion_summary)
-                        positiveButton(R.string.button_delete) {
-
-                            viewModel.removeAttachment(t)
-                            when (t.type) {
-                                Attachment.TYPE_CONTENT_URI ->
-                                    context.contentResolver.delete(uri, null, null)
-                                Attachment.TYPE_IMPORTED_FILE ->
-                                    File(t.target!!).delete()
-                            }
-                        }
-                        negativeButton(R.string.button_cancel)
-                    }
-                }
-            }
-        }
-    }
 
     // This function invokes the corresponding application that
     // will open the uri of the attachment if the user clicks

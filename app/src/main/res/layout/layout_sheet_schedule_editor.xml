@@ -22,7 +22,7 @@
             android:layout_width="@dimen/icon_dimen"
             android:layout_height="@dimen/icon_dimen"
             android:layout_margin="@dimen/container_padding_regular"
-            app:srcCompat="@drawable/ic_outline_calculate_24"/>
+            app:srcCompat="@drawable/ic_outline_sensor_door_24"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/classroomTextInput"

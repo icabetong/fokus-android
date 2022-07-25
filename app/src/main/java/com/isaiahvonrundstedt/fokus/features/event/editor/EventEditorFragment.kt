@@ -196,7 +196,7 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
             } else {
                 with(binding.subjectTextView) {
                     removeCompoundDrawableAtStart()
-                    setText(R.string.field_not_set)
+                    setText(R.string.field_subject)
                     setTextColorFromResource(R.color.color_secondary_text)
                 }
 

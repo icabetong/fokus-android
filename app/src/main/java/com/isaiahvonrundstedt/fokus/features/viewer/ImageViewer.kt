@@ -8,10 +8,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import coil.load
 import com.isaiahvonrundstedt.fokus.databinding.LayoutViewerImageBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewer
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseViewerFragment
 import java.io.File
 
-class ImageViewer(manager: FragmentManager) : BaseViewer(manager) {
+class ImageViewer(manager: FragmentManager) : BaseViewerFragment(manager) {
     private var _binding: LayoutViewerImageBinding? = null
 
     private val binding get() = _binding!!

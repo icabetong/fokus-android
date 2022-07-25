@@ -50,12 +50,12 @@ class TaskWidgetProvider : AppWidgetProvider() {
             context, 0,
             Intent(context, MainActivity::class.java).apply {
                 action = MainActivity.ACTION_WIDGET_TASK
-            }, PendingIntent.FLAG_UPDATE_CURRENT
+            }, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val addIntent = PendingIntent.getActivity(
             context, 0,
-            Intent(context, TaskEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+            Intent(context, TaskEditorContainer::class.java), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val views = RemoteViews(context?.packageName, R.layout.layout_widget_tasks)

@@ -46,91 +46,25 @@
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
         <item name="snackbarStyle">@style/Fokus.Widget.Snackbar</item>
 
-        <item name="md_background_color">@color/theme_surface</item>
+        <item name="md_background_color">?attr/colorSurface</item>
         <item name="md_corner_radius">@dimen/surface_corner_radius</item>
     </style>
 
     <style name="Fokus.Component.Preference" parent="PreferenceThemeOverlay.v14.Material">
         <item name="preferenceCategoryTitleTextAppearance">@style/Fokus.TextAppearance.Label.Large</item>
     </style>
-    <style name="Fokus.Component.Dialog" parent="Theme.Material3.DayNight.Dialog.Alert">
-        <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorOnPrimary">@color/theme_on_primary</item>
-        <item name="colorPrimaryContainer">@color/theme_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/theme_on_primary_container</item>
-        <item name="colorSecondary">@color/theme_secondary</item>
-        <item name="colorOnSecondary">@color/theme_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/theme_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/theme_on_secondary_container</item>
-        <item name="colorTertiary">@color/theme_tertiary</item>
-        <item name="colorOnTertiary">@color/theme_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/theme_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/theme_on_tertiary_container</item>
-        <item name="colorError">@color/theme_error</item>
-        <item name="colorOnError">@color/theme_on_error</item>
-        <item name="colorErrorContainer">@color/theme_error_container</item>
-        <item name="colorOnErrorContainer">@color/theme_on_error_container</item>
-        <item name="android:colorBackground">@color/theme_background</item>
-        <item name="colorOnBackground">@color/theme_on_background</item>
-        <item name="colorSurface">@color/theme_surface</item>
-        <item name="colorOnSurface">@color/theme_on_surface</item>
-        <item name="colorSurfaceVariant">@color/theme_surface_variant</item>
-        <item name="colorOnSurfaceVariant">@color/theme_on_surface_variant</item>
-        <item name="colorOutline">@color/theme_outline</item>
+    <style name="Fokus.Component.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="dialogCornerRadius">@dimen/surface_corner_radius</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
         <item name="buttonBarPositiveButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
         <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
     </style>
-    <style name="Fokus.Component.Viewer.Bridge" parent="Theme.Material3.DayNight.Dialog">
-        <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorOnPrimary">@color/theme_on_primary</item>
-        <item name="colorPrimaryContainer">@color/theme_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/theme_on_primary_container</item>
-        <item name="colorSecondary">@color/theme_secondary</item>
-        <item name="colorOnSecondary">@color/theme_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/theme_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/theme_on_secondary_container</item>
-        <item name="colorTertiary">@color/theme_tertiary</item>
-        <item name="colorOnTertiary">@color/theme_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/theme_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/theme_on_tertiary_container</item>
-        <item name="colorError">@color/theme_error</item>
-        <item name="colorOnError">@color/theme_on_error</item>
-        <item name="colorErrorContainer">@color/theme_error_container</item>
-        <item name="colorOnErrorContainer">@color/theme_on_error_container</item>
-        <item name="android:colorBackground">@color/theme_background</item>
-        <item name="colorOnBackground">@color/theme_on_background</item>
-        <item name="colorSurface">@color/theme_surface</item>
-        <item name="colorOnSurface">@color/theme_on_surface</item>
-        <item name="colorSurfaceVariant">@color/theme_surface_variant</item>
-        <item name="colorOnSurfaceVariant">@color/theme_on_surface_variant</item>
-        <item name="colorOutline">@color/theme_outline</item>
+    <style name="Fokus.Component.Viewer.Bridge" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:windowBackground">@color/theme_background</item>
+        <item name="android:windowBackground">?attr/colorSurface</item>
     </style>
-    <style name="Fokus.Component.BottomSheet.Bridge" parent="Theme.Material3.DayNight.BottomSheetDialog">
-        <item name="colorPrimary">@color/theme_primary</item>
-        <item name="colorOnPrimary">@color/theme_on_primary</item>
-        <item name="colorPrimaryContainer">@color/theme_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/theme_on_primary_container</item>
-        <item name="colorSecondary">@color/theme_secondary</item>
-        <item name="colorOnSecondary">@color/theme_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/theme_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/theme_on_secondary_container</item>
-        <item name="colorTertiary">@color/theme_tertiary</item>
-        <item name="colorOnTertiary">@color/theme_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/theme_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/theme_on_tertiary_container</item>
-        <item name="colorError">@color/theme_error</item>
-        <item name="colorOnError">@color/theme_on_error</item>
-        <item name="colorErrorContainer">@color/theme_error_container</item>
-        <item name="colorOnErrorContainer">@color/theme_on_error_container</item>
-        <item name="android:colorBackground">@color/theme_background</item>
-        <item name="colorOnBackground">@color/theme_on_background</item>
-        <item name="colorSurface">@color/theme_surface</item>
-        <item name="colorOnSurface">@color/theme_on_surface</item>
-        <item name="colorSurfaceVariant">@color/theme_surface_variant</item>
-        <item name="colorOnSurfaceVariant">@color/theme_on_surface_variant</item>
-        <item name="colorOutline">@color/theme_outline</item>
+    <style name="Fokus.Component.BottomSheet.Bridge" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Fokus.Component.BottomSheet.Base</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
@@ -173,9 +107,7 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
     <style name="Fokus.Widget.Button.Text" parent="Widget.Material3.Button.TextButton"/>
-    <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Button</item>
-    </style>
+    <style name="Fokus.Widget.Button.Text.Dialog" parent="Widget.Material3.Button.TextButton.Dialog"/>
     <style name="Fokus.Widget.Chip" parent="Widget.Material3.Chip.Filter"/>
     <style name="Fokus.Widget.Switch" parent="Widget.AppCompat.CompoundButton.Switch"/>
     <style name="Fokus.Widget.FAB" parent="Widget.Material3.FloatingActionButton.Primary"/>

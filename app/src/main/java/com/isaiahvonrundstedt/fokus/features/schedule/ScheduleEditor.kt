@@ -31,6 +31,7 @@ import java.util.*
 class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
     private var id: String? = null
+    private var classroom: String? = null
     private var startTime: LocalTime? = null
     private var endTime: LocalTime? = null
     private var daysOfWeek: Int = 0
@@ -63,6 +64,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
             it.getParcelable<Schedule>(EXTRA_SCHEDULE)?.also { schedule ->
                 id = schedule.scheduleID
+                classroom = schedule.classroom
                 startTime = schedule.startTime
                 endTime = schedule.endTime
                 daysOfWeek = schedule.daysOfWeek
@@ -70,6 +72,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
                 subjectID = schedule.subject
                 requestKey = REQUEST_KEY_UPDATE
 
+                binding.classroomTextInput.setText(classroom)
                 binding.startTimeTextView.text = Schedule.formatTime(view.context, startTime)
                 binding.endTimeTextView.text = Schedule.formatTime(view.context, endTime)
 
@@ -225,6 +228,7 @@ class ScheduleEditor(manager: FragmentManager) : BaseBottomSheet(manager) {
 
             val schedule = Schedule(
                 scheduleID = id ?: UUID.randomUUID().toString(),
+                classroom = binding.classroomTextInput.text.toString(),
                 daysOfWeek = daysOfWeek,
                 weeksOfMonth = weeksOfMonth,
                 startTime = startTime,

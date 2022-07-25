@@ -4,176 +4,205 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/bottom_sheet_padding">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:text="@string/dialog_schedule_details"
         android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/field_days_of_week"
-        android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+        android:orientation="horizontal">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/daysOfWeekGroup"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/icon_dimen"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_margin="@dimen/container_padding_regular"
+            app:srcCompat="@drawable/ic_outline_calculate_24"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/classroomTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/field_classroom"
+            android:inputType="text"
+            android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:chipSpacingVertical="0dp">
+        android:orientation="horizontal">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/sundayChip"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/icon_dimen"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_margin="@dimen/container_padding_regular"
+            app:srcCompat="@drawable/ic_outline_date_range_24"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/daysOfWeekGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_sunday"
-            style="@style/Fokus.Widget.Chip"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/container_padding_regular"
+            app:chipSpacingVertical="0dp">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/mondayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_monday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sundayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_sunday"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/tuesdayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_tuesday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/mondayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_monday"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/wednesdayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_wednesday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tuesdayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_tuesday"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/thursdayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_thursday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/wednesdayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_wednesday"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/fridayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_friday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/thursdayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_thursday"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/saturdayChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/days_of_week_item_saturday"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fridayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_friday"
+                style="@style/Fokus.Widget.Chip"/>
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/saturdayChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/days_of_week_item_saturday"
+                style="@style/Fokus.Widget.Chip"/>
 
-    <TextView
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/field_class_time"
-        android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint" />
+        android:orientation="horizontal">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeightSmall">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/icon_dimen"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_margin="@dimen/container_padding_regular"
+            app:srcCompat="@drawable/ic_outline_access_time_24"/>
 
         <TextView
             android:id="@+id/startTimeTextView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/field_start_time"
             android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
             android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/endTimeTextView"/>
+            android:focusable="true"/>
 
         <TextView
             android:id="@+id/endTimeTextView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/container_padding_regular"
             android:text="@string/field_end_time"
             android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
             android:clickable="true"
-            android:focusable="true"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/startTimeTextView"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:focusable="true"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/weekNumbersHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/editor_container_padding"
-        android:text="@string/field_weeks_of_month"
-        android:textAppearance="@style/Fokus.TextAppearance.Editor.Hint"/>
+        android:orientation="horizontal">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/weekOfMonthGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:chipSpacingVertical="0dp">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/icon_dimen"
+            android:layout_height="@dimen/icon_dimen"
+            android:layout_margin="@dimen/container_padding_regular"
+            app:srcCompat="@drawable/ic_outline_calendar_month_24"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/weekOneChip"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/weekOfMonthGroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/weeks_of_month_item_week_1"
-            style="@style/Fokus.Widget.Chip"/>
+            android:layout_weight="1"
+            app:chipSpacingVertical="0dp">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/weekTwoChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/weeks_of_month_item_week_2"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/weekOneChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/weeks_of_month_item_week_1"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/weekThreeChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/weeks_of_month_item_week_3"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/weekTwoChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/weeks_of_month_item_week_2"
+                style="@style/Fokus.Widget.Chip"/>
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/weekFourChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/weeks_of_month_item_week_4"
-            style="@style/Fokus.Widget.Chip"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/weekThreeChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/weeks_of_month_item_week_3"
+                style="@style/Fokus.Widget.Chip"/>
 
-    </com.google.android.material.chip.ChipGroup>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/weekFourChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/weeks_of_month_item_week_4"
+                style="@style/Fokus.Widget.Chip"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/actionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_margin="@dimen/container_padding_regular"
         android:layout_gravity="end"
         android:text="@string/button_save"
         app:icon="@drawable/ic_outline_save_24"

@@ -165,6 +165,7 @@ data class Schedule @JvmOverloads constructor(
             scheduleID = it.scheduleID
             daysOfWeek = it.daysOfWeek
             startTime = it.startTime
+            classroom = it.classroom
             endTime = it.endTime
             subject = it.subject
         }

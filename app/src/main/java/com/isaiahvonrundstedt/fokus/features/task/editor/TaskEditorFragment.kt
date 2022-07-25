@@ -35,7 +35,7 @@ import com.afollestad.materialdialogs.utils.MDUtil.textChanged
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.isaiahvonrundstedt.fokus.CoreApplication
+import com.isaiahvonrundstedt.fokus.Fokus
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
@@ -584,7 +584,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                         createSnackbar(R.string.feedback_export_completed, binding.root)
 
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
+                            val uri = Fokus.obtainUriForFile(requireContext(), File(it))
 
                             startActivity(
                                 ShareCompat.IntentBuilder.from(requireActivity())
@@ -782,7 +782,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                         ImageViewer.show(childFragmentManager, file.path, attachment.name)
                     }
                     else -> {
-                        val targetUri = CoreApplication.obtainUriForFile(
+                        val targetUri = Fokus.obtainUriForFile(
                             requireContext(),
                             file
                         )

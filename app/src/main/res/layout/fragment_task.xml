@@ -38,6 +38,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_tasks_title"
+            android:textColor="?attr/colorPrimary"
             android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <TextView
@@ -66,6 +67,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_finished_title"
+            android:textColor="?attr/colorPrimary"
             android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <TextView

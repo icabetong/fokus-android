@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <corners android:radius="@dimen/surface_corner_radius"/>
-    <solid android:color="@color/theme_primary_container"/>
+    <solid android:color="?attr/colorPrimaryContainer"/>
     <size android:width="@dimen/icon_width"
         android:height="@dimen/icon_height"/>
 

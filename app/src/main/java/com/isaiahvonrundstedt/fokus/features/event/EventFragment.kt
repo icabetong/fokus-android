@@ -17,10 +17,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.color.MaterialColors
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
+import com.isaiahvonrundstedt.fokus.components.extensions.android.isDark
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
@@ -274,7 +276,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         if (day.owner == DayOwner.THIS_MONTH) {
             when (day.date) {
                 viewModel.today -> {
-                    textView.setTextColorFromResource(R.color.theme_on_primary_container)
+                    val color = if (requireContext().isDark()) android.R.color.system_accent1_50
+                        else android.R.color.system_accent1_500
+                    textView.setTextColorFromResource(color)
                     textView.setBackgroundResource(R.drawable.shape_calendar_current_day)
                     view.isVisible = false
                 }

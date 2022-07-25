@@ -3,7 +3,7 @@
 
     <style name="Fokus"/>
     <!-- Base application theme -->
-    <style name="Fokus.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Fokus.Theme" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 
         <item name="colorPrimary">@color/theme_primary</item>
@@ -106,7 +106,6 @@
         <item name="colorOutline">@color/theme_outline</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@color/theme_background</item>
-
     </style>
     <style name="Fokus.Component.BottomSheet.Bridge" parent="Theme.Material3.DayNight.BottomSheetDialog">
         <item name="colorPrimary">@color/theme_primary</item>

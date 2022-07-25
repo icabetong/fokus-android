@@ -27,7 +27,7 @@ import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.isaiahvonrundstedt.fokus.CoreApplication
+import com.isaiahvonrundstedt.fokus.Fokus
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.removeCompoundDrawableAtStart
@@ -410,7 +410,7 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
                         createSnackbar(R.string.feedback_export_completed, binding.root)
 
                         intent.getStringExtra(BaseService.EXTRA_BROADCAST_DATA)?.also {
-                            val uri = CoreApplication.obtainUriForFile(requireContext(), File(it))
+                            val uri = Fokus.obtainUriForFile(requireContext(), File(it))
 
                             startActivity(
                                 ShareCompat.IntentBuilder.from(requireActivity())

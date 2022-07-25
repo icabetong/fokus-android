@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Title">
+                    android:textAppearance="@style/Fokus.TextAppearance.Title.Medium">
 
                     <requestFocus/>
 
@@ -65,7 +65,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/button_mark_as_finished"
                     android:textColor="@color/color_secondary_text"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"/>
 
             </LinearLayout>
 
@@ -97,7 +97,7 @@
                         android:gravity="center_vertical"
                         android:background="?attr/selectableItemBackground"
                         android:text="@string/field_due_date"
-                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                        android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
                             android:paddingEnd="@dimen/editor_container_padding"
                             android:checked="true"
                             android:text="@string/field_not_set"
-                            app:textAppearanceCompat="@style/Fokus.TextAppearance.Editor.Value"/>
+                            app:textAppearanceCompat="@style/Fokus.TextAppearance.Label.Large"/>
 
                         <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
                             android:id="@+id/inNextMeetingRadio"
@@ -139,7 +139,7 @@
                             android:paddingStart="@dimen/editor_container_padding"
                             android:paddingEnd="@dimen/editor_container_padding"
                             app:titleText="@string/field_due_in_the_next_meeting"
-                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large" />
 
                         <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
                             android:id="@+id/pickDateTimeRadio"
@@ -148,7 +148,7 @@
                             android:paddingStart="@dimen/editor_container_padding"
                             android:paddingEnd="@dimen/editor_container_padding"
                             app:titleText="@string/field_due_pick_from_schedule"
-                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>
 
                         <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
                             android:id="@+id/customDateTimeRadio"
@@ -157,7 +157,7 @@
                             android:paddingStart="@dimen/editor_container_padding"
                             android:paddingEnd="@dimen/editor_container_padding"
                             app:titleText="@string/field_due_custom"
-                            app:titleTextAppearance="@style/Fokus.TextAppearance.Editor.Value"/>
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>
 
                     </RadioGroup>
 
@@ -186,7 +186,7 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:text="@string/field_subject"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                     android:drawablePadding="16dp"
                     android:background="?attr/selectableItemBackground"/>
 
@@ -226,7 +226,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/button_mark_as_important"
                         android:textColor="@color/color_secondary_text"
-                        android:textAppearance="@style/Fokus.TextAppearance.Editor.Value" />
+                        android:textAppearance="@style/Fokus.TextAppearance.Label.Large" />
 
                 </LinearLayout>
 
@@ -272,7 +272,7 @@
                     android:maxLines="6"
                     android:minLines="2"
                     android:scrollbars="vertical"
-                    android:textAppearance="@style/Fokus.TextAppearance.Editor.Value"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
                     android:background="@android:color/transparent"/>
 
             </LinearLayout>

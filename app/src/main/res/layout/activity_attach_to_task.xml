@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,7 +31,8 @@
                     android:id="@+id/titleView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"/>
+                    android:textAppearance="@style/Fokus.TextAppearance.Title.Large"
+                    tools:text="mdpf.pdf"/>
 
                 <TextView
                     android:id="@+id/summaryView"
@@ -38,7 +40,8 @@
                     android:layout_height="wrap_content"
                     android:maxLines="3"
                     android:ellipsize="end"
-                    android:textAppearance="@style/Fokus.TextAppearance.List.Body"/>
+                    android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"
+                    tools:text="anything"/>
 
             </LinearLayout>
 

@@ -31,15 +31,15 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_logs_title"
-            android:textSize="18sp"
             android:textColor="@color/theme_primary"
-            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_logs_summary"/>
+            android:text="@string/empty_view_no_logs_summary"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </LinearLayout>
 

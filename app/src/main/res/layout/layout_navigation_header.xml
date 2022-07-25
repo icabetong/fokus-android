@@ -10,4 +10,4 @@
     android:layout_marginBottom="@dimen/container_padding_regular"
     android:text="@string/app_name"
     android:textColor="?attr/colorOnSurfaceVariant"
-    android:textAppearance="@style/Fokus.TextAppearance.Navigation.Title" />
+    android:textAppearance="@style/Fokus.TextAppearance.Title.Medium" />

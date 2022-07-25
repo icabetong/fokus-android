@@ -32,7 +32,7 @@
             android:layout_marginStart="@dimen/icon_to_text_padding"
             android:ellipsize="end"
             android:lines="1"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Title.Strong"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/summaryView"
             app:layout_constraintStart_toEndOf="@id/iconView"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Body"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Small"
             app:layout_constraintTop_toBottomOf="@id/titleView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/iconView"
@@ -64,7 +64,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            android:textAppearance="@style/Fokus.TextAppearance.List.Meta"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Small"
             tools:text="h:mm"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

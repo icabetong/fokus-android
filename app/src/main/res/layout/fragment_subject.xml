@@ -32,14 +32,14 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_subjects_title"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/empty_view_no_subjects_summary"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </LinearLayout>
 
@@ -58,14 +58,14 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_classes_today_title"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/empty_view_no_classes_today_summary"
-            style="@style/Fokus.TextAppearance.Status.Summary"/>
+            style="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </LinearLayout>
 
@@ -84,14 +84,14 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/empty_view_no_classes_tomorrow_title"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Title"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/empty_view_no_classes_tomorrow_summary"
-            android:textAppearance="@style/Fokus.TextAppearance.Status.Summary"/>
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </LinearLayout>
 

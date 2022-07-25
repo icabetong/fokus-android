@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.Widget.Item.Title"
+            android:textAppearance="@style/Fokus.TextAppearance.Title.Medium"
             tools:text="Make Dinner"/>
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginTop="2dp"
             android:lines="1"
             android:ellipsize="end"
-            android:textAppearance="@style/Fokus.TextAppearance.Widget.Item.Body"
+            android:textAppearance="@style/Fokus.TextAppearance.Body.Small"
             tools:text="7:30PM"/>
 
     </LinearLayout>

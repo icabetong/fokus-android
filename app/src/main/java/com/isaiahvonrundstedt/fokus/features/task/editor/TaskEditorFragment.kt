@@ -234,7 +234,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                         binding.dueDateTextView.text = formatDueDate(requireContext())
                         binding.dueDateTextView.setTextColorFromResource(R.color.color_primary_text)
                     } else {
-                        binding.dueDateTextView.setText(R.string.field_not_set)
+                        binding.dueDateTextView.setText(R.string.field_due_date)
                         binding.dueDateTextView.setTextColorFromResource(R.color.color_secondary_text)
                     }
                 }
@@ -306,7 +306,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                 }
             } else {
                 with(binding.subjectTextView) {
-                    setText(R.string.field_not_set)
+                    setText(R.string.field_subject)
                     setTextColorFromResource(R.color.color_secondary_text)
                     removeCompoundDrawableAtStart()
                 }
@@ -371,7 +371,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
             viewModel.setDueDate(null)
 
             binding.removeDueDateButton.isVisible = false
-            binding.dueDateTextView.setText(R.string.field_not_set)
+            binding.dueDateTextView.setText(R.string.field_due_date)
             binding.dueDateTextView.setTextColor(
                 ContextCompat.getColor(
                     it.context,
@@ -385,7 +385,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
         }
 
         binding.removeButton.setOnClickListener {
-            binding.dueDateTextView.setText(R.string.field_not_set)
+            binding.dueDateTextView.setText(R.string.field_due_date)
             binding.dueDateTextView.setTextColor(
                 ContextCompat.getColor(
                     it.context,

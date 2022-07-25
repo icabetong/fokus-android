@@ -4,7 +4,6 @@
     <dimen name="container_padding_medium">24dp</dimen>
     <dimen name="container_padding_regular">16dp</dimen>
     <dimen name="container_padding_small">8dp</dimen>
-    <dimen name="shape_radius">8dp</dimen>
 
     <!-- Legacy -->
     <dimen name="activity_padding">16dp</dimen>
@@ -20,7 +19,7 @@
     <dimen name="bottom_sheet_padding">24dp</dimen>
     <dimen name="bottom_sheet_min_height">256dp</dimen>
 
-    <dimen name="surface_corner_radius">8dp</dimen>
+    <dimen name="surface_corner_radius">24dp</dimen>
 
     <dimen name="editor_container_padding">12dp</dimen>
     <dimen name="editor_item_height">56dp</dimen>

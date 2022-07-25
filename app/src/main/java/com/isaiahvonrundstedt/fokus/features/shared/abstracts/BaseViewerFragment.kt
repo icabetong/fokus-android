@@ -7,7 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.isaiahvonrundstedt.fokus.R
 
-abstract class BaseViewer(private val manager: FragmentManager) : DialogFragment() {
+abstract class BaseViewerFragment(private val manager: FragmentManager) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

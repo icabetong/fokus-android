@@ -14,7 +14,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.isaiahvonrundstedt.fokus.features.settings.BackupActivity$Companion$BackupFragment"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.BackupFragment$Companion$BackupPreference"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:ignore="FragmentTagUsage"/>
 

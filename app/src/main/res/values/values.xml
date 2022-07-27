@@ -61,6 +61,7 @@
         <item name="buttonBarNegativeButtonStyle">@style/Fokus.Widget.Button.Text.Dialog</item>
     </style>
     <style name="Fokus.Component.Viewer.Bridge" parent="ThemeOverlay.Material3.Dialog.Alert">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">?attr/colorSurface</item>
     </style>

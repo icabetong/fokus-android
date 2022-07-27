@@ -10,6 +10,10 @@
         android:name="com.isaiahvonrundstedt.fokus.features.core.fragment.RootFragment"
         tools:layout="@layout/fragment_root"/>
     <fragment
+        android:id="@+id/navigation_backup"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.BackupFragment"
+        tools:layout="@layout/fragment_root"/>
+    <fragment
         android:id="@+id/navigation_notices"
         android:name="com.isaiahvonrundstedt.fokus.features.about.NoticesFragment"
         tools:layout="@layout/fragment_notices"/>

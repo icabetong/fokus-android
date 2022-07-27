@@ -38,6 +38,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.isaiahvonrundstedt.fokus.Fokus
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.*
+import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toArrayList
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toCalendar
 import com.isaiahvonrundstedt.fokus.components.extensions.jdk.toZonedDateTime
 import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
@@ -58,7 +59,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
-import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
+import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerFragment
 import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import com.isaiahvonrundstedt.fokus.features.viewer.ImageViewer
@@ -77,7 +78,6 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
     private val binding get() = _binding!!
 
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-    private lateinit var subjectLauncher: ActivityResultLauncher<Intent>
     private lateinit var attachmentLauncher: ActivityResultLauncher<Intent>
     private lateinit var exportLauncher: ActivityResultLauncher<Intent>
     private lateinit var importLauncher: ActivityResultLauncher<Intent>
@@ -105,17 +105,6 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                         positiveButton(R.string.button_continue) {}
                         negativeButton(R.string.button_cancel)
                     }
-                }
-            }
-
-        subjectLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    result.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
-                        ?.also {
-                            viewModel.setSubject(it.subject)
-                            viewModel.schedules = ArrayList(it.schedules)
-                        }
                 }
             }
 
@@ -202,6 +191,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
         registerForFragmentResult(
             arrayOf(
+                SubjectPickerFragment.REQUEST_KEY_PICK,
                 SchedulePickerSheet.REQUEST_KEY,
                 AttachmentOptionSheet.REQUEST_KEY
             ), this
@@ -381,7 +371,8 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
         }
 
         binding.subjectTextView.setOnClickListener {
-            subjectLauncher.launch(Intent(context, SubjectPickerActivity::class.java))
+            SubjectPickerFragment(childFragmentManager)
+                .show()
         }
 
         binding.removeButton.setOnClickListener {
@@ -681,6 +672,12 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when (requestKey) {
+            SubjectPickerFragment.REQUEST_KEY_PICK -> {
+                result.getParcelable<SubjectPackage>(SubjectPickerFragment.EXTRA_SELECTED_SUBJECT)?.let {
+                    viewModel.setSubject(it.subject)
+                    viewModel.schedules = it.schedules.toArrayList()
+                }
+            }
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)

@@ -1,35 +1,52 @@
 package com.isaiahvonrundstedt.fokus.features.subject.picker
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
-import com.isaiahvonrundstedt.fokus.databinding.ActivityPickerSubjectBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.databinding.FragmentPickerSubjectBinding
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePickerFragment
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SubjectPickerActivity : BaseActivity(), BaseAdapter.ActionListener {
-    private lateinit var binding: ActivityPickerSubjectBinding
+class SubjectPickerFragment(fragmentManager: FragmentManager): BasePickerFragment(fragmentManager),
+    BaseAdapter.ActionListener {
+    private var _binding: FragmentPickerSubjectBinding? = null
 
+    private val binding get() = _binding!!
     private val pickerAdapter = SubjectPickerAdapter(this)
     private val viewModel: SubjectPickerViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPickerSubjectBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.dialog_assign_subject)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentPickerSubjectBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupToolbar(binding.appBarLayout.toolbar, R.string.dialog_assign_subject, onNavigate = { dismiss() })
 
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
@@ -55,10 +72,9 @@ class SubjectPickerActivity : BaseActivity(), BaseAdapter.ActionListener {
         if (t is SubjectPackage) {
             when (action) {
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    setResult(RESULT_OK, Intent().apply {
-                        putExtra(EXTRA_SELECTED_SUBJECT, t)
-                    })
-                    finish()
+                    setFragmentResult(REQUEST_KEY_PICK,
+                        bundleOf(EXTRA_SELECTED_SUBJECT to t))
+                    dismiss()
                 }
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
@@ -74,6 +90,7 @@ class SubjectPickerActivity : BaseActivity(), BaseAdapter.ActionListener {
     }
 
     companion object {
+        const val REQUEST_KEY_PICK = "request:pick:subject"
         const val EXTRA_SELECTED_SUBJECT = "extra:subject"
     }
 }

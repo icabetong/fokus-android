@@ -68,7 +68,6 @@ class MainActivity : BaseActivity() {
                         SubjectEditorFragment.EXTRA_SUBJECT to subject?.let { Subject.toBundle(it) },
                         SubjectEditorFragment.EXTRA_SCHEDULE to schedules
                     )
-
                     controller?.navigate(R.id.navigation_editor_subject, args)
                 }
                 ACTION_SHORTCUT_TASK -> {
@@ -81,13 +80,13 @@ class MainActivity : BaseActivity() {
                     controller?.navigate(R.id.navigation_editor_subject)
                 }
                 ACTION_NAVIGATION_TASK -> {
-                    controller?.navigate(R.id.navigation_tasks)
+                    //controller?.navigate(R.id.navigation_tasks)
                 }
                 ACTION_NAVIGATION_EVENT -> {
-                    controller?.navigate(R.id.navigation_events)
+                    //controller?.navigate(R.id.navigation_events)
                 }
                 ACTION_NAVIGATION_SUBJECT -> {
-                    controller?.navigate(R.id.navigation_subjects)
+                    //controller?.navigate(R.id.navigation_subjects)
                 }
             }
         }

@@ -124,6 +124,7 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
             Event.fromBundle(it)?.also { event ->
                 viewModel.setEvent(event)
                 binding.root.transitionName = TRANSITION_ELEMENT_ROOT + event.eventID
+                binding.priorityCard.isVisible = event.isImportant
             }
         }
         arguments?.getBundle(EXTRA_SUBJECT)?.also {
@@ -226,6 +227,7 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
         binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setImportant(isChecked)
+            binding.priorityCard.isVisible = isChecked
         }
 
         binding.scheduleTextView.setOnClickListener { v ->

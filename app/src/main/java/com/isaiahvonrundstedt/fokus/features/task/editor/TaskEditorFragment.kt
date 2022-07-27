@@ -168,6 +168,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
             Task.fromBundle(it)?.also { task ->
                 viewModel.setTask(task)
                 binding.root.transitionName = TRANSITION_ELEMENT_ROOT + task.taskID
+                binding.priorityCard.isVisible = task.isFinished
             }
         }
         arguments?.getParcelableArrayList<Attachment>(EXTRA_ATTACHMENTS)?.also {
@@ -416,6 +417,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
         binding.prioritySwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setImportant(isChecked)
+            binding.priorityCard.isVisible = isChecked
         }
 
         binding.noDueRadioButton.setOnClickListener {

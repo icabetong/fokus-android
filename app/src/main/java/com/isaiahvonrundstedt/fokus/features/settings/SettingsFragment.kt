@@ -37,6 +37,7 @@ import java.util.*
 
 class SettingsFragment : BaseFragment() {
     private var _binding: FragmentSettingsBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
 
@@ -60,8 +61,15 @@ class SettingsFragment : BaseFragment() {
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_settings)
-            setupNavigation(this)
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        controller = findNavController()
     }
 
     companion object {

@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -47,7 +48,9 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
             inflateMenu(R.menu.menu_logs)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
-            setupNavigation(binding.appBarLayout.toolbar)
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
 
         with(binding.recyclerView) {
@@ -62,13 +65,7 @@ class LogFragment : BaseFragment(), BaseAdapter.ActionListener {
 
     override fun onStart() {
         super.onStart()
-
-        /**
-         * Get the NavController here so
-         * it doesn't crash when the host
-         * activity is recreated.
-         */
-        controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
+        controller = findNavController()
 
         viewModel.logs.observe(viewLifecycleOwner) {
             logAdapter.submitList(it)

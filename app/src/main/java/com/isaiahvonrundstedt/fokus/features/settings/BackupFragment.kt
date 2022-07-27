@@ -57,8 +57,9 @@ class BackupFragment : BaseFragment() {
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_backup)
-            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
     }
 

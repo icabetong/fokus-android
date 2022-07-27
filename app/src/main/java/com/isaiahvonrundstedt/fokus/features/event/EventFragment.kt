@@ -17,7 +17,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.color.MaterialColors
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.custom.ItemDecoration
 import com.isaiahvonrundstedt.fokus.components.custom.ItemSwipeCallback
@@ -43,7 +42,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.*
-
 
 @AndroidEntryPoint
 class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.ArchiveListener {

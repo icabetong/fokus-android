@@ -80,6 +80,7 @@
     <style name="Fokus.Widget.Toolbar" parent="Widget.Material3.Toolbar">
         <item name="contentInsetStart">@dimen/toolbar_keyline</item>
         <item name="titleCentered">true</item>
+        <item name="titleTextColor">?attr/colorOnSurfaceVariant</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title.Large</item>
         <item name="maxButtonHeight">48dp</item>
         <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>

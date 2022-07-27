@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.BuildConfig
 import com.isaiahvonrundstedt.fokus.R
@@ -19,6 +20,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 
 class AboutFragment : BaseFragment() {
     private var _binding: FragmentAboutBinding? = null
+    private var controller: NavController? = null
 
     private val binding get() = _binding!!
 
@@ -42,8 +44,15 @@ class AboutFragment : BaseFragment() {
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_about)
-            setupNavigation(this)
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        controller = findNavController()
     }
 
     companion object {

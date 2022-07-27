@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
@@ -17,6 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialFadeThrough
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getDimension
 import me.saket.cascade.CascadePopupMenu
@@ -28,12 +30,8 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialElevationScale(false).apply {
-            duration = TRANSITION_DURATION
-        }
-        reenterTransition = MaterialElevationScale(true).apply {
-            duration = TRANSITION_DURATION
-        }
+        enterTransition = MaterialFadeThrough()
+        returnTransition = MaterialFadeThrough()
     }
 
     /**
@@ -48,10 +46,18 @@ abstract class BaseFragment : Fragment() {
      *  @param toolbar adds the navigation icon at the start of
      *  the toolbar and registers an onClick callback on it
      */
-    protected fun setupNavigation(toolbar: MaterialToolbar) {
+    protected fun setupNavigation(toolbar: MaterialToolbar,
+                                  @DrawableRes iconRes: Int? = null,
+                                  onNavigate: (() -> Unit)? = null) {
         with(toolbar) {
-            setNavigationIcon(R.drawable.ic_outline_menu_24)
-            setNavigationOnClickListener { triggerNavigationDrawer() }
+            setNavigationIcon(iconRes ?: R.drawable.ic_outline_menu_24)
+            setNavigationOnClickListener {
+               if (onNavigate != null) {
+                   onNavigate()
+               } else {
+                   triggerNavigationDrawer()
+               }
+            }
         }
     }
 
@@ -65,6 +71,16 @@ abstract class BaseFragment : Fragment() {
         else parentDrawer?.openDrawer(GravityCompat.START)
     }
 
+    /**
+     *  This function will set the insets (padding) required
+     *  to the individual views so that they won't overlap with
+     *  Android's Status and Navigation Bars
+     *  @param root the parent view or layout
+     *  @param topView the topmost view in the layout such as the AppBar
+     *  @param contentViews the views which contains the contents in the layout
+     *  such as the RecyclerView and empty views.
+     *  @param bottomView views such as the FABs.
+     */
     protected fun setInsets(
         root: View,
         topView: View,

@@ -43,8 +43,9 @@ class NoticesFragment : BaseFragment() {
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_notices)
-            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
     }
 

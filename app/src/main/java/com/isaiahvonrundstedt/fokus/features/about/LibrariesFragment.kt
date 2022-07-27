@@ -44,8 +44,9 @@ class LibrariesFragment : BaseFragment() {
 
         with(binding.appBarLayout.toolbar) {
             setTitle(R.string.activity_open_source_licenses)
-            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
-            setNavigationOnClickListener { controller?.navigateUp() }
+            setupNavigation(this, R.drawable.ic_outline_arrow_back_24) {
+                controller?.navigateUp()
+            }
         }
 
         with(binding.recyclerView) {

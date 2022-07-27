@@ -5,9 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.isaiahvonrundstedt.fokus.R
 import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
@@ -16,8 +21,8 @@ import com.isaiahvonrundstedt.fokus.components.interfaces.Streamable
 import com.isaiahvonrundstedt.fokus.components.service.BackupRestoreService
 import com.isaiahvonrundstedt.fokus.components.utils.PreferenceManager
 import com.isaiahvonrundstedt.fokus.database.converter.DateTimeConverter
-import com.isaiahvonrundstedt.fokus.databinding.ActivityBackupBinding
-import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseActivity
+import com.isaiahvonrundstedt.fokus.databinding.FragmentBackupBinding
+import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BasePreference
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,20 +31,45 @@ import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BackupActivity : BaseActivity() {
-    private lateinit var binding: ActivityBackupBinding
+class BackupFragment : BaseFragment() {
+    private var _binding: FragmentBackupBinding? = null
+    private var controller: NavController? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityBackupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setPersistentActionBar(binding.appBarLayout.toolbar)
-        setToolbarTitle(R.string.settings_backup_and_restore)
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBackupBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setInsets(binding.root, binding.appBarLayout.toolbar, emptyArray())
+
+        with(binding.appBarLayout.toolbar) {
+            setTitle(R.string.activity_backup)
+            setNavigationIcon(R.drawable.ic_outline_arrow_back_24)
+            setNavigationOnClickListener { controller?.navigateUp() }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        controller = findNavController()
     }
 
     companion object {
         @AndroidEntryPoint
-        class BackupFragment : BasePreference() {
+        class BackupPreference : BasePreference() {
 
             private lateinit var createLauncher: ActivityResultLauncher<Intent>
             private lateinit var restoreLauncher: ActivityResultLauncher<Intent>

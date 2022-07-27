@@ -69,7 +69,7 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/xml_launcher_shortcuts"/>
         </activity>
-        <activity android:name=".features.settings.BackupActivity"/>
+        <activity android:name=".features.settings.BackupFragment"/>
 
         <activity android:name=".features.attachments.attach.AttachToTaskActivity"
             android:exported="true">
@@ -79,7 +79,6 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
         </activity>
-        <activity android:name=".features.subject.picker.SubjectPickerActivity" />
         <activity android:name=".features.subject.editor.SubjectEditorContainer" />
         <activity android:name=".features.task.editor.TaskEditorContainer"/>
         <activity android:name=".features.event.editor.EventEditorContainer"/>

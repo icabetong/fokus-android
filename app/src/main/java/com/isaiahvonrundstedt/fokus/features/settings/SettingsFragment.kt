@@ -11,6 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
@@ -63,6 +66,7 @@ class SettingsFragment : BaseFragment() {
 
     companion object {
         class SettingsFragment : BasePreference() {
+            private var controller: NavController? = null
 
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
                 setPreferencesFromResource(R.xml.xml_settings_main, rootKey)
@@ -172,7 +176,7 @@ class SettingsFragment : BaseFragment() {
 
                 findPreference<Preference>(PreferenceManager.PREFERENCE_BACKUP_RESTORE)
                     ?.setOnPreferenceClickListener {
-                        startActivity(Intent(context, BackupActivity::class.java))
+                        controller?.navigate(R.id.navigation_backup)
                         true
                     }
 
@@ -236,6 +240,12 @@ class SettingsFragment : BaseFragment() {
                     e.printStackTrace()
                 }
                 return false
+            }
+
+            override fun onStart() {
+                super.onStart()
+                controller = Navigation.findNavController(requireActivity(),
+                    R.id.navigationHostFragment)
             }
 
             private val preferences by lazy {

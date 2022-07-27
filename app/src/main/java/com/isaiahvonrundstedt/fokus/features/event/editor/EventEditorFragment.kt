@@ -48,7 +48,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseService
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.subject.SubjectPackage
-import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerActivity
+import com.isaiahvonrundstedt.fokus.features.subject.picker.SubjectPickerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import me.saket.cascade.overrideOverflowMenu
 import java.io.File
@@ -66,21 +66,11 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
     private lateinit var exportLauncher: ActivityResultLauncher<Intent>
     private lateinit var importLauncher: ActivityResultLauncher<Intent>
-    private lateinit var subjectLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = buildContainerTransform()
         sharedElementReturnTransition = buildContainerTransform()
-
-        subjectLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                it?.data?.getParcelableExtra<SubjectPackage>(SubjectPickerActivity.EXTRA_SELECTED_SUBJECT)
-                    ?.also { data ->
-                        viewModel.setSubject(data.subject)
-                        viewModel.schedules = data.schedules
-                    }
-            }
 
         exportLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -142,6 +132,7 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
         registerForFragmentResult(
             arrayOf(
+                SubjectPickerFragment.REQUEST_KEY_PICK,
                 SchedulePickerSheet.REQUEST_KEY
             ), this
         )
@@ -257,7 +248,8 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
         }
 
         binding.subjectTextView.setOnClickListener {
-            subjectLauncher.launch(Intent(context, SubjectPickerActivity::class.java))
+            SubjectPickerFragment(childFragmentManager)
+                .show()
         }
 
         binding.removeButton.setOnClickListener {
@@ -361,6 +353,12 @@ class EventEditorFragment : BaseEditorFragment(), FragmentResultListener {
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         when (requestKey) {
+            SubjectPickerFragment.REQUEST_KEY_PICK -> {
+                result.getParcelable<SubjectPackage>(SubjectPickerFragment.EXTRA_SELECTED_SUBJECT)?.let {
+                    viewModel.setSubject(it.subject)
+                    viewModel.schedules = it.schedules
+                }
+            }
             SchedulePickerSheet.REQUEST_KEY -> {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)

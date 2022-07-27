@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_padding">
+            android:paddingBottom="@dimen/activity_padding"
+            android:animateLayoutChanges="true">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/eventNameTextInputLayout"
@@ -194,10 +195,12 @@
                 </LinearLayout>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/priorityCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/container_padding_regular"
                     android:layout_marginBottom="@dimen/container_padding_regular"
+                    android:visibility="gone"
                     style="@style/Widget.Material3.CardView.Filled">
 
                     <androidx.appcompat.widget.AppCompatTextView

@@ -39,7 +39,7 @@ class TaskRepository @Inject constructor(
 
     suspend fun fetchAsPackage(): List<TaskPackage> = tasks.fetchAsPackage()
 
-    suspend fun checkNameUniqueness(name: String?): List<String> = tasks.checkNameUniqueness(name)
+    suspend fun checkNameUniqueness(name: String?, id: String?): List<String> = tasks.checkNameUniqueness(name, id)
 
     suspend fun insert(task: Task, attachmentList: List<Attachment> = emptyList()) {
         tasks.insert(task)

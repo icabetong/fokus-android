@@ -63,7 +63,8 @@ class EventEditorViewModel @Inject constructor(
                 name ?: getName(),
                 DateTimeConverter.fromLocalDate(
                     schedule?.toLocalDate() ?: getSchedule()?.toLocalDate()
-                )
+                ),
+                getEvent()?.eventID
             )
             _isNameTaken.value = result.isNotEmpty()
         }

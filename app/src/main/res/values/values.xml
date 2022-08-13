@@ -39,8 +39,6 @@
 
         <item name="appBarLayoutStyle">@style/Fokus.Widget.AppBar</item>
         <item name="toolbarStyle">@style/Fokus.Widget.Toolbar</item>
-        <item name="toolbarNavigationButtonStyle">@style/Fokus.Widget.Toolbar.Navigation</item>
-        <item name="actionOverflowButtonStyle">@style/Fokus.Widget.Toolbar.Overflow</item>
         <item name="switchStyle">@style/Fokus.Widget.Switch</item>
         <item name="floatingActionButtonStyle">@style/Fokus.Widget.FAB</item>
         <item name="extendedFloatingActionButtonStyle">@style/Fokus.Widget.FAB.Extended</item>
@@ -78,23 +76,9 @@
 
     <style name="Fokus.Widget.AppBar" parent="Widget.Material3.AppBarLayout"/>
     <style name="Fokus.Widget.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="contentInsetStart">@dimen/toolbar_keyline</item>
         <item name="titleCentered">true</item>
         <item name="titleTextColor">?attr/colorOnSurfaceVariant</item>
         <item name="titleTextAppearance">@style/Fokus.TextAppearance.Title.Large</item>
-        <item name="maxButtonHeight">48dp</item>
-        <item name="android:paddingLeft">@dimen/toolbar_padding_horizontal</item>
-        <item name="android:paddingRight">@dimen/toolbar_padding_horizontal</item>
-    </style>
-    <style name="Fokus.Widget.Toolbar.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="tint">?attr/colorOnSurfaceVariant</item>
-        <item name="android:minWidth">48dp</item>
-    </style>
-    <style name="Fokus.Widget.Toolbar.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="srcCompat">@drawable/ic_outline_more_vert_24</item>
-        <item name="tint">?attr/colorOnSurfaceVariant</item>
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
     </style>
     <style name="Fokus.Widget.Button" parent="Widget.Material3.Button">
         <item name="iconTint">?attr/colorOnPrimary</item>

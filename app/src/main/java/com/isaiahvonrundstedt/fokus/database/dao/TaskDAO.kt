@@ -18,19 +18,19 @@ interface TaskDAO {
     fun update(task: Task)
 
     @Query("SELECT taskID FROM tasks WHERE name = :task COLLATE NOCASE")
-    fun checkNameUniqueness(task: String?): List<String>
+    suspend fun checkNameUniqueness(task: String?): List<String>
 
     @Query("UPDATE tasks SET isFinished = :status WHERE taskID = :taskID")
-    fun setFinished(taskID: String, status: Int)
+    suspend fun setFinished(taskID: String, status: Int)
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
-    fun fetch(): List<Task>
+    suspend fun fetch(): List<Task>
 
     @Query("SELECT COUNT(*) FROM tasks WHERE isFinished = 0 AND isTaskArchived = 0")
-    fun fetchCount(): Int
+    suspend fun fetchCount(): Int
 
     @Query("SELECT * FROM tasks WHERE isFinished = 0")
-    fun fetchAsPackage(): List<TaskPackage>
+    suspend fun fetchAsPackage(): List<TaskPackage>
 
     @Transaction
     @Query("SELECT * FROM tasks LEFT JOIN subjects ON tasks.subject == subjects.subjectID WHERE isTaskArchived = 0 ORDER BY dueDate ASC")

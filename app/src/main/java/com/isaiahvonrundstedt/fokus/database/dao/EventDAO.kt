@@ -18,13 +18,13 @@ interface EventDAO {
     fun update(event: Event)
 
     @Query("SELECT eventID FROM events WHERE name = :event AND DATE(schedule) = DATE(:schedule) COLLATE NOCASE")
-    fun checkNameUniqueness(event: String?, schedule: String?): List<String>
+    suspend fun checkNameUniqueness(event: String?, schedule: String?): List<String>
 
     @Query("SELECT * FROM events")
-    fun fetch(): List<Event>
+    suspend fun fetch(): List<Event>
 
     @Query("SELECT * FROM events")
-    fun fetchPackage(): List<EventPackage>
+    suspend fun fetchPackage(): List<EventPackage>
 
     @Transaction
     @Query("SELECT * FROM events LEFT JOIN subjects ON events.subject == subjects.subjectID WHERE isEventArchived = 0 ORDER BY schedule ASC")

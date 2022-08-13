@@ -32,7 +32,7 @@ class SubjectRepository @Inject constructor(
 
     suspend fun fetch(): List<SubjectPackage> = subjects.fetchAsPackage()
 
-    suspend fun checkCodeExists(code: String?): List<String> = subjects.checkCodeUniqueness(code)
+    suspend fun checkCodeExists(code: String?, subjectId: String?): List<String> = subjects.checkCodeUniqueness(code, subjectId)
 
     suspend fun insert(subject: Subject, scheduleList: List<Schedule>) {
         subjects.insert(subject)

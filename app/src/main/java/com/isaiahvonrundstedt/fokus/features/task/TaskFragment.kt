@@ -150,6 +150,7 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
                         shapes = listOf(Shape.Square, Shape.Circle),
                         speed = 1f,
                         maxSpeed = 5f,
+                        damping = 0.9f,
                         fadeOutEnabled = true,
                         timeToLive = 1000L,
                         spread = 360,

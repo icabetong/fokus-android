@@ -66,7 +66,7 @@ class SubjectEditorViewModel @Inject constructor(
     }
 
     fun checkCodeUniqueness(code: String?) = viewModelScope.launch {
-        val result = repository.checkCodeExists(code)
+        val result = repository.checkCodeExists(code, getSubject()?.subjectID)
         _isCodeExists.value = !result.contains(getID()) && result.isNotEmpty()
     }
 

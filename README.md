@@ -44,7 +44,7 @@ We use [SemVer](http://www.semver.org) for versioning. For the versions availabl
 
 ## Licenses
 
-This project is licensed under the AGPL-3.0 - see the license file for more details
+This project is licensed under the GPL-3.0 - see the license file for more details
 
 ## Contributing
 

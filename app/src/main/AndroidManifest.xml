@@ -80,6 +80,13 @@
         <activity android:name=".features.task.editor.TaskEditorContainer"/>
         <activity android:name=".features.event.editor.EventEditorContainer"/>
 
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:theme="@style/Fokus.Theme.Core"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" />
+
         <service android:name=".components.service.NotificationActionService"
             android:exported="false"/>
         <service android:name=".components.service.BackupRestoreService"
@@ -142,4 +149,6 @@
         </receiver>
 
     </application>
+
+
 </manifest>

@@ -1,2 +1,5 @@
 rootProject.name='Fokus'
 include ':app'
+
+setBinding(new Binding([gradle: this]))
+evaluate(new File(settingsDir,'runtime/.android/include_flutter.groovy'))

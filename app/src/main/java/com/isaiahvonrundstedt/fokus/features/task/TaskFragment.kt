@@ -32,6 +32,7 @@ import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
 import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.flutter.embedding.android.FlutterActivity
 import me.saket.cascade.overrideOverflowMenu
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
@@ -128,10 +129,12 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
         super.onResume()
 
         binding.actionButton.setOnClickListener {
-            controller?.navigate(
-                R.id.navigation_editor_task, null, null,
-                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
-            )
+//            controller?.navigate(
+//                R.id.navigation_editor_task, null, null,
+//                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
+//            )
+            startActivity(FlutterActivity.withCachedEngine("core").build(requireContext()))
+
         }
     }
 

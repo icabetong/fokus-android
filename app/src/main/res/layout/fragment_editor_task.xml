@@ -297,6 +297,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/container_padding_regular"
                     android:layout_gravity="center"
+                    android:padding="4dp"
                     android:minHeight="@dimen/editor_item_height"
                     android:orientation="vertical">
 

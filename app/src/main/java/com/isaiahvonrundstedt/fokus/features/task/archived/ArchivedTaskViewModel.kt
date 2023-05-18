@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
 import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class ArchivedTaskViewModel @Inject constructor(
     val items: LiveData<List<TaskPackage>> = taskRepository.fetchArchived()
     val isEmpty: LiveData<Boolean> = Transformations.map(items) { it.isEmpty() }
 
-    fun removeFromArchive(taskPackage: TaskPackage) = viewModelScope.launch {
+    fun removeFromArchive(taskPackage: TaskPackage) = viewModelScope.launch(Dispatchers.IO) {
         taskPackage.task.isTaskArchived = false
         taskRepository.update(taskPackage.task)
     }

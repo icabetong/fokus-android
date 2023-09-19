@@ -341,4 +341,6 @@
     <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
     <string name="credit_user_interface_icons_summary">User Interface Icons</string>
 
+    <string name="notifications_are_now_enabled_for_this_app">Notifications are now enabled for this app!</string>
+    <string name="notifications_are_not_enabled_for_this_app">Notifications are NOT enabled for this app!</string>
 </resources>

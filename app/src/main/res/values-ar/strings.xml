@@ -340,4 +340,6 @@
     <string name="credit_user_interface_icons_title" translatable="false">Tailwind Labs</string>
     <string name="credit_user_interface_icons_summary">أيكونه واجهة المستخدم</string>
 
+    <string name="notifications_are_now_enabled_for_this_app">تم تمكين الإخطارات الآن لهذا التطبيق!</string>
+    <string name="notifications_are_not_enabled_for_this_app">لم يتم تمكين الإخطارات لهذا التطبيق!</string>
 </resources>

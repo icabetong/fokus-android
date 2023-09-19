@@ -1,12 +1,17 @@
 package com.isaiahvonrundstedt.fokus.features.core.activities
 
+import android.Manifest
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.isaiahvonrundstedt.fokus.R
+import com.isaiahvonrundstedt.fokus.components.extensions.android.createSnackbar
 import com.isaiahvonrundstedt.fokus.components.extensions.android.getParcelableListExtra
 import com.isaiahvonrundstedt.fokus.components.utils.NotificationChannelManager
 import com.isaiahvonrundstedt.fokus.databinding.ActivityMainBinding
@@ -26,6 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private var controller: NavController? = null
     private lateinit var binding: ActivityMainBinding
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val notificationManager: NotificationManager by lazy {
+        getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +42,11 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
         controller = findNavController(R.id.navigationHostFragment)
 
+        requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { enabled ->
+                if (enabled) createSnackbar(R.string.notifications_are_now_enabled_for_this_app)
+                else createSnackbar(R.string.notifications_are_not_enabled_for_this_app)
+            }
         intent?.also { intent ->
             when (intent.action) {
                 ACTION_WIDGET_TASK -> {
@@ -96,25 +110,28 @@ class MainActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(NotificationChannelManager(this)) {
-                register(
-                    NotificationChannelManager.CHANNEL_ID_GENERIC,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-                register(
-                    NotificationChannelManager.CHANNEL_ID_TASK,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
-                )
-                register(
-                    NotificationChannelManager.CHANNEL_ID_EVENT,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
-                )
-                register(
-                    NotificationChannelManager.CHANNEL_ID_CLASS,
-                    groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
-                )
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU && !notificationManager.areNotificationsEnabled()) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                with(NotificationChannelManager(this)) {
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_GENERIC,
+                        NotificationManager.IMPORTANCE_DEFAULT
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_TASK,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_EVENT,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
+                    register(
+                        NotificationChannelManager.CHANNEL_ID_CLASS,
+                        groupID = NotificationChannelManager.CHANNEL_GROUP_ID_REMINDERS
+                    )
+                }
             }
         }
     }

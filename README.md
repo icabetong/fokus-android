@@ -5,6 +5,11 @@
 
 Fokus is an open source application that combines a todo list and a calendar that can help you manage your school related work and events in one place. It's fast and beautiful yet simple design that can help you focus on what matters most.
 
+### Not maintained anymore. 
+```
+I cannot maintain this project anymore due to my full time work. If you want to continue it's development, you can fork this repository and continue maintaining the application. Thank you for using my simple application.
+```
+
 ## Features
 
 * Get reminded when a task is nearing its due
